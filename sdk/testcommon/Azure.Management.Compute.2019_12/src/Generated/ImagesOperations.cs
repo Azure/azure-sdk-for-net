@@ -80,6 +80,7 @@ namespace Azure.Management.Compute
         /// <summary> Gets the list of images under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<Image> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -123,6 +124,7 @@ namespace Azure.Management.Compute
         /// <summary> Gets the list of images under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<Image> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -242,6 +244,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -276,6 +279,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +314,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -344,6 +349,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ImagesUpdateOperation StartUpdate(string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -377,6 +383,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="imageName"/> is null. </exception>
         public virtual async Task<ImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string imageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -406,6 +413,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="imageName"/> is null. </exception>
         public virtual ImagesDeleteOperation StartDelete(string resourceGroupName, string imageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

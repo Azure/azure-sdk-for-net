@@ -658,6 +658,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -669,6 +670,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 string sharesnapshot = default,
                 int? timeout = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -683,7 +685,8 @@ namespace Azure.Storage.Files.Shares
                         resourceUri,
                         version,
                         sharesnapshot,
-                        timeout))
+                        timeout,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -720,13 +723,15 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.GetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
                 string sharesnapshot = default,
-                int? timeout = default)
+                int? timeout = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -751,6 +756,7 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -811,6 +817,18 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.NextAllowedQuotaDowngradeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
+                        {
+                            _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseDuration(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
+                        {
+                            _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseState(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
+                        {
+                            _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
+                        }
                         if (response.Headers.TryGetValue("x-ms-access-tier", out _header))
                         {
                             _value.AccessTier = _header;
@@ -854,6 +872,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -866,6 +885,7 @@ namespace Azure.Storage.Files.Shares
                 string sharesnapshot = default,
                 int? timeout = default,
                 Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -881,7 +901,8 @@ namespace Azure.Storage.Files.Shares
                         version,
                         sharesnapshot,
                         timeout,
-                        deleteSnapshots))
+                        deleteSnapshots,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -919,6 +940,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -926,7 +948,8 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 string sharesnapshot = default,
                 int? timeout = default,
-                Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType? deleteSnapshots = default)
+                Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -952,6 +975,7 @@ namespace Azure.Storage.Files.Shares
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
                 if (deleteSnapshots != null) { _request.Headers.SetValue("x-ms-delete-snapshots", Azure.Storage.Files.Shares.FileRestClient.Serialization.ToString(deleteSnapshots.Value)); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -984,6 +1008,881 @@ namespace Azure.Storage.Files.Shares
                 }
             }
             #endregion Share.DeleteAsync
+
+            #region Share.AcquireLeaseAsync
+            /// <summary>
+            /// The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="duration">Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease>> AcquireLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                long? duration = default,
+                string proposedLeaseId = default,
+                string sharesnapshot = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ShareClient.AcquireLease",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = AcquireLeaseAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        duration,
+                        proposedLeaseId,
+                        sharesnapshot,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.AcquireLeaseAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="duration">Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Share.AcquireLeaseAsync Message.</returns>
+            internal static Azure.Core.HttpMessage AcquireLeaseAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                long? duration = default,
+                string proposedLeaseId = default,
+                string sharesnapshot = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease", escapeValue: false);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-lease-action", "acquire");
+                _request.Headers.SetValue("x-ms-version", version);
+                if (duration != null) { _request.Headers.SetValue("x-ms-lease-duration", duration.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (proposedLeaseId != null) { _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.AcquireLeaseAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.ShareFileLease _value = new Azure.Storage.Files.Shares.Models.ShareFileLease();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
+                        {
+                            _value.LeaseId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.AcquireLeaseAsync
+
+            #region Share.ReleaseLeaseAsync
+            /// <summary>
+            /// The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo>> ReleaseLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string sharesnapshot = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ShareClient.ReleaseLease",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = ReleaseLeaseAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        leaseId,
+                        version,
+                        timeout,
+                        sharesnapshot,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.ReleaseLeaseAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Share.ReleaseLeaseAsync Message.</returns>
+            internal static Azure.Core.HttpMessage ReleaseLeaseAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string sharesnapshot = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (leaseId == null)
+                {
+                    throw new System.ArgumentNullException(nameof(leaseId));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease", escapeValue: false);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-lease-action", "release");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.ReleaseLeaseAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.ReleaseLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo _value = new Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.ReleaseLeaseAsync
+
+            #region Share.ChangeLeaseAsync
+            /// <summary>
+            /// The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease>> ChangeLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string proposedLeaseId = default,
+                string sharesnapshot = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ShareClient.ChangeLease",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = ChangeLeaseAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        leaseId,
+                        version,
+                        timeout,
+                        proposedLeaseId,
+                        sharesnapshot,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.ChangeLeaseAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Share.ChangeLeaseAsync Message.</returns>
+            internal static Azure.Core.HttpMessage ChangeLeaseAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string proposedLeaseId = default,
+                string sharesnapshot = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (leaseId == null)
+                {
+                    throw new System.ArgumentNullException(nameof(leaseId));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease", escapeValue: false);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-lease-action", "change");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", version);
+                if (proposedLeaseId != null) { _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.ChangeLeaseAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.ShareFileLease _value = new Azure.Storage.Files.Shares.Models.ShareFileLease();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
+                        {
+                            _value.LeaseId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.ChangeLeaseAsync
+
+            #region Share.RenewLeaseAsync
+            /// <summary>
+            /// The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease>> RenewLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string sharesnapshot = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ShareClient.RenewLease",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = RenewLeaseAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        leaseId,
+                        version,
+                        timeout,
+                        sharesnapshot,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.RenewLeaseAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Share.RenewLeaseAsync Message.</returns>
+            internal static Azure.Core.HttpMessage RenewLeaseAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string leaseId,
+                string version,
+                int? timeout = default,
+                string sharesnapshot = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (leaseId == null)
+                {
+                    throw new System.ArgumentNullException(nameof(leaseId));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease", escapeValue: false);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-lease-action", "renew");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.RenewLeaseAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.RenewLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLease> RenewLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.ShareFileLease _value = new Azure.Storage.Files.Shares.Models.ShareFileLease();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
+                        {
+                            _value.LeaseId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.RenewLeaseAsync
+
+            #region Share.BreakLeaseAsync
+            /// <summary>
+            /// The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="breakPeriod">For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.BrokenLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.BrokenLease>> BreakLeaseAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                long? breakPeriod = default,
+                string leaseId = default,
+                string requestId = default,
+                string sharesnapshot = default,
+                bool async = true,
+                string operationName = "ShareClient.BreakLease",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = BreakLeaseAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        breakPeriod,
+                        leaseId,
+                        requestId,
+                        sharesnapshot))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.BreakLeaseAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="breakPeriod">For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <returns>The Share.BreakLeaseAsync Message.</returns>
+            internal static Azure.Core.HttpMessage BreakLeaseAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                long? breakPeriod = default,
+                string leaseId = default,
+                string requestId = default,
+                string sharesnapshot = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "lease", escapeValue: false);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-lease-action", "break");
+                _request.Headers.SetValue("x-ms-version", version);
+                if (breakPeriod != null) { _request.Headers.SetValue("x-ms-lease-break-period", breakPeriod.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.BreakLeaseAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.BreakLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.BrokenLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 202:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.BrokenLease _value = new Azure.Storage.Files.Shares.Models.BrokenLease();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
+                        {
+                            _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
+                        {
+                            _value.LeaseId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.BreakLeaseAsync
 
             #region Share.CreateSnapshotAsync
             /// <summary>
@@ -1467,6 +2366,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1479,6 +2379,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 int? quotaInGB = default,
                 Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1494,7 +2395,8 @@ namespace Azure.Storage.Files.Shares
                         version,
                         timeout,
                         quotaInGB,
-                        accessTier))
+                        accessTier,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -1532,6 +2434,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.SetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1539,7 +2442,8 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 int? quotaInGB = default,
-                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default)
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1566,6 +2470,7 @@ namespace Azure.Storage.Files.Shares
                 _request.Headers.SetValue("x-ms-version", version);
                 if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (accessTier != null) { _request.Headers.SetValue("x-ms-access-tier", accessTier.ToString()); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -1624,6 +2529,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1635,6 +2541,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1649,7 +2556,8 @@ namespace Azure.Storage.Files.Shares
                         resourceUri,
                         version,
                         timeout,
-                        metadata))
+                        metadata,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -1686,13 +2594,15 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.SetMetadataAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetMetadataAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
-                System.Collections.Generic.IDictionary<string, string> metadata = default)
+                System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1723,6 +2633,7 @@ namespace Azure.Storage.Files.Shares
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -1780,6 +2691,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1790,6 +2702,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1803,7 +2716,8 @@ namespace Azure.Storage.Files.Shares
                         pipeline,
                         resourceUri,
                         version,
-                        timeout))
+                        timeout,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -1839,12 +2753,14 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.GetAccessPolicyAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
-                int? timeout = default)
+                int? timeout = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1869,6 +2785,7 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -1925,6 +2842,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1936,6 +2854,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions = default,
                 int? timeout = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1950,7 +2869,8 @@ namespace Azure.Storage.Files.Shares
                         resourceUri,
                         version,
                         permissions,
-                        timeout))
+                        timeout,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -1987,13 +2907,15 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.SetAccessPolicyAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetAccessPolicyAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions = default,
-                int? timeout = default)
+                int? timeout = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -2018,6 +2940,7 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 // Create the body
                 System.Xml.Linq.XElement _body = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("SignedIdentifiers", ""));
@@ -2089,6 +3012,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -2099,6 +3023,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -2112,7 +3037,8 @@ namespace Azure.Storage.Files.Shares
                         pipeline,
                         resourceUri,
                         version,
-                        timeout))
+                        timeout,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -2148,12 +3074,14 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Share.GetStatisticsAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetStatisticsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
-                int? timeout = default)
+                int? timeout = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -2178,6 +3106,7 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -3844,7 +4773,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 4 TB.</param>
             /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
             /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
             /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
@@ -3945,7 +4874,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 4 TB.</param>
             /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
             /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
             /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
@@ -5419,7 +6348,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 string requestId = default,
                 bool async = true,
@@ -5483,7 +6412,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 string requestId = default)
             {
@@ -6478,6 +7407,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="prevsharesnapshot">The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -6491,6 +7421,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 string sharesnapshot = default,
+                string prevsharesnapshot = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
@@ -6508,6 +7439,7 @@ namespace Azure.Storage.Files.Shares
                         resourceUri,
                         version,
                         sharesnapshot,
+                        prevsharesnapshot,
                         timeout,
                         range,
                         leaseId))
@@ -6546,6 +7478,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="prevsharesnapshot">The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -6555,6 +7488,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 string sharesnapshot = default,
+                string prevsharesnapshot = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default)
@@ -6578,6 +7512,7 @@ namespace Azure.Storage.Files.Shares
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "rangelist", escapeValue: false);
                 if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+                if (prevsharesnapshot != null) { _request.Uri.AppendQuery("prevsharesnapshot", prevsharesnapshot); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -6606,11 +7541,7 @@ namespace Azure.Storage.Files.Shares
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal();
-                        _value.Ranges =
-                            System.Linq.Enumerable.ToList(
-                                System.Linq.Enumerable.Select(
-                                    _xml.Element(System.Xml.Linq.XName.Get("Ranges", "")).Elements(System.Xml.Linq.XName.Get("Range", "")),
-                                    Azure.Storage.Files.Shares.Models.Range.FromXml));
+                        _value.Body = Azure.Storage.Files.Shares.Models.ShareFileRangeList.FromXml(_xml.Root);
 
                         // Get response headers
                         string _header;
@@ -7371,17 +8302,22 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class BrokenLease
     {
         /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
+        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Uniquely identifies a file's lease
+        /// Approximate time remaining in the lease period, in seconds.
+        /// </summary>
+        public int LeaseTime { get; internal set; }
+
+        /// <summary>
+        /// Uniquely identifies a share's lease
         /// </summary>
         public string LeaseId { get; internal set; }
 
@@ -7393,6 +8329,59 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class BrokenLease
+
+#region class ClearRange
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// ClearRange
+    /// </summary>
+    internal partial class ClearRange
+    {
+        /// <summary>
+        /// Start
+        /// </summary>
+        public long Start { get; internal set; }
+
+        /// <summary>
+        /// End
+        /// </summary>
+        public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ClearRange instances.
+        /// You can use ShareModelFactory.ClearRange instead.
+        /// </summary>
+        internal ClearRange() { }
+
+        /// <summary>
+        /// Deserializes XML into a new ClearRange instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ClearRange instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ClearRange FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ClearRange _value = new Azure.Storage.Files.Shares.Models.ClearRange();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ClearRange value);
+    }
+}
+#endregion class ClearRange
 
 #region enum CopyStatus
 namespace Azure.Storage.Files.Shares.Models
@@ -7683,12 +8672,12 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class FileLeaseReleaseInfo
     {
         /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
+        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
@@ -7763,6 +8752,59 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class FileProperty
+
+#region class FileRange
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// An Azure Storage file range.
+    /// </summary>
+    internal partial class FileRange
+    {
+        /// <summary>
+        /// Start of the range.
+        /// </summary>
+        public long Start { get; internal set; }
+
+        /// <summary>
+        /// End of the range.
+        /// </summary>
+        public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileRange instances.
+        /// You can use ShareModelFactory.FileRange instead.
+        /// </summary>
+        internal FileRange() { }
+
+        /// <summary>
+        /// Deserializes XML into a new FileRange instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FileRange instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.FileRange FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.FileRange _value = new Azure.Storage.Files.Shares.Models.FileRange();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.FileRange value);
+    }
+}
+#endregion class FileRange
 
 #region class FilesAndDirectoriesSegment
 namespace Azure.Storage.Files.Shares.Models
@@ -8253,59 +9295,6 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class PermissionInfo
-
-#region class Range
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// An Azure Storage file range.
-    /// </summary>
-    internal partial class Range
-    {
-        /// <summary>
-        /// Start of the range.
-        /// </summary>
-        public long Start { get; internal set; }
-
-        /// <summary>
-        /// End of the range.
-        /// </summary>
-        public long End { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of Range instances.
-        /// You can use ShareModelFactory.Range instead.
-        /// </summary>
-        internal Range() { }
-
-        /// <summary>
-        /// Deserializes XML into a new Range instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Range instance.</returns>
-        internal static Azure.Storage.Files.Shares.Models.Range FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Shares.Models.Range _value = new Azure.Storage.Files.Shares.Models.Range();
-            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
-            if (_child != null)
-            {
-                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
-            if (_child != null)
-            {
-                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.Range value);
-    }
-}
-#endregion class Range
 
 #region class RawStorageDirectoryInfo
 namespace Azure.Storage.Files.Shares.Models
@@ -9579,12 +10568,12 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileLease
     {
         /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
+        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
@@ -9648,20 +10637,85 @@ namespace Azure.Storage.Files.Shares.Models
         public long FileContentLength { get; internal set; }
 
         /// <summary>
-        /// A list of non-overlapping valid ranges, sorted by increasing address range.
+        /// The list of file ranges
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> Ranges { get; internal set; }
+        public Azure.Storage.Files.Shares.Models.ShareFileRangeList Body { get; internal set; }
 
         /// <summary>
         /// Creates a new ShareFileRangeInfoInternal instance
         /// </summary>
         public ShareFileRangeInfoInternal()
         {
-            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.Range>();
+            Body = new Azure.Storage.Files.Shares.Models.ShareFileRangeList();
         }
     }
 }
 #endregion class ShareFileRangeInfoInternal
+
+#region class ShareFileRangeList
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// The list of file ranges
+    /// </summary>
+    internal partial class ShareFileRangeList
+    {
+        /// <summary>
+        /// Ranges
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.FileRange> Ranges { get; internal set; }
+
+        /// <summary>
+        /// ClearRanges
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ClearRange> ClearRanges { get; internal set; }
+
+        /// <summary>
+        /// Creates a new ShareFileRangeList instance
+        /// </summary>
+        public ShareFileRangeList()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareFileRangeList instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareFileRangeList(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.FileRange>();
+                ClearRanges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.ClearRange>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareFileRangeList instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareFileRangeList instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ShareFileRangeList FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.Shares.Models.ShareFileRangeList _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeList(true);
+            _value.Ranges = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("Range", "")),
+                    e => Azure.Storage.Files.Shares.Models.FileRange.FromXml(e)));
+            _value.ClearRanges = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("ClearRange", "")),
+                    e => Azure.Storage.Files.Shares.Models.ClearRange.FromXml(e)));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareFileRangeList value);
+    }
+}
+#endregion class ShareFileRangeList
 
 #region enum ShareFileRangeWriteType
 namespace Azure.Storage.Files.Shares.Models
@@ -9950,7 +11004,7 @@ namespace Azure.Storage.Files.Shares.Models
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// When a file is leased, specifies whether the lease is of infinite or fixed duration.
+    /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
     /// </summary>
     public enum ShareLeaseDuration
     {
@@ -10000,7 +11054,7 @@ namespace Azure.Storage.Files.Shares
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Lease state of the file.
+    /// Lease state of the share.
     /// </summary>
     public enum ShareLeaseState
     {
@@ -10071,7 +11125,7 @@ namespace Azure.Storage.Files.Shares
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// The current lease status of the file.
+    /// The current lease status of the share.
     /// </summary>
     #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum ShareLeaseStatus
@@ -10304,6 +11358,21 @@ namespace Azure.Storage.Files.Shares.Models
         public string AccessTierTransitionState { get; internal set; }
 
         /// <summary>
+        /// The current lease status of the share.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareLeaseStatus? LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Lease state of the share.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareLeaseState? LeaseState { get; internal set; }
+
+        /// <summary>
+        /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareLeaseDuration? LeaseDuration { get; internal set; }
+
+        /// <summary>
         /// QuotaInGB
         /// </summary>
         public int? QuotaInGB { get; internal set; }
@@ -10398,6 +11467,21 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 _value.AccessTierTransitionState = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseState(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseDuration(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
@@ -10428,33 +11512,39 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
         public static ShareProperties ShareProperties(
-            System.DateTimeOffset? deletedOn = default,
+            string accessTier = default,
             System.DateTimeOffset? lastModified = default,
             int? provisionedIops = default,
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
-            Azure.ETag? eTag = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
-            string accessTier = default,
+            Azure.ETag? eTag = default,
             System.DateTimeOffset? accessTierChangeTime = default,
             string accessTierTransitionState = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new ShareProperties()
             {
-                DeletedOn = deletedOn,
+                AccessTier = accessTier,
                 LastModified = lastModified,
                 ProvisionedIops = provisionedIops,
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
-                ETag = eTag,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
-                AccessTier = accessTier,
+                ETag = eTag,
                 AccessTierChangeTime = accessTierChangeTime,
                 AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,
             };
@@ -10462,6 +11552,81 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class ShareProperties
+
+#region class ShareProtocolSettings
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Protocol settings
+    /// </summary>
+    public partial class ShareProtocolSettings
+    {
+        /// <summary>
+        /// Settings for SMB protocol.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareSmbSettings Smb { get; set; }
+
+        /// <summary>
+        /// Creates a new ShareProtocolSettings instance
+        /// </summary>
+        public ShareProtocolSettings()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareProtocolSettings instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareProtocolSettings(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Smb = new Azure.Storage.Files.Shares.Models.ShareSmbSettings();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a ShareProtocolSettings instance as XML.
+        /// </summary>
+        /// <param name="value">The ShareProtocolSettings instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "ShareProtocolSettings".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ShareProtocolSettings", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Smb != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "SMB", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareProtocolSettings instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareProtocolSettings instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ShareProtocolSettings FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ShareProtocolSettings _value = new Azure.Storage.Files.Shares.Models.ShareProtocolSettings(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("SMB", ""));
+            if (_child != null)
+            {
+                _value.Smb = Azure.Storage.Files.Shares.Models.ShareSmbSettings.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareProtocolSettings value);
+    }
+}
+#endregion class ShareProtocolSettings
 
 #region class ShareRetentionPolicy
 namespace Azure.Storage.Files.Shares.Models
@@ -10564,6 +11729,11 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get; set; }
 
         /// <summary>
+        /// Protocol settings
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareProtocolSettings Protocol { get; set; }
+
+        /// <summary>
         /// Creates a new ShareServiceProperties instance
         /// </summary>
         public ShareServiceProperties()
@@ -10581,6 +11751,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 HourMetrics = new Azure.Storage.Files.Shares.Models.ShareMetrics();
                 MinuteMetrics = new Azure.Storage.Files.Shares.Models.ShareMetrics();
+                Protocol = new Azure.Storage.Files.Shares.Models.ShareProtocolSettings();
             }
         }
 
@@ -10611,6 +11782,10 @@ namespace Azure.Storage.Files.Shares.Models
                     _elements.Add(Azure.Storage.Files.Shares.Models.ShareCorsRule.ToXml(_child));
                 }
                 _element.Add(_elements);
+            }
+            if (value.Protocol != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "ProtocolSettings", ""));
             }
             return _element;
         }
@@ -10646,6 +11821,11 @@ namespace Azure.Storage.Files.Shares.Models
             else
             {
                 _value.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.ShareCorsRule>();
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ProtocolSettings", ""));
+            if (_child != null)
+            {
+                _value.Protocol = Azure.Storage.Files.Shares.Models.ShareProtocolSettings.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -10743,6 +11923,81 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class ShareSignedIdentifier
+
+#region class ShareSmbSettings
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Settings for SMB protocol.
+    /// </summary>
+    public partial class ShareSmbSettings
+    {
+        /// <summary>
+        /// Settings for SMB Multichannel.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get; set; }
+
+        /// <summary>
+        /// Creates a new ShareSmbSettings instance
+        /// </summary>
+        public ShareSmbSettings()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareSmbSettings instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareSmbSettings(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Multichannel = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a ShareSmbSettings instance as XML.
+        /// </summary>
+        /// <param name="value">The ShareSmbSettings instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "ShareSmbSettings".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "ShareSmbSettings", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Multichannel != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.SmbMultichannel.ToXml(value.Multichannel, "Multichannel", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareSmbSettings instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareSmbSettings instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ShareSmbSettings FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ShareSmbSettings _value = new Azure.Storage.Files.Shares.Models.ShareSmbSettings(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Multichannel", ""));
+            if (_child != null)
+            {
+                _value.Multichannel = Azure.Storage.Files.Shares.Models.SmbMultichannel.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareSmbSettings value);
+    }
+}
+#endregion class ShareSmbSettings
 
 #region class ShareSnapshotInfo
 namespace Azure.Storage.Files.Shares.Models
@@ -10973,6 +12228,70 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class SharesSegment
+
+#region class SmbMultichannel
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Settings for SMB multichannel
+    /// </summary>
+    public partial class SmbMultichannel
+    {
+        /// <summary>
+        /// If SMB multichannel is enabled.
+        /// </summary>
+        public bool? Enabled { get; set; }
+
+        /// <summary>
+        /// Creates a new SmbMultichannel instance
+        /// </summary>
+        public SmbMultichannel() { }
+
+        /// <summary>
+        /// Serialize a SmbMultichannel instance as XML.
+        /// </summary>
+        /// <param name="value">The SmbMultichannel instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Multichannel".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.SmbMultichannel value, string name = "Multichannel", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Enabled != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Enabled", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.Enabled.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SmbMultichannel instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SmbMultichannel instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.SmbMultichannel FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.SmbMultichannel _value = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
+            _child = element.Element(System.Xml.Linq.XName.Get("Enabled", ""));
+            if (_child != null)
+            {
+                _value.Enabled = bool.Parse(_child.Value);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.SmbMultichannel value);
+    }
+}
+#endregion class SmbMultichannel
 
 #region class StorageClosedHandlesSegment
 namespace Azure.Storage.Files.Shares.Models

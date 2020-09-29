@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Tests
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");
         public string ClientObjectId => GetRecordedVariable("CLIENT_OBJECTID");
         public const string PrimaryKeyEnvironmentVariableName = "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY";
-        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryKeyEnvironmentVariableName);
+        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryKeyEnvironmentVariableName, options => options.IsSecret());
         public string AccountName => GetRecordedVariable("BLOB_STORAGE_ACCOUNT_NAME");
         public string StorageUri => string.Format(StorageUriFormat, AccountName);
         public string BlobContainerName => GetRecordedVariable("BLOB_CONTAINER_NAME");

@@ -2,6 +2,9 @@
 
 ## 1.1.0-preview.1 (Unreleased)
 
+
+## 1.0.1 (2020-08-06)
+
 ### Fixed
 
 - Transient error in key refresh (#12415).

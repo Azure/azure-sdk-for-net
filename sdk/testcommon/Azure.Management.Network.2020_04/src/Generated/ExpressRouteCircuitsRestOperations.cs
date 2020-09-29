@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ExpressRouteCircuitsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -58,6 +58,7 @@ namespace Azure.Management.Network
             uri.AppendPath(circuitName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -65,6 +66,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +95,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -132,6 +135,7 @@ namespace Azure.Management.Network
             uri.AppendPath(circuitName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -139,6 +143,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuit>> GetAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuit value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-                        }
+                        value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,6 +175,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public Response<ExpressRouteCircuit> Get(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -196,14 +195,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuit value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-                        }
+                        value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,6 +219,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -238,6 +231,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string circuitName, ExpressRouteCircuit parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -270,6 +264,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string circuitName, ExpressRouteCircuit parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -313,6 +308,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -324,6 +320,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to update express route circuit tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuit>> UpdateTagsAsync(string resourceGroupName, string circuitName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,14 +344,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuit value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-                        }
+                        value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,6 +357,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to update express route circuit tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ExpressRouteCircuit> UpdateTags(string resourceGroupName, string circuitName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -390,14 +381,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuit value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-                        }
+                        value = ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,6 +408,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -433,6 +418,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListArpTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -470,6 +456,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListArpTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -520,6 +507,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -529,6 +517,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListRoutesTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -566,6 +555,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListRoutesTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -616,6 +606,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -625,6 +616,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListRoutesTableSummaryAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -662,6 +654,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListRoutesTableSummary(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -709,6 +702,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/stats", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -716,6 +710,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitStats>> GetStatsAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -735,14 +730,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitStats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -754,6 +742,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is null. </exception>
         public Response<ExpressRouteCircuitStats> GetStats(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -773,14 +762,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitStats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -806,6 +788,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/stats", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -814,6 +797,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitStats>> GetPeeringStatsAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -837,14 +821,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitStats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -857,6 +834,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public Response<ExpressRouteCircuitStats> GetPeeringStats(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -880,14 +858,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitStats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -909,12 +880,14 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCircuits", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -930,14 +903,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -948,6 +914,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ExpressRouteCircuitListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -963,14 +930,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -990,6 +950,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCircuits", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1005,14 +966,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1032,14 +986,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1056,6 +1003,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1063,6 +1011,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1082,14 +1031,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1101,6 +1043,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ExpressRouteCircuitListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1120,14 +1063,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1144,12 +1080,14 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the express route circuits in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ExpressRouteCircuitListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1165,14 +1103,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1183,6 +1114,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the express route circuits in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ExpressRouteCircuitListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1198,14 +1130,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitListResult.DeserializeExpressRouteCircuitListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

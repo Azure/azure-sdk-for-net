@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor");
                 writer.WriteStringValue(Vendor);
             }
-            if (BundledScaleUnit != null)
+            if (Optional.IsDefined(BundledScaleUnit))
             {
                 writer.WritePropertyName("bundledScaleUnit");
                 writer.WriteStringValue(BundledScaleUnit);
             }
-            if (MarketPlaceVersion != null)
+            if (Optional.IsDefined(MarketPlaceVersion))
             {
                 writer.WritePropertyName("marketPlaceVersion");
                 writer.WriteStringValue(MarketPlaceVersion);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualApplianceSkuProperties DeserializeVirtualApplianceSkuProperties(JsonElement element)
         {
-            string vendor = default;
-            string bundledScaleUnit = default;
-            string marketPlaceVersion = default;
+            Optional<string> vendor = default;
+            Optional<string> bundledScaleUnit = default;
+            Optional<string> marketPlaceVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vendor"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vendor = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("bundledScaleUnit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bundledScaleUnit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("marketPlaceVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     marketPlaceVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualApplianceSkuProperties(vendor, bundledScaleUnit, marketPlaceVersion);
+            return new VirtualApplianceSkuProperties(vendor.Value, bundledScaleUnit.Value, marketPlaceVersion.Value);
         }
     }
 }

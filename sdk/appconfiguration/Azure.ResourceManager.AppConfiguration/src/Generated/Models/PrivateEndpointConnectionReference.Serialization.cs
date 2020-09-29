@@ -10,81 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class PrivateEndpointConnectionReference : IUtf8JsonSerializable
+    public partial class PrivateEndpointConnectionReference
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (PrivateEndpoint != null)
-            {
-                writer.WritePropertyName("privateEndpoint");
-                writer.WriteObjectValue(PrivateEndpoint);
-            }
-            if (PrivateLinkServiceConnectionState != null)
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static PrivateEndpointConnectionReference DeserializePrivateEndpointConnectionReference(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            ProvisioningState? provisioningState = default;
-            PrivateEndpoint privateEndpoint = default;
-            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -94,28 +43,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
@@ -123,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionReference(id, name, type, provisioningState, privateEndpoint, privateLinkServiceConnectionState);
+            return new PrivateEndpointConnectionReference(id.Value, name.Value, type.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, privateLinkServiceConnectionState.Value);
         }
     }
 }

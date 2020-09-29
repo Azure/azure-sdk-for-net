@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public AvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -57,12 +57,14 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/availablePrivateEndpointTypes", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailablePrivateEndpointTypesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -78,14 +80,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,6 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<AvailablePrivateEndpointTypesResult> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -111,14 +107,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -142,6 +131,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/availablePrivateEndpointTypes", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -149,6 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -168,14 +159,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,6 +171,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailablePrivateEndpointTypesResult> ListByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -206,14 +191,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -230,6 +208,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -237,6 +216,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailablePrivateEndpointTypesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -256,14 +236,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,6 +248,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public Response<AvailablePrivateEndpointTypesResult> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -294,14 +268,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,6 +285,7 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -326,6 +294,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -349,14 +318,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,6 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailablePrivateEndpointTypesResult> ListByResourceGroupNextPage(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -392,14 +355,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AvailablePrivateEndpointTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
-                        }
+                        value = AvailablePrivateEndpointTypesResult.DeserializeAvailablePrivateEndpointTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

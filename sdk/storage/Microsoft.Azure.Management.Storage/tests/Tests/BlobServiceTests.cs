@@ -994,6 +994,7 @@ namespace Storage.Tests
                     properties.DeleteRetentionPolicy.Days = 30;
                     properties.ChangeFeed = new ChangeFeed();
                     properties.ChangeFeed.Enabled = true;
+                    properties.IsVersioningEnabled = true;
                     properties.RestorePolicy = new RestorePolicyProperties(true, 5);
                     storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties);
                     properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
@@ -1001,6 +1002,7 @@ namespace Storage.Tests
                     Assert.Equal(5, properties.RestorePolicy.Days);
                     Assert.True(properties.DeleteRetentionPolicy.Enabled);
                     Assert.Equal(30, properties.DeleteRetentionPolicy.Days);
+                    Assert.NotNull(properties.RestorePolicy.MinRestoreTime);
                     Assert.True(properties.ChangeFeed.Enabled);
 
                     // restore blobs
@@ -1009,15 +1011,28 @@ namespace Storage.Tests
                     {
                         System.Threading.Thread.Sleep(10000);
                     }
+
+                    //Create restore ranges
                     List<BlobRestoreRange> ranges = new List<BlobRestoreRange>();
                     ranges.Add(new BlobRestoreRange("", "container1/blob1"));
                     ranges.Add(new BlobRestoreRange("container1/blob2", "container2/blob3"));
                     ranges.Add(new BlobRestoreRange("container3/blob3", ""));
-                    var restoreStatus = storageMgmtClient.StorageAccounts.RestoreBlobRanges(rgName, accountName, DateTime.Now.AddSeconds(-1), ranges);
-                    Assert.Equal("Complete", restoreStatus.Status);
 
+                    //Start restore
+                    Task<AzureOperationResponse<BlobRestoreStatus>> beginTask = storageMgmtClient.StorageAccounts.BeginRestoreBlobRangesWithHttpMessagesAsync(rgName, accountName, DateTime.Now.AddSeconds(-1), ranges);
+                    beginTask.Wait();
+                    AzureOperationResponse<BlobRestoreStatus> response = beginTask.Result;
+                    Assert.NotNull(response.Body.RestoreId);
+                    Assert.Equal("InProgress", response.Body.Status);
+
+                    // wait for restore complete (this test wait at most 5 mins)
+                    Task<AzureOperationResponse<BlobRestoreStatus>> waitTask = storageMgmtClient.GetPostOrDeleteOperationResultAsync(response, null, new System.Threading.CancellationToken());
+                    waitTask.Wait(5 * 60 * 1000);
+
+                    //Check restore status by get account properties
                     account = storageMgmtClient.StorageAccounts.GetProperties(rgName, accountName, StorageAccountExpand.BlobRestoreStatus);
-                    Assert.Equal("Complete", account.BlobRestoreStatus.Status);
+                    Assert.True(waitTask.Result.Body.Status == "InProgress" || waitTask.Result.Body.Status == "Complete");
+                    Assert.Equal(response.Body.RestoreId, waitTask.Result.Body.RestoreId);
                 }
                 finally
                 {

@@ -27,7 +27,7 @@ Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores
 Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
 
-## Analyzing the sentiment of multipile documents
+## Analyzing the sentiment of multiple documents
 
 To analyze the sentiment of a collection of documents in the same language, call `AnalyzeSentimentBatch` on an `IEnumerable` of strings.  The results are returned as a `AnalyzeSentimentResultCollection`.
 

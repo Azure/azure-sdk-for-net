@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Authentication
@@ -9,7 +11,7 @@ namespace Azure.Iot.Hub.Service.Authentication
     /// <summary>
     /// The IoT Hub credentials, to be used for authenticating against an IoT Hub instance via SAS tokens.
     /// </summary>
-    public class IotHubSasCredential : ISasTokenProvider
+    public class IotHubSasCredential : TokenCredential
     {
         // Time buffer before expiry when the token should be renewed, expressed as a percentage of the time to live.
         // The token will be renewed when it has 15% or less of the sas token's lifespan left.
@@ -91,7 +93,7 @@ namespace Azure.Iot.Hub.Service.Authentication
 
         /// <summary>
         /// The validity duration of the generated shared access signature token used for authentication.
-        /// The token will be renewed when at 15% or less of it's lifespan. The default value is 30 minutes.
+        /// The token will be renewed when at 15% or less of its lifespan. The default value is 30 minutes.
         /// </summary>
         public TimeSpan SasTokenTimeToLive { get; private set; } = TimeSpan.FromMinutes(30);
 
@@ -104,8 +106,23 @@ namespace Azure.Iot.Hub.Service.Authentication
             }.Uri;
         }
 
-        string ISasTokenProvider.GetSasToken()
+        private bool TokenShouldBeGenerated()
         {
+            // The token needs to be generated if this is the first time it is being accessed (not cached yet)
+            // or the current time is greater than or equal to the token expiry time, less 15% buffer.
+            if (_cachedSasToken == null)
+            {
+                return true;
+            }
+
+            var bufferTimeInMilliseconds = (double)RenewalTimeBufferPercentage / 100 * SasTokenTimeToLive.TotalMilliseconds;
+            DateTimeOffset tokenExpiryTimeWithBuffer = _tokenExpiryTime.AddMilliseconds(-bufferTimeInMilliseconds);
+            return DateTimeOffset.UtcNow.CompareTo(tokenExpiryTimeWithBuffer) >= 0;
+        }
+
+        private AccessToken GetSasTokenAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
             lock (_lock)
             {
                 if (TokenShouldBeGenerated())
@@ -122,22 +139,30 @@ namespace Azure.Iot.Hub.Service.Authentication
                     _cachedSasToken = builder.ToSignature();
                 }
 
-                return _cachedSasToken;
+                return new AccessToken(_cachedSasToken, _tokenExpiryTime);
             }
         }
 
-        private bool TokenShouldBeGenerated()
+        /// <summary>
+        /// Gets an Azure.Core.AccessToken for the specified set of scopes.
+        /// </summary>
+        /// <param name="requestContext">The Azure.Core.TokenRequestContext with authentication information.</param>
+        /// <param name="cancellationToken">The System.Threading.CancellationToken to use.</param>
+        /// <returns> A valid Azure token <see cref="AccessToken"/>.</returns>
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            // The token needs to be generated if this is the first time it is being accessed (not cached yet)
-            // or the current time is greater than or equal to the token expiry time, less 15% buffer.
-            if (_cachedSasToken == null)
-            {
-                return true;
-            }
+            return new ValueTask<AccessToken>(GetSasTokenAsync(cancellationToken));
+        }
 
-            var bufferTimeInMilliseconds = (double)RenewalTimeBufferPercentage / 100 * SasTokenTimeToLive.TotalMilliseconds;
-            DateTimeOffset tokenExpiryTimeWithBuffer = _tokenExpiryTime.AddMilliseconds(-bufferTimeInMilliseconds);
-            return DateTimeOffset.UtcNow.CompareTo(tokenExpiryTimeWithBuffer) >= 0;
+        /// <summary>
+        /// Gets an Azure.Core.AccessToken for the specified set of scopes.
+        /// </summary>
+        /// <param name="requestContext">The Azure.Core.TokenRequestContext with authentication information.</param>
+        /// <param name="cancellationToken">The System.Threading.CancellationToken to use.</param>
+        /// <returns> A valid Azure token <see cref="AccessToken"/>.</returns>
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            return GetSasTokenAsync(cancellationToken);
         }
     }
 }

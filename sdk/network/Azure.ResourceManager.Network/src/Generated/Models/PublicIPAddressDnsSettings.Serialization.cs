@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DomainNameLabel != null)
+            if (Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel");
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
             }
-            if (ReverseFqdn != null)
+            if (Optional.IsDefined(ReverseFqdn))
             {
                 writer.WritePropertyName("reverseFqdn");
                 writer.WriteStringValue(ReverseFqdn);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PublicIPAddressDnsSettings DeserializePublicIPAddressDnsSettings(JsonElement element)
         {
-            string domainNameLabel = default;
-            string fqdn = default;
-            string reverseFqdn = default;
+            Optional<string> domainNameLabel = default;
+            Optional<string> fqdn = default;
+            Optional<string> reverseFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainNameLabel"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     domainNameLabel = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("reverseFqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reverseFqdn = property.Value.GetString();
                     continue;
                 }
             }
-            return new PublicIPAddressDnsSettings(domainNameLabel, fqdn, reverseFqdn);
+            return new PublicIPAddressDnsSettings(domainNameLabel.Value, fqdn.Value, reverseFqdn.Value);
         }
     }
 }

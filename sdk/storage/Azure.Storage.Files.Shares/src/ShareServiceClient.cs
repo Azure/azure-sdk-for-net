@@ -876,6 +876,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             GetShareClient(shareName).DeleteInternal(
                 includeSnapshots,
+                conditions: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
@@ -916,6 +917,7 @@ namespace Azure.Storage.Files.Shares
             await GetShareClient(shareName)
                 .DeleteInternal(
                     includeSnapshots,
+                    conditions: default,
                     async: true,
                     cancellationToken,
                     operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")

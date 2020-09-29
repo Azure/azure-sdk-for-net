@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// included in the applyScope of Snapshot - Take can apply it.</param>
         /// <param name="userData">User specified data about the snapshot for
         /// any purpose. Length should not exceed 16KB.</param>
-        public UpdateSnapshotRequest(IList<System.Guid> applyScope = default(IList<System.Guid>), string userData = default(string))
+        public UpdateSnapshotRequest(IList<System.Guid?> applyScope = default(IList<System.Guid?>), string userData = default(string))
         {
             ApplyScope = applyScope;
             UserData = userData;
@@ -58,7 +57,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// included in the applyScope of Snapshot - Take can apply it.
         /// </summary>
         [JsonProperty(PropertyName = "applyScope")]
-        public IList<System.Guid> ApplyScope { get; set; }
+        public IList<System.Guid?> ApplyScope { get; set; }
 
         /// <summary>
         /// Gets or sets user specified data about the snapshot for any
@@ -67,21 +66,5 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (UserData != null)
-            {
-                if (UserData.Length > 16384)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
-                }
-            }
-        }
     }
 }

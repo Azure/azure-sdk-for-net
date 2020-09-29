@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public BgpServiceCommunitiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/bgpServiceCommunities", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -70,14 +71,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BgpServiceCommunityListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
-                        }
+                        value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +91,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BgpServiceCommunityListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
-                        }
+                        value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,12 +108,14 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the available bgp service communities. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<BgpServiceCommunityListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -142,14 +131,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BgpServiceCommunityListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
-                        }
+                        value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,6 +142,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the available bgp service communities. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<BgpServiceCommunityListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -175,14 +158,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BgpServiceCommunityListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
-                        }
+                        value = BgpServiceCommunityListResult.DeserializeBgpServiceCommunityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

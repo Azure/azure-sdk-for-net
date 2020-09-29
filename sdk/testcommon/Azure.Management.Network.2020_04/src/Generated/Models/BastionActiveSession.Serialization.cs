@@ -14,120 +14,76 @@ namespace Azure.Management.Network.Models
     {
         internal static BastionActiveSession DeserializeBastionActiveSession(JsonElement element)
         {
-            string sessionId = default;
-            object startTime = default;
-            string targetSubscriptionId = default;
-            string resourceType = default;
-            string targetHostName = default;
-            string targetResourceGroup = default;
-            string userName = default;
-            string targetIpAddress = default;
-            BastionConnectProtocol? protocol = default;
-            string targetResourceId = default;
-            float? sessionDurationInMins = default;
+            Optional<string> sessionId = default;
+            Optional<object> startTime = default;
+            Optional<string> targetSubscriptionId = default;
+            Optional<string> resourceType = default;
+            Optional<string> targetHostName = default;
+            Optional<string> targetResourceGroup = default;
+            Optional<string> userName = default;
+            Optional<string> targetIpAddress = default;
+            Optional<BastionConnectProtocol> protocol = default;
+            Optional<string> targetResourceId = default;
+            Optional<float> sessionDurationInMins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("targetSubscriptionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetSubscriptionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetHostName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetHostName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetResourceGroup"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetResourceGroup = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     userName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protocol"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     protocol = new BastionConnectProtocol(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sessionDurationInMins"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionDurationInMins = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new BastionActiveSession(sessionId, startTime, targetSubscriptionId, resourceType, targetHostName, targetResourceGroup, userName, targetIpAddress, protocol, targetResourceId, sessionDurationInMins);
+            return new BastionActiveSession(sessionId.Value, startTime.Value, targetSubscriptionId.Value, resourceType.Value, targetHostName.Value, targetResourceGroup.Value, userName.Value, targetIpAddress.Value, Optional.ToNullable(protocol), targetResourceId.Value, Optional.ToNullable(sessionDurationInMins));
         }
     }
 }

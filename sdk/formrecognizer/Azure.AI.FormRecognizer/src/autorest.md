@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/de43e7fba7da1d2f2212c971d01f790a7afb1ba5/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.0/FormRecognizer.json
+    -  https://github.com/Azure/azure-rest-api-specs/blob/8fee11f5dd30e228a850ee25a2f3368dc1671b53/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.1-preview.1/FormRecognizer.json
 ```
 
 

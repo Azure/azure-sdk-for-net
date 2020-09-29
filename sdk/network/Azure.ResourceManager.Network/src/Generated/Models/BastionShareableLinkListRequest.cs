@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,16 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionShareableLinkListRequest. </summary>
         public BastionShareableLinkListRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionShareableLinkListRequest. </summary>
-        /// <param name="vms"> List of VM references. </param>
-        internal BastionShareableLinkListRequest(IList<BastionShareableLink> vms)
-        {
-            Vms = vms;
+            Vms = new ChangeTrackingList<BastionShareableLink>();
         }
 
         /// <summary> List of VM references. </summary>
-        public IList<BastionShareableLink> Vms { get; set; }
+        public IList<BastionShareableLink> Vms { get; }
     }
 }

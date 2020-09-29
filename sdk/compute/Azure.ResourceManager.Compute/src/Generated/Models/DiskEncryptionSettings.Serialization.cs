@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DiskEncryptionKey != null)
+            if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey");
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey");
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskEncryptionSettings DeserializeDiskEncryptionSettings(JsonElement element)
         {
-            KeyVaultSecretReference diskEncryptionKey = default;
-            KeyVaultKeyReference keyEncryptionKey = default;
-            bool? enabled = default;
+            Optional<KeyVaultSecretReference> diskEncryptionKey = default;
+            Optional<KeyVaultKeyReference> keyEncryptionKey = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diskEncryptionKey = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyEncryptionKey = KeyVaultKeyReference.DeserializeKeyVaultKeyReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DiskEncryptionSettings(diskEncryptionKey, keyEncryptionKey, enabled);
+            return new DiskEncryptionSettings(diskEncryptionKey.Value, keyEncryptionKey.Value, Optional.ToNullable(enabled));
         }
     }
 }

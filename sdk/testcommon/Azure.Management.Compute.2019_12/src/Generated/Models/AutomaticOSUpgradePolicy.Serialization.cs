@@ -15,12 +15,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (EnableAutomaticOSUpgrade != null)
+            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade");
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
-            if (DisableAutomaticRollback != null)
+            if (Optional.IsDefined(DisableAutomaticRollback))
             {
                 writer.WritePropertyName("disableAutomaticRollback");
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
@@ -30,30 +30,22 @@ namespace Azure.Management.Compute.Models
 
         internal static AutomaticOSUpgradePolicy DeserializeAutomaticOSUpgradePolicy(JsonElement element)
         {
-            bool? enableAutomaticOSUpgrade = default;
-            bool? disableAutomaticRollback = default;
+            Optional<bool> enableAutomaticOSUpgrade = default;
+            Optional<bool> disableAutomaticRollback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enableAutomaticOSUpgrade = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("disableAutomaticRollback"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     disableAutomaticRollback = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AutomaticOSUpgradePolicy(enableAutomaticOSUpgrade, disableAutomaticRollback);
+            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback));
         }
     }
 }

@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ServiceEndpointPolicy IOperationSource<ServiceEndpointPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-            }
+            return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
         }
 
         async ValueTask<ServiceEndpointPolicy> IOperationSource<ServiceEndpointPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-            }
+            return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
         }
     }
 }

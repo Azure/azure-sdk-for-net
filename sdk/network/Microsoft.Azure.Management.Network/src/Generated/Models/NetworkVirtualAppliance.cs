@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="nvaSku">Network Virtual Appliance SKU.</param>
+        /// <param name="addressPrefix">Address Prefix.</param>
         /// <param
         /// name="bootStrapConfigurationBlobs">BootStrapConfigurationBlobs
         /// storage URLs.</param>
@@ -55,6 +56,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Network Interfaces.</param>
         /// <param name="virtualApplianceSites">List of references to
         /// VirtualApplianceSite.</param>
+        /// <param name="inboundSecurityRules">List of references to
+        /// InboundSecurityRules.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -62,10 +65,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// to cloud-init and config blob.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
+        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), string addressPrefix = default(string), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), IList<SubResource> inboundSecurityRules = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             NvaSku = nvaSku;
+            AddressPrefix = addressPrefix;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
             VirtualHub = virtualHub;
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
@@ -73,6 +77,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualApplianceAsn = virtualApplianceAsn;
             VirtualApplianceNics = virtualApplianceNics;
             VirtualApplianceSites = virtualApplianceSites;
+            InboundSecurityRules = inboundSecurityRules;
             ProvisioningState = provisioningState;
             Identity = identity;
             Etag = etag;
@@ -89,6 +94,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nvaSku")]
         public VirtualApplianceSkuProperties NvaSku { get; set; }
+
+        /// <summary>
+        /// Gets address Prefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.addressPrefix")]
+        public string AddressPrefix { get; private set; }
 
         /// <summary>
         /// Gets or sets bootStrapConfigurationBlobs storage URLs.
@@ -132,6 +143,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualApplianceSites")]
         public IList<SubResource> VirtualApplianceSites { get; private set; }
+
+        /// <summary>
+        /// Gets list of references to InboundSecurityRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundSecurityRules")]
+        public IList<SubResource> InboundSecurityRules { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the resource. Possible values

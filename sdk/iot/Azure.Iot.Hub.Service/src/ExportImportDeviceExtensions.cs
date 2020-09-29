@@ -28,7 +28,6 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         public static ExportImportDevice WithPropertiesFrom(this ExportImportDevice device, TwinProperties properties)
         {
-
             var container = new PropertyContainer();
             if (properties != null)
             {
@@ -44,18 +43,6 @@ namespace Azure.Iot.Hub.Service
 
             device.Properties = container;
 
-            return device;
-        }
-
-        /// <summary>
-        /// Initializes the <see cref="ExportImportDevice.ParentScopes"/> property using provided values.
-        /// </summary>
-        public static ExportImportDevice WithParentScopes(this ExportImportDevice device, IList<string> parentScopes)
-        {
-            foreach (var parentScope in parentScopes)
-            {
-                device.ParentScopes.Add(parentScope);
-            }
             return device;
         }
     }

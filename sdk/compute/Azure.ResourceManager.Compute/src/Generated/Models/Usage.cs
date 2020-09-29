@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal Usage(int currentValue, long limit, UsageName name)
         {
             if (name == null)

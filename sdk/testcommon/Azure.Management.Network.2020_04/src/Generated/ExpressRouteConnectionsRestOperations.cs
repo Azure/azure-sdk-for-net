@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ExpressRouteConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -61,6 +61,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(putExpressRouteConnectionParameters);
             request.Content = content;
@@ -73,6 +74,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnection putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -110,6 +112,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, <paramref name="connectionName"/>, or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnection putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,6 +161,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -166,6 +170,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response<ExpressRouteConnection>> GetAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -189,14 +194,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteConnection.DeserializeExpressRouteConnection(document.RootElement);
-                        }
+                        value = ExpressRouteConnection.DeserializeExpressRouteConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,6 +207,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
         public Response<ExpressRouteConnection> Get(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -232,14 +231,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteConnection.DeserializeExpressRouteConnection(document.RootElement);
-                        }
+                        value = ExpressRouteConnection.DeserializeExpressRouteConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,6 +256,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -272,6 +265,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -305,6 +299,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="connectionName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -349,6 +344,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/expressRouteConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -356,6 +352,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
         public async Task<Response<ExpressRouteConnectionList>> ListAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -375,14 +372,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteConnectionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteConnectionList.DeserializeExpressRouteConnectionList(document.RootElement);
-                        }
+                        value = ExpressRouteConnectionList.DeserializeExpressRouteConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,6 +384,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
         public Response<ExpressRouteConnectionList> List(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -413,14 +404,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteConnectionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteConnectionList.DeserializeExpressRouteConnectionList(document.RootElement);
-                        }
+                        value = ExpressRouteConnectionList.DeserializeExpressRouteConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -23,49 +23,11 @@ namespace Azure.Data.Tables
         /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
         /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
         /// </summary>
-        internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this DynamicTableEntity tableEntityProperties)
-        {
-            var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
-
-            foreach (var item in tableEntityProperties)
-            {
-                annotatedDictionary[item.Key] = item.Value;
-
-                switch (item.Value)
-                {
-                    case byte[] _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
-                        break;
-                    case long _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
-                        // Int64 / long should be serialized as string.
-                        annotatedDictionary[item.Key] = item.Value.ToString();
-                        break;
-                    case double _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDouble;
-                        break;
-                    case Guid _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmGuid;
-                        break;
-                    case DateTimeOffset _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
-                        break;
-                    case DateTime _:
-                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
-                        break;
-                }
-            }
-
-            return annotatedDictionary;
-        }
-
-        /// <summary>
-        /// Returns a new Dictionary with the appropriate Odata type annotation for a given propertyName value pair.
-        /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
-        /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
-        /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
+            // Remove the ETag property, as it does not need to be serialized
+            tableEntityProperties.Remove(TableConstants.PropertyNames.ETag);
+
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
 
             foreach (var item in tableEntityProperties)
@@ -94,6 +56,8 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
 
@@ -140,7 +104,7 @@ namespace Azure.Data.Tables
                 entity[annotation] = typeAnnotationsWithKeys[annotation].typeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
@@ -148,6 +112,13 @@ namespace Azure.Data.Tables
 
                 // Remove the type annotation property from the dictionary.
                 entity.Remove(typeAnnotationsWithKeys[annotation].annotationKey);
+            }
+
+            // The Timestamp property is not annotated, since it is a known system property
+            // so we must cast it without a type annotation
+            if (entity.TryGetValue(TableConstants.PropertyNames.TimeStamp, out var value) && value is string)
+            {
+                entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
         }
 
@@ -178,12 +149,24 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : class, ITableEntity, new()
         {
+            var result = new T();
+
+            if (result is IDictionary<string, object> dictionary)
+            {
+                entity.CastAndRemoveAnnotations();
+
+                foreach (var entProperty in entity.Keys)
+                {
+                    dictionary[entProperty] = entity[entProperty];
+                }
+
+                return result;
+            }
+
             properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
             {
                 return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             });
-
-            var result = new T();
 
             // Iterate through each property of the entity and set them as the correct type.
             foreach (var property in properties)
@@ -196,15 +179,22 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        property.SetValue(result, propertyValue);
+                        if (property.PropertyType.IsEnum)
+                        {
+                            typeActions[typeof(Enum)](property, propertyValue, result);
+                        }
+                        else
+                        {
+                            property.SetValue(result, propertyValue);
+                        }
                     }
                 }
             }
 
             // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.Etag, out var etag))
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
             {
-                result.ETag = etag as string;
+                result.ETag = new ETag((etag as string)!);
             }
             return result;
         }
@@ -227,6 +217,7 @@ namespace Azure.Data.Tables
             {typeof(string), (property, propertyValue, result) =>  property.SetValue(result, propertyValue as string)},
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
+            {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
     }
 }

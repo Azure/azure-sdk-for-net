@@ -24,7 +24,8 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         /// Initializes a new instance of the <see cref="OperationsMockTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsMockTests(bool isAsync) : base(isAsync)
+        public OperationsMockTests(bool isAsync)
+            : base(isAsync)
         {
         }
 

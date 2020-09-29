@@ -41,7 +41,7 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
-                var jsonO = JObject.Parse(body);
+                var jsonO = JToken.Parse(body);
                 foreach (string jsonPath in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
@@ -93,7 +93,10 @@ namespace Azure.Core.TestFramework
 
             SanitizeHeaders(entry.Response.Headers);
 
-            SanitizeBody(entry.Response);
+            if (entry.RequestMethod != RequestMethod.Head)
+            {
+                SanitizeBody(entry.Response);
+            }
         }
 
         public virtual void Sanitize(RecordSession session)

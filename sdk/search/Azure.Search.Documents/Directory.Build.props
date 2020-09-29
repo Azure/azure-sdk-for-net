@@ -2,7 +2,7 @@
 
   <!-- Azure.Core.Experimental feature flags -->
   <PropertyGroup>
-    <!-- Enable everything by default -->
+    <!-- Disable everything by default -->
     <UseAzureCoreExperimental Condition="'$(UseAzureCoreExperimental)' == ''">false</UseAzureCoreExperimental>
 
     <!-- Use Azure.Core.Experimental's Spatial features -->
@@ -10,16 +10,12 @@
     <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSpatial>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalSpatial)' == 'true'">EXPERIMENTAL_SPATIAL;$(DefineConstants)</DefineConstants>
 
-    <!-- Use Azure.Core.Experimental's ObjectSerializer features -->
-    <UseAzureCoreExperimentalSerializer Condition="'$(UseAzureCoreExperimentalSerializer)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSerializer>
-    <DefineConstants Condition="'$(UseAzureCoreExperimentalSerializer)' == 'true'">EXPERIMENTAL_SERIALIZER;$(DefineConstants)</DefineConstants>
-
     <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
     <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->
-    <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalSerializer)' == 'true') OR ('$(UseAzureCoreExperimentalSerializer)' == 'true')">true</AddExperimentalReference>
+    <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalDynamic)' == 'true')">true</AddExperimentalReference>
     <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">$(UseProjectReferenceToAzureClients)</UseExperimentalProjectReference>
   </PropertyGroup>
 

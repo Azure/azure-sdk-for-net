@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/tenants", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -60,14 +61,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TenantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TenantListResult.DeserializeTenantListResult(document.RootElement);
-                        }
+                        value = TenantListResult.DeserializeTenantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,14 +81,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TenantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TenantListResult.DeserializeTenantListResult(document.RootElement);
-                        }
+                        value = TenantListResult.DeserializeTenantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,12 +98,14 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<TenantListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -132,14 +121,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TenantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TenantListResult.DeserializeTenantListResult(document.RootElement);
-                        }
+                        value = TenantListResult.DeserializeTenantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,6 +132,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<TenantListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -165,14 +148,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TenantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TenantListResult.DeserializeTenantListResult(document.RootElement);
-                        }
+                        value = TenantListResult.DeserializeTenantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

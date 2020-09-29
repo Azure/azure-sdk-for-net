@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public WebApplicationFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -57,12 +57,14 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<WebApplicationFirewallPolicyListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -78,14 +80,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,6 +91,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<WebApplicationFirewallPolicyListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -111,14 +107,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,6 +127,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -153,14 +143,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,6 +186,7 @@ namespace Azure.Management.Network
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -217,6 +194,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public async Task<Response<WebApplicationFirewallPolicy>> GetAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -236,14 +214,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,6 +226,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public Response<WebApplicationFirewallPolicy> Get(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -274,14 +246,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,6 +270,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -316,6 +282,7 @@ namespace Azure.Management.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<WebApplicationFirewallPolicy>> CreateOrUpdateAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -340,14 +307,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -360,6 +320,7 @@ namespace Azure.Management.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="policyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<WebApplicationFirewallPolicy> CreateOrUpdate(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -384,14 +345,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicy.DeserializeWebApplicationFirewallPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -414,6 +368,7 @@ namespace Azure.Management.Network
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -421,6 +376,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -449,6 +405,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -482,6 +439,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -489,6 +447,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<WebApplicationFirewallPolicyListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -508,14 +467,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,6 +479,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<WebApplicationFirewallPolicyListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -546,14 +499,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -570,12 +516,14 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the WAF policies in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<WebApplicationFirewallPolicyListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -591,14 +539,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -609,6 +550,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the WAF policies in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<WebApplicationFirewallPolicyListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -624,14 +566,7 @@ namespace Azure.Management.Network
                     {
                         WebApplicationFirewallPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
-                        }
+                        value = WebApplicationFirewallPolicyListResult.DeserializeWebApplicationFirewallPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

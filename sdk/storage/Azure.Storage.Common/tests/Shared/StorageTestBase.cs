@@ -102,6 +102,13 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetSoftDeleteTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests premium files.
+        /// </summary>
+        public TenantConfiguration TestConfigPremiumFile => GetTestConfig(
+                "Storage_TestConfigPremiumFile",
+                () => TestConfigurations.DefaultPremiumFileTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>
@@ -335,11 +342,12 @@ namespace Azure.Storage.Test.Shared
         /// </param>
         /// <param name="totalSize">The total size we should eventually see.</param>
         /// <returns>A task that will (optionally) delay.</returns>
-        protected async Task WaitForProgressAsync(List<long> progressList, long totalSize)
+        protected async Task WaitForProgressAsync(System.Collections.Concurrent.ConcurrentBag<long> progressBag, long totalSize)
         {
             for (var attempts = 0; attempts < 10; attempts++)
             {
-                if (progressList.LastOrDefault() >= totalSize)
+                // ConcurrentBag.GetEnumerator() returns a snapshot in time; we can safely use linq queries
+                if (progressBag.Count > 0 && progressBag.Max() >= totalSize)
                 {
                     return;
                 }

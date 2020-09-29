@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, or <paramref name="description"/> is null. </exception>
         internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description)
         {
             if (schema == null)

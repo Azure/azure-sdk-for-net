@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGateway. </summary>
         public ApplicationGateway()
         {
+            Zones = new ChangeTrackingList<string>();
+            GatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
+            AuthenticationCertificates = new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>();
+            TrustedRootCertificates = new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>();
+            SslCertificates = new ChangeTrackingList<ApplicationGatewaySslCertificate>();
+            FrontendIPConfigurations = new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>();
+            FrontendPorts = new ChangeTrackingList<ApplicationGatewayFrontendPort>();
+            Probes = new ChangeTrackingList<ApplicationGatewayProbe>();
+            BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
+            BackendHttpSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>();
+            HttpListeners = new ChangeTrackingList<ApplicationGatewayHttpListener>();
+            UrlPathMaps = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
+            RequestRoutingRules = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
+            RewriteRuleSets = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
+            RedirectConfigurations = new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
+            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGateway. </summary>
@@ -88,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The identity of the application gateway, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> SKU of the application gateway resource. </summary>
@@ -98,33 +115,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Operational state of the application gateway resource. </summary>
         public ApplicationGatewayOperationalState? OperationalState { get; }
         /// <summary> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations { get; set; }
+        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations { get; }
         /// <summary> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get; set; }
+        public IList<ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get; }
         /// <summary> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayTrustedRootCertificate> TrustedRootCertificates { get; set; }
+        public IList<ApplicationGatewayTrustedRootCertificate> TrustedRootCertificates { get; }
         /// <summary> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewaySslCertificate> SslCertificates { get; set; }
+        public IList<ApplicationGatewaySslCertificate> SslCertificates { get; }
         /// <summary> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get; set; }
+        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get; }
         /// <summary> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; set; }
+        public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; }
         /// <summary> Probes of the application gateway resource. </summary>
-        public IList<ApplicationGatewayProbe> Probes { get; set; }
+        public IList<ApplicationGatewayProbe> Probes { get; }
         /// <summary> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; set; }
+        public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; }
         /// <summary> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; set; }
+        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; }
         /// <summary> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayHttpListener> HttpListeners { get; set; }
+        public IList<ApplicationGatewayHttpListener> HttpListeners { get; }
         /// <summary> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; set; }
+        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; }
         /// <summary> Request routing rules of the application gateway resource. </summary>
-        public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; set; }
+        public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; }
         /// <summary> Rewrite rules for the application gateway resource. </summary>
-        public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get; set; }
+        public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get; }
         /// <summary> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayRedirectConfiguration> RedirectConfigurations { get; set; }
+        public IList<ApplicationGatewayRedirectConfiguration> RedirectConfigurations { get; }
         /// <summary> Web application firewall configuration. </summary>
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
@@ -140,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the application gateway resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Custom error configurations of the application gateway resource. </summary>
-        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; set; }
+        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
         /// <summary> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </summary>
         public bool? ForceFirewallPolicyAssociation { get; set; }
     }

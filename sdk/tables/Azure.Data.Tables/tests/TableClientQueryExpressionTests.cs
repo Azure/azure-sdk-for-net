@@ -39,39 +39,39 @@ namespace Azure.Data.Tables.Tests
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
         private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
+        private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<ComplexEntity, bool>> s_gt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_gtDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_gtDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ge = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_geDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_geDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_lt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_ltDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_ltDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_le = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_leDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_leDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_or = x => x.PartitionKey == Partition || x.RowKey == Row;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_orDE = x => x.PartitionKey == Partition || x.RowKey == Row;
+        private static readonly Expression<Func<TableEntity, bool>> s_orDE = x => x.PartitionKey == Partition || x.RowKey == Row;
         private static readonly Expression<Func<ComplexEntity, bool>> s_compareToExp = ent => ent.String.CompareTo(SomeString) >= 0;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_compareToExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_compareToExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_guidExp = ent => ent.Guid == s_someGuid;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_guidExpDE = ent => ent.GetGuid("Guid") == s_someGuid;
+        private static readonly Expression<Func<TableEntity, bool>> s_guidExpDE = ent => ent.GetGuid("Guid") == s_someGuid;
         private static readonly Expression<Func<ComplexEntity, bool>> s_int64Exp = ent => ent.Int64 >= SomeInt64;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_int64ExpDE = ent => ent.GetInt64("Int64") >= SomeInt64;
+        private static readonly Expression<Func<TableEntity, bool>> s_int64ExpDE = ent => ent.GetInt64("Int64") >= SomeInt64;
         private static readonly Expression<Func<ComplexEntity, bool>> s_doubleExp = ent => ent.Double >= SomeDouble;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_doubleExpDE = ent => ent.GetDouble("Double") >= SomeDouble;
+        private static readonly Expression<Func<TableEntity, bool>> s_doubleExpDE = ent => ent.GetDouble("Double") >= SomeDouble;
         private static readonly Expression<Func<ComplexEntity, bool>> s_intExp = ent => ent.Int32 >= SomeInt;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_intExpDE = ent => ent.GetInt32("Int32") >= SomeInt;
+        private static readonly Expression<Func<TableEntity, bool>> s_intExpDE = ent => ent.GetInt32("Int32") >= SomeInt;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtoExp = ent => ent.DateTimeOffset >= s_someDateTimeOffset;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_dtoExpDE = ent => ent.GetDateTime("DateTimeOffset") >= s_someDateTimeOffset;
+        private static readonly Expression<Func<TableEntity, bool>> s_dtoExpDE = ent => ent.GetDateTime("DateTimeOffset") >= s_someDateTimeOffset;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtExp = ent => ent.DateTime < s_someDateTime;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_dtExpDE = ent => ent.GetDateTime("DateTime") < s_someDateTime;
+        private static readonly Expression<Func<TableEntity, bool>> s_dtExpDE = ent => ent.GetDateTime("DateTime") < s_someDateTime;
         private static readonly Expression<Func<ComplexEntity, bool>> s_boolTrueExp = ent => ent.Bool == SomeTrueBool;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_boolTrueExpDE = ent => ent.GetBoolean("Bool") == SomeTrueBool;
+        private static readonly Expression<Func<TableEntity, bool>> s_boolTrueExpDE = ent => ent.GetBoolean("Bool") == SomeTrueBool;
         private static readonly Expression<Func<ComplexEntity, bool>> s_boolFalseExp = ent => ent.Bool == SomeFalseBool;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_boolFalseExpDE = ent => ent.GetBoolean("Bool") == SomeFalseBool;
+        private static readonly Expression<Func<TableEntity, bool>> s_boolFalseExpDE = ent => ent.GetBoolean("Bool") == SomeFalseBool;
         private static readonly Expression<Func<ComplexEntity, bool>> s_binaryExp = ent => ent.Binary == s_someBinary;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_binaryExpDE = ent => ent.GetBinary("Binary") == s_someBinary;
+        private static readonly Expression<Func<TableEntity, bool>> s_binaryExpDE = ent => ent.GetBinary("Binary") == s_someBinary;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= s_someDateTime;
-        private static readonly Expression<Func<DynamicTableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
+        private static readonly Expression<Func<TableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
 
         public static object[] ExpressionTestCases =
         {
@@ -94,7 +94,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
         };
 
-        public static object[] DynamicTableEntityExpressionTestCases =
+        public static object[] DictionaryTableEntityExpressionTestCases =
         {
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_neDE },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gtDE },
@@ -124,9 +124,9 @@ namespace Azure.Data.Tables.Tests
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }
 
-        [TestCaseSource(nameof(DynamicTableEntityExpressionTestCases))]
+        [TestCaseSource(nameof(DictionaryTableEntityExpressionTestCases))]
         [Test]
-        public void TestDynamicTableEntityFilterExpressions(string expectedFilter, Expression<Func<DynamicTableEntity, bool>> expression)
+        public void TestDictionaryTableEntityFilterExpressions(string expectedFilter, Expression<Func<TableEntity, bool>> expression)
         {
             var filter = TableClient.CreateQueryFilter(expression);
 

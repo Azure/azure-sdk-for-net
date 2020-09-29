@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public partial class PrivateEndpointConnectionReference
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
-        public PrivateEndpointConnectionReference()
+        internal PrivateEndpointConnectionReference()
         {
         }
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The provisioning status of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource of private endpoint. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public PrivateEndpoint PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
     }
 }

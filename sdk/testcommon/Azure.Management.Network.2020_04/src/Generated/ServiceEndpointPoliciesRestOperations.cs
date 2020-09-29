@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ServiceEndpointPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -58,6 +58,7 @@ namespace Azure.Management.Network
             uri.AppendPath(serviceEndpointPolicyName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -65,6 +66,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +95,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -136,6 +139,7 @@ namespace Azure.Management.Network
                 uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -144,6 +148,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public async Task<Response<ServiceEndpointPolicy>> GetAsync(string resourceGroupName, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,14 +168,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,6 +181,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public Response<ServiceEndpointPolicy> Get(string resourceGroupName, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,14 +201,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,6 +225,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -244,6 +237,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serviceEndpointPolicyName, ServiceEndpointPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -276,6 +270,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string serviceEndpointPolicyName, ServiceEndpointPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -319,6 +314,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -330,6 +326,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ServiceEndpointPolicy>> UpdateTagsAsync(string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -353,14 +350,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,6 +363,7 @@ namespace Azure.Management.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ServiceEndpointPolicy> UpdateTags(string resourceGroupName, string serviceEndpointPolicyName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -396,14 +387,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -423,6 +407,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/ServiceEndpointPolicies", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -438,14 +423,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,14 +443,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,12 +465,14 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/serviceEndpointPolicies", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all service endpoint Policies in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ServiceEndpointPolicyListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -515,14 +488,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -533,6 +499,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all service endpoint Policies in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ServiceEndpointPolicyListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -548,14 +515,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -572,12 +532,14 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the service endpoint policies in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ServiceEndpointPolicyListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -593,14 +555,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,6 +566,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the service endpoint policies in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ServiceEndpointPolicyListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -626,14 +582,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -650,6 +599,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -657,6 +607,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ServiceEndpointPolicyListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -676,14 +627,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -695,6 +639,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ServiceEndpointPolicyListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -714,14 +659,7 @@ namespace Azure.Management.Network
                     {
                         ServiceEndpointPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
-                        }
+                        value = ServiceEndpointPolicyListResult.DeserializeServiceEndpointPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

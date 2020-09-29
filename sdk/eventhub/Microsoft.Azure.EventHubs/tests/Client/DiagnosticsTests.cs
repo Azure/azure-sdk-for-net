@@ -424,6 +424,88 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 }
             }
         }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ValidateDiagnosticsIdentifierWhenSentInBatch()
+        {
+            const string PartitionId = "0";
+
+            await using (var scope = await EventHubScope.CreateAsync(3))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var eventQueue = this.CreateEventQueue();
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
+                try
+                {
+                    using (var listener = this.CreateEventListener(null, eventQueue))
+                    using (var subscription = this.SubscribeToEvents(listener))
+                    {
+                        // Enable all events.
+                        listener.Enable((name, queueName, arg) => true);
+
+                        // Create a batch until it is maxed out.
+                        var batch = ehClient.CreateBatch();
+                        while (batch.TryAdd(new EventData(new byte[10 * 1024]))) { }
+
+                        // Mark end of stream before sending.
+                        var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(PartitionId);
+
+                        await TestUtility.SendToPartitionAsync(ehClient, PartitionId, batch);
+
+                        // Create receiver from marked offset and receive some or all of the messages.
+                        var receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, PartitionId, EventPosition.FromOffset(pInfo.LastEnqueuedOffset));
+                        var messages = await receiver.ReceiveAsync(10);
+
+                        Assert.True(messages.Count() > 0, "Couldn't receive any messages.");
+
+                        // Validate all messages carry diagnostics-id in the property bag.
+                        foreach(var eventData in messages)
+                        {
+                            var activity = eventData.ExtractActivity();
+                            Assert.True(activity.ParentId != null, "Diagnostics identifier was missing for received event");
+                        }
+                    }
+                }
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
+            }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public void BatchSizeCalculation()
+        {
+            var batchSizeWithDiagnostics = 0;
+
+            // Create a batch w/o diagnostics enabled and get the batch size.
+            var batch = new EventDataBatch(1024 * 1024);
+            while (batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello EventHub by partitionKey!")))) { }
+            var batchSizeWithoutDiagnostics = batch.Count;
+
+            // Create a batch w diagnostics enabled and get the batch size.
+            var eventQueue = this.CreateEventQueue();
+            using (var listener = this.CreateEventListener(null, eventQueue))
+            using (var subscription = this.SubscribeToEvents(listener))
+            {
+                // Enable all events.
+                listener.Enable((name, queueName, arg) => true);
+                
+                batch = new EventDataBatch(1024 * 1024);
+                while (batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello EventHub by partitionKey!")))) { }
+                batchSizeWithDiagnostics = batch.Count;
+            }
+
+            // Because of the diagnostics-id overhead, we should have less number of events when diagnostics enabled.
+            // Validate that there are less number of events in the batch when diagnostics enabled than disabled.
+            Assert.True(batchSizeWithoutDiagnostics > batchSizeWithDiagnostics,
+                $"Batch size with diagnostics isn't smaller. W/ diagnostics enabled: { batchSizeWithDiagnostics }, w/o diagnostics enabled: { batchSizeWithoutDiagnostics }");
+        }
+
         #endregion Partition Sender
 
         #region Partition Receiver

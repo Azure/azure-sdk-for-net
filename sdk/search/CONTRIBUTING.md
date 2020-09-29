@@ -16,7 +16,7 @@ and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
 client libraries.  You can learn about these shared features in the
-[Azure.Core README](../core/Azure.Core/README.md).
+[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md).
 
 ## Code Generation
 Please do not edit any of the code in the `/Generated` folders directly.  If
@@ -30,9 +30,9 @@ exercise any new features that you've added.
 ### Frameworks
 We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](../core/Azure.Core/tests/TestFramework) is
+[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
 copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln`
+sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
 if you make any changes here.)_
 
 ### Sync/Async testing

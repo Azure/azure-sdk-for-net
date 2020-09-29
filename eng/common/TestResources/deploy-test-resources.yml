@@ -12,8 +12,8 @@ parameters:
 #   "TenantId": "<tenant id>",
 #   "TestApplicationId": "<test app id>",
 #   "TestApplicationSecret": "<test app secret>",
-#   "ProvisionerApplicationId": "<provisoner app id>",
-#   "ProvisionerApplicationSecret": "<provisoner app secert>",
+#   "ProvisionerApplicationId": "<provisioner app id>",
+#   "ProvisionerApplicationSecret": "<provisioner app secret>",
 #   "Environment": "AzureCloud | AzureGov | AzureChina | <other environment>"
 # }
 
@@ -36,5 +36,5 @@ steps:
         @subscriptionConfiguration `
         -CI `
         -Force `
-        -Verbose
+        -Verbose | Out-Null
     displayName: Deploy test resources

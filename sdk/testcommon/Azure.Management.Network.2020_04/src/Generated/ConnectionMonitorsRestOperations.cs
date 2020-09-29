@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ConnectionMonitorsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -61,6 +61,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -73,6 +74,7 @@ namespace Azure.Management.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -110,6 +112,7 @@ namespace Azure.Management.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,6 +161,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionMonitorName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -166,6 +170,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response<ConnectionMonitorResult>> GetAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -189,14 +194,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,6 +207,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response<ConnectionMonitorResult> Get(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -232,14 +231,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,6 +256,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionMonitorName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -272,6 +265,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -304,6 +298,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -349,6 +344,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -361,6 +357,7 @@ namespace Azure.Management.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ConnectionMonitorResult>> UpdateTagsAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -388,14 +385,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,6 +399,7 @@ namespace Azure.Management.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ConnectionMonitorResult> UpdateTags(string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -436,14 +427,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -469,6 +453,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -477,6 +462,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> StopAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -509,6 +495,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Stop(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -554,6 +541,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -562,6 +550,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> StartAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -594,6 +583,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Start(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -639,6 +629,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/query", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -647,6 +638,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public async Task<Response> QueryAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -679,6 +671,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="connectionMonitorName"/> is null. </exception>
         public Response Query(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -722,6 +715,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/connectionMonitors", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -729,6 +723,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public async Task<Response<ConnectionMonitorListResult>> ListAsync(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -748,14 +743,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -767,6 +755,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public Response<ConnectionMonitorListResult> List(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -786,14 +775,7 @@ namespace Azure.Management.Network
                     {
                         ConnectionMonitorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

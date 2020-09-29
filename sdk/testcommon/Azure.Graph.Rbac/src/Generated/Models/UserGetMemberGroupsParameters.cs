@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -18,16 +19,7 @@ namespace Azure.Graph.Rbac.Models
         public UserGetMemberGroupsParameters(bool securityEnabledOnly)
         {
             SecurityEnabledOnly = securityEnabledOnly;
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of UserGetMemberGroupsParameters. </summary>
-        /// <param name="securityEnabledOnly"> If true, only membership in security-enabled groups should be checked. Otherwise, membership in all groups should be checked. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal UserGetMemberGroupsParameters(bool securityEnabledOnly, IDictionary<string, object> additionalProperties)
-        {
-            SecurityEnabledOnly = securityEnabledOnly;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> If true, only membership in security-enabled groups should be checked. Otherwise, membership in all groups should be checked. </summary>

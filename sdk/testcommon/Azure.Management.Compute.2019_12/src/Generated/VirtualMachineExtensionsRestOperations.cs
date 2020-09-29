@@ -28,7 +28,7 @@ namespace Azure.Management.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualMachineExtensionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -61,6 +61,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(extensionParameters);
             request.Content = content;
@@ -73,6 +74,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -110,6 +112,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -159,6 +162,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(extensionParameters);
             request.Content = content;
@@ -171,6 +175,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -207,6 +212,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -262,6 +268,7 @@ namespace Azure.Management.Compute
         /// <param name="vmName"> The name of the virtual machine where the extension should be deleted. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -295,6 +302,7 @@ namespace Azure.Management.Compute
         /// <param name="vmName"> The name of the virtual machine where the extension should be deleted. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -344,6 +352,7 @@ namespace Azure.Management.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -353,6 +362,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public async Task<Response<VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -376,14 +386,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtension value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-                        }
+                        value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -397,6 +400,7 @@ namespace Azure.Management.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public Response<VirtualMachineExtension> Get(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -420,14 +424,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtension value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-                        }
+                        value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -455,6 +452,7 @@ namespace Azure.Management.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -463,6 +461,7 @@ namespace Azure.Management.Compute
         /// <param name="vmName"> The name of the virtual machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public async Task<Response<VirtualMachineExtensionsListResult>> ListAsync(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -482,14 +481,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtensionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -502,6 +494,7 @@ namespace Azure.Management.Compute
         /// <param name="vmName"> The name of the virtual machine containing the extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public Response<VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -521,14 +514,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtensionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

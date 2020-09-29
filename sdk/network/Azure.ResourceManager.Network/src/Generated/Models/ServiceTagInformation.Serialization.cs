@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagInformation DeserializeServiceTagInformation(JsonElement element)
         {
-            ServiceTagInformationPropertiesFormat properties = default;
-            string name = default;
-            string id = default;
+            Optional<ServiceTagInformationPropertiesFormat> properties = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceTagInformation(properties, name, id);
+            return new ServiceTagInformation(properties.Value, name.Value, id.Value);
         }
     }
 }

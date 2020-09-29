@@ -237,7 +237,7 @@ namespace Azure.Core.Tests
          [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
          public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
          {
-             StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
              using TestServer testServer = new TestServer(
                  context =>
@@ -728,6 +728,35 @@ namespace Azure.Core.Tests
                 Assert.IsNotEmpty(exception.Message);
                 Assert.AreEqual(0, exception.Status);
             }
+        }
+
+        [Test]
+        public async Task ThrowsTaskCanceledExceptionWhenCancelled()
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    tcs.SetResult(null);
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                });
+
+            var cts = new CancellationTokenSource();
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Uri.Reset(testServer.Address);
+
+            var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
+
+            // Wait for server to receive a request
+            await tcs.Task;
+
+            cts.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            testDoneTcs.Cancel();
         }
 
         [Test]

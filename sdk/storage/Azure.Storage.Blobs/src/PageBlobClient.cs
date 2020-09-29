@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PageInfo>> UploadPagesInternal(
+        internal async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
             byte[] transactionalContentHash,
@@ -1083,15 +1083,16 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content?.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, content?.Length ?? null);
+                    var range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
                     return await BlobRestClient.PageBlob.UploadPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         timeout: default,
@@ -2891,6 +2892,204 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion UploadPagesFromUri
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            PageBlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            PageBlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the page blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            long position,
+            PageBlobOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                ETag? etag;
+
+                if (overwrite)
+                {
+                    if (options?.Size == null)
+                    {
+                        throw new ArgumentException($"{nameof(options)}.{nameof(options.Size)} must be set if {nameof(overwrite)} is set to true");
+                    }
+
+                    Response<BlobContentInfo> createResponse = await CreateInternal(
+                        size: options.Size.Value,
+                        sequenceNumber: default,
+                        httpHeaders: default,
+                        metadata: default,
+                        tags: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    etag = createResponse.Value.ETag;
+                }
+                else
+                {
+                    try
+                    {
+                        Response<BlobProperties> propertiesResponse = await GetPropertiesInternal(
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        etag = propertiesResponse.Value.ETag;
+                    }
+                    catch (RequestFailedException ex)
+                    when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                    {
+                        if (options?.Size == null)
+                        {
+                            throw new ArgumentException($"{nameof(options)}.{nameof(options.Size)} must be set if the Page Blob is being created for the first time");
+                        }
+
+                        Response<BlobContentInfo> createResponse = await CreateInternal(
+                            size: options.Size.Value,
+                            sequenceNumber: default,
+                            httpHeaders: default,
+                            metadata: default,
+                            tags: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        etag = createResponse.Value.ETag;
+                    }
+                }
+
+                PageBlobRequestConditions conditions = new PageBlobRequestConditions()
+                {
+                    IfMatch = etag,
+                    LeaseId = options?.OpenConditions?.LeaseId,
+                };
+
+                return new PageBlobWriteStream(
+                    pageBlobClient: this,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
+                    position: position,
+                    conditions: conditions,
+                    progressHandler: options?.ProgressHandler);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
     }
 
     /// <summary>
@@ -2915,23 +3114,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new PageBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetPageBlobClientCore(blobName);
         }
     }
 }

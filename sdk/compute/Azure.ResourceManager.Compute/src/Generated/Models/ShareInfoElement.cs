@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ShareInfoElement
     {
         /// <summary> Initializes a new instance of ShareInfoElement. </summary>
-        public ShareInfoElement()
+        internal ShareInfoElement()
         {
         }
 

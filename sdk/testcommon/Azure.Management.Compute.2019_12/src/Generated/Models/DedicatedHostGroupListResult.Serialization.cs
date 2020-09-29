@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         internal static DedicatedHostGroupListResult DeserializeDedicatedHostGroupListResult(JsonElement element)
         {
             IReadOnlyList<DedicatedHostGroup> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Management.Compute.Models
                     List<DedicatedHostGroup> array = new List<DedicatedHostGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DedicatedHostGroup.DeserializeDedicatedHostGroup(item));
-                        }
+                        array.Add(DedicatedHostGroup.DeserializeDedicatedHostGroup(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DedicatedHostGroupListResult(value, nextLink);
+            return new DedicatedHostGroupListResult(value, nextLink.Value);
         }
     }
 }

@@ -14,36 +14,24 @@ namespace Azure.Management.Storage.Models
     {
         internal static Operation DeserializeOperation(JsonElement element)
         {
-            string name = default;
-            OperationDisplay display = default;
-            string origin = default;
-            ServiceSpecification serviceSpecification = default;
+            Optional<string> name = default;
+            Optional<OperationDisplay> display = default;
+            Optional<string> origin = default;
+            Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("display"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     origin = property.Value.GetString();
                     continue;
                 }
@@ -53,10 +41,6 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("serviceSpecification"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property0.Value);
                             continue;
                         }
@@ -64,7 +48,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new Operation(name, display, origin, serviceSpecification);
+            return new Operation(name.Value, display.Value, origin.Value, serviceSpecification.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();

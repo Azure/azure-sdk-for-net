@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceGroupListResult DeserializeResourceGroupListResult(JsonElement element)
         {
-            IReadOnlyList<ResourceGroup> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ResourceGroup>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceGroup> array = new List<ResourceGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceGroup.DeserializeResourceGroup(item));
-                        }
+                        array.Add(ResourceGroup.DeserializeResourceGroup(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceGroupListResult(value, nextLink);
+            return new ResourceGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

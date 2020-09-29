@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("commandId");
             writer.WriteStringValue(CommandId);
-            if (Script != null)
+            if (Optional.IsCollectionDefined(Script))
             {
                 writer.WritePropertyName("script");
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartArray();

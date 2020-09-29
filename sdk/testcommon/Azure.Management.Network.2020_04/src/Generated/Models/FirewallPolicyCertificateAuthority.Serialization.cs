@@ -15,14 +15,14 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (KeyVaultSecretId != null)
+            if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId");
                 writer.WriteStringValue(KeyVaultSecretId);
@@ -33,16 +33,12 @@ namespace Azure.Management.Network.Models
 
         internal static FirewallPolicyCertificateAuthority DeserializeFirewallPolicyCertificateAuthority(JsonElement element)
         {
-            string name = default;
-            string keyVaultSecretId = default;
+            Optional<string> name = default;
+            Optional<string> keyVaultSecretId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -52,10 +48,6 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("keyVaultSecretId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             keyVaultSecretId = property0.Value.GetString();
                             continue;
                         }
@@ -63,7 +55,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyCertificateAuthority(name, keyVaultSecretId);
+            return new FirewallPolicyCertificateAuthority(name.Value, keyVaultSecretId.Value);
         }
     }
 }

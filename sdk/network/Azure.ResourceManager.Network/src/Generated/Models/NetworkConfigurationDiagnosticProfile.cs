@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="source"> Traffic source. Accepted values are &apos;*&apos;, IP Address/CIDR, Service Tag. </param>
         /// <param name="destination"> Traffic destination. Accepted values are: &apos;*&apos;, IP Address/CIDR, Service Tag. </param>
         /// <param name="destinationPort"> Traffic destination port. Accepted values are &apos;*&apos; and a single port in the range (0 - 65535). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="protocol"/>, <paramref name="source"/>, <paramref name="destination"/>, or <paramref name="destinationPort"/> is null. </exception>
         public NetworkConfigurationDiagnosticProfile(Direction direction, string protocol, string source, string destination, string destinationPort)
         {
             if (protocol == null)

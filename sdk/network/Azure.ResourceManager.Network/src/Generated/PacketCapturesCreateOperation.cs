@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         PacketCaptureResult IOperationSource<PacketCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
-            }
+            return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
         }
 
         async ValueTask<PacketCaptureResult> IOperationSource<PacketCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
-            }
+            return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
         }
     }
 }

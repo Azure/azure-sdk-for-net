@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         AccessUri IOperationSource<AccessUri>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return AccessUri.DeserializeAccessUri(document.RootElement);
-            }
+            return AccessUri.DeserializeAccessUri(document.RootElement);
         }
 
         async ValueTask<AccessUri> IOperationSource<AccessUri>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return AccessUri.DeserializeAccessUri(document.RootElement);
-            }
+            return AccessUri.DeserializeAccessUri(document.RootElement);
         }
     }
 }

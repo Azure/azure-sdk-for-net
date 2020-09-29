@@ -1380,6 +1380,42 @@ namespace Microsoft.Azure.ServiceBus
                 this.WriteEvent(117, objectName, details);
             }
         }
+
+        [Event(118, Level = EventLevel.Informational, Message = "{0}: Unregister MessageHandler start.")]
+        public void UnregisterMessageHandlerStart(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(118, clientId);
+            }
+        }
+
+        [Event(119, Level = EventLevel.Informational, Message = "{0}: Unregister MessageHandler done.")]
+        public void UnregisterMessageHandlerStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(119, clientId);
+            }
+        }
+
+        [Event(120, Level = EventLevel.Informational, Message = "{0}: Unregister SessionHandler start.")]
+        public void UnregisterSessionHandlerStart(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(120, clientId);
+            }
+        }
+
+        [Event(121, Level = EventLevel.Informational, Message = "{0}: Unregister SessionHandler done.")]
+        public void UnregisterSessionHandlerStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(121, clientId);
+            }
+        }
     }
 
     internal static class TraceHelper

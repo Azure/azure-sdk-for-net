@@ -669,5 +669,57 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
         }
+
+        [Test]
+        [LiveOnly]
+        public async Task EncryptedReuploadSuccess()
+        {
+            var originalData = GetRandomBuffer(Constants.KB);
+            var editedData = GetRandomBuffer(Constants.KB);
+            (string Key, string Value) originalMetadata = ("foo", "bar");
+            var mockKey = GetIKeyEncryptionKey().Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var encryptedBlobClient = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // upload data with encryption
+                await encryptedBlobClient.UploadAsync(
+                    new MemoryStream(originalData),
+                    new BlobUploadOptions
+                    {
+                        Metadata = new Dictionary<string, string> { { originalMetadata.Key, originalMetadata.Value } }
+                    },
+                    cancellationToken: s_cancellationToken);
+
+                // download with decryption
+                var downloadResult = await encryptedBlobClient.DownloadAsync(cancellationToken: s_cancellationToken);
+                Assert.AreEqual(2, downloadResult.Value.Details.Metadata.Count);
+                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key));
+                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                var firstDownloadEncryptionData = downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey];
+
+                // reupload edited blob, maintaining metadata as we recommend to customers
+                await encryptedBlobClient.UploadAsync(
+                    new MemoryStream(editedData),
+                    new BlobUploadOptions
+                    {
+                        Metadata = downloadResult.Value.Details.Metadata
+                    },
+                    cancellationToken: s_cancellationToken);
+
+                // if we didn't throw, success in reuploading with new encryption metadata
+                // download edited blob to assert expected data was uploaded
+                downloadResult = await encryptedBlobClient.DownloadAsync(cancellationToken: s_cancellationToken);
+                Assert.AreEqual(2, downloadResult.Value.Details.Metadata.Count);
+                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(originalMetadata.Key));
+                Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                Assert.AreNotEqual(firstDownloadEncryptionData, downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey]);
+            }
+        }
     }
 }

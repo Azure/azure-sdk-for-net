@@ -3493,6 +3493,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
+            /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -3509,6 +3510,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 long? contentLength = default,
                 byte[] transactionalContentHash = default,
+                byte[] transactionalContentCrc64 = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
@@ -3529,6 +3531,7 @@ namespace Azure.Storage.Files.DataLake
                         timeout,
                         contentLength,
                         transactionalContentHash,
+                        transactionalContentCrc64,
                         leaseId,
                         requestId))
                     {
@@ -3570,6 +3573,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
+            /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Path.AppendDataAsync Message.</returns>
@@ -3582,6 +3586,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 long? contentLength = default,
                 byte[] transactionalContentHash = default,
+                byte[] transactionalContentCrc64 = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -3614,6 +3619,7 @@ namespace Azure.Storage.Files.DataLake
                 _request.Headers.SetValue("x-ms-version", version);
                 if (contentLength != null) { _request.Headers.SetValue("Content-Length", contentLength.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
+                if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
@@ -3646,6 +3652,22 @@ namespace Azure.Storage.Files.DataLake
                         if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
                         {
                             _value.ClientRequestId = _header;
+                        }
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Content-MD5", out _header))
+                        {
+                            _value.ContentMD5 = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
+                        {
+                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
+                        {
+                            _value.IsServerEncrypted = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -4225,6 +4247,30 @@ namespace Azure.Storage.Files.DataLake.Models
         /// If a client request id header is sent in the request, this header will be present in the response with the same value.
         /// </summary>
         public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// An HTTP entity tag associated with the file or directory.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentMD5 { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] XMSContentCrc64 { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
+        /// </summary>
+        public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of PathAppendDataResult instances.

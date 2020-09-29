@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public FlowLogsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -61,6 +61,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -73,6 +74,7 @@ namespace Azure.Management.Network
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -110,6 +112,7 @@ namespace Azure.Management.Network
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,6 +161,7 @@ namespace Azure.Management.Network
             uri.AppendPath(flowLogName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -166,6 +170,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public async Task<Response<FlowLog>> GetAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -189,14 +194,7 @@ namespace Azure.Management.Network
                     {
                         FlowLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLog.DeserializeFlowLog(document.RootElement);
-                        }
+                        value = FlowLog.DeserializeFlowLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,6 +207,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public Response<FlowLog> Get(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -232,14 +231,7 @@ namespace Azure.Management.Network
                     {
                         FlowLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLog.DeserializeFlowLog(document.RootElement);
-                        }
+                        value = FlowLog.DeserializeFlowLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,6 +256,7 @@ namespace Azure.Management.Network
             uri.AppendPath(flowLogName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -272,6 +265,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -304,6 +298,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,6 +342,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/flowLogs", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -354,6 +350,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public async Task<Response<FlowLogListResult>> ListAsync(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -373,14 +370,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -392,6 +382,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public Response<FlowLogListResult> List(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -411,14 +402,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,6 +419,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -443,6 +428,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkWatcherName"/> is null. </exception>
         public async Task<Response<FlowLogListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -466,14 +452,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,6 +465,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkWatcherName"/> is null. </exception>
         public Response<FlowLogListResult> ListNextPage(string nextLink, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -509,14 +489,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

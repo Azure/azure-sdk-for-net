@@ -1,10 +1,10 @@
 $Language = "dotnet"
-$Lang = "net"
+$LanguageShort = "net"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 
-function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
   $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
   if (Test-Path $projectPath)
@@ -12,7 +12,7 @@ function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceName)
+    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
   }
   else
   {
@@ -21,13 +21,13 @@ function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
 }
 
 # Returns the nuget publish status of a package id and version.
-function IsNugetPackageVersionPublished($pkgId, $pkgVersion) 
+function IsNugetPackageVersionPublished ($pkgId, $pkgVersion) 
 {
   $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
 
   try
   {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -uri $nugetUri -Method "GET"
+    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
     return $nugetVersions.versions.Contains($pkgVersion)
   }
   catch
@@ -48,7 +48,7 @@ function IsNugetPackageVersionPublished($pkgId, $pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
-function Parse-dotnet-Package($pkg, $workingDirectory) 
+function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory) 
 {
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
@@ -88,30 +88,31 @@ function Parse-dotnet-Package($pkg, $workingDirectory)
 }
 
 # Stage and Upload Docs to blob Storage
-function StageAndUpload-dotnet-Docs ()
+function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
-  $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-  $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
+  $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
-  foreach ($Item in $PublishedDocs)
+  if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
   {
-    $PkgName = $Item.Name.Remove(0, 5)
-    $PkgFullName = $PublishedPkgs | Where-Object -FilterScript {$_.Name -match "$($PkgName).\d"}
-
-    if (($PkgFullName | Measure-Object).count -eq 1)
-    {
-      $DocVersion = $PkgFullName[0].BaseName.Remove(0, $PkgName.Length + 1)
-
-      Write-Host "Start Upload for $($PkgName)/$($DocVersion)"
-      Write-Host "DocDir $($Item)"
-      Write-Host "PkgName $($PkgName)"
-      Write-Host "DocVersion $($DocVersion)"
-      Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion
-    }
-    else
-    {
-      Write-Host "Package with the same name Exists. Upload Skipped"
-      continue
-    }
+      Write-Host "$($DocLocation) should contain only one (1) published package and docs"
+      Write-Host "No of Packages $($PublishedPkgs.Count)"
+      Write-Host "No of Docs $($PublishedDoc.Count)"
+      exit 1
   }
+
+  $DocsStagingDir = "$WorkingDirectory/docstaging"
+  $TempDir = "$WorkingDirectory/temp"
+
+  New-Item -ItemType directory -Path $DocsStagingDir
+  New-Item -ItemType directory -Path $TempDir
+
+  Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
+  $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+
+  Write-Host "Start Upload for $($pkgProperties.Tag)"
+  Write-Host "DocDir $($DocsStagingDir)"
+  Write-Host "PkgName $($pkgProperties.PackageId)"
+  Write-Host "DocVersion $($pkgProperties.PackageVersion)"
+  Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
 }

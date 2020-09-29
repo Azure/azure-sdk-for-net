@@ -76,6 +76,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [NonParallelizable]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -100,6 +101,36 @@ namespace Azure.Storage.Files.Shares.Test
             properties = await service.GetPropertiesAsync();
             Assert.AreEqual(1, properties.Value.Cors.Count());
             Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [NonParallelizable]
+        public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
+
+            // Act
+            properties.Protocol.Smb.Multichannel.Enabled = true;
+            await service.SetPropertiesAsync(properties);
+            propertiesResponse = await service.GetPropertiesAsync();
+            properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+
+            // Cleanup
+            properties.Protocol.Smb.Multichannel.Enabled = false;
+            await service.SetPropertiesAsync(properties);
         }
 
         [Test]

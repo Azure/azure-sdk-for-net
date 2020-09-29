@@ -16,29 +16,9 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LastModifiedTime != null)
-            {
-                writer.WritePropertyName("lastModifiedTime");
-                writer.WriteStringValue(LastModifiedTime.Value, "O");
-            }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -49,37 +29,25 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicy DeserializeManagementPolicy(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            DateTimeOffset? lastModifiedTime = default;
-            ManagementPolicySchema policy = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<ManagementPolicySchema> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -89,19 +57,11 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("lastModifiedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("policy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             policy = ManagementPolicySchema.DeserializeManagementPolicySchema(property0.Value);
                             continue;
                         }
@@ -109,7 +69,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicy(id, name, type, lastModifiedTime, policy);
+            return new ManagementPolicy(id.Value, name.Value, type.Value, Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }

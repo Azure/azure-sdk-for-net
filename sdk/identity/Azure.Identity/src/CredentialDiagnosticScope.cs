@@ -14,25 +14,25 @@ namespace Azure.Identity
         private readonly string _name;
         private readonly DiagnosticScope _scope;
         private readonly TokenRequestContext _context;
+        private readonly IScopeHandler _scopeHandler;
 
-        public CredentialDiagnosticScope(string name, DiagnosticScope scope, TokenRequestContext context)
+        public CredentialDiagnosticScope(ClientDiagnostics diagnostics, string name, TokenRequestContext context, IScopeHandler scopeHandler)
         {
             _name = name;
-
-            _scope = scope;
-
+            _scope = scopeHandler.CreateScope(diagnostics, name);
             _context = context;
+            _scopeHandler = scopeHandler;
         }
 
         public void Start()
         {
-            _scope.Start();
+            AzureIdentityEventSource.Singleton.GetToken(_name, _context);
+            _scopeHandler.Start(_name, _scope);
         }
 
         public AccessToken Succeeded(AccessToken token)
         {
             AzureIdentityEventSource.Singleton.GetTokenSucceeded(_name, _context, token.ExpiresOn);
-
             return token;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Identity
         private void RegisterFailed(Exception ex)
         {
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
-            _scope.Failed(ex);
+            _scopeHandler.Fail(_name, _scope, ex);
         }
 
         private bool TryWrapException(ref Exception exception)
@@ -77,9 +77,6 @@ namespace Azure.Identity
 
         }
 
-        public void Dispose()
-        {
-            _scope.Dispose();
-        }
+        public void Dispose() => _scopeHandler.Dispose(_name, _scope);
     }
 }

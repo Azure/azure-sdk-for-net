@@ -106,7 +106,7 @@ namespace Azure.Batch.Unit.Tests
                                 ETag = "eTag=0x8D250D98B5D78AA",
                                 EnableAutoScale = false,
                                 LastModified = currentDateTime,
-                                MaxTasksPerNode = 4,
+                                TaskSlotsPerNode = 4,
                                 ResizeTimeout = new TimeSpan(),
                                 State = Models.PoolState.Active,
                                 StateTransitionTime = currentDateTime,
@@ -131,7 +131,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(3, pool.CurrentDedicatedComputeNodes);
                 Assert.Equal(false, pool.AutoScaleEnabled);
                 Assert.Equal(currentDateTime, pool.LastModified);
-                Assert.Equal(4, pool.MaxTasksPerComputeNode);
+                Assert.Equal(4, pool.TaskSlotsPerNode);
                 Assert.Equal("4", pool.CloudServiceConfiguration.OSFamily);
                 Assert.Equal(PoolState.Active, pool.State);
                 Assert.Equal(currentDateTime, pool.StateTransitionTime);

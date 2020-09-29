@@ -36,7 +36,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
         public EncryptedXmlInfo Encrypt(XElement plaintextElement)
         {
-            return EncryptAsync(plaintextElement).GetAwaiter().GetResult();
+            return Task.Run(() => EncryptAsync(plaintextElement)).GetAwaiter().GetResult();
         }
 
         private async Task<EncryptedXmlInfo> EncryptAsync(XElement plaintextElement)
@@ -66,7 +66,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
                 var wrappedKey = await key.WrapKeyAsync(DefaultKeyEncryption, symmetricKey).ConfigureAwait(false);
 
                 var element = new XElement("encryptedKey",
-                    new XComment(" This key is encrypted with Azure KeyVault. "),
+                    new XComment(" This key is encrypted with Azure Key Vault. "),
                     new XElement("kid", key.KeyId),
                     new XElement("key", Convert.ToBase64String(wrappedKey)),
                     new XElement("iv", Convert.ToBase64String(symmetricIV)),

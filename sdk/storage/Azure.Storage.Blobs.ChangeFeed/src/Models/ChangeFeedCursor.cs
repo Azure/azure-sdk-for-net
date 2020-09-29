@@ -16,9 +16,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public int CursorVersion { get; set; }
 
         /// <summary>
-        /// UrlHash.
+        /// UrlHost. The host component of the container URL.
         /// </summary>
-        public string UrlHash { get; set; }
+        public string UrlHost { get; set; }
 
         /// <summary>
         /// EndDateTime.
@@ -31,12 +31,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public SegmentCursor CurrentSegmentCursor { get; set; }
 
         internal ChangeFeedCursor(
-            string urlHash,
+            string urlHost,
             DateTimeOffset? endDateTime,
             SegmentCursor currentSegmentCursor)
         {
             CursorVersion = 1;
-            UrlHash = urlHash;
+            UrlHost = urlHost;
             EndTime = endDateTime;
             CurrentSegmentCursor = currentSegmentCursor;
         }

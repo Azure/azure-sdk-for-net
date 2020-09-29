@@ -37,5 +37,45 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 Assert.AreEqual(expectedNotebook.Properties.BigDataPool?.ReferenceName, actualNotebook.Properties.BigDataPool?.ReferenceName);
             }
         }
+
+        [Test]
+        public async Task TestCreateNotebook()
+        {
+            Notebook notebook = new Notebook(
+                new NotebookMetadata
+                {
+                    LanguageInfo = new NotebookLanguageInfo(name: "Python")
+                },
+                nbformat: 4,
+                nbformatMinor: 2,
+                new List<NotebookCell>()
+            );
+            string notebookName = Recording.GenerateName("Notebook");
+            NotebookCreateOrUpdateNotebookOperation operation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
+            NotebookResource notebookResource = await operation.WaitForCompletionAsync();
+            Assert.AreEqual(notebookName, notebookResource.Name);
+        }
+
+        [Test]
+        public async Task TestDeleteNotebook()
+        {
+            string notebookName = Recording.GenerateName("Notebook");
+
+            Notebook notebook = new Notebook(
+                new NotebookMetadata
+                {
+                    LanguageInfo = new NotebookLanguageInfo(name: "Python")
+                },
+                nbformat: 4,
+                nbformatMinor: 2,
+                new List<NotebookCell>()
+            );
+            NotebookCreateOrUpdateNotebookOperation createOperation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
+            await createOperation.WaitForCompletionAsync();
+
+            NotebookDeleteNotebookOperation deleteOperation = await NotebookClient.StartDeleteNotebookAsync(notebookName);
+            Response response = await deleteOperation.WaitForCompletionAsync();
+            Assert.AreEqual(200, response.Status);
+        }
     }
 }
