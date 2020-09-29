@@ -44,7 +44,7 @@ Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyReso
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
-az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --subscription MySubscription
+az cosmosdb create --name MyCosmosDBDatabaseAccount --capabilities EnableTable --resource-group MyResourceGroup --subscription MySubscription
 
 az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --account-name MyCosmosDBDatabaseAccount
 ```
@@ -184,6 +184,15 @@ foreach (TableEntity qEntity in queryResultsFilter)
 }
 
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
+```
+
+If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+
+```C# Snippet:TablesSample4QueryEntitiesExpression
+// Use the <see cref="TableClient"> to query the table using a filter expression.
+
+double priceCutOff = 6.00;
+Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 ```
 
 ### Delete table entities

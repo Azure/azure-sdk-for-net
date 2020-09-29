@@ -236,9 +236,10 @@ stages:
           echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
           echo "Using DevopsFeedId = $devopsFeedId"
         displayName: Setup DevOpsFeedId
-      - task: NuGetCommand@2
-        displayName: 'Publish to DevOps Feed'
-        inputs:
-          command: push
-          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
-          publishVstsFeed: $(DevOpsFeedID)
+      - ${{ each artifact in parameters.Artifacts }}:
+        - task: NuGetCommand@2
+          displayName: 'Publish to DevOps Feed'
+          inputs:
+            command: push
+            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+            publishVstsFeed: $(DevOpsFeedID)

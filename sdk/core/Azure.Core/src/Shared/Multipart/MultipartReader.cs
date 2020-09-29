@@ -69,6 +69,12 @@ namespace Azure.Core
         /// </summary>
         public long? BodyLengthLimit { get; set; }
 
+        /// <summary>
+        /// Sets whether the reader will always expect CRLF around boundaries.
+        /// </summary>
+        /// <value></value>
+        public bool ExpectBoundariesWithCRLF { get; set; } = true;
+
         public async Task<MultipartSection> ReadNextSectionAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             // Drain the prior section.
@@ -81,13 +87,13 @@ namespace Azure.Core
                 return null;
             }
             var headers = await ReadHeadersAsync(cancellationToken).ConfigureAwait(false);
-            _boundary.ExpectLeadingCrlf = true;
+            _boundary.ExpectLeadingCrlf = ExpectBoundariesWithCRLF;
             _currentStream = new MultipartReaderStream(_stream, _boundary) { LengthLimit = BodyLengthLimit };
             long? baseStreamOffset = _stream.CanSeek ? (long?)_stream.Position : null;
             return new MultipartSection() { Headers = headers, Body = _currentStream, BaseStreamOffset = baseStreamOffset };
         }
 
-        private async Task<Dictionary<string, string []>> ReadHeadersAsync(CancellationToken cancellationToken)
+        private async Task<Dictionary<string, string[]>> ReadHeadersAsync(CancellationToken cancellationToken)
         {
             int totalSize = 0;
             var accumulator = new KeyValueAccumulator();
