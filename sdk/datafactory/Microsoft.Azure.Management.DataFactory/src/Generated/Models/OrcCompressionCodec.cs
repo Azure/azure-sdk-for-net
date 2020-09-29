@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string None = "none";
         public const string Zlib = "zlib";
         public const string Snappy = "snappy";
+        public const string Lzo = "lzo";
     }
 }

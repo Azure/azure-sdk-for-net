@@ -2025,6 +2025,24 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string MongoDbAtlasLinkedService = @"
+{
+    name: ""MariaDBLinkedService"",
+    properties: {
+        type: ""MongoDbAtlas"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            database: ""ComponentTest""
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string AzureMariaDBLinkedService = @"
 {
