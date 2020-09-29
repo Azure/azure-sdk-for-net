@@ -4,4 +4,4 @@
 
 ### Added
 
-- Added `GeographyConverter` to serialize `Microsoft.Spatial.GeometryPoint` objects.
+- Added `MicrosoftSpatialGeoJsonConverter` to serialize `Microsoft.Spatial.GeometryPoint` objects.

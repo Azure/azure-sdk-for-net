@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 {
-    public class NewtonsoftJsonGeographyConverterTests
+    public class NewtonsoftJsonMicrosoftSpatialGeoJsonConverterTests
     {
         [Test]
         public void CanConvert()
         {
-            NewtonsoftJsonGeographyConverter converter = new NewtonsoftJsonGeographyConverter();
+            NewtonsoftJsonMicrosoftSpatialGeoJsonConverter converter = new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter();
             Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 Converters =
                 {
-                    new NewtonsoftJsonGeographyConverter(),
+                    new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 Converters =
                 {
-                    new NewtonsoftJsonGeographyConverter(),
+                    new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 Converters =
                 {
-                    new NewtonsoftJsonGeographyConverter(),
+                    new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 Converters =
                 {
-                    new NewtonsoftJsonGeographyConverter(),
+                    new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
             {
                 Converters =
                 {
-                    new NewtonsoftJsonGeographyConverter(),
+                    new NewtonsoftJsonMicrosoftSpatialGeoJsonConverter(),
                 },
             };
 

@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Converts between <see cref="Geography" /> objects and Geo-JSON points.
+    /// Converts between <c>Microsoft.Spatial</c> objects and Geo-JSON.
     /// </summary>
-    public class NewtonsoftJsonGeographyConverter : JsonConverter
+    public class NewtonsoftJsonMicrosoftSpatialGeoJsonConverter : JsonConverter
     {
         /// <inheritdoc/>
         public override bool CanConvert(Type objectType) =>

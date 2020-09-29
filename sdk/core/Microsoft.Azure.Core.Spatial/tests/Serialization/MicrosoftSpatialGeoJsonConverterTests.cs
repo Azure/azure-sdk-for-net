@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 {
-    public class GeographyConverterTests
+    public class MicrosoftSpatialGeoJsonConverterTests
     {
         [Test]
         public void CanConvert()
         {
-            GeographyConverter converter = new GeographyConverter();
+            MicrosoftSpatialGeoJsonConverter converter = new MicrosoftSpatialGeoJsonConverter();
             Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 Converters =
                 {
-                    new GeographyConverter(),
+                    new MicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 Converters =
                 {
-                    new GeographyConverter(),
+                    new MicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 Converters =
                 {
-                    new GeographyConverter(),
+                    new MicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 Converters =
                 {
-                    new GeographyConverter(),
+                    new MicrosoftSpatialGeoJsonConverter(),
                 },
             };
 
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             {
                 Converters =
                 {
-                    new GeographyConverter(),
+                    new MicrosoftSpatialGeoJsonConverter(),
                 },
             };
 

@@ -327,7 +327,7 @@ namespace Azure.Search.Documents.Tests
         public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
-        [JsonConverter(typeof(GeographyConverter))]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; }
 #endif
 
@@ -417,7 +417,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
         public GeoPoint Location { get; set; }
 #else
-        [JsonConverter(typeof(GeographyConverter))]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; } = null;
 #endif
         public HotelAddress Address { get; set; }

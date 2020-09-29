@@ -9,9 +9,9 @@ using Microsoft.Spatial;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Converts between <see cref="Geography" /> objects and Geo-JSON points.
+    /// Converts between <c>Microsoft.Spatial</c> objects and Geo-JSON.
     /// </summary>
-    public class GeographyConverter : JsonConverter<Geography>
+    public class MicrosoftSpatialGeoJsonConverter : JsonConverter<object>
     {
         // TODO: Consider reading and writing more of a GeographicPoint, but for now we only read and write what we support in OData currently.
         private const string CoordinatesPropertyName = "coordinates";
@@ -27,7 +27,7 @@ namespace Azure.Core.Serialization
             typeof(GeographyPoint).IsAssignableFrom(typeToConvert);
 
         /// <inheritdoc/>
-        public override Geography Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, Geography value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
         {
             if (value is GeographyPoint point)
             {
