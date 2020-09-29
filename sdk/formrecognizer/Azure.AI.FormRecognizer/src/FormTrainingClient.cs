@@ -223,7 +223,7 @@ namespace Azure.AI.FormRecognizer.Training
                     composeRequest.ModelName = createComposedModelOptions.DisplayName;
                 }
 
-                ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.AI.FormRecognizer.Training
                     composeRequest.ModelName = createComposedModelOptions.DisplayName;
                 }
 
-                ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
