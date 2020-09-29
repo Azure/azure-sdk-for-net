@@ -653,6 +653,52 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// </summary>
+        public virtual async Task<Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+
+            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+            scope.Start();
+
+            try
+            {
+                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricIdGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+
+            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+            scope.Start();
+
+            try
+            {
+                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricIdGuid, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         public virtual async Task<Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -940,6 +986,54 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw;
             }
         }
+
+        // /// <summary>
+        // /// </summary>
+        // public virtual async Task<Response<AlertingHook>> UpdateHookAsync(string hookId, CancellationToken cancellationToken = default)
+        // {
+        //     Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
+
+        //     Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+        //     using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+        //     scope.Start();
+
+        //     try
+        //     {
+        //         ResponseWithHeaders<ServiceCreateHookHeaders> response = await _serviceRestClient.UpdateHookAsync(hookGuid, cancellationToken).ConfigureAwait(false);
+
+        //         return Response.FromValue(hook, response.GetRawResponse());
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
+
+        // /// <summary>
+        // /// </summary>
+        // public virtual Response<AlertingHook> UpdateHook(string hookId, CancellationToken cancellationToken = default)
+        // {
+        //     Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
+
+        //     Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+        //     using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+        //     scope.Start();
+
+        //     try
+        //     {
+        //         ResponseWithHeaders<ServiceCreateHookHeaders> response = _serviceRestClient.UpdateHook(hookGuid, cancellationToken);
+
+        //         return Response.FromValue(hookId, response.GetRawResponse());
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
 
         /// <summary>
         /// </summary>

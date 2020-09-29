@@ -10,27 +10,8 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The CommentFeedback. </summary>
-    internal partial class CommentFeedback : MetricFeedback
+    public partial class CommentFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of CommentFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        public CommentFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter, CommentFeedbackValue value) : base(metricId, dimensionFilter)
-        {
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value;
-            FeedbackType = FeedbackType.Comment;
-        }
 
         /// <summary> Initializes a new instance of CommentFeedback. </summary>
         /// <param name="feedbackType"> feedback type. </param>
@@ -54,6 +35,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset? StartTime { get; set; }
         /// <summary> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </summary>
         public DateTimeOffset? EndTime { get; set; }
-        public CommentFeedbackValue Value { get; set; }
     }
 }
