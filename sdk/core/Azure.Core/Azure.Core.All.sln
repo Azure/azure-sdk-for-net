@@ -251,6 +251,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.Azur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink", "..\..\keyvault\samples\sharelink\ShareLink.csproj", "{28B02839-0F22-40F2-9A80-C4384881A54F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj", "{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj", "{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\synapse\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{14a1ca9b-2387-4b81-84d5-120e4f8ffab8}*SharedItemsImports = 5
@@ -1764,6 +1768,14 @@ Global
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x64.Build.0 = Release|Any CPU
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x86.ActiveCfg = Release|Any CPU
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x86.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

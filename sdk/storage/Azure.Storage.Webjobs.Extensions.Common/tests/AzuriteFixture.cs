@@ -39,6 +39,8 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         private List<string> accountsList = new List<string>();
         private CountdownEvent countdownEvent = new CountdownEvent(2);
         private StringBuilder azuriteOutput = new StringBuilder();
+        private int blobsPort;
+        private int queuesPort;
 
         public AzuriteFixture()
         {
@@ -53,16 +55,12 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage($"{azuriteScriptLocation} does not exist, check if {AzuriteLocationKey} is pointing to right location"));
             }
 
-            int blobsPort = FindFreeTcpPort();
-            int queuesPort = FindFreeTcpPort();
             for (int i = 0; i < AccountPoolSize; i++)
             {
                 var account = new AzuriteAccount()
                 {
                     Name = Guid.NewGuid().ToString(),
                     Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-                    BlobsPort = blobsPort,
-                    QueuesPort = queuesPort,
                 };
                 accounts.Enqueue(account);
                 accountsList.Add($"{account.Name}:{account.Key}");
@@ -72,7 +70,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             Directory.CreateDirectory(tempDirectory);
             process = new Process();
             process.StartInfo.FileName = "node";
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
+            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort 0 --queuePort 0";
             process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -83,10 +81,12 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 {
                     if (e.Data.Contains("Azurite Blob service is successfully listening at"))
                     {
+                        blobsPort = ParseAzuritePort(e.Data);
                         countdownEvent.Signal();
                     }
                     if (e.Data.Contains("Azurite Queue service is successfully listening at"))
                     {
+                        queuesPort = ParseAzuritePort(e.Data);
                         countdownEvent.Signal();
                     }
                     if (!countdownEvent.IsSet) // stop output collection if it started successfully.
@@ -103,11 +103,22 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage("could not run NodeJS, make sure it's installed"), e);
             }
             process.BeginOutputReadLine();
-            var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(5));
+            var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(15));
             if (!didAzuriteStart)
             {
                 throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
             }
+            foreach (var account in accounts)
+            {
+                account.BlobsPort = blobsPort;
+                account.QueuesPort = queuesPort;
+            }
+        }
+
+        private int ParseAzuritePort(string outputLine)
+        {
+            int indexFrom = outputLine.LastIndexOf(':') + 1;
+            return int.Parse(outputLine.Substring(indexFrom));
         }
 
         private string ErrorMessage(string specificReason)
@@ -117,15 +128,6 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 "- NodeJS is installed and available in $PATH (i.e. 'node' command can be run in terminal)\n" +
                 "- Azurite V3 is installed via NPM (see https://github.com/Azure/Azurite for instructions)\n" +
                 $"- {AzuriteLocationKey} envorinment is set and pointing to location of directory that has 'azurite' command (i.e. run 'where azurite' in Windows CMD)\n";
-        }
-
-        private static int FindFreeTcpPort()
-        {
-            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-            l.Start();
-            int port = ((IPEndPoint)l.LocalEndpoint).Port;
-            l.Stop();
-            return port;
         }
 
         public StorageAccount GetAccount()

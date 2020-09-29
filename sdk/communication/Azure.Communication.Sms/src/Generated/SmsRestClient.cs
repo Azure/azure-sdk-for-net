@@ -68,9 +68,9 @@ namespace Azure.Communication.Sms
             return message0;
         }
 
-        /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
+        /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
+        /// <param name="to"> The recipients&apos; phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,9 +106,9 @@ namespace Azure.Communication.Sms
             }
         }
 
-        /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
+        /// <summary> Sends a SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
+        /// <param name="to"> The recipients&apos; phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
