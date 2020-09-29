@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class TrainingOperation : Operation<CustomFormModel>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal TrainingOperation(string location, ServiceRestClient allOperations, ClientDiagnostics diagnostics)
+        internal TrainingOperation(string location, FormRecognizerRestClient allOperations, ClientDiagnostics diagnostics)
         {
             _serviceClient = allOperations;
             _diagnostics = diagnostics;

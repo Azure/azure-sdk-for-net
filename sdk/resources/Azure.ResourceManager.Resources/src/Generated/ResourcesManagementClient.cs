@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Returns an instance of DeploymentScriptsOperations. </summary>
         public virtual DeploymentScriptsOperations DeploymentScripts => new DeploymentScriptsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ServiceOperations. </summary>
-        public virtual ServiceOperations Service => new ServiceOperations(_clientDiagnostics, _pipeline, _endpoint);
+        /// <summary> Returns an instance of ResourceManagementOperations. </summary>
+        public virtual ResourceManagementOperations ResourceManagement => new ResourceManagementOperations(_clientDiagnostics, _pipeline, _endpoint);
 
         /// <summary> Returns an instance of FeaturesOperations. </summary>
         public virtual FeaturesOperations Features => new FeaturesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);

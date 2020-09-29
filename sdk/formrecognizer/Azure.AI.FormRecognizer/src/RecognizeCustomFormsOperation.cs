@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizeCustomFormsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operations"></param>
         /// <param name="diagnostics"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeCustomFormsOperation(ServiceRestClient operations, ClientDiagnostics diagnostics, string operationLocation)
+        internal RecognizeCustomFormsOperation(FormRecognizerRestClient operations, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = operations;
             _diagnostics = diagnostics;
