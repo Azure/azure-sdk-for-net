@@ -12,21 +12,24 @@ namespace Microsoft.Extensions.Azure
         private readonly Dictionary<string, ClientRegistration<TClient>> _clientRegistrations;
 
         private readonly IServiceProvider _serviceProvider;
+        private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
 
         private readonly IOptionsMonitor<AzureClientCredentialOptions<TClient>> _clientsOptions;
 
         private readonly IOptionsMonitor<TOptions> _monitor;
 
         private readonly EventSourceLogForwarder _logForwarder;
+        private readonly AzureComponentFactory _componentFactory;
         private FallbackAzureClientFactory<TClient> _fallbackFactory;
 
         public AzureClientFactory(
             IServiceProvider serviceProvider,
+            IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
-            FallbackAzureClientFactory<TClient> fallbackFactory,
-            EventSourceLogForwarder logForwarder)
+            EventSourceLogForwarder logForwarder,
+            AzureComponentFactory componentFactory)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
             foreach (var registration in clientRegistrations)
@@ -35,10 +38,11 @@ namespace Microsoft.Extensions.Azure
             }
 
             _serviceProvider = serviceProvider;
+            _globalOptions = globalOptions;
             _clientsOptions = clientsOptions;
             _monitor = monitor;
-            _fallbackFactory = fallbackFactory;
             _logForwarder = logForwarder;
+            _componentFactory = componentFactory;
         }
 
         public TClient CreateClient(string name)
@@ -47,6 +51,11 @@ namespace Microsoft.Extensions.Azure
 
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
+                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(
+                    _globalOptions,
+                    _serviceProvider,
+                    _componentFactory,
+                    _logForwarder);
                 return _fallbackFactory.CreateClient(name);
             }
 
