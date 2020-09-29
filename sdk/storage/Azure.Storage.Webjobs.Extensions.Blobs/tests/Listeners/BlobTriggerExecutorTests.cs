@@ -433,7 +433,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private StorageAccount CreateAccount()
         {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            return azuriteFixture.GetAccount();
         }
 
         private BlobTriggerExecutorContext CreateExecutorContext(bool createBlob = true)

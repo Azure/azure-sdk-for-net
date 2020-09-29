@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
 
             // make sure our system containers are present
             var container = CreateContainer(account, "azure-webjobs-hosts");

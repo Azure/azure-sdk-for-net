@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
             await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceProgram();
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
             await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceAsyncProgram();
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
             await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                          .Returns(() => new InstanceCustomActivatorProgram(resultFactory));
             IJobActivator activator = activatorMock.Object;
 
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
             await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()

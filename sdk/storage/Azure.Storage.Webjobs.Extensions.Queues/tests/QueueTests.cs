@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                {
-                   builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                   builder.UseStorage(azuriteFixture.GetAccount());
                })
                .ConfigureServices(services =>
                {
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                 {
-                    builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    builder.UseStorage(azuriteFixture.GetAccount());
                 })
                 .ConfigureServices(services =>
                 {
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<T>>(b =>
                 {
-                    b.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    b.UseStorage(azuriteFixture.GetAccount());
                 })
                 .Build();
 
@@ -476,8 +476,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            var account = azuriteFixture.GetAccount();
-            return StorageAccount.NewFromConnectionString(account.ConnectionString);
+            return azuriteFixture.GetAccount();
         }
 
         private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)

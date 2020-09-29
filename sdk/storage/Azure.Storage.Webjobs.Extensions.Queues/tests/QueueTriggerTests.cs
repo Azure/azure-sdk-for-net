@@ -715,7 +715,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
             var method = programType.GetMethod("Run");
             Assert.NotNull(method);
 
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            return azuriteFixture.GetAccount();
         }
 
         private static async Task<QueueClient> CreateQueue(StorageAccount account, string queueName)

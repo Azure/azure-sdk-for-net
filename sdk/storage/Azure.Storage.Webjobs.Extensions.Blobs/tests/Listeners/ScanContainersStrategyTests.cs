@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            return azuriteFixture.GetAccount();
         }
 
         private class LambdaBlobTriggerExecutor : ITriggerExecutor<BlobTriggerExecutorContext>

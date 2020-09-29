@@ -10,6 +10,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
@@ -26,6 +29,8 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     /// </summary>
     public class AzuriteFixture : IDisposable
     {
+        private const BlobClientOptions.ServiceVersion SupportedBlobServiceVersion = BlobClientOptions.ServiceVersion.V2019_12_12;
+        private const QueueClientOptions.ServiceVersion SupportedQueueServiceVersion = QueueClientOptions.ServiceVersion.V2019_12_12;
         private const int AccountPoolSize = 50;
         private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
@@ -123,9 +128,12 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             return port;
         }
 
-        public AzuriteAccount GetAccount()
+        public StorageAccount GetAccount()
         {
-            return accounts.Dequeue();
+            var azuriteAccount = accounts.Dequeue();
+            return new StorageAccount(azuriteAccount.ConnectionString,
+                SupportedBlobServiceVersion,
+                SupportedQueueServiceVersion);
         }
 
         public void Dispose()

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task<StorageAccount> CreateFakeStorageAccountAsync()
         {
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
 
             // make sure our system containers are present
             var container = await CreateContainerAsync(account, "azure-webjobs-hosts");
