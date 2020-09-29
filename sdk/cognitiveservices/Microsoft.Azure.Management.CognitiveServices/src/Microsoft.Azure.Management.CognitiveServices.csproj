@@ -11,7 +11,7 @@
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Support Sku capabilities.
+1) Support more fields for ApiProperties.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>
