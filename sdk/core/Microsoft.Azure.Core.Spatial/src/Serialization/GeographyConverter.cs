@@ -9,9 +9,9 @@ using Microsoft.Spatial;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Converts between <see cref="GeographyPoint" /> objects and Geo-JSON points.
+    /// Converts between <see cref="Geography" /> objects and Geo-JSON points.
     /// </summary>
-    public class GeographyPointConverter : JsonConverter<GeographyPoint>
+    public class GeographyConverter : JsonConverter<Geography>
     {
         // TODO: Consider reading and writing more of a GeographicPoint, but for now we only read and write what we support in OData currently.
         private const string CoordinatesPropertyName = "coordinates";
@@ -22,7 +22,12 @@ namespace Azure.Core.Serialization
         private static readonly JsonEncodedText s_TypePropertyNameBytes = JsonEncodedText.Encode(TypePropertyName);
 
         /// <inheritdoc/>
-        public override GeographyPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override bool CanConvert(Type typeToConvert) =>
+            // BUGBUG #15506: Check for all Geography derivatives.
+            typeof(GeographyPoint).IsAssignableFrom(typeToConvert);
+
+        /// <inheritdoc/>
+        public override Geography Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
@@ -85,15 +90,18 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, GeographyPoint value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Geography value, JsonSerializerOptions options)
         {
-            writer.WriteStartObject();
-            writer.WriteString(s_TypePropertyNameBytes, PointTypeName);
-            writer.WriteStartArray(s_CoordinatesPropertyNameBytes);
-            writer.WriteNumberValue(value.Longitude);
-            writer.WriteNumberValue(value.Latitude);
-            writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (value is GeographyPoint point)
+            {
+                writer.WriteStartObject();
+                writer.WriteString(s_TypePropertyNameBytes, PointTypeName);
+                writer.WriteStartArray(s_CoordinatesPropertyNameBytes);
+                writer.WriteNumberValue(point.Longitude);
+                writer.WriteNumberValue(point.Latitude);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            }
         }
     }
 }
