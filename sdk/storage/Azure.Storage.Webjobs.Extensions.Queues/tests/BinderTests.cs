@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BindStringableParameter_CanInvoke()
         {
             // Arrange
