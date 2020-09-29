@@ -33,7 +33,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <param name="configuration">The configuration.</param>
         /// <param name="connectionName">The connection string key.</param>
         /// <returns></returns>
-        public static IConfigurationSection GetConnectionStringOrSetting(this IConfiguration configuration, string connectionName) =>
-            configuration?.GetSection("ConnectionStrings").GetSection(connectionName) ?? configuration?.GetSection(connectionName);
+        public static IConfigurationSection GetConnectionStringOrSetting(this IConfiguration configuration, string connectionName)
+        {
+            var connectionStringSection = configuration?.GetSection("ConnectionStrings").GetSection(connectionName);
+
+            if (connectionStringSection.Exists())
+            {
+                return connectionStringSection;
+            }
+            return configuration?.GetSection(connectionName);
+        }
     }
 }

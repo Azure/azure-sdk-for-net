@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
         private readonly IServiceProvider _serviceProvider;
         private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
 
-        internal AzureComponentFactoryImpl(IOptionsMonitor<AzureClientsGlobalOptions> globalOptions, IServiceProvider serviceProvider)
+        public AzureComponentFactoryImpl(IOptionsMonitor<AzureClientsGlobalOptions> globalOptions, IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _globalOptions = globalOptions;

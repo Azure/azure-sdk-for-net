@@ -145,6 +145,11 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 SupportedQueueServiceVersion);
         }
 
+        public AzuriteAccount GetAzureAccount()
+        {
+            return accounts.Dequeue();
+        }
+
         public void Dispose()
         {
             if (process != null)
