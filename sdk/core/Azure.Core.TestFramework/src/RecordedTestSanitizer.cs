@@ -41,10 +41,14 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
+                // Prevent default behavior where JSON.NET will convert DateTimeOffset
+                // into a DateTime.
                 var settings = new JsonSerializerSettings
                 {
                     DateParseHandling = DateParseHandling.DateTimeOffset
                 };
+
+
                 JToken jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
 
                 foreach (string jsonPath in JsonPathSanitizers)
