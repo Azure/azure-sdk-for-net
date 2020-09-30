@@ -8,18 +8,18 @@
         "Content-Length": "104",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a73dd5a108742a418b56eab9962daa8b-ef0aadeaba759641-00",
+        "traceparent": "00-c7ab9d78bc7c894d91fa0620273f5e3a-feee32175a946841-00",
         "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200925.1",
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "6f7ff1ebf01edf820ef48b59916fa3c5",
+        "x-ms-client-request-id": "770d9e4cb28d9c29e7a811d7bb51af47",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2015-09-26T00:10:44Z",
-        "endTime": "2020-09-26T00:10:44Z",
+        "startTime": "2015-09-29T23:42:40Z",
+        "endTime": "2020-09-29T23:42:40Z",
         "series": [
           {
             "Dim1": "*",
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8822e30f-4448-40f6-bbf6-1b34f7a04064",
+        "apim-request-id": "24e770fd-eee0-4bfc-9a00-106adf125346",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:10:44 GMT",
+        "Date": "Tue, 29 Sep 2020 23:42:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "310",
-        "X-Request-ID": "8822e30f-4448-40f6-bbf6-1b34f7a04064"
+        "x-envoy-upstream-service-time": "311",
+        "X-Request-ID": "24e770fd-eee0-4bfc-9a00-106adf125346"
       },
       "ResponseBody": {
         "value": [
@@ -56,11 +56,11 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-09-25T19:10:44.9957118-05:00",
+    "DateTimeOffsetNow": "2020-09-29T18:42:40.8782128-05:00",
     "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "549759138"
+    "RandomSeed": "1204385147"
   }
 }

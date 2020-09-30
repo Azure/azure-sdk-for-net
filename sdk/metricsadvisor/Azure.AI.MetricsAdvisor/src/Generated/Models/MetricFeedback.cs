@@ -10,22 +10,8 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricFeedback. </summary>
-    internal partial class MetricFeedback
+    public partial class MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> is null. </exception>
-        public MetricFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter)
-        {
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-
-            MetricId = metricId;
-            DimensionFilter = dimensionFilter;
-        }
 
         /// <summary> Initializes a new instance of MetricFeedback. </summary>
         /// <param name="feedbackType"> feedback type. </param>
@@ -43,17 +29,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricId = metricId;
             DimensionFilter = dimensionFilter;
         }
-
-        /// <summary> feedback type. </summary>
-        internal FeedbackType FeedbackType { get; set; }
-        /// <summary> feedback unique id. </summary>
-        public Guid? FeedbackId { get; }
-        /// <summary> feedback created time. </summary>
-        public DateTimeOffset? CreatedTime { get; }
-        /// <summary> user who gives this feedback. </summary>
-        public string UserPrincipal { get; }
-        /// <summary> metric unique id. </summary>
-        public Guid MetricId { get; set; }
-        public FeedbackDimensionFilter DimensionFilter { get; set; }
     }
 }

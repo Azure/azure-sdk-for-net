@@ -23,16 +23,14 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal DimensionKey(IEnumerable<KeyValuePair<string, string>> dimension)
         {
-            if (dimension == null)
-            {
-                throw new ArgumentNullException(nameof(dimension));
-            }
-
             Dimension = new Dictionary<string, string>();
 
-            foreach (KeyValuePair<string, string> kvp in dimension)
+            if (dimension != default)
             {
-                Dimension.Add(kvp);
+                foreach (KeyValuePair<string, string> kvp in dimension)
+                {
+                    Dimension.Add(kvp);
+                }
             }
         }
 

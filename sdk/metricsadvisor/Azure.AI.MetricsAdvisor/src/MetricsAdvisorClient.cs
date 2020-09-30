@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly ServiceRestClient _serviceRestClient;
+        private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
         /// </summary>
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
 
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
 
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -334,6 +334,338 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Response<MetricDataList> response = _serviceRestClient.GetMetricData(metricGuid, queryOptions, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="metricId"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
+            int? skip = options?.SkipCount;
+            int? top = options?.TopCount;
+
+            async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                scope.Start();
+
+                try
+                {
+                    Response<EnrichmentStatusList> response = await _serviceRestClient.GetEnrichmentStatusByMetricAsync(metricGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<EnrichmentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                scope.Start();
+
+                try
+                {
+                    Response<EnrichmentStatusList> response = await _serviceRestClient.GetEnrichmentStatusByMetricNextAsync(nextLink, queryOptions, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="metricId"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
+            int? skip = options?.SkipCount;
+            int? top = options?.TopCount;
+
+            Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                scope.Start();
+
+                try
+                {
+                    Response<EnrichmentStatusList> response = _serviceRestClient.GetEnrichmentStatusByMetric(metricGuid, queryOptions, skip, top, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<EnrichmentStatus> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                scope.Start();
+
+                try
+                {
+                    Response<EnrichmentStatusList> response = _serviceRestClient.GetEnrichmentStatusByMetricNext(nextLink, queryOptions, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksAsync(GetMetricFeedbackOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(options.MetricId)
+            {
+                DimensionFilter = options.DimensionFilter,
+                EndTime = options.EndTime,
+                FeedbackType = options.FeedbackType,
+                StartTime = options.StartTime,
+                TimeMode = options.TimeMode
+            };
+            int? skip = options?.SkipCount;
+            int? top = options?.TopCount;
+
+            async Task<Page<MetricFeedback>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
+                scope.Start();
+
+                try
+                {
+                    Response<MetricFeedbackList> response = await _serviceRestClient.ListMetricFeedbacksAsync(queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<MetricFeedback>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
+                scope.Start();
+
+                try
+                {
+                    Response<MetricFeedbackList> response = await _serviceRestClient.ListMetricFeedbacksNextAsync(nextLink, queryOptions, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<MetricFeedback> GetMetricFeedbacks(GetMetricFeedbackOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(options.MetricId)
+            {
+                DimensionFilter = options.DimensionFilter,
+                EndTime = options.EndTime,
+                FeedbackType = options.FeedbackType,
+                StartTime = options.StartTime,
+                TimeMode = options.TimeMode
+            };
+            int? skip = options?.SkipCount;
+            int? top = options?.TopCount;
+
+            Page<MetricFeedback> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
+                scope.Start();
+
+                try
+                {
+                    Response<MetricFeedbackList> response = _serviceRestClient.ListMetricFeedbacks(queryOptions, skip, top, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<MetricFeedback> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
+                scope.Start();
+
+                try
+                {
+                    Response<MetricFeedbackList> response = _serviceRestClient.ListMetricFeedbacksNext(nextLink, queryOptions, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(feedback, nameof(feedback));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
+
+                feedback.FeedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
+
+                return Response.FromValue(feedback, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(feedback, nameof(feedback));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
+
+                feedback.FeedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
+
+                return Response.FromValue(feedback, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="feedbackId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(string feedbackId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
+            Guid feedbackIdGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+            scope.Start();
+
+            try
+            {
+                return await _serviceRestClient.GetMetricFeedbackAsync(feedbackIdGuid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="feedbackId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<MetricFeedback> GetMetricFeedback(string feedbackId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
+            Guid feedbackIdGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+            scope.Start();
+
+            try
+            {
+                return _serviceRestClient.GetMetricFeedback(feedbackIdGuid, cancellationToken);
             }
             catch (Exception e)
             {
