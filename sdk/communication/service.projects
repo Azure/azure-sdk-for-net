@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Remove sms data plane tests from nightly live runs -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\Azure.Communication.Sms\Azure.Communication.Sms.csproj" Condition="'$(AZURE_SEARCH_TEST_MODE)' == 'Live'" />
+  </ItemGroup>
+</Project>
