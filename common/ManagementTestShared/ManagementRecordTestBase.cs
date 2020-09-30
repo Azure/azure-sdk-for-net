@@ -4,13 +4,12 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RP	
+#if RESOURCES_RP
 using Azure.ResourceManager.Resources;	
-#else	
+#else
 using Azure.Management.Resources;
 #endif
 using System;
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
