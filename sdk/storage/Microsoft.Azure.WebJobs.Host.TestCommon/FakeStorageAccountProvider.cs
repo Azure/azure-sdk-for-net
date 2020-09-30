@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs
         private readonly StorageAccount _account;
 
         public FakeStorageAccountProvider(StorageAccount account)
-            : base(null)
+            : base(null, null)
         {
             this._account = account;
         }
