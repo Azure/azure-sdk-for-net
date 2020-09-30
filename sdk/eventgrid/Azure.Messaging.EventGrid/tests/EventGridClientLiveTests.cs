@@ -262,6 +262,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public async Task CanPublishCloudEventWithRawJsonData()
         {
+
             EventGridPublisherClientOptions options = Recording.InstrumentClientOptions(new EventGridPublisherClientOptions());
             EventGridPublisherClient client = InstrumentClient(
                 new EventGridPublisherClient(
