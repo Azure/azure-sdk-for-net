@@ -207,7 +207,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         public virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
-            ValidateSendViaEntityName(queueOrTopicName, options?.ViaQueueOrTopicName);
+            ValidateSendViaEntityName(queueOrTopicName, options?.TransactionQueueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
