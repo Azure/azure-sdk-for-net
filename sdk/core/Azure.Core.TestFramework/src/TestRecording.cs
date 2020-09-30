@@ -148,7 +148,7 @@ namespace Azure.Core.TestFramework
                             _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("o"); // Use the "Round-Trip Format"
                             break;
                         case RecordedTestMode.Playback:
-                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey], null, DateTimeStyles.RoundtripKind);
+                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey]);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
