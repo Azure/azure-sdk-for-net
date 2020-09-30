@@ -41,7 +41,12 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
-                var jsonO = JToken.Parse(body);
+                var settings = new JsonSerializerSettings
+                {
+                    DateParseHandling = DateParseHandling.DateTimeOffset
+                };
+                JToken jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
+
                 foreach (string jsonPath in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
@@ -49,7 +54,7 @@ namespace Azure.Core.TestFramework
                         token.Replace(JToken.FromObject(SanitizeValue));
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO);
+                return JsonConvert.SerializeObject(jsonO, settings);
             }
             catch
             {
