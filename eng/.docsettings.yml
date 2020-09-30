@@ -158,6 +158,7 @@ known_content_issues:
   - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
   - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
   - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project

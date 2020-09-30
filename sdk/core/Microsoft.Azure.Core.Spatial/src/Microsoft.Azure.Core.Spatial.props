@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- TODO: Convert this to a PackageReference when Microsoft.Azure.Core.Spatial is published -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).csproj" />
+  </ItemGroup>
+</Project>

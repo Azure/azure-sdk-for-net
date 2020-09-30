@@ -173,7 +173,37 @@ namespace Azure.Search.Documents.Tests
             GeographyPoint.Create(latitude, longitude);
 
         public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
-            GeographyPointConverter.AsDocument(CreatePoint(longitude, latitude));
+            CreatePoint(longitude, latitude).AsDocument();
 #endif
+
+        /// <summary>
+        /// Converts the <see cref="GeographyPoint"/> to a <see cref="SearchDocument"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="GeographyPoint"/> to convert.</param>
+        /// <returns>A <see cref="SearchDocument"/> for the given <paramref name="value"/>.</returns>
+        public static SearchDocument AsDocument(this GeographyPoint value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            List<double> coords = new List<double>
+            {
+                value.Longitude,
+                value.Latitude,
+            };
+
+            if (value.Z != null)
+            {
+                coords.Add(value.Z.Value);
+            }
+
+            return new SearchDocument()
+            {
+                ["type"] = "Point",
+                ["coordinates"] = coords.ToArray()
+            };
+        }
     }
 }
