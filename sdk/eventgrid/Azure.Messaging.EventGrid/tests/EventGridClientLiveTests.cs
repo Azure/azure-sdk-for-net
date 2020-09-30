@@ -380,7 +380,7 @@ namespace Azure.Messaging.EventGrid.Tests
         public async Task CustomizeSerializedJSONPropertiesToCamelCase()
         {
             EventGridPublisherClientOptions options = Recording.InstrumentClientOptions(new EventGridPublisherClientOptions());
-            options.DataSerializer = new JsonObjectSerializer(
+            options.Serializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

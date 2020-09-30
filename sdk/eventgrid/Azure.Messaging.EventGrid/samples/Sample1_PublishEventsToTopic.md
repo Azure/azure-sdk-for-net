@@ -16,7 +16,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 ```C# Snippet:CreateClientWithOptions
 EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
 {
-    DataSerializer = myCustomDataSerializer
+    Serializer = myCustomDataSerializer
 };
 
 EventGridPublisherClient client = new EventGridPublisherClient(

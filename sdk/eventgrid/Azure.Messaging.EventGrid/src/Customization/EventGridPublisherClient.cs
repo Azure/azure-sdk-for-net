@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -31,6 +31,9 @@ namespace Azure.Messaging.EventGrid
         private readonly AzureKeyCredential _key;
         private readonly string _apiVersion;
         private readonly ObjectSerializer _dataSerializer;
+
+        private const string TraceParentHeaderName = "traceparent";
+        private const string TraceStateHeaderName = "tracestate";
 
         /// <summary>Initalizes an instance of EventGridClient.</summary>
         protected EventGridPublisherClient()
@@ -62,7 +65,7 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
             _apiVersion = options.Version.GetVersionString();
-            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
+            _dataSerializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             _key = credential;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
@@ -80,7 +83,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
+            _dataSerializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
@@ -198,6 +201,15 @@ namespace Azure.Messaging.EventGrid
                 // List of events cannot be null
                 Argument.AssertNotNull(events, nameof(events));
 
+                string activityId = null;
+                string traceState = null;
+                Activity currentActivity = Activity.Current;
+                if (currentActivity != null && currentActivity.IsW3CFormat())
+                {
+                    activityId = currentActivity.Id;
+                    currentActivity.TryGetTraceState(out traceState);
+                }
+
                 List<CloudEventInternal> eventsWithSerializedPayloads = new List<CloudEventInternal>();
                 foreach (CloudEvent cloudEvent in events)
                 {
@@ -220,6 +232,17 @@ namespace Azure.Messaging.EventGrid
                     foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
                     {
                         newCloudEvent.Add(kvp.Key, new CustomModelSerializer(kvp.Value, _dataSerializer, cancellationToken));
+                    }
+
+                    if (activityId != null &&
+                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
+                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+                    {
+                        newCloudEvent.Add(TraceParentHeaderName, activityId);
+                        if (traceState != null)
+                        {
+                            newCloudEvent.Add(TraceStateHeaderName, traceState);
+                        }
                     }
 
                     // The 'Data' property is optional for CloudEvents
