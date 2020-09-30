@@ -4,6 +4,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
@@ -20,6 +21,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException">Thrown when parsing fails.</exception>
         public static Guid ValidateGuid(string id, string paramName)
         {
+            Argument.AssertNotNullOrEmpty(id, paramName);
+
             Guid guid;
 
             try
@@ -124,6 +127,16 @@ namespace Azure.AI.MetricsAdvisor
             {
                 throw new ArgumentException(UnexpectedHeaderFormat);
             }
+        }
+
+        internal static HookInfoPatch GetPatchModel(AlertingHook hook)
+        {
+            return hook switch
+            {
+                EmailHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                WebHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                _ => throw new InvalidOperationException("Unknown AlertingHook type.")
+            };
         }
     }
 }

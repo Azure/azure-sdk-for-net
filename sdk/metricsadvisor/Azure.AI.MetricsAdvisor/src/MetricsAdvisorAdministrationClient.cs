@@ -989,6 +989,64 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// </summary>
+        public virtual async Task<Response> UpdateHookAsync(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(hook, nameof(hook));
+
+            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+            if (hook is EmailHook emailHook)
+            {
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+            scope.Start();
+
+            try
+            {
+                var patch = ClientCommon.GetPatchModel(hook);
+
+                return await _serviceRestClient.UpdateHookAsync(hookGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(hook, nameof(hook));
+
+            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+            if (hook is EmailHook emailHook)
+            {
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+            scope.Start();
+
+            try
+            {
+                var patch = ClientCommon.GetPatchModel(hook);
+
+                return _serviceRestClient.UpdateHook(hookGuid, patch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         public virtual async Task<Response<AlertingHook>> GetHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));

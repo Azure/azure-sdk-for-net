@@ -12,8 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress(nameof(WebHook), typeof(string), typeof(WebhookHookParameter))]
     public partial class WebHook : AlertingHook
     {
-        private IDictionary<string, string> _headers;
-
         /// <summary>
         /// </summary>
         public WebHook(string name, string endpoint)
@@ -21,58 +19,44 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
 
-            Endpoint = endpoint;
-            Headers = new ChangeTrackingDictionary<string, string>();
+            HookParameter = new WebhookHookParameter(endpoint, default, default, new ChangeTrackingDictionary<string, string>(), default, default);;
             HookType = HookType.Webhook;
         }
 
         internal WebHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
-            Endpoint = hookParameter.Endpoint;
-            Username = hookParameter.Username;
-            Password = hookParameter.Password;
-            CertificateKey = hookParameter.CertificateKey;
-            CertificatePassword = hookParameter.CertificatePassword;
-            Headers = hookParameter.Headers;
+            HookParameter = hookParameter;
             HookType = hookType;
         }
 
         /// <summary>
         /// </summary>
-        public string Endpoint { get; }
+        public string Endpoint { get => HookParameter.Endpoint; private set => HookParameter.Endpoint = value; }
 
         /// <summary>
         /// </summary>
-        public string Username { get; set; }
+        public string Username { get => HookParameter.Username; set => HookParameter.Username = value; }
 
         /// <summary>
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get => HookParameter.Password; set => HookParameter.Password = value; }
 
         /// <summary>
         /// </summary>
-        public string CertificateKey { get; set; }
+        public string CertificateKey { get => HookParameter.CertificateKey; set => HookParameter.CertificateKey = value; }
 
         /// <summary>
         /// </summary>
-        public string CertificatePassword { get; set; }
+        public string CertificatePassword { get => HookParameter.Username; set => HookParameter.Username = value; }
 
         /// <summary>
         /// </summary>
-        public IDictionary<string, string> Headers
-        {
-            get => _headers;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Headers));
-                _headers = value;
-            }
-        }
+        public IDictionary<string, string> Headers => HookParameter.Headers;
 
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal WebhookHookParameter HookParameter => new WebhookHookParameter(Endpoint, Username, Password, Headers, CertificateKey, CertificatePassword);
+        internal WebhookHookParameter HookParameter { get; private set; }
     }
 }
