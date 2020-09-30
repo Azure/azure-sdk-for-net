@@ -45,7 +45,7 @@ namespace Azure.Core.TestFramework
                 // into a DateTime.
                 var settings = new JsonSerializerSettings
                 {
-                    DateParseHandling = DateParseHandling.DateTimeOffset
+                    DateParseHandling = DateParseHandling.None
                 };
 
 
