@@ -2512,9 +2512,7 @@ namespace Azure.Storage.Files.DataLake
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
 
-                                if ((currentFailureCount > 0) &&
-                                    ((options?.ContinueOnFailure.GetValueOrDefault(false) == false) ||
-                                    (batchFailures == default)))
+                                if ((currentFailureCount > 0) && (batchFailures == default))
                                 {
                                     batchFailures = response.FailedEntries
                                     .Select(failedEntry => new AccessControlChangeFailure()

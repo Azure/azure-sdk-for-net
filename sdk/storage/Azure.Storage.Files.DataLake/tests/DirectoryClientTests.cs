@@ -1084,6 +1084,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1114,6 +1115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1166,6 +1168,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1199,6 +1202,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
             Assert.AreEqual(4, progress.BatchCounters.Count);
             Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
@@ -1311,6 +1315,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
@@ -1352,6 +1359,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory without assigning subowner permissions to the directory
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
 
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -1380,6 +1388,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1417,6 +1430,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory without assigning subowner permissions to the directory
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
 
             // Add files and a directory and only allow subowner permissions
             DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
@@ -1483,12 +1497,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task SetAccessControlRecursiveAsync_RetrieveBatchFailures()
+        public async Task SetAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
             string fileSystemName = GetNewFileSystemName();
             string topDirectoryName = GetNewDirectoryName();
@@ -1534,18 +1556,46 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
             // Act
-            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(accessControlList: AccessControlList);
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
-            foreach (AccessControlChangeFailure failure in result.BatchFailures)
-            {
-                Assert.Contains(failure.Name, failedPathNames);
-            }
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1594,9 +1644,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
+                ProgressHandler = progress,
                 BatchSize = 2
             };
 
@@ -1613,6 +1665,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1718,6 +1771,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1748,6 +1802,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1800,6 +1855,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1833,6 +1889,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
             Assert.AreEqual(4, progress.BatchCounters.Count);
             Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
@@ -1889,6 +1946,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, changedFilesCount);
             Assert.AreEqual(0, failedChangesCount);
             Assert.AreEqual(2, iterationCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1953,6 +2011,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
@@ -1994,6 +2055,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory as superuser
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
@@ -2022,6 +2085,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2059,6 +2127,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory as superuser
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
 
             // Add files and a directory as AAD app
             DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
@@ -2125,12 +2194,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task UpdateAccessControlRecursiveAsync_RetrieveBatchFailures()
+        public async Task UpdateAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
             string fileSystemName = GetNewFileSystemName();
             string topDirectoryName = GetNewDirectoryName();
@@ -2176,19 +2253,46 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
             // Act
-            AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
-                accessControlList: AccessControlList);
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
-            foreach (AccessControlChangeFailure failure in result.BatchFailures)
-            {
-                Assert.Contains(failure.Name, failedPathNames);
-            }
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2237,9 +2341,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
+                ProgressHandler = progress,
                 BatchSize = 2
             };
 
@@ -2256,6 +2362,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2362,6 +2469,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2392,6 +2500,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2445,6 +2554,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2478,6 +2588,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(4, result.Counters.ChangedFilesCount);
             Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
             Assert.AreEqual(4, progress.BatchCounters.Count);
             Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
@@ -2534,6 +2645,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, changedFilesCount);
             Assert.AreEqual(0, failedChangesCount);
             Assert.AreEqual(2, iterationCount);
+            Assert.IsNull(result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2592,6 +2704,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
             Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
             AccessControlChangeFailure failure = progress.Failures[0];
@@ -2633,6 +2748,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory without assigning subowner permissions to the directory
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
 
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -2661,6 +2777,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2698,6 +2819,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
             // Add directory without assigning subowner permissions to the directory
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
 
             // Add files and a directory and only allow subowner permissions
             DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
@@ -2763,12 +2885,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
             Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task RemoveAccessControlRecursiveAsync_RetrieveBatchFailures()
+        public async Task RemoveAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
             string fileSystemName = GetNewFileSystemName();
             string topDirectoryName = GetNewDirectoryName();
@@ -2814,19 +2944,46 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
             // Act
-            AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
-                accessControlList: RemoveAccessControlList);
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
 
             // Assert
-            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(4, result.Counters.FailedChangesCount);
-            Assert.AreEqual(4, result.BatchFailures.Length);
-            foreach (AccessControlChangeFailure failure in result.BatchFailures)
-            {
-                Assert.Contains(failure.Name, failedPathNames);
-            }
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -2875,9 +3032,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
+                ProgressHandler = progress,
                 BatchSize = 2
             };
 
@@ -2894,6 +3053,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
             Assert.IsNull(result.ContinuationToken);
         }
 
