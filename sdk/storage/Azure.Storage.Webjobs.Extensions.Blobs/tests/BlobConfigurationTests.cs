@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Azure;
@@ -16,7 +13,8 @@ using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobConfigurationTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobConfigurationTests
     {
         private readonly AzuriteFixture azuriteFixture;
 
@@ -35,7 +33,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection", account.ConnectionString }
+                        {"CustomConnection", account.ConnectionString },
+                        {"blobPath", "cscontainer/csblob" }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
@@ -52,8 +51,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("blob", result.Name);
-            Assert.Equal("container", result.BlobContainerName);
+            Assert.Equal("csblob", result.Name);
+            Assert.Equal("cscontainer", result.BlobContainerName);
             Assert.NotNull(result.BlobContainerName);
             Assert.False(await result.ExistsAsync());
         }
@@ -68,7 +67,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:endpoint", account.Endpoint }
+                        {"CustomConnection:endpoint", account.Endpoint },
+                        {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
@@ -85,8 +85,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("blob", result.Name);
-            Assert.Equal("container", result.BlobContainerName);
+            Assert.Equal("endpointblob", result.Name);
+            Assert.Equal("endpointcontainer", result.BlobContainerName);
             Assert.NotNull(result.BlobContainerName);
             Assert.False(await result.ExistsAsync());
         }
@@ -106,9 +106,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public BlockBlobClient Result { get; set; }
 
             public void Run(
-                [Blob("container/blob", Connection = "CustomConnection")] BlockBlobClient blob)
+                [Blob("%blobPath%", Connection = "CustomConnection")] BlockBlobClient blob)
             {
-                this.Result = blob;
+                Result = blob;
             }
         }
     }

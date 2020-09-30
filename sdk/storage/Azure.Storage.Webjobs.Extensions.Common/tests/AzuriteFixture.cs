@@ -6,7 +6,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -137,11 +139,11 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             var transport = GetTransport();
 
             return new StorageAccount(
-            return new StorageAccount(azuriteAccount.ConnectionString,
+                new BlobServiceClient(account.ConnectionString, new BlobClientOptions()
                 {
                     Transport = transport
                 }),
-                new QueueServiceClient(azuriteAccount.ConnectionString, new QueueClientOptions(SupportedQueueServiceVersion)
+                new QueueServiceClient(account.ConnectionString, new QueueClientOptions(SupportedQueueServiceVersion)
                 {
                     Transport = transport
                 }));
@@ -163,7 +165,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public AzuriteAccount GetAzureAccount()
         {
-            return accounts.Dequeue();
+            return account;
         }
 
         public void Dispose()
