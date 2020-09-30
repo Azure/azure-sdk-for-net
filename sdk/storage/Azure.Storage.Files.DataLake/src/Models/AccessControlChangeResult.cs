@@ -16,5 +16,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional continuation token. Value is present when operation is split into multiple batches and can be used to resume progress.
         /// </summary>
         public string ContinuationToken { get; internal set; }
+
+        /// <summary>
+        /// Optional the First Batch Failures.
+        /// An enumerable of path entries that failed to update Access Control List within the first single batch.
+        /// If no failures occured, this will be set to null.
+        /// </summary>
+        public AccessControlChangeFailure[] BatchFailures { get; internal set; }
     }
 }

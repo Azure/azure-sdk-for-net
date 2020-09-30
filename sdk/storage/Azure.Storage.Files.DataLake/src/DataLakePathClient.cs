@@ -2124,10 +2124,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
-        /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
@@ -2150,7 +2146,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2158,7 +2153,6 @@ namespace Azure.Storage.Files.DataLake
             return SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
                 PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Set,
                 continuationToken,
                 options,
@@ -2175,10 +2169,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
@@ -2202,7 +2192,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2210,7 +2199,6 @@ namespace Azure.Storage.Files.DataLake
             return await SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
                 PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Set,
                 continuationToken,
                 options,
@@ -2227,10 +2215,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
@@ -2254,7 +2238,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2262,7 +2245,6 @@ namespace Azure.Storage.Files.DataLake
             return SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
                 PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Modify,
                 continuationToken,
                 options,
@@ -2279,10 +2261,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
@@ -2306,7 +2284,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2314,7 +2291,6 @@ namespace Azure.Storage.Files.DataLake
             return await SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
                 PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Modify,
                 continuationToken,
                 options,
@@ -2331,10 +2307,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
@@ -2358,7 +2330,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2366,7 +2337,6 @@ namespace Azure.Storage.Files.DataLake
             return SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
                 RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Remove,
                 continuationToken,
                 options,
@@ -2383,10 +2353,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
@@ -2410,7 +2376,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             string continuationToken = default,
             AccessControlChangeOptions options = default,
             CancellationToken cancellationToken = default)
@@ -2418,7 +2383,6 @@ namespace Azure.Storage.Files.DataLake
             return await SetAccessControlRecursiveInternal(
                 $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
                 RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                progressHandler,
                 PathSetAccessControlRecursiveMode.Remove,
                 continuationToken,
                 options,
@@ -2438,10 +2402,6 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
         /// </param>
         /// <param name="mode">
         /// Mode \"set\" sets POSIX access control rights on files and directories,
@@ -2475,7 +2435,6 @@ namespace Azure.Storage.Files.DataLake
         private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
             string operationName,
             string accessControlList,
-            IProgress<Response<AccessControlChanges>> progressHandler,
             PathSetAccessControlRecursiveMode mode,
             string continuationToken,
             AccessControlChangeOptions options,
@@ -2505,6 +2464,7 @@ namespace Azure.Storage.Files.DataLake
                         int filesSuccessfulCount = 0;
                         int failureCount = 0;
                         int batchesCount = 0;
+                        AccessControlChangeFailure[] batchFailures = default;
 
                         do
                         {
@@ -2552,7 +2512,17 @@ namespace Azure.Storage.Files.DataLake
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
 
-                                if (progressHandler != null)
+                                if ((currentFailureCount > 0) && (batchFailures == default))
+                                {
+                                    batchFailures = response.FailedEntries
+                                    .Select(failedEntry => new AccessControlChangeFailure()
+                                    {
+                                        Name = failedEntry.Name,
+                                        IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                        ErrorMessage = failedEntry.ErrorMessage,
+                                    }).ToArray();
+                                }
+                                if (options?.ProgressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries
                                         .Select(failedEntry => new AccessControlChangeFailure()
@@ -2562,7 +2532,7 @@ namespace Azure.Storage.Files.DataLake
                                             ErrorMessage = failedEntry.ErrorMessage,
                                         }).ToList();
 
-                                    progressHandler.Report(
+                                    options.ProgressHandler.Report(
                                         Response.FromValue(
                                             new AccessControlChanges()
                                             {
@@ -2602,6 +2572,7 @@ namespace Azure.Storage.Files.DataLake
                                     (failureCount > 0) && !(options?.ContinueOnFailure == true)
                                         ? lastContinuationToken
                                         : continuationToken,
+                                BatchFailures = batchFailures
                             },
                             jsonResponse.GetRawResponse());
                     }
