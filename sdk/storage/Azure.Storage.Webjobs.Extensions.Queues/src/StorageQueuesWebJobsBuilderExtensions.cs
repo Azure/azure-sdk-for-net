@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Config;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -34,6 +35,7 @@ namespace Microsoft.Extensions.Hosting
             // add webjobs to user agent for all storage calls
             DiagnosticsOptions.DefaultApplicationId = "AzureWebJobs";
 
+            builder.Services.AddAzureClients(_ => { });
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO (kasobol-msft) figure out if this is needed in extension and if so if it's needed in both blobs and queues?

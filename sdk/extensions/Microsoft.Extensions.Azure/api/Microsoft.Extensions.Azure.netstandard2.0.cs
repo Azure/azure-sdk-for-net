@@ -27,6 +27,12 @@ namespace Microsoft.Extensions.Azure
     {
         public static void AddAzureClients(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection, System.Action<Microsoft.Extensions.Azure.AzureClientFactoryBuilder> configureClients) { }
     }
+    public abstract partial class AzureComponentFactory
+    {
+        protected AzureComponentFactory() { }
+        public abstract object CreateClientOptions(System.Type optionsType, object serviceVersion, Microsoft.Extensions.Configuration.IConfiguration configuration);
+        public abstract Azure.Core.TokenCredential CreateCredential(Microsoft.Extensions.Configuration.IConfiguration configuration);
+    }
     public partial interface IAzureClientFactory<TClient>
     {
         TClient CreateClient(string name);

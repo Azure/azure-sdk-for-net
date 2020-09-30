@@ -23,4 +23,8 @@
     <ProjectReference Include="..\src\Azure.WebJobs.Extensions.Storage.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="cert.pem" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

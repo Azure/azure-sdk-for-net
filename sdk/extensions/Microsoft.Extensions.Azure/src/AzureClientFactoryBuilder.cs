@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection.AddOptions();
             _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
             _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
+            _serviceCollection.TryAddSingleton<AzureComponentFactory, AzureComponentFactoryImpl>();
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
