@@ -85,6 +85,24 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
+        internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement? serializedData, byte[] dataBase64)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(type, nameof(type));
+
+            Id = id;
+            Source = source;
+            Type = type;
+            Time = time;
+            DataSchema = dataSchema;
+            DataContentType = dataContentType;
+            Subject = subject;
+            SerializedData = serializedData;
+            DataBase64 = dataBase64;
+            ExtensionAttributes = new Dictionary<string, object>();
+        }
+
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -163,17 +181,15 @@ namespace Azure.Messaging.EventGrid
                 }
 
                 CloudEvent cloudEvent = new CloudEvent(
+                    cloudEventInternal.Id,
                     cloudEventInternal.Source,
-                    cloudEventInternal.Type)
-                {
-                    Id = cloudEventInternal.Id,
-                    Time = cloudEventInternal.Time,
-                    DataBase64 = cloudEventInternal.DataBase64,
-                    DataSchema = cloudEventInternal.Dataschema,
-                    DataContentType = cloudEventInternal.Datacontenttype,
-                    Subject = cloudEventInternal.Subject,
-                    SerializedData = cloudEventInternal.Data
-                };
+                    cloudEventInternal.Type,
+                    cloudEventInternal.Time,
+                    cloudEventInternal.Dataschema,
+                    cloudEventInternal.Datacontenttype,
+                    cloudEventInternal.Subject,
+                    cloudEventInternal.Data,
+                    cloudEventInternal.DataBase64);
 
                 if (cloudEventInternal.AdditionalProperties != null)
                 {

@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
 
   <ItemGroup>

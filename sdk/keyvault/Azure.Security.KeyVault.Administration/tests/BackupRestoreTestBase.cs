@@ -27,16 +27,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
 
-        private KeyVaultBackupClient GetClient(TestRecording recording = null)
+        internal KeyVaultBackupClient GetClient(TestRecording recording = null, bool isInstrumented = true)
         {
             recording ??= Recording;
 
-            return InstrumentClient
-                (new KeyVaultBackupClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
-
+            var client = new KeyVaultBackupClient(
+                new Uri(TestEnvironment.KeyVaultUrl),
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new KeyVaultBackupClientOptions()));
+            return isInstrumented ? InstrumentClient(client) : client;
         }
 
 

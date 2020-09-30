@@ -7,13 +7,14 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
+    [Ignore("Only verifying that the sample builds")]
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
         [Ignore("Only verifying that the sample builds")]
         [Test]
         public void CreateSchemaRegistryClient()
         {
-            #region Snippet:CreateSchemaRegistryClient
+            #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             string endpoint = "<event_hubs_namespace_hostname>";
             var credentials = new ClientSecretCredential(
                 "<tenant_id>",
@@ -30,7 +31,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:RegisterSchema
+            #region Snippet:SchemaRegistryRegisterSchema
             string schemaName = "<schema_name>";
             string groupName = "<schema_group_name>";
             SerializationType schemaType = SerializationType.Avro;
@@ -56,7 +57,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:RetrieveSchemaId
+            #region Snippet:SchemaRegistryRetrieveSchemaId
             string schemaName = "<schema_name>";
             string groupName = "<schema_group_name>";
             SerializationType schemaType = SerializationType.Avro;
@@ -83,7 +84,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:RetrieveSchema
+            #region Snippet:SchemaRegistryRetrieveSchema
             string schemaId = "<schema_id>";
 
             Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);

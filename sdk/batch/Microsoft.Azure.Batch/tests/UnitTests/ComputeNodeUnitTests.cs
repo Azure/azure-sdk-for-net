@@ -53,11 +53,11 @@
                 CertificateReference computeNodeCertificateReference = computeNode.CertificateReferences.First();
 
                 // reads are allowed
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.StoreLocation);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.StoreName);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.Thumbprint);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.ThumbprintAlgorithm);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.Visibility);
+                this.testOutputHelper.WriteLine(computeNodeCertificateReference.StoreLocation.ToString());
+                this.testOutputHelper.WriteLine(computeNodeCertificateReference.StoreName);
+                this.testOutputHelper.WriteLine(computeNodeCertificateReference.Thumbprint);
+                this.testOutputHelper.WriteLine(computeNodeCertificateReference.ThumbprintAlgorithm);
+                this.testOutputHelper.WriteLine(computeNodeCertificateReference.Visibility.ToString());
 
                 // writes are foribdden
                 Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.StoreLocation = CertStoreLocation.CurrentUser; });

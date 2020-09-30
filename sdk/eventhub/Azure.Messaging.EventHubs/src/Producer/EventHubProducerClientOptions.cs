@@ -127,5 +127,44 @@ namespace Azure.Messaging.EventHubs.Producer
 
             return copiedOptions;
         }
+
+        /// <summary>
+        ///   Creates the set of flags that represents the features requested by these options.
+        /// </summary>
+        ///
+        /// <returns>The set of features that were requested for the <see cref="EventHubProducerClient" />.</returns>
+        ///
+        internal TransportProducerFeatures CreateFeatureFlags()
+        {
+            var features = TransportProducerFeatures.None;
+
+            if (EnableIdempotentPartitions)
+            {
+                features |= TransportProducerFeatures.IdempotentPublishing;
+            }
+
+            return features;
+        }
+
+        /// <summary>
+        ///   Attempts to retrieve the publishing options for a given partition, returning a
+        ///   default in the case that no partition was specified or there were no available options
+        ///   for that partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition for which options are requested.</param>
+        ///
+        /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
+        ///
+        internal PartitionPublishingOptions GetPublishingOptionsOrDefaultForPartition(string partitionId)
+        {
+            if (string.IsNullOrEmpty(partitionId))
+            {
+                return default;
+            }
+
+            PartitionOptions.TryGetValue(partitionId, out var options);
+            return options;
+        }
     }
 }

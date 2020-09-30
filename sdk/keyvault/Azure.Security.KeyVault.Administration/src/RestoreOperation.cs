@@ -28,10 +28,10 @@ namespace Azure.Security.KeyVault.Administration
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public RestoreOperation(string id, KeyVaultBackupClient client)
+        public RestoreOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore(Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync(Uri, string, string, CancellationToken)"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullRestoreOperationHeaders> response)
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore(string, Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync(string, Uri, string, string, CancellationToken)"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders> response)
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));

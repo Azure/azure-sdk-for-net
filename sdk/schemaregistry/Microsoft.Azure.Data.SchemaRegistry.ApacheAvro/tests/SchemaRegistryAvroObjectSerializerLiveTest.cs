@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserialize()
         {
             var client = CreateClient();
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, readEmployee.Age);
         }
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();
@@ -71,6 +71,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
@@ -84,6 +85,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();

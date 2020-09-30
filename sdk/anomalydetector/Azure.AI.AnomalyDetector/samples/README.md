@@ -19,6 +19,7 @@ These code samples show common scenario operations with the Anomaly Detector cli
 |[Sample2_DetectLastPointAnomaly][sample_detect_last_point_anomaly] |Detecting the anomaly status of the latest data point.|
 |[Sample3_DetectChangePoint][sample_detect_change_point] |Detecting change points in the entire time series.|
 
-[sample_detect_entire_series_anomaly]: ./Sample1_DetectEntireSeriesAnomaly.md
-[sample_detect_last_point_anomaly]: ./Sample2_DetectLastPointAnomaly.md
-[sample_detect_change_point]: ./Sample3_DetectChangePoint.md
+<!-- LINKS -->
+[sample_detect_entire_series_anomaly]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample1_DetectEntireSeriesAnomaly.cs
+[sample_detect_last_point_anomaly]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample2_DetectLastPointAnomaly.cs
+[sample_detect_change_point]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample3_DetectChangePoint.cs
