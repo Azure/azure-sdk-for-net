@@ -144,9 +144,15 @@ namespace Azure.AI.FormRecognizer.Training
 
         private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model)
         {
+            string formType = string.Empty;
+            if (string.IsNullOrEmpty(model.ModelInfo.DisplayName))
+                formType = $"custom-{model.ModelInfo.ModelId}";
+            else
+                formType = $"custom-{model.ModelInfo.DisplayName}";
+
             return new List<CustomFormSubmodel> {
                 new CustomFormSubmodel(
-                    $"form-{model.ModelInfo.ModelId}",
+                    formType,
                     model.TrainResult.AverageModelAccuracy,
                     CalculateFieldMap(model.TrainResult),
                     model.ModelInfo.ModelId) };
@@ -159,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Training
             foreach (var trainResult in model.ComposedTrainResults)
             {
                 submodels.Add(new CustomFormSubmodel(
-                    $"form-{trainResult.ModelId}",
+                    $"custom-{trainResult.ModelId}",
                     trainResult.AverageModelAccuracy,
                     CalculateFieldMap(trainResult),
                     trainResult.ModelId));
