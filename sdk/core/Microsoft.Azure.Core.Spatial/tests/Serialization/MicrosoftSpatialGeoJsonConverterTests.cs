@@ -119,5 +119,29 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             // Use regex comparison since double precision can be slight off.
             StringAssert.IsMatch(@"\{""type\"":""Point"",""coordinates"":\[-121\.72690\d+,46\.87996\d+\]\}", json);
         }
+
+
+        [Test]
+        public void ThrowsActionableExceptionMessage()
+        {
+            string json = @"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    -121.726906
+  ]
+}";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new MicrosoftSpatialGeoJsonConverter(),
+                },
+            };
+
+            JsonException expectedException = Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<GeographyPoint>(json, options));
+            Assert.AreEqual("$", expectedException.Path);
+            Assert.AreEqual(3, expectedException.BytePositionInLine);
+            Assert.AreEqual(4, expectedException.LineNumber);
+        }
     }
 }

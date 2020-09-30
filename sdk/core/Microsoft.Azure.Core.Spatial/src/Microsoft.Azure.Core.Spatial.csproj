@@ -9,7 +9,6 @@
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
-  <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />
     <PackageReference Include="System.Text.Json" />
