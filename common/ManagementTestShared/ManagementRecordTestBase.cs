@@ -4,14 +4,18 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+#if RESOURCES_RP	
+using Azure.ResourceManager.Resources;	
+#else	
 using Azure.Management.Resources;
+#endif
 using System;
 
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
+
 using System.Threading.Tasks;
 using NUnit.Framework;
 
