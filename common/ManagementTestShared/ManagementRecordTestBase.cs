@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.TestFramework
 {
     [Category("Recorded")]
-    public abstract class MgmtRecordTestBase<TEnvironment> : ClientTestBase where TEnvironment : TestEnvironment, new()
+    public abstract class ManagementRecordTestBase<TEnvironment> : ClientTestBase where TEnvironment : TestEnvironment, new()
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.TestFramework
         public bool SaveDebugRecordingsOnFailure { get; set; } = false;
 #endif
 
-        protected MgmtRecordTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        protected ManagementRecordTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
 
-        protected MgmtRecordTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
+        protected ManagementRecordTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
@@ -87,22 +87,45 @@ namespace Azure.ResourceManager.TestFramework
                 fileName);
         }
 
+        /// <summary>
+        /// Initializes the clients for a test scenario so the recordings are setup and saved
+        /// correctly
+        /// </summary>
         protected abstract void InitializeClients();
 
+        /// <summary>
+        /// Setup of resources that will be run before a test fixture or suite
+        /// This should be overriden if resources need to be setup once for a suite of test
+        /// </summary>
         protected virtual Task OnOneTimeSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
+
+        /// <summary>
+        /// Setup of resources that will run before each test in a test fixture or suite
+        /// This should be overriden if resources need to be setup before each test.
+        /// </summary>
         protected virtual Task OnSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
 
+        /// <summary>
+        /// Teardown of resources that will be run after all test in a test fixture or suite have run
+        /// This should be overriden if customization for resource teardown needs done, else the teardown of
+        /// resources will be handled automaticall by the framework
+        /// </summary>
         protected virtual Task OnOneTimeTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
 
+        /// <summary>
+        /// Teardown of resources that will be run after each test in test fixture or suite
+        /// This should be overriden if customization for resource teardown needs done, else the teardown of
+        /// resources will be handled automaticall by the framework
+        /// </summary>
         protected virtual Task OnTearDownAsync()
         {
             return Task.FromResult<object>(null);
@@ -196,6 +219,12 @@ namespace Azure.ResourceManager.TestFramework
                 }
                 CleanupPolicy.ResourceGroupsCreated.Clear();
             }
+        }
+
+        protected T GetManagementClient<T>(ClientOptions options, string subscriptionId) where T : class
+        {
+            return this.CreateClient<T>(subscriptionId,
+                TestEnvironment.Credential, Recording.InstrumentClientOptions(options));
         }
 
     }

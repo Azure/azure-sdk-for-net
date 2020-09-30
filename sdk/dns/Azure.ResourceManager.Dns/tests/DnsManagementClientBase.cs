@@ -12,7 +12,7 @@ using Azure.Management.Dns.Tests;
 namespace Azure.ResourceManager.Dns.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class DnsManagementClientBase : MgmtRecordTestBase<DnsManagementTestEnvironment>
+    public abstract class DnsManagementClientBase : ManagementRecordTestBase<DnsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
@@ -44,16 +44,10 @@ namespace Azure.ResourceManager.Dns.Tests
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
-            DnsManagementClient = this.GetDnsManagementClient();
+            DnsManagementClient = this.GetManagementClient<DnsManagementClient>(new DnsManagementClientOptions(), TestEnvironment.SubscriptionId);
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }
 
-
-        internal DnsManagementClient GetDnsManagementClient()
-        {
-            return CreateClient<DnsManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential, Recording.InstrumentClientOptions(new DnsManagementClientOptions()));
-        }
     }
 }
