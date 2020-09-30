@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -102,6 +103,33 @@ namespace Azure.AI.FormRecognizer.Tests
                         Assert.IsNotNull(fields.Value.Label);
                 }
             }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CheckFormTypeinSubmodelAndRecognizedForm(bool labeled)
+        {
+            var client = CreateFormTrainingClient();
+            var formClient = client.GetFormRecognizerClient();
+
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFilesUri, labeled);
+            await trainingOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(trainingOperation.HasValue);
+
+            CustomFormModel model = trainingOperation.Value;
+            Assert.IsNotNull(model.Submodels.FirstOrDefault().FormType);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+            RecognizeCustomFormsOperation recognizeOperation = await formClient.StartRecognizeCustomFormsFromUriAsync(model.ModelId, uri);
+            await recognizeOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(recognizeOperation.HasValue);
+
+            RecognizedForm form = recognizeOperation.Value.Single();
+            Assert.IsNotNull(form.FormType);
+            Assert.AreEqual(form.FormType, model.Submodels.FirstOrDefault().FormType);
         }
 
         [Test]
