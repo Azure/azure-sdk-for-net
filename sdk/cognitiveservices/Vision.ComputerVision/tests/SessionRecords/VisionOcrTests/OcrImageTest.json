@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "aebf675c810f498ea94ed13bd02b8c06"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.29220.03",
