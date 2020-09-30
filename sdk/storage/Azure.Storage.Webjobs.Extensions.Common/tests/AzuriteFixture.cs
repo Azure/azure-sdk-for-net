@@ -46,6 +46,9 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public AzuriteFixture()
         {
+            // This is to force newer protocol on machines with older .NET Framework. Otherwise tests don't connect to Azurite with unsigned cert.
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
             var defaultPath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA") ?? string.Empty, "npm");
 
