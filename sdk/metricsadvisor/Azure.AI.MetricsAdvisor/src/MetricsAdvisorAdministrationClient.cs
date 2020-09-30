@@ -295,6 +295,62 @@ namespace Azure.AI.MetricsAdvisor.Administration
         ///
         /// </summary>
         /// <param name="dataFeedId"></param>
+        /// <param name="dataFeed"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                var patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dataFeedId"></param>
+        /// <param name="dataFeed"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                var patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dataFeedId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Response{DataFeed}"/>.</returns>
         public virtual async Task<Response> DeleteDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)

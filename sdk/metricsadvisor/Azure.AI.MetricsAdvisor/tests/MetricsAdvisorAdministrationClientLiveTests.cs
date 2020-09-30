@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateBlobDataFeed()
+        public async Task CreateAndUpdateBlobDataFeed()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
             InitDataFeedSources();
@@ -63,6 +63,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings, _dataFeedOptions).ConfigureAwait(false);
 
             Assert.That(createdDataFeed.Id, Is.Not.Null);
+
+            createdDataFeed.Options.FeedDescription = Recording.GenerateAlphaNumericId("desc");
+            await adminClient.UpdateDataFeedAsync(createdDataFeed.Id.ToString(), createdDataFeed).ConfigureAwait(false);
 
             await adminClient.DeleteDataFeedAsync(createdDataFeed.Id);
         }
