@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//vision/v3.1/ocr?detectOrientation=true&language=de",
-      "EncodedRequestUri": "Ly92aXNpb24vdjMuMS9vY3I/ZGV0ZWN0T3JpZW50YXRpb249dHJ1ZSZsYW5ndWFnZT1kZQ==",
+      "RequestUri": "/vision/v3.1/ocr?detectOrientation=true&language=de",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.ComputerVision.OCR=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "337"
+          "331"
         ],
         "apim-request-id": [
-          "022a8e58-89c3-463f-a109-98be1b917a9b"
+          "fcf8d228-e608-465f-bb9c-7af29c266ade"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 19:20:22 GMT"
+          "Wed, 30 Sep 2020 21:51:18 GMT"
         ],
         "Content-Length": [
           "219"

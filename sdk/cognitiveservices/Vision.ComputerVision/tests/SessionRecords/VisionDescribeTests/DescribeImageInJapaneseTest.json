@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//vision/v3.1/describe?maxCandidates=1&language=ja",
-      "EncodedRequestUri": "Ly92aXNpb24vdjMuMS9kZXNjcmliZT9tYXhDYW5kaWRhdGVzPTEmbGFuZ3VhZ2U9amE=",
+      "RequestUri": "/vision/v3.1/describe?maxCandidates=1&language=ja",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9MSZsYW5ndWFnZT1qYQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.ComputerVision.Describe=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "686"
+          "552"
         ],
         "apim-request-id": [
-          "6a73f2fe-a604-4c35-8bc1-f671eac2711c"
+          "c211816c-1479-4d63-87a0-3993820889fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 19:20:13 GMT"
+          "Wed, 30 Sep 2020 21:51:14 GMT"
         ],
         "Content-Length": [
           "401"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.79938099007893149\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"6a73f2fe-a604-4c35-8bc1-f671eac2711c\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.79938099007893149\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"c211816c-1479-4d63-87a0-3993820889fa\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//vision/v3.1/generateThumbnail?width=64&height=64&smartCropping=false",
-      "EncodedRequestUri": "Ly92aXNpb24vdjMuMS9nZW5lcmF0ZVRodW1ibmFpbD93aWR0aD02NCZoZWlnaHQ9NjQmc21hcnRDcm9wcGluZz1mYWxzZQ==",
+      "RequestUri": "/vision/v3.1/generateThumbnail?width=64&height=64&smartCropping=false",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.ComputerVision.GenerateThumbnail=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "359"
+          "281"
         ],
         "apim-request-id": [
-          "7e7423a1-41e3-4cf4-a077-db4e422c59b2"
+          "a12e93bb-14ad-4295-8932-cf09fdbb0cd8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 19:20:23 GMT"
+          "Wed, 30 Sep 2020 21:51:18 GMT"
         ],
         "Content-Length": [
           "2523"

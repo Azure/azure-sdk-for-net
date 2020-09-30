@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//vision/v3.1/models/landmarks/analyze?language=pt",
-      "EncodedRequestUri": "Ly92aXNpb24vdjMuMS9tb2RlbHMvbGFuZG1hcmtzL2FuYWx5emU/bGFuZ3VhZ2U9cHQ=",
+      "RequestUri": "/vision/v3.1/models/landmarks/analyze?language=pt",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.ComputerVision.Landmarks=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "353"
+          "466"
         ],
         "apim-request-id": [
-          "730943b0-9b60-4093-bae5-b3f9d3fc6960"
+          "51ce2be1-bc76-4d60-933c-cd66970c0539"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 19:20:15 GMT"
+          "Wed, 30 Sep 2020 21:51:10 GMT"
         ],
         "Content-Length": [
           "192"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991011619567871\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"730943b0-9b60-4093-bae5-b3f9d3fc6960\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991011619567871\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"51ce2be1-bc76-4d60-933c-cd66970c0539\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

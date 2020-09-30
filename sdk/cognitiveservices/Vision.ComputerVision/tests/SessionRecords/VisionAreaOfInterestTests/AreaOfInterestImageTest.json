@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//vision/v3.1/areaOfInterest",
-      "EncodedRequestUri": "Ly92aXNpb24vdjMuMS9hcmVhT2ZJbnRlcmVzdA==",
+      "RequestUri": "/vision/v3.1/areaOfInterest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2FyZWFPZkludGVyZXN0",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.ComputerVision.AreaOfInterest=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "523"
+          "496"
         ],
         "apim-request-id": [
-          "5852fa74-fc40-4af1-81c1-1c11c2d9880c"
+          "9e3e1dff-690d-4463-a48f-2573b34a1ebb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,7 +39,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 19:20:17 GMT"
+          "Wed, 30 Sep 2020 21:51:09 GMT"
         ],
         "Content-Length": [
           "155"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"5852fa74-fc40-4af1-81c1-1c11c2d9880c\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"9e3e1dff-690d-4463-a48f-2573b34a1ebb\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
