@@ -18,11 +18,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ContinuationToken { get; internal set; }
 
         /// <summary>
-        /// Optional Batch Failures when <see cref="AccessControlChangeOptions.RetrieveBatchFailures"/> is set to true.
-        /// An enumerable of path entries that failed to update Access Control List within single batch.
-        /// If <see cref="AccessControlChangeOptions.ContinueOnFailure"/> is set to true,
-        /// then the value will contain the first batch of failures seen.
-        /// Otherwise the last batch of failures seen will be set.
+        /// Optional the First Batch Failures.
+        /// An enumerable of path entries that failed to update Access Control List within the first single batch.
+        /// If no failures occured, this will be set to null.
         /// </summary>
         public AccessControlChangeFailure[] BatchFailures { get; internal set; }
     }

@@ -1150,9 +1150,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Cancelled Exception
             }
 
             options.ProgressHandler = null;
@@ -1259,7 +1259,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1320,7 +1320,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1385,7 +1385,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1462,9 +1462,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Canceled Exception
             }
 
             // Assert
@@ -1526,33 +1526,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
-
-            // TODO: replace with GetNewDataLakeSasCredentialsOwner when it gets merged from 74livetests
-            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
-            {
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = fileSystemName,
-                AgentObjectId = subowner
-            };
-            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
-                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
-            };
-
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                RetrieveBatchFailures = true
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
             // Act
-            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
-                accessControlList: AccessControlList,
-                options: options);
+            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(accessControlList: AccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
@@ -1606,24 +1589,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
-            // TODO: replace with GetNewDataLakeSasCredentialsOwner when it gets merged from 74livetests
-            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
-            {
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = fileSystemName,
-                AgentObjectId = subowner
-            };
-            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
-                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
-                RetrieveBatchFailures = true,
                 BatchSize = 2
             };
 
@@ -1812,9 +1785,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Canceled Exception
             }
 
             options.ProgressHandler = null;
@@ -1920,7 +1893,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1989,7 +1962,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2054,7 +2027,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2131,9 +2104,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Canceled Exception
             }
 
             // Assert
@@ -2200,18 +2173,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                RetrieveBatchFailures = true
-            };
-
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
-                accessControlList: AccessControlList,
-                options: options);
+                accessControlList: AccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
@@ -2273,7 +2240,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
-                RetrieveBatchFailures = true,
                 BatchSize = 2
             };
 
@@ -2463,9 +2429,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Canceled Exception
             }
 
             options.ProgressHandler = null;
@@ -2572,7 +2538,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2635,7 +2601,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2700,7 +2666,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2776,9 +2742,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (DataLakeAclChangeFailedException)
             {
-                // skip
+                // skip Task Canceled Exception
             }
 
             // Assert
@@ -2845,18 +2811,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                RetrieveBatchFailures = true
-            };
-
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
 
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
-                accessControlList: RemoveAccessControlList,
-                options: options);
+                accessControlList: RemoveAccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
@@ -2918,7 +2878,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 ContinueOnFailure = true,
-                RetrieveBatchFailures = true,
                 BatchSize = 2
             };
 

@@ -316,7 +316,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? ContinueOnFailure { get { throw null; } set { } }
         public int? MaxBatches { get { throw null; } set { } }
         public System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChanges>> ProgressHandler { get { throw null; } set { } }
-        public bool? RetrieveBatchFailures { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct AccessControlChangeResult
