@@ -8,12 +8,13 @@ using Newtonsoft.Json;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Converts between <see cref="GeographyPoint" /> objects and Geo-JSON points.
+    /// Converts between <c>Microsoft.Spatial</c> objects and Geo-JSON.
     /// </summary>
-    public class NewtonsoftJsonGeographyPointConverter : JsonConverter
+    public class NewtonsoftJsonMicrosoftSpatialGeoJsonConverter : JsonConverter
     {
         /// <inheritdoc/>
         public override bool CanConvert(Type objectType) =>
+            // BUGBUG #15506: Check for all Geography derivatives.
             typeof(GeographyPoint).IsAssignableFrom(objectType);
 
         /// <inheritdoc/>

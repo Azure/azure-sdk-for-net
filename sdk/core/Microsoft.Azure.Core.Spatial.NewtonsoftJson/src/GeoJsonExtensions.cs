@@ -132,7 +132,14 @@ namespace Azure.Core.Serialization
             double longitude = ReadFloatOrInt();
             double latitude = ReadFloatOrInt();
 
+            // Skip remaining coordinates, e.g. z and m.
+            while (coordinatesReader.TokenType != JsonToken.EndArray)
+            {
+                coordinatesReader.Advance();
+            }
+
             coordinatesReader.ExpectAndAdvance(JsonToken.EndArray);
+
             return GeographyPoint.Create(latitude, longitude);
         }
     }
