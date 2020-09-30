@@ -83,5 +83,6 @@
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
     <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
+    <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
   </PropertyGroup>
 </Project>
