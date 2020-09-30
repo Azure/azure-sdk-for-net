@@ -38,8 +38,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="migrationState">Migration state that this database is
         /// in. Possible values include: 'UNDEFINED', 'CONFIGURING',
         /// 'INITIALIAZING', 'STARTING', 'RUNNING', 'READY_TO_COMPLETE',
-        /// 'COMPLETING', 'COMPLETE', 'CANCELLING', 'CANCELLED',
-        /// 'FAILED'</param>
+        /// 'COMPLETING', 'COMPLETE', 'CANCELLING', 'CANCELLED', 'FAILED',
+        /// 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED',
+        /// 'RESTORE_IN_PROGRESS', 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS',
+        /// 'BACKUP_COMPLETED'</param>
         /// <param name="incomingChanges">Number of incoming changes</param>
         /// <param name="appliedChanges">Number of applied changes</param>
         /// <param name="cdcInsertCounter">Number of cdc inserts</param>
@@ -104,7 +106,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Gets migration state that this database is in. Possible values
         /// include: 'UNDEFINED', 'CONFIGURING', 'INITIALIAZING', 'STARTING',
         /// 'RUNNING', 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE',
-        /// 'CANCELLING', 'CANCELLED', 'FAILED'
+        /// 'CANCELLING', 'CANCELLED', 'FAILED', 'VALIDATING',
+        /// 'VALIDATION_COMPLETE', 'VALIDATION_FAILED', 'RESTORE_IN_PROGRESS',
+        /// 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
         /// </summary>
         [JsonProperty(PropertyName = "migrationState")]
         public string MigrationState { get; private set; }
