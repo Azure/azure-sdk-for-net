@@ -4,7 +4,7 @@
 
 > see https://aka.ms/autorest
 
-Run `dotnet msbuild /t:GenerateCode /p:IsClientLibrary=true` in src directory to re-generate.
+Run `dotnet build /t:GenerateCode /p:IsClientLibrary=true` in src directory to re-generate.
 
 ``` yaml
 title: Azure.Security.KeyVault.Storage
