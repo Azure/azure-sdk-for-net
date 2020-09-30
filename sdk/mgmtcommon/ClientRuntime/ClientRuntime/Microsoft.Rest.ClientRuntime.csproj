@@ -3,12 +3,12 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.21</Version>
+    <Version>2.3.22</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      General performance improvements since last release.
+      Fixed a bug with ShouldSerialize methods not working correctly in PolymorphicConvertor.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
