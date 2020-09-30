@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             : base(isAsync)
         { }
 
-        private const string ResourceId = "/subscriptions/0e44ac0a-5911-482b-9edd-3e67625d45b5/providers/microsoft.insights/logprofiles/default";
-
         private static string DefaultName = "default";
 
         [Test]
