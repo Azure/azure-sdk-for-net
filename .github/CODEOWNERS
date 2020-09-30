@@ -27,7 +27,7 @@
 /sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
 
 # PRLabel: %Batch
-/sdk/batch/                                     @bgklein @xingwu1 
+/sdk/batch/                                     @paterasMSFT @dpwatrous
 
 # PRLabel: %Communication
 /sdk/communication/                             @RezaJooyandeh @DominikMe
