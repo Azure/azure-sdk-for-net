@@ -19,23 +19,23 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private string endpoint;
+        private string host;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Breeze endpoint: https://dc.services.visualstudio.com. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint = "https://dc.services.visualstudio.com")
+        /// <param name="host"> Breeze endpoint: https://dc.services.visualstudio.com. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
+        public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://dc.services.visualstudio.com")
         {
-            if (endpoint == null)
+            if (host == null)
             {
-                throw new ArgumentNullException(nameof(endpoint));
+                throw new ArgumentNullException(nameof(host));
             }
 
-            this.endpoint = endpoint;
+            this.host = host;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;
@@ -63,8 +63,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return message;
         }
 
-        /// <summary> This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
-        /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
+        /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>
+        /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
@@ -96,8 +96,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
         }
 
-        /// <summary> This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
-        /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
+        /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>
+        /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)

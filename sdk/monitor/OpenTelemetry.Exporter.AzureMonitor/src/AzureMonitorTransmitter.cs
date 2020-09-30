@@ -20,7 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        private readonly ApplicationInsightsRestClient serviceRestClient;
+        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
 
@@ -45,7 +45,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
@@ -70,11 +70,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (async)
             {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
             }
 
             // TODO: Handle exception, check telemetryItems has items
@@ -83,7 +83,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture));
             ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
             telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
