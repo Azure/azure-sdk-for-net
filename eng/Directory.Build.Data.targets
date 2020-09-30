@@ -180,7 +180,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" />
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
   </ItemGroup>
  
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
