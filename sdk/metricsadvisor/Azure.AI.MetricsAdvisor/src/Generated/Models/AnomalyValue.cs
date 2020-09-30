@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyValue. </summary>
-    internal readonly partial struct AnomalyValue : IEquatable<AnomalyValue>
+    public readonly partial struct AnomalyValue : IEquatable<AnomalyValue>
     {
         private readonly string _value;
 

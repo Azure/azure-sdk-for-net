@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly ServiceRestClient _serviceRestClient;
+        private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
         /// </summary>
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
 
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
 
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<ServiceCreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataSource.DataFeedDetail, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataSource.DataFeedDetail, cancellationToken).ConfigureAwait(false);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
                 var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
@@ -276,7 +276,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<ServiceCreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataSource.DataFeedDetail, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataSource.DataFeedDetail, cancellationToken);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
                 var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
@@ -570,7 +570,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
                 detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 return Response.FromValue(detectionConfiguration, response.GetRawResponse());
@@ -593,7 +593,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
                 detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 return Response.FromValue(detectionConfiguration, response.GetRawResponse());
@@ -641,6 +641,52 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 return _serviceRestClient.GetAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual async Task<Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+
+            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+            scope.Start();
+
+            try
+            {
+                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricIdGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+
+            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+            scope.Start();
+
+            try
+            {
+                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricIdGuid, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -709,7 +755,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
                 alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 return Response.FromValue(alertConfiguration, response.GetRawResponse());
@@ -733,7 +779,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
                 alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 return Response.FromValue(alertConfiguration, response.GetRawResponse());
@@ -899,7 +945,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
                 hook.Id = ClientCommon.GetHookId(response.Headers.Location);
 
                 return Response.FromValue(hook, response.GetRawResponse());
@@ -927,7 +973,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<ServiceCreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
                 hook.Id = ClientCommon.GetHookId(response.Headers.Location);
 
                 return Response.FromValue(hook, response.GetRawResponse());

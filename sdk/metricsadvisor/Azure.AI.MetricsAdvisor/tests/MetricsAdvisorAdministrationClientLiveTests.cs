@@ -13,8 +13,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricsAdvisorAdministrationClientLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string DataFeedId = "dd64cd95-f22f-4176-9554-ded0b8db83a1";
-
         public MetricsAdvisorAdministrationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -74,16 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
-            DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
-
-            var config = new MetricAnomalyDetectionConfiguration(
-                feed.MetricIds.First(),
-                Recording.GenerateAlphaNumericId("Name"),
-                new MetricAnomalyDetectionConditions(
-                    DetectionConditionsOperator.And,
-                    new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
-                    new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
-                    new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
+            var config = await CreateMetricAnomalyDetectionConfiguration(adminClient);
 
             MetricAnomalyDetectionConfiguration createdConfiguration = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
 
@@ -144,7 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AnomalyAlertConfiguration createdAlertConfig = await adminClient.CreateAnomalyAlertConfigurationAsync(
                 new AnomalyAlertConfiguration(
                     Recording.GenerateAlphaNumericId("test"),
-                    new List<string> (),
+                    new List<string>(),
                     new List<MetricAnomalyAlertConfiguration>
                     {
                         new MetricAnomalyAlertConfiguration(
@@ -195,6 +184,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
             await adminClient.ResetDataFeedIngestionStatusAsync(DataFeedId, new DateTimeOffset(2020, 9, 1, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2020, 9, 2, 0, 0, 0, TimeSpan.Zero)).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        public async Task GetMetricAnomalyDetectionConfigurations()
+        {
+            var adminClient = GetMetricsAdvisorAdministrationClient();
+
+            Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>> configs = await adminClient.GetMetricAnomalyDetectionConfigurationsAsync(MetricId).ConfigureAwait(false);
+
+            Assert.That(configs.Value, Is.Not.Empty);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The PeriodFeedbackValue. </summary>
-    internal partial class PeriodFeedbackValue
+    public partial class PeriodFeedbackValue
     {
         /// <summary> Initializes a new instance of PeriodFeedbackValue. </summary>
         /// <param name="periodType"> the type of setting period. </param>
