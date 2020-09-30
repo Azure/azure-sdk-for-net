@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes
         private readonly SearchClientOptions.ServiceVersion _version;
         private readonly ObjectSerializer _serializer;
 
-        private ServiceRestClient _serviceClient;
+        private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
@@ -91,9 +91,9 @@ namespace Azure.Search.Documents.Indexes
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the generated <see cref="ServiceRestClient"/> to make requests.
+        /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
         /// </summary>
-        private ServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new ServiceRestClient(
+        private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),

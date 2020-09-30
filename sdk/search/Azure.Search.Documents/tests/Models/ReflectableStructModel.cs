@@ -7,10 +7,9 @@ using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
-using Microsoft.Spatial;
+using Azure.Core.GeoJson;
 #endif
+using Microsoft.Spatial;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -109,10 +108,10 @@ namespace Azure.Search.Documents.Tests
         public int? NullableInt { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry GeographyPoint { get; set; }
-#else
-        public GeographyPoint GeographyPoint { get; set; }
+        public GeoPoint GeoPoint { get; set; }
 #endif
+
+        public GeographyPoint GeographyPoint { get; set; }
 
         public int[] IntArray { get; set; }
 
@@ -175,16 +174,17 @@ namespace Azure.Search.Documents.Tests
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry[] GeographyPointArray { get; set; }
+        public GeoPoint[] GeoPointArray { get; set; }
 
-        public IList<PointGeometry> GeographyPointIList { get; set; }
+        public IList<GeoPoint> GeoPointIList { get; set; }
 
-        public List<PointGeometry> GeographyPointList { get; set; }
+        public List<GeoPoint> GeoPointList { get; set; }
 
-        public IEnumerable<PointGeometry> GeographyPointIEnumerable { get; set; }
+        public IEnumerable<GeoPoint> GeoPointIEnumerable { get; set; }
 
-        public ICollection<PointGeometry> GeographyPointICollection { get; set; }
-#else
+        public ICollection<GeoPoint> GeoPointICollection { get; set; }
+#endif
+
         public GeographyPoint[] GeographyPointArray { get; set; }
 
         public IList<GeographyPoint> GeographyPointIList { get; set; }
@@ -194,7 +194,6 @@ namespace Azure.Search.Documents.Tests
         public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
 
         public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
-#endif
 
         public ReflectableComplexStruct? Complex { get; set; }
 

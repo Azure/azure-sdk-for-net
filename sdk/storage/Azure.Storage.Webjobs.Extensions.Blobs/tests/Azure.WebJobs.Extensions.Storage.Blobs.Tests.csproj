@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Common\tests\Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj" />
     <ProjectReference Include="..\src\Azure.WebJobs.Extensions.Storage.Blobs.csproj" />

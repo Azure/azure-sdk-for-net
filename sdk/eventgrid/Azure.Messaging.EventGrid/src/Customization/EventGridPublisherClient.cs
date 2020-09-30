@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid
     /// </summary>
     public class EventGridPublisherClient
     {
-        private readonly ServiceRestClient _serviceRestClient;
+        private readonly EventGridRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private string _hostName => _endpoint.Host;
         private readonly Uri _endpoint;
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid
             _endpoint = endpoint;
             _key = credential;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
+            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid
             _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
+            _serviceRestClient = new EventGridRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
