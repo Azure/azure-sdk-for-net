@@ -31,7 +31,7 @@
             "name": "[variables('uniqueSubDomainName')]",
             "location": "global",
             "properties": {
-                "dataLocation": "United States"
+                "dataLocation": "UnitedStates"
             }
         },
         {
