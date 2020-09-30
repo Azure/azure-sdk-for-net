@@ -15,26 +15,27 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobTests
     {
-        private const string TriggerQueueName = "input";
-        private const string ContainerName = "container";
+        private const string TriggerQueueName = "input-blobtests";
+        private const string ContainerName = "container-blobtests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
 
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public BlobTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(TriggerQueueName).DeleteIfExists();
         }
 
         [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
-            var account = azuriteFixture.GetAccount();
-
             var prog = new BindToCloudBlockBlobProgram();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
@@ -65,7 +66,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContent = "message";
-            var account = azuriteFixture.GetAccount();
             QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
 

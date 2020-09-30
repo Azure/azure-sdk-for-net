@@ -18,15 +18,18 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class QueueTests
     {
-        private const string TriggerQueueName = "input";
-        private const string QueueName = "output";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string TriggerQueueName = "input-queuetests";
+        private const string QueueName = "output-queuetests";
+        private readonly StorageAccount account;
 
         public QueueTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(TriggerQueueName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
         // Test binding to generics.
@@ -42,7 +45,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task TestGenericSucceeds()
         {
-            var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<ICollector<string>>>(b =>
                 {
@@ -112,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                {
-                   builder.UseStorage(azuriteFixture.GetAccount());
+                   builder.UseStorage(account);
                })
                .ConfigureServices(services =>
                {
@@ -145,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                 {
-                    builder.UseStorage(azuriteFixture.GetAccount());
+                    builder.UseStorage(account);
                 })
                 .ConfigureServices(services =>
                 {
@@ -189,7 +191,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
             Assert.NotEqual(ProgramWithTriggerAndBindingData.QueueOutName, ProgramWithTriggerAndBindingData.QueueOutName.ToLower());
 
-            var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndBindingData>(b =>
                 {
@@ -250,7 +251,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
             Assert.NotEqual(ProgramWithTriggerAndBindingData.QueueOutName, ProgramWithTriggerAndBindingData.QueueOutName.ToLower());
 
-            var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndCompoundBindingData>(b =>
                 {
@@ -361,7 +361,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public void Fails_BindingContract_Mismatch()
         {
             // Verify that indexing fails if the [Queue] trigger needs binding data that's not present.
-            var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramBadContract>(b =>
                 {
@@ -386,7 +385,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public void Fails_Cant_Bind_To_Object()
         {
-            var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramCantBindToObject>(b =>
                 {
@@ -422,7 +420,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<T>>(b =>
                 {
-                    b.UseStorage(azuriteFixture.GetAccount());
+                    b.UseStorage(account);
                 })
                 .Build();
 
@@ -435,7 +433,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task Queue_IfBoundToCloudQueue_BindsAndCreatesQueue()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var client = account.CreateQueueServiceClient();
             var triggerQueue = await CreateQueue(client, TriggerQueueName);
             await triggerQueue.SendMessageAsync("ignore");
@@ -456,7 +453,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedContent = Guid.NewGuid().ToString();
-            var account = CreateFakeStorageAccount();
             var client = account.CreateQueueServiceClient();
             var triggerQueue = await CreateQueue(client, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
@@ -472,11 +468,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Single(messages);
             QueueMessage message = messages.Single();
             Assert.Equal(expectedContent, message.MessageText);
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return azuriteFixture.GetAccount();
         }
 
         private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)

@@ -3,19 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Newtonsoft.Json;
 using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
@@ -23,24 +18,26 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
-    public class HostCallTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class HostCallTests
     {
-        private const string QueueName = "input";
-        private const string OutputQueueName = "output";
+        private const string QueueName = "input-hostcalltests";
+        private const string OutputQueueName = "output-hostcalltests";
         private const int TestValue = Int32.MinValue;
         private const string TestQueueMessage = "ignore";
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public HostCallTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(OutputQueueName).DeleteIfExists();
         }
 
         [Fact]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             IDictionary<string, object> arguments = new Dictionary<string, object>
             {
                 { "value", "15" }
@@ -67,8 +64,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToOutPoco_CanCall()
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(QueueProgram), "BindToOutPoco");
 
@@ -92,8 +87,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
 
@@ -113,8 +106,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(QueueProgram), "BindToICollectorByteArray");
 
@@ -133,8 +124,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToIAsyncCollectorInt_NotSupported()
         {
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             FunctionIndexingException ex = await Assert.ThrowsAsync<FunctionIndexingException>(() =>
             {
@@ -147,8 +136,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task TestEnqueueMultiplePocoMessages(string methodName)
         {
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(QueueProgram), methodName);
 
@@ -169,9 +156,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToIAsyncCollector_AddEnqueuesImmediately()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorEnqueuesImmediately");
         }
@@ -179,9 +163,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToCloudQueue_CanCall()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
@@ -194,9 +175,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToCloudQueueAndQueueIsMissing_Creates()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
@@ -224,9 +202,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [InlineData("FuncWithICollector", TestQueueMessage)]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_CreatesAndSends(string methodName, string expectedMessage)
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(MissingQueueProgram), methodName);
 
@@ -239,9 +214,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToOutPocoAndQueueIsMissing_CreatesAndSends()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
 
@@ -254,9 +226,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Queue_IfBoundToOutStructAndQueueIsMissing_CreatesAndSends()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
 
@@ -273,9 +242,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [InlineData("FuncWithICollectorNoop")]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_DoesNotCreate(string methodName)
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
             await CallAsync(account, typeof(MissingQueueProgram), methodName);
 
@@ -362,11 +328,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return azuriteFixture.GetAccount();
         }
 
         private struct CustomDataValue

@@ -13,13 +13,16 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
-    public class DataBindingFunctionalTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class DataBindingFunctionalTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "queue-databindingfunctionaltests";
+        private readonly StorageAccount account;
 
         public DataBindingFunctionalTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
         [Fact]
@@ -29,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseStorage(azuriteFixture.GetAccount());
+                    b.UseStorage(account);
                 });
 
 
@@ -64,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
         {
             public static string Result { get; set; }
 
-            public static void BindStringableParameter([QueueTrigger("ignore")] MessageWithStringableProperty message,
+            public static void BindStringableParameter([QueueTrigger(QueueName)] MessageWithStringableProperty message,
                 string guidValue)
             {
                 Result = guidValue;

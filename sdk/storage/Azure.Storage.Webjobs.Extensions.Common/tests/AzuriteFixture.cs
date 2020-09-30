@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Azure.Storage.Blobs;
@@ -31,12 +28,10 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     {
         private const BlobClientOptions.ServiceVersion SupportedBlobServiceVersion = BlobClientOptions.ServiceVersion.V2019_12_12;
         private const QueueClientOptions.ServiceVersion SupportedQueueServiceVersion = QueueClientOptions.ServiceVersion.V2019_12_12;
-        private const int AccountPoolSize = 50;
         private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
         private Process process;
-        private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
-        private List<string> accountsList = new List<string>();
+        private AzuriteAccount account;
         private CountdownEvent countdownEvent = new CountdownEvent(2);
         private StringBuilder azuriteOutput = new StringBuilder();
         private int blobsPort;
@@ -55,23 +50,18 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage($"{azuriteScriptLocation} does not exist, check if {AzuriteLocationKey} is pointing to right location"));
             }
 
-            for (int i = 0; i < AccountPoolSize; i++)
+            account = new AzuriteAccount()
             {
-                var account = new AzuriteAccount()
-                {
-                    Name = Guid.NewGuid().ToString(),
-                    Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-                };
-                accounts.Enqueue(account);
-                accountsList.Add($"{account.Name}:{account.Key}");
-            }
+                Name = Guid.NewGuid().ToString(),
+                Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
+            };
 
             tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort 0 --queuePort 0";
-            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
+            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{account.Name}:{account.Key}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
@@ -108,11 +98,8 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             {
                 throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
             }
-            foreach (var account in accounts)
-            {
-                account.BlobsPort = blobsPort;
-                account.QueuesPort = queuesPort;
-            }
+            account.BlobsPort = blobsPort;
+            account.QueuesPort = queuesPort;
         }
 
         private int ParseAzuritePort(string outputLine)
@@ -132,8 +119,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public StorageAccount GetAccount()
         {
-            var azuriteAccount = accounts.Dequeue();
-            return new StorageAccount(azuriteAccount.ConnectionString,
+            return new StorageAccount(account.ConnectionString,
                 SupportedBlobServiceVersion,
                 SupportedQueueServiceVersion);
         }

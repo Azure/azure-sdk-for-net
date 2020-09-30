@@ -25,10 +25,11 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    public class BlobQueueTriggerExecutorTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobQueueTriggerExecutorTests
     {
         private const string TestBlobName = "TestBlobName";
-        private const string TestContainerName = "container";
+        private const string TestContainerName = "container-blobqueuetriggerexecutortests";
         private const string TestQueueMessageId = "abc123";
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
@@ -36,17 +37,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         private readonly BlobServiceClient blobServiceClient;
         private readonly BlobContainerClient blobContainer;
 
-        private readonly AzuriteFixture azuriteFixture;
-
         public BlobQueueTriggerExecutorTests(AzuriteFixture azuriteFixture)
         {
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            this.azuriteFixture = azuriteFixture;
-            blobServiceClient = azuriteFixture.GetAccount().CreateBlobServiceClient();
+            var account = azuriteFixture.GetAccount();
+            blobServiceClient = account.CreateBlobServiceClient();
             blobContainer = blobServiceClient.GetBlobContainerClient(TestContainerName);
+            blobContainer.DeleteIfExists();
             blobContainer.CreateIfNotExists();
         }
 

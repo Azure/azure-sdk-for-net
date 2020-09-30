@@ -16,7 +16,8 @@ using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>, IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>
     {
         private ITriggerBinding _binding;
 
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var fakeAccount = azuriteFixture.GetAccount();
             QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
-            QueueClient queue = queueServiceClient.GetQueueClient("queueName");
+            QueueClient queue = queueServiceClient.GetQueueClient("queueName-queuetriggerbindingintegrationtests");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);
             var enqueueWatcher = new Host.Queues.Listeners.SharedQueueWatcher();

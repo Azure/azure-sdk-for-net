@@ -14,13 +14,14 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
-    public class StorageBlobScanInfoManagerTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class StorageBlobScanInfoManagerTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public StorageBlobScanInfoManagerTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
         }
 
         [Fact]
@@ -30,7 +31,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
 
             // by default there is no table in this client
@@ -48,7 +48,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -67,7 +66,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = "account=" + Guid.NewGuid().ToString();
             string containerName = "container-" + Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -89,7 +87,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -114,7 +111,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();

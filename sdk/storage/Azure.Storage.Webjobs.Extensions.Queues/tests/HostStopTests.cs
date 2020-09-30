@@ -13,23 +13,24 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStopTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class HostStopTests
     {
-        private const string QueueName = "input";
+        private const string QueueName = "input-hoststoptests";
         private static readonly TaskCompletionSource<object> _functionStarted = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<object> _stopHostCalled = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<bool> _testTaskSource = new TaskCompletionSource<bool>();
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public HostStopTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
         [Fact]
         public async Task Stop_TriggersCancellationToken()
         {
-            StorageAccount account = azuriteFixture.GetAccount();
             QueueClient queue = await CreateQueueAsync(account, QueueName);
             await queue.SendMessageAsync("ignore");
 
