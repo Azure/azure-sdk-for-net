@@ -47,5 +47,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the length (in UTF-16 code units) of the matching text in the sentence.
         /// </summary>
         private int Length { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Text: {Text}, Offset: {Offset}, ConfidenceScore: {ConfidenceScore}";
+        }
     }
 }

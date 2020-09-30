@@ -57,5 +57,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the starting position (in UTF-16 code units) for the aspect text.
         /// </summary>
         public int Offset { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Text: {Text}, Sentiment: {Sentiment}, Confidence Scores: [{ConfidenceScores}]";
+        }
     }
 }

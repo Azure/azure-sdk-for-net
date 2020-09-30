@@ -32,5 +32,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// The text of this form element. It can be a whole line or a single word.
         /// </summary>
         public string Text { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"PageNumber: {PageNumber}, Text: {Text}";
+        }
     }
 }

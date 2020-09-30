@@ -38,5 +38,11 @@ namespace Azure.AI.TextAnalytics
                 return _documentSentiment;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ID: {Id}, {DocumentSentiment}";
+        }
     }
 }

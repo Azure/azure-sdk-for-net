@@ -63,5 +63,10 @@ namespace Azure.AI.FormRecognizer.Training
         [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset TrainingCompletedOn { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ModelId: {ModelId}, Status: {Status}";
+        }
     }
 }

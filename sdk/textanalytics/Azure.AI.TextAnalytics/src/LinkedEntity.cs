@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -66,5 +67,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         [CodeGenMember("BingId")]
         public string BingEntitySearchApiId { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Name: {Name}, # Matches: {Matches.Count()}";
+        }
     }
 }

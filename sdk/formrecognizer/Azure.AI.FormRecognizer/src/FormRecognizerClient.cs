@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Azure.AI.FormRecognizer
     /// </summary>
     public class FormRecognizerClient
     {
+        private readonly Uri _endpoint;
+
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         internal readonly FormRecognizerRestClient ServiceClient;
 
@@ -56,6 +59,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            _endpoint = endpoint;
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
@@ -91,6 +95,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            _endpoint = endpoint;
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
             ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
@@ -528,6 +533,27 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
+        #endregion
+
+        #region Nobody wants to see these
+        /// <summary>
+        /// Check if two FormRecognizerClient instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        /// <summary>
+        /// Get a hash code for the FormRecognizerClient.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// FormRecognizerClient ToString.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => $"Endpoint: {_endpoint}";
         #endregion
 
         /// <summary>

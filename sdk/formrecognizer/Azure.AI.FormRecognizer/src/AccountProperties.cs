@@ -37,5 +37,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// The maximum number of models that can be trained for this subscription.
         /// </summary>
         public int CustomModelLimit { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"CustomModelCount: {CustomModelCount}, CustomModelLimit: {CustomModelLimit}";
+        }
     }
 }

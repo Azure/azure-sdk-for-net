@@ -39,5 +39,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The instance to be converted into a <see cref="string"/>.</param>
         /// <returns>The <see cref="string"/> corresponding to the recognized text.</returns>
         public static implicit operator string(FieldData text) => text.Text;
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Text: {Text}";
+        }
     }
 }

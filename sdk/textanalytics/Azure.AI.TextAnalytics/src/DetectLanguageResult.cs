@@ -37,5 +37,11 @@ namespace Azure.AI.TextAnalytics
                 return _primaryLanguage;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ID: {Id}, {PrimaryLanguage}";
+        }
     }
 }

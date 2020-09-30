@@ -26,5 +26,11 @@ namespace Azure.AI.TextAnalytics
         /// The list of opinions that are related to the aspect.
         /// </summary>
         public IReadOnlyCollection<OpinionSentiment> Opinions { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Aspect text: {Aspect.Text}, Aspect sentiment: {Aspect.Sentiment}, #Opinions: {Opinions.Count}";
+        }
     }
 }

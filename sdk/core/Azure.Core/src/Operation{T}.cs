@@ -105,6 +105,6 @@ namespace Azure
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() => $"ID:: {Id}, HasCompleted: {HasCompleted}";
     }
 }

@@ -56,5 +56,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
         /// </summary>
         public int Offset { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Text: {Text}, ConfidenceScore: {ConfidenceScore}";
+        }
     }
 }

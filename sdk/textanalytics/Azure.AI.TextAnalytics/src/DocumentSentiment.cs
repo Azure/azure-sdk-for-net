@@ -53,6 +53,12 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Sentiment: {Sentiment}, Confidence Scores: [{ConfidenceScores}]";
+        }
+
         private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentimentInternal> internalSentences)
         {
             var sentences = new List<SentenceSentiment>();

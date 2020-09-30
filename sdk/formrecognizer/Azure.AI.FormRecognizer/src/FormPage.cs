@@ -102,6 +102,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<FormSelectionMark> SelectionMarks { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"PageNumber: {PageNumber}, # Lines: {Lines.Count}, # Tables: {Tables.Count}, # SelectionMarks: {SelectionMarks.Count}";
+        }
+
         private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine> textLines, int pageNumber)
         {
             List<FormLine> rawLines = new List<FormLine>();

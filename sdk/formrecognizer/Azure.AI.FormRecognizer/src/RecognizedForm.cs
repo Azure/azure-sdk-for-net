@@ -104,6 +104,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"FormType: {FormType}, # Fields: {Fields.Count}, # Pages: {Pages.Count}";
+        }
+
         private static IReadOnlyDictionary<string, FormField> ConvertUnsupervisedFields(int pageNumber, IReadOnlyList<KeyValuePair> keyValuePairs, IReadOnlyList<ReadResult> readResults)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();

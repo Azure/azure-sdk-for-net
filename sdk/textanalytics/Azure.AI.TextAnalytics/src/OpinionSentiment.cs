@@ -64,5 +64,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the starting position (in UTF-16 code units) for the opinion text.
         /// </summary>
         public int Offset { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Text: {Text}, Sentiment: {Sentiment}, IsNegated: {IsNegated}, Confidence Scores: [{ConfidenceScores}]";
+        }
     }
 }

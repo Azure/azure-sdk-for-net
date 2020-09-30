@@ -18,10 +18,9 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class TextAnalyticsClient
     {
-        private readonly Uri _baseUri;
+        private readonly Uri _endpoint;
         private readonly TextAnalyticsRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
@@ -66,8 +65,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
+            _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
@@ -106,8 +104,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
+            _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
@@ -2143,7 +2140,7 @@ namespace Azure.AI.TextAnalytics
         /// TextAnalyticsClient ToString.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() => $"Endpoint: {_endpoint}";
         #endregion
     }
 }

@@ -42,5 +42,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the warnings encountered while processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Language: {Name}, ConfidenceScore: {ConfidenceScore}";
+        }
     }
 }

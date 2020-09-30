@@ -36,5 +36,11 @@ namespace Azure.AI.TextAnalytics
                 return _keyPhrases;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ID: {Id}, # KeyPhrases: {KeyPhrases.Count}";
+        }
     }
 }

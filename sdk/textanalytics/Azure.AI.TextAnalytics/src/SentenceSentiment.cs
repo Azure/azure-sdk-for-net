@@ -64,6 +64,12 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public int Offset { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Sentiment: {Sentiment}, Confidence Scores: [{ConfidenceScores}]";
+        }
+
         private static IReadOnlyCollection<MinedOpinion> ConvertToMinedOpinions(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
         {
             var minedOpinions = new List<MinedOpinion>();

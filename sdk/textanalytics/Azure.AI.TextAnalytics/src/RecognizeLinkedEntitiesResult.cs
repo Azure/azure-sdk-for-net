@@ -38,5 +38,11 @@ namespace Azure.AI.TextAnalytics
                 return _linkedEntities;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ID: {Id}, # of Linked Entities: {Entities.Count}";
+        }
     }
 }

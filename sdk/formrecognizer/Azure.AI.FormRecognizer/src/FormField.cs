@@ -104,6 +104,21 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public float Confidence { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            // labeled
+            if (LabelData == null)
+            {
+                return $"{ValueData}, Confidence: {Confidence}";
+            }
+            else
+            {
+                //unlabeled
+                return $"Label {LabelData}, {ValueData}, Confidence: {Confidence}";
+            }
+        }
+
         internal static IReadOnlyList<FormElement> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult> readResults)
         {
             List<FormElement> FormElement = new List<FormElement>();

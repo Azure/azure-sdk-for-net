@@ -35,5 +35,11 @@ namespace Azure.AI.TextAnalytics
         /// sentiment of the analyzed text is negative.
         /// </summary>
         public double Negative { get; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Positive:{Positive}, Negative:{Negative}, Neutral:{Neutral}";
+        }
     }
 }

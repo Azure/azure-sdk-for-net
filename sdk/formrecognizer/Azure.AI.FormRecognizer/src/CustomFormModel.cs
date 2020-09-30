@@ -106,6 +106,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"ModelId: {ModelId}, Status: {Status}";
+        }
+
         private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model model)
         {
             if (model.Keys != null)
