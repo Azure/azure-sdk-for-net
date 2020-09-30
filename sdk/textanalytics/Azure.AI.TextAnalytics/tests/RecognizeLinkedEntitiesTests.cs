@@ -58,7 +58,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 LinkedEntityMatch match = entity.Matches.First();
                 Assert.IsNotNull(match.ConfidenceScore);
                 Assert.IsNotNull(match.Text);
-                Assert.Greater(match.Length, 0);
             }
         }
 

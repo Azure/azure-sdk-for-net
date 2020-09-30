@@ -48,7 +48,6 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (PiiEntity entity in entities)
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
-                Assert.Greater(entity.Length, 0);
             }
         }
 

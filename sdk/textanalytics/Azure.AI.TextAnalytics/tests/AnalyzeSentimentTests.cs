@@ -426,7 +426,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                 Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
-                Assert.Greater(sentence.Length, 0);
 
                 Assert.IsNotNull(sentence.MinedOpinions);
                 if (opinionMining)
@@ -443,8 +442,6 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.AreEqual(0, minedOpinions.Aspect.ConfidenceScores.Neutral);
                         Assert.IsTrue(CheckTotalConfidenceScoreValue(minedOpinions.Aspect.ConfidenceScores));
                         Assert.IsNotNull(minedOpinions.Aspect.Offset);
-                        Assert.IsNotNull(minedOpinions.Aspect.Length);
-                        Assert.Greater(minedOpinions.Aspect.Length, 0);
 
                         // Opinions
                         Assert.IsNotNull(minedOpinions.Opinions);
@@ -459,8 +456,6 @@ namespace Azure.AI.TextAnalytics.Tests
                             Assert.IsTrue(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores));
                             Assert.IsNotNull(opinion.IsNegated);
                             Assert.IsNotNull(opinion.Offset);
-                            Assert.IsNotNull(opinion.Length);
-                            Assert.Greater(opinion.Length, 0);
                         }
                     }
                 }

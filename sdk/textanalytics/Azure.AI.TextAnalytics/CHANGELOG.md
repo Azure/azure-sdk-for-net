@@ -1,7 +1,8 @@
 # Release History
 
 ## 5.1.0-beta.2 (Unreleased)
-
+### Breaking changes
+- Removed property `Length` from `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
 
 ## 5.1.0-beta.1 (2020-09-17)
 
