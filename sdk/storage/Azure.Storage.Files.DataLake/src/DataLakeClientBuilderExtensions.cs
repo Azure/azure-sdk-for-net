@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/>.
         /// </summary>
-        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
+        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(
@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sharedKeyCredential"/>.
         /// </summary>
-        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, StorageSharedKeyCredential sharedKeyCredential)
+        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, StorageSharedKeyCredential sharedKeyCredential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(options => new DataLakeServiceClient(serviceUri, sharedKeyCredential, options));
@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="DataLakeServiceClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddBlobServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(configuration);

@@ -2,6 +2,7 @@
 
 ## 1.0.1 (2020-10-06)
 
+- Number of parallel secret retrievals is limited to `32`.
 
 ## 1.0.0 (2020-06-04)
 
