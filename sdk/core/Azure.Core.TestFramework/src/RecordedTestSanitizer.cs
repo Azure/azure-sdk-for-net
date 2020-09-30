@@ -49,7 +49,11 @@ namespace Azure.Core.TestFramework
                         token.Replace(JToken.FromObject(SanitizeValue));
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO);
+                var settings = new JsonSerializerSettings
+                {
+                    DateParseHandling = DateParseHandling.DateTimeOffset
+                };
+                return JsonConvert.SerializeObject(jsonO, settings);
             }
             catch
             {
