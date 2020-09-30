@@ -1,6 +1,12 @@
 # Release History
 
-## 5.3.0-beta.3 (Unreleased)
+## 5.3.0-beta.3 (2020-09-30)
+
+### Changes
+
+#### Key Bug Fixes
+
+- An issue with package publishing which blocked referencing and use has been fixed.
 
 ## 5.3.0-beta.2 (2020-09-28)
 
