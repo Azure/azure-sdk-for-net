@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus
         /// Hence, if this value is set to be too low, it could cause new sessions to be requested
         /// more often than necessary.
         /// </remarks>
-        public TimeSpan? MaxReceiveWaitTime
+        internal TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
 
