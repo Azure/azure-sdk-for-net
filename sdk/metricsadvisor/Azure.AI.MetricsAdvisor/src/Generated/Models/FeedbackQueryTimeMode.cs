@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> time mode to filter feedback. </summary>
-    internal readonly partial struct FeedbackQueryTimeMode : IEquatable<FeedbackQueryTimeMode>
+    public readonly partial struct FeedbackQueryTimeMode : IEquatable<FeedbackQueryTimeMode>
     {
         private readonly string _value;
 

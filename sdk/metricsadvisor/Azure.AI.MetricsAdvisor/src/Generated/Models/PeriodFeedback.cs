@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The PeriodFeedback. </summary>
-    internal partial class PeriodFeedback : MetricFeedback
+    public partial class PeriodFeedback : MetricFeedback
     {
         /// <summary> Initializes a new instance of PeriodFeedback. </summary>
         /// <param name="metricId"> metric unique id. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
 
             Value = value;
-            FeedbackType = FeedbackType.Period;
+            FeedbackType = Models.FeedbackType.Period;
         }
 
         /// <summary> Initializes a new instance of PeriodFeedback. </summary>
@@ -45,7 +45,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value;
             FeedbackType = feedbackType;
         }
-
-        public PeriodFeedbackValue Value { get; set; }
     }
 }

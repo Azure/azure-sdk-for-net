@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    internal class ServiceCreateAnomalyAlertingConfigurationHeaders
+    internal class AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders
     {
         private readonly Response _response;
-        public ServiceCreateAnomalyAlertingConfigurationHeaders(Response response)
+        public AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(Response response)
         {
             _response = response;
         }

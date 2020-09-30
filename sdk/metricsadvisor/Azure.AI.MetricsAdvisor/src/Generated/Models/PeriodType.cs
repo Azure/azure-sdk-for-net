@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> the type of setting period. </summary>
-    internal readonly partial struct PeriodType : IEquatable<PeriodType>
+    public readonly partial struct PeriodType : IEquatable<PeriodType>
     {
         private readonly string _value;
 

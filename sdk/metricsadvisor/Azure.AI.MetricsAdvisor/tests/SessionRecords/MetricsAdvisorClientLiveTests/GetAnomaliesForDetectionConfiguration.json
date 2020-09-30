@@ -9,27 +9,27 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200925.1",
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "005d70e3612213c06a79e834aac4e714",
+        "x-ms-client-request-id": "57e69636a474dfe417b759538a5fbe31",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2015-09-25T22:18:10Z",
-        "endTime": "2020-09-25T22:18:10Z"
+        "startTime": "2015-09-29T23:42:34Z",
+        "endTime": "2020-09-29T23:42:34Z"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8778717b-63a6-40e5-acfc-f45c231a3b4d",
+        "apim-request-id": "b705dd59-39c0-4cf5-8b13-b62deaf926b2",
         "Content-Length": "109965",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 25 Sep 2020 22:18:15 GMT",
+        "Date": "Tue, 29 Sep 2020 23:42:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5251",
-        "X-Request-ID": "8778717b-63a6-40e5-acfc-f45c231a3b4d"
+        "x-envoy-upstream-service-time": "491",
+        "X-Request-ID": "b705dd59-39c0-4cf5-8b13-b62deaf926b2"
       },
       "ResponseBody": {
         "value": [
@@ -7889,11 +7889,11 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-09-25T17:18:10.0775837-05:00",
+    "DateTimeOffsetNow": "2020-09-29T18:42:34.2763753-05:00",
     "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1500981598"
+    "RandomSeed": "645139889"
   }
 }

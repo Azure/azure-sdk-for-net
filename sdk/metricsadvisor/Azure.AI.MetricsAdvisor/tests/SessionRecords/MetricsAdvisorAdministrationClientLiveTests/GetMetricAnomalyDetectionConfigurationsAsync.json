@@ -1,0 +1,207 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5/enrichment/anomalyDetection/configurations",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-c5b735b50806a3479143b4ec647b98de-16dd45ecdb2a0e4c-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "8e37856d40046a04b3309d8b08638ac4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bdd28843-1edc-4d03-81e5-02a912527572",
+        "Content-Length": "2925",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "104",
+        "X-Request-ID": "bdd28843-1edc-4d03-81e5-02a912527572"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "anomalyDetectionConfigurationId": "2fe9e687-4c9e-4e1b-8ec8-6541553db969",
+            "name": "new Name",
+            "description": "new description",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "OR",
+              "hardThresholdCondition": {
+                "upperBound": 500.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 5,
+                  "minRatio": 5.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 44.0,
+                "shiftPoint": 2,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 4,
+                  "minRatio": 4.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [
+              {
+                "group": {
+                  "dimension": {
+                    "Dim1": "Common Lime"
+                  }
+                },
+                "hardThresholdCondition": {
+                  "upperBound": 400.0,
+                  "anomalyDetectorDirection": "Up",
+                  "suppressCondition": {
+                    "minNumber": 2,
+                    "minRatio": 2.0
+                  }
+                }
+              }
+            ],
+            "seriesOverrideConfigurations": [
+              {
+                "series": {
+                  "seriesId": "54bdef99c03c71c764fd3ea671cd1260",
+                  "dimension": {
+                    "Dim1": "Common Beech",
+                    "Dim2": "Ant"
+                  }
+                },
+                "changeThresholdCondition": {
+                  "changePercentage": 33.0,
+                  "shiftPoint": 1,
+                  "anomalyDetectorDirection": "Both",
+                  "withinRange": true,
+                  "suppressCondition": {
+                    "minNumber": 2,
+                    "minRatio": 2.0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "anomalyDetectionConfigurationId": "bd309211-64b5-4a7a-bb81-a2789599c526",
+            "name": "js-all-as-anomaly",
+            "description": "",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "wholeMetricConfiguration": {
+              "hardThresholdCondition": {
+                "upperBound": 0.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "a420626b-b09b-4938-9bd3-91f263f50612",
+            "name": "test_detection_configuration_java",
+            "description": "",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "smartDetectionCondition": {
+                "sensitivity": 68.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 5.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Up",
+                "withinRange": false,
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [
+              {
+                "group": {
+                  "dimension": {
+                    "Dim1": "Common Alder"
+                  }
+                },
+                "smartDetectionCondition": {
+                  "sensitivity": 80.0,
+                  "anomalyDetectorDirection": "Down",
+                  "suppressCondition": {
+                    "minNumber": 1,
+                    "minRatio": 100.0
+                  }
+                }
+              }
+            ],
+            "seriesOverrideConfigurations": [
+              {
+                "series": {
+                  "seriesId": "8f0847fcd60e1002241f4da0f02b6d57",
+                  "dimension": {
+                    "Dim1": "Common Alder",
+                    "Dim2": "American robin"
+                  }
+                },
+                "smartDetectionCondition": {
+                  "sensitivity": 68.0,
+                  "anomalyDetectorDirection": "Both",
+                  "suppressCondition": {
+                    "minNumber": 1,
+                    "minRatio": 100.0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "anomalyDetectionConfigurationId": "c0f2539f-b804-4ab9-a70f-0da0c89c76d8",
+            "name": "Default",
+            "description": "",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "wholeMetricConfiguration": {
+              "smartDetectionCondition": {
+                "sensitivity": 60.0,
+                "anomalyDetectorDirection": "Both",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "88212133"
+  }
+}

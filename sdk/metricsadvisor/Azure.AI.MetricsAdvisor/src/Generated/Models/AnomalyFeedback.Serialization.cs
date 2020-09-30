@@ -24,13 +24,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteObjectValue(Value);
             if (Optional.IsDefined(AnomalyDetectionConfigurationId))
             {
-                writer.WritePropertyName("anomalyDetectionConfigurationId");
-                writer.WriteStringValue(AnomalyDetectionConfigurationId.Value);
+                if (AnomalyDetectionConfigurationId != null)
+                {
+                    writer.WritePropertyName("anomalyDetectionConfigurationId");
+                    writer.WriteStringValue(AnomalyDetectionConfigurationId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("anomalyDetectionConfigurationId");
+                }
             }
             if (Optional.IsDefined(AnomalyDetectionConfigurationSnapshot))
             {
-                writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
-                writer.WriteObjectValue(AnomalyDetectionConfigurationSnapshot);
+                if (AnomalyDetectionConfigurationSnapshot != null)
+                {
+                    writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
+                    writer.WriteObjectValue(AnomalyDetectionConfigurationSnapshot);
+                }
+                else
+                {
+                    writer.WriteNull("anomalyDetectionConfigurationSnapshot");
+                }
             }
             writer.WritePropertyName("feedbackType");
             writer.WriteStringValue(FeedbackType.ToString());
@@ -46,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
-            Optional<Guid> anomalyDetectionConfigurationId = default;
+            Optional<Guid?> anomalyDetectionConfigurationId = default;
             Optional<MetricAnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
             FeedbackType feedbackType = default;
             Optional<Guid> feedbackId = default;
@@ -73,11 +87,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("anomalyDetectionConfigurationId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        anomalyDetectionConfigurationId = null;
+                        continue;
+                    }
                     anomalyDetectionConfigurationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("anomalyDetectionConfigurationSnapshot"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        anomalyDetectionConfigurationSnapshot = null;
+                        continue;
+                    }
                     anomalyDetectionConfigurationSnapshot = MetricAnomalyDetectionConfiguration.DeserializeMetricAnomalyDetectionConfiguration(property.Value);
                     continue;
                 }

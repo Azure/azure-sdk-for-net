@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The FeedbackDimensionFilter. </summary>
-    internal partial class FeedbackDimensionFilter
+    public partial class FeedbackDimensionFilter
     {
         /// <summary> Initializes a new instance of FeedbackDimensionFilter. </summary>
         /// <param name="dimension"> metric dimension filter. </param>

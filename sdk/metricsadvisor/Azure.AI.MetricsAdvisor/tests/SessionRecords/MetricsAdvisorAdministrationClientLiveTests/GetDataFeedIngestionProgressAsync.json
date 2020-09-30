@@ -1,35 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/dd64cd95-f22f-4176-9554-ded0b8db83a1/ingestionProgress",
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/0072a752-1476-4cfa-8cf0-f226995201a0/ingestionProgress",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a57a5e54103c3d4fb59ae49249f38a7b-49d8dd4cc90a334a-00",
+        "traceparent": "00-fa97a71856a30b4dbbf5a6866ae4ebd6-2b725ed50739be44-00",
         "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200928.1",
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "3f42ac7dc0ba2bb3b24e58cf2973c7dd",
+        "x-ms-client-request-id": "2ac9c9dd878f56e5e0ab8a5616c83457",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "852c9471-448e-493f-9bb1-b7769cd04b49",
+        "apim-request-id": "18cdb971-e208-4533-be03-a9713e86fc25",
         "Content-Length": "78",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Sep 2020 16:06:29 GMT",
+        "Date": "Tue, 29 Sep 2020 23:47:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5324",
-        "X-Request-ID": "852c9471-448e-493f-9bb1-b7769cd04b49"
+        "x-envoy-upstream-service-time": "5288",
+        "X-Request-ID": "18cdb971-e208-4533-be03-a9713e86fc25"
       },
       "ResponseBody": {
         "latestSuccessTimestamp": null,
-        "latestActiveTimestamp": "2020-09-27T00:00:00Z"
+        "latestActiveTimestamp": "2020-09-28T00:00:00Z"
       }
     }
   ],
@@ -38,6 +38,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "652838391"
+    "RandomSeed": "108596429"
   }
 }

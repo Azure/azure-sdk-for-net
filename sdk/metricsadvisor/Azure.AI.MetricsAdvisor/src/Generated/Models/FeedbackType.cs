@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> feedback type. </summary>
-    internal readonly partial struct FeedbackType : IEquatable<FeedbackType>
+    public readonly partial struct FeedbackType : IEquatable<FeedbackType>
     {
         private readonly string _value;
 

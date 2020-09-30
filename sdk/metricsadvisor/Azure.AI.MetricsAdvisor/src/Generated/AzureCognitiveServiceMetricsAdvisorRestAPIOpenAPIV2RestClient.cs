@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    internal partial class ServiceRestClient
+    internal partial class AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient
     {
         private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
+        /// <summary> Initializes a new instance of AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        public AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {
@@ -284,7 +284,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceCreateAnomalyAlertingConfigurationHeaders>> CreateAnomalyAlertingConfigurationAsync(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders>> CreateAnomalyAlertingConfigurationAsync(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -293,7 +293,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateAnomalyAlertingConfigurationRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCreateAnomalyAlertingConfigurationHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -307,7 +307,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ServiceCreateAnomalyAlertingConfigurationHeaders> CreateAnomalyAlertingConfiguration(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> CreateAnomalyAlertingConfiguration(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -316,7 +316,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateAnomalyAlertingConfigurationRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCreateAnomalyAlertingConfigurationHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -777,7 +777,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceCreateAnomalyDetectionConfigurationHeaders>> CreateAnomalyDetectionConfigurationAsync(MetricAnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders>> CreateAnomalyDetectionConfigurationAsync(MetricAnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -786,7 +786,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateAnomalyDetectionConfigurationRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCreateAnomalyDetectionConfigurationHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -800,7 +800,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ServiceCreateAnomalyDetectionConfigurationHeaders> CreateAnomalyDetectionConfiguration(MetricAnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> CreateAnomalyDetectionConfiguration(MetricAnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -809,7 +809,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateAnomalyDetectionConfigurationRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCreateAnomalyDetectionConfigurationHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -1473,7 +1473,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceCreateDataFeedHeaders>> CreateDataFeedAsync(DataFeedDetail body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders>> CreateDataFeedAsync(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1482,7 +1482,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateDataFeedRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCreateDataFeedHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -1496,7 +1496,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ServiceCreateDataFeedHeaders> CreateDataFeed(DataFeedDetail body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> CreateDataFeed(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1505,7 +1505,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateDataFeedRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCreateDataFeedHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -1847,7 +1847,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceCreateMetricFeedbackHeaders>> CreateMetricFeedbackAsync(MetricFeedback body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders>> CreateMetricFeedbackAsync(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1856,7 +1856,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateMetricFeedbackRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCreateMetricFeedbackHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -1870,7 +1870,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ServiceCreateMetricFeedbackHeaders> CreateMetricFeedback(MetricFeedback body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> CreateMetricFeedback(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1879,7 +1879,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateMetricFeedbackRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCreateMetricFeedbackHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -1983,7 +1983,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceCreateHookHeaders>> CreateHookAsync(AlertingHook body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders>> CreateHookAsync(AlertingHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1992,7 +1992,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateHookRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCreateHookHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -2006,7 +2006,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ServiceCreateHookHeaders> CreateHook(AlertingHook body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> CreateHook(AlertingHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2015,7 +2015,7 @@ namespace Azure.AI.MetricsAdvisor
 
             using var message = CreateCreateHookRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCreateHookHeaders(message.Response);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:

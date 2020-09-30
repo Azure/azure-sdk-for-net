@@ -38,6 +38,38 @@ directive:
     $.properties.latestSuccessTimestamp["x-nullable"] = true
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.CommentFeedback
+  transform: >
+    $.allOf[1].properties.startTime["x-nullable"] = true
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.CommentFeedback
+  transform: >
+    $.allOf[1].properties.endTime["x-nullable"] = true
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyFeedback
+  transform: >
+    $.allOf[1].properties.anomalyDetectionConfigurationId["x-nullable"] = true
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyFeedback
+  transform: >
+    $.allOf[1].properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true
+```
+
 ### Add required properties
 
 ``` yaml
