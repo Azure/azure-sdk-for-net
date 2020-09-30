@@ -115,7 +115,7 @@ foreach (CustomFormSubmodel model in purchaseOrderModel.Submodels)
     Console.WriteLine("    The documents used to trained the model are: ");
     foreach (var doc in trainingDocsPerModel[model.ModelId])
     {
-        Console.WriteLine($"        doc.Name");
+        Console.WriteLine($"        {doc.Name}");
     }
 }
 ```
