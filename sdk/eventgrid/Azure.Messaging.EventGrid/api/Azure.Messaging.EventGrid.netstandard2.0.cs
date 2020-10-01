@@ -440,6 +440,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal IotHubDeviceTelemetryEventData() { }
     }
+    public partial class KeyVaultAccessPolicyChangedEventData
+    {
+        internal KeyVaultAccessPolicyChangedEventData() { }
+        public float? Exp { get { throw null; } }
+        public string Id { get { throw null; } }
+        public float? Nbf { get { throw null; } }
+        public string ObjectName { get { throw null; } }
+        public string ObjectType { get { throw null; } }
+        public string VaultName { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
     public partial class KeyVaultCertificateExpiredEventData
     {
         internal KeyVaultCertificateExpiredEventData() { }
