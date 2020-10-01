@@ -21,7 +21,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     public partial class AvailabilityData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public AvailabilityData(int version, string id, string name, string duration, bool success) { }
+        public AvailabilityData(int version, string id, string name, string duration, bool success) : base (default(int)) { }
         public string Duration { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
@@ -30,7 +30,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public string RunLocation { get { throw null; } set { } }
         public bool Success { get { throw null; } }
-        public int Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContextTagKeys : System.IEquatable<OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys>
@@ -96,12 +95,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     }
     public partial class MessageData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public MessageData(int version, string message) { }
+        public MessageData(int version, string message) : base (default(int)) { }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public OpenTelemetry.Exporter.AzureMonitor.Models.SeverityLevel? SeverityLevel { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     public partial class MetricDataPoint
     {
@@ -117,10 +115,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     }
     public partial class MetricsData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public MetricsData(int version, System.Collections.Generic.IEnumerable<OpenTelemetry.Exporter.AzureMonitor.Models.MetricDataPoint> metrics) { }
+        public MetricsData(int version, System.Collections.Generic.IEnumerable<OpenTelemetry.Exporter.AzureMonitor.Models.MetricDataPoint> metrics) : base (default(int)) { }
         public System.Collections.Generic.IList<OpenTelemetry.Exporter.AzureMonitor.Models.MetricDataPoint> Metrics { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        public int Version { get { throw null; } }
     }
     public partial class MonitorBase
     {
@@ -130,12 +127,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     }
     public partial class MonitorDomain
     {
-        public MonitorDomain() { }
-        public string Test { get { throw null; } set { } }
+        public MonitorDomain(int version) { }
+        public int Version { get { throw null; } }
     }
     public partial class PageViewData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public PageViewData(int version, string id, string name) { }
+        public PageViewData(int version, string id, string name) : base (default(int)) { }
         public string Duration { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
@@ -143,11 +140,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public string ReferredUri { get { throw null; } set { } }
         public string Url { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     public partial class PageViewPerfData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public PageViewPerfData(int version, string id, string name) { }
+        public PageViewPerfData(int version, string id, string name) : base (default(int)) { }
         public string DomProcessing { get { throw null; } set { } }
         public string Duration { get { throw null; } set { } }
         public string Id { get { throw null; } }
@@ -159,11 +155,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public string ReceivedResponse { get { throw null; } set { } }
         public string SentRequest { get { throw null; } set { } }
         public string Url { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     public partial class RemoteDependencyData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public RemoteDependencyData(int version, string name, string duration) { }
+        public RemoteDependencyData(int version, string name, string duration) : base (default(int)) { }
         public string Data { get { throw null; } set { } }
         public string Duration { get { throw null; } }
         public string Id { get { throw null; } set { } }
@@ -174,11 +169,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public bool? Success { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     public partial class RequestData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public RequestData(int version, string id, string duration, bool success, string responseCode) { }
+        public RequestData(int version, string id, string duration, bool success, string responseCode) : base (default(int)) { }
         public string Duration { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
@@ -188,7 +182,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public string Source { get { throw null; } set { } }
         public bool Success { get { throw null; } }
         public string Url { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SeverityLevel : System.IEquatable<OpenTelemetry.Exporter.AzureMonitor.Models.SeverityLevel>
@@ -229,21 +222,19 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     }
     public partial class TelemetryEventData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public TelemetryEventData(int version, string name) { }
+        public TelemetryEventData(int version, string name) : base (default(int)) { }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        public int Version { get { throw null; } }
     }
     public partial class TelemetryExceptionData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
     {
-        public TelemetryExceptionData(int version) { }
+        public TelemetryExceptionData(int version, System.Collections.Generic.IEnumerable<OpenTelemetry.Exporter.AzureMonitor.Models.TelemetryExceptionDetails> exceptions) : base (default(int)) { }
         public System.Collections.Generic.IList<OpenTelemetry.Exporter.AzureMonitor.Models.TelemetryExceptionDetails> Exceptions { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
         public string ProblemId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public OpenTelemetry.Exporter.AzureMonitor.Models.SeverityLevel? SeverityLevel { get { throw null; } set { } }
-        public int Version { get { throw null; } }
     }
     public partial class TelemetryExceptionDetails
     {
@@ -258,14 +249,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     }
     public partial class TelemetryItem
     {
-        public TelemetryItem(string name, System.DateTimeOffset time) { }
+        public TelemetryItem(string name, string time) { }
         public OpenTelemetry.Exporter.AzureMonitor.Models.MonitorBase Data { get { throw null; } set { } }
         public string InstrumentationKey { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public float? SampleRate { get { throw null; } set { } }
         public string Sequence { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.DateTimeOffset Time { get { throw null; } }
+        public string Time { get { throw null; } }
         public int? Version { get { throw null; } set { } }
     }
     public partial class TrackResponse
