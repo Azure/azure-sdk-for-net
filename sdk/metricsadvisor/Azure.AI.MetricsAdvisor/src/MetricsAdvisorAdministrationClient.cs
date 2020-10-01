@@ -302,6 +302,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+            }
 
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
@@ -309,7 +313,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
                 return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -330,6 +334,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+            }
 
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
@@ -337,7 +345,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
                 return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
             }
             catch (Exception ex)
@@ -462,7 +470,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
 
                 return await _serviceRestClient.ResetDataFeedIngestionStatusAsync(dataFeedGuid, options, cancellationToken).ConfigureAwait(false);
             }
@@ -490,7 +498,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
 
                 return _serviceRestClient.ResetDataFeedIngestionStatus(dataFeedGuid, options, cancellationToken);
             }
@@ -1061,7 +1069,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                var patch = ClientCommon.GetPatchModel(hook);
+                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
 
                 return await _serviceRestClient.UpdateHookAsync(hookGuid, patch, cancellationToken).ConfigureAwait(false);
             }
@@ -1090,7 +1098,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                var patch = ClientCommon.GetPatchModel(hook);
+                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
 
                 return _serviceRestClient.UpdateHook(hookGuid, patch, cancellationToken);
             }
