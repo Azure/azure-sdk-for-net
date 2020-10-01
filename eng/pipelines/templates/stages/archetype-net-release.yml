@@ -54,6 +54,13 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
+                    - task: PowerShell@2
+                      displayName: Prep template pipeline for release
+                      condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
+                      inputs:
+                        pwsh: true
+                        workingDirectory: $(Build.SourcesDirectory)
+                        filePath: eng/scripts/SetTestPipelineVersion.ps1
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
