@@ -8,9 +8,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
 
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" VersionOverride="0.6.0-beta.1" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" VersionOverride="0.6.0-beta.1" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" VersionOverride="0.6.0-beta.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
 
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
