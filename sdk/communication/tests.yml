@@ -5,4 +5,4 @@ extends:
   parameters:
     ServiceDirectory: communication
     EnvVars:
-      AZURE_TEST_MODE: Record
+      AZURE_COMMUNICATION_TEST_MODE: Record
