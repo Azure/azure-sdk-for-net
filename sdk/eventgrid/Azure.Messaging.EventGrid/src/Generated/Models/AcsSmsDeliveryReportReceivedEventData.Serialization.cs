@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcssmsDeliveryReportReceivedEventData
+    public partial class AcsSmsDeliveryReportReceivedEventData
     {
-        internal static AcssmsDeliveryReportReceivedEventData DeserializeAcssmsDeliveryReportReceivedEventData(JsonElement element)
+        internal static AcsSmsDeliveryReportReceivedEventData DeserializeAcsSmsDeliveryReportReceivedEventData(JsonElement element)
         {
             Optional<string> deliveryStatus = default;
             Optional<string> deliveryStatusDetails = default;
-            Optional<IReadOnlyList<AcssmsDeliveryAttemptProperties>> deliveryAttempts = default;
+            Optional<IReadOnlyList<AcsSmsDeliveryAttemptProperties>> deliveryAttempts = default;
             Optional<DateTimeOffset> receivedTimestamp = default;
             Optional<string> messageId = default;
             Optional<string> @from = default;
@@ -37,10 +37,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deliveryAttempts"))
                 {
-                    List<AcssmsDeliveryAttemptProperties> array = new List<AcssmsDeliveryAttemptProperties>();
+                    List<AcsSmsDeliveryAttemptProperties> array = new List<AcsSmsDeliveryAttemptProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcssmsDeliveryAttemptProperties.DeserializeAcssmsDeliveryAttemptProperties(item));
+                        array.Add(AcsSmsDeliveryAttemptProperties.DeserializeAcsSmsDeliveryAttemptProperties(item));
                     }
                     deliveryAttempts = array;
                     continue;
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcssmsDeliveryReportReceivedEventData(messageId.Value, @from.Value, to.Value, deliveryStatus.Value, deliveryStatusDetails.Value, Optional.ToList(deliveryAttempts), Optional.ToNullable(receivedTimestamp));
+            return new AcsSmsDeliveryReportReceivedEventData(messageId.Value, @from.Value, to.Value, deliveryStatus.Value, deliveryStatusDetails.Value, Optional.ToList(deliveryAttempts), Optional.ToNullable(receivedTimestamp));
         }
     }
 }

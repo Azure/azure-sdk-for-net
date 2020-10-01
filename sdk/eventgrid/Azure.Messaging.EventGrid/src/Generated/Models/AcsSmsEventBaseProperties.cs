@@ -8,18 +8,18 @@
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all SMS events. </summary>
-    public partial class AcssmsEventBaseProperties
+    public partial class AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcssmsEventBaseProperties. </summary>
-        internal AcssmsEventBaseProperties()
+        /// <summary> Initializes a new instance of AcsSmsEventBaseProperties. </summary>
+        internal AcsSmsEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcssmsEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of AcsSmsEventBaseProperties. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
-        internal AcssmsEventBaseProperties(string messageId, string @from, string to)
+        internal AcsSmsEventBaseProperties(string messageId, string @from, string to)
         {
             MessageId = messageId;
             From = @from;

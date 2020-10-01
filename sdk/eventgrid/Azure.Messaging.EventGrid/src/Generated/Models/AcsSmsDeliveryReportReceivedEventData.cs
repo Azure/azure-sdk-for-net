@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
-    public partial class AcssmsDeliveryReportReceivedEventData : AcssmsEventBaseProperties
+    public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcssmsDeliveryReportReceivedEventData. </summary>
-        internal AcssmsDeliveryReportReceivedEventData()
+        /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>
+        internal AcsSmsDeliveryReportReceivedEventData()
         {
-            DeliveryAttempts = new ChangeTrackingList<AcssmsDeliveryAttemptProperties>();
+            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
         }
 
-        /// <summary> Initializes a new instance of AcssmsDeliveryReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryStatusDetails"> Details about Delivery Status. </param>
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
-        internal AcssmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcssmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Details about Delivery Status. </summary>
         public string DeliveryStatusDetails { get; }
         /// <summary> List of details of delivery attempts made. </summary>
-        public IReadOnlyList<AcssmsDeliveryAttemptProperties> DeliveryAttempts { get; }
+        public IReadOnlyList<AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
         /// <summary> The time at which the SMS delivery report was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }
     }
