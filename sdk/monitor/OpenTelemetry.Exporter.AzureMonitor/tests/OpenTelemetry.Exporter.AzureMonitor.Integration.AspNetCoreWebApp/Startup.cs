@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
 {
     public class Startup
     {

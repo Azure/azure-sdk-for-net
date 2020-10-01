@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp.Controllers
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
 {
     [Route("api/[controller]")]
     [ApiController]

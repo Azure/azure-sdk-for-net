@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Console.Tests
 {
     /// <summary>
-    /// These tests are to verify that the IntegrationTests work (i.e. Tests app can talk to WebApp).
+    /// These tests are to verify that the IntegrationTests work (i.e. This project can communicate with the <see cref="AspNetCoreWebApp"/> project).
     /// </summary>
-    public class BasicTests : IClassFixture<WebApplicationFactory<WebApp.Startup>>
+    public class BasicTests : IClassFixture<WebApplicationFactory<AspNetCoreWebApp.Startup>>
     {
-        private readonly WebApplicationFactory<WebApp.Startup> factory;
+        private readonly WebApplicationFactory<AspNetCoreWebApp.Startup> factory;
 
-        public BasicTests(WebApplicationFactory<WebApp.Startup> factory)
+        public BasicTests(WebApplicationFactory<AspNetCoreWebApp.Startup> factory)
         {
             this.factory = factory;
         }

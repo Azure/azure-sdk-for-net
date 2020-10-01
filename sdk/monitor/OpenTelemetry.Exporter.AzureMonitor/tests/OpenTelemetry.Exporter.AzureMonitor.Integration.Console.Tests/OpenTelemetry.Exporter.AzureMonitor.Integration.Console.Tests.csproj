@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  <!-- https://docs.microsoft.com/aspnet/core/test/integration-tests -->
-  
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
 
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
@@ -17,23 +17,23 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" VersionOverride="[2.1.1,2.2)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
     To support net461 so we must reference the dependent packages.-->
-    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1, )" />
+    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1,2.2)" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
-    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp.csproj" />
+    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp.csproj" />
   </ItemGroup>
 
 </Project>
