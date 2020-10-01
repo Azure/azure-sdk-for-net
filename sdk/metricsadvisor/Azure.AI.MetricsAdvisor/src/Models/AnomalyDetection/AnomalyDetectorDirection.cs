@@ -4,7 +4,8 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The direction of the boundaries specified by an anomaly detection condition.
+    /// The direction of the boundaries specified by an anomaly detection condition or a
+    /// <see cref="MetricBoundaryCondition"/>.
     /// </summary>
     public readonly partial struct AnomalyDetectorDirection
     {
