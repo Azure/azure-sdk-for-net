@@ -39,9 +39,7 @@ OpenTelemetry.Sdk.CreateTracerProviderBuilder()
 
 ## Troubleshooting
 
-This exporter is fully instrumented for logging information at various levels of detail using the .NET EventSource to emit information. Logging is performed for each operation and follows the pattern of marking the starting point of the operation, it's completion, and any exceptions encountered. Additional information that may offer insight is also logged in the context of the associated operation.
-
-The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-TraceExporter-AzureMonitor".
+This exporter logs event using the .NET EventSource to emit information. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-TraceExporter-AzureMonitor".
 
 ## Next steps
 
