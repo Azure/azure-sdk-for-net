@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <remarks>
         /// The lun is used to uniquely identify each data disk. If attaching
-        /// multiple disks, each should have a distinct lun.
+        /// multiple disks, each should have a distinct lun. The value must be
+        /// between 0 and 63, inclusive.
         /// </remarks>
         [JsonProperty(PropertyName = "lun")]
         public int Lun { get; set; }
