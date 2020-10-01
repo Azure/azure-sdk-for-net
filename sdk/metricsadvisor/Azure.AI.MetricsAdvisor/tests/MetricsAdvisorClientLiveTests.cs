@@ -297,14 +297,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(pages, Is.GreaterThan(0));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricFeedbacks()
         {
             var client = GetMetricsAdvisorClient();
 
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions(MetricId) { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));

@@ -410,8 +410,8 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options.SkipCount;
+            int? top = options.TopCount;
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -664,14 +664,14 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
 
-            Guid feedbackIdGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+            Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
             scope.Start();
 
             try
             {
-                return _serviceRestClient.GetMetricFeedback(feedbackIdGuid, cancellationToken);
+                return _serviceRestClient.GetMetricFeedback(feedbackGuid, cancellationToken);
             }
             catch (Exception e)
             {

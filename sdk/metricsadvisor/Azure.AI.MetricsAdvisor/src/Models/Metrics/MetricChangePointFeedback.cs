@@ -19,8 +19,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         public MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointValue value) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-
             if (value == default)
             {
                 throw new ArgumentNullException(nameof(value));
@@ -41,7 +39,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         internal MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
             Argument.AssertNotNull(value, nameof(value));
 
             StartTime = startTime;

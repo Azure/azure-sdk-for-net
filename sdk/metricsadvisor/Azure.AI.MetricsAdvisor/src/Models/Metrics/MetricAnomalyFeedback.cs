@@ -18,8 +18,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyValue value) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-
             if (value == default)
             {
                 throw new ArgumentNullException(nameof(value));
@@ -41,8 +39,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));

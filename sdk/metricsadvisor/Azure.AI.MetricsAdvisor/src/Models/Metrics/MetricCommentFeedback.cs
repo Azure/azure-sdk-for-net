@@ -17,7 +17,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         public MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, string comment) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
             Argument.AssertNotNullOrEmpty(comment, nameof(comment));
 
             ValueInternal = new CommentFeedbackValue(comment);
@@ -31,7 +30,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         internal MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, CommentFeedbackValue comment) : base(metricId, dimensionFilter)
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 
             ValueInternal = comment;
