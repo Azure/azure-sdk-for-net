@@ -11,7 +11,7 @@ namespace Azure.Core.GeoJson
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public struct GeoArray<T>: IEnumerable<T>
+    public readonly struct GeoArray<T>: IEnumerable<T>
     {
         private readonly object _container;
 
