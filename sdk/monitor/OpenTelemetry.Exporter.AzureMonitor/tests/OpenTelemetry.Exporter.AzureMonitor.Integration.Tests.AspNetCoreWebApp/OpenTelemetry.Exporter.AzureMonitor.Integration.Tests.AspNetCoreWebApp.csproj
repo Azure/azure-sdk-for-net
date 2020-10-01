@@ -5,21 +5,10 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
-
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" VersionOverride="0.6.0-beta.1" />
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" VersionOverride="0.6.0-beta.1" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" VersionOverride="0.6.0-beta.1" />
-
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net461' ">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
+    
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
@@ -28,12 +17,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1, )" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1, )" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1, )" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
-    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp.csproj" />
   </ItemGroup>
 
 </Project>
