@@ -33,7 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
-    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp.csproj" />
+    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp.Tests\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp.Tests.csproj" />
   </ItemGroup>
 
 </Project>
