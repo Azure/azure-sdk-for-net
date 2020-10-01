@@ -26,8 +26,8 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(points, nameof(points));
 
@@ -60,5 +60,8 @@ namespace Azure.Core.GeoJson
         ///
         /// </summary>
         public GeoArray<GeoPosition> Coordinates => new GeoArray<GeoPosition>(this);
+
+        /// <inheritdoc />
+        public override GeoObjectType Type { get; } = GeoObjectType.MultiPoint;
     }
 }

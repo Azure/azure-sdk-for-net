@@ -25,8 +25,8 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoLineCollection(IEnumerable<GeoLine> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoLineCollection(IEnumerable<GeoLine> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(lines, nameof(lines));
 
@@ -59,5 +59,8 @@ namespace Azure.Core.GeoJson
         ///
         /// </summary>
         public GeoArray<GeoArray<GeoPosition>> Coordinates => new GeoArray<GeoArray<GeoPosition>>(this);
+
+        /// <inheritdoc />
+        public override GeoObjectType Type { get; } = GeoObjectType.MultiLineString;
     }
 }

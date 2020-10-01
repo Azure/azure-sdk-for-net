@@ -18,24 +18,25 @@ namespace Azure.Core.GeoJson
     {
         internal static readonly IReadOnlyDictionary<string, object?> DefaultProperties = new ReadOnlyDictionary<string, object?>(new Dictionary<string, object?>());
         private string? _serialized;
+        internal IReadOnlyDictionary<string, object?> CustomProperties { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="GeoObject"/>.
         /// </summary>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        protected GeoObject(GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties)
+        /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        protected GeoObject(GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties)
         {
-            Argument.AssertNotNull(additionalProperties, nameof(additionalProperties));
+            Argument.AssertNotNull(customProperties, nameof(customProperties));
 
             BoundingBox = boundingBox;
-            AdditionalProperties = additionalProperties;
+            CustomProperties = customProperties;
         }
 
         /// <summary>
-        ///
+        /// Gets the GeoJSON type of this object.
         /// </summary>
-        public virtual GeoObjectType Type { get; }
+        public abstract GeoObjectType Type { get; }
 
         /// <summary>
         /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
@@ -43,9 +44,9 @@ namespace Azure.Core.GeoJson
         public GeoBoundingBox? BoundingBox { get; }
 
         /// <summary>
-        /// Gets a dictionary of additional properties associated with the <see cref="GeoObject"/>.
+        /// Tries to get a value of a custom property associated with the <see cref="GeoObject"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, object?> AdditionalProperties { get; }
+        public bool TryGetCustomProperty(string name, out object? value) => CustomProperties.TryGetValue(name, out value);
 
         /// <summary>
         /// Converts an instance of <see cref="GeoObject"/> to a GeoJSON representation.

@@ -60,13 +60,13 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtrip<GeoPoint>(input);
             Assert.AreEqual(P(0), point.Coordinates);
-            Assert.AreEqual(1, point.AdditionalProperties["additionalNumber"]);
-            Assert.AreEqual(2.2, point.AdditionalProperties["additionalNumber2"]);
-            Assert.AreEqual(9999999999999999999L, point.AdditionalProperties["additionalNumber3"]);
-            Assert.AreEqual("hello", point.AdditionalProperties["additionalString"]);
-            Assert.AreEqual(null, point.AdditionalProperties["additionalNull"]);
-            Assert.AreEqual(true, point.AdditionalProperties["additionalBool"]);
-            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.AdditionalProperties["additionalArray"]);
+            Assert.AreEqual(1, point.CustomProperties["additionalNumber"]);
+            Assert.AreEqual(2.2, point.CustomProperties["additionalNumber2"]);
+            Assert.AreEqual(9999999999999999999L, point.CustomProperties["additionalNumber3"]);
+            Assert.AreEqual("hello", point.CustomProperties["additionalString"]);
+            Assert.AreEqual(null, point.CustomProperties["additionalNull"]);
+            Assert.AreEqual(true, point.CustomProperties["additionalBool"]);
+            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.CustomProperties["additionalArray"]);
         }
 
         [Test]

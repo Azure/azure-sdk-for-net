@@ -391,7 +391,7 @@ namespace Azure.Core.GeoJson
                 writer.WriteEndArray();
             }
 
-            foreach (var additionalProperty in value.AdditionalProperties)
+            foreach (var additionalProperty in value.CustomProperties)
             {
                 writer.WritePropertyName(additionalProperty.Key);
                 WriteAdditionalPropertyValue(writer, additionalProperty.Value);
