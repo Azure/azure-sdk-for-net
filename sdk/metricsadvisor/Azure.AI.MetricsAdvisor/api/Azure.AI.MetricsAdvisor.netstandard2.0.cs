@@ -742,11 +742,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class GetMetricFeedbacksOptions
     {
-        public GetMetricFeedbacksOptions(string metricId) { }
+        public GetMetricFeedbacksOptions() { }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } set { } }
-        public System.Guid MetricId { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
