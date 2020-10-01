@@ -14,7 +14,6 @@
 
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="Xunit.SkippableFact" VersionOverride="1.4.13" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net461' ">
