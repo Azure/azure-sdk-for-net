@@ -3,6 +3,7 @@
   
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
