@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="name">A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.</param>
         /// <param name="idsOfHooksToAlert">The unique identifiers of the <see cref="AlertingHook"/>s that must be notified when an alert is detected by this configuration.</param>
-        /// <param name="metricAlertConfigurations">TODODOCS.</param>
+        /// <param name="metricAlertConfigurations">The configurations that define which anomalies are eligible for triggering an alert.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="idsOfHooksToAlert"/>, or <paramref name="metricAlertConfigurations"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         public AnomalyAlertConfiguration(string name, IList<string> idsOfHooksToAlert, IList<MetricAnomalyAlertConfiguration> metricAlertConfigurations)

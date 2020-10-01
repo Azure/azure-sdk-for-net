@@ -23,8 +23,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         [CodeGenMember("Dimension")]
         public static MetricAnomalyAlertScopeType SeriesGroup { get; } = new MetricAnomalyAlertScopeType(SeriesGroupValue);
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public static MetricAnomalyAlertScopeType TopN { get; } = new MetricAnomalyAlertScopeType(TopNValue);
     }

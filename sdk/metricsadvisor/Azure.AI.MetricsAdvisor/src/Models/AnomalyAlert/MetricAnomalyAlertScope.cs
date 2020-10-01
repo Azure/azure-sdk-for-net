@@ -31,8 +31,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DimensionKey SeriesGroupInScope { get; }
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public TopNGroupScope TopNGroupInScope { get; }
 
@@ -57,8 +57,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new MetricAnomalyAlertScope(MetricAnomalyAlertScopeType.SeriesGroup, seriesGroupKey, topNGroupInScope: default);
         }
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="topNGroup"/> is null.</exception>
         public static MetricAnomalyAlertScope GetScopeForTopNGroup(TopNGroupScope topNGroup)

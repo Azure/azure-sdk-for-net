@@ -11,6 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureDataLakeStorageGen2DataFeedSource : DataFeedSource
     {
+        // TODODOCS.
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDataLakeStorageGen2DataFeedSource"/> class.
         /// </summary>
@@ -18,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="accountKey">The Storage Account key.</param>
         /// <param name="fileSystemName">The name of the file system.</param>
         /// <param name="directoryTemplate">The directory template.</param>
-        /// <param name="fileTemplate">TODODOCS.</param>
+        /// <param name="fileTemplate"></param>
         /// <exception cref="ArgumentNullException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is empty.</exception>
         public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)

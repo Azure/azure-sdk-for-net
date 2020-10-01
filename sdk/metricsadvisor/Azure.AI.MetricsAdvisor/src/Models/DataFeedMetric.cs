@@ -6,8 +6,8 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
+    // TODODOCS: hard to explain.
     /// <summary>
-    /// TODODOCS.
     /// </summary>
     [CodeGenModel("Metric")]
     public partial class DataFeedMetric

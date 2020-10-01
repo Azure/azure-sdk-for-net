@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
+    // TODODOCS: this whole class needs clarification.
     /// <summary>
-    /// TODODOCS.
     /// </summary>
     public partial class TopNGroupScope
     {

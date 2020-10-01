@@ -11,8 +11,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenModel("DataFeedDetailRollUpMethod")]
     public readonly partial struct DataFeedAutoRollupMethod
     {
+        // TODODOCS: when is this used for?
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public static DataFeedAutoRollupMethod None { get; } = new DataFeedAutoRollupMethod(NoneValue);
 
@@ -33,8 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         [CodeGenMember("Min")]
         public static DataFeedAutoRollupMethod Minimum { get; } = new DataFeedAutoRollupMethod(MinimumValue);
 
-        // TODO: double check if it's in fact an arithmetic mean.
-
+        // TODODOCS: double check if it's in fact an arithmetic mean.
         /// <summary>
         /// The rolled-up column should contain the arithmetic mean of the ingested values.
         /// </summary>

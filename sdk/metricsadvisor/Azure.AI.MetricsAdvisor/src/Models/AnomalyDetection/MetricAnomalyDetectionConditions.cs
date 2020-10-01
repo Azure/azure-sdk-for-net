@@ -25,8 +25,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         [CodeGenMember("ConditionOperator")]
         public DetectionConditionsOperator? CrossConditionsOperator { get; set; }
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public SmartDetectionCondition SmartDetectionCondition { get; set; }
 

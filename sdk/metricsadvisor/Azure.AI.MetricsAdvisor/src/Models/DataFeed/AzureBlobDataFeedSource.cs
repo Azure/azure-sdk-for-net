@@ -11,12 +11,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureBlobDataFeedSource : DataFeedSource
     {
+        // TODODOCS.
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureBlobDataFeedSource"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string for authenticating to the Azure Storage Account.</param>
         /// <param name="container">The name of the blob container.</param>
-        /// <param name="blobTemplate">TODODOCS.</param>
+        /// <param name="blobTemplate"></param>
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is empty.</exception>
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate)

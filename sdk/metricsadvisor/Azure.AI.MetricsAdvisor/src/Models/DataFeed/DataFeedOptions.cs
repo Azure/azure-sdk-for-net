@@ -40,8 +40,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public string FeedDescription { get; set; }
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public AccessMode? AccessMode { get; set; }
 

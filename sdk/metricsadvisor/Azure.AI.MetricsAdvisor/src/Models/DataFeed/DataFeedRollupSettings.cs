@@ -51,8 +51,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeedAutoRollupMethod? RollupMethod { get; set; }
 
+        // TODODOCS: what is this used for?
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="AutoRollupGroupByColumnNames"/> is null.</exception>
         public IList<string> AutoRollupGroupByColumnNames

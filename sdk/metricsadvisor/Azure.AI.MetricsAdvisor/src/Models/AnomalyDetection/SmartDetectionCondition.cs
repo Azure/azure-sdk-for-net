@@ -6,8 +6,8 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
+    // TODODOCS: properties need clarification.
     /// <summary>
-    /// TODODOCS.
     /// </summary>
     public partial class SmartDetectionCondition
     {

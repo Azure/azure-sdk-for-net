@@ -61,8 +61,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public TimeSpan? IngestionStartOffset { get; set; }
 
+        // TODODOCS.
         /// <summary>
-        /// TODODOCS.
         /// </summary>
         public TimeSpan? StopRetryAfter { get; set; }
     }
