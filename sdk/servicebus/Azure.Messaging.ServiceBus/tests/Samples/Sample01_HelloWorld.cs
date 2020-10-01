@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -229,6 +228,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // Create a ServiceBusClient that will authenticate using a connection string
             string connectionString = "<connection_string>";
             ServiceBusClient client = new ServiceBusClient(connectionString);
+            #endregion
+        }
+
+        /// <summary>
+        /// Shows how to use <see cref="ServiceBusFailureReason"/> in <see cref="ServiceBusException"/>.
+        /// </summary>
+        public void ServiceBusExceptionFailureReasonUsage()
+        {
+            #region Snippet:ServiceBusExceptionFailureReasonUsage
+            try
+            {
+                // Receive messages using the receiver client
+            }
+            catch (ServiceBusException ex) when
+                (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
+            {
+                // Take action based on a service timeout
+            }
             #endregion
         }
     }

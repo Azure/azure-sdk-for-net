@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -161,11 +162,15 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 #if EXPERIMENTAL_SPATIAL
-            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
             }
 #endif
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
+            {
+                AssertEqual(eGpt, aGpt, path);
+            }
             else
             {
                 AssertEqual(expected, actual, path);
@@ -199,11 +204,20 @@ namespace Azure.Search.Documents.Tests
 
             while (true)
             {
-                await DelayAsync(delay, cancellationToken: cts.Token);
+                SearchIndexerStatus status = null;
+                try
+                {
+                    await DelayAsync(delay, cancellationToken: cts.Token);
 
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
-                    indexerName,
-                    cancellationToken: cts.Token);
+                    status = await client.GetIndexerStatusAsync(
+                        indexerName,
+                        cancellationToken: cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
 
                 if (status.Status == IndexerStatus.Running)
                 {

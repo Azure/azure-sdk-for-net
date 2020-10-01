@@ -1,7 +1,5 @@
 variables:
   DocWardenVersion: '0.6.1'
-  DotNetCoreSDKVersion: '3.1.301'
-  DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
   ConvertToProjectReferenceOption: ''
   skipComponentGovernanceDetection: true
@@ -10,3 +8,4 @@ variables:
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
+  CollectCoverage: false

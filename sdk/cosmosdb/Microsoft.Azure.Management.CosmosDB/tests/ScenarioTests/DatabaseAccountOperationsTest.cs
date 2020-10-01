@@ -113,7 +113,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(databaseAccountsByResourceGroupName);
 
                 DatabaseAccountListKeysResult databaseAccountListKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-                
+
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.SecondaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryReadonlyMasterKey);
@@ -175,7 +175,7 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(actualValue.DefaultConsistencyLevel, expectedValue.DefaultConsistencyLevel);
 
             if (actualValue.DefaultConsistencyLevel == DefaultConsistencyLevel.BoundedStaleness)
-            { 
+            {
                 Assert.Equal(actualValue.MaxIntervalInSeconds, expectedValue.MaxIntervalInSeconds);
                 Assert.Equal(actualValue.MaxStalenessPrefix, expectedValue.MaxStalenessPrefix);
             }

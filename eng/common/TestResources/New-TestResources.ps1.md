@@ -14,19 +14,20 @@ Deploys live test resources defined for a service directory to Azure.
 
 ### Default (Default)
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] [-DeleteAfterHours <Int32>]
- [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
+ -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>]
+ [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>]
- [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
+ -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
+ -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -112,6 +113,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ResourceGroupName
+Set this value to deploy directly to a Resource Group that has already been
+created.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json'.
@@ -180,7 +197,7 @@ It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 ```yaml
 Type: String
@@ -305,6 +322,7 @@ is based on the cloud to which the template is being deployed:
 * AzureCloud -\> 'westus2'
 * AzureUSGovernment -\> 'usgovvirginia'
 * AzureChinaCloud -\> 'chinaeast2'
+* Dogfood -\> 'westus'
 
 ```yaml
 Type: String
@@ -381,6 +399,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutFile
+Save test environment settings into a test-resources.json.env file next to test-resources.json.
+File is protected via DPAPI.
+Supported only on windows.
+The environment file would be scoped to the current repository directory.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
@@ -412,23 +448,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OutFile
-save test environment settings into a test-resources.json.env file next to test-resources.json. 
-The file is protected via DPAPI. The environment file would be scoped to the current repository directory.
-Note: Supported only on Windows.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -439,5 +458,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[Remove-TestResources.ps1](./Remove-TestResources.ps1.md)

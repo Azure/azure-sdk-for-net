@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    internal class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
         /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken"/> and <see cref="DeviceCodeCredential.GetTokenAsync"/> in the case that
@@ -40,5 +42,10 @@ namespace Azure.Identity
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
         public AuthenticationRecord AuthenticationRecord { get; set; }
+
+        /// <summary>
+        /// The callback which will be executed to display the device code login details to the user. In not specified the device code and login instructions will be printed to the console.
+        /// </summary>
+        public Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; set; }
     }
 }

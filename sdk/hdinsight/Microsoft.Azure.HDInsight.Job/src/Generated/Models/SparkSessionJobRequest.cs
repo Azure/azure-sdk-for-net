@@ -28,8 +28,31 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkSessionJobRequest class.
         /// </summary>
-        /// <param name="kind">Possible values include: 'spark', 'pyspark',
-        /// 'sparkr', 'sql'</param>
+        /// <param name="kind">Spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'</param>
+        /// <param name="proxyUser">User to impersonate when starting the
+        /// session.</param>
+        /// <param name="jars">Jars to be used in this session.</param>
+        /// <param name="pythonFiles">Python files to be used in this
+        /// session.</param>
+        /// <param name="files">Files to be used in this session.</param>
+        /// <param name="driverMemory">Amount of memory to use for the driver
+        /// process.</param>
+        /// <param name="driverCores">Number of cores to use for the driver
+        /// process.</param>
+        /// <param name="executorMemory">Amount of memory to use per executor
+        /// process.</param>
+        /// <param name="executorCores">Number of cores to use for each
+        /// executor.</param>
+        /// <param name="executorCount">Number of executors to launch for this
+        /// session.</param>
+        /// <param name="archives">Archives to be used in this session.</param>
+        /// <param name="queue">The name of the YARN queue to which
+        /// submitted.</param>
+        /// <param name="name">The name of this session.</param>
+        /// <param name="configuration">Spark configuration properties.</param>
+        /// <param name="heartbeatTimeoutInSecond">Timeout in second to which
+        /// session be orphaned.</param>
         public SparkSessionJobRequest(string kind = default(string), string proxyUser = default(string), IList<string> jars = default(IList<string>), IList<string> pythonFiles = default(IList<string>), IList<string> files = default(IList<string>), string driverMemory = default(string), int? driverCores = default(int?), string executorMemory = default(string), int? executorCores = default(int?), int? executorCount = default(int?), IList<string> archives = default(IList<string>), string queue = default(string), string name = default(string), IDictionary<string, string> configuration = default(IDictionary<string, string>), int? heartbeatTimeoutInSecond = default(int?))
         {
             Kind = kind;
@@ -56,78 +79,92 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'spark', 'pyspark', 'sparkr',
-        /// 'sql'
+        /// Gets or sets spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
 
         /// <summary>
+        /// Gets or sets user to impersonate when starting the session.
         /// </summary>
         [JsonProperty(PropertyName = "proxyUser")]
         public string ProxyUser { get; set; }
 
         /// <summary>
+        /// Gets or sets jars to be used in this session.
         /// </summary>
         [JsonProperty(PropertyName = "jars")]
         public IList<string> Jars { get; set; }
 
         /// <summary>
+        /// Gets or sets python files to be used in this session.
         /// </summary>
         [JsonProperty(PropertyName = "pyFiles")]
         public IList<string> PythonFiles { get; set; }
 
         /// <summary>
+        /// Gets or sets files to be used in this session.
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }
 
         /// <summary>
+        /// Gets or sets amount of memory to use for the driver process.
         /// </summary>
         [JsonProperty(PropertyName = "driverMemory")]
         public string DriverMemory { get; set; }
 
         /// <summary>
+        /// Gets or sets number of cores to use for the driver process.
         /// </summary>
         [JsonProperty(PropertyName = "driverCores")]
         public int? DriverCores { get; set; }
 
         /// <summary>
+        /// Gets or sets amount of memory to use per executor process.
         /// </summary>
         [JsonProperty(PropertyName = "executorMemory")]
         public string ExecutorMemory { get; set; }
 
         /// <summary>
+        /// Gets or sets number of cores to use for each executor.
         /// </summary>
         [JsonProperty(PropertyName = "executorCores")]
         public int? ExecutorCores { get; set; }
 
         /// <summary>
+        /// Gets or sets number of executors to launch for this session.
         /// </summary>
         [JsonProperty(PropertyName = "numExecutors")]
         public int? ExecutorCount { get; set; }
 
         /// <summary>
+        /// Gets or sets archives to be used in this session.
         /// </summary>
         [JsonProperty(PropertyName = "archives")]
         public IList<string> Archives { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the YARN queue to which submitted.
         /// </summary>
         [JsonProperty(PropertyName = "queue")]
         public string Queue { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of this session.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets spark configuration properties.
         /// </summary>
         [JsonProperty(PropertyName = "conf")]
         public IDictionary<string, string> Configuration { get; set; }
 
         /// <summary>
+        /// Gets or sets timeout in second to which session be orphaned.
         /// </summary>
         [JsonProperty(PropertyName = "heartbeatTimeoutInSecond")]
         public int? HeartbeatTimeoutInSecond { get; set; }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId");
                 writer.WriteStringValue(ApplicationId);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagementLockOwner DeserializeManagementLockOwner(JsonElement element)
         {
-            string applicationId = default;
+            Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     applicationId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ManagementLockOwner(applicationId);
+            return new ManagementLockOwner(applicationId.Value);
         }
     }
 }

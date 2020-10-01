@@ -15,124 +15,74 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Subscription DeserializeSubscription(JsonElement element)
         {
-            string id = default;
-            string subscriptionId = default;
-            string displayName = default;
-            string tenantId = default;
-            SubscriptionState? state = default;
-            SubscriptionPolicies subscriptionPolicies = default;
-            string authorizationSource = default;
-            IReadOnlyList<ManagedByTenant> managedByTenants = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            Optional<string> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> displayName = default;
+            Optional<string> tenantId = default;
+            Optional<SubscriptionState> state = default;
+            Optional<SubscriptionPolicies> subscriptionPolicies = default;
+            Optional<string> authorizationSource = default;
+            Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString().ToSubscriptionState();
                     continue;
                 }
                 if (property.NameEquals("subscriptionPolicies"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationSource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     authorizationSource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("managedByTenants"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ManagedByTenant> array = new List<ManagedByTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
-                        }
+                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
                     }
                     managedByTenants = array;
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new Subscription(id, subscriptionId, displayName, tenantId, state, subscriptionPolicies, authorizationSource, managedByTenants, tags);
+            return new Subscription(id.Value, subscriptionId.Value, displayName.Value, tenantId.Value, Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags));
         }
     }
 }

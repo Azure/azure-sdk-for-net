@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicySetDefinition. </summary>
         public PolicySetDefinition()
         {
+            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+            PolicyDefinitions = new ChangeTrackingList<PolicyDefinitionReference>();
+            PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinition. </summary>
@@ -57,10 +61,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </summary>
         public object Metadata { get; set; }
         /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; set; }
+        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; }
         /// <summary> An array of policy definition references. </summary>
-        public IList<PolicyDefinitionReference> PolicyDefinitions { get; set; }
+        public IList<PolicyDefinitionReference> PolicyDefinitions { get; }
         /// <summary> The metadata describing groups of policy definition references within the policy set definition. </summary>
-        public IList<PolicyDefinitionGroup> PolicyDefinitionGroups { get; set; }
+        public IList<PolicyDefinitionGroup> PolicyDefinitionGroups { get; }
     }
 }

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This library provides base types for other Microsoft Azure Communication client libraries</Description>
+    <AssemblyTitle>Azure Communication Services Common</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Microsoft Azure Communication Service;Microsoft;Azure;Azure Communication Service;Communication;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.Communication</RootNamespace>
+    <EnableApiCompat>false</EnableApiCompat>
+    <!-- These supressions should be removed in a production library -->
+    <NoWarn>$(NoWarn);CA1812;AZC0001</NoWarn>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+</Project>

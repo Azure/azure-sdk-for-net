@@ -94,6 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "CosmosDbMongoDbApiCollection": return CosmosDbMongoDbApiCollectionDataset.DeserializeCosmosDbMongoDbApiCollectionDataset(element);
                     case "CosmosDbSqlApiCollection": return CosmosDbSqlApiCollectionDataset.DeserializeCosmosDbSqlApiCollectionDataset(element);
                     case "CouchbaseTable": return CouchbaseTableDataset.DeserializeCouchbaseTableDataset(element);
+                    case "CustomDataset": return CustomDataset.DeserializeCustomDataset(element);
                     case "Db2Table": return Db2TableDataset.DeserializeDb2TableDataset(element);
                     case "DelimitedText": return DelimitedTextDataset.DeserializeDelimitedTextDataset(element);
                     case "DocumentDbCollection": return DocumentDbCollectionDataset.DeserializeDocumentDbCollectionDataset(element);
@@ -166,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -219,7 +220,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

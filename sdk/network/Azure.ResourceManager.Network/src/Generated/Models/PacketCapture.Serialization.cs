@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("target");
             writer.WriteStringValue(Target);
-            if (BytesToCapturePerPacket != null)
+            if (Optional.IsDefined(BytesToCapturePerPacket))
             {
                 writer.WritePropertyName("bytesToCapturePerPacket");
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (TotalBytesPerSession != null)
+            if (Optional.IsDefined(TotalBytesPerSession))
             {
                 writer.WritePropertyName("totalBytesPerSession");
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (TimeLimitInSeconds != null)
+            if (Optional.IsDefined(TimeLimitInSeconds))
             {
                 writer.WritePropertyName("timeLimitInSeconds");
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation");
             writer.WriteObjectValue(StorageLocation);
-            if (Filters != null)
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters");
                 writer.WriteStartArray();

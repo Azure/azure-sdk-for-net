@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of CorsRules. </summary>
         public CorsRules()
         {
+            CorsRulesValue = new ChangeTrackingList<CorsRule>();
         }
 
         /// <summary> Initializes a new instance of CorsRules. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue { get; set; }
+        public IList<CorsRule> CorsRulesValue { get; }
     }
 }

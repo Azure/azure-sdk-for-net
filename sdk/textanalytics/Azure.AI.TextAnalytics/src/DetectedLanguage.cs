@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -11,11 +12,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct DetectedLanguage
     {
-        internal DetectedLanguage(string name, string iso6391Name, double score, IList<TextAnalyticsWarning> warnings)
+        internal DetectedLanguage(DetectedLanguageInternal language, IList<TextAnalyticsWarning> warnings)
         {
-            Name = name;
-            Iso6391Name = iso6391Name;
-            ConfidenceScore = score;
+            Name = language.Name;
+            Iso6391Name = language.Iso6391Name;
+            ConfidenceScore = language.ConfidenceScore;
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 

@@ -290,8 +290,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new DataLakeAccessPolicy()
             {
-                StartsOn = blobAccessPolicy.StartsOn,
-                ExpiresOn = blobAccessPolicy.ExpiresOn,
+                PolicyStartsOn = blobAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = blobAccessPolicy.PolicyExpiresOn,
                 Permissions = blobAccessPolicy.Permissions
             };
         }
@@ -329,8 +329,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new BlobAccessPolicy()
             {
-                StartsOn = dataLakeAccessPolicy.StartsOn,
-                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                PolicyStartsOn = dataLakeAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = dataLakeAccessPolicy.PolicyExpiresOn,
                 Permissions = dataLakeAccessPolicy.Permissions
             };
         }
@@ -406,6 +406,21 @@ namespace Azure.Storage.Files.DataLake
                 Description = error.Description,
                 IsFatal = error.IsFatal,
                 Position = error.Position
+            };
+        }
+
+        internal static BlobOpenReadOptions ToBlobOpenReadOptions(this DataLakeOpenReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobOpenReadOptions(options.Conditions == null)
+            {
+                BufferSize = options.BufferSize,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                Position = options.Position
             };
         }
     }

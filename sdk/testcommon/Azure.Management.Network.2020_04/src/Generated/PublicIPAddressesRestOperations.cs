@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public PublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -58,6 +58,7 @@ namespace Azure.Management.Network
             uri.AppendPath(publicIpAddressName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -65,6 +66,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +95,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -136,6 +139,7 @@ namespace Azure.Management.Network
                 uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -144,6 +148,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public async Task<Response<PublicIPAddress>> GetAsync(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,14 +168,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,6 +181,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public Response<PublicIPAddress> Get(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,14 +201,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,6 +225,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -244,6 +237,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -276,6 +270,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -319,6 +314,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -330,6 +326,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to update public IP address tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PublicIPAddress>> UpdateTagsAsync(string resourceGroupName, string publicIpAddressName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -353,14 +350,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,6 +363,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to update public IP address tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<PublicIPAddress> UpdateTags(string resourceGroupName, string publicIpAddressName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -396,14 +387,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -423,6 +407,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -438,14 +423,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,14 +443,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,12 +465,14 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -515,14 +488,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -533,6 +499,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<PublicIPAddressListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -548,14 +515,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -579,6 +539,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/publicipaddresses", false);
             uri.AppendQuery("api-version", "2018-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -586,6 +547,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -605,14 +567,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -624,6 +579,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -643,14 +599,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,6 +629,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/publicipaddresses", false);
             uri.AppendQuery("api-version", "2018-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -690,6 +640,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetVMPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -721,14 +672,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -743,6 +687,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetVMPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -774,14 +719,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -816,6 +754,7 @@ namespace Azure.Management.Network
                 uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -828,6 +767,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP Address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/>, or <paramref name="publicIpAddressName"/> is null. </exception>
         public async Task<Response<PublicIPAddress>> GetVirtualMachineScaleSetPublicIPAddressAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -863,14 +803,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -887,6 +820,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP Address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/>, or <paramref name="publicIpAddressName"/> is null. </exception>
         public Response<PublicIPAddress> GetVirtualMachineScaleSetPublicIPAddress(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -922,14 +856,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -946,12 +873,14 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets all the public IP addresses in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -967,14 +896,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -985,6 +907,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the public IP addresses in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1000,14 +923,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1024,6 +940,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1031,6 +948,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1050,14 +968,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1069,6 +980,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1088,14 +1000,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1112,6 +1017,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1120,6 +1026,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetPublicIPAddressesNextPageAsync(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1143,14 +1050,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1163,6 +1063,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetPublicIPAddressesNextPage(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1186,14 +1087,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1210,6 +1104,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1221,6 +1116,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetVMPublicIPAddressesNextPageAsync(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1256,14 +1152,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1279,6 +1168,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The network interface name. </param>
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
         public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetVMPublicIPAddressesNextPage(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1314,14 +1204,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

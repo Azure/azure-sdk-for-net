@@ -23,5 +23,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         public const string OSImage = "OSImage";
         public const string Extension = "Extension";
         public const string InGuestPatch = "InGuestPatch";
+        public const string SQLDB = "SQLDB";
+        public const string SQLManagedInstance = "SQLManagedInstance";
     }
 }

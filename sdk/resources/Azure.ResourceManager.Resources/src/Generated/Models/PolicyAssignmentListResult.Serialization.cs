@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PolicyAssignmentListResult DeserializePolicyAssignmentListResult(JsonElement element)
         {
-            IReadOnlyList<PolicyAssignment> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PolicyAssignment>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PolicyAssignment> array = new List<PolicyAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PolicyAssignment.DeserializePolicyAssignment(item));
-                        }
+                        array.Add(PolicyAssignment.DeserializePolicyAssignment(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PolicyAssignmentListResult(value, nextLink);
+            return new PolicyAssignmentListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

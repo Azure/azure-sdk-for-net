@@ -45,11 +45,11 @@ TODO
 
 ### Create the thing
 
-Use the [create_thing](not-valid-link) method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call [Thing.save](not-valid-link).
+Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
 
 ### Get the thing
 
-The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
 ## Troubleshooting
 
@@ -78,11 +78,11 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 
 <!-- LINKS -->
 [azure_sub]: https://azure.microsoft.com/free/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/digitaltwins/Azure.ResourceManager.DigitalTwins
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
 [package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[token_credential]: https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet
-[digital_twins_documentation]: https://docs.microsoft.com/en-us/azure/digital-twins/
+[token_credential]: https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
+[digital_twins_documentation]: https://docs.microsoft.com/azure/digital-twins/
 [adt_nuget]: https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fdigitaltwins%2FAzure.ResourceManager.DigitalTwins%2FREADME.md)

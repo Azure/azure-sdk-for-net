@@ -6,7 +6,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="ClientCertificateCredential"/>.
     /// </summary>
-    internal class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
 
         /// <summary>
@@ -18,5 +18,10 @@ namespace Azure.Identity
         /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
         /// </summary>
         public bool AllowUnencryptedCache { get; set; }
+
+        /// <summary>
+        /// Will include x5c header to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
+        /// </summary>
+        public bool IncludeX5CCliamHeader { get; set; }
     }
 }

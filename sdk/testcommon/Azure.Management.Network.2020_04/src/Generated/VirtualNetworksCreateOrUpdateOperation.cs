@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         VirtualNetwork IOperationSource<VirtualNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-            }
+            return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
         }
 
         async ValueTask<VirtualNetwork> IOperationSource<VirtualNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-            }
+            return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
         }
     }
 }

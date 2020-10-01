@@ -26,13 +26,13 @@ namespace Azure.Security.KeyVault.Administration.Samples
             _objectId = TestEnvironment.ClientObjectId;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRoleAssignmentAsync()
         {
             // Replace client with the Instrumented Client.
             client = Client;
 
-            List<RoleDefinition> definitions = await client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
+            List<KeyVaultRoleDefinition> definitions = await client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
             _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
@@ -45,14 +45,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             //@@string definitionIdToAssign = "<roleDefinitionId>";
             //@@string servicePrincipalObjectId = "<objectId>";
 
-            RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
+            KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
             //@@RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
-            /*@@*/RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Keys, properties, _roleAssignmentId).ConfigureAwait(false);
+            /*@@*/KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, properties, _roleAssignmentId).ConfigureAwait(false);
             #endregion
 
             RegisterForCleanup(keysScopedAssignment);
 
-            var keyClient = KeyClient;
+            KeyClient keyClient = KeyClient;
             List<KeyProperties> keyProperties = await keyClient.GetPropertiesOfKeysAsync().ToEnumerableAsync().ConfigureAwait(false);
             string keyName = keyProperties.First().Name;
 
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
             //@@RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties);
-            /*@@*/RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties, _roleAssignmentId).ConfigureAwait(false);
+            /*@@*/KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), properties, _roleAssignmentId).ConfigureAwait(false);
             #endregion
 
             RegisterForCleanup(keyScopedAssignment);

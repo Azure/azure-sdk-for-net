@@ -1,6 +1,6 @@
 # Azure Synapse Analytics Artifacts client library for .NET
 
-This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
+This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/develop/net/).
 
 The Azure Synapse Analytics development client library enables programmatically managing artifacts, offering methods to create, update, list, and delete pipelines, datasets, data flows, notebooks, Spark job definitions, SQL scripts, linked services and triggers.
 
@@ -8,7 +8,7 @@ Azure Synapse is a limitless analytics service that brings together enterprise d
 
 ## Getting started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
@@ -16,7 +16,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics development client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.1
+dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.2
 ```
 
 ### Prerequisites
@@ -70,7 +70,8 @@ Notebook notebook = new Notebook(
     nbformatMinor: 2,
     new List<NotebookCell>()
 );
-NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+NotebookCreateOrUpdateNotebookOperation operation = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 ```
 
 ### Retrieve a notebook
@@ -97,7 +98,7 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-notebookClient.DeleteNotebook("MyNotebook");
+notebookClient.StartDeleteNotebook("MyNotebook");
 ```
 
 ## To build

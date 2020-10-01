@@ -11,7 +11,7 @@ namespace Azure.Management.Network.Models
     public partial class AzureFirewallIpGroups
     {
         /// <summary> Initializes a new instance of AzureFirewallIpGroups. </summary>
-        public AzureFirewallIpGroups()
+        internal AzureFirewallIpGroups()
         {
         }
 

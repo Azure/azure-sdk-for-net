@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ResourceGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -56,12 +56,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -117,6 +120,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -127,6 +131,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ResourceGroup>> CreateOrUpdateAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -147,14 +152,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -166,6 +164,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ResourceGroup> CreateOrUpdate(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -186,14 +185,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,12 +206,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to delete. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -242,6 +236,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to delete. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response Delete(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -274,12 +269,14 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -295,14 +292,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -313,6 +303,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -328,14 +319,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -357,6 +341,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -367,6 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ResourceGroup>> UpdateAsync(string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -386,14 +372,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,6 +384,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ResourceGroup> Update(string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -424,14 +404,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -454,6 +427,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -464,6 +438,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ExportTemplateAsync(string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -491,6 +466,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ExportTemplate(string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -534,6 +510,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -551,14 +528,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -580,14 +550,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -604,6 +567,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -612,6 +576,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ResourceGroupListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -627,14 +592,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,6 +605,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ResourceGroupListResult> ListNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -662,14 +621,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

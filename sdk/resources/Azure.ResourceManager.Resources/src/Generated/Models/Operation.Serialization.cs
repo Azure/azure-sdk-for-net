@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Operation DeserializeOperation(JsonElement element)
         {
-            string name = default;
-            OperationDisplay display = default;
+            Optional<string> name = default;
+            Optional<OperationDisplay> display = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("display"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }
             }
-            return new Operation(name, display);
+            return new Operation(name.Value, display.Value);
         }
     }
 }

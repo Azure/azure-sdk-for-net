@@ -62,10 +62,12 @@ The following environment variables must be set for the the end to end tests to 
 8. `MABOM_StorageKey`: The key to your storage account.
 9. `MABOM_BlobEndpoint`: The blob endpoint for the storage account, i.e. `https://<account>.blob.core.windows.net`
 10. `MABOM_BatchManagementEndpoint`: The management endpoint for the tenant you are targeting. This will usually be `https://management.azure.com/`.
+11. `MABOM_AzureAuthenticationClientId`: The client ID of an AAD App Registration with contributor access to the subscription you're using (#2).
+12. `MABOM_AzureAuthenticationClientSecret`: The secret for the App Registration (#11).
 
 If running the tests against a test tenant, you also must set:
 
-11. `MABOM_BatchTRPExtraHeaders` to x-ms-version=2015-12-01;x-ms-client-tenant-id=microsoft.onmicrosoft.com
-12. `MABOM_BatchTRPCertificateThumbprint`: The thumbprint used to authenticate with the Batch RPFE.
+13. `MABOM_BatchTRPExtraHeaders` to x-ms-version=2015-12-01;x-ms-client-tenant-id=microsoft.onmicrosoft.com
+14. `MABOM_BatchTRPCertificateThumbprint`: The thumbprint used to authenticate with the Batch Resource Provider.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fbatch%2FMicrosoft.Azure.Batch%2FREADME.png)

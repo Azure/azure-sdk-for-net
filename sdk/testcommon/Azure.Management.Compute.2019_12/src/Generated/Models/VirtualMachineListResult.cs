@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
         /// <param name="value"> The list of virtual machines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineListResult(IEnumerable<VirtualMachine> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page of Virtual Machines. </param>
         internal VirtualMachineListResult(IReadOnlyList<VirtualMachine> value, string nextLink)
         {
-            Value = value ?? new List<VirtualMachine>();
+            Value = value;
             NextLink = nextLink;
         }
 

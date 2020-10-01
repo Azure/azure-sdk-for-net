@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.DataBox/operations?api-version=2019-09-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDktMDE=",
+      "RequestUri": "/providers/Microsoft.DataBox/operations?api-version=2020-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e813195f-da0c-49a6-88e0-687f5b5aa770"
+          "f15d7932-5bae-4dc5-bc82-db38505b453a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.29130.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.1"
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,10 +30,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "97705235-7a84-4549-9522-f282fd18145c"
+          "2b14865f-971d-4486-ab5f-d44a94c11287"
         ],
         "x-ms-client-request-id": [
-          "e813195f-da0c-49a6-88e0-687f5b5aa770"
+          "f15d7932-5bae-4dc5-bc82-db38505b453a"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -42,16 +42,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "274c387e-f7f7-43d3-a3ba-ad61d62ec5a2"
+          "2b14865f-971d-4486-ab5f-d44a94c11287"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20191017T102447Z:274c387e-f7f7-43d3-a3ba-ad61d62ec5a2"
+          "CENTRALINDIA:20200831T045514Z:2b14865f-971d-4486-ab5f-d44a94c11287"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 17 Oct 2019 10:24:47 GMT"
+          "Mon, 31 Aug 2020 04:55:14 GMT"
         ],
         "Content-Length": [
           "5884"

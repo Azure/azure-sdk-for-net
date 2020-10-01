@@ -101,8 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests
             inputVMScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1.ToString();
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                        {
+                Extensions = {
                             GetTestVMSSVMExtension(),
                         }
             };
@@ -153,8 +152,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Adding an extension to the VMScaleSet. We will use Patch to update this.
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                        {
+                Extensions = {
                             GetTestVMSSVMExtension(),
                         }
             };

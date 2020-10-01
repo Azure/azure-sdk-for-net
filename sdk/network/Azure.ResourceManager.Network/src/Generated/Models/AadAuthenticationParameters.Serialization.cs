@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant");
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience");
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer");
                 writer.WriteStringValue(AadIssuer);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AadAuthenticationParameters DeserializeAadAuthenticationParameters(JsonElement element)
         {
-            string aadTenant = default;
-            string aadAudience = default;
-            string aadIssuer = default;
+            Optional<string> aadTenant = default;
+            Optional<string> aadAudience = default;
+            Optional<string> aadIssuer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadTenant"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadTenant = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadAudience"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadAudience = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadIssuer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aadIssuer = property.Value.GetString();
                     continue;
                 }
             }
-            return new AadAuthenticationParameters(aadTenant, aadAudience, aadIssuer);
+            return new AadAuthenticationParameters(aadTenant.Value, aadAudience.Value, aadIssuer.Value);
         }
     }
 }

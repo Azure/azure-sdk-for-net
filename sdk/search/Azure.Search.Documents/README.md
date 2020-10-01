@@ -43,7 +43,7 @@ Use the Azure.Search.Documents client library to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents
+dotnet add package Azure.Search.Documents --version 11.2.0-beta.1
 ```
 
 ### Prerequisites
@@ -128,9 +128,8 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 }
 ```
 
-You can paste that into a new console app,
-[install the Azure.Search.Documents package](#Install-the-package), add a
-`using Azure.Search.Documents;` statement, and then hit F5 to run.
+You can paste that into a new console app, install the Azure.Search.Documents
+package, add a `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
 
@@ -216,10 +215,12 @@ We can decorate our own C# types with [attributes from `System.Text.Json`](https
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 public class Hotel
 {
-    [JsonPropertyName("hotelId")]
+    [JsonPropertyName("HotelId")]
+    [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
     public string Id { get; set; }
 
-    [JsonPropertyName("hotelName")]
+    [JsonPropertyName("HotelName")]
+    [SearchableField(IsFilterable = true, IsSortable = true)]
     public string Name { get; set; }
 }
 ```
@@ -249,8 +250,8 @@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury")
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     SearchDocument doc = result.Document;
-    string id = (string)doc["hotelId"];
-    string name = (string)doc["hotelName"];
+    string id = (string)doc["HotelId"];
+    string name = (string)doc["HotelName"];
     Console.WriteLine("{id}: {name}");
 }
 ```
@@ -264,10 +265,10 @@ Let's search for the top 5 luxury hotels with a good rating.
 int stars = 4;
 SearchOptions options = new SearchOptions
 {
-    // Filter to only ratings greater than or equal our preference
-    Filter = SearchFilter.Create($"rating ge {stars}"),
+    // Filter to only Rating greater than or equal our preference
+    Filter = SearchFilter.Create($"Rating ge {stars}"),
     Size = 5, // Take only 5 results
-    OrderBy = { "rating desc" } // Sort by rating from high to low
+    OrderBy = { "Rating desc" } // Sort by Rating from high to low
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
@@ -276,8 +277,8 @@ SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 ### Creating an index
 
 You can use the `SearchIndexClient` to create a search index. Fields can be
-defined using convenient `SimpleField`, `SearchableField`, or `ComplexField`
-classes. Indexes can also define suggesters, lexical analyzers, and more.
+defined from a model class using `FieldBuilder`. Indexes can also define
+suggesters, lexical analyzers, and more:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -287,7 +288,26 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
-// Create the index
+// Create the index using FieldBuilder.
+SearchIndex index = new SearchIndex("hotels")
+{
+    Fields = new FieldBuilder().Build(typeof(Hotel)),
+    Suggesters =
+    {
+        // Suggest query terms from the hotelName field.
+        new SearchSuggester("sg", "hotelName")
+    }
+};
+
+client.CreateIndex(index);
+```
+
+In scenarios when the model is not known or cannot be modified, you can
+also create fields explicitly using convenient `SimpleField`,
+`SearchableField`, or `ComplexField` classes:
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+// Create the index using field definitions.
 SearchIndex index = new SearchIndex("hotels")
 {
     Fields =
@@ -310,8 +330,8 @@ SearchIndex index = new SearchIndex("hotels")
     },
     Suggesters =
     {
-        // Suggest query terms from both the hotelName and description fields.
-        new SearchSuggester("sg", "hotelName", "description")
+        // Suggest query terms from the hotelName field.
+        new SearchSuggester("sg", "hotelName")
     }
 };
 
@@ -389,9 +409,9 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-* [Go further with Azure.Search.Documents and our samples][samples]
-* [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
-* [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
+* Go further with Azure.Search.Documents and our [samples][samples]
+* Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
+* Read more about the [Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
 
@@ -424,8 +444,8 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
-[samples]: samples/
-[search_contrib]: ../CONTRIBUTING.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/
+[search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

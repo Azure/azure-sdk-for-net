@@ -1,7 +1,32 @@
 # Release History
 
-## 11.1.0-preview.1 (Unreleased)
+## 11.2.0-beta.1 (2020-10-06)
 
+### Fixed
+
+- Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
+
+### Added
+
+- Add support to `FieldBuilder` to define search fields for `Microsoft.Spatial` types without an explicit assembly dependency.
+- Add support to `SearchFilter` to encode geometric types from `Microsoft.Spatial` without an explicit assembly dependency.
+
+## 11.1.1 (2020-08-18)
+
+### Fixed
+
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 11.1.0 (2020-08-11)
+
+### Added
+
+- Added `SearchClientOptions.Serializer` to set which `ObjectSerializer` to use for serialization.
+- Added `FieldBuilder` to easily create `SearchIndex` fields from a model type.
+
+### Removed
+
+- Removed `$select` from the query parameters logged by default.  You can add it back via `SearchClientOptions.Diagnostics.LoggedQueryParameters("$select");` if desired.
 
 ## 11.0.0 (2020-07-07)
 

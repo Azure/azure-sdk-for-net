@@ -13,20 +13,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of OrchestrationServiceSummary. </summary>
         internal OrchestrationServiceSummary()
         {
-            ServiceName = "AutomaticRepairs";
         }
 
         /// <summary> Initializes a new instance of OrchestrationServiceSummary. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
-        internal OrchestrationServiceSummary(string serviceName, OrchestrationServiceState? serviceState)
+        internal OrchestrationServiceSummary(OrchestrationServiceNames? serviceName, OrchestrationServiceState? serviceState)
         {
             ServiceName = serviceName;
             ServiceState = serviceState;
         }
 
         /// <summary> The name of the service. </summary>
-        public string ServiceName { get; }
+        public OrchestrationServiceNames? ServiceName { get; }
         /// <summary> The current state of the service. </summary>
         public OrchestrationServiceState? ServiceState { get; }
     }

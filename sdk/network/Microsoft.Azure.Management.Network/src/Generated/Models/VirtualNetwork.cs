@@ -180,6 +180,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (VirtualNetworkPeerings != null)
+            {
+                foreach (var element in VirtualNetworkPeerings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (BgpCommunities != null)
             {
                 BgpCommunities.Validate();

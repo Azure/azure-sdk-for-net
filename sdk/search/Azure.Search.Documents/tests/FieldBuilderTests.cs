@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Tests;
+using Microsoft.Spatial;
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
-namespace Azure.Search.Documents.Samples.Tests
+namespace Azure.Search.Documents.Tests
 {
     public class FieldBuilderTests
     {
@@ -65,7 +66,10 @@ namespace Azure.Search.Documents.Samples.Tests
                     (SearchFieldDataType.Boolean, nameof(ReflectableModel.Flag)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
+#if EXPERIMENTAL_SPATIAL
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPoint)),
+#endif
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
                 };
 
                 (SearchFieldDataType, string)[] primitivePropertyTestData =
@@ -119,6 +123,13 @@ namespace Azure.Search.Documents.Samples.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
+#if EXPERIMENTAL_SPATIAL
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointArray)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIEnumerable)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointICollection)),
+#endif
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
@@ -219,7 +230,16 @@ namespace Azure.Search.Documents.Samples.Tests
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
                 nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Name),
-                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+
+                // The following fields were added since track 1, since setting the analyzers is only supported on searchable fields:
+                // https://docs.microsoft.com/rest/api/searchservice/create-index#-field-definitions-
+#pragma warning disable SA1115 // Parameter should follow comma
+                nameof(ReflectableModel.TextWithAnalyzer),
+                nameof(ReflectableModel.TextWithSearchAnalyzer),
+                nameof(ReflectableModel.TextWithIndexAnalyzer)
+#pragma warning restore SA1115 // Parameter should follow comma
+            );
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
@@ -266,7 +286,7 @@ namespace Azure.Search.Documents.Samples.Tests
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
-        public void NotIsHiddenOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse(
+        public void NotIsHiddenOnAllPropertiesExceptOnesWithIsHiddenSetToTrue(
             Type modelType)
         {
             // Was IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse
@@ -346,13 +366,15 @@ namespace Azure.Search.Documents.Samples.Tests
         {
             var expectedFields = new SearchField[]
             {
-                new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
-                new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Complex)
+                new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
+                new ComplexField(nameof(ModelWithNestedKey.Inner))
                 {
                     Fields =
                     {
-                        new SearchField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
-                        new SearchField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
+                        new SimpleField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
+
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
                     }
                 }
             };
@@ -367,12 +389,13 @@ namespace Azure.Search.Documents.Samples.Tests
         {
             var expectedFields = new SearchField[]
             {
-                new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
-                new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Collection(SearchFieldDataType.Complex))
+                new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
+                new ComplexField(nameof(ModelWithNestedKey.Inner), collection: true)
                 {
                     Fields =
                     {
-                        new SearchField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
                     }
                 }
             };
@@ -388,16 +411,17 @@ namespace Azure.Search.Documents.Samples.Tests
         [TestCase(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedPropertyTypes(Type modelType, string invalidPropertyName)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => BuildForType(modelType));
 
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
                 "which does not map to an Azure Search data type. Please use a supported data type or mark the property with " +
-                "[JsonIgnore] or [FieldBuilderIgnore] and define the field by creating a SearchField object." +
+                "[FieldBuilderIgnore] and define the field by creating a SearchField object. See https://aka.ms/azsdk/net/search/fieldbuilder for more information." +
                 $"{Environment.NewLine}Parameter name: {nameof(modelType)}";
 
             Assert.AreEqual(nameof(modelType), e.ParamName);
             Assert.AreEqual(expectedErrorMessage, e.Message);
+            Assert.AreEqual("https://aka.ms/azsdk/net/search/fieldbuilder", e.HelpLink);
         }
 
         [TestCase(typeof(int))]
@@ -410,9 +434,11 @@ namespace Azure.Search.Documents.Samples.Tests
         [TestCase(typeof(IList<ReflectableStructModel>))]
         [TestCase(typeof(List<string>))]
         [TestCase(typeof(ICollection<decimal>))]
+        [TestCase(typeof(decimal))]
+        [TestCase(typeof(float))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => BuildForType(modelType));
 
             string expectedErrorMessage =
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
@@ -422,6 +448,29 @@ namespace Azure.Search.Documents.Samples.Tests
             Assert.AreEqual(expectedErrorMessage, e.Message);
         }
 
+        [Test]
+        public void SupportsSpecificSpatialTypes()
+        {
+            IList<SearchField> fields = new FieldBuilder().Build(typeof(ModelWithSpatialProperties));
+            foreach (SearchField field in fields)
+            {
+                switch (field.Name)
+                {
+                    case nameof(ModelWithSpatialProperties.ID):
+                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        break;
+
+                    case nameof(ModelWithSpatialProperties.GeographyPoint):
+                        Assert.AreEqual(SearchFieldDataType.GeographyPoint, field.Type);
+                        break;
+
+                    default:
+                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        break;
+                }
+            }
+        }
+
         private static IEnumerable<(Type, SearchFieldDataType, string)> CombineTestData(
             IEnumerable<Type> modelTypes,
             IEnumerable<(SearchFieldDataType dataType, string fieldName)> testData) =>
@@ -429,7 +478,7 @@ namespace Azure.Search.Documents.Samples.Tests
             from tuple in testData
             select (type, tuple.dataType, tuple.fieldName);
 
-        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.BuildForType(modelType);
+        private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
 
         private enum Direction
         {
@@ -498,7 +547,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable, IsSearchable, IsSortable, IsFacetable]
+            [SearchableField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
             public Direction Direction { get; set; }
         }
 
@@ -507,7 +556,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public decimal Price { get; set; }
         }
 
@@ -516,7 +565,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public IEnumerable<byte> Buffer { get; set; }
         }
 
@@ -525,7 +574,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public ICollection<char> Buffer { get; set; }
         }
 
@@ -534,7 +583,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string InnerID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public int OtherField { get; set; }
         }
 
@@ -548,7 +597,7 @@ namespace Azure.Search.Documents.Samples.Tests
 
         private class InnerModelWithIgnoredProperties
         {
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public int OtherField { get; set; }
 
             [JsonIgnore]
@@ -571,6 +620,24 @@ namespace Azure.Search.Documents.Samples.Tests
             public Direction FieldBuilderIgnored { get; set; }
 
             public InnerModelWithIgnoredProperties[] Inner { get; set; }
+        }
+
+        private class ModelWithSpatialProperties
+        {
+            [SimpleField(IsKey = true)]
+            public string ID { get; set; }
+
+            public GeographyPoint GeographyPoint { get; set; }
+
+            public GeographyLineString GeographyLineString { get; set; }
+
+            public GeographyPolygon GeographyPolygon { get; set; }
+
+            public GeometryPoint GeometryPoint { get; set; }
+
+            public GeometryLineString GeometryLineString { get; set; }
+
+            public GeometryPolygon GeometryPolygon { get; set; }
         }
     }
 }

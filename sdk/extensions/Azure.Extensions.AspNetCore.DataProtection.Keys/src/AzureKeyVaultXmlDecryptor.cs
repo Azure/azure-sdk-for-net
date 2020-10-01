@@ -24,7 +24,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
         public XElement Decrypt(XElement encryptedElement)
         {
-            return DecryptAsync(encryptedElement).GetAwaiter().GetResult();
+            return Task.Run(() => DecryptAsync(encryptedElement)).GetAwaiter().GetResult();
         }
 
         private async Task<XElement> DecryptAsync(XElement encryptedElement)

@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Azure.Management.Resources;
 using Azure.Management.Resources.Models;
+
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public static class Helper

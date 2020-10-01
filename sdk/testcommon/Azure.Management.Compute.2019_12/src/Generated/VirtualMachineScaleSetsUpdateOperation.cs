@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         VirtualMachineScaleSet IOperationSource<VirtualMachineScaleSet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
-            }
+            return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
         }
 
         async ValueTask<VirtualMachineScaleSet> IOperationSource<VirtualMachineScaleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
-            }
+            return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
         }
     }
 }

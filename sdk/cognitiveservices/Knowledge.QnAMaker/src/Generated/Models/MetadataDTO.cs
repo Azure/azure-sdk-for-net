@@ -72,28 +72,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
-            if (Name != null)
-            {
-                if (Name.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 100);
-                }
-                if (Name.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
-                }
-            }
-            if (Value != null)
-            {
-                if (Value.Length > 500)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Value", 500);
-                }
-                if (Value.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Value", 1);
-                }
-            }
         }
     }
 }

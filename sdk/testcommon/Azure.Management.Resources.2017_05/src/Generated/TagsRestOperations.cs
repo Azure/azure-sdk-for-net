@@ -30,7 +30,7 @@ namespace Azure.Management.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public TagsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2017-05-10")
         {
             if (subscriptionId == null)
@@ -72,6 +72,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -99,6 +100,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response DeleteValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -137,6 +139,7 @@ namespace Azure.Management.Resources
             uri.AppendPath(tagValue, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -144,6 +147,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -164,14 +168,7 @@ namespace Azure.Management.Resources
                     {
                         TagValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagValue.DeserializeTagValue(document.RootElement);
-                        }
+                        value = TagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,6 +180,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response<TagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -203,14 +201,7 @@ namespace Azure.Management.Resources
                     {
                         TagValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagValue.DeserializeTagValue(document.RootElement);
-                        }
+                        value = TagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -231,12 +222,14 @@ namespace Azure.Management.Resources
             uri.AppendPath(tagName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> The tag name can have a maximum of 512 characters and is case insensitive. Tag names created by Azure have prefixes of microsoft, azure, or windows. You cannot create tags with one of these prefixes. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public async Task<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -253,14 +246,7 @@ namespace Azure.Management.Resources
                     {
                         TagDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagDetails.DeserializeTagDetails(document.RootElement);
-                        }
+                        value = TagDetails.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -271,6 +257,7 @@ namespace Azure.Management.Resources
         /// <summary> The tag name can have a maximum of 512 characters and is case insensitive. Tag names created by Azure have prefixes of microsoft, azure, or windows. You cannot create tags with one of these prefixes. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public Response<TagDetails> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -287,14 +274,7 @@ namespace Azure.Management.Resources
                     {
                         TagDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagDetails.DeserializeTagDetails(document.RootElement);
-                        }
+                        value = TagDetails.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -321,6 +301,7 @@ namespace Azure.Management.Resources
         /// <summary> You must remove all values from a resource tag before you can delete it. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -343,6 +324,7 @@ namespace Azure.Management.Resources
         /// <summary> You must remove all values from a resource tag before you can delete it. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public Response Delete(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
@@ -374,6 +356,7 @@ namespace Azure.Management.Resources
             uri.AppendPath("/tagNames", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -389,14 +372,7 @@ namespace Azure.Management.Resources
                     {
                         TagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -416,14 +392,7 @@ namespace Azure.Management.Resources
                     {
                         TagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,12 +409,14 @@ namespace Azure.Management.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets the names and values of all resource tags that are defined in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -461,14 +432,7 @@ namespace Azure.Management.Resources
                     {
                         TagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -479,6 +443,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets the names and values of all resource tags that are defined in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<TagsListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -494,14 +459,7 @@ namespace Azure.Management.Resources
                     {
                         TagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

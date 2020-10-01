@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxBatchInstancePercent != null)
+            if (Optional.IsDefined(MaxBatchInstancePercent))
             {
                 writer.WritePropertyName("maxBatchInstancePercent");
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (MaxUnhealthyInstancePercent != null)
+            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent");
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (MaxUnhealthyUpgradedInstancePercent != null)
+            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent");
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (PauseTimeBetweenBatches != null)
+            if (Optional.IsDefined(PauseTimeBetweenBatches))
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches");
                 writer.WriteStringValue(PauseTimeBetweenBatches);
@@ -40,50 +40,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element)
         {
-            int? maxBatchInstancePercent = default;
-            int? maxUnhealthyInstancePercent = default;
-            int? maxUnhealthyUpgradedInstancePercent = default;
-            string pauseTimeBetweenBatches = default;
+            Optional<int> maxBatchInstancePercent = default;
+            Optional<int> maxUnhealthyInstancePercent = default;
+            Optional<int> maxUnhealthyUpgradedInstancePercent = default;
+            Optional<string> pauseTimeBetweenBatches = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxBatchInstancePercent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxBatchInstancePercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxUnhealthyInstancePercent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxUnhealthyInstancePercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxUnhealthyUpgradedInstancePercent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxUnhealthyUpgradedInstancePercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("pauseTimeBetweenBatches"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pauseTimeBetweenBatches = property.Value.GetString();
                     continue;
                 }
             }
-            return new RollingUpgradePolicy(maxBatchInstancePercent, maxUnhealthyInstancePercent, maxUnhealthyUpgradedInstancePercent, pauseTimeBetweenBatches);
+            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value);
         }
     }
 }

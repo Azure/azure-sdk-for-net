@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ExpressRouteCrossConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -55,6 +55,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -70,14 +71,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +91,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -126,12 +113,14 @@ namespace Azure.Management.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ExpressRouteCrossConnectionListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -147,14 +136,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,6 +147,7 @@ namespace Azure.Management.Network
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ExpressRouteCrossConnectionListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -180,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,6 +186,7 @@ namespace Azure.Management.Network
             uri.AppendPath(crossConnectionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -217,6 +194,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group (peering location of the circuit). </param>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
         public async Task<Response<ExpressRouteCrossConnection>> GetAsync(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -236,14 +214,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,6 +226,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group (peering location of the circuit). </param>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
         public Response<ExpressRouteCrossConnection> Get(string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -274,14 +246,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,6 +270,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -316,6 +282,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="parameters"> Parameters supplied to the update express route crossConnection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, ExpressRouteCrossConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,6 +314,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="parameters"> Parameters supplied to the update express route crossConnection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string crossConnectionName, ExpressRouteCrossConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -389,6 +357,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(crossConnectionParameters);
             request.Content = content;
@@ -400,6 +369,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the cross connection. </param>
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="crossConnectionParameters"/> is null. </exception>
         public async Task<Response<ExpressRouteCrossConnection>> UpdateTagsAsync(string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,14 +393,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -443,6 +406,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the cross connection. </param>
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="crossConnectionParameters"/> is null. </exception>
         public Response<ExpressRouteCrossConnection> UpdateTags(string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -466,14 +430,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnection.DeserializeExpressRouteCrossConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -500,6 +457,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -509,6 +467,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListArpTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -546,6 +505,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListArpTable(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -596,6 +556,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -605,6 +566,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListRoutesTableSummaryAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -642,6 +604,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListRoutesTableSummary(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -692,6 +655,7 @@ namespace Azure.Management.Network
             uri.AppendPath(devicePath, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -701,6 +665,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public async Task<Response> ListRoutesTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -738,6 +703,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
         public Response ListRoutesTable(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -778,12 +744,14 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ExpressRouteCrossConnectionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -799,14 +767,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -817,6 +778,7 @@ namespace Azure.Management.Network
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ExpressRouteCrossConnectionListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -832,14 +794,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -856,6 +811,7 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -863,6 +819,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ExpressRouteCrossConnectionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -882,14 +839,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -901,6 +851,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ExpressRouteCrossConnectionListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -920,14 +871,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCrossConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCrossConnectionListResult.DeserializeExpressRouteCrossConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

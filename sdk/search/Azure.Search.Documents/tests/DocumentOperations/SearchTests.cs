@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.Serialization;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
@@ -164,9 +164,7 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-#if EXPERIMENTAL_SERIALIZER
         [Test]
-#endif
         public async Task StaticDocumentsWithCustomSerializer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -174,7 +172,6 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = resources.GetQueryClient(
                 new SearchClientOptions()
                 {
-#if EXPERIMENTAL_SERIALIZER
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
@@ -182,11 +179,10 @@ namespace Azure.Search.Documents.Tests
                             Converters =
                             {
 #if EXPERIMENTAL_SPATIAL
-                                new GeometryJsonConverter()
+                                new GeoJsonConverter()
 #endif
                             }
                         })
-#endif
                 });
             SearchResults<UncasedHotel> response = await client.SearchAsync<UncasedHotel>("*");
             Assert.IsNull(response.TotalCount);

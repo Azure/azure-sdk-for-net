@@ -56,6 +56,7 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2020_06_30) { }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -103,6 +104,26 @@ namespace Azure.Search.Documents
 }
 namespace Azure.Search.Documents.Indexes
 {
+    public partial class FieldBuilder
+    {
+        public FieldBuilder() { }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type modelType) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class FieldBuilderIgnoreAttribute : System.Attribute
+    {
+        public FieldBuilderIgnoreAttribute() { }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SearchableFieldAttribute : Azure.Search.Documents.Indexes.SimpleFieldAttribute
+    {
+        public SearchableFieldAttribute() { }
+        public string AnalyzerName { get { throw null; } set { } }
+        public string IndexAnalyzerName { get { throw null; } set { } }
+        public string SearchAnalyzerName { get { throw null; } set { } }
+        public string[] SynonymMapNames { get { throw null; } set { } }
+    }
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
@@ -201,6 +222,16 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RunIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SimpleFieldAttribute : System.Attribute
+    {
+        public SimpleFieldAttribute() { }
+        public bool IsFacetable { get { throw null; } set { } }
+        public bool IsFilterable { get { throw null; } set { } }
+        public bool IsHidden { get { throw null; } set { } }
+        public bool IsKey { get { throw null; } set { } }
+        public bool IsSortable { get { throw null; } set { } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
@@ -729,6 +760,102 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName left, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName right) { throw null; }
         public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string ArLucene = "ar.lucene";
+            public const string ArMicrosoft = "ar.microsoft";
+            public const string BgLucene = "bg.lucene";
+            public const string BgMicrosoft = "bg.microsoft";
+            public const string BnMicrosoft = "bn.microsoft";
+            public const string CaLucene = "ca.lucene";
+            public const string CaMicrosoft = "ca.microsoft";
+            public const string CsLucene = "cs.lucene";
+            public const string CsMicrosoft = "cs.microsoft";
+            public const string DaLucene = "da.lucene";
+            public const string DaMicrosoft = "da.microsoft";
+            public const string DeLucene = "de.lucene";
+            public const string DeMicrosoft = "de.microsoft";
+            public const string ElLucene = "el.lucene";
+            public const string ElMicrosoft = "el.microsoft";
+            public const string EnLucene = "en.lucene";
+            public const string EnMicrosoft = "en.microsoft";
+            public const string EsLucene = "es.lucene";
+            public const string EsMicrosoft = "es.microsoft";
+            public const string EtMicrosoft = "et.microsoft";
+            public const string EuLucene = "eu.lucene";
+            public const string FaLucene = "fa.lucene";
+            public const string FiLucene = "fi.lucene";
+            public const string FiMicrosoft = "fi.microsoft";
+            public const string FrLucene = "fr.lucene";
+            public const string FrMicrosoft = "fr.microsoft";
+            public const string GaLucene = "ga.lucene";
+            public const string GlLucene = "gl.lucene";
+            public const string GuMicrosoft = "gu.microsoft";
+            public const string HeMicrosoft = "he.microsoft";
+            public const string HiLucene = "hi.lucene";
+            public const string HiMicrosoft = "hi.microsoft";
+            public const string HrMicrosoft = "hr.microsoft";
+            public const string HuLucene = "hu.lucene";
+            public const string HuMicrosoft = "hu.microsoft";
+            public const string HyLucene = "hy.lucene";
+            public const string IdLucene = "id.lucene";
+            public const string IdMicrosoft = "id.microsoft";
+            public const string IsMicrosoft = "is.microsoft";
+            public const string ItLucene = "it.lucene";
+            public const string ItMicrosoft = "it.microsoft";
+            public const string JaLucene = "ja.lucene";
+            public const string JaMicrosoft = "ja.microsoft";
+            public const string Keyword = "keyword";
+            public const string KnMicrosoft = "kn.microsoft";
+            public const string KoLucene = "ko.lucene";
+            public const string KoMicrosoft = "ko.microsoft";
+            public const string LtMicrosoft = "lt.microsoft";
+            public const string LvLucene = "lv.lucene";
+            public const string LvMicrosoft = "lv.microsoft";
+            public const string MlMicrosoft = "ml.microsoft";
+            public const string MrMicrosoft = "mr.microsoft";
+            public const string MsMicrosoft = "ms.microsoft";
+            public const string NbMicrosoft = "nb.microsoft";
+            public const string NlLucene = "nl.lucene";
+            public const string NlMicrosoft = "nl.microsoft";
+            public const string NoLucene = "no.lucene";
+            public const string PaMicrosoft = "pa.microsoft";
+            public const string Pattern = "pattern";
+            public const string PlLucene = "pl.lucene";
+            public const string PlMicrosoft = "pl.microsoft";
+            public const string PtBrLucene = "pt-BR.lucene";
+            public const string PtBrMicrosoft = "pt-BR.microsoft";
+            public const string PtPtLucene = "pt-PT.lucene";
+            public const string PtPtMicrosoft = "pt-PT.microsoft";
+            public const string RoLucene = "ro.lucene";
+            public const string RoMicrosoft = "ro.microsoft";
+            public const string RuLucene = "ru.lucene";
+            public const string RuMicrosoft = "ru.microsoft";
+            public const string Simple = "simple";
+            public const string SkMicrosoft = "sk.microsoft";
+            public const string SlMicrosoft = "sl.microsoft";
+            public const string SrCyrillicMicrosoft = "sr-cyrillic.microsoft";
+            public const string SrLatinMicrosoft = "sr-latin.microsoft";
+            public const string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
+            public const string StandardLucene = "standard.lucene";
+            public const string Stop = "stop";
+            public const string SvLucene = "sv.lucene";
+            public const string SvMicrosoft = "sv.microsoft";
+            public const string TaMicrosoft = "ta.microsoft";
+            public const string TeMicrosoft = "te.microsoft";
+            public const string ThLucene = "th.lucene";
+            public const string ThMicrosoft = "th.microsoft";
+            public const string TrLucene = "tr.lucene";
+            public const string TrMicrosoft = "tr.microsoft";
+            public const string UkMicrosoft = "uk.microsoft";
+            public const string UrMicrosoft = "ur.microsoft";
+            public const string ViMicrosoft = "vi.microsoft";
+            public const string Whitespace = "whitespace";
+            public const string ZhHansLucene = "zh-Hans.lucene";
+            public const string ZhHansMicrosoft = "zh-Hans.microsoft";
+            public const string ZhHantLucene = "zh-Hant.lucene";
+            public const string ZhHantMicrosoft = "zh-Hant.microsoft";
+        }
     }
     public partial class LexicalTokenizer
     {
@@ -1163,7 +1290,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string DefaultScoringProfile { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Fields { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Fields { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.ScoringProfile> ScoringProfiles { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm Similarity { get { throw null; } set { } }

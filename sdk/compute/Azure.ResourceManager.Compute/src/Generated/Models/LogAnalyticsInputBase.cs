@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
         public LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             if (blobContainerSasUri == null)
@@ -26,23 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;
             ToTime = toTime;
-        }
-
-        /// <summary> Initializes a new instance of LogAnalyticsInputBase. </summary>
-        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
-        /// <param name="fromTime"> From time of the query. </param>
-        /// <param name="toTime"> To time of the query. </param>
-        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
-        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
-        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
-        internal LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName)
-        {
-            BlobContainerSasUri = blobContainerSasUri;
-            FromTime = fromTime;
-            ToTime = toTime;
-            GroupByThrottlePolicy = groupByThrottlePolicy;
-            GroupByOperationName = groupByOperationName;
-            GroupByResourceName = groupByResourceName;
         }
 
         /// <summary> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </summary>

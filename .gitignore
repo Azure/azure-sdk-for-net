@@ -165,3 +165,5 @@ msbuild.binlog
 
 # BenchmarkDotNet 
 BenchmarkDotNet.Artifacts
+
+artifacts
