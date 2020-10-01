@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = queueA
+                    TransactionQueueOrTopicName = queueA
                 });
 
                 ServiceBusReceiver receiverA = client.CreateReceiver(queueA);

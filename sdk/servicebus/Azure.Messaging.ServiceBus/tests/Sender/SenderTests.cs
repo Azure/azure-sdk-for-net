@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var sender = client.CreateSender(queueName,
                 new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = "sendViaName"
+                    TransactionQueueOrTopicName = "sendViaName"
                 });
         }
 
@@ -144,13 +144,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.That(() => client.CreateSender(queueName,
                 new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = "sendViaName"
+                    TransactionQueueOrTopicName = "sendViaName"
                 }),
                 Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.CreateSender(queueName,
                new ServiceBusSenderOptions
                {
-                   ViaQueueOrTopicName = queueName
+                   TransactionQueueOrTopicName = queueName
                }),
                Throws.InstanceOf<ArgumentException>());
         }
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             client.CreateSender("something",
                 new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = "something"
+                    TransactionQueueOrTopicName = "something"
                 });
         }
 
@@ -192,7 +192,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var sender = client.CreateSender(queueName,
                 new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = null
+                    TransactionQueueOrTopicName = null
                 });
         }
 

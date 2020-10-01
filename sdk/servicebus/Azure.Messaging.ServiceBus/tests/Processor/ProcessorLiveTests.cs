@@ -39,7 +39,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentCalls = numThreads,
                     AutoComplete = autoComplete,
-                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
+                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30),
+                    PrefetchCount = 20
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;

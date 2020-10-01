@@ -223,7 +223,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessagesAsync(batch);
 
-                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                {
+                    PrefetchCount = 100
+                });
 
                 var messageEnum = messages.GetEnumerator();
 

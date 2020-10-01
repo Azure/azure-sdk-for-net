@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy Proxy { get; set; } = null;
+        public IWebProxy WebProxy { get; set; } = null;
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
@@ -100,14 +100,14 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Creates a new copy of the current <see cref="ServiceBusClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
-        ///        ///
+        ///
         /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
         internal ServiceBusClientOptions Clone() =>
             new ServiceBusClientOptions
             {
                 TransportType = TransportType,
-                Proxy = Proxy,
+                WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
                 Plugins = new List<ServiceBusPlugin>(Plugins)
             };

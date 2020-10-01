@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             {
                 MessageId = messageId,
                 PartitionKey = partitionKey,
-                ViaPartitionKey = viaPartitionKey,
+                TransactionPartitionKey = viaPartitionKey,
                 SessionId = sessionId,
                 CorrelationId = correlationId,
                 Subject = label,

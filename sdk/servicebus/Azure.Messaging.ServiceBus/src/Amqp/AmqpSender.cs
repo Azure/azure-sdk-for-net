@@ -446,9 +446,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                    if (!string.IsNullOrWhiteSpace(message.TransactionPartitionKey))
                     {
-                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.TransactionPartitionKey;
                     }
 
                     entries.Add(entry);
