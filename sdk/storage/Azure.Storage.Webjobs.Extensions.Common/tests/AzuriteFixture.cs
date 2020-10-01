@@ -2,14 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
+using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
@@ -29,14 +32,10 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     /// </summary>
     public class AzuriteFixture : IDisposable
     {
-        private const BlobClientOptions.ServiceVersion SupportedBlobServiceVersion = BlobClientOptions.ServiceVersion.V2019_12_12;
-        private const QueueClientOptions.ServiceVersion SupportedQueueServiceVersion = QueueClientOptions.ServiceVersion.V2019_12_12;
-        private const int AccountPoolSize = 50;
         private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
         private Process process;
-        private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
-        private List<string> accountsList = new List<string>();
+        private AzuriteAccount account;
         private CountdownEvent countdownEvent = new CountdownEvent(2);
         private StringBuilder azuriteOutput = new StringBuilder();
         private int blobsPort;
@@ -44,10 +43,22 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public AzuriteFixture()
         {
+            // This is to force newer protocol on machines with older .NET Framework. Otherwise tests don't connect to Azurite with unsigned cert.
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
+            var defaultPath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA") ?? string.Empty, "npm");
+
             if (string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                throw new ArgumentException(ErrorMessage($"{AzuriteLocationKey} environment variable is not set"));
+                if (Directory.Exists(defaultPath))
+                {
+                    azuriteLocation = defaultPath;
+                }
+                else
+                {
+                    throw new ArgumentException(ErrorMessage($"{AzuriteLocationKey} environment variable is not set and {defaultPath} doesn't exist"));
+                }
             }
             var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
             if (!File.Exists(azuriteScriptLocation))
@@ -55,23 +66,19 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 throw new ArgumentException(ErrorMessage($"{azuriteScriptLocation} does not exist, check if {AzuriteLocationKey} is pointing to right location"));
             }
 
-            for (int i = 0; i < AccountPoolSize; i++)
+            account = new AzuriteAccount()
             {
-                var account = new AzuriteAccount()
-                {
-                    Name = Guid.NewGuid().ToString(),
-                    Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-                };
-                accounts.Enqueue(account);
-                accountsList.Add($"{account.Name}:{account.Key}");
-            }
+                Name = Guid.NewGuid().ToString(),
+                Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
+            };
 
             tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tempDirectory);
             process = new Process();
             process.StartInfo.FileName = "node";
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort 0 --queuePort 0";
-            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
+            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            process.StartInfo.Arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{account.Name}:{account.Key}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
@@ -108,11 +115,8 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             {
                 throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
             }
-            foreach (var account in accounts)
-            {
-                account.BlobsPort = blobsPort;
-                account.QueuesPort = queuesPort;
-            }
+            account.BlobsPort = blobsPort;
+            account.QueuesPort = queuesPort;
         }
 
         private int ParseAzuritePort(string outputLine)
@@ -132,10 +136,36 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
         public StorageAccount GetAccount()
         {
-            var azuriteAccount = accounts.Dequeue();
-            return new StorageAccount(azuriteAccount.ConnectionString,
-                SupportedBlobServiceVersion,
-                SupportedQueueServiceVersion);
+            var transport = GetTransport();
+
+            return new StorageAccount(
+                new BlobServiceClient(account.ConnectionString, new BlobClientOptions()
+                {
+                    Transport = transport
+                }),
+                new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
+                {
+                    Transport = transport
+                }));
+        }
+
+        public HttpClientTransport GetTransport()
+        {
+            var transport = new HttpClientTransport(new HttpClient(new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            }));
+            return transport;
+        }
+
+        public TokenCredential GetCredential()
+        {
+            return new AzuriteTokenCredential();
+        }
+
+        public AzuriteAccount GetAzureAccount()
+        {
+            return account;
         }
 
         public void Dispose()
@@ -150,6 +180,30 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 Directory.Delete(tempDirectory, true);
             }
         }
+
+        private class AzuriteTokenCredential: TokenCredential
+        {
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                //{
+                // "aud": "https://storage.azure.com",
+                // "iss": "https://sts.windows-ppe.net/ab1f708d-50f6-404c-a006-d71b2ac7a606/",
+                // "iat": 1511859603,
+                // "nbf": 1511859603,
+                // "exp": 9999999999,
+                // "alg": "HS256"
+                //}
+                // Encoded using https://jwt.io/
+                return new AccessToken("eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy1wcGUubmV0L2FiMWY3MDhkLTUwZjYtNDA0Yy1hMDA2LWQ3MWIyYWM3YTYwNi8iLCJpYXQiOjE1MTE4NTk2MDMsIm5iZiI6MTUxMTg1OTYwMywiZXhwIjo5OTk5OTk5OTk5LCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy1wcGUubmV0L2FiMWY3MDhkLTUwZjYtNDA0Yy1hMDA2LWQ3MWIyYWM3YTYwNi8iLCJpYXQiOjE1MTE4NTk2MDMsIm5iZiI6MTUxMTg1OTYwMywiZXhwIjo5OTk5OTk5OTk5LCJhbGciOiJIUzI1NiJ9.z48ZJz_3k0ZOATIMjZ02AQxlDnUT3NXLEJXLgdHIKl8", DateTimeOffset.MaxValue);
+            }
+
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -161,11 +215,13 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public int BlobsPort { get; set; }
         public int QueuesPort { get; set; }
 
+        public string Endpoint => $"https://127.0.0.1:{BlobsPort}/{Name}";
+
         public string ConnectionString
         {
             get
             {
-                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:{BlobsPort}/{Name};QueueEndpoint=http://127.0.0.1:{QueuesPort}/{Name};";
+                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=https://127.0.0.1:{BlobsPort}/{Name};QueueEndpoint=https://127.0.0.1:{QueuesPort}/{Name};";
             }
         }
     }

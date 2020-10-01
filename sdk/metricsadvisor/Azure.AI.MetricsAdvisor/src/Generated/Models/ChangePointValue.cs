@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ChangePointValue. </summary>
-    internal readonly partial struct ChangePointValue : IEquatable<ChangePointValue>
+    public readonly partial struct ChangePointValue : IEquatable<ChangePointValue>
     {
         private readonly string _value;
 

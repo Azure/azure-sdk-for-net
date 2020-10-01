@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.0.1 (2020-10-06)
 
 - Number of parallel secret retrievals is limited to `32`.
 

@@ -13,14 +13,18 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("Match")]
     public readonly partial struct LinkedEntityMatch
     {
+        // use for deserialization
         internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
+            : this(confidenceScore, text, offset) => Length = length;
+
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset)
         {
             // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
             Text = text ?? string.Empty;
             ConfidenceScore = confidenceScore;
             Offset = offset;
-            Length = length;
+            Length = default;
         }
 
         /// <summary>
@@ -40,8 +44,8 @@ namespace Azure.AI.TextAnalytics
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length (in UTF-16 code units) of the matching text in the document.
+        /// Gets the length (in UTF-16 code units) of the matching text in the sentence.
         /// </summary>
-        public int Length { get; }
+        private int Length { get; }
     }
 }

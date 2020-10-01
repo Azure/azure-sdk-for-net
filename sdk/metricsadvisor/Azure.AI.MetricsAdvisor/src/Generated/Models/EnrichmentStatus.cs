@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The EnrichmentStatus. </summary>
-    internal partial class EnrichmentStatus
+    public partial class EnrichmentStatus
     {
         /// <summary> Initializes a new instance of EnrichmentStatus. </summary>
         internal EnrichmentStatus()
