@@ -7,24 +7,23 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class QueueTriggerTests
     {
         private const string QueueName = "input-queuetriggertests";
-        private readonly StorageAccount account;
+        private StorageAccount account;
 
-        public QueueTriggerTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
+            account = AzuriteNUnitFixture.Instance.GetAccount();
             account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await queue.SendMessageAsync(message);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToCloudQueueMessage_Binds()
         {
             // Arrange
@@ -63,17 +62,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedGuid, result.MessageText);
+            Assert.AreEqual(expectedGuid, result.MessageText);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToString_Binds()
         {
             string expectedContent = Guid.NewGuid().ToString();
             await TestBindToString(expectedContent);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsEmpty_Binds()
         {
             await TestBindToString(string.Empty);
@@ -90,10 +89,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedContent, result);
+            Assert.AreEqual(expectedContent, result);
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) reenable when we get base64/BinaryData in SDK")]
+        [Test]
+        [Ignore("TODO (kasobol-msft) reenable when we get base64/BinaryData in SDK")]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
@@ -106,29 +106,31 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Exception binding parameter 'message'", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
             Exception innerException = exception.InnerException;
-            Assert.IsType<DecoderFallbackException>(innerException);
-            Assert.Equal("Unable to translate bytes [FF] at index -1 from specified code page to Unicode.",
+            Assert.IsInstanceOf<DecoderFallbackException>(innerException);
+            Assert.AreEqual("Unable to translate bytes [FF] at index -1 from specified code page to Unicode.",
                 innerException.Message);
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
+        [Test]
+        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArray_Binds()
         {
             byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
             await TestBindToByteArray(expectedContent);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsEmpty_Binds()
         {
             byte[] expectedContent = new byte[0];
             await TestBindToByteArray(expectedContent);
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
+        [Test]
+        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsNonUtf8_Binds()
         {
             byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
@@ -146,17 +148,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToByteArrayProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedContent, result);
+            Assert.AreEqual(expectedContent, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToPoco_Binds()
         {
             Poco expectedContent = new Poco { Value = "abc" };
             await TestBindToPoco(expectedContent);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsJsonNull_Binds()
         {
             Poco expectedContent = null;
@@ -186,12 +188,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
 
             Assert.NotNull(actual);
-            Assert.Equal(expected.Value, actual.Value);
-            Assert.Equal(expected.Int32Value, actual.Int32Value);
+            Assert.AreEqual(expected.Value, actual.Value);
+            Assert.AreEqual(expected.Int32Value, actual.Int32Value);
             AssertEqual(expected.Child, actual.Child);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsNotJson_DoesNotBind()
         {
             // Arrange
@@ -204,20 +206,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Exception binding parameter 'message'", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
             Exception innerException = exception.InnerException;
-            Assert.IsType<InvalidOperationException>(innerException);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
             const string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses " +
                 "Json.NET serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw " +
                 "values and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON " +
                 "parser failed: Unexpected character encountered while parsing value: n. Path '', line 0, position " +
                 "0.";
             string actual = Regex.Replace(innerException.Message, @"[\n\r]", "");
-            Assert.Equal(expectedInnerMessage, actual);
+            Assert.AreEqual(expectedInnerMessage, actual);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsIncompatibleJson_DoesNotBind()
         {
             // Arrange
@@ -230,20 +232,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Exception binding parameter 'message'", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Exception binding parameter 'message'", exception.Message);
             Exception innerException = exception.InnerException;
-            Assert.IsType<InvalidOperationException>(innerException);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
             string expectedInnerMessage = "Binding parameters to complex objects (such as 'Poco') uses Json.NET " +
                 "serialization. 1. Bind the parameter type as 'string' instead of 'Poco' to get the raw values " +
                 "and avoid JSON deserialization, or2. Change the queue payload to be valid json. The JSON parser " +
                 "failed: Error converting value 123 to type '" + typeof(Poco).FullName + "'. Path '', line 1, " +
                 "position 3.";
             string actual = Regex.Replace(innerException.Message, @"[\n\r]", "");
-            Assert.Equal(expectedInnerMessage, actual);
+            Assert.AreEqual(expectedInnerMessage, actual);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBoundToPocoStruct_Binds()
         {
             // Arrange
@@ -257,10 +259,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToPocoStructProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedContent, result);
+            Assert.AreEqual(expectedContent, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfMessageIsString_ProvidesQueueTriggerBindingData()
         {
             // Arrange
@@ -273,10 +275,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedQueueTrigger, result);
+            Assert.AreEqual(expectedQueueTrigger, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfMessageIsUtf8ByteArray_ProvidesQueueTriggerBindingData()
         {
             // Arrange
@@ -290,10 +292,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedQueueTrigger, result);
+            Assert.AreEqual(expectedQueueTrigger, result);
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
+        [Test]
+        [Ignore("TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
         public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange
@@ -306,14 +309,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Exception binding parameter 'queueTrigger'", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Exception binding parameter 'queueTrigger'", exception.Message);
             Exception innerException = exception.InnerException;
-            Assert.IsType<InvalidOperationException>(innerException);
-            Assert.Equal("Binding data does not contain expected value 'queueTrigger'.", innerException.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(innerException);
+            Assert.AreEqual("Binding data does not contain expected value 'queueTrigger'.", innerException.Message);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
@@ -326,10 +329,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(1, result);
+            Assert.AreEqual(1, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
@@ -342,10 +345,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(0, (int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays);
+            Assert.AreEqual(0, (int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
@@ -359,10 +362,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotEmpty(result);
+            CollectionAssert.IsNotEmpty(result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
@@ -373,10 +376,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
+            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
@@ -387,10 +390,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
+            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
@@ -402,10 +405,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotEmpty(result);
+            CollectionAssert.IsNotEmpty(result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesPocoStructPropertyBindingData()
         {
             // Arrange
@@ -421,10 +424,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToPocoStructPropertyBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedInt32Value, result);
+            Assert.AreEqual(expectedInt32Value, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_ProvidesPocoComplexPropertyBindingData()
         {
             // Arrange
@@ -447,7 +450,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(expectedChild, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfBindingAlwaysFails_MovesToPoisonQueue()
         {
             // Arrange
@@ -460,10 +463,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 new string[] { typeof(PoisonQueueProgram).FullName + ".PutInPoisonQueue" });
 
             // Assert
-            Assert.Equal(expectedContents, result);
+            Assert.AreEqual(expectedContents, result);
         }
 
-        [Fact]
+        [Test]
         public async Task QueueTrigger_IfDequeueCountReachesMaxDequeueCount_MovesToPoisonQueue()
         {
             try
@@ -482,7 +485,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 FakeQueuesOptionsSetup optionsSetup = new FakeQueuesOptionsSetup();
                 QueuesOptions options = new QueuesOptions();
                 optionsSetup.Configure(options);
-                Assert.Equal(options.MaxDequeueCount, MaxDequeueCountProgram.DequeueCount);
+                Assert.AreEqual(options.MaxDequeueCount, MaxDequeueCountProgram.DequeueCount);
             }
             finally
             {
@@ -490,7 +493,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfArgumentIsCloudQueueMessage_Binds()
         {
             // Arrange
@@ -501,10 +504,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.Same(expectedMessage, result);
+            Assert.AreSame(expectedMessage, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfArgumentIsString_Binds()
         {
             // Arrange
@@ -516,10 +519,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expectedContents, result.MessageText);
+            Assert.AreEqual(expectedContents, result.MessageText);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfArgumentIsIStorageQueueMessage_Binds()
         {
             // Arrange
@@ -530,10 +533,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.Same(expectedMessage, result);
+            Assert.AreSame(expectedMessage, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
@@ -545,10 +548,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedDequeueCount, result);
+            Assert.AreEqual(expectedDequeueCount, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
@@ -561,10 +564,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedExpirationTime, result);
+            Assert.AreEqual(expectedExpirationTime, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfExpirationTimeIsNull_ProvidesMaxValueExpirationTimeBindingData()
         {
             // Arrange
@@ -577,10 +580,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(DateTimeOffset.MaxValue, result);
+            Assert.AreEqual(DateTimeOffset.MaxValue, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
@@ -592,10 +595,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToIdBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Same(expectedId, result);
+            Assert.AreSame(expectedId, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
@@ -608,10 +611,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedInsertionTime, result);
+            Assert.AreEqual(expectedInsertionTime, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfInsertionTimeIsNull_ProvidesUtcNowInsertionTimeBindingData()
         {
             // Arrange
@@ -624,11 +627,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalMinutes);
-            Assert.Equal(TimeSpan.Zero, result.Offset);
+            Assert.AreEqual(0, (int)DateTimeOffset.Now.Subtract(result).TotalMinutes);
+            Assert.AreEqual(TimeSpan.Zero, result.Offset);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
@@ -641,10 +644,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedNextVisibleTime, result);
+            Assert.AreEqual(expectedNextVisibleTime, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_IfNextVisibleTimeIsNull_ProvidesMaxValueNextVisibleTimeBindingData()
         {
             // Arrange
@@ -657,10 +660,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(DateTimeOffset.MaxValue, result);
+            Assert.AreEqual(DateTimeOffset.MaxValue, result);
         }
 
-        [Fact]
+        [Test]
         public async Task CallQueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
@@ -672,7 +675,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToPopReceiptBindingDataProgram.TaskSource = s);
 
             // Assert
-            Assert.Same(expectedPopReceipt, result);
+            Assert.AreSame(expectedPopReceipt, result);
         }
 
         private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
