@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RPs
+#if RESOURCES_RP
 using Azure.ResourceManager.Resources;
 #else
 using Azure.Management.Resources;
