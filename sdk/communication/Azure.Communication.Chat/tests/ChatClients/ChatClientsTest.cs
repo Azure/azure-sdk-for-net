@@ -139,6 +139,8 @@ namespace Azure.Communication.Chat.Tests
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendReadReceipt
             chatThreadClient.SendReadReceipt(sendChatMessageResult2.Id);
 
+            Thread.Sleep(500);
+
             #region Snippet:Azure_Communication_Chat_Tests_E2E_GetReadReceipts
             Pageable<ReadReceipt> readReceipts = chatThreadClient.GetReadReceipts();
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetReadReceipts
@@ -147,8 +149,6 @@ namespace Azure.Communication.Chat.Tests
             #region Snippet:Azure_Communication_Chat_Tests_E2E_DeleteChatThread
             chatClient.DeleteChatThread(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_DeleteChatThread
-
-            Thread.Sleep(500);
 
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
@@ -237,12 +237,12 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.SendReadReceiptAsync(messageId);
             await chatThreadClient.SendReadReceiptAsync(sendChatMessageResult2.Id);
 
+            Thread.Sleep(500);
+
             AsyncPageable<ReadReceipt> readReceipts = chatThreadClient.GetReadReceiptsAsync();
             var readReceiptsCount = readReceipts.ToEnumerableAsync().Result.Count();
 
             await chatClient.DeleteChatThreadAsync(chatThreadClient.Id);
-
-            Thread.Sleep(500);
 
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
@@ -258,7 +258,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatThreadMembersAfterOneAddedCount);
             Assert.AreEqual(2, chatThreadMembersAfterOneDeletedCount);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
-            //Assert.AreEqual(1, readReceiptsCount);
+            Assert.AreEqual(1, readReceiptsCount);
         }
 
         private (CommunicationUser user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
