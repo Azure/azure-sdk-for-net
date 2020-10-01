@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
@@ -70,6 +71,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (async)
             {
+                // TODO: RequestFailedException is thrown when http response is not equal to 200 or 206. Implement logic to catch exception.
                 response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else

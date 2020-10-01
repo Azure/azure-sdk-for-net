@@ -40,29 +40,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendRaw("/v2", false);
-            uri.AppendPath("/track", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStartArray();
-            foreach (var item in body)
-            {
-                content.JsonWriter.WriteObjectValue(item);
-            }
-            content.JsonWriter.WriteEndArray();
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,11 +57,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 case 200:
                 case 206:
-                case 400:
-                case 402:
-                case 429:
-                case 500:
-                case 503:
                     {
                         TrackResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -113,11 +85,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 case 200:
                 case 206:
-                case 400:
-                case 402:
-                case 429:
-                case 500:
-                case 503:
                     {
                         TrackResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
