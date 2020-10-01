@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication.Administration;
@@ -162,7 +161,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatThreadMembersAfterOneAddedCount);
             Assert.AreEqual(2, chatThreadMembersAfterOneDeletedCount);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
-            // Commenting the assert below for now as it is flakey due to server-side delay; currently in investigation
+            // Commenting out the assert below for now as it is flakey due to server-side delay; currently in investigation
             // Assert.AreEqual(1, readReceiptsCount);
         }
 
