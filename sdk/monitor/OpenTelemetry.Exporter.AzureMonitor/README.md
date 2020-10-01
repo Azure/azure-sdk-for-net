@@ -1,6 +1,6 @@
 # Azure Monitor Exporter client library for .NET
 
-The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://docs.microsoft.com/azure/azure-monitor/app/data-model) to the [Azure Monitor Platform](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
+The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://docs.microsoft.com/azure/azure-monitor/app/data-model) to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
 
 ## Getting started
 
@@ -22,7 +22,7 @@ Exporter does not use authentication.
 
 ## Key concepts
 
-This exporter sends traces to the configured Azure Monitor Resource using HTTP. IP address used by the Azure Monitor is documented in [IP addresses used by Application Insights and Log Analytics](https://docs.microsoft.com/azure/azure-monitor/app/ip-addresses#outgoing-ports).
+This exporter sends traces to the configured Azure Monitor Resource using HTTPS. IP addresses used by the Azure Monitor is documented in [IP addresses used by Application Insights and Log Analytics](https://docs.microsoft.com/azure/azure-monitor/app/ip-addresses#outgoing-ports).
 
 ## Examples
 
@@ -33,9 +33,9 @@ using OpenTelemetry.Exporter.AzureMonitor;
 using OpenTelemetry.Trace;
 
 OpenTelemetry.Sdk.CreateTracerProviderBuilder()
-    .AddSource("Samples.SampleClient")
+    .AddSource("Demo.DemoClient")
     .AddAzureMonitorTraceExporter(o => {
-        o.ConnectionString = "<actualconnectionstring>";
+        o.ConnectionString = "<Your Connection String>";
     })
     .Build();
 ```
