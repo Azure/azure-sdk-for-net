@@ -16,6 +16,9 @@ Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
 ```shell
 dotnet add package OpenTelemetry.Exporter.AzureMonitor
 ```
+### Authenticate the client
+
+Exporter does not use authentication. 
 
 ## Key concepts
 
