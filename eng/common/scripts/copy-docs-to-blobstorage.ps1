@@ -218,7 +218,7 @@ function Upload-Blobs
     } 
    
     Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
-    & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true  --cache-control "max-age=300, must-revalidate"
+    & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
 
     Write-Host "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
@@ -229,7 +229,7 @@ function Upload-Blobs
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         Write-Host "Uploading $($PkgName) to latest folder in $($DocDest)..."
-        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true  --cache-control "max-age=300, must-revalidate"
+        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
     }
 }
 
