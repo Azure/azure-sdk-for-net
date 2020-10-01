@@ -27,7 +27,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="message">The message describing the authentication failure.</param>
         /// <param name="innerException">The exception underlying the authentication failure.</param>
-        public AuthenticationFailedException(string message, Exception innerException)
+        public AuthenticationFailedException(string message, Exception? innerException)
             : base(message, innerException)
         {
         }
