@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Creates a new copy of the current <see cref="ServiceBusClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
-        ///        ///
+        ///
         /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
         internal ServiceBusClientOptions Clone() =>

@@ -65,7 +65,9 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="TransactionEntityPath"/>; null otherwise.
+        /// If <see cref="ServiceBusSenderOptions.TransactionQueueOrTopicName"/> is set,
+        /// the message is sent to <see cref="EntityPath"/> via <see cref="TransactionEntityPath"/>;
+        /// null otherwise.
         /// </summary>
         public string TransactionEntityPath { get; }
 
