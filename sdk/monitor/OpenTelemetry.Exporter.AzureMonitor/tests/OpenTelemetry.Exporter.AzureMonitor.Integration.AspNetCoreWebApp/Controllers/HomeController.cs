@@ -12,9 +12,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Unused parameters are used in tests to identify unique requests.")]
     public class HomeController : ControllerBase
     {
-#pragma warning disable IDE0060 // Remove unused parameter
         /// <summary>
         /// This URI will always return <see cref="HttpStatusCode.OK"/>.
         /// <code>GET api/home/{id?}</code>
@@ -23,7 +23,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
         /// <returns></returns>
         [HttpGet("{id?}")]
         public ActionResult<string> Get(string id = null) => StatusCode((int)HttpStatusCode.OK);
-#pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
         /// This URI will return the <see cref="HttpStatusCode"/> matching the provided value.
