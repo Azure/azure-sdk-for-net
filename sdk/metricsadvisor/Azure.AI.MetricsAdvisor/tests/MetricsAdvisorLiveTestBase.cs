@@ -30,7 +30,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";
         internal const string DataFeedId = "0072a752-1476-4cfa-8cf0-f226995201a0";
 
-
         public void InitDataFeedSources()
         {
             _blobFeedName = Recording.GenerateAlphaNumericId("test");

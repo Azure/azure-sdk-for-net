@@ -13,8 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> is null. </exception>
-        internal MetricFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter)
+        internal MetricFeedback(string metricId, FeedbackDimensionFilter dimensionFilter)
         {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
 
             MetricId = metricId;
@@ -22,10 +23,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> feedback type. </summary>
-        public FeedbackType FeedbackType { get; internal set; }
+        [CodeGenMember("FeedbackType")]
+        public FeedbackType Type { get; internal set; }
 
         /// <summary> feedback unique id. </summary>
-        public Guid? FeedbackId { get; internal set;}
+        [CodeGenMember("FeedbackId")]
+        public string Id { get; internal set; }
 
         /// <summary> feedback created time. </summary>
         public DateTimeOffset? CreatedTime { get; }
@@ -34,8 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string UserPrincipal { get; }
 
         /// <summary> metric unique id. </summary>
-        public Guid MetricId { get; internal set; }
-
+        public string MetricId { get; }
 
         /// <summary> The dimension filter. </summary>
         public FeedbackDimensionFilter DimensionFilter { get; internal set; }

@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyFeedback : MetricFeedback
+    [CodeGenModel("AnomalyFeedback")]
+    public partial class MetricAnomalyFeedback : MetricFeedback
     {
         /// <summary> Initializes a new instance of AnomalyFeedback. </summary>
         /// <param name="metricId"> The metric unique id. </param>
@@ -14,12 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="endTime"> The end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
         /// <param name="value"> The value for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        public AnomalyFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyValue value) : base(metricId, dimensionFilter)
+        public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyValue value) : base(metricId, dimensionFilter)
         {
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
             if (value == default)
             {
                 throw new ArgumentNullException(nameof(value));
@@ -28,8 +26,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionFilter = dimensionFilter;
             StartTime = startTime;
             EndTime = endTime;
-            Value = new AnomalyFeedbackValue(value);
-            FeedbackType = FeedbackType.Anomaly;
+            ValueInternal = new AnomalyFeedbackValue(value);
+            Type = FeedbackType.Anomaly;
         }
 
         /// <summary> Initializes a new instance of AnomalyFeedback. </summary>
@@ -39,12 +37,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
         /// <param name="value"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        internal AnomalyFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
+        internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
         {
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
@@ -52,8 +46,21 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             StartTime = startTime;
             EndTime = endTime;
-            Value = value;
-            FeedbackType = Models.FeedbackType.Anomaly;
+            ValueInternal = value;
+            Type = Models.FeedbackType.Anomaly;
         }
+
+        /// <summary>
+        /// The anomaly value.
+        /// </summary>
+        public AnomalyValue AnomalyValue { get => ValueInternal.AnomalyValue; }
+
+        [CodeGenMember("Value")]
+        internal AnomalyFeedbackValue ValueInternal { get; }
+
+        /// <summary>
+        /// The anomaly detection configuration snapshot.
+        /// </summary>
+        public MetricAnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
     }
 }

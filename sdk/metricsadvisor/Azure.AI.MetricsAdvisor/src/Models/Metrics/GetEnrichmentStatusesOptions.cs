@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The GetEnrichmentStatusOptions. </summary>
-    public partial class GetEnrichmentStatusOptions
+    /// <summary> The GetEnrichmentStatusesOptions. </summary>
+    public class GetEnrichmentStatusesOptions
     {
-        /// <summary> Initializes a new instance of GetEnrichmentStatusOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetEnrichmentStatusesOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to query anomaly detection status. </param>
         /// <param name="endTime"> the end point of time range to query anomaly detection status. </param>
-        public GetEnrichmentStatusOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        public GetEnrichmentStatusesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;

@@ -2,32 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-
-    /// <summary> The GetMetricFeedbackOptions. </summary>
-    public partial class GetMetricFeedbackOptions
+    /// <summary> The <see cref="GetMetricFeedbacksOptions" />. </summary>
+    public class GetMetricFeedbacksOptions
     {
-        internal MetricFeedbackFilter _metricFeedbackFilter;
-
-        /// <summary> Initializes a new instance of GetMetricFeedbackOptions. </summary>
-        /// <param name="metricId"> filter feedbacks by metric id. </param>
-        public GetMetricFeedbackOptions(string metricId)
+        /// <summary> Creates a new <see cref="GetMetricFeedbacksOptions" />. </summary>
+        public GetMetricFeedbacksOptions()
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-
-            MetricId = metricIdGuid;
+            Filter = new DimensionKey();
         }
 
-        /// <summary> The metric Id used to filter the feedbacks. </summary>
-        public Guid MetricId { get; }
-
+        /// <summary> The dimension filter. </summary>
+        internal FeedbackDimensionFilter DimensionFilter => Filter.Dimension.Count == 0 ? null : new FeedbackDimensionFilter(Filter.Dimension);
 
         /// <summary> The dimension filter. </summary>
-        public FeedbackDimensionFilter DimensionFilter { get; set; }
+        public DimensionKey Filter { get; }
 
         /// <summary> filter feedbacks by type. </summary>
         public FeedbackType? FeedbackType { get; set; }

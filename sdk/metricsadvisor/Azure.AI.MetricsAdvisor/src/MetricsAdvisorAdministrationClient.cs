@@ -657,14 +657,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
             scope.Start();
 
             try
             {
-                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricIdGuid, cancellationToken).ConfigureAwait(false);
+                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -680,14 +680,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
             scope.Start();
 
             try
             {
-                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricIdGuid, cancellationToken);
+                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
