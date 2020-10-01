@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-
     /// <summary> The GetMetricFeedbackOptions. </summary>
-    public partial class GetMetricFeedbackOptions
+    public class GetMetricFeedbackOptions
     {
         internal MetricFeedbackFilter _metricFeedbackFilter;
 
@@ -25,9 +25,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> The metric Id used to filter the feedbacks. </summary>
         public Guid MetricId { get; }
 
+        /// <summary> The dimension filter. </summary>
+        internal FeedbackDimensionFilter DimensionFilter { get; set; }
 
         /// <summary> The dimension filter. </summary>
-        public FeedbackDimensionFilter DimensionFilter { get; set; }
+        public DimensionKey Filter
+        {
+            get => new DimensionKey(DimensionFilter.Dimension);
+            set => DimensionFilter = new FeedbackDimensionFilter(value.Dimension);
+        }
 
         /// <summary> filter feedbacks by type. </summary>
         public FeedbackType? FeedbackType { get; set; }

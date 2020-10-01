@@ -112,13 +112,13 @@ namespace Azure.AI.MetricsAdvisor
 
         private static readonly Regex s_feedbackIdRegex = new Regex(@"/feedback/metric/(?<feedbackId>[\d\w-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        public static Guid GetFeedbackId(string locationHeader)
+        public static string GetFeedbackId(string locationHeader)
         {
             Match match = s_feedbackIdRegex.Match(locationHeader);
 
             if (match.Success)
             {
-                return new Guid(match.Groups["feedbackId"].Value);
+                return match.Groups["feedbackId"].Value;
             }
             else
             {
