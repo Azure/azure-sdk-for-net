@@ -59,6 +59,6 @@ namespace Azure.Core.GeoJson
         /// <summary>
         ///
         /// </summary>
-        public GeoArray<GeoArray<GeoPosition>> Coordinates { get; }
+        public GeoArray<GeoPosition> Coordinates => new GeoArray<GeoPosition>(this);
     }
 }

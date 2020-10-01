@@ -38,7 +38,6 @@ namespace Azure.Core.GeoJson
             Argument.AssertNotNull(rings, nameof(rings));
 
             Rings = rings.ToArray();
-            Coordinates = new GeoArray<GeoArray<GeoPosition>>();
         }
 
         /// <summary>
@@ -49,6 +48,6 @@ namespace Azure.Core.GeoJson
         /// <summary>
         ///
         /// </summary>
-        public GeoArray<GeoArray<GeoPosition>> Coordinates { get; }
+        public GeoArray<GeoArray<GeoPosition>> Coordinates => new GeoArray<GeoArray<GeoPosition>>(this);
     }
 }

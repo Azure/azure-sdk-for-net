@@ -10,11 +10,11 @@ namespace Azure.Core.Tests
 {
     [TestFixture(2)]
     [TestFixture(3)]
-    public class SpatialTests
+    public class SpatialSerializationTests
     {
         private readonly int _points;
 
-        public SpatialTests(int points)
+        public SpatialSerializationTests(int points)
         {
             _points = points;
         }
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Position);
+            Assert.AreEqual(P(0), point.Coordinates);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Position);
+            Assert.AreEqual(P(0), point.Coordinates);
             Assert.AreEqual(P(1).Longitude, point.BoundingBox.West);
             Assert.AreEqual(P(1).Latitude, point.BoundingBox.South);
 
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
                         $" }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Position);
+            Assert.AreEqual(P(0), point.Coordinates);
             Assert.AreEqual(1, point.AdditionalProperties["additionalNumber"]);
             Assert.AreEqual(2.2, point.AdditionalProperties["additionalNumber2"]);
             Assert.AreEqual(9999999999999999999L, point.AdditionalProperties["additionalNumber3"]);
@@ -125,8 +125,8 @@ namespace Azure.Core.Tests
             var multipoint = AssertRoundtrip<GeoPointCollection>(input);
             Assert.AreEqual(2, multipoint.Points.Count);
 
-            Assert.AreEqual(P(0), multipoint.Points[0].Position);
-            Assert.AreEqual(P(1), multipoint.Points[1].Position);
+            Assert.AreEqual(P(0), multipoint.Points[0].Coordinates);
+            Assert.AreEqual(P(1), multipoint.Points[1].Coordinates);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace Azure.Core.Tests
 
             var collection = AssertRoundtrip<GeoCollection>(input);
             var point = (GeoPoint) collection.Geometries[0];
-            Assert.AreEqual(P(0), point.Position);
+            Assert.AreEqual(P(0), point.Coordinates);
 
             var lineString = (GeoLine) collection.Geometries[1];
             Assert.AreEqual(P(1), lineString.Coordinates[0]);
