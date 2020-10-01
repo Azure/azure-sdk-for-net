@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(FeedbackType.ToString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -31,17 +31,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anomaly": return AnomalyFeedback.DeserializeAnomalyFeedback(element);
-                    case "ChangePoint": return ChangePointFeedback.DeserializeChangePointFeedback(element);
-                    case "Comment": return CommentFeedback.DeserializeCommentFeedback(element);
-                    case "Period": return PeriodFeedback.DeserializePeriodFeedback(element);
+                    case "Anomaly": return MetricAnomalyFeedback.DeserializeMetricAnomalyFeedback(element);
+                    case "ChangePoint": return MetricChangePointFeedback.DeserializeMetricChangePointFeedback(element);
+                    case "Comment": return MetricCommentFeedback.DeserializeMetricCommentFeedback(element);
+                    case "Period": return MetricPeriodFeedback.DeserializeMetricPeriodFeedback(element);
                 }
             }
             FeedbackType feedbackType = default;
-            Optional<Guid> feedbackId = default;
+            Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
-            Guid metricId = default;
+            string metricId = default;
             FeedbackDimensionFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("feedbackId"))
                 {
-                    feedbackId = property.Value.GetGuid();
+                    feedbackId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("metricId"))
                 {
-                    metricId = property.Value.GetGuid();
+                    metricId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dimensionFilter"))
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricFeedback(feedbackType, Optional.ToNullable(feedbackId), Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
+            return new MetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
         }
     }
 }
