@@ -328,9 +328,8 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
@@ -361,9 +360,8 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
@@ -396,7 +394,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
         /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
@@ -433,7 +431,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
         /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
