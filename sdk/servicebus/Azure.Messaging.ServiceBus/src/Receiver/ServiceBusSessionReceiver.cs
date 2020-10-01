@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
     ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
-    ///  <see cref="ServiceBusClient.AcceptNextSessionAsync(string,string,Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions,System.Threading.CancellationToken)"/>.
+    ///  <see cref="ServiceBusClient.AcceptNextSessionAsync(string, string, ServiceBusSessionReceiverOptions, CancellationToken)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
