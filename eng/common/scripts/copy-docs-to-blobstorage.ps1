@@ -177,9 +177,9 @@ function Update-Existing-Versions
     $sortedVersionObj.LatestGAPackage | Out-File -File "$($DocLocation)/latest-ga" -Force -NoNewLine
     $sortedVersionObj.LatestPreviewPackage | Out-File -File "$($DocLocation)/latest-preview" -Force -NoNewLine
 
-    & $($AzCopy) cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions$($SASKey)" 
-    & $($AzCopy) cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview$($SASKey)" 
-    & $($AzCopy) cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga$($SASKey)" 
+    & $($AzCopy) cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions$($SASKey)"
+    & $($AzCopy) cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview$($SASKey)"
+    & $($AzCopy) cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga$($SASKey)"
 
     return $sortedVersionObj
 }
