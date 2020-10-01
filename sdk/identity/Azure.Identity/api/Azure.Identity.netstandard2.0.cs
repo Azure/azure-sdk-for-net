@@ -116,9 +116,11 @@ namespace Azure.Identity
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
-        protected DeviceCodeCredential() { }
-        public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, Azure.Identity.DeviceCodeCredentialOptions options = null) { }
+        public DeviceCodeCredential() { }
+        public DeviceCodeCredential(Azure.Identity.DeviceCodeCredentialOptions options) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -133,6 +135,7 @@ namespace Azure.Identity
         public bool AllowUnencryptedCache { get { throw null; } set { } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
+        public System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> DeviceCodeCallback { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool EnablePersistentCache { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }

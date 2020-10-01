@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    /// <summary> An instance of PageView represents a generic action on a page like a button click. It is also the base type for PageView. </summary>
+    /// <summary> An instance of Request represents completion of an external request to the application to do work and contains a summary of that request execution and the results. </summary>
     public partial class RequestData : MonitorDomain
     {
         /// <summary> Initializes a new instance of RequestData. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="id"> Identifier of a request call instance. Used for correlation between request and other telemetry items. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
-        /// <param name="success"> Indication of successfull or unsuccessfull call. </param>
+        /// <param name="success"> Indication of successful or unsuccessful call. </param>
         /// <param name="responseCode"> Result of a request execution. HTTP status code for HTTP requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/>, or <paramref name="responseCode"/> is null. </exception>
-        public RequestData(int version, string id, string duration, bool success, string responseCode)
+        public RequestData(int version, string id, string duration, bool success, string responseCode) : base(version)
         {
             if (id == null)
             {
@@ -36,7 +36,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 throw new ArgumentNullException(nameof(responseCode));
             }
 
-            Version = version;
             Id = id;
             Duration = duration;
             Success = success;
@@ -45,15 +44,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> Identifier of a request call instance. Used for correlation between request and other telemetry items. </summary>
         public string Id { get; }
         /// <summary> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like &apos;GET /values/{id}&apos;. </summary>
         public string Name { get; set; }
         /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </summary>
         public string Duration { get; }
-        /// <summary> Indication of successfull or unsuccessfull call. </summary>
+        /// <summary> Indication of successful or unsuccessful call. </summary>
         public bool Success { get; }
         /// <summary> Result of a request execution. HTTP status code for HTTP requests. </summary>
         public string ResponseCode { get; }

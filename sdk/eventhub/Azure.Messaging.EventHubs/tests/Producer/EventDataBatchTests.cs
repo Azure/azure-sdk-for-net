@@ -275,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override long SizeInBytes { get; } = 100;
 
-            public override bool ReserveSpaceForSequenceNumber { get; } = true;
+            public override TransportProducerFeatures ActiveFeatures { get; } = TransportProducerFeatures.None;
 
             public override int Count { get; } = 400;
 

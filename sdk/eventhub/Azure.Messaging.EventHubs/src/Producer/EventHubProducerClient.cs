@@ -401,8 +401,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
         ///
-        public virtual async Task<PartitionPublishingProperties> ReadPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                       CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -566,9 +566,9 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            var sendTask = (!Options.EnableIdempotentPartitions)
-                ? SendInternalAsync(eventBatch, cancellationToken)
-                : SendIdempotentAsync(eventBatch, cancellationToken);
+            var sendTask = (Options.EnableIdempotentPartitions)
+                ? SendIdempotentAsync(eventBatch, cancellationToken)
+                : SendInternalAsync(eventBatch, cancellationToken);
 
             await sendTask.ConfigureAwait(false);
         }
@@ -884,6 +884,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     {
                         lastSequence = NextSequence(lastSequence);
                         eventData.PendingPublishSequenceNumber = lastSequence;
+                        eventData.PendingProducerGroupId = partitionState.ProducerGroupId;
+                        eventData.PendingProducerOwnerLevel = partitionState.OwnerLevel;
                     }
 
                     // Publish the events.
@@ -893,7 +895,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
                     await SendInternalAsync(eventSet, options, cancellationToken).ConfigureAwait(false);
 
-                    // Update state and commit the sequencing.
+                    // Update state and commit the state.
 
                     EventHubsEventSource.Log.IdempotentSequenceUpdate(EventHubName, options.PartitionId, partitionState.LastPublishedSequenceNumber.Value, lastSequence);
                     partitionState.LastPublishedSequenceNumber = lastSequence;
@@ -905,11 +907,11 @@ namespace Azure.Messaging.EventHubs.Producer
                 }
                 catch
                 {
-                    // Clear the pending sequence numbers in the face of an exception.
+                    // Clear the pending state in the face of an exception.
 
                     foreach (var eventData in eventSet)
                     {
-                        eventData.PendingPublishSequenceNumber = null;
+                        eventData.ClearPublishingState();
                     }
 
                     throw;
@@ -983,6 +985,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     {
                         lastSequence = NextSequence(lastSequence);
                         eventData.PendingPublishSequenceNumber = lastSequence;
+                        eventData.PendingProducerGroupId = partitionState.ProducerGroupId;
+                        eventData.PendingProducerOwnerLevel = partitionState.OwnerLevel;
                     }
 
                     // Publish the events.
@@ -1005,7 +1009,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     foreach (var eventData in eventSet)
                     {
-                        eventData.PendingPublishSequenceNumber = null;
+                        eventData.ClearPublishingState();
                     }
 
                     throw;

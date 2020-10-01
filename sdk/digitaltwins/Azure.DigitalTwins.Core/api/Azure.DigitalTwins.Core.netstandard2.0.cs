@@ -146,7 +146,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     {
         public ComponentMetadata() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> WriteableProperties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> WritableProperties { get { throw null; } }
     }
     public partial class DigitalTwinMetadata
     {
@@ -154,7 +154,7 @@ namespace Azure.DigitalTwins.Core.Serialization
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
         public string ModelId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> WriteableProperties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> WritableProperties { get { throw null; } }
     }
     public partial class ModelProperties
     {
