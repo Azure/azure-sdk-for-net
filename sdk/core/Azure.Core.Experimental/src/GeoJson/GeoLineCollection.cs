@@ -56,7 +56,7 @@ namespace Azure.Core.GeoJson
         public GeoLine this[int index] => Lines[index];
 
         /// <summary>
-        ///
+        /// Returns a view over the coordinates array that forms this geometry.
         /// </summary>
         public GeoArray<GeoArray<GeoPosition>> Coordinates => new GeoArray<GeoArray<GeoPosition>>(this);
 

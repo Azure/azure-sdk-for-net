@@ -31,7 +31,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Returns a view over the coordinates array that forms this geometry.
         /// </summary>
         public GeoArray<GeoPosition> Coordinates { get; }
 

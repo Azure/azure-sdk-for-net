@@ -53,7 +53,7 @@ namespace Azure.Core.GeoJson
         public GeoPolygon this[int index] => Polygons[index];
 
         /// <summary>
-        ///
+        /// Returns a view over the coordinates array that forms this geometry.
         /// </summary>
         public GeoArray<GeoArray<GeoArray<GeoPosition>>> Coordinates => new GeoArray<GeoArray<GeoArray<GeoPosition>>>(this);
 

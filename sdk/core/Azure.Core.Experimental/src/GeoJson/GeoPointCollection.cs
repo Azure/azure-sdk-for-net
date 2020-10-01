@@ -57,7 +57,7 @@ namespace Azure.Core.GeoJson
         public GeoPoint this[int index] => Points[index];
 
         /// <summary>
-        ///
+        /// Returns a view over the coordinates array that forms this geometry.
         /// </summary>
         public GeoArray<GeoPosition> Coordinates => new GeoArray<GeoPosition>(this);
 

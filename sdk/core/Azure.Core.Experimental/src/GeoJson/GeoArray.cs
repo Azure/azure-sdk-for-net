@@ -1,33 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Azure.Core.GeoJson
 {
     /// <summary>
-    ///
+    /// Represents a of geometry coordinates array
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the value.</typeparam>
     public readonly struct GeoArray<T>: IEnumerable<T>
     {
         private readonly object _container;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="container"></param>
         internal GeoArray(object container)
         {
             _container = container;
         }
 
         /// <summary>
-        ///
+        /// Returns a value at the provided index.
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index">The index to retrieve the value from.</param>
         public T this[int index]
         {
             get
@@ -45,7 +40,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Returns the size of the array.
         /// </summary>
         public int Count
         {
@@ -64,9 +59,9 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Returns an enumerator that iterates through the collection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
@@ -77,7 +72,7 @@ namespace Azure.Core.GeoJson
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        ///
+        /// Enumerates the elements of a <see cref="GeoArray{T}"/>
         /// </summary>
 #pragma warning disable CA1034
         public struct Enumerator: IEnumerator<T>
