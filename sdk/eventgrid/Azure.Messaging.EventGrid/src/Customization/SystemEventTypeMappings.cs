@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.ACSChatThreadCreatedWithUserEvent,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
             { EventTypes.ACSChatThreadPropertiesUpdatedPerUserEvent, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
             { EventTypes.ACSChatThreadWithUserDeletedEvent, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
-            { EventTypes.ACSSMSDeliveryReportReceivedEvent, AcssmsDeliveryReportReceivedEventData.DeserializeAcssmsDeliveryReportReceivedEventData },
-            { EventTypes.ACSSMSReceivedEvent, AcssmsReceivedEventData.DeserializeAcssmsReceivedEventData },
+            { EventTypes.ACSSMSDeliveryReportReceivedEvent, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
+            { EventTypes.ACSSMSReceivedEvent, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events
             { EventTypes.ContainerRegistryImagePushedEvent, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },

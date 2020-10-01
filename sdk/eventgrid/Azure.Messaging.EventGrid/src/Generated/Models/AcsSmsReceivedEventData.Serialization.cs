@@ -5,20 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcssmsEventBaseProperties
+    public partial class AcsSmsReceivedEventData
     {
-        internal static AcssmsEventBaseProperties DeserializeAcssmsEventBaseProperties(JsonElement element)
+        internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element)
         {
+            Optional<string> message = default;
+            Optional<DateTimeOffset> receivedTimestamp = default;
             Optional<string> messageId = default;
             Optional<string> @from = default;
             Optional<string> to = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("message"))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("receivedTimestamp"))
+                {
+                    receivedTimestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("messageId"))
                 {
                     messageId = property.Value.GetString();
@@ -35,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcssmsEventBaseProperties(messageId.Value, @from.Value, to.Value);
+            return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Optional.ToNullable(receivedTimestamp));
         }
     }
 }
