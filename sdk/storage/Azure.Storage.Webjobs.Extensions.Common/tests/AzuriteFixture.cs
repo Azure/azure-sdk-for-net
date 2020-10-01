@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -33,8 +32,6 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     /// </summary>
     public class AzuriteFixture : IDisposable
     {
-        private const BlobClientOptions.ServiceVersion SupportedBlobServiceVersion = BlobClientOptions.ServiceVersion.V2019_12_12;
-        private const QueueClientOptions.ServiceVersion SupportedQueueServiceVersion = QueueClientOptions.ServiceVersion.V2019_12_12;
         private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
         private Process process;
@@ -80,7 +77,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem";
+            process.StartInfo.Arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
             process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{account.Name}:{account.Key}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -146,7 +143,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 {
                     Transport = transport
                 }),
-                new QueueServiceClient(account.ConnectionString, new QueueClientOptions(SupportedQueueServiceVersion)
+                new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
                 {
                     Transport = transport
                 }));
