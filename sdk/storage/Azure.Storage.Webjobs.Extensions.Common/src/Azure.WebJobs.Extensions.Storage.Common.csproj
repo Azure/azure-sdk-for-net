@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
