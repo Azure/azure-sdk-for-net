@@ -2,12 +2,10 @@
   <!-- https://docs.microsoft.com/aspnet/core/test/integration-tests -->
   
   <PropertyGroup>
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
 
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" VersionOverride="0.6.0-beta.1" />
@@ -17,6 +15,17 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Xunit.SkippableFact" VersionOverride="1.4.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
+    But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
+    We need to support net461 so we must reference the dependent packages.-->
+    <!--<PackageReference Include="Microsoft.AspNetCore.App" />-->
+    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1, )" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1, )" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1, )" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1, )" />
   </ItemGroup>
 
   <ItemGroup>
