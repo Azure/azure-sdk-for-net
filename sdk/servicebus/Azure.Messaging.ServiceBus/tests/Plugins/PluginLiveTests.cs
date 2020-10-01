@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
-                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
-                var receiver = await client.CreateSessionReceiverAsync(scope.TopicName, scope.SubscriptionNames.First());
+                var receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
