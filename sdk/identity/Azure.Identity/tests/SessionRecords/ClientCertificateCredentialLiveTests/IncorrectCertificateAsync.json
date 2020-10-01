@@ -1,0 +1,142 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://login.microsoftonline.com/common/discovery/instance?api-version=1.1\u0026authorization_endpoint=https%3A%2F%2Flogin.microsoftonline.com%2F72f988bf-86f1-41af-91ab-2d7cd011db47%2Foauth2%2Fv2.0%2Fauthorize",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "client-request-id": "648ba393-e751-4a57-bded-81bbf0e24fed",
+        "return-client-request-id": "true",
+        "User-Agent": [
+          "azsdk-net-Identity/1.2.0-dev.20200716.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-app-name": "UnknownClient",
+        "x-app-ver": "0.0.0.0",
+        "x-client-OS": "Microsoft Windows 10.0.18363 ",
+        "x-client-SKU": "MSAL.NetCore",
+        "x-client-Ver": "4.16.1.0",
+        "x-ms-client-request-id": "7041a5df997d07fa3c759de52363758e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "max-age=86400, private",
+        "client-request-id": "648ba393-e751-4a57-bded-81bbf0e24fed",
+        "Content-Length": "980",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 16 Jul 2020 07:27:12 GMT",
+        "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
+        "Set-Cookie": [
+          "fpc=AiDywZn4dtRJhL5d3qClVVAfvPzECQAAAE34odYOAAAA; expires=Sat, 15-Aug-2020 07:27:13 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "x-ms-gateway-slice=prod; path=/; SameSite=None; secure; HttpOnly",
+          "stsservicecookie=ests; path=/; secure; HttpOnly; SameSite=None"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ests-server": "2.1.10821.14 - WUS2 ProdSlices",
+        "x-ms-request-id": "d7f78042-68c9-4a42-ab8d-fbfa2f9baa01"
+      },
+      "ResponseBody": {
+        "tenant_discovery_endpoint": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/v2.0/.well-known/openid-configuration",
+        "api-version": "1.1",
+        "metadata": [
+          {
+            "preferred_network": "login.microsoftonline.com",
+            "preferred_cache": "login.windows.net",
+            "aliases": [
+              "login.microsoftonline.com",
+              "login.windows.net",
+              "login.microsoft.com",
+              "sts.windows.net"
+            ]
+          },
+          {
+            "preferred_network": "login.partner.microsoftonline.cn",
+            "preferred_cache": "login.partner.microsoftonline.cn",
+            "aliases": [
+              "login.partner.microsoftonline.cn",
+              "login.chinacloudapi.cn"
+            ]
+          },
+          {
+            "preferred_network": "login.microsoftonline.de",
+            "preferred_cache": "login.microsoftonline.de",
+            "aliases": [
+              "login.microsoftonline.de"
+            ]
+          },
+          {
+            "preferred_network": "login.microsoftonline.us",
+            "preferred_cache": "login.microsoftonline.us",
+            "aliases": [
+              "login.microsoftonline.us",
+              "login.usgovcloudapi.net"
+            ]
+          },
+          {
+            "preferred_network": "login-us.microsoftonline.com",
+            "preferred_cache": "login-us.microsoftonline.com",
+            "aliases": [
+              "login-us.microsoftonline.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "client-request-id": "648ba393-e751-4a57-bded-81bbf0e24fed",
+        "Content-Length": "9",
+        "return-client-request-id": "true",
+        "User-Agent": [
+          "azsdk-net-Identity/1.2.0-dev.20200716.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-app-name": "UnknownClient",
+        "x-app-ver": "0.0.0.0",
+        "x-client-current-telemetry": "2|1004,0|",
+        "x-client-last-telemetry": "2|0|||",
+        "x-client-OS": "Microsoft Windows 10.0.18363 ",
+        "x-client-SKU": "MSAL.NetCore",
+        "x-client-Ver": "4.16.1.0",
+        "x-ms-client-request-id": "a4d4421974faddeb261eaa6487a84618",
+        "x-ms-lib-capability": "retry-after, h429",
+        "x-ms-PKeyAuth": "1.0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "U2FuaXRpemVk",
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "client-request-id": "648ba393-e751-4a57-bded-81bbf0e24fed",
+        "Content-Length": "820",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 16 Jul 2020 07:27:12 GMT",
+        "Expires": "-1",
+        "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
+        "Pragma": "no-cache",
+        "Set-Cookie": [
+          "fpc=AiDywZn4dtRJhL5d3qClVVAfvPzECgAAAE34odYOAAAA; expires=Sat, 15-Aug-2020 07:27:13 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "x-ms-gateway-slice=estsfd; path=/; SameSite=None; secure; HttpOnly",
+          "stsservicecookie=ests; path=/; secure; HttpOnly; SameSite=None"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-clitelem": "1,700027,0,,",
+        "x-ms-ests-server": "2.1.10821.14 - SCUS ProdSlices",
+        "x-ms-request-id": "708f739f-af1e-4e8f-8eb4-3b5ec153c200"
+      },
+      "ResponseBody": "{\u0022error\u0022:\u0022invalid_client\u0022,\u0022error_description\u0022:\u0022AADSTS700027: Client assertion contains an invalid signature. [Reason - The key was not found., Thumbprint of key used by client: \\u002792C25FA606D05CE516C4EAD70D2904E20338C556\\u0027, Please visit \\u0027https://developer.microsoft.com/en-us/graph/graph-explorer\\u0027 and query for \\u0027https://graph.microsoft.com/beta/applications/17c91d3f-58a8-436f-81af-7c9ee3e330c8\\u0027 to see configured keys]\\r\\nTrace ID: 708f739f-af1e-4e8f-8eb4-3b5ec153c200\\r\\nCorrelation ID: 648ba393-e751-4a57-bded-81bbf0e24fed\\r\\nTimestamp: 2020-07-16 07:27:13Z\u0022,\u0022error_codes\u0022:[700027],\u0022timestamp\u0022:\u00222020-07-16 07:27:13Z\u0022,\u0022trace_id\u0022:\u0022708f739f-af1e-4e8f-8eb4-3b5ec153c200\u0022,\u0022correlation_id\u0022:\u0022648ba393-e751-4a57-bded-81bbf0e24fed\u0022,\u0022error_uri\u0022:\u0022https://login.microsoftonline.com/error?code=700027\u0022}"
+    }
+  ],
+  "Variables": {
+    "IDENTITY_SP_CLIENT_ID": "17c91d3f-58a8-436f-81af-7c9ee3e330c8",
+    "IDENTITY_SP_TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "RandomSeed": "821923688"
+  }
+}

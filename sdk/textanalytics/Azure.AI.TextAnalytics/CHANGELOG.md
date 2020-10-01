@@ -1,9 +1,46 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 5.1.0-beta.2 (Unreleased)
 ### Breaking changes
+- Removed property `Length` from `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+
+## 5.1.0-beta.1 (2020-09-17)
+
+### New Features
+- It defaults to the latest supported API version, which currently is `3.1-preview.2`.
+- `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+- Added the `RecognizePiiEntities` endpoint which returns entities containing Personally Identifiable Information. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Added `Offset` and `Length` properties for `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`. The default encoding is UTF-16 code units. For additional information see https://aka.ms/text-analytics-offsets
+- `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
+- Added property `BingEntitySearchApiId` to the `LinkedEntity` class. This property is only available for v3.1-preview.2 and up, and it is to be used in conjunction with the Bing Entity Search API to fetch additional relevant information about the returned entity.
+
+## 5.0.0 (2020-07-27)
+- Re-release of version `1.0.1` with updated version `5.0.0`.
+
+## 1.0.1 (2020-06-23)
+
+### Fixes
+- The document confidence scores for analyze sentiment now contains the values the Text Analytics service returns ([12889](https://github.com/Azure/azure-sdk-for-net/issues/12889)).
+- `TextAnalyticsErrorCode` casing is now pascal case instead of camel case ([12888](https://github.com/Azure/azure-sdk-for-net/issues/12888)).
+
+## 1.0.0 (2020-06-09)
+- First stable release of Azure.AI.TextAnalytics package.
+
+## 1.0.0-preview.5 (2020-05-27)
+### Breaking changes
+- Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
 - `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
+- `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
+- `TextAnalyticsError` property `Code` has been renamed to `ErrorCode` and it is an `TextAnalyticsErrorCode` instead of a string.
+- Single operation method `RecognizeEntitiesAsync` and `RecognizeEntities` now returns a `CategorizedEntityCollection`.
+- Single operation method `ExtractKeyPhrasesAsync` and `ExtractKeyPhrases` now returns a `KeyPhraseCollection`.
+- Single operation method `RecognizeLinkedEntitiesAsync` and `RecognizeLinkedEntities` now returns a `LinkedEntityCollection`.
+
+### Added
+- Added `Text` property to `SentenceSentiment`.
+- `Warnings` property added to each document-level response object returned from the endpoints. It is a list of `TextAnalyticsWarnings`.
 
 ## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes

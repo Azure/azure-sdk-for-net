@@ -5,72 +5,72 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Identifies a predefined list of language-specific stopwords. </summary>
     public enum StopwordsList
     {
-        /// <summary> arabic. </summary>
+        /// <summary> Selects the stopword list for Arabic. </summary>
         Arabic,
-        /// <summary> armenian. </summary>
+        /// <summary> Selects the stopword list for Armenian. </summary>
         Armenian,
-        /// <summary> basque. </summary>
+        /// <summary> Selects the stopword list for Basque. </summary>
         Basque,
-        /// <summary> brazilian. </summary>
+        /// <summary> Selects the stopword list for Portuguese (Brazil). </summary>
         Brazilian,
-        /// <summary> bulgarian. </summary>
+        /// <summary> Selects the stopword list for Bulgarian. </summary>
         Bulgarian,
-        /// <summary> catalan. </summary>
+        /// <summary> Selects the stopword list for Catalan. </summary>
         Catalan,
-        /// <summary> czech. </summary>
+        /// <summary> Selects the stopword list for Czech. </summary>
         Czech,
-        /// <summary> danish. </summary>
+        /// <summary> Selects the stopword list for Danish. </summary>
         Danish,
-        /// <summary> dutch. </summary>
+        /// <summary> Selects the stopword list for Dutch. </summary>
         Dutch,
-        /// <summary> english. </summary>
+        /// <summary> Selects the stopword list for English. </summary>
         English,
-        /// <summary> finnish. </summary>
+        /// <summary> Selects the stopword list for Finnish. </summary>
         Finnish,
-        /// <summary> french. </summary>
+        /// <summary> Selects the stopword list for French. </summary>
         French,
-        /// <summary> galician. </summary>
+        /// <summary> Selects the stopword list for Galician. </summary>
         Galician,
-        /// <summary> german. </summary>
+        /// <summary> Selects the stopword list for German. </summary>
         German,
-        /// <summary> greek. </summary>
+        /// <summary> Selects the stopword list for Greek. </summary>
         Greek,
-        /// <summary> hindi. </summary>
+        /// <summary> Selects the stopword list for Hindi. </summary>
         Hindi,
-        /// <summary> hungarian. </summary>
+        /// <summary> Selects the stopword list for Hungarian. </summary>
         Hungarian,
-        /// <summary> indonesian. </summary>
+        /// <summary> Selects the stopword list for Indonesian. </summary>
         Indonesian,
-        /// <summary> irish. </summary>
+        /// <summary> Selects the stopword list for Irish. </summary>
         Irish,
-        /// <summary> italian. </summary>
+        /// <summary> Selects the stopword list for Italian. </summary>
         Italian,
-        /// <summary> latvian. </summary>
+        /// <summary> Selects the stopword list for Latvian. </summary>
         Latvian,
-        /// <summary> norwegian. </summary>
+        /// <summary> Selects the stopword list for Norwegian. </summary>
         Norwegian,
-        /// <summary> persian. </summary>
+        /// <summary> Selects the stopword list for Persian. </summary>
         Persian,
-        /// <summary> portuguese. </summary>
+        /// <summary> Selects the stopword list for Portuguese. </summary>
         Portuguese,
-        /// <summary> romanian. </summary>
+        /// <summary> Selects the stopword list for Romanian. </summary>
         Romanian,
-        /// <summary> russian. </summary>
+        /// <summary> Selects the stopword list for Russian. </summary>
         Russian,
-        /// <summary> sorani. </summary>
+        /// <summary> Selects the stopword list for Sorani. </summary>
         Sorani,
-        /// <summary> spanish. </summary>
+        /// <summary> Selects the stopword list for Spanish. </summary>
         Spanish,
-        /// <summary> swedish. </summary>
+        /// <summary> Selects the stopword list for Swedish. </summary>
         Swedish,
-        /// <summary> thai. </summary>
+        /// <summary> Selects the stopword list for Thai. </summary>
         Thai,
-        /// <summary> turkish. </summary>
+        /// <summary> Selects the stopword list for Turkish. </summary>
         Turkish
     }
 }

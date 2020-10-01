@@ -4,6 +4,10 @@
 using System;
 using System.Globalization;
 using System.Text;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core;
+using Azure.Core.GeoJson;
+#endif
 
 namespace Azure.Search.Documents
 {
@@ -12,7 +16,7 @@ namespace Azure.Search.Documents
     /// expressions, like the kind used by <see cref="SearchOptions.Filter"/>,
     /// by automatically replacing, quoting, and escaping interpolated
     /// parameters.
-    /// <see href="https://docs.microsoft.com/en-us/azure/search/search-filters"/>
+    /// For more information, see <see href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</see>.
     /// </summary>
     public static class SearchFilter
     {
@@ -63,19 +67,30 @@ namespace Azure.Search.Documents
                     decimal x => x.ToString(formatProvider),
 
                     // Floating point
-                    float x => JsonExtensions.Float(x, formatProvider),
-                    double x => JsonExtensions.Double(x, formatProvider),
+                    float x => JsonSerialization.Float(x, formatProvider),
+                    double x => JsonSerialization.Double(x, formatProvider),
 
                     // Dates as 8601 with a time zone
-                    DateTimeOffset x => JsonExtensions.Date(x, formatProvider),
-                    DateTime x => JsonExtensions.Date(x, formatProvider),
+                    DateTimeOffset x => JsonSerialization.Date(x, formatProvider),
+                    DateTime x => JsonSerialization.Date(x, formatProvider),
 
-                    // TODO: #10592- Unify on an Azure.Core spatial type
+#if EXPERIMENTAL_SPATIAL
+                    // Points
+                    GeoPosition x => EncodeGeography(x),
+                    GeoPoint x => EncodeGeography(x),
+
+                    // Polygons
+                    GeoLine x => EncodeGeography(x),
+                    GeoPolygon x => EncodeGeography(x),
+#endif
 
                     // Text
                     string x => Quote(x),
                     char x => Quote(x.ToString(formatProvider)),
                     StringBuilder x => Quote(x.ToString()),
+
+                    // Microsoft.Spatial types
+                    object x when SpatialProxyFactory.TryCreate(x, out GeographyProxy proxy) => proxy.ToString(),
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -109,5 +124,47 @@ namespace Azure.Search.Documents
             builder.Append("'");
             return builder.ToString();
         }
+
+#if EXPERIMENTAL_SPATIAL
+        /// <summary>
+        /// Convert a <see cref="GeoPosition"/> to an OData value.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <returns>The OData representation of the position.</returns>
+        private static string EncodeGeography(GeoPosition position) =>
+            SpatialFormatter.EncodePoint(position.Longitude, position.Latitude);
+
+        /// <summary>
+        /// Convert a <see cref="GeoPoint"/> to an OData value.
+        /// </summary>
+        /// <param name="point">The point.</param>
+        /// <returns>The OData representation of the point.</returns>
+        private static string EncodeGeography(GeoPoint point)
+        {
+            Argument.AssertNotNull(point, nameof(point));
+            return EncodeGeography(point.Position);
+        }
+
+        /// <summary>
+        /// Convert a <see cref="GeoLine"/> forming a polygon to an OData
+        /// value.  A GeoLine must have at least four
+        /// <see cref="GeoLine.Positions"/> and the first and last must
+        /// match to form a searchable polygon.
+        /// </summary>
+        /// <param name="line">The line forming a polygon.</param>
+        /// <returns>The OData representation of the line.</returns>
+        private static string EncodeGeography(GeoLine line) =>
+            SpatialFormatter.EncodePolygon(line);
+
+        /// <summary>
+        /// Convert a <see cref="GeoPolygon"/> to an OData value.  A
+        /// GeoPolygon must have exactly one <see cref="GeoPolygon.Rings"/>
+        /// to form a searchable polygon.
+        /// </summary>
+        /// <param name="polygon">The polygon.</param>
+        /// <returns>The OData representation of the polygon.</returns>
+        private static string EncodeGeography(GeoPolygon polygon) =>
+            SpatialFormatter.EncodePolygon(polygon);
+#endif
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The Amount.
+    /// The amount.
     /// </summary>
     public partial class Amount
     {

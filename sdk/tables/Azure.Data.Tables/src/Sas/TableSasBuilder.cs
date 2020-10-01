@@ -10,32 +10,48 @@ namespace Azure.Data.Tables.Sas
     /// <summary>
     /// <see cref="TableSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage table.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas" />.
     /// </summary>
     public class TableSasBuilder
     {
-
-        public TableSasBuilder(string tableName)
+        /// <summary>
+        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
+        /// <param name="permissions">The permissions associated with the shared access signature.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        public TableSasBuilder(string tableName, TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             TableName = tableName;
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
         }
+
         /// <summary>
-        /// The storage service version to use to authenticate requests made
-        /// with this shared access signature, and the service version to use
-        /// when handling requests made with this shared access signature.
+        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
         /// </summary>
-        public string Version { get; set; }
+        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            TableName = tableName;
+            ExpiresOn = expiresOn;
+            Permissions = rawPermissions;
+        }
 
         /// <summary>
         /// The optional signed protocol field specifies the protocol
         /// permitted for a request made with the SAS.  Possible values are
-        /// <see cref="SasProtocol.HttpsAndHttp"/>,
-        /// <see cref="SasProtocol.Https"/>, and
-        /// <see cref="SasProtocol.None"/>.
+        /// <see cref="TableSasProtocol.HttpsAndHttp"/>,
+        /// <see cref="TableSasProtocol.Https"/>, and
+        /// <see cref="TableSasProtocol.None"/>.
         /// </summary>
-        public SasProtocol Protocol { get; set; }
+        public TableSasProtocol Protocol { get; set; }
 
         /// <summary>
         /// Optionally specify the time at which the shared access signature
@@ -69,7 +85,7 @@ namespace Azure.Data.Tables.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange IPRange { get; set; }
+        public TableSasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -80,7 +96,7 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// The name of the table being made accessible.
         /// </summary>
-        public string TableName { get; }
+        public string TableName { get; set; }
 
         /// <summary>
         /// The optional start of the partition key values range being made available.
@@ -104,7 +120,12 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         public string RowKeyEnd { get; set; }
 
-
+        /// <summary>
+        /// The storage service version to use to authenticate requests made
+        /// with this shared access signature, and the service version to use
+        /// when handling requests made with this shared access signature.
+        /// </summary>
+        internal string Version { get; set; }
 
         /// <summary>
         /// Sets the permissions for a table SAS.
@@ -135,8 +156,7 @@ namespace Azure.Data.Tables.Sas
         /// The storage account's <see cref="TableSharedKeyCredential"/>.
         /// </param>
         /// <returns>
-        /// The <see cref="TableSasQueryParameters"/> used for authenticating
-        /// requests.
+        /// An instance of <see cref="TableSasQueryParameters"/>.
         /// </returns>
         public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
@@ -144,8 +164,8 @@ namespace Azure.Data.Tables.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = TableSasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = TableSasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -155,7 +175,7 @@ namespace Azure.Data.Tables.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, TableName),
                 Identifier,
                 IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
+                TableSasExtensions.ToProtocolString(Protocol),
                 Version,
                 PartitionKeyStart,
                 RowKeyStart,
@@ -164,6 +184,7 @@ namespace Azure.Data.Tables.Sas
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableSasQueryParameters(
                 version: Version,
+                resourceTypes: default,
                 tableName: TableName,
                 partitionKeyStart: PartitionKeyStart,
                 partitionKeyEnd: PartitionKeyEnd,
@@ -179,6 +200,20 @@ namespace Azure.Data.Tables.Sas
                 signature: signature);
             return p;
         }
+
+        /// <summary>
+        /// Use an account's <see cref="TableSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="TableSharedKeyCredential"/>.
+        /// </param>
+        /// <returns>
+        /// A URL encoded query string representing the SAS.
+        /// </returns>
+        public string Sign(TableSharedKeyCredential sharedKeyCredential) =>
+            ToSasQueryParameters(sharedKeyCredential).ToString();
 
         /// <summary>
         /// Computes the canonical name for a table resource for SAS signing.

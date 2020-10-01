@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
     /// </summary>
     public partial interface ICosmosDBManagementClient : System.IDisposable
     {
@@ -41,14 +40,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
-        string SubscriptionId1 { get; set; }
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -158,6 +152,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IGremlinResourcesOperations.
         /// </summary>
         IGremlinResourcesOperations GremlinResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDatabaseAccountsOperations.
+        /// </summary>
+        IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; }
 
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.

@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -25,24 +26,24 @@ namespace Azure.Search.Documents
         {
             #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2019-05-06-Preview version of the Azure Cognitive Search
+            /// The 2020_06_30 version of the Azure Cognitive Search
             /// service.
             /// </summary>
-            V2019_05_06_Preview = 1
+            V2020_06_30 = 1
             #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_06_30;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
         /// can be passed between different client libraries.  Changing this
         /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
         /// </summary>
-        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2019_05_06_Preview;
+        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
@@ -50,6 +51,14 @@ namespace Azure.Search.Documents
         /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.  The
+        /// serializer needs to support JSON and <see cref="JsonObjectSerializer"/>
+        /// will be used if no value is provided.
+        /// </summary>
+        public ObjectSerializer Serializer { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
@@ -129,7 +138,6 @@ namespace Azure.Search.Documents
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
             Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
-            Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }
 
@@ -154,7 +162,7 @@ namespace Azure.Search.Documents
         public static SearchClientOptions.ServiceVersion Validate(this SearchClientOptions.ServiceVersion version) =>
             version switch
             {
-                SearchClientOptions.ServiceVersion.V2019_05_06_Preview => version,
+                SearchClientOptions.ServiceVersion.V2020_06_30 => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -176,7 +184,7 @@ namespace Azure.Search.Documents
         public static string ToVersionString(this SearchClientOptions.ServiceVersion version) =>
             version switch
             {
-                SearchClientOptions.ServiceVersion.V2019_05_06_Preview => "2019-05-06-Preview",
+                SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
                 _ => throw CreateInvalidVersionException(version)
             };
 

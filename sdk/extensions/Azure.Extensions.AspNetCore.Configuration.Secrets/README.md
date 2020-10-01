@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing c
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets -v 1.0.0-preview.2
+dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets
 ```
 
 ### Prerequisites
@@ -42,7 +42,7 @@ The [Azure Identity library][identity] provides easy Azure Active Directory supp
 
 ## Next steps
 
-Read more about [configuration in ASP.NET Core](aspnetcore_configuration_doc).
+Read more about [configuration in ASP.NET Core][aspnetcore_configuration_doc].
 
 ## Contributing
 
@@ -62,14 +62,14 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/src
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.Configuration.Secrets
-[nuget]: https://www.nuget.org/storage-quickstart-create-account?tabs=azure-powershell
-[keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
-[keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
-[keyvault_create_ps]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-powershell#create-a-key-vault
+[nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets
+[keyvault_create_cli]: https://docs.microsoft.com/azure/key-vault/quick-create-cli#create-a-key-vault
+[keyvault_create_portal]: https://docs.microsoft.com/azure/key-vault/quick-create-portal#create-a-vault
+[keyvault_create_ps]: https://docs.microsoft.com/azure/key-vault/quick-create-powershell#create-a-key-vault
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[aspnetcore_configuration_doc]: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1
+[aspnetcore_configuration_doc]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

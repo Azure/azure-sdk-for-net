@@ -2,9 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Search.Documents
 {
@@ -69,5 +74,77 @@ namespace Azure.Search.Documents
                 new List<string>() :
                 // TODO: #10600 - Verify we don't need to worry about escaping
                 new List<string>(value.Split(','));
+
+        /// <summary>
+        /// Copy from a source stream to a destination either synchronously or
+        /// asynchronously.
+        /// </summary>
+        /// <param name="source">The stream to read from.</param>
+        /// <param name="destination">The stream to write to.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>A Task representing the computation.</returns>
+        public static async Task CopyToAsync(
+            this Stream source,
+            Stream destination,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
+
+            if (async)
+            {
+                await source.CopyToAsync(
+                    destination,
+                    Constants.CopyBufferSize,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                // This is not using CopyTo so we can honor cancellations
+                byte[] buffer = ArrayPool<byte>.Shared.Rent(Constants.CopyBufferSize);
+                try
+                {
+                    while (true)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        int read = source.Read(buffer, 0, buffer.Length);
+                        if (read <= 0) { break; }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        destination.Write(buffer, 0, read);
+                    }
+                }
+                finally
+                {
+                    destination.Flush();
+                    ArrayPool<byte>.Shared.Return(buffer, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copy a Stream into memory.
+        /// </summary>
+        /// <param name="source">The stream to read.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>The source stream as a MemoryStream.</returns>
+        public static async Task<MemoryStream> CopyToMemoryStreamAsync(
+            this Stream source,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            MemoryStream destination = new MemoryStream();
+            await source.CopyToAsync(destination, async, cancellationToken).ConfigureAwait(false);
+            return destination;
+        }
     }
 }

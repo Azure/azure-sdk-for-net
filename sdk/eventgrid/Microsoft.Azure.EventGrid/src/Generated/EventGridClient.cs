@@ -280,10 +280,7 @@ namespace Microsoft.Azure.EventGrid
                     }
                 }
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
+            string apiVersion = "2018-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -293,6 +290,7 @@ namespace Microsoft.Azure.EventGrid
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("topicHostname", topicHostname);
                 tracingParameters.Add("events", events);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "PublishEvents", tracingParameters);
             }
@@ -301,9 +299,9 @@ namespace Microsoft.Azure.EventGrid
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "api/events";
             _url = _url.Replace("{topicHostname}", topicHostname);
             List<string> _queryParameters = new List<string>();
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

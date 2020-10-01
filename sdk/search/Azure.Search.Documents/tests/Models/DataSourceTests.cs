@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("\"0123abcd\"", "\"0123abcd\"")]
         public void ParsesETag(string value, string expected)
         {
-            SearchIndexerDataSource sut = new SearchIndexerDataSource(null, null, SearchIndexerDataSourceType.AzureBlob, null, null, null, null, value);
+            SearchIndexerDataSourceConnection sut = new SearchIndexerDataSourceConnection(null, null, SearchIndexerDataSourceType.AzureBlob, null, null, null, null, value);
             Assert.AreEqual(expected, sut.ETag?.ToString());
         }
     }

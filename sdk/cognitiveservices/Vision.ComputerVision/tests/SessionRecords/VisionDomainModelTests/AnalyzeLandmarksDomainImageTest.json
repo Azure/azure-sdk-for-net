@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/models/landmarks/analyze?language=pt",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
+      "RequestUri": "/vision/v3.0/models/landmarks/analyze?language=pt",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {

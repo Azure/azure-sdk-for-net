@@ -33,8 +33,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the DeploymentPropertiesExtended
         /// class.
         /// </summary>
-        /// <param name="provisioningState">The state of the
-        /// provisioning.</param>
+        /// <param name="provisioningState">Denotes the state of provisioning.
+        /// Possible values include: 'NotSpecified', 'Accepted', 'Running',
+        /// 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled',
+        /// 'Failed', 'Succeeded', 'Updating'</param>
         /// <param name="correlationId">The correlation ID of the
         /// deployment.</param>
         /// <param name="timestamp">The timestamp of the template
@@ -94,7 +96,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the state of the provisioning.
+        /// Gets denotes the state of provisioning. Possible values include:
+        /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
+        /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
+        /// 'Succeeded', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -204,10 +209,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TemplateLink != null)
-            {
-                TemplateLink.Validate();
-            }
             if (ParametersLink != null)
             {
                 ParametersLink.Validate();

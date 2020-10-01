@@ -1,0 +1,1204 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605?api-version=2019-06-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"sqlAdministratorLoginPassword\": \"Password1!7191\",\r\n    \"sqlAdministratorLogin\": \"sshuser6955\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6ae721fb-97fc-458d-83fe-4f5ad953a845"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "367"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview"
+        ],
+        "x-ms-request-id": [
+          "bd474838-5242-4085-9b08-0ec3e75d44ce"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "41b127bc-435a-4387-9d69-6e531dd5830f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090454Z:41b127bc-435a-4387-9d69-6e531dd5830f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:04:53 GMT"
+        ],
+        "Content-Length": [
+          "1103"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n  \"location\": \"eastus\",\r\n  \"name\": \"synapsesdkworkspace8605\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n      \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n      \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"workspacemanagedrg-bc06cf54-b0af-4ccd-8b3a-20a0f9938a7c\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"privateEndpointConnections\": [],\r\n    \"provisioningState\": \"Provisioning\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605?api-version=2019-06-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"sqlAdministratorLoginPassword\": \"Password1!7191\",\r\n    \"sqlAdministratorLogin\": \"sshuser6955\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ce8386aa-5c75-46f6-951e-26940d9c15d1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "415"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2c145824-4990-44bf-9181-023174725c5a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c8cae03-16fe-4f33-8b58-d01e35ea8a7f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090855Z:5c8cae03-16fe-4f33-8b58-d01e35ea8a7f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:08:55 GMT"
+        ],
+        "Content-Length": [
+          "1170"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n  \"location\": \"eastus\",\r\n  \"name\": \"synapsesdkworkspace8605\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n      \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n      \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"workspacemanagedrg-bc06cf54-b0af-4ccd-8b3a-20a0f9938a7c\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser6955\",\r\n    \"privateEndpointConnections\": [],\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "34fc3b5d-42eb-47d8-9f8d-37af5e4ca971"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "201d53b4-3f27-4fa4-8627-26a991aab731"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090524Z:201d53b4-3f27-4fa4-8627-26a991aab731"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:05:24 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fe31fa33-7d8f-4791-8f69-6c27351bfc60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "7940242e-0e8e-4c28-9454-c41d61582b8d"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090554Z:7940242e-0e8e-4c28-9454-c41d61582b8d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:05:54 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8836aa38-3a1c-47d1-9e4a-77c37b7a9180"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "b931bf0e-bb36-4d38-b547-161e3f6509f4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090625Z:b931bf0e-bb36-4d38-b547-161e3f6509f4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:06:24 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8a6967ae-0990-47c1-aba0-a6c1ed91fc63"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "f2611c8e-3db0-4a95-90cf-280790c381eb"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090655Z:f2611c8e-3db0-4a95-90cf-280790c381eb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:06:54 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "7d747be1-807d-4ca4-a26f-a337c5b8e9ef"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "31aaf9b1-2b91-4b62-b41b-41355bca6658"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090726Z:31aaf9b1-2b91-4b62-b41b-41355bca6658"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:07:26 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/30e3a120-2259-4f13-9dc6-40fafdefafaf?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "51ae58b0-6e9f-496c-94e8-2b7ba3008382"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce240d19-f987-478b-8d6f-f67d438fd39a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090756Z:ce240d19-f987-478b-8d6f-f67d438fd39a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:07:56 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a7d284ac-054a-4f11-86d7-9d53f8230fdc"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-correlation-request-id": [
+          "d953bc4a-e7fb-4ab6-8581-f70b6f22d0a1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090757Z:d953bc4a-e7fb-4ab6-8581-f70b6f22d0a1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:07:56 GMT"
+        ],
+        "Content-Length": [
+          "1138"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n  \"location\": \"eastus\",\r\n  \"name\": \"synapsesdkworkspace8605\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n      \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n      \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"workspacemanagedrg-bc06cf54-b0af-4ccd-8b3a-20a0f9938a7c\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser6955\",\r\n    \"privateEndpointConnections\": [],\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "576727df-33ab-40a5-a2ca-f9190347fe28"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c3f89bce-0956-4be3-a4dd-b6175b0e2916"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "2f2929d5-64f5-4e8f-a97e-75a763a5a680"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090757Z:2f2929d5-64f5-4e8f-a97e-75a763a5a680"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:07:57 GMT"
+        ],
+        "Content-Length": [
+          "1138"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n  \"location\": \"eastus\",\r\n  \"name\": \"synapsesdkworkspace8605\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n      \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n      \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"workspacemanagedrg-bc06cf54-b0af-4ccd-8b3a-20a0f9938a7c\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage6322.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7106\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser6955\",\r\n    \"privateEndpointConnections\": [],\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f41a3d0b-835c-4ecf-b763-6dfd8e9e5b1d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a6c82673-6ec7-4a01-be87-3bbedaf758a3"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "41378847-1925-44db-84e2-3453f8de5285"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20200706T090941Z:41378847-1925-44db-84e2-3453f8de5285"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:09:41 GMT"
+        ],
+        "Content-Length": [
+          "975"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"synapsesdkworkspace8605\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"TestTag\": \"TestUpdate\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n          \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapsesdkrp2915\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4a338567-914d-4f16-85c7-5aa624846d10"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-request-id": [
+          "044488b2-824a-43e7-9a61-223f76367ec5"
+        ],
+        "x-ms-correlation-request-id": [
+          "044488b2-824a-43e7-9a61-223f76367ec5"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091845Z:044488b2-824a-43e7-9a61-223f76367ec5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:18:44 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "12"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/providers/Microsoft.Synapse/workspaces?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fed2973c-7d48-4814-8096-39dcfa7d9a0f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "c805ad8c-c368-4254-af2a-ae8416498e76",
+          "e3d2e406-da72-4891-bdd9-c6cd42bc4f0a",
+          "40a27d75-9cd1-48d7-b5e3-6879157bd8eb",
+          "60bce8e8-d9ca-489b-a967-0b1895139902",
+          "b860bd4b-f74e-425a-ba4c-dd389b2a1c2c",
+          "b9a1279d-a26f-41bc-aa80-7d651534a937"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-request-id": [
+          "01a72f82-c4a6-4b0d-a37f-ac2d32e1be51"
+        ],
+        "x-ms-correlation-request-id": [
+          "01a72f82-c4a6-4b0d-a37f-ac2d32e1be51"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091453Z:01a72f82-c4a6-4b0d-a37f-ac2d32e1be51"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:14:52 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "61419"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/aznb-integration-demo-rg/providers/Microsoft.Synapse/workspaces/aznbintdemows\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"aznbintdemows\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"309c2ad1-11c8-4a38-8e71-c8800a71bf9a\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2faznb-integration-demo-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2faznbintdemows\",\r\n          \"sql\": \"aznbintdemows.sql.azuresynapse.net\",\r\n          \"dev\": \"https://aznbintdemows.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"aznbintdemows-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"aznb-integration-demo-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/beijingtest/providers/Microsoft.Synapse/workspaces/fenq\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"fenq\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"43c5521b-a729-41d4-979f-e25460e74e63\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbeijingtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ffenq\",\r\n          \"sql\": \"fenq.sql.azuresynapse.net\",\r\n          \"dev\": \"https://fenq.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"fenq-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"beijingtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/pierotest\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"pierotest\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"58f07a59-4d85-4f87-a390-77ff1dcd79c6\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fpierotest\",\r\n          \"sql\": \"pierotest.sql.azuresynapse.net\",\r\n          \"dev\": \"https://pierotest.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"pierotest-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/bigdataqa1105ws\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"bigdataqa1105ws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"b78db07d-c7d9-4556-af15-87973308fcb9\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fbigdataqa1105ws\",\r\n          \"sql\": \"bigdataqa1105ws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://bigdataqa1105ws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"bigdataqa1105ws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/bigdataqa0407\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"bigdataqa0407\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"4c1d6175-8cee-4958-8822-ae89062c508a\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fbigdataqa0407\",\r\n          \"sql\": \"bigdataqa0407.sql.azuresynapse.net\",\r\n          \"dev\": \"https://bigdataqa0407.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"bigdataqa0407-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/chayang-test-rg/providers/Microsoft.Synapse/workspaces/chayang-synapse-westus\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"chayang-synapse-westus\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"2f36658a-7be2-4baa-b81c-19226899d74c\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"pointOfContact\": \"chayang\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fchayang-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fchayang-synapse-westus\",\r\n          \"sql\": \"chayang-synapse-westus.sql.azuresynapse.net\",\r\n          \"dev\": \"https://chayang-synapse-westus.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"chayang-synapse-westus-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"chayang-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/chayang-test-rg/providers/Microsoft.Synapse/workspaces/chayangwestus2\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"chayangwestus2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"76d1d861-3fe3-4e6c-814f-4bc4e61f5e37\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"cleanup\": \"keep\",\r\n        \"pointOfContact\": \"chayang\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fchayang-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fchayangwestus2\",\r\n          \"sql\": \"chayangwestus2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://chayangwestus2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"chayangwestus2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"chayang-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/gyytest/providers/Microsoft.Synapse/workspaces/gyywestus2\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"gyywestus2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"d6ce3a74-72aa-4031-b665-afd38c6238eb\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fgyytest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fgyywestus2\",\r\n          \"sql\": \"gyywestus2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://gyywestus2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"gyywestus2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"gyytest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Failed\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltianrg/providers/Microsoft.Synapse/workspaces/ltiantest1234\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"ltiantest1234\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltianrg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltiantest1234\",\r\n          \"sql\": \"ltiantest1234.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltiantest1234.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltiantest1234-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltianrg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltianrg/providers/Microsoft.Synapse/workspaces/ltianwestus2\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"ltianwestus2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"f9ada472-66a8-4ffe-b2fa-d20e64182ae5\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltianrg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltianwestus2\",\r\n          \"sql\": \"ltianwestus2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltianwestus2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltianwestus2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltianrg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltianrg/providers/Microsoft.Synapse/workspaces/ltiansynapseeastus\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"ltiansynapseeastus\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"1fd4cf7b-e9c1-4cfe-8fa3-b6a63d998fab\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltianrg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltiansynapseeastus\",\r\n          \"sql\": \"ltiansynapseeastus.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltiansynapseeastus.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltiansynapseeastus-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltianrg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/mandywtest/providers/Microsoft.Synapse/workspaces/mandyw1025a\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"mandyw1025a\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"f2efb077-9502-47e8-86e3-16d13a7f5037\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"lirsuntesttagname1\": \"lirsuntesttagvalue1\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fmandywtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fmandyw1025a\",\r\n          \"sql\": \"mandyw1025a.sql.azuresynapse.net\",\r\n          \"dev\": \"https://mandyw1025a.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"mandyw1025a-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"mandywtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/pierowebtooling/providers/Microsoft.Synapse/workspaces/pi19\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"pi19\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"57ac3755-2a7b-49dc-aaea-b3f9bc598b00\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fpierowebtooling%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fpi19\",\r\n          \"sql\": \"pi19.sql.azuresynapse.net\",\r\n          \"dev\": \"https://pi19.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"pi19-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"pierowebtooling\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/pierowebtooling/providers/Microsoft.Synapse/workspaces/labtestpbi\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"labtestpbi\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"1fa15a35-a7af-45e1-a33c-3fafc92508aa\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fpierowebtooling%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2flabtestpbi\",\r\n          \"sql\": \"labtestpbi.sql.azuresynapse.net\",\r\n          \"dev\": \"https://labtestpbi.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"labtestpbi-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"pierowebtooling\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/rufan0723rg01/providers/Microsoft.Synapse/workspaces/rufan072301ws\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"rufan072301ws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2frufan0723rg01%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2frufan072301ws\",\r\n          \"sql\": \"rufan072301ws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://rufan072301ws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"rufan072301ws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"rufan0723rg01\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ruxurg/providers/Microsoft.Synapse/workspaces/ruxuwsoct\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"ruxuwsoct\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"6449e0fb-f4e9-4fad-b26a-e3847d26c21b\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fruxurg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fruxuwsoct\",\r\n          \"sql\": \"ruxuwsoct.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ruxuwsoct.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ruxuwsoct-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ruxurg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/shuaitest/providers/Microsoft.Synapse/workspaces/shuaitest2\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"shuaitest2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"f7e1a0e4-97b2-4aa0-b605-e515fc867242\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fshuaitest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fshuaitest2\",\r\n          \"sql\": \"shuaitest2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://shuaitest2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"shuaitest2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"shuaitest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/soc-ux-verify/providers/Microsoft.Synapse/workspaces/socuxverify\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"socuxverify\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"7d54018b-0dca-4fb3-8b66-8e9df663db97\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsoc-ux-verify%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsocuxverify\",\r\n          \"sql\": \"socuxverify.sql.azuresynapse.net\",\r\n          \"dev\": \"https://socuxverify.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"socuxverify-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"soc-ux-verify\",\r\n        \"adlaResourceId\": \"/subscriptions/b15a46e3-13e9-4504-a348-f823e6e01503/resourceGroups/conv/providers/Microsoft.DataLakeAnalytics/accounts/sparkwatchdog-c09\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/spark-sql-dev/providers/Microsoft.Synapse/workspaces/sparksqltest\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"sparksqltest\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"d62a7561-6355-4481-8c47-f6ec9bd6bfeb\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fspark-sql-dev%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsparksqltest\",\r\n          \"sql\": \"sparksqltest.sql.azuresynapse.net\",\r\n          \"dev\": \"https://sparksqltest.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"sparksqltest-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"spark-sql-dev\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-e2e/providers/Microsoft.Synapse/workspaces/synapsewestus2e2e\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"synapsewestus2e2e\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"b0415034-89c8-4812-8fe0-50de8a86c860\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-e2e%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsewestus2e2e\",\r\n          \"sql\": \"synapsewestus2e2e.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapsewestus2e2e.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapsewestus2e2e-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-e2e\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/xqctest/providers/Microsoft.Synapse/workspaces/xqctest\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"xqctest\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"6b9ee482-d437-420f-8afd-d2f277f02096\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fxqctest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fxqctest\",\r\n          \"sql\": \"xqctest.sql.azuresynapse.net\",\r\n          \"dev\": \"https://xqctest.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"xqctest-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"xqctest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/yifso-workspace/providers/Microsoft.Synapse/workspaces/yifso\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"yifso\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fyifso-workspace%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fyifso\",\r\n          \"sql\": \"yifso.sql.azuresynapse.net\",\r\n          \"dev\": \"https://yifso.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"yifso-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"yifso-workspace\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"DeleteError\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/yifso-workspace/providers/Microsoft.Synapse/workspaces/yifso1202ws\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"yifso1202ws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"cb9090e5-02a0-4805-b8fa-de52cf15d95b\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"__gitRepoConfiguration__0\": \"%7B%22type%22%3A%22FactoryGitHubConfiguration%22%2C%22hostName%22%3A%22%22%2C%22accountName%22%3A%22yifso%22%2C%22repositoryName%22%3A%22SynapseTest%22%2C%22collaborationBranch%22%3A%22master%22%2C%22rootFolder%22%3A%22%2Fyifso20200106%22%2C%22lastCommitId\",\r\n        \"__gitRepoConfiguration__1\": \"%22%3A%22%22%7D\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fyifso-workspace%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fyifso1202ws\",\r\n          \"sql\": \"yifso1202ws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://yifso1202ws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"yifso1202ws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"yifso-workspace\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zhwe-arc/providers/Microsoft.Synapse/workspaces/zhwe-0801\",\r\n      \"location\": \"westus2\",\r\n      \"name\": \"zhwe-0801\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzhwe-arc%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fzhwe-0801\",\r\n          \"sql\": \"zhwe-0801.sql.azuresynapse.net\",\r\n          \"dev\": \"https://zhwe-0801.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"zhwe-0801-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zhwe-arc\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/a365-anb-rg/providers/Microsoft.Synapse/workspaces/jennyhpdemo2\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"jennyhpdemo2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"b537130d-2e81-4b46-9b6c-5d56713659d6\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fa365-anb-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fjennyhpdemo2\",\r\n          \"sql\": \"jennyhpdemo2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://jennyhpdemo2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"jennyhpdemo2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"a365-anb-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/bigdataqa0514ws2\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"bigdataqa0514ws2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"8aca5ca7-03c1-440c-8040-309b55a94c74\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fbigdataqa0514ws2\",\r\n          \"sql\": \"bigdataqa0514ws2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://bigdataqa0514ws2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"bigdataqa0514ws2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/bigdataqa0512ws2\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"bigdataqa0512ws2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"e751cac0-57c2-4004-bb73-23c6ba1411bf\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fbigdataqa0512ws2\",\r\n          \"sql\": \"bigdataqa0512ws2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://bigdataqa0512ws2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"bigdataqa0512ws2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/qing0313\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"qing0313\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"eede0795-1aa4-468a-a5ff-a57174b43536\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fqing0313\",\r\n          \"sql\": \"qing0313.sql.azuresynapse.net\",\r\n          \"dev\": \"https://qing0313.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"qing0313-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bjtest/providers/Microsoft.Synapse/workspaces/sparkbatchtest2\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"sparkbatchtest2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"e63bf885-458f-4eb2-969b-093b7e2f3e14\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbjtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsparkbatchtest2\",\r\n          \"sql\": \"sparkbatchtest2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://sparkbatchtest2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"sparkbatchtest2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bjtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/catestAWTeus/providers/Microsoft.Synapse/workspaces/catesteus\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"catesteus\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"65f80739-a6e0-4c3d-8a50-1ab878179e0c\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fcatestAWTeus%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fcatesteus\",\r\n          \"sql\": \"catesteus.sql.azuresynapse.net\",\r\n          \"dev\": \"https://catesteus.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"catesteus-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"catestAWTeus\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/gyytest/providers/Microsoft.Synapse/workspaces/gyyeastusws\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"gyyeastusws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"77fd8328-a4e8-4981-96c3-3847a1d9d8c2\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fgyytest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fgyyeastusws\",\r\n          \"sql\": \"gyyeastusws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://gyyeastusws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"gyyeastusws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"gyytest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltianrg/providers/Microsoft.Synapse/workspaces/ltianeastusvnetws\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"ltianeastusvnetws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"c477cfd2-d8db-49ca-ba63-ddc4d597a93b\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltianrg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltianeastusvnetws\",\r\n          \"sql\": \"ltianeastusvnetws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltianeastusvnetws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltianeastusvnetws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltianrg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/mandywtest/providers/Microsoft.Synapse/workspaces/mandywtestd\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"mandywtestd\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"79e63652-f857-438d-8fc5-fd3f20a29b77\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fmandywtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fmandywtestd\",\r\n          \"sql\": \"mandywtestd.sql.azuresynapse.net\",\r\n          \"dev\": \"https://mandywtestd.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"mandywtestd-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"mandywtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/pierowebtooling/providers/Microsoft.Synapse/workspaces/pieroeast\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"pieroeast\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"b6a6ba32-0316-4898-94cb-addb28dcdd42\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fpierowebtooling%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fpieroeast\",\r\n          \"sql\": \"pieroeast.sql.azuresynapse.net\",\r\n          \"dev\": \"https://pieroeast.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"pieroeast-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"pierowebtooling\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/samplenbeastus/providers/Microsoft.Synapse/workspaces/samplenbwseastus\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"samplenbwseastus\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"4119c54f-2926-427b-b672-f92c5a72e9a7\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"cleanup\": \"keep\",\r\n        \"pointOfContact\": \"ruxu\"\r\n      },\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsamplenbeastus%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsamplenbwseastus\",\r\n          \"sql\": \"samplenbwseastus.sql.azuresynapse.net\",\r\n          \"dev\": \"https://samplenbwseastus.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"samplenbwseastus-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"samplenbeastus\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/shuaitest/providers/Microsoft.Synapse/workspaces/devtooltelemetryws\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"devtooltelemetryws\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"68c959d3-efe2-4d5e-814d-098c5fe97a05\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fshuaitest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fdevtooltelemetryws\",\r\n          \"sql\": \"devtooltelemetryws.sql.azuresynapse.net\",\r\n          \"dev\": \"https://devtooltelemetryws.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"devtooltelemetryws-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"shuaitest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-e2e/providers/Microsoft.Synapse/workspaces/synapseeastuse2e\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"synapseeastuse2e\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"1b49d1bc-cba5-4aa1-a245-caf19bbdcd18\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-e2e%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapseeastuse2e\",\r\n          \"sql\": \"synapseeastuse2e.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapseeastuse2e.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapseeastuse2e-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-e2e\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-e2e/providers/Microsoft.Synapse/workspaces/synapseeastuse2e1\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"synapseeastuse2e1\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"4f9193ce-9c97-4b20-a7b6-50fc49455e9d\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-e2e%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapseeastuse2e1\",\r\n          \"sql\": \"synapseeastuse2e1.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapseeastuse2e1.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapseeastuse2e1-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-e2e\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Failed\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-e2e/providers/Microsoft.Synapse/workspaces/synapseeastuse2e2\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"synapseeastuse2e2\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"2e88e543-956d-42c3-9633-a97617a4423d\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-e2e%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapseeastuse2e2\",\r\n          \"sql\": \"synapseeastuse2e2.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapseeastuse2e2.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapseeastuse2e2-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-e2e\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Failed\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"synapsesdkworkspace8605\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"eec0409b-7109-4dfa-adfe-c482cbe90eaf\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"TestTag\": \"TestUpdate\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapsesdkrp2915%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8605\",\r\n          \"sql\": \"synapsesdkworkspace8605.sql.azuresynapse.net\",\r\n          \"dev\": \"https://synapsesdkworkspace8605.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"synapsesdkworkspace8605-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapsesdkrp2915\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zhwe-arc/providers/Microsoft.Synapse/workspaces/zhwe0214eus\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"zhwe0214eus\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"5b759132-99b4-4ef1-8104-c3d24e276586\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzhwe-arc%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fzhwe0214eus\",\r\n          \"sql\": \"zhwe0214eus.sql.azuresynapse.net\",\r\n          \"dev\": \"https://zhwe0214eus.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"zhwe0214eus-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zhwe-arc\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace\",\r\n      \"location\": \"eastus\",\r\n      \"name\": \"testsynapseworkspace\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"5c40eee1-1044-4ec5-9d56-bbbd73b93df0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"key1\": \"value2\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzzy-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ftestsynapseworkspace\",\r\n          \"sql\": \"testsynapseworkspace.sql.azuresynapse.net\",\r\n          \"dev\": \"https://testsynapseworkspace.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"testsynapseworkspace-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zzy-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/beijingtest/providers/Microsoft.Synapse/workspaces/zhaotestworkspace\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"zhaotestworkspace\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"bb17d021-989f-445f-9be2-8dae7b27b6e0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbeijingtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fzhaotestworkspace\",\r\n          \"sql\": \"zhaotestworkspace.sql.azuresynapse.net\",\r\n          \"dev\": \"https://zhaotestworkspace.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"zhaotestworkspace-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"beijingtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/beijingtest/providers/Microsoft.Synapse/workspaces/xssc\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"xssc\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"aba6c6ee-cc3f-4105-b213-8a0e26fd2dd0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbeijingtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fxssc\",\r\n          \"sql\": \"xssc.sql.azuresynapse.net\",\r\n          \"dev\": \"https://xssc.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"xssc-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"beijingtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/bigdataqa/providers/Microsoft.Synapse/workspaces/xiaocw0316\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"xiaocw0316\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"f98fa659-f0f1-4d52-9b3b-c5e6c48a1556\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fbigdataqa%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fxiaocw0316\",\r\n          \"sql\": \"xiaocw0316.sql.azuresynapse.net\",\r\n          \"dev\": \"https://xiaocw0316.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"xiaocw0316-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"bigdataqa\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/dongwwarg/providers/Microsoft.Synapse/workspaces/dongwwaps5970\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"dongwwaps5970\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"219ddf8e-2d70-4e50-8f8b-522cc53c60d5\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fdongwwarg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fdongwwaps5970\",\r\n          \"sql\": \"dongwwaps5970.sql.azuresynapse.net\",\r\n          \"dev\": \"https://dongwwaps5970.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"dongwwaps5970-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"dongwwarg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/kuhuan-vnet-test/providers/Microsoft.Synapse/workspaces/kuhuanvnettest\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"kuhuanvnettest\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"ee41bad8-3072-4f07-a4b9-43f7c2db2838\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fkuhuan-vnet-test%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fkuhuanvnettest\",\r\n          \"sql\": \"kuhuanvnettest.sql.azuresynapse.net\",\r\n          \"dev\": \"https://kuhuanvnettest.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"kuhuanvnettest-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"kuhuan-vnet-test\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/lilijing/providers/Microsoft.Synapse/workspaces/lilijing0227neur\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"lilijing0227neur\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"9555b5c3-a247-4047-8df1-8d7b7363c5b2\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"cleanup\": \"keep\",\r\n        \"pointOfContact\": \"lilijing\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2flilijing%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2flilijing0227neur\",\r\n          \"sql\": \"lilijing0227neur.sql.azuresynapse.net\",\r\n          \"dev\": \"https://lilijing0227neur.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"lilijing0227neur-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"lilijing\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltianrg/providers/Microsoft.Synapse/workspaces/ltiannortheurope\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"ltiannortheurope\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"ea1bb792-dcb8-4ac7-9adf-a0aa627dac66\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltianrg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltiannortheurope\",\r\n          \"sql\": \"ltiannortheurope.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltiannortheurope.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltiannortheurope-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltianrg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/samplenb/providers/Microsoft.Synapse/workspaces/ruxuwsne\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"ruxuwsne\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"3e0da1ed-a0cc-4829-b521-3ffa85cf4400\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {\r\n        \"cleanup\": \"keep\",\r\n        \"pointOfContact\": \"ruxu\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsamplenb%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fruxuwsne\",\r\n          \"sql\": \"ruxuwsne.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ruxuwsne.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ruxuwsne-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"samplenb\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/silahuhilotest2/providers/Microsoft.Synapse/workspaces/silahuhilotestworkspace\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"silahuhilotestworkspace\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"afabe409-5e61-4260-af71-3211c7aa0fd1\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsilahuhilotest2%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsilahuhilotestworkspace\",\r\n          \"sql\": \"silahuhilotestworkspace.sql.azuresynapse.net\",\r\n          \"dev\": \"https://silahuhilotestworkspace.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"silahuhilotestworkspace-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"silahuhilotest2\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-cliadfuw/providers/Microsoft.Synapse/workspaces/clitestvrg5tl4me\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"clitestvrg5tl4me\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"c4ce8348-9586-4ee3-b8d6-c337c59150ba\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-cliadfuw%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fclitestvrg5tl4me\",\r\n          \"sql\": \"clitestvrg5tl4me.sql.azuresynapse.net\",\r\n          \"dev\": \"https://clitestvrg5tl4me.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"clitestvrg5tl4me-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-cliadfuw\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapse-clicqdm2/providers/Microsoft.Synapse/workspaces/clitestbttui2gy6\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"clitestbttui2gy6\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"df1cc1fd-f085-4164-b54e-b7c876b1fd4d\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fsynapse-clicqdm2%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fclitestbttui2gy6\",\r\n          \"sql\": \"clitestbttui2gy6.sql.azuresynapse.net\",\r\n          \"dev\": \"https://clitestbttui2gy6.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"clitestbttui2gy6-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"synapse-clicqdm2\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/yifso-workspace/providers/Microsoft.Synapse/workspaces/yifso0610vnet\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"yifso0610vnet\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"6f1dabe6-d63b-4db0-b0b8-de53b988db7f\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fyifso-workspace%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fyifso0610vnet\",\r\n          \"sql\": \"yifso0610vnet.sql.azuresynapse.net\",\r\n          \"dev\": \"https://yifso0610vnet.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"yifso0610vnet-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"yifso-workspace\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testcliworkspace123\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"testcliworkspace123\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"74d467e9-5461-4fbc-8b84-7f8b82009dea\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzzy-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ftestcliworkspace123\",\r\n          \"sql\": \"testcliworkspace123.sql.azuresynapse.net\",\r\n          \"dev\": \"https://testcliworkspace123.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"testcliworkspace123-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zzy-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/dongwwa6810\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"dongwwa6810\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"2ee9ab41-a86b-4193-a5f8-746df871d0fc\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzzy-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fdongwwa6810\",\r\n          \"sql\": \"dongwwa6810.sql.azuresynapse.net\",\r\n          \"dev\": \"https://dongwwa6810.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"dongwwa6810-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zzy-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/fromcliwithstorageresourceid\",\r\n      \"location\": \"northeurope\",\r\n      \"name\": \"fromcliwithstorageresourceid\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"238b1d30-d2a4-4930-af12-19e5a3a54862\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzzy-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ffromcliwithstorageresourceid\",\r\n          \"sql\": \"fromcliwithstorageresourceid.sql.azuresynapse.net\",\r\n          \"dev\": \"https://fromcliwithstorageresourceid.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"fromcliwithstorageresourceid-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zzy-test-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/Dansynapse/providers/Microsoft.Synapse/workspaces/dansynapse20200212\",\r\n      \"location\": \"westeurope\",\r\n      \"name\": \"dansynapse20200212\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"2b1dbd69-efd3-42ac-be3f-c6c0b38d56ae\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fDansynapse%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fdansynapse20200212\",\r\n          \"sql\": \"dansynapse20200212.sql.azuresynapse.net\",\r\n          \"dev\": \"https://dansynapse20200212.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"dansynapse20200212-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"Dansynapse\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/fengqi-synapse-rg/providers/Microsoft.Synapse/workspaces/fengqi0507weeu\",\r\n      \"location\": \"westeurope\",\r\n      \"name\": \"fengqi0507weeu\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"18e6e06b-0bf0-4696-a1f9-56d6fd1387dc\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2ffengqi-synapse-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ffengqi0507weeu\",\r\n          \"sql\": \"fengqi0507weeu.sql.azuresynapse.net\",\r\n          \"dev\": \"https://fengqi0507weeu.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"fengqi0507weeu-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"fengqi-synapse-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/pierosynapse/providers/Microsoft.Synapse/workspaces/testemirates\",\r\n      \"location\": \"westeurope\",\r\n      \"name\": \"testemirates\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"a4b12147-a465-4ac9-ba66-2d33fb7d9d6c\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fpierosynapse%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ftestemirates\",\r\n          \"sql\": \"testemirates.sql.azuresynapse.net\",\r\n          \"dev\": \"https://testemirates.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"testemirates-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"pierosynapse\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/yifso-workspace/providers/Microsoft.Synapse/workspaces/yifso0409weu\",\r\n      \"location\": \"westeurope\",\r\n      \"name\": \"yifso0409weu\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"208f38c9-e8e8-47a3-8ccd-36999051e2e0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fyifso-workspace%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fyifso0409weu\",\r\n          \"sql\": \"yifso0409weu.sql.azuresynapse.net\",\r\n          \"dev\": \"https://yifso0409weu.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"yifso0409weu-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"yifso-workspace\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/HMSaaS/providers/Microsoft.Synapse/workspaces/hmsaasvnettesting\",\r\n      \"location\": \"eastus2\",\r\n      \"name\": \"hmsaasvnettesting\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"0ab90e1f-ffee-402f-80ad-135a66081dcd\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"managedVirtualNetwork\": \"default\",\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fHMSaaS%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fhmsaasvnettesting\",\r\n          \"sql\": \"hmsaasvnettesting.sql.azuresynapse.net\",\r\n          \"dev\": \"https://hmsaasvnettesting.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"hmsaasvnettesting-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"HMSaaS\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/madhu-0605rg/providers/Microsoft.Synapse/workspaces/mrebbwssparktest0605\",\r\n      \"location\": \"eastus2\",\r\n      \"name\": \"mrebbwssparktest0605\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"78230af7-9da6-462f-85ca-e9ed227ab2e3\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fmadhu-0605rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fmrebbwssparktest0605\",\r\n          \"sql\": \"mrebbwssparktest0605.sql.azuresynapse.net\",\r\n          \"dev\": \"https://mrebbwssparktest0605.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"mrebbwssparktest0605-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"madhu-0605rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/rufanSynapseRG1/providers/Microsoft.Synapse/workspaces/rufanworkspace0709\",\r\n      \"location\": \"eastus2\",\r\n      \"name\": \"rufanworkspace0709\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"0af1f54f-d172-430d-94a0-9059717d7ab3\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2frufanSynapseRG1%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2frufanworkspace0709\",\r\n          \"sql\": \"rufanworkspace0709.sql.azuresynapse.net\",\r\n          \"dev\": \"https://rufanworkspace0709.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"rufanworkspace0709-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"rufanSynapseRG1\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ywtest/providers/Microsoft.Synapse/workspaces/roletestspace\",\r\n      \"location\": \"eastus2\",\r\n      \"name\": \"roletestspace\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"39445276-c45e-4772-be7e-91ce6f9170fe\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fywtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2froletestspace\",\r\n          \"sql\": \"roletestspace.sql.azuresynapse.net\",\r\n          \"dev\": \"https://roletestspace.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"roletestspace-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ywtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ywtest/providers/Microsoft.Synapse/workspaces/testspace\",\r\n      \"location\": \"eastus2\",\r\n      \"name\": \"testspace\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"a8e53278-97e0-4fbb-80b1-d81d4243e6e2\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fywtest%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ftestspace\",\r\n          \"sql\": \"testspace.sql.azuresynapse.net\",\r\n          \"dev\": \"https://testspace.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"testspace-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ywtest\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/catestAWTeus/providers/Microsoft.Synapse/workspaces/lanjun0421\",\r\n      \"location\": \"eastus2euap\",\r\n      \"name\": \"lanjun0421\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fcatestAWTeus%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2flanjun0421\",\r\n          \"sql\": \"lanjun0421.sql.azuresynapse.net\",\r\n          \"dev\": \"https://lanjun0421.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"lanjun0421-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"catestAWTeus\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"DeleteError\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/catestrgsynapse/providers/Microsoft.Synapse/workspaces/lanjuntest\",\r\n      \"location\": \"eastus2euap\",\r\n      \"name\": \"lanjuntest\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"4de69469-c898-4083-84ed-177189badfd0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fcatestrgsynapse%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2flanjuntest\",\r\n          \"sql\": \"lanjuntest.sql.azuresynapse.net\",\r\n          \"dev\": \"https://lanjuntest.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"lanjuntest-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"catestrgsynapse\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Failed\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/ltian-eaup-rg/providers/Microsoft.Synapse/workspaces/ltianeuapstudio0319\",\r\n      \"location\": \"eastus2euap\",\r\n      \"name\": \"ltianeuapstudio0319\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"e791d7cc-477c-4f92-8645-a1b335693d5f\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fltian-eaup-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fltianeuapstudio0319\",\r\n          \"sql\": \"ltianeuapstudio0319.sql.azuresynapse.net\",\r\n          \"dev\": \"https://ltianeuapstudio0319.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"ltianeuapstudio0319-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"ltian-eaup-rg\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Failed\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/zhwe-eus2-euap-synapse/providers/Microsoft.Synapse/workspaces/zhwe4synapse2testspkmon8euap\",\r\n      \"location\": \"eastus2euap\",\r\n      \"name\": \"zhwe4synapse2testspkmon8euap\",\r\n      \"type\": \"Microsoft.Synapse/workspaces\",\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"bcd469d4-65ce-4812-af5d-526ac9cdc766\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      },\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"connectivityEndpoints\": {\r\n          \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2f8bca72e0-8f5e-4c77-9acc-b45609999bc2%2fresourceGroups%2fzhwe-eus2-euap-synapse%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fzhwe4synapse2testspkmon8euap\",\r\n          \"sql\": \"zhwe4synapse2testspkmon8euap.sql.azuresynapse.net\",\r\n          \"dev\": \"https://zhwe4synapse2testspkmon8euap.dev.azuresynapse.net\",\r\n          \"sqlOnDemand\": \"zhwe4synapse2testspkmon8euap-ondemand.sql.azuresynapse.net\"\r\n        },\r\n        \"managedResourceGroupName\": \"zhwe-eus2-euap-synapse\",\r\n        \"privateEndpointConnections\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605?api-version=2019-06-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7648f370-8570-4297-95b3-a627a9a33745"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationResults/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview"
+        ],
+        "Access-Control-Allow-Headers": [
+          "Location"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Location"
+        ],
+        "x-ms-request-id": [
+          "451d48a8-8bb8-4f2a-a040-f9d2b66c9de7"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "66ed6705-bc55-4a24-aaac-4cb48ce0ab85"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091601Z:66ed6705-bc55-4a24-aaac-4cb48ce0ab85"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:16:01 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "97004970-3d0d-46e2-a1ac-baf73dba09ea"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "0002ecb8-8547-45ed-b8b6-4b9d9ae4ef89"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091632Z:0002ecb8-8547-45ed-b8b6-4b9d9ae4ef89"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:16:32 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a8577b1e-fc3d-44ce-af9d-bb9249f3cd64"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-correlation-request-id": [
+          "73f7c183-37e9-4a9b-91e1-4dd5ce0ed89f"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091702Z:73f7c183-37e9-4a9b-91e1-4dd5ce0ed89f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:17:01 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "50ce1d1f-1772-485a-9cfa-f13f84a5d1ce"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "586302b4-af29-4411-af01-c194b1e9d351"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091732Z:586302b4-af29-4411-af01-c194b1e9d351"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:17:32 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "946e36d3-f9fe-4f03-9069-b44d78f1864c"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "a3e06f2e-b935-4d46-b10b-e6e184050776"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091803Z:a3e06f2e-b935-4d46-b10b-e6e184050776"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:18:03 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationStatuses/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "37b7e49c-68df-495d-a5be-5e7c5ce28b8e"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-correlation-request-id": [
+          "6220fe44-5867-4a82-ae61-9c22062a8bc1"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091833Z:6220fe44-5867-4a82-ae61-9c22062a8bc1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:18:33 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8bca72e0-8f5e-4c77-9acc-b45609999bc2/resourceGroups/synapsesdkrp2915/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8605/operationResults/90354160-86a9-4439-aa16-3910b3c4e9e0?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ce4fe6e5-cb56-4254-b4cf-dfc3895a81fb"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c75b18c-7ca3-4ee8-b80a-686af604f126"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANWEST:20200706T091833Z:7c75b18c-7ca3-4ee8-b80a-686af604f126"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jul 2020 09:18:33 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    ".ctor": [
+      "synapsesdkrp2915",
+      "synapsesdkstorage6322",
+      "sshuser6955",
+      "Password1!7191",
+      "synapsesdkfilesys7106"
+    ],
+    "TestInitialize": [
+      "8bca72e0-8f5e-4c77-9acc-b45609999bc2"
+    ],
+    "TestWorkspaceLifeCycle": [
+      "synapsesdkworkspace8605"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "8bca72e0-8f5e-4c77-9acc-b45609999bc2"
+  }
+}

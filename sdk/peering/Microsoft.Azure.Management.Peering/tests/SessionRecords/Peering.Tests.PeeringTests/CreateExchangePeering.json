@@ -1,88 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res9000?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczkwMDA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzYyMjI/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 6222,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc6222@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9df494f6-85c3-4aa6-a535-2820465021cc"
+          "b26bc067-5d32-4515-83b6-8832120ef5bd"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "31"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-request-id": [
-          "f1d08c06-cec1-44d2-a4ed-1df3df437f8a"
-        ],
-        "x-ms-correlation-request-id": [
-          "f1d08c06-cec1-44d2-a4ed-1df3df437f8a"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222146Z:f1d08c06-cec1-44d2-a4ed-1df3df437f8a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:21:45 GMT"
-        ],
-        "Content-Length": [
-          "170"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000\",\r\n  \"name\": \"res9000\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 2802,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc2802@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "507e8fdf-bb2c-41ac-956c-70556396d329"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,10 +33,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "0ff36cdd-d515-4dc8-a7d4-fd1d8e732c9f"
+          "80e7d779-3b52-46a4-b008-4f273f69ca46"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:19 GMT"
         ],
         "Content-Length": [
           "432"
@@ -111,26 +45,26 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 2802,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc2802@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Pending\"\r\n  },\r\n  \"name\": \"AS2802\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 6222,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc6222@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Pending\"\r\n  },\r\n  \"name\": \"AS6222\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzYyMjI/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "44ac522b-16bb-414d-804b-e22e80089044"
+          "dc1d2697-03ce-4c75-b34a-d665ca4b4184"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -141,10 +75,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "47319830-707c-4268-b1a2-2817cd45a3f7"
+          "6bb0f129-8f6a-49cd-92cd-5c9d4c47997d"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:19 GMT"
         ],
         "Content-Length": [
           "433"
@@ -153,26 +87,26 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 2802,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc2802@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"AS2802\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 6222,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc6222@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"AS6222\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzYyMjI/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "625d845d-a5dc-4a44-b1a7-edcb59b90a85"
+          "a7686182-60bc-4ec2-9872-9d0e82f2e231"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -183,10 +117,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "431ce1ee-1020-43da-8f0e-a188cc3ad00e"
+          "ff9b36ee-b188-4b37-a37f-b9f3489cdc1d"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:36 GMT"
+          "Tue, 12 May 2020 17:41:21 GMT"
         ],
         "Content-Length": [
           "68"
@@ -199,22 +133,22 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczkwMDAvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczg3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyaW5ncy9leGNoYW5nZXBlZXJpbmc2MjIyP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"bgpSession\": {\r\n            \"peerSessionIPv4Address\": \"10.12.97.151\",\r\n            \"maxPrefixesAdvertisedV4\": 20000\r\n          },\r\n          \"connectionIdentifier\": \"764d85c6-803e-417e-866f-982faf76e54a\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_3668\": \"Active\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"bgpSession\": {\r\n            \"peerSessionIPv4Address\": \"10.12.97.150\",\r\n            \"maxPrefixesAdvertisedV4\": 20000\r\n          },\r\n          \"connectionIdentifier\": \"1a879952-494f-4cf9-837e-006262579ae7\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_6161\": \"Active\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5a727f66-ebe5-4637-b283-ca2d3a9b011c"
+          "260087a3-8c91-4b5a-bc6f-81882ba79aec"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -231,38 +165,38 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "df0b655c-4a7b-487b-8d70-95799f1f72dc"
+          "a6ca3cc0-ba59-47b4-83c3-5bbaaeefddea"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:19 GMT"
         ],
         "Content-Length": [
-          "1353"
+          "1351"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.151\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"764d85c6-803e-417e-866f-982faf76e54a\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_3668\": \"Active\"\r\n  },\r\n  \"eTag\": \"a3dd0efc-c7b3-4d52-8641-af5f56d3e7bc\",\r\n  \"name\": \"exchangepeering2802\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.150\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"1a879952-494f-4cf9-837e-006262579ae7\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_6161\": \"Active\"\r\n  },\r\n  \"eTag\": \"a64881b2-6fd3-4941-b97d-00d7d4385573\",\r\n  \"name\": \"exchangepeering6222\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczkwMDAvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczg3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyaW5ncy9leGNoYW5nZXBlZXJpbmc2MjIyP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "84d0f9a1-8b80-4af1-ba30-23861ca9617e"
+          "7337079a-0b79-4311-96ed-78c260e85842"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -273,38 +207,38 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "a258dfb6-6e08-4ce1-a94d-ba507cb69d17"
+          "380c4615-b237-411b-90fc-f9308535ca90"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:21 GMT"
         ],
         "Content-Length": [
-          "1353"
+          "1351"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.151\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"764d85c6-803e-417e-866f-982faf76e54a\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_3668\": \"Active\"\r\n  },\r\n  \"eTag\": \"a3dd0efc-c7b3-4d52-8641-af5f56d3e7bc\",\r\n  \"name\": \"exchangepeering2802\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.150\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"1a879952-494f-4cf9-837e-006262579ae7\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_6161\": \"Active\"\r\n  },\r\n  \"eTag\": \"a64881b2-6fd3-4941-b97d-00d7d4385573\",\r\n  \"name\": \"exchangepeering6222\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczkwMDAvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczg3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyaW5ncy9leGNoYW5nZXBlZXJpbmc2MjIyP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4ab14782-d01f-4836-8516-73f675079d20"
+          "919115b6-cbcb-449b-beb8-bbbb8af37456"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -315,10 +249,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "f372c669-7e62-4f89-8ae7-251b63b14d08"
+          "ca21e4b4-fe17-4d62-9320-37c236e4a3f1"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:21 GMT"
         ],
         "Content-Length": [
           "0"
@@ -328,22 +262,22 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9000/providers/Microsoft.Peering/peerings/exchangepeering2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczkwMDAvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res87/providers/Microsoft.Peering/peerings/exchangepeering6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczg3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyaW5ncy9leGNoYW5nZXBlZXJpbmc2MjIyP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4f288d7b-6480-4cb8-a4d1-48a4340ae19a"
+          "c7f419d6-dda9-419a-b9ea-f83dcd8cc623"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -354,10 +288,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "588af5fd-bbc0-4edf-84c9-7dfd68814c4d"
+          "8bcc709c-31aa-4a23-bbc1-1fd32d51ae08"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:21:46 GMT"
+          "Tue, 12 May 2020 17:41:21 GMT"
         ],
         "Content-Length": [
           "0"
@@ -367,364 +301,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res9000?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczkwMDA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS6222?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzYyMjI/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "819509e6-0ab6-4b0d-b739-fa8cbfd924fd"
+          "76630d37-aa21-43e1-b271-0cc9e874fb36"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "54143012-58fa-4279-90e2-b859dbd8afdd"
-        ],
-        "x-ms-correlation-request-id": [
-          "54143012-58fa-4279-90e2-b859dbd8afdd"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222149Z:54143012-58fa-4279-90e2-b859dbd8afdd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:21:49 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNNU1EQXdMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "109eaf8f-9598-41cf-b5fe-8ae15aa2f4b1"
-        ],
-        "x-ms-correlation-request-id": [
-          "109eaf8f-9598-41cf-b5fe-8ae15aa2f4b1"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222204Z:109eaf8f-9598-41cf-b5fe-8ae15aa2f4b1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:04 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNNU1EQXdMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "4c144067-14e7-4a32-b838-dd3b0b62918c"
-        ],
-        "x-ms-correlation-request-id": [
-          "4c144067-14e7-4a32-b838-dd3b0b62918c"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222220Z:4c144067-14e7-4a32-b838-dd3b0b62918c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:19 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNNU1EQXdMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "ca7cec64-b564-4878-b4cc-e369748aba47"
-        ],
-        "x-ms-correlation-request-id": [
-          "ca7cec64-b564-4878-b4cc-e369748aba47"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222235Z:ca7cec64-b564-4878-b4cc-e369748aba47"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:34 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVM5MDAwLUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNNU1EQXdMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
-        ],
-        "x-ms-request-id": [
-          "f885da1d-656e-44ef-a15f-41487a2b58aa"
-        ],
-        "x-ms-correlation-request-id": [
-          "f885da1d-656e-44ef-a15f-41487a2b58aa"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222235Z:f885da1d-656e-44ef-a15f-41487a2b58aa"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:35 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res9000?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczkwMDA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "73611f72-3051-4c82-a40a-0a221914a8ad"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
-        ],
-        "x-ms-request-id": [
-          "6139e436-5423-473a-b1cc-a1149fc3227a"
-        ],
-        "x-ms-correlation-request-id": [
-          "6139e436-5423-473a-b1cc-a1149fc3227a"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222236Z:6139e436-5423-473a-b1cc-a1149fc3227a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:35 GMT"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "99"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'res9000' could not be found.\"\r\n  }\r\n}",
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS2802?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzI4MDI/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "c41316f4-c349-4389-a528-7073bf9d3dc2"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -735,10 +327,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "c4b15139-15f0-42c4-a573-82ebdf698076"
+          "b18ddff8-ecb7-4f48-9ebc-092ae73b758b"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:36 GMT"
+          "Tue, 12 May 2020 17:41:21 GMT"
         ],
         "Content-Length": [
           "0"
@@ -750,17 +342,17 @@
   ],
   "Names": {
     "CreateExchangePeering": [
-      "02802"
+      "06222"
     ],
     "CreateResourceGroup": [
-      "res9000"
+      "res87"
     ],
     "CreateExchangePeeringModel": [
-      "tfs_3668"
+      "tfs_6161"
     ]
   },
   "Variables": {
     "SubscriptionId": "3e919f9a-4e26-4736-aa8d-d596d9a49239",
-    "ipAddress": "151"
+    "ipAddress": "150"
   }
 }

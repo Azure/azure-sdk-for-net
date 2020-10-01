@@ -7,12 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.FrontDoor</PackageId>
 		<Description>Provides management capabilities for Front Door services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.FrontDoor</AssemblyName>
-		<Version>2.1.0</Version>
+		<Version>3.0.0</Version>
 		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			Add create, update, get, and delete operations for AFD Rules Engine.
-			Add private link property to backends.
+			API 2020-05-01. Added Private link support for Storage, Keyvault and Web App Service resources
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

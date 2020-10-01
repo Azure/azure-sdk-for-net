@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TestHelperProjects>Resources201705;</TestHelperProjects>
+    <NoWarn>$(NoWarn);SA1649</NoWarn>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.Dns.csproj" />
+  </ItemGroup>
+</Project>

@@ -97,7 +97,7 @@ namespace ResourceGroups.Tests
         /// <summary>
         /// Utility method to test Put request for Tags Operation within tracked resources and proxy resources
         /// </summary>
-        private void CreateOrUpdateTagsTest(string resourceScope, MockContext context)
+        private void CreateOrUpdateTagsTest(MockContext context, string resourceScope = "")
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var tagsResource = new TagsResource(new Tags(
@@ -107,6 +107,8 @@ namespace ResourceGroups.Tests
                 }
             ));
             var client = GetResourceManagementClient(context, handler);
+            var subscriptionScope = "/subscriptions/" + client.SubscriptionId;
+            resourceScope = subscriptionScope + resourceScope;
 
             // test creating tags for resources
             var putResponse = client.Tags.CreateOrUpdateAtScope(resourceScope, tagsResource);
@@ -123,8 +125,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
-                this.CreateOrUpdateTagsTest(resourceScope, context);
+                string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                this.CreateOrUpdateTagsTest(context:context, resourceScope:resourceScope);
             }
         }
 
@@ -137,19 +139,20 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
-                this.CreateOrUpdateTagsTest(subscriptionScope, context);
+                this.CreateOrUpdateTagsTest(context: context);
             }
         }
 
         /// <summary>
         /// Utility method to test Patch request for Tags Operation within tracked resources and proxy resources, including Replace|Merge|Delete operations
         /// </summary>
-        private void UpdateTagsTest(string resourceScope, MockContext context)
+        private void UpdateTagsTest(MockContext context, string resourceScope = "")
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
             var client = GetResourceManagementClient(context, handler);
+            var subscriptionScope = "/subscriptions/" + client.SubscriptionId;
+            resourceScope = subscriptionScope + resourceScope;
 
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags(
@@ -207,8 +210,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
-                this.UpdateTagsTest(resourceScope, context);
+                string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                this.UpdateTagsTest(context:context, resourceScope: resourceScope);
             }
         }
 
@@ -221,19 +224,20 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
-                this.UpdateTagsTest(subscriptionScope, context);
+                this.UpdateTagsTest(context: context);
             }
         }
 
         /// <summary>
         /// Utility method to test Get request for Tags Operation within tracked resources and proxy resources
         /// </summary>
-        private void GetTagsTest(string resourceScope, MockContext context)
+        private void GetTagsTest(MockContext context, string resourceScope = "")
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             
             var client = GetResourceManagementClient(context, handler);
+            var subscriptionScope = "/subscriptions/" + client.SubscriptionId;
+            resourceScope = subscriptionScope + resourceScope;
 
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags(
@@ -260,8 +264,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
-                this.GetTagsTest(resourceScope, context);
+                string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                this.GetTagsTest(context: context, resourceScope: resourceScope);
             }
         }
 
@@ -274,18 +278,19 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
-                this.GetTagsTest(subscriptionScope, context);
+                this.GetTagsTest(context: context);
             }
         }
 
         /// <summary>
         /// Utility method to test Delete request for Tags Operation within tracked resources and proxy resources
         /// </summary>
-        private TagsResource DeleteTagsTest(string resourceScope, MockContext context)
+        private TagsResource DeleteTagsTest(MockContext context, string resourceScope = "")
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(context, handler);
+            var subscriptionScope = "/subscriptions/" + client.SubscriptionId;
+            resourceScope = subscriptionScope + resourceScope;
 
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags(
@@ -314,8 +319,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
-                this.DeleteTagsTest(resourceScope, context).Properties.TagsProperty.Should().BeEmpty();
+                string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                this.DeleteTagsTest(context: context, resourceScope: resourceScope).Properties.TagsProperty.Should().BeEmpty();
             }
         }
 
@@ -328,8 +333,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
-                this.DeleteTagsTest(subscriptionScope, context).Properties.TagsProperty.Should().BeNull();
+                this.DeleteTagsTest(context: context).Properties.TagsProperty.Should().BeNull();
             }            
         }
 

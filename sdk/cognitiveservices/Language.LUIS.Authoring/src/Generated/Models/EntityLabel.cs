@@ -12,6 +12,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,13 +40,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// the extracted entity ends.</param>
         /// <param name="role">The role of the predicted entity.</param>
         /// <param name="roleId">The role id for the predicted entity.</param>
-        public EntityLabel(string entityName, int startTokenIndex, int endTokenIndex, string role = default(string), System.Guid? roleId = default(System.Guid?))
+        public EntityLabel(string entityName, int startTokenIndex, int endTokenIndex, string role = default(string), System.Guid? roleId = default(System.Guid?), IList<EntityLabel> children = default(IList<EntityLabel>))
         {
             EntityName = entityName;
             StartTokenIndex = startTokenIndex;
             EndTokenIndex = endTokenIndex;
             Role = role;
             RoleId = roleId;
+            Children = children;
             CustomInit();
         }
 
@@ -86,6 +89,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public System.Guid? RoleId { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "children")]
+        public IList<EntityLabel> Children { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -96,6 +104,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
             if (EntityName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "EntityName");
+            }
+            if (Children != null)
+            {
+                foreach (var element in Children)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,72 +1,72 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seanmccuswest2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f7b1630715da2c4f949b2f4f688a6b64-5f24b9f6ac72d24a-00",
+        "traceparent": "00-169416c350d56842bfd5d361a3c2d1f0-19754ad27f4bf64f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.1-dev.20200210.1\u002B009707a3b348edcec7ca1b3c52e1b54e760d2c43",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "f758c1a1-c3fb-8301-7e1f-9cdd6e11ec1a",
-        "x-ms-date": "Mon, 10 Feb 2020 21:16:36 GMT",
+        "x-ms-date": "Tue, 04 Aug 2020 00:17:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Content-Length": "514",
         "Content-Type": "application/xml",
-        "Date": "Mon, 10 Feb 2020 21:16:35 GMT",
+        "Date": "Tue, 04 Aug 2020 00:17:25 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f758c1a1-c3fb-8301-7e1f-9cdd6e11ec1a",
-        "x-ms-request-id": "9e118c35-901a-0096-7757-e0780c000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "0679d736-101a-004a-69f4-69794d000000",
+        "x-ms-version": "2020-02-10"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
       "RequestUri": "https://error.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "372",
+        "Content-Length": "473",
         "Content-Type": "application/xml",
-        "traceparent": "00-2070897453c12d4d8321a8b5b3fa7083-0e7a07ac93021c4e-00",
+        "traceparent": "00-7cfef2d61e0d374ebce9bc1410cf9dfb-897da352dc9a3c4e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.1-dev.20200210.1\u002B009707a3b348edcec7ca1b3c52e1b54e760d2c43",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "bcdcf536-ccda-5df4-ea18-9440674b7cc1",
-        "x-ms-date": "Mon, 10 Feb 2020 21:16:36 GMT",
+        "x-ms-date": "Tue, 04 Aug 2020 00:17:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2020-02-10"
       },
-      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003C/StorageServiceProperties\u003E",
+      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Length": "467",
         "Content-Type": "application/xml",
-        "Date": "Mon, 10 Feb 2020 21:16:35 GMT",
+        "Date": "Tue, 04 Aug 2020 00:17:26 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "x-ms-error-code": "AuthenticationFailed",
-        "x-ms-request-id": "b5b37adb-401a-00ef-0557-e0527d000000"
+        "x-ms-request-id": "7ef57747-d01a-0122-07f4-697160000000"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthenticationFailed\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
-        "RequestId:b5b37adb-401a-00ef-0557-e0527d000000\n",
-        "Time:2020-02-10T21:16:36.6831477Z\u003C/Message\u003E\u003CAuthenticationErrorDetail\u003ECannot find the claimed account when trying to GetProperties for the account seanmccuswest2.\u003C/AuthenticationErrorDetail\u003E\u003C/Error\u003E"
+        "RequestId:7ef57747-d01a-0122-07f4-697160000000\n",
+        "Time:2020-08-04T00:17:26.9332380Z\u003C/Message\u003E\u003CAuthenticationErrorDetail\u003ECannot find the claimed account when trying to GetProperties for the account seanmcccanary3.\u003C/AuthenticationErrorDetail\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "2027460530",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmccuswest2\nU2FuaXRpemVk\nhttps://seanmccuswest2.blob.core.windows.net\nhttp://seanmccuswest2.file.core.windows.net\nhttp://seanmccuswest2.queue.core.windows.net\nhttp://seanmccuswest2.table.core.windows.net\n\n\n\n\nhttp://seanmccuswest2-secondary.blob.core.windows.net\nhttp://seanmccuswest2-secondary.file.core.windows.net\nhttp://seanmccuswest2-secondary.queue.core.windows.net\nhttp://seanmccuswest2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmccuswest2.blob.core.windows.net/;QueueEndpoint=http://seanmccuswest2.queue.core.windows.net/;FileEndpoint=http://seanmccuswest2.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccuswest2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccuswest2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccuswest2-secondary.file.core.windows.net/;AccountName=seanmccuswest2;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
   }
 }

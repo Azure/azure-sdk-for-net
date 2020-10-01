@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
@@ -29,6 +29,17 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string apiKey = "<apiKey>";
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [Test]
+        public void CreateFormRecognizerClientTokenCredential()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+
+            #region Snippet:CreateFormRecognizerClientTokenCredential
+            //@@ string endpoint = "<endpoint>";
+            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
@@ -58,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerBadRequest
             try
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -81,7 +92,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeFormContentFromFile
             using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
             {
-                Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -98,12 +109,12 @@ namespace Azure.AI.FormRecognizer.Samples
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
-            string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
+            string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -121,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // Firstly, create a trained model we can use to recognize the custom form.
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Proceed with the custom form recognition.
 
@@ -136,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 //@@ string modelId = "<modelId>";
 
-                Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 /*
                  *
                  */

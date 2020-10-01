@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Subscriptions = new SubscriptionsOperations(this);
             Tenants = new TenantsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-11-01";
+            ApiVersion = "2020-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

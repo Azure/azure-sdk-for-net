@@ -77,8 +77,12 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", getTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(location, getTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "originalTag1");
-                Assert.Equal("Basic", getTopicResponse.Sku.Name, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Null(getTopicResponse.Identity);
+
+                //// Disable the test as Sku is not part of GA API yet.
+                //// Assert.Equal("Basic", getTopicResponse.Sku.Name, StringComparer.CurrentCultureIgnoreCase);
+
+                //// Disable the test as Identity is not part of GA API yet.
+                //// Assert.Null(getTopicResponse.Identity);
                 Assert.Null(getTopicResponse.InboundIpRules);
 
                 // Get all topics created within a resourceGroup

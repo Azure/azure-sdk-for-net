@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// Recovery plan A2A specific details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("A2A")]
     public partial class RecoveryPlanA2ADetails : RecoveryPlanProviderSpecificDetails
     {
         /// <summary>

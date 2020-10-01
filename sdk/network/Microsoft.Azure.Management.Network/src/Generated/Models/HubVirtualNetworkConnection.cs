@@ -37,10 +37,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="remoteVirtualNetwork">Reference to the remote virtual
         /// network.</param>
-        /// <param name="allowHubToRemoteVnetTransit">VirtualHub to RemoteVnet
-        /// transit to enabled or not.</param>
-        /// <param name="allowRemoteVnetToUseHubVnetGateways">Allow RemoteVnet
-        /// to use Virtual Hub's gateways.</param>
+        /// <param name="allowHubToRemoteVnetTransit">Deprecated: VirtualHub to
+        /// RemoteVnet transit to enabled or not.</param>
+        /// <param name="allowRemoteVnetToUseHubVnetGateways">Deprecated: Allow
+        /// RemoteVnet to use Virtual Hub's gateways.</param>
         /// <param name="enableInternetSecurity">Enable internet
         /// security.</param>
         /// <param name="routingConfiguration">The Routing Configuration
@@ -80,13 +80,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets virtualHub to RemoteVnet transit to enabled or not.
+        /// Gets or sets deprecated: VirtualHub to RemoteVnet transit to
+        /// enabled or not.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowHubToRemoteVnetTransit")]
         public bool? AllowHubToRemoteVnetTransit { get; set; }
 
         /// <summary>
-        /// Gets or sets allow RemoteVnet to use Virtual Hub's gateways.
+        /// Gets or sets deprecated: Allow RemoteVnet to use Virtual Hub's
+        /// gateways.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowRemoteVnetToUseHubVnetGateways")]
         public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }

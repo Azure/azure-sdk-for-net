@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LexicalTokenizer : IUtf8JsonSerializable
     {
@@ -31,14 +31,14 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.ClassicTokenizer": return ClassicTokenizer.DeserializeClassicTokenizer(element);
                     case "#Microsoft.Azure.Search.EdgeNGramTokenizer": return EdgeNGramTokenizer.DeserializeEdgeNGramTokenizer(element);
                     case "#Microsoft.Azure.Search.KeywordTokenizer": return KeywordTokenizer.DeserializeKeywordTokenizer(element);
-                    case "#Microsoft.Azure.Search.KeywordTokenizerV2": return KeywordTokenizerV2.DeserializeKeywordTokenizerV2(element);
+                    case "#Microsoft.Azure.Search.KeywordTokenizerV2": return KeywordTokenizer.DeserializeKeywordTokenizer(element);
                     case "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer": return MicrosoftLanguageStemmingTokenizer.DeserializeMicrosoftLanguageStemmingTokenizer(element);
                     case "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer": return MicrosoftLanguageTokenizer.DeserializeMicrosoftLanguageTokenizer(element);
                     case "#Microsoft.Azure.Search.NGramTokenizer": return NGramTokenizer.DeserializeNGramTokenizer(element);
-                    case "#Microsoft.Azure.Search.PathHierarchyTokenizerV2": return PathHierarchyTokenizerV2.DeserializePathHierarchyTokenizerV2(element);
+                    case "#Microsoft.Azure.Search.PathHierarchyTokenizerV2": return PathHierarchyTokenizer.DeserializePathHierarchyTokenizer(element);
                     case "#Microsoft.Azure.Search.PatternTokenizer": return PatternTokenizer.DeserializePatternTokenizer(element);
                     case "#Microsoft.Azure.Search.StandardTokenizer": return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element);
-                    case "#Microsoft.Azure.Search.StandardTokenizerV2": return LuceneStandardTokenizerV2.DeserializeLuceneStandardTokenizerV2(element);
+                    case "#Microsoft.Azure.Search.StandardTokenizerV2": return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element);
                     case "#Microsoft.Azure.Search.UaxUrlEmailTokenizer": return UaxUrlEmailTokenizer.DeserializeUaxUrlEmailTokenizer(element);
                 }
             }

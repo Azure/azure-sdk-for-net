@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the type of a datasource. </summary>
     public readonly partial struct SearchIndexerDataSourceType : IEquatable<SearchIndexerDataSourceType>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchIndexerDataSourceType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

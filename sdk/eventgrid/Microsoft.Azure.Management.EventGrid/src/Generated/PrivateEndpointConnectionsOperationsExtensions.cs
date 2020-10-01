@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain

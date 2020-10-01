@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAdd" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var batch = new ServiceBusMessageBatch(mockBatch);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAdd(message), Is.True, "The message should have been accepted.");
+            Assert.That(batch.TryAddMessage(message), Is.True, "The message should have been accepted.");
             Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(message), "The message should have been passed with delegation.");
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAdd" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -116,13 +116,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var batch = new ServiceBusMessageBatch(mockBatch);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
 
             batch.Lock();
-            Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
 
             batch.Unlock();
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The message should have been accepted after unlocking.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The message should have been accepted after unlocking.");
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var batch = new ServiceBusMessageBatch(mockBatch);
             var messageData = new ServiceBusMessage(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
 
             batch.Lock();
             Assert.That(() => batch.Clear(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var mockBatch = new MockTransportBatch();
             var batch = new ServiceBusMessageBatch(mockBatch);
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
 
             batch.Lock();
             Assert.That(() => batch.Dispose(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             public override void Dispose() => DisposeInvoked = true;
             public override void Clear() => ClearInvoked = true;
 
-            public override bool TryAdd(ServiceBusMessage message)
+            public override bool TryAddMessage(ServiceBusMessage message)
             {
                 TryAddCalledWith = message;
                 return true;

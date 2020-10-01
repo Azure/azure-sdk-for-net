@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="topic">Name of the topic of the event
         /// subscription.</param>
         /// <param name="provisioningState">Provisioning state of the event
@@ -45,15 +45,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// 'Deleting', 'Succeeded', 'Canceled', 'Failed',
         /// 'AwaitingManualAction'</param>
         /// <param name="destination">Information about the destination where
-        /// events have to be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.</param>
-        /// <param name="deliveryWithResourceIdentity">Information about the
-        /// destination where events have to be delivered for the event
-        /// subscription.
-        /// Uses the managed identity setup on the parent resource (namely,
-        /// topic or domain) to acquire the authentication tokens being used
-        /// during delivery / dead-lettering.</param>
+        /// events have to be delivered for the event subscription.</param>
         /// <param name="filter">Information about the filter for the event
         /// subscription.</param>
         /// <param name="labels">List of user defined labels.</param>
@@ -65,32 +57,20 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="retryPolicy">The retry policy for events. This can be
         /// used to configure maximum number of delivery attempts and time to
         /// live for events.</param>
-        /// <param name="deadLetterDestination">The dead letter destination of
-        /// the event subscription. Any event that cannot be delivered to its'
-        /// destination is sent to the dead letter destination.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.</param>
-        /// <param name="deadLetterWithResourceIdentity">The dead letter
-        /// destination of the event subscription. Any event that cannot be
-        /// delivered to its' destination is sent to the dead letter
-        /// destination.
-        /// Uses the managed identity setup on the parent resource (namely,
-        /// topic or domain) to acquire the authentication tokens being used
-        /// during delivery / dead-lettering.</param>
-        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), DeliveryWithResourceIdentity deliveryWithResourceIdentity = default(DeliveryWithResourceIdentity), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), System.DateTime? expirationTimeUtc = default(System.DateTime?), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination), DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default(DeadLetterWithResourceIdentity))
+        /// <param name="deadLetterDestination">The DeadLetter destination of
+        /// the event subscription.</param>
+        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), System.DateTime? expirationTimeUtc = default(System.DateTime?), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination))
             : base(id, name, type)
         {
             Topic = topic;
             ProvisioningState = provisioningState;
             Destination = destination;
-            DeliveryWithResourceIdentity = deliveryWithResourceIdentity;
             Filter = filter;
             Labels = labels;
             ExpirationTimeUtc = expirationTimeUtc;
             EventDeliverySchema = eventDeliverySchema;
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
-            DeadLetterWithResourceIdentity = deadLetterWithResourceIdentity;
             CustomInit();
         }
 
@@ -116,21 +96,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets or sets information about the destination where events have to
         /// be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destination")]
         public EventSubscriptionDestination Destination { get; set; }
-
-        /// <summary>
-        /// Gets or sets information about the destination where events have to
-        /// be delivered for the event subscription.
-        /// Uses the managed identity setup on the parent resource (namely,
-        /// topic or domain) to acquire the authentication tokens being used
-        /// during delivery / dead-lettering.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deliveryWithResourceIdentity")]
-        public DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets information about the filter for the event
@@ -168,25 +136,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public RetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the dead letter destination of the event subscription.
-        /// Any event that cannot be delivered to its' destination is sent to
-        /// the dead letter destination.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.
+        /// Gets or sets the DeadLetter destination of the event subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetterDestination")]
         public DeadLetterDestination DeadLetterDestination { get; set; }
-
-        /// <summary>
-        /// Gets or sets the dead letter destination of the event subscription.
-        /// Any event that cannot be delivered to its' destination is sent to
-        /// the dead letter destination.
-        /// Uses the managed identity setup on the parent resource (namely,
-        /// topic or domain) to acquire the authentication tokens being used
-        /// during delivery / dead-lettering.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deadLetterWithResourceIdentity")]
-        public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity { get; set; }
 
     }
 }

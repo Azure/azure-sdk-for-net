@@ -14,7 +14,7 @@ namespace Azure.Search.Documents
     /// </summary>
     [CodeGenModel("SuggestRequest")]
     [CodeGenSuppress(nameof(SuggestOptions), typeof(string), typeof(string))]
-    public partial class SuggestOptions : SearchRequestOptions
+    public partial class SuggestOptions
     {
         /// <summary>
         /// Initializes new instance of <see cref="SuggestOptions"/>
@@ -131,7 +131,6 @@ namespace Azure.Search.Documents
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 UseFuzzyMatching = UseFuzzyMatching,
-                ClientRequestId = ClientRequestId
             };
     }
 }

@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Indexers request. If successful, it includes the full definitions of all indexers. </summary>
     internal partial class ListIndexersResult
     {
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexers"/> is null. </exception>
         internal ListIndexersResult(IEnumerable<SearchIndexer> indexers)
         {
             if (indexers == null)
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(indexers));
             }
 
-            Indexers = indexers.ToArray();
+            Indexers = indexers.ToList();
         }
 
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>

@@ -1,9 +1,9 @@
 # DotNet project templates
 
-## Azure.Management SDK client library template
+## Azure.ResourceManager SDK client library template
 
 ### To install the template (one-time step), run following commands:
-* dotnet new -i `Path to SDK repo`\eng\templates\Azure.Management.Template
+* dotnet new -i `Path to SDK repo`\eng\templates\Azure.ResourceManager.Template
 
 ---
 
@@ -22,13 +22,13 @@ Following parameter is available
 
 
 ### To create a new management SDK project:
-* Create folder `Azure.Management.Rp` under corresponding service folder, ie under network\Azure.Management.Network 
-* Change to the `Azure.Management.Rp` folder 
+* Create folder `Azure.ResourceManager.Rp` under corresponding service folder, ie under network\Azure.ResourceManager.Network 
+* Change to the `Azure.ResourceManager.Rp` folder 
 * dotnet new azuremgmt --provider `ResourceProviderName`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --tagVersion `Optional tag in README.MD`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --includeCI true
 * 
-> Note: Please use proper casing for the directory name as well as resource provider name. `Azure.Management.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/`resource name`/resource-manager/readme.md
+> Note: Please use proper casing for the directory name as well as resource provider name. `Azure.ResourceManager.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/<resource name>/resource-manager/readme.md`
 
 ---
 

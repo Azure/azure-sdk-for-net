@@ -1,7 +1,54 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
+## 12.5.0-preview.2 (Unreleased)
 
+
+## 12.5.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for 4 TB files.
+- Added support for SMB Multichannel.
+- Added support for Share and Share Snapshot Leases.
+- Added support for Get File Range Diff.
+- Added support for Set Share Tier.
+- Fixed bug where Stream returned from ShareFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where ShareAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+
+## 12.4.0 (2020-08-31)
+- Fixed bug where ShareFileClient.Upload() and .UploadRange() would deadlock if the content stream's position was not zero.
+- Fixed bug in ShareFileClient.OpenRead() causing us to do more download called than necessary.
+- Fixed bug where ShareClient.Delete() could not delete Share Snapshots unless the includeSnapshots parameter was set to false.
+
+## 12.3.1 (2020-08-18)
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.3.0 (2020-08-13)
+- Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
+- Fixed bug where ShareClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in ShareAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to ShareAccessPolicy
+- Added ShareFileClient.OpenWrite().
+
+## 12.3.0-preview.2 (2020-07-27)
+- Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
+- Updated ShareSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Added ShareFileClient.OpenRead().
+- Fixed bug where in ShareFileClient.Upload(), all exceptions except for LeaseNotPresentWithFileOperation were not being thrown.
+
+## 12.3.0-preview.1 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Large Files.
+- Added support for File Soft Delete.
+- Fixed bug where ShareDirectoryClient and ShareFileClient.Name and .Path were sometimes URL-encoded.
+- Fixed bug where ShareClient.WithSnapshot(), ShareDirectoryClient.WithSnapshot(), and ShareFileClient.WithSnapshot() were not functioning correctly.
+
+## 12.2.3 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.2.2 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
+## 12.2.1 (2020-05)
+- Fixed bug where blob, file and directory names were not URL encoded.
 
 ## 12.2.0 (2020-03)
 - Added Exists() and DeleteIfExists() to ShareClient, ShareDirectoryClient, and ShareFileClient.

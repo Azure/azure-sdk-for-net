@@ -5,20 +5,20 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents classes of characters on which a token filter can operate. </summary>
     public enum TokenCharacterKind
     {
-        /// <summary> letter. </summary>
+        /// <summary> Keeps letters in tokens. </summary>
         Letter,
-        /// <summary> digit. </summary>
+        /// <summary> Keeps digits in tokens. </summary>
         Digit,
-        /// <summary> whitespace. </summary>
+        /// <summary> Keeps whitespace in tokens. </summary>
         Whitespace,
-        /// <summary> punctuation. </summary>
+        /// <summary> Keeps punctuation in tokens. </summary>
         Punctuation,
-        /// <summary> symbol. </summary>
+        /// <summary> Keeps symbols in tokens. </summary>
         Symbol
     }
 }

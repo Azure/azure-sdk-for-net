@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\threis\src\azure-sdk-for-net\sdk
+2020-06-25 17:45:53 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      496d55d8616e9f4172d3753459045b001762d39f
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@3.0.6187

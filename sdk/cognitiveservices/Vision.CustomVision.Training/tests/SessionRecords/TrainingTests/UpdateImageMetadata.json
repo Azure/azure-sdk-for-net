@@ -1,0 +1,96 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//customvision/v3.3/training/projects/8f85f477-6c1a-4fdc-9d96-523f13d257c4/images?taggingStatus=All&take=1&skip=0",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Zjg1ZjQ3Ny02YzFhLTRmZGMtOWQ5Ni01MjNmMTNkMjU3YzQvaW1hZ2VzP3RhZ2dpbmdTdGF0dXM9QWxsJnRha2U9MSZza2lwPTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "c37675c4-2d7a-4161-98fb-2edcec53ecb8"
+        ],
+        "apim-request-id": [
+          "c37675c4-2d7a-4161-98fb-2edcec53ecb8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Jun 2020 17:28:19 GMT"
+        ],
+        "Content-Length": [
+          "959"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5edde7a6-959f-455e-8a94-37f7b00a882a\",\r\n    \"created\": \"2020-06-06T17:28:07.8328236\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisprodeu2training.blob.core.windows.net/i-8f85f4776c1a4fdc9d96523f13d257c4/i-5edde7a6959f455e8a9437f7b00a882a?sv=2017-04-17&sr=b&sig=QqPzSS6LYTIseKSrPFs%2BEZdWI3FJHUPfdrj5vpcCFZY%3D&se=2020-06-07T17%3A28%3A19Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisprodeu2training.blob.core.windows.net/i-8f85f4776c1a4fdc9d96523f13d257c4/t-5edde7a6959f455e8a9437f7b00a882a?sv=2017-04-17&sr=b&sig=rUmQpxUtJIRW43pmShXMA%2BIHvEPkjrolCP9OQBnmh2k%3D&se=2020-06-07T17%3A28%3A19Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisprodeu2training.blob.core.windows.net/i-8f85f4776c1a4fdc9d96523f13d257c4/i-5edde7a6959f455e8a9437f7b00a882a?sv=2017-04-17&sr=b&sig=hTLv6RM0KHhX53JFfzQRu33F9mK5lXQnwxMFMNC59GY%3D&se=2020-06-07T17%3A28%3A20Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8dcfce56-f3b4-4d37-87b2-08914addbbac\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2020-06-06T17:28:07.8336169\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.3/training/projects/8f85f477-6c1a-4fdc-9d96-523f13d257c4/images/metadata?imageIds=5edde7a6-959f-455e-8a94-37f7b00a882a",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Zjg1ZjQ3Ny02YzFhLTRmZGMtOWQ5Ni01MjNmMTNkMjU3YzQvaW1hZ2VzL21ldGFkYXRhP2ltYWdlSWRzPTVlZGRlN2E2LTk1OWYtNDU1ZS04YTk0LTM3ZjdiMDBhODgyYQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"type\": \"unit test\",\r\n  \"value\": \"30\"\r\n}",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "45"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "547d742a-fcf0-43c2-a7e6-85285a5fdf40"
+        ],
+        "apim-request-id": [
+          "547d742a-fcf0-43c2-a7e6-85285a5fdf40"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Jun 2020 17:28:19 GMT"
+        ],
+        "Content-Length": [
+          "147"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"isBatchSuccessful\": true,\r\n  \"images\": [\r\n    {\r\n      \"imageId\": \"5edde7a6-959f-455e-8a94-37f7b00a882a\",\r\n      \"status\": \"OK\",\r\n      \"metadata\": {\r\n        \"type\": \"unit test\",\r\n        \"value\": \"30\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Minimum fields that must be present in any type of validation request.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ValidationInputRequest")]
     public partial class ValidationInputRequest
     {
         /// <summary>

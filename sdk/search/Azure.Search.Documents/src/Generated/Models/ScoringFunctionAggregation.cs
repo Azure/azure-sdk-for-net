@@ -5,20 +5,20 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the aggregation function used to combine the results of all the scoring functions in a scoring profile. </summary>
     public enum ScoringFunctionAggregation
     {
-        /// <summary> sum. </summary>
+        /// <summary> Boost scores by the sum of all scoring function results. </summary>
         Sum,
-        /// <summary> average. </summary>
+        /// <summary> Boost scores by the average of all scoring function results. </summary>
         Average,
-        /// <summary> minimum. </summary>
+        /// <summary> Boost scores by the minimum of all scoring function results. </summary>
         Minimum,
-        /// <summary> maximum. </summary>
+        /// <summary> Boost scores by the maximum of all scoring function results. </summary>
         Maximum,
-        /// <summary> firstMatching. </summary>
+        /// <summary> Boost scores using the first applicable scoring function in the scoring profile. </summary>
         FirstMatching
     }
 }

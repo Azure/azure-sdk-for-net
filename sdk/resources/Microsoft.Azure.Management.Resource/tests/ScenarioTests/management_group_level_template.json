@@ -1,10 +1,18 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "tagsa021920"
+      "defaultValue": "tagsa1"
+    },
+    "managementGroupName": {
+      "type": "string",
+      "defaultValue": "tag-mg-sdk"
+    },
+    "subscriptionId": {
+      "type": "string",
+      "defaultValue": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
     }
   },
   "variables": {
@@ -37,8 +45,8 @@
       "apiVersion": "2016-12-01",
       "dependsOn": [ "policy2" ],
       "properties": {
-        "scope": "/providers/Microsoft.Management/managementGroups/tag-mg1",
-        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/tag-mg1/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
+        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'))]",
+        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'), '/providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
       }
     },
     {
@@ -46,7 +54,7 @@
       "name": "sdktest-subnested",
       "apiVersion": "2018-05-01",
       "location": "West US",
-      "subscriptionId": "afe8f803-7190-48e3-b41a-bc454e8aad1a",
+      "subscriptionId": "[parameters('subscriptionId')]",
       "properties": {
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",

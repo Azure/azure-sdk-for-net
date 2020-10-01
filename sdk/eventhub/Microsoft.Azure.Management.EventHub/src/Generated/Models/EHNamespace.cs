@@ -34,18 +34,21 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the EHNamespace class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Properties of sku resource</param>
+        /// <param name="identity">Properties of BYOK Identity
+        /// description</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
         /// <param name="createdAt">The time the Namespace was created.</param>
         /// <param name="updatedAt">The time the Namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
+        /// <param name="clusterArmId">Cluster ARM ID of the Namespace.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics.</param>
         /// <param name="isAutoInflateEnabled">Value that indicates whether
@@ -55,18 +58,27 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// throughput units. ( '0' if AutoInflateEnabled = true)</param>
         /// <param name="kafkaEnabled">Value that indicates whether Kafka is
         /// enabled for eventhub namespace.</param>
-        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?))
+        /// <param name="zoneRedundant">Enabling this property creates a
+        /// Standard Event Hubs Namespace in regions supported availability
+        /// zones.</param>
+        /// <param name="encryption">Properties of BYOK Encryption
+        /// description</param>
+        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
+            Identity = identity;
             ProvisioningState = provisioningState;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
+            ClusterArmId = clusterArmId;
             MetricId = metricId;
             IsAutoInflateEnabled = isAutoInflateEnabled;
             MaximumThroughputUnits = maximumThroughputUnits;
             KafkaEnabled = kafkaEnabled;
+            ZoneRedundant = zoneRedundant;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -80,6 +92,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Identity description
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the Namespace.
@@ -104,6 +122,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
         public string ServiceBusEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets or sets cluster ARM ID of the Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterArmId")]
+        public string ClusterArmId { get; set; }
 
         /// <summary>
         /// Gets identifier for Azure Insights metrics.
@@ -132,6 +156,19 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.kafkaEnabled")]
         public bool? KafkaEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enabling this property creates a Standard Event Hubs
+        /// Namespace in regions supported availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Encryption description
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
 
         /// <summary>
         /// Validate the object.

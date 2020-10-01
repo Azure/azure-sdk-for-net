@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +13,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -41,6 +45,11 @@ namespace Azure.Storage.Files.DataLake
         private readonly Uri _blobUri;
 
         /// <summary>
+        /// The paths's blob <see cref="Uri"/> endpoint.
+        /// </summary>
+        internal virtual Uri BlobUri => _blobUri;
+
+        /// <summary>
         /// The path's dfs <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _dfsUri;
@@ -48,7 +57,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// DFS Uri
         /// </summary>
-        internal Uri DfsUri => _dfsUri;
+        internal virtual Uri DfsUri => _dfsUri;
 
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
@@ -372,7 +381,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
@@ -381,7 +394,35 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = pipeline;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
+        }
+
+        internal DataLakePathClient(
+            Uri fileSystemUri,
+            string directoryOrFilePath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri)
+            {
+                DirectoryOrFilePath = directoryOrFilePath
+            };
+            _uri = uriBuilder.ToUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = pipeline;
+            _version = version;
+            _clientDiagnostics = clientDiagnostics;
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
         }
 
         /// <summary>
@@ -663,7 +704,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> CreateInternal(
+        internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
@@ -1044,7 +1085,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1099,7 +1142,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1154,7 +1199,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1230,7 +1277,9 @@ namespace Azure.Storage.Files.DataLake
         /// for deletion, if the path exists. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1267,7 +1316,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion, if the path exists. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1304,7 +1355,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion, if the path exists. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="recursive">
         /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
@@ -1348,7 +1401,8 @@ namespace Azure.Storage.Files.DataLake
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException ex)
-            when (ex.ErrorCode == "PathNotFound")
+            when (ex.ErrorCode == Constants.DataLake.PathNotFound
+                || ex.ErrorCode == Constants.DataLake.FilesystemNotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -1552,7 +1606,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     // Build renameSource
                     DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(_dfsUri);
-                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath;
+                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
 
                     if (sourceUriBuilder.Sas != null)
                     {
@@ -1560,12 +1614,25 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destination URI
-                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
                     destUriBuilder.FileSystemName = destinationFileSystem ?? destUriBuilder.FileSystemName;
-                    destUriBuilder.DirectoryOrFilePath = destinationPath;
 
-                    // We will get sas with destPath, if it was provided by the user.
-                    destUriBuilder.Sas = null;
+                    // DataLakeUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
+                    // especially SAS, to be encoded.
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                    }
+                    else
+                    {
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                    }
 
                     // Build destPathClient
                     DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
@@ -1613,7 +1680,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetAccessControl"/> operation returns the
         /// access control data for a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
@@ -1672,7 +1741,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetAccessControlAsync"/> operation returns the
         /// access control data for a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
@@ -1731,7 +1802,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetAccessControlInternal"/> operation returns the
         /// access control data for a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
@@ -1818,7 +1891,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlList"/> operation sets the
         /// Access Control on a path
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -1882,7 +1957,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlListAsync"/> operation sets the
         /// Access Control on a path
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -1946,7 +2023,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlListInternal"/> operation sets the
         /// Access Control on a path
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2035,12 +2114,499 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Access Control
 
+        #region Set Access Control Recursive
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursive"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Set,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursiveAsync"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Set,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateAccessControlRecursive"/> operation modifies the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Modify,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateAccessControlRecursiveAsync"/> operation modifies the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Modify,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlRecursive"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
+            IList<RemovePathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Remove,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlRecursiveAsync"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
+            IList<RemovePathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Remove,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="operationName">
+        /// The operation name for diagnostic purpose.
+        /// </param>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="mode">
+        /// Mode \"set\" sets POSIX access control rights on files and directories,
+        /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
+        /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
+            string operationName,
+            string accessControlList,
+            PathSetAccessControlRecursiveMode mode,
+            string continuationToken,
+            AccessControlChangeOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
+            try
+            {
+                scope.Start();
+                using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+                {
+                    Pipeline.LogMethodEnter(
+                        nameof(DataLakePathClient),
+                        message:
+                        $"{nameof(Uri)}: {Uri}\n" +
+                        $"{nameof(accessControlList)}: {accessControlList}\n" +
+                        $"{nameof(mode)}: {mode}\n" +
+                        $"batchSize: {options.BatchSize}");
+                    try
+                    {
+                        Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
+                        string lastContinuationToken = null;
+
+                        int directoriesSuccessfulCount = 0;
+                        int filesSuccessfulCount = 0;
+                        int failureCount = 0;
+                        int batchesCount = 0;
+                        AccessControlChangeFailure[] batchFailures = default;
+
+                        do
+                        {
+                            try
+                            {
+                                jsonResponse =
+                                    await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                        clientDiagnostics: ClientDiagnostics,
+                                        pipeline: Pipeline,
+                                        resourceUri: DfsUri,
+                                        mode: mode,
+                                        maxRecords: options?.BatchSize,
+                                        version: Version.ToVersionString(),
+                                        acl: accessControlList,
+                                        async: async,
+                                        continuation: continuationToken,
+                                        forceFlag: options?.ContinueOnFailure,
+                                        cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
+                            catch (RequestFailedException exception)
+                            {
+                                throw DataLakeErrors.ChangeAclRequestFailed(exception, continuationToken);
+                            }
+                            catch (Exception exception)
+                            {
+                                throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
+                            }
+                            continuationToken = jsonResponse.Value.Continuation;
+
+                            if (!string.IsNullOrEmpty(continuationToken))
+                            {
+                                lastContinuationToken = continuationToken;
+                            }
+
+                            using (JsonDocument document = JsonDocument.Parse(jsonResponse.Value.Body))
+                            {
+                                SetAccessControlRecursiveResponse response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+
+                                int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
+                                int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
+                                int currentFailureCount = response.FailureCount ?? 0;
+
+                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                                filesSuccessfulCount += currentFilesSuccessfulCount;
+                                failureCount += currentFailureCount;
+
+                                if ((currentFailureCount > 0) && (batchFailures == default))
+                                {
+                                    batchFailures = response.FailedEntries
+                                    .Select(failedEntry => new AccessControlChangeFailure()
+                                    {
+                                        Name = failedEntry.Name,
+                                        IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                        ErrorMessage = failedEntry.ErrorMessage,
+                                    }).ToArray();
+                                }
+                                if (options?.ProgressHandler != null)
+                                {
+                                    var failedEntries = response.FailedEntries
+                                        .Select(failedEntry => new AccessControlChangeFailure()
+                                        {
+                                            Name = failedEntry.Name,
+                                            IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                            ErrorMessage = failedEntry.ErrorMessage,
+                                        }).ToList();
+
+                                    options.ProgressHandler.Report(
+                                        Response.FromValue(
+                                            new AccessControlChanges()
+                                            {
+                                                BatchCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                                    ChangedFilesCount = currentFilesSuccessfulCount,
+                                                    FailedChangesCount = currentFailureCount,
+                                                },
+                                                AggregateCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                                    ChangedFilesCount = filesSuccessfulCount,
+                                                    FailedChangesCount = failureCount,
+                                                },
+                                                BatchFailures = failedEntries.ToArray(),
+                                                ContinuationToken = lastContinuationToken,
+                                            },
+                                            jsonResponse.GetRawResponse()));
+                                }
+                            }
+                            batchesCount++;
+
+                        } while (!string.IsNullOrEmpty(continuationToken)
+                            && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
+
+                        return Response.FromValue(
+                            new AccessControlChangeResult()
+                            {
+                                Counters = new AccessControlChangeCounters()
+                                {
+                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                    ChangedFilesCount = filesSuccessfulCount,
+                                    FailedChangesCount = failureCount,
+                                },
+                                ContinuationToken =
+                                    (failureCount > 0) && !(options?.ContinueOnFailure == true)
+                                        ? lastContinuationToken
+                                        : continuationToken,
+                                BatchFailures = batchFailures
+                            },
+                            jsonResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        Pipeline.LogException(ex);
+                        throw;
+                    }
+                    finally
+                    {
+                        Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Set Access Control Recursive
+
         #region Set Permissions
         /// <summary>
         /// The <see cref="SetPermissions"/> operation sets the
         /// file permissions on a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="permissions">
         ///  The POSIX access permissions for the file owner, the file owning group, and others.
@@ -2105,7 +2671,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetPermissionsAsync"/> operation sets the
         /// file permissions on a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="permissions">
         ///  The POSIX access permissions for the file owner, the file owning group, and others.
@@ -2169,7 +2737,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetPermissionsInternal"/> operation sets the
         /// file permissions on a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="permissions">
         ///  The POSIX access permissions for the file owner, the file owning group, and others.
@@ -2265,7 +2835,9 @@ namespace Azure.Storage.Files.DataLake
         /// properties for the path. It does not return the content of the
         /// path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -2318,7 +2890,9 @@ namespace Azure.Storage.Files.DataLake
         /// properties for the path. It does not return the content of the
         /// path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -2372,7 +2946,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetHttpHeaders"/> operation sets system
         /// properties on the path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
@@ -2410,11 +2986,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2432,7 +3004,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
         /// properties on the PATH.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
@@ -2471,11 +3045,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2495,7 +3065,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadata"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this path.
@@ -2532,11 +3104,7 @@ namespace Azure.Storage.Files.DataLake
                     conditions.ToBlobRequestConditions());
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2554,7 +3122,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        ///For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this path.
@@ -2592,11 +3162,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)

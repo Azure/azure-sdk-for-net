@@ -130,6 +130,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IWorkspacesOperations Workspaces { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
@@ -143,6 +148,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the ISavedSearchesOperations.
         /// </summary>
         public virtual ISavedSearchesOperations SavedSearches { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableServiceTiersOperations.
+        /// </summary>
+        public virtual IAvailableServiceTiersOperations AvailableServiceTiers { get; private set; }
 
         /// <summary>
         /// Gets the IGatewaysOperations.
@@ -411,9 +421,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
             SharedKeys = new SharedKeysOperations(this);
             Usages = new UsagesOperations(this);
             Workspaces = new WorkspacesOperations(this);
+            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
             Clusters = new ClustersOperations(this);
             StorageInsightConfigs = new StorageInsightConfigsOperations(this);
             SavedSearches = new SavedSearchesOperations(this);
+            AvailableServiceTiers = new AvailableServiceTiersOperations(this);
             Gateways = new GatewaysOperations(this);
             Schema = new SchemaOperations(this);
             WorkspacePurge = new WorkspacePurgeOperations(this);

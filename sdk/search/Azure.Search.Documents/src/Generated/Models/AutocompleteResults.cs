@@ -16,20 +16,21 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        internal AutocompleteResults(IEnumerable<Autocompletion> results)
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal AutocompleteResults(IEnumerable<AutocompleteItem> results)
         {
             if (results == null)
             {
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        internal AutocompleteResults(double? coverage, IReadOnlyList<Autocompletion> results)
+        internal AutocompleteResults(double? coverage, IReadOnlyList<AutocompleteItem> results)
         {
             Coverage = coverage;
             Results = results;
@@ -38,6 +39,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </summary>
         public double? Coverage { get; }
         /// <summary> The list of returned Autocompleted items. </summary>
-        public IReadOnlyList<Autocompletion> Results { get; }
+        public IReadOnlyList<AutocompleteItem> Results { get; }
     }
 }

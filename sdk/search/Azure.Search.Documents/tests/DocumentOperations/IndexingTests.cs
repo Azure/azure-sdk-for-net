@@ -4,8 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.GeoJson;
+#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -54,6 +59,79 @@ namespace Azure.Search.Documents.Tests
         #endregion Utilities
 
         [Test]
+        public async Task IndexingConveniences()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            SearchClient client = resources.GetSearchClient();
+
+            // Upload
+            var doc1 = new SearchDocument
+            {
+                ["hotelId"] = "1",
+                ["hotelName"] = "Highway Hole in the Wall"
+            };
+            var doc2 = new SearchDocument
+            {
+                ["hotelId"] = "2",
+                ["hotelName"] = "Freeway Flophouse"
+            };
+            Response<IndexDocumentsResult> response = await client.UploadDocumentsAsync(new[] { doc1, doc2 });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 201);
+            AssertActionSucceeded("2", response.Value.Results[1], 201);
+            await resources.WaitForIndexingAsync();
+            long count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(2L, count);
+
+            // Merge
+            response = await client.MergeDocumentsAsync(
+                new[]
+                {
+                    new SearchDocument { ["hotelId"] = "1", ["hotelName"] = "Highway Haven" }
+                });
+            Assert.AreEqual(1, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(2L, count);
+            SearchDocument merged = await client.GetDocumentAsync<SearchDocument>("1");
+            Assert.AreNotEqual(doc1["hotelName"], merged["hotelName"]);
+
+            // Upload or Merge
+            response = await client.MergeOrUploadDocumentsAsync(
+                new[]
+                {
+                    new SearchDocument { ["hotelId"] = "2", ["hotelName"] = "Freeway Freedom" },
+                    new SearchDocument { ["hotelId"] = "3", ["hotelName"] = "Basically a gas station bathroom, but with beds" },
+                });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("2", response.Value.Results[0], 200);
+            AssertActionSucceeded("3", response.Value.Results[1], 201);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(3L, count);
+            merged = await client.GetDocumentAsync<SearchDocument>("2");
+            Assert.AreNotEqual(doc2["hotelName"], merged["hotelName"]);
+
+            // Delete by document
+            response = await client.DeleteDocumentsAsync(new[] { doc1, doc2 });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 200);
+            AssertActionSucceeded("2", response.Value.Results[1], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(1L, count);
+
+            // Delete by key
+            response = await client.DeleteDocumentsAsync("hotelId", new[] { "3" });
+            Assert.AreEqual(1, response.Value.Results.Count);
+            AssertActionSucceeded("3", response.Value.Results[0], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(0L, count);
+        }
+
+        [Test]
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
@@ -72,9 +150,7 @@ namespace Azure.Search.Documents.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        // TODO: #10592- Unify on an Azure.Core spatial type
-                        ["location"] = null,
-                        // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
+                        ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -122,9 +198,7 @@ namespace Azure.Search.Documents.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        // TODO: #10592- Unify on an Azure.Core spatial type
-                        ["location"] = null,
-                        // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
+                        ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -221,8 +295,7 @@ namespace Azure.Search.Documents.Tests
                         SmokingAllowed = true,
                         LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         Rating = 4,
-                        // TODO: #10592- Unify on an Azure.Core spatial type
-                        // Location = GeographyPoint.Create(40.760586, -73.975403),
+                        Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
                         Address = new HotelAddress
                         {
                             StreetAddress = "677 5th Ave",
@@ -270,8 +343,7 @@ namespace Azure.Search.Documents.Tests
                         SmokingAllowed = true,
                         LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                         Rating = 3,
-                        // TODO: #10592- Unify on an Azure.Core spatial type
-                        // Location = GeographyPoint.Create(35.904160, -78.940483),
+                        Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
                         Address = new HotelAddress()
                         {
                             StreetAddress = "6910 Fayetteville Rd",
@@ -347,6 +419,88 @@ namespace Azure.Search.Documents.Tests
 
             long count = await client.GetDocumentCountAsync();
             Assert.AreEqual(3L, count);
+        }
+
+        [Test]
+        public async Task StaticDocumentsWithCustomSerializer()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            SearchClient client = resources.GetSearchClient(
+                new SearchClientOptions()
+                {
+                    Serializer = new JsonObjectSerializer(
+                        new JsonSerializerOptions()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            Converters =
+                            {
+#if EXPERIMENTAL_SPATIAL
+                                new GeoJsonConverter()
+#endif
+                            }
+                        })
+                });
+            UncasedHotel expected = new UncasedHotel
+            {
+                HotelId = "1",
+                HotelName = "Secret Point Motel",
+                Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time's Square and the historic centre of the city, as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
+                DescriptionFr = "L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.",
+                Category = "Boutique",
+                Tags = new[] { "pool", "air conditioning", "concierge" },
+                ParkingIncluded = false,
+                SmokingAllowed = true,
+                LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
+                Rating = 4,
+                Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                Address = new HotelAddress
+                {
+                    StreetAddress = "677 5th Ave",
+                    City = "New York",
+                    StateProvince = "NY",
+                    Country = "USA",
+                    PostalCode = "10022"
+                },
+                Rooms = new[]
+                {
+                    new HotelRoom
+                    {
+                        Description = "Budget Room, 1 Queen Bed (Cityside)",
+                        DescriptionFr = "Chambre Économique, 1 grand lit (côté ville)",
+                        Type = "Budget Room",
+                        BaseRate = 9.69,
+                        BedOptions = "1 Queen Bed",
+                        SleepsCount = 2,
+                        SmokingAllowed = true,
+                        Tags = new[] { "vcr/dvd" }
+                    },
+                    new HotelRoom
+                    {
+                        Description = "Budget Room, 1 King Bed (Mountain View)",
+                        DescriptionFr = "Chambre Économique, 1 très grand lit (Mountain View)",
+                        Type = "Budget Room",
+                        BaseRate = 8.09,
+                        BedOptions = "1 King Bed",
+                        SleepsCount = 2,
+                        SmokingAllowed = true,
+                        Tags = new[] { "vcr/dvd", "jacuzzi tub" }
+                    }
+                }
+            };
+            IndexDocumentsBatch<UncasedHotel> batch = IndexDocumentsBatch.Create(
+                IndexDocumentsAction.Upload(expected));
+
+            Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
+            Assert.AreEqual(1, response.Value.Results.Count);
+
+            List<IndexingResult> results = new List<IndexingResult>(response.Value.Results);
+            AssertActionSucceeded("1", results[0], 201);
+
+            await resources.WaitForIndexingAsync();
+
+            // Pull it back using the default serializer and compare
+            Hotel actual = await resources.GetQueryClient().GetDocumentAsync<Hotel>("1");
+            Assert.AreEqual(expected, actual);
         }
 
         internal struct SimpleStructHotel
@@ -470,12 +624,37 @@ namespace Azure.Search.Documents.Tests
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(new Hotel { HotelId = "1", Category = "Luxury" }),
                 IndexDocumentsAction.Merge(new Hotel { HotelId = "2" }));
-            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+            AggregateException ex = await CatchAsync<AggregateException>(
                 async () => await client.IndexDocumentsAsync(
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
-            Assert.AreEqual(404, ex.Status);
-            Assert.AreEqual("Document not found.", ex.Message);
+            RequestFailedException inner = ex.InnerException as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
+        }
+
+        [Test]
+        public async Task ThrowsAggregateException()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            SearchClient client = resources.GetSearchClient();
+
+            IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
+                IndexDocumentsAction.Upload(new Hotel { HotelId = "1", Category = "Luxury" }),
+                IndexDocumentsAction.Merge(new Hotel { HotelId = "2" }),
+                IndexDocumentsAction.Merge(new Hotel { HotelId = "3" }));
+            AggregateException ex = await CatchAsync<AggregateException>(
+                async () => await client.IndexDocumentsAsync(
+                    batch,
+                    new IndexDocumentsOptions { ThrowOnAnyError = true }));
+
+            StringAssert.StartsWith("Failed to index document(s): 2, 3.", ex.Message);
+            RequestFailedException inner = ex.InnerExceptions[0] as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
+            inner = ex.InnerExceptions[1] as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
         }
 
         [Test]
@@ -700,9 +879,7 @@ namespace Azure.Search.Documents.Tests
                     ["smokingAllowed"] = true,
                     ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     ["rating"] = 4L,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
-                    ["location"] = null,
-                    // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
+                    ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                     ["address"] = new SearchDocument
                     {
                         ["streetAddress"] = "677 5th Ave",
@@ -812,15 +989,15 @@ namespace Azure.Search.Documents.Tests
                 IndexDocumentsBatch.Merge(new[] { updated }));
             await resources.WaitForIndexingAsync();
 
-            SearchDocument actualDoc = await client.GetDocumentAsync("1");
-            Assert.AreEqual(expected, actualDoc);
+            SearchDocument actualDoc = await client.GetDocumentAsync<SearchDocument>("1");
+            AssertApproximate(expected, actualDoc);
 
             await client.IndexDocumentsAsync(
                 IndexDocumentsBatch.MergeOrUpload(new[] { original }));
             await resources.WaitForIndexingAsync();
 
-            actualDoc = await client.GetDocumentAsync("1");
-            Assert.AreEqual(original, actualDoc);
+            actualDoc = await client.GetDocumentAsync<SearchDocument>("1");
+            AssertApproximate(original, actualDoc);
         }
 
         [Test]
@@ -842,8 +1019,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     Rating = 4,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
-                    // Location = GeographyPoint.Create(40.760586, -73.975403),
+                    Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
                     Address = new HotelAddress
                     {
                         StreetAddress = "677 5th Ave",
@@ -917,8 +1093,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 5, 0, 0, TimeSpan.Zero),
                     Rating = 3,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
-                    // Location = GeographyPoint.Create(40.760586, -73.975403),
+                    Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "677 5th Ave",
@@ -997,7 +1172,7 @@ namespace Azure.Search.Documents.Tests
                         SMOKINGALLOWED = false,
                         LASTRENOVATIONDATE = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         RATING = 4,
-                        LOCATION = GeographyPoint.Create(40.760586, -73.975403),
+                        LOCATION = TestExtensions.CreatePoint(40.760586, -73.975403),
                         ADDRESS = new LoudHotelAddress()
                         {
                             STREETADDRESS = "677 5th Ave",
@@ -1132,9 +1307,8 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "1",
                     Category = string.Empty,
                     LastRenovationDate = DateTimeOffset.MinValue,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // South pole, date line from the west
-                    // Location = GeographyPoint.Create(-90, -180),
+                    Location = TestExtensions.CreatePoint(-180, -90),
                     ParkingIncluded = false,
                     Rating = int.MinValue,
                     Tags = new string[0],
@@ -1153,9 +1327,8 @@ namespace Azure.Search.Documents.Tests
                     // (other than payload size or term length).
                     Category = "test",
                     LastRenovationDate = DateTimeOffset.MaxValue,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // North pole, date line from the east
-                    // Location = GeographyPoint.Create(90, 180),
+                    Location = TestExtensions.CreatePoint(180, 90),
                     ParkingIncluded = true,
                     Rating = int.MaxValue,
                     // No meaningful string max; see above.
@@ -1173,9 +1346,8 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "3",
                     Category = null,
                     LastRenovationDate = null,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // Equator, meridian
-                    // Location = GeographyPoint.Create(0, 0),
+                    Location = TestExtensions.CreatePoint(0, 0),
                     ParkingIncluded = null,
                     Rating = null,
                     Tags = new string[0],
@@ -1235,10 +1407,9 @@ namespace Azure.Search.Documents.Tests
             foreach (Hotel doc in expected)
             {
                 Hotel actual = await client.GetDocumentAsync<Hotel>(doc.HotelId);
-                Assert.AreEqual(doc, actual);
+                AssertApproximate(doc, actual);
             }
         }
-
 
         [Test]
         public async Task ThrowsWhenMergingWithNewKey()
@@ -1248,12 +1419,13 @@ namespace Azure.Search.Documents.Tests
 
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Merge(
                 new[] { new SearchDocument { ["hotelId"] = "42" } });
-            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+            AggregateException ex = await CatchAsync<AggregateException>(
                 async () => await client.IndexDocumentsAsync(
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
-            Assert.AreEqual(404, ex.Status);
-            StringAssert.StartsWith("Document not found.", ex.Message);
+            RequestFailedException inner = ex.InnerException as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            StringAssert.StartsWith("Document not found.", inner.Message);
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation
@@ -1326,7 +1498,7 @@ namespace Azure.Search.Documents.Tests
                         SMOKINGALLOWED = true,
                         LASTRENOVATIONDATE = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         RATING = 4,
-                        LOCATION = GeographyPoint.Create(40.760586, -73.975403),
+                        LOCATION = TestExtensions.CreatePoint(40.760586, -73.975403),
                         ADDRESS = new LoudHotelAddress()
                         {
                             STREETADDRESS = "677 5th Ave",

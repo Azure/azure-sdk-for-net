@@ -46,13 +46,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// the associated model will be deleted.
         /// </summary>
         /// <param name="trainingClient">The client to use for training and for deleting the model upon disposal.</param>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        public static async Task<DisposableTrainedModel> TrainModelAsync(FormTrainingClient trainingClient, Uri trainingFiles, bool useLabels)
+        public static async Task<DisposableTrainedModel> TrainModelAsync(FormTrainingClient trainingClient, Uri trainingFilesUri, bool useTrainingLabels, TimeSpan pollingInterval)
         {
-            TrainingOperation operation = await trainingClient.StartTrainingAsync(trainingFiles, useLabels);
-            await operation.WaitForCompletionAsync();
+            TrainingOperation operation = await trainingClient.StartTrainingAsync(trainingFilesUri, useTrainingLabels);
+            await operation.WaitForCompletionAsync(pollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);

@@ -112,6 +112,11 @@ namespace Microsoft.Azure.Management.Peering
         public virtual IPeeringsOperations Peerings { get; private set; }
 
         /// <summary>
+        /// Gets the IReceivedRoutesOperations.
+        /// </summary>
+        public virtual IReceivedRoutesOperations ReceivedRoutes { get; private set; }
+
+        /// <summary>
         /// Gets the IPeeringServiceCountriesOperations.
         /// </summary>
         public virtual IPeeringServiceCountriesOperations PeeringServiceCountries { get; private set; }
@@ -384,13 +389,14 @@ namespace Microsoft.Azure.Management.Peering
             RegisteredAsns = new RegisteredAsnsOperations(this);
             RegisteredPrefixes = new RegisteredPrefixesOperations(this);
             Peerings = new PeeringsOperations(this);
+            ReceivedRoutes = new ReceivedRoutesOperations(this);
             PeeringServiceCountries = new PeeringServiceCountriesOperations(this);
             PeeringServiceLocations = new PeeringServiceLocationsOperations(this);
             Prefixes = new PrefixesOperations(this);
             PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
             PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-01-01-preview";
+            ApiVersion = "2020-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -461,7 +467,10 @@ namespace Microsoft.Azure.Management.Peering
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-01-01-preview";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             CheckServiceProviderAvailabilityInput checkServiceProviderAvailabilityInput = new CheckServiceProviderAvailabilityInput();
             if (peeringServiceLocation != null || peeringServiceProvider != null)
             {
@@ -475,7 +484,6 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("checkServiceProviderAvailabilityInput", checkServiceProviderAvailabilityInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckServiceProviderAvailability", tracingParameters);
@@ -485,9 +493,9 @@ namespace Microsoft.Azure.Management.Peering
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/CheckServiceProviderAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -1,0 +1,1110 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.DigitalTwins/locations/eastus/checkNameAvailability?api-version=2020-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "95",
+        "Content-Type": "application/json",
+        "traceparent": "00-a77e7e8fde837141b6057d9d08901eca-2fee060f4d6b2c4c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "5adb61af8e374c98bfe299d370b1ac88",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "966e3ea5-4c08-4446-82db-f8ebf9453e0b",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "966e3ea5-4c08-4446-82db-f8ebf9453e0b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020309Z:966e3ea5-4c08-4446-82db-f8ebf9453e0b"
+      },
+      "ResponseBody": {
+        "nameAvailable": true,
+        "reason": "NameIsAvailable",
+        "message": "\u0027DtInstanceLifecycle-1580228407\u0027 is available."
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407?api-version=2020-03-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "37",
+        "Content-Type": "application/json",
+        "traceparent": "00-7bee66dd3cf7ae4abb52d2f88821a76c-fb65de4088b8b945-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "8b2b647a96ecfe4a5e1fddb71df4a2e3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "properties": {}
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:17 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3b3fb798-1f6e-4e6b-8705-b0118a31ccb4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "3b3fb798-1f6e-4e6b-8705-b0118a31ccb4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020318Z:3b3fb798-1f6e-4e6b-8705-b0118a31ccb4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "19887dc9c7fb184b16ddfb17b0e02fca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:17 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cd48431c-4553-4c40-a981-f197ef9449d6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "cd48431c-4553-4c40-a981-f197ef9449d6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020318Z:cd48431c-4553-4c40-a981-f197ef9449d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "dfe5b53f498214777b950a4628a15936",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:19 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "162a46ef-dcb0-452f-954c-8f55ec718002",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "162a46ef-dcb0-452f-954c-8f55ec718002",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020319Z:162a46ef-dcb0-452f-954c-8f55ec718002"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "9fedd12e886b26e745164c3369d1e5a0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:20 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "db1e6633-0d17-45b0-aef2-9bc314962943",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "db1e6633-0d17-45b0-aef2-9bc314962943",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020321Z:db1e6633-0d17-45b0-aef2-9bc314962943"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ee69a3761143808906749d66bd05ef75",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:21 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9a89528f-7968-47e1-8e72-5a548cf18039",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "9a89528f-7968-47e1-8e72-5a548cf18039",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020322Z:9a89528f-7968-47e1-8e72-5a548cf18039"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "dfe8c58390f2b65fcebe996cfd43abaa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:23 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "62a66e2e-5208-4875-b9dc-280391deb53b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "62a66e2e-5208-4875-b9dc-280391deb53b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020323Z:62a66e2e-5208-4875-b9dc-280391deb53b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "84cf6aaf6b371df2476d99f7ea816940",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:24 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "af8547bd-0eeb-4b45-9699-7145bc1ee5ff",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "af8547bd-0eeb-4b45-9699-7145bc1ee5ff",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020325Z:af8547bd-0eeb-4b45-9699-7145bc1ee5ff"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a3b0d72606e8e6ae44b32085771d83c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:25 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "954cda73-1c3e-4c5b-82d5-31d51daa461d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "954cda73-1c3e-4c5b-82d5-31d51daa461d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020326Z:954cda73-1c3e-4c5b-82d5-31d51daa461d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Provisioning",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:15.8900688Z",
+          "hostName": null
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Create?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "53b7f3c96a35173dd2cb9884f668cb4c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b076adbe-bbd3-44f6-8138-04af7a5a4544",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "b076adbe-bbd3-44f6-8138-04af7a5a4544",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020327Z:b076adbe-bbd3-44f6-8138-04af7a5a4544"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:27.1935574Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fb3091e2393d294bacc4dc8123f3b3bb-6a1a92fc25dd1d47-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "254559540793a9c1bbe840844b6da529",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4e229a3b-5da5-42e1-adc5-1047659fad65",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "4e229a3b-5da5-42e1-adc5-1047659fad65",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020328Z:4e229a3b-5da5-42e1-adc5-1047659fad65"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:27.1935574Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.DigitalTwins/digitalTwinsInstances?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "f72ed7ea16c9bb0a9998d01c6d29efdb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "553",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a5702b4b-cdcf-42aa-bc89-475570f6ee2d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "a5702b4b-cdcf-42aa-bc89-475570f6ee2d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020328Z:a5702b4b-cdcf-42aa-bc89-475570f6ee2d"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+            "name": "DtInstanceLifecycle-1580228407",
+            "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createdTime": "2020-09-14T02:03:15.8900688Z",
+              "lastUpdatedTime": "2020-09-14T02:03:27.1935574Z",
+              "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+            },
+            "location": "eastus",
+            "sku": {
+              "name": "S1"
+            },
+            "tags": null
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407?api-version=2020-03-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4abcc87491e6ed4697d07d737934a3db-f061043489884f40-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "1d30d3e75dd7c12e320e974d29b9cc65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "439",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:28 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "76eee690-d43b-4438-b08d-a18bb1f63c3c",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "76eee690-d43b-4438-b08d-a18bb1f63c3c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020329Z:76eee690-d43b-4438-b08d-a18bb1f63c3c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "0001-01-01T00:00:00",
+          "lastUpdatedTime": "0001-01-01T00:00:00",
+          "hostName": null
+        },
+        "location": null,
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "789c65f9883d8c52a86cc5bb7fbd91e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:29 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e3592862-401d-44b9-9a18-8b09c45b6a4b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "e3592862-401d-44b9-9a18-8b09c45b6a4b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020329Z:e3592862-401d-44b9-9a18-8b09c45b6a4b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "fef66bcccf8e13a150f2ce4dd1338b8d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:30 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "00d97f91-6aeb-49de-9b78-9eea1c8232e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "00d97f91-6aeb-49de-9b78-9eea1c8232e8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020331Z:00d97f91-6aeb-49de-9b78-9eea1c8232e8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "c45405d2541d9d271c0d77cd0fc7bf91",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:31 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "04f4ea2f-5b39-4239-b8c0-0bcdd933151d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "04f4ea2f-5b39-4239-b8c0-0bcdd933151d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020332Z:04f4ea2f-5b39-4239-b8c0-0bcdd933151d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ca2eacf83cae2903c388274bb905bb74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:33 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a82e1d0e-5c86-4132-a0d3-efc1bc3dce1f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "a82e1d0e-5c86-4132-a0d3-efc1bc3dce1f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020333Z:a82e1d0e-5c86-4132-a0d3-efc1bc3dce1f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "79e838e1cc6978c24458e28158d40488",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:34 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a7aef98-abc6-496b-a35c-4c7f8ae2fe90",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "3a7aef98-abc6-496b-a35c-4c7f8ae2fe90",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020335Z:3a7aef98-abc6-496b-a35c-4c7f8ae2fe90"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "24543d32c00596df012a01942cdbe417",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:35 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "40773cd8-f1af-47f6-abc7-cc4a3c017ef7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "40773cd8-f1af-47f6-abc7-cc4a3c017ef7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020336Z:40773cd8-f1af-47f6-abc7-cc4a3c017ef7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "d6ec025145df2c28e9b585555a81d0ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:37 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "13b66039-ded4-487c-96fe-96555982164d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "13b66039-ded4-487c-96fe-96555982164d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020337Z:13b66039-ded4-487c-96fe-96555982164d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "7b189e8397b0206e5952783eca2d4c68",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:38 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6eb57ec7-ba54-4834-93d1-76f6f7d0fa6d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "6eb57ec7-ba54-4834-93d1-76f6f7d0fa6d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020339Z:6eb57ec7-ba54-4834-93d1-76f6f7d0fa6d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "552fca742de8eda915283b503a8a3c7f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:39 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ac836706-caca-4e18-8fc5-8e066e8aeef3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "ac836706-caca-4e18-8fc5-8e066e8aeef3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020340Z:ac836706-caca-4e18-8fc5-8e066e8aeef3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleting",
+          "createdTime": "2020-09-14T02:03:15.8900688Z",
+          "lastUpdatedTime": "2020-09-14T02:03:29.3255296Z",
+          "hostName": "DtInstanceLifecycle-1580228407.api.eus.digitaltwins.azure.net"
+        },
+        "location": "eastus",
+        "sku": {
+          "name": "S1"
+        },
+        "tags": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407/operationResults/Delete?api-version=2020-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.DigitalTwins/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "8d11135a68c3ba6694cc7d8ccde961bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "438",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Sep 2020 02:03:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "49579517-5668-47b3-9748-72dbb92c50cf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "49579517-5668-47b3-9748-72dbb92c50cf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T020341Z:49579517-5668-47b3-9748-72dbb92c50cf"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdkDigitalTwinsRG/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DtInstanceLifecycle-1580228407",
+        "name": "DtInstanceLifecycle-1580228407",
+        "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+        "properties": {
+          "provisioningState": "Deleted",
+          "createdTime": "0001-01-01T00:00:00",
+          "lastUpdatedTime": "0001-01-01T00:00:00",
+          "hostName": null
+        },
+        "location": null,
+        "tags": null
+      }
+    }
+  ],
+  "Variables": {
+    "LOCATION": "eastus",
+    "RandomSeed": "1907185498",
+    "RESOURCE_GROUP": "sdkDigitalTwinsRG",
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+  }
+}

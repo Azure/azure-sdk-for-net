@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -67,21 +66,5 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "qnaId")]
         public int? QnaId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (UserQuestion != null)
-            {
-                if (UserQuestion.Length > 1000)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "UserQuestion", 1000);
-                }
-            }
-        }
     }
 }

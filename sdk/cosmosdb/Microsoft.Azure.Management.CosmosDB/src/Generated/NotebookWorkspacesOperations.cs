@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the notebook workspace resources of an existing Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -85,6 +85,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -124,7 +131,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -273,7 +280,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -304,6 +311,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -343,7 +357,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -495,7 +509,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Creates the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -517,7 +531,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -539,7 +553,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Retrieves the connection info for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -570,6 +584,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -609,7 +630,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -761,7 +782,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Regenerates the auth token for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -783,7 +804,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Starts the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -805,7 +826,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Creates the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -836,6 +857,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -875,7 +903,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters = new NotebookWorkspaceCreateUpdateParameters();
             // Tracing
@@ -1035,7 +1063,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1063,6 +1091,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1102,7 +1137,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1236,7 +1271,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Regenerates the auth token for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1264,6 +1299,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1303,7 +1345,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1437,7 +1479,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Starts the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1465,6 +1507,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1504,7 +1553,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01";
+            string apiVersion = "2020-06-01-preview";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

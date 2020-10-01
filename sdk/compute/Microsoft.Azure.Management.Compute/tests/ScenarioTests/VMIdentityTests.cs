@@ -36,7 +36,7 @@ namespace Compute.Tests
 
                 try
                 {
-                    var storageAccountOutput = CreateStorageAccount( rgName, storageAccountName );
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     Action<VirtualMachine> addUserIdentity = vm =>
                     {

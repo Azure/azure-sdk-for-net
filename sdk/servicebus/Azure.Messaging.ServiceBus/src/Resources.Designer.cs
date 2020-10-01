@@ -214,15 +214,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The entity path/name &apos;{0}&apos; exceeds the &apos;{1}&apos; character limit..
-        /// </summary>
-        internal static string EntityNameLengthExceedsLimit {
-            get {
-                return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
         /// </summary>
         internal static string ExponentialRetryBackoffRange {
@@ -331,15 +322,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
-        /// </summary>
-        internal static string MaxConcurrentCallsMustBeGreaterThanZero {
-            get {
-                return ResourceManager.GetString("MaxConcurrentCallsMustBeGreaterThanZero", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The maximum permitted length of {0} was exceeded..
         /// </summary>
         internal static string MaxPermittedLengthExceeded {
@@ -376,6 +358,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is not currently running. It needs to be started before it can be stopped..
+        /// </summary>
+        internal static string MessageProcessorIsNotRunning {
+            get {
+                return ResourceManager.GetString("MessageProcessorIsNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
         internal static string MessageSizeExceeded {
@@ -385,7 +376,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
+        ///   Looks up a localized string similar to The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shard Access Signature to be valid..
         /// </summary>
         internal static string MissingConnectionInformation {
             get {
@@ -403,11 +394,20 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
+        ///   Looks up a localized string similar to The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor..
         /// </summary>
         internal static string OnlyOneEntityNameMayBeSpecified {
             get {
                 return ResourceManager.GetString("OnlyOneEntityNameMayBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`..
+        /// </summary>
+        internal static string OnlyOneSharedAccessAuthorizationMayBeSpecified {
+            get {
+                return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
             }
         }
         
@@ -421,7 +421,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        ///   Looks up a localized string similar to This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled..
         /// </summary>
         internal static string PeekLockModeRequired {
             get {
@@ -529,20 +529,11 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
-        /// </summary>
-        internal static string SqlFilterActionStatmentTooLong {
-            get {
-                return ResourceManager.GetString("SqlFilterActionStatmentTooLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The length of the filter statement is {0}, which exceeds the maximum length of {1}.
         /// </summary>
-        internal static string SqlFilterStatmentTooLong {
+        internal static string SqlRuleFilterStatmentTooLong {
             get {
-                return ResourceManager.GetString("SqlFilterStatmentTooLong", resourceCulture);
+                return ResourceManager.GetString("SqlRuleFilterStatmentTooLong", resourceCulture);
             }
         }
         

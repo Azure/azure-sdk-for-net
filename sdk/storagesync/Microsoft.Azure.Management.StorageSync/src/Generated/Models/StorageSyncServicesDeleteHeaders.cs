@@ -31,13 +31,20 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Initializes a new instance of the StorageSyncServicesDeleteHeaders
         /// class.
         /// </summary>
-        /// <param name="xMsRequestId">request id.</param>
+        /// <param name="xMsRequestId">Request id</param>
         /// <param name="xMsCorrelationRequestId">correlation request
-        /// id.</param>
-        public StorageSyncServicesDeleteHeaders(string xMsRequestId = default(string), string xMsCorrelationRequestId = default(string))
+        /// id</param>
+        /// <param name="azureAsyncOperation">Operation Status Location
+        /// URI</param>
+        /// <param name="location">Operation Status Location URI</param>
+        /// <param name="retryAfter">Retry After</param>
+        public StorageSyncServicesDeleteHeaders(string xMsRequestId = default(string), string xMsCorrelationRequestId = default(string), string azureAsyncOperation = default(string), string location = default(string), string retryAfter = default(string))
         {
             XMsRequestId = xMsRequestId;
             XMsCorrelationRequestId = xMsCorrelationRequestId;
+            AzureAsyncOperation = azureAsyncOperation;
+            Location = location;
+            RetryAfter = retryAfter;
             CustomInit();
         }
 
@@ -47,16 +54,34 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets request id.
+        /// Gets or sets request id
         /// </summary>
         [JsonProperty(PropertyName = "x-ms-request-id")]
         public string XMsRequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets correlation request id.
+        /// Gets or sets correlation request id
         /// </summary>
         [JsonProperty(PropertyName = "x-ms-correlation-request-id")]
         public string XMsCorrelationRequestId { get; set; }
+
+        /// <summary>
+        /// Gets or sets operation Status Location URI
+        /// </summary>
+        [JsonProperty(PropertyName = "Azure-AsyncOperation")]
+        public string AzureAsyncOperation { get; set; }
+
+        /// <summary>
+        /// Gets or sets operation Status Location URI
+        /// </summary>
+        [JsonProperty(PropertyName = "Location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets retry After
+        /// </summary>
+        [JsonProperty(PropertyName = "Retry-After")]
+        public string RetryAfter { get; set; }
 
     }
 }

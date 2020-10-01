@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.Cdn
         IOriginsOperations Origins { get; }
 
         /// <summary>
+        /// Gets the IOriginGroupsOperations.
+        /// </summary>
+        IOriginGroupsOperations OriginGroups { get; }
+
+        /// <summary>
         /// Gets the ICustomDomainsOperations.
         /// </summary>
         ICustomDomainsOperations CustomDomains { get; }
@@ -108,6 +113,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the IEdgeNodesOperations.
         /// </summary>
         IEdgeNodesOperations EdgeNodes { get; }
+
+        /// <summary>
+        /// Gets the IPoliciesOperations.
+        /// </summary>
+        IPoliciesOperations Policies { get; }
+
+        /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        IManagedRuleSetsOperations ManagedRuleSets { get; }
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for

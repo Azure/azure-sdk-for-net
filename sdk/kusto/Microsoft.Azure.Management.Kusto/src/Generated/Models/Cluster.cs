@@ -74,7 +74,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// purge operations are enabled.</param>
         /// <param name="languageExtensions">List of the cluster's language
         /// extensions.</param>
-        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList))
+        /// <param name="enableDoubleEncryption">A boolean value that indicates
+        /// if double encryption is enabled.</param>
+        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             KeyVaultProperties = keyVaultProperties;
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
+            EnableDoubleEncryption = enableDoubleEncryption;
             CustomInit();
         }
 
@@ -199,10 +202,17 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public bool? EnablePurge { get; set; }
 
         /// <summary>
-        /// Gets or sets list of the cluster's language extensions.
+        /// Gets list of the cluster's language extensions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.languageExtensions")]
-        public LanguageExtensionsList LanguageExtensions { get; set; }
+        public LanguageExtensionsList LanguageExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value that indicates if double encryption is
+        /// enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDoubleEncryption")]
+        public bool? EnableDoubleEncryption { get; set; }
 
         /// <summary>
         /// Validate the object.

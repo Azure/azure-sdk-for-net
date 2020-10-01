@@ -18,9 +18,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
+    /// Enables authentication to Azure Active Directory using Azure CLI to obtain an access token.
     /// </summary>
-    internal class AzureCliCredential : TokenCredential
+    public class AzureCliCredential : TokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to set up account";
@@ -89,14 +89,9 @@ namespace Azure.Identity
                 AccessToken token = await RequestCliAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 

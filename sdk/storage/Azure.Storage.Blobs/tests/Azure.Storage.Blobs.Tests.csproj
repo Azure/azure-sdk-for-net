@@ -8,9 +8,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <!-- Microsoft and Newtonsoft dependencies for testing clientside encryption backwards compatibility -->
+    <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Newtonsoft.Json" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj" />
   </ItemGroup>
   <ItemGroup>

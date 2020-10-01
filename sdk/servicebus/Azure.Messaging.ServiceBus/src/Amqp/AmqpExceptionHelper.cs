@@ -93,85 +93,90 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
         {
-            if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
+            if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceTimeout);
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceTimeout);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotFound.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (connectionError)
                 {
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem);
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem);
                 }
 
-                return new ServiceBusException(message, ServiceBusException.FailureReason.MessagingEntityNotFound);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new NotSupportedException(message);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new InvalidOperationException(message);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value) ||
-                string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value))
+            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase) ||
+                string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.Unauthorized);
+                return new ServiceBusException(message, ServiceBusFailureReason.Unauthorized);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceBusy);
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceBusy);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentException(message);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentOutOfRangeException(message);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value))
+            if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.MessagingEntityDisabled);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityDisabled);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value))
+            if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.MessageLockLost);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageLockLost);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value))
+            if (string.Equals(condition, AmqpClientConstants.EntityAlreadyExistsError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.SessionLockLost);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityAlreadyExists);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value))
+            if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.QuotaExceeded);
+                return new ServiceBusException(message, ServiceBusFailureReason.SessionLockLost);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value))
+            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.MessageSizeExceeded);
+                return new ServiceBusException(message, ServiceBusFailureReason.QuotaExceeded);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value))
+            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.MessageNotFound);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageSizeExceeded);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value))
+            if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.SessionCannotBeLocked);
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageNotFound);
+            }
+
+            if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.SessionCannotBeLocked);
             }
 
             return new ServiceBusException(true, message);
@@ -193,14 +198,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 case SocketException _:
                     message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
                 case IOException _:
                     if (exception.InnerException is SocketException socketException)
                     {
                         message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
                     }
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
                 case AmqpException amqpException:
                     return amqpException.Error.ToMessagingContractException(connectionError);
@@ -209,28 +214,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     return amqpException.Error.ToMessagingContractException(connectionError);
 
                 case OperationCanceledException _ when connectionError:
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
                 case OperationCanceledException operationCanceledException when
                 operationCanceledException.InnerException != null:
                     return operationCanceledException.InnerException;
 
                 case OperationCanceledException operationEx when !(operationEx is TaskCanceledException):
-                    return new ServiceBusException(operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout);
+                    return new ServiceBusException(operationEx.Message, ServiceBusFailureReason.ServiceTimeout);
 
                 case TimeoutException _:
                     return new ServiceBusException(
                         message,
-                        ServiceBusException.FailureReason.ServiceTimeout,
+                        ServiceBusFailureReason.ServiceTimeout,
                         innerException: aggregateException);
 
                 case InvalidOperationException _ when connectionError:
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
             }
 
             if (connectionError)
             {
-                return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
             }
 
             return aggregateException;

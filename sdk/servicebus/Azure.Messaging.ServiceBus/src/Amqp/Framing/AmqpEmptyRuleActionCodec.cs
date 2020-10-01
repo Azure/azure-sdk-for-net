@@ -7,7 +7,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     internal sealed class AmqpEmptyRuleActionCodec : AmqpRuleActionCodec
     {
-        public static readonly string Name = AmqpConstants.Vendor + ":empty-rule-action:list";
+        public const string Name = AmqpConstants.Vendor + ":empty-rule-action:list";
         public const ulong Code = 0x0000013700000005;
         private const int Fields = 0;
 

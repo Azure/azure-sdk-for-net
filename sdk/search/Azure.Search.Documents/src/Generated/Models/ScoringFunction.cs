@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for functions that can modify document scores during ranking. </summary>
     public partial class ScoringFunction

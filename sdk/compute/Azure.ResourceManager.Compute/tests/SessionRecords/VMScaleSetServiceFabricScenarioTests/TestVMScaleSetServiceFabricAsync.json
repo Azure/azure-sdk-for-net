@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2019-12-01\u0026platformUpdateDomain=0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e5bcb52cb214214fbf8355a9a017d306-25b7df92dd7c934b-00",
+        "User-Agent": [
+          "azsdk-net-Management.Compute/1.0.0-dev.20200605.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "db6af41fa240e6ce725aa9d5f0083a8e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "110",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 06 Jun 2020 03:44:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3104ee53-b234-4db4-84ab-34677603d40c",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "3104ee53-b234-4db4-84ab-34677603d40c",
+        "x-ms-routing-request-id": "KOREASOUTH:20200606T034446Z:3104ee53-b234-4db4-84ab-34677603d40c"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022ResourceGroupNotFound\u0022,\u0022message\u0022:\u0022Resource group \u0027crptestrgr97ryo0ni\u0027 could not be found.\u0022}}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "935821148",
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+  }
+}

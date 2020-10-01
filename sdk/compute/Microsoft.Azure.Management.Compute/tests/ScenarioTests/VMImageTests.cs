@@ -85,7 +85,7 @@ namespace Compute.Tests
                     Assert.True(vmimage.AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported);
                 }
 
-                // Validate if image not whitelisted to support automatic OS upgrades, return
+                // Validate if image not allowlisted to support automatic OS upgrades, return
                 // AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported = false in GET VMImageVesion call
                 imagePublisher = "Canonical";
                 imageOffer = "UbuntuServer";

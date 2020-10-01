@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListSkillsetsResult
     {
@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Models
                     List<SearchIndexerSkillset> array = new List<SearchIndexerSkillset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
-                        }
+                        array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
                     }
                     value = array;
                     continue;

@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// The filter to apply on the operation. Only **location** filter is supported
+        /// currently.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

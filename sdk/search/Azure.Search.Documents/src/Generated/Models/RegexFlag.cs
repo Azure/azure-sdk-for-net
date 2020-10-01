@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines flags that can be combined to control how regular expressions are used in the pattern analyzer and pattern tokenizer. </summary>
     public readonly partial struct RegexFlag : IEquatable<RegexFlag>
@@ -16,35 +16,36 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="RegexFlag"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegexFlag(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CanonEQValue = "CANON_EQ";
+        private const string CanonEqValue = "CANON_EQ";
         private const string CaseInsensitiveValue = "CASE_INSENSITIVE";
         private const string CommentsValue = "COMMENTS";
-        private const string DotallValue = "DOTALL";
+        private const string DotAllValue = "DOTALL";
         private const string LiteralValue = "LITERAL";
         private const string MultilineValue = "MULTILINE";
         private const string UnicodeCaseValue = "UNICODE_CASE";
         private const string UnixLinesValue = "UNIX_LINES";
 
-        /// <summary> CANON_EQ. </summary>
-        public static RegexFlag CanonEQ { get; } = new RegexFlag(CanonEQValue);
-        /// <summary> CASE_INSENSITIVE. </summary>
+        /// <summary> Enables canonical equivalence. </summary>
+        public static RegexFlag CanonEq { get; } = new RegexFlag(CanonEqValue);
+        /// <summary> Enables case-insensitive matching. </summary>
         public static RegexFlag CaseInsensitive { get; } = new RegexFlag(CaseInsensitiveValue);
-        /// <summary> COMMENTS. </summary>
+        /// <summary> Permits whitespace and comments in the pattern. </summary>
         public static RegexFlag Comments { get; } = new RegexFlag(CommentsValue);
-        /// <summary> DOTALL. </summary>
-        public static RegexFlag Dotall { get; } = new RegexFlag(DotallValue);
-        /// <summary> LITERAL. </summary>
+        /// <summary> Enables dotall mode. </summary>
+        public static RegexFlag DotAll { get; } = new RegexFlag(DotAllValue);
+        /// <summary> Enables literal parsing of the pattern. </summary>
         public static RegexFlag Literal { get; } = new RegexFlag(LiteralValue);
-        /// <summary> MULTILINE. </summary>
+        /// <summary> Enables multiline mode. </summary>
         public static RegexFlag Multiline { get; } = new RegexFlag(MultilineValue);
-        /// <summary> UNICODE_CASE. </summary>
+        /// <summary> Enables Unicode-aware case folding. </summary>
         public static RegexFlag UnicodeCase { get; } = new RegexFlag(UnicodeCaseValue);
-        /// <summary> UNIX_LINES. </summary>
+        /// <summary> Enables Unix lines mode. </summary>
         public static RegexFlag UnixLines { get; } = new RegexFlag(UnixLinesValue);
         /// <summary> Determines if two <see cref="RegexFlag"/> values are the same. </summary>
         public static bool operator ==(RegexFlag left, RegexFlag right) => left.Equals(right);

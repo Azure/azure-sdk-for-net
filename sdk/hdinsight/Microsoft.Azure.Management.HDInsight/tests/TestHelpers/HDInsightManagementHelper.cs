@@ -23,6 +23,8 @@ using static Management.HDInsight.Tests.HDInsightManagementTestUtilities;
 using Microsoft.Azure.Management.Authorization;
 using System.Linq;
 using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Management.HDInsight.Tests
 {
@@ -58,6 +60,11 @@ namespace Management.HDInsight.Tests
         private KeyVaultManagementClient keyVaultManagementClient;
 
         /// <summary>
+        /// The Azure network management client provides operations about vnet.
+        /// </summary>
+        private NetworkManagementClient networkManagementClient;
+
+        /// <summary>
         /// Client class to perform cryptographic key operations and vault
         /// operations against the Key Vault service.
         /// </summary>
@@ -81,6 +88,7 @@ namespace Management.HDInsight.Tests
             authorizationManagementClient = context.GetServiceClient<AuthorizationManagementClient>();
             keyVaultManagementClient = context.GetServiceClient<KeyVaultManagementClient>();
             keyVaultClient = GetKeyVaultClient();
+            networkManagementClient = context.GetServiceClient<NetworkManagementClient>();
             this.commonData = commonData;
         }
 
@@ -420,6 +428,32 @@ namespace Management.HDInsight.Tests
             };
 
             authorizationManagementClient.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
+        }
+
+        public VirtualNetwork CreateVirtualNetworkWithSubnet(string resourceGroupName, string location, string virtualNetworkName, string subnetName, bool subnetPrivateEndpointNetworkPoliciesFlag =true, bool subnetPrivateLinkServiceNetworkPoliciesFlag = true)
+        {
+            VirtualNetwork vnet = new VirtualNetwork()
+            {
+                Location = location,
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                },
+                Subnets = new List<Subnet>()
+                {
+                    new Subnet()
+                    {
+                        Name = subnetName,
+                        AddressPrefix = "10.0.0.0/24",
+                        PrivateEndpointNetworkPolicies = subnetPrivateEndpointNetworkPoliciesFlag ? "Enabled" : "Disabled",
+                        PrivateLinkServiceNetworkPolicies =subnetPrivateLinkServiceNetworkPoliciesFlag ? "Enabled" : "Disabled"
+                    }
+                }
+            };
+            return networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
         }
 
         /// <summary>

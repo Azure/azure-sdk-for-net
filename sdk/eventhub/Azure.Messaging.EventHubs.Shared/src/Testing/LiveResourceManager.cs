@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                   string resourceGroupName,
                                                                   string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(new Uri(EventHubsTestEnvironment.Instance.ResourceManagerUrl), new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName)).ConfigureAwait(false);
                 return resourceGroup.Location;
@@ -77,7 +77,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public async Task<string> AquireManagementTokenAsync()
         {
-            ManagementToken token = s_managementToken;
+            var token = s_managementToken;
+            var authority = new Uri(new Uri(EventHubsTestEnvironment.Instance.AuthorityHostUrl), EventHubsTestEnvironment.Instance.TenantId).ToString();
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
@@ -86,9 +87,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
+                var context = new AuthenticationContext(authority);
                 var credential = new ClientCredential(EventHubsTestEnvironment.Instance.ClientId, EventHubsTestEnvironment.Instance.ClientSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ EventHubsTestEnvironment.Instance.TenantId }");
-                AuthenticationResult result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential).ConfigureAwait(false);
+                var result = await context.AcquireTokenAsync(EventHubsTestEnvironment.Instance.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))
                 {

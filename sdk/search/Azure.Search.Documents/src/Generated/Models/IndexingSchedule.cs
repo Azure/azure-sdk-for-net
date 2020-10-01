@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a schedule for indexer execution. </summary>
     public partial class IndexingSchedule

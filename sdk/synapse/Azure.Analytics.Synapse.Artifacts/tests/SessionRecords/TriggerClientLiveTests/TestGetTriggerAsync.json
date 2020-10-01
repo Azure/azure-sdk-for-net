@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/triggers?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a4eb13e827d1a729e656409d1478d4de",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "697",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:24:35 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "a4eb13e827d1a729e656409d1478d4de",
+        "x-ms-request-id": "87b03574-e18e-4d7b-8d73-3ec91c3d3902"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger277322190",
+            "name": "Trigger277322190",
+            "type": "Microsoft.Synapse/workspaces/triggers",
+            "etag": "91006ff5-0000-0800-0000-5f6c3b8d0000",
+            "properties": {
+              "type": "Trigger",
+              "runtimeState": "Stopped"
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger533902365",
+            "name": "Trigger533902365",
+            "type": "Microsoft.Synapse/workspaces/triggers",
+            "etag": "91006df6-0000-0800-0000-5f6c3b9a0000",
+            "properties": {
+              "type": "Trigger",
+              "runtimeState": "Stopped"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/triggers/Trigger277322190?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7060ac9a8b11de408dfa9750e16d2770-a10a367734309d41-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2f3942e86ee846bb014ad74c0701d99c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "342",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:24:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2f3942e86ee846bb014ad74c0701d99c",
+        "x-ms-correlation-request-id": "e4206caf-d2ac-4d54-9f87-b200b6226270",
+        "x-ms-request-id": "3e28d16d-4507-47e2-ac0e-69c2138677e7",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger277322190",
+        "name": "Trigger277322190",
+        "type": "Microsoft.Synapse/workspaces/triggers",
+        "properties": {
+          "type": "Trigger",
+          "runtimeState": "Stopped"
+        },
+        "etag": "91006ff5-0000-0800-0000-5f6c3b8d0000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/triggers/Trigger533902365?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3a96eab38d3bd34aad7dd6939ab056f7-214da46e59e70148-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "21b738ca8f9f99a0a29e069dc70e4fc1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "342",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:24:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "21b738ca8f9f99a0a29e069dc70e4fc1",
+        "x-ms-correlation-request-id": "213476e0-7bb6-491d-9dc8-fc1ac6ad1bf0",
+        "x-ms-request-id": "aa4aa6c0-5e50-40b5-9391-a32f47165572",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger533902365",
+        "name": "Trigger533902365",
+        "type": "Microsoft.Synapse/workspaces/triggers",
+        "properties": {
+          "type": "Trigger",
+          "runtimeState": "Stopped"
+        },
+        "etag": "91006df6-0000-0800-0000-5f6c3b9a0000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspaceywlive.dev.azuresynapse.net",
+    "RandomSeed": "176684923"
+  }
+}

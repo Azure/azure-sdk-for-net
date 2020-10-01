@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for data change detection policies. </summary>
     public partial class DataChangeDetectionPolicy

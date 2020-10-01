@@ -140,6 +140,26 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IFileSharesOperations FileShares { get; private set; }
 
         /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        public virtual IQueueServicesOperations QueueServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        public virtual IQueueOperations Queue { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        public virtual ITableServicesOperations TableServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        public virtual ITableOperations Table { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -393,6 +413,10 @@ namespace Microsoft.Azure.Management.Storage
             BlobContainers = new BlobContainersOperations(this);
             FileServices = new FileServicesOperations(this);
             FileShares = new FileSharesOperations(this);
+            QueueServices = new QueueServicesOperations(this);
+            Queue = new QueueOperations(this);
+            TableServices = new TableServicesOperations(this);
+            Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";

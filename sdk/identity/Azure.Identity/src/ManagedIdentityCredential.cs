@@ -87,19 +87,12 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken result = async ? await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.Authenticate(requestContext.Scopes, cancellationToken);
-
+                AccessToken result = await _client.AuthenticateAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(result);
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
             }
             catch (Exception e)
             {
-               throw scope.FailAndWrap(e);
+               throw scope.FailWrapAndThrow(e);
             }
         }
     }

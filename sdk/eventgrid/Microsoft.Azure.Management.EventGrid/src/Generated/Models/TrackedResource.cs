@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
         public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)

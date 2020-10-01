@@ -14,11 +14,11 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class CassandraResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup2510";
-        const string databaseAccountName = "db2725";
+        const string resourceGroupName = "CosmosDBResourceGroup3668";
+        const string databaseAccountName = "db8192";
 
         const string keyspaceName = "keyspaceName2510";
         const string keyspaceName2 = "keyspaceName22510";
@@ -55,11 +55,8 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
                 {
-                    Resource = new CassandraKeyspaceResource{ Id = keyspaceName },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Resource = new CassandraKeyspaceResource { Id = keyspaceName },
+                    Options = new CreateUpdateOptions()
                 };
 
                 CassandraKeyspaceGetResults cassandraKeyspaceGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -79,7 +76,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new CassandraKeyspaceResource { Id = keyspaceName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -108,10 +105,7 @@ namespace CosmosDB.Tests.ScenarioTests
                             PartitionKeys = new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } }
                         }
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 CassandraTableGetResults cassandraTableGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName, cassandraTableCreateUpdateParameters).GetAwaiter().GetResult().Body;

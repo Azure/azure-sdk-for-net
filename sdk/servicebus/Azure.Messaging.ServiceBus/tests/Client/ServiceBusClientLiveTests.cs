@@ -5,12 +5,47 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Client
 {
     public class ServiceBusClientLiveTests : ServiceBusLiveTestBase
     {
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectUsingSharedAccessSignatureConnectionString()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+
+                await using (var client = new ServiceBusClient(connectionString, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]
@@ -22,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -33,10 +68,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
+                Assert.IsTrue(client.IsClosed);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
@@ -46,7 +82,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 else
                 {
                     Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }
@@ -63,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -74,8 +112,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 if (!useSessions)
                 {

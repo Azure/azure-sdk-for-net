@@ -21,11 +21,11 @@ namespace SnippetGenerator
         private readonly Lazy<List<Snippet>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         private const string _codeOnlyPattern = "/*@@*/";
         private static readonly Regex _regionRegex = new Regex(
             @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -37,35 +37,50 @@ namespace SnippetGenerator
 
         public void Process()
         {
-            foreach (var mdFile in Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories))
+
+            List<string> files = new List<string>();
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories));
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.cs", SearchOption.AllDirectories));
+
+            foreach (var file in files)
             {
-                Console.WriteLine($"Processing {mdFile}");
-
-                var text = File.ReadAllText(mdFile);
-                bool changed = false;
-
-                text = MarkdownProcessor.Process(text, s =>
+                string SnippetProvider(string s)
                 {
                     var selectedSnippets = _snippets.Value.Where(snip => snip.Name == s).ToArray();
                     if (selectedSnippets.Length > 1)
                     {
                         throw new InvalidOperationException($"Multiple snippets with the name '{s}' defined '{_directory}'");
                     }
+
                     if (selectedSnippets.Length == 0)
                     {
                         throw new InvalidOperationException($"Snippet '{s}' not found in directory '{_directory}'");
                     }
 
                     var selectedSnippet = selectedSnippets.Single();
-                    Console.WriteLine($"Replaced {selectedSnippet.Name}");
-                    changed = true;
+                    Console.WriteLine($"Replaced {selectedSnippet.Name} in {file}");
                     return FormatSnippet(selectedSnippet.Text);
-                });
+                }
 
-                if (changed)
+                var originalText = File.ReadAllText(file);
+
+                string text;
+                switch (Path.GetExtension(file))
+                {
+                    case ".md":
+                        text = MarkdownProcessor.Process(originalText, SnippetProvider);
+                        break;
+                    case ".cs":
+                        text = CSharpProcessor.Process(originalText, SnippetProvider);
+                        break;
+                    default:
+                        throw new NotSupportedException(file);
+                }
+
+                if (text != originalText)
                 {
                     _utf8EncodingWithoutBOM = new UTF8Encoding(false);
-                    File.WriteAllText(mdFile, text, _utf8EncodingWithoutBOM);
+                    File.WriteAllText(file, text, _utf8EncodingWithoutBOM);
                 }
             }
         }

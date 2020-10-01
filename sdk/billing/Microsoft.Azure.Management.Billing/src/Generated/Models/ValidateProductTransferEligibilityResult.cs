@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the
         /// ValidateProductTransferEligibilityResult class.
         /// </summary>
-        /// <param name="isTransferEligible">Specifies whether the transfer is
+        /// <param name="isMoveEligible">Specifies whether the transfer is
         /// eligible or not.</param>
         /// <param name="errorDetails">Validation error details.</param>
-        public ValidateProductTransferEligibilityResult(bool? isTransferEligible = default(bool?), ValidateProductTransferEligibilityError errorDetails = default(ValidateProductTransferEligibilityError))
+        public ValidateProductTransferEligibilityResult(bool? isMoveEligible = default(bool?), ValidateProductTransferEligibilityError errorDetails = default(ValidateProductTransferEligibilityError))
         {
-            IsTransferEligible = isTransferEligible;
+            IsMoveEligible = isMoveEligible;
             ErrorDetails = errorDetails;
             CustomInit();
         }
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets specifies whether the transfer is eligible or not.
         /// </summary>
-        [JsonProperty(PropertyName = "isTransferEligible")]
-        public bool? IsTransferEligible { get; private set; }
+        [JsonProperty(PropertyName = "isMoveEligible")]
+        public bool? IsMoveEligible { get; private set; }
 
         /// <summary>
         /// Gets or sets validation error details.

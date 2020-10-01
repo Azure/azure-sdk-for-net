@@ -1,104 +1,102 @@
 parameters:
-  PreSteps: []
-  PostSteps: []
-  EnvVars: {}
-  MaxParallel: 0
-  BuildInParallel: true
-  TimeoutInMinutes: 60
+- name: AdditionalPlatforms
+  type: object
+  default: []
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SubscriptionConfiguration
+  type: string
+  default: $(sub-config-azure-cloud-test-resources)
+- name: TestCanary
+  type: boolean
+  default: false
+- name: ResourceGroupLocationCanary
+  type: string
+  default: "centraluseuap"
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
 
 jobs:
-  - job: "Test"
-    variables:
-      - template: ../variables/globals.yml
-
-    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-
-    strategy:
-      maxParallel: ${{ parameters.MaxParallel }}
-      matrix:
-        Linux:
-          OSName: "Linux"
-          OSVmImage: "ubuntu-18.04"
-          TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
-        Windows_NetCoreApp:
-          OSName: "Windows"
+- template: archetype-sdk-tests-jobs.yml
+  parameters:
+    PreSteps: ${{ parameters.PreSteps }}
+    PostSteps: ${{ parameters.PostSteps }}
+    EnvVars: ${{ parameters.EnvVars }}
+    MaxParallel: ${{ parameters.MaxParallel }}
+    BuildInParallel: ${{ parameters.BuildInParallel }}
+    TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+    Location: ${{ parameters.Location }}
+    SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+    ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    TestSetupSteps: ${{ parameters.TestSetupSteps }}
+    platforms:
+      - DisplayName: "Test on Linux"
+        OSVmImage: "ubuntu-18.04"
+        TestTargetFramework: netcoreapp2.1
+        PreSteps:
+          - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+      - DisplayName: "Test on Windows for NetCoreApp"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: netcoreapp2.1
+      - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: netcoreapp2.1
+        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      - DisplayName: "Test on Windows for .Net Framework"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: net461
+      - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: net461
+        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      - DisplayName: "Test on MacOS"
+        OSVmImage: "macOS-10.15"
+        TestTargetFramework: netcoreapp2.1
+      - ${{ if eq(parameters.TestCanary, 'true') }}:          
+        - DisplayName: "Test on Windows for NetCoreApp - Canary region"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
-        Windows_NetCoreApp_ProjectReferences:
-          OSName: "Windows"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          OSName: "Windows"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-          CloudType: AzureCloud
-        MacOs:
-          OSName: "MacOS"
-          OSVmImage: "macOS-10.15"
-          TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
-    pool:
-      vmImage: "$(OSVmImage)"
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
+          Location: ${{ parameters.ResourceGroupLocationCanary }}
+      - DisplayName: "Record on Windows for NetCoreApp"
+        OSVmImage: "windows-2019"
+        TestMode: Record
+        TestTargetFramework: netcoreapp2.1
+        AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
+        PostSteps:
+          - task: CopyFiles@2
+            displayName: "Copy Test Recordings"
+            inputs:
+              sourceFolder: '$(Build.SourcesDirectory)'
+              contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+              targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+          - task: PublishBuildArtifacts@1
+            displayName: "Publish Test Recordings"
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+              artifactName: SessionRecords
 
-    steps:
-      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-      
-      - ${{ parameters.PreSteps }}
-
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
-
-      - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
-
-      - template: /eng/common/TestResources/deploy-test-resources.yml
-        parameters:
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-
-      - script: >
-          dotnet test eng/service.proj
-          --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx"
-          --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeSrc=false /p:IncludeSamples=false
-          /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          $(ConvertToProjectReferenceOption)
-
-        displayName: "Build & Test (all tests for $(TestTargetFramework))"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "None"
-          ${{ insert }}: ${{ parameters.EnvVars }}
-
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-
-      - task: PublishTestResults@2
-        condition: always()
-        displayName: "Publish Results ($(TestTargetFramework))"
-        inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
-          testResultsFormat: "VSTest"
-          mergeTestResults: true
-
-      - ${{ parameters.PostSteps }}
+      - ${{ parameters.AdditionalPlatforms }}

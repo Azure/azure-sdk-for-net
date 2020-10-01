@@ -31,7 +31,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// 'VAIDK'</param>
         /// <param name="status">Status of the export. Possible values include:
         /// 'Exporting', 'Failed', 'Done'</param>
-        /// <param name="downloadUri">URI used to download the model.</param>
+        /// <param name="downloadUri">URI used to download the model. If VNET
+        /// feature is enabled this will be a relative path to be used with
+        /// GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.</param>
         /// <param name="flavor">Flavor of the export. These are
         /// specializations of the export platform.
         /// Docker platform has valid flavors: Linux, Windows, ARM.
@@ -73,7 +76,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets URI used to download the model.
+        /// Gets URI used to download the model. If VNET feature is enabled
+        /// this will be a relative path to be used with GetArtifact, otherwise
+        /// this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "downloadUri")]
         public string DownloadUri { get; private set; }

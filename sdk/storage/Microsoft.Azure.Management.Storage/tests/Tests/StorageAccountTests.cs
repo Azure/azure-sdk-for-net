@@ -2254,5 +2254,44 @@ namespace Storage.Tests
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
             }
         }
+
+        [Fact]
+        public void StorageAccountCreateUpdateWithMinTlsVersionBlobPublicAccess()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Location = "East US 2 EUAP";
+                parameters.Kind = Kind.StorageV2;
+                parameters.AllowBlobPublicAccess = false;
+                parameters.MinimumTlsVersion = MinimumTlsVersion.TLS11;
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                // Verify account settings
+                Assert.False(account.AllowBlobPublicAccess);
+                Assert.Equal(MinimumTlsVersion.TLS11, account.MinimumTlsVersion);
+
+                //Update account
+                var udpateParameters = new StorageAccountUpdateParameters();
+                udpateParameters.MinimumTlsVersion = MinimumTlsVersion.TLS12;
+                udpateParameters.AllowBlobPublicAccess = true;
+                udpateParameters.EnableHttpsTrafficOnly = true;
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, udpateParameters);
+
+                // Verify account settings
+                Assert.True(account.AllowBlobPublicAccess);
+                Assert.Equal(MinimumTlsVersion.TLS12, account.MinimumTlsVersion);
+            }
+        }
     }
 }

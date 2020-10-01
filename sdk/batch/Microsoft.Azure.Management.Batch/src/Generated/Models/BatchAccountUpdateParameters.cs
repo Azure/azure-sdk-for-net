@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// auto-storage account.</param>
         /// <param name="encryption">The encryption configuration for the Batch
         /// account.</param>
-        public BatchAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), EncryptionProperties encryption = default(EncryptionProperties))
+        /// <param name="identity">The identity of the Batch account.</param>
+        public BatchAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), EncryptionProperties encryption = default(EncryptionProperties), BatchAccountIdentity identity = default(BatchAccountIdentity))
         {
             Tags = tags;
             AutoStorage = autoStorage;
             Encryption = encryption;
+            Identity = identity;
             CustomInit();
         }
 
@@ -70,8 +72,19 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Gets or sets the encryption configuration for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// Configures how customer data is encrypted inside the Batch account.
+        /// By default, accounts are encrypted using a Microsoft managed key.
+        /// For additional control, a customer-managed key can be used instead.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.encryption")]
         public EncryptionProperties Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchAccountIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -84,6 +97,10 @@ namespace Microsoft.Azure.Management.Batch.Models
             if (AutoStorage != null)
             {
                 AutoStorage.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

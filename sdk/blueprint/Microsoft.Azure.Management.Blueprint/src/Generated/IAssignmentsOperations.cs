@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
         /// </param>
+        /// <param name='deleteBehavior'>
+        /// When deleteBehavior=all, the resources that were created by the
+        /// blueprint assignment will be deleted. Possible values include:
+        /// 'none', 'all'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -109,7 +114,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string resourceScope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string resourceScope, string assignmentName, string deleteBehavior = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Blueprints service SPN objectId
         /// </summary>

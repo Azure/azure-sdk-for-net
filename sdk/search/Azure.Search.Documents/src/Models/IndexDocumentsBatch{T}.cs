@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -19,7 +22,7 @@ namespace Azure.Search.Documents.Models
     /// Contains a batch of document write actions to send to a search index
     /// via <see cref="SearchClient.IndexDocuments"/>.
     /// </summary>
-    public partial class IndexDocumentsBatch<T> : IUtf8JsonSerializable
+    public partial class IndexDocumentsBatch<T>
     {
         /// <summary>
         /// The actions in the batch.
@@ -54,19 +57,43 @@ namespace Azure.Search.Documents.Models
             }
         }
 
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Serialize the document batch.
         /// </summary>
         /// <param name="writer">The JSON writer.</param>
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>A task representing the serialization.</returns>
+        internal async Task SerializeAsync(
+            Utf8JsonWriter writer,
+            ObjectSerializer serializer,
+            JsonSerializerOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1572
         {
             Debug.Assert(writer != null);
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName(Constants.ValueKeyJson);
             writer.WriteStartArray();
             foreach (IndexDocumentsAction<T> action in Actions)
             {
-                writer.WriteObjectValue(action);
+                await action.SerializeAsync(
+                    writer,
+                    serializer,
+                    options,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -94,17 +121,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsBatch<T>(IndexActionType.Upload, documents);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// upload.
-        /// </summary>
-        /// <param name="documents">The documents to upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to upload.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Upload(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Upload, documents);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to merge.
         /// </summary>
         /// <typeparam name="T">
@@ -117,17 +133,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsBatch<T> Merge<T>(IEnumerable<T> documents) =>
             new IndexDocumentsBatch<T>(IndexActionType.Merge, documents);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// merge.
-        /// </summary>
-        /// <param name="documents">The documents to merge.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to merge.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Merge(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Merge, documents);
 
         /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to merge or upload.
@@ -144,18 +149,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsBatch<T>(IndexActionType.MergeOrUpload, documents);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// merge or upload.
-        /// </summary>
-        /// <param name="documents">The documents to merge or upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to merge or
-        /// upload.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> MergeOrUpload(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.MergeOrUpload, documents);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to delete.
         /// </summary>
         /// <typeparam name="T">
@@ -168,17 +161,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsBatch<T> Delete<T>(IEnumerable<T> documents) =>
             new IndexDocumentsBatch<T>(IndexActionType.Delete, documents);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// delete.
-        /// </summary>
-        /// <param name="documents">The documents to delete.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to delete.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Delete(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Delete, documents);
 
         /// <summary>
         ///Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to

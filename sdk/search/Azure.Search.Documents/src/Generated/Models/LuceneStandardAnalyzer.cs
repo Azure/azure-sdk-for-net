@@ -7,14 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Standard Apache Lucene analyzer; Composed of the standard tokenizer, lowercase filter and stop filter. </summary>
     public partial class LuceneStandardAnalyzer : LexicalAnalyzer
     {
         /// <summary> Initializes a new instance of LuceneStandardAnalyzer. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LuceneStandardAnalyzer(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 
@@ -39,7 +42,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>
         public int? MaxTokenLength { get; set; }
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
     }
 }

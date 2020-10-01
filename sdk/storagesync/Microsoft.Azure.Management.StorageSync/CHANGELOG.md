@@ -1,5 +1,13 @@
 ## Microsoft.Azure.Management.StorageSync release notes
 
+### Changes in 2020-03-01
+
+- Support private links for Azure File Sync
+- Additional cloud tiering status support, including:
+    - Local cache performance metrics
+    - Status for tiering policies
+- Change enum as ModelAsString for InitialDownloadPolicy and LocalCacheMode
+
 ### Changes in 2019-06-01
 
 - Support for cloud tiering health and recall status for server endpoints

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the overall indexer status. </summary>
     public enum IndexerStatus

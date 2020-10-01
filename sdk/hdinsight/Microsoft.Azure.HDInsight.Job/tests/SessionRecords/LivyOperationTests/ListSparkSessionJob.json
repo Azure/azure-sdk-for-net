@@ -1,0 +1,251 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/livy/sessions",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "da21e566-9d88-4aef-aaec-2680be44f7a7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "62f93351e11140eb813716fe196d73e9"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "x-ms-hdi-errorcode": [
+          "fc:Failed to get active leader, returning cached leader rm:Failed to get active leader, returning cached leader "
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:25:25 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "34"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"from\": 0,\r\n  \"total\": 0,\r\n  \"sessions\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e9f93788-6029-4269-97e3-7fa88c449609"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "d7a073b798a54faea783fe7641c39f41"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:25:36 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "2509"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"from\": 0,\r\n  \"total\": 1,\r\n  \"sessions\": [\r\n    {\r\n      \"id\": 26,\r\n      \"appId\": null,\r\n      \"owner\": null,\r\n      \"proxyUser\": null,\r\n      \"state\": \"starting\",\r\n      \"kind\": \"spark\",\r\n      \"appInfo\": {\r\n        \"driverLogUrl\": null,\r\n        \"sparkUiUrl\": null\r\n      },\r\n      \"log\": [\r\n        \"20/05/13 13:25:28 INFO Client: Preparing resources for our AM container\",\r\n        \"20/05/13 13:25:29 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/rsc-jars/livy-rsc-0.4.0.2.6.5.3015-8.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/livy-rsc-0.4.0.2.6.5.3015-8.jar\",\r\n        \"20/05/13 13:25:30 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/rsc-jars/netty-all-4.0.29.Final.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/netty-all-4.0.29.Final.jar\",\r\n        \"20/05/13 13:25:30 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/rsc-jars/livy-api-0.4.0.2.6.5.3015-8.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/livy-api-0.4.0.2.6.5.3015-8.jar\",\r\n        \"20/05/13 13:25:31 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/repl_2.11-jars/livy-repl_2.11-0.4.0.2.6.5.3015-8.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/livy-repl_2.11-0.4.0.2.6.5.3015-8.jar\",\r\n        \"20/05/13 13:25:33 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/repl_2.11-jars/livy-core_2.11-0.4.0.2.6.5.3015-8.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/livy-core_2.11-0.4.0.2.6.5.3015-8.jar\",\r\n        \"20/05/13 13:25:34 INFO Client: Uploading resource file:/usr/hdp/current/livy2-server/repl_2.11-jars/commons-codec-1.9.jar -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/commons-codec-1.9.jar\",\r\n        \"20/05/13 13:25:35 INFO Client: Uploading resource file:/usr/hdp/current/spark2-client/R/lib/sparkr.zip#sparkr -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/sparkr.zip\",\r\n        \"20/05/13 13:25:35 INFO Client: Uploading resource file:/usr/hdp/current/spark2-client/python/lib/pyspark.zip -> wasbs://containercmk002@shangweistorageaccount.blob.core.windows.net/user/livy/.sparkStaging/application_1588970089921_0061/pyspark.zip\",\r\n        \"\\nYARN Diagnostics: \"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"kind\": \"spark\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "689310cf-f57a-4e4d-a589-e3b98e0756ba"
+        ],
+        "X-Requested-By": [
+          "admin"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "23"
+        ]
+      },
+      "ResponseHeaders": {
+        "Location": [
+          "/sessions/26"
+        ],
+        "request-id": [
+          "4003ab32e9244500889bd0678e657e06"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:25:25 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "191"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": 26,\r\n  \"appId\": null,\r\n  \"owner\": null,\r\n  \"proxyUser\": null,\r\n  \"state\": \"starting\",\r\n  \"kind\": \"spark\",\r\n  \"appInfo\": {\r\n    \"driverLogUrl\": null,\r\n    \"sparkUiUrl\": null\r\n  },\r\n  \"log\": [\r\n    \"stdout: \",\r\n    \"\\nstderr: \",\r\n    \"\\nYARN Diagnostics: \"\r\n  ]\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/livy/sessions?from=1&size=0",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnM/ZnJvbT0xJnNpemU9MA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "48f962d8-89b9-4f25-a6f7-7f5fac53dbaa"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "e66788c59ee24b1696eac09e3ebba998"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:25:36 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "34"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"from\": 1,\r\n  \"total\": 1,\r\n  \"sessions\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions/26",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMjY=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "af2e912e-674c-4a78-a961-c87fe37a7390"
+        ],
+        "X-Requested-By": [
+          "admin"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "8f3d637088bf49ecae107e8acc721dba"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Wed, 13 May 2020 13:25:36 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "17"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"msg\": \"deleted\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "964c10bb-8a6c-43bc-83d3-6b318c6c7305"
+  }
+}

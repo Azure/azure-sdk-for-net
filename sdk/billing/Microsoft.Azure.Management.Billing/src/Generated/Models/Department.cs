@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A department resource.
+    /// A department.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Department : Resource
@@ -37,9 +37,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="departmentName">The name for department.</param>
-        /// <param name="costCenter">The cost center name.</param>
-        /// <param name="status">The status for department.</param>
+        /// <param name="departmentName">The name of the department.</param>
+        /// <param name="costCenter">The cost center associated with the
+        /// department.</param>
+        /// <param name="status">The status of the department.</param>
         /// <param name="enrollmentAccounts">Associated enrollment accounts. By
         /// default this is not populated, unless it's specified in
         /// $expand.</param>
@@ -59,19 +60,19 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name for department.
+        /// Gets or sets the name of the department.
         /// </summary>
         [JsonProperty(PropertyName = "properties.departmentName")]
         public string DepartmentName { get; set; }
 
         /// <summary>
-        /// Gets or sets the cost center name.
+        /// Gets or sets the cost center associated with the department.
         /// </summary>
         [JsonProperty(PropertyName = "properties.costCenter")]
         public string CostCenter { get; set; }
 
         /// <summary>
-        /// Gets or sets the status for department.
+        /// Gets or sets the status of the department.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }

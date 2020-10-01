@@ -10,15 +10,13 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Sku
+    /// An ARM Resource SKU.
     /// </summary>
-    /// <remarks>
-    /// SQL pool SKU
-    /// </remarks>
     public partial class Sku
     {
         /// <summary>
@@ -32,12 +30,14 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="tier">The service tier</param>
-        /// <param name="name">The SKU name</param>
-        public Sku(string tier = default(string), string name = default(string))
+        /// <param name="name">The name of the SKU, typically, a letter +
+        /// Number code, e.g. P3.</param>
+        /// <param name="tier">The tier or edition of the particular SKU, e.g.
+        /// Basic, Premium.</param>
+        public Sku(string name, string tier = default(string))
         {
-            Tier = tier;
             Name = name;
+            Tier = tier;
             CustomInit();
         }
 
@@ -47,16 +47,31 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the service tier
+        /// Gets or sets the name of the SKU, typically, a letter + Number
+        /// code, e.g. P3.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tier or edition of the particular SKU, e.g. Basic,
+        /// Premium.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU name
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

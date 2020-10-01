@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="shareUsageBytes">The approximate size of the data
         /// stored on the share. Note that this value may not include all
         /// recently created or recently resized files.</param>
-        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), int? shareUsageBytes = default(int?))
+        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?))
             : base(id, name, type, etag)
         {
             LastModifiedTime = lastModifiedTime;
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// resized files.
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareUsageBytes")]
-        public int? ShareUsageBytes { get; private set; }
+        public long? ShareUsageBytes { get; private set; }
 
         /// <summary>
         /// Validate the object.

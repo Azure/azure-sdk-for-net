@@ -182,6 +182,72 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
+            /// Updates the properties of an existing private endpoint connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The private endpoint connection name. This must be unique within the
+            /// account.
+            /// </param>
+            /// <param name='parameters'>
+            /// PrivateEndpointConnection properties that should be updated. Properties
+            /// that are supplied will be updated, any property not supplied will be
+            /// unchanged.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// The state (ETag) version of the private endpoint connection to update. This
+            /// value can be omitted or set to "*" to apply the operation unconditionally.
+            /// </param>
+            public static PrivateEndpointConnection BeginUpdate(this IPrivateEndpointConnectionOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, privateEndpointConnectionName, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the properties of an existing private endpoint connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The private endpoint connection name. This must be unique within the
+            /// account.
+            /// </param>
+            /// <param name='parameters'>
+            /// PrivateEndpointConnection properties that should be updated. Properties
+            /// that are supplied will be updated, any property not supplied will be
+            /// unchanged.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// The state (ETag) version of the private endpoint connection to update. This
+            /// value can be omitted or set to "*" to apply the operation unconditionally.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> BeginUpdateAsync(this IPrivateEndpointConnectionOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all of the private endpoint connections in the specified account.
             /// </summary>
             /// <param name='operations'>

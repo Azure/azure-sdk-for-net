@@ -3,10 +3,6 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
@@ -40,24 +36,15 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSName: "Linux"
           OSVmImage: "ubuntu-18.04"
         Windows:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
         MacOs:
-          OSName: "MacOS"
           OSVmImage: "macOS-10.15"
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
@@ -89,7 +76,7 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: PowerShell@2

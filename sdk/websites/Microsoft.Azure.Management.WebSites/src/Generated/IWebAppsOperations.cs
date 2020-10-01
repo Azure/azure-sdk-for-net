@@ -460,6 +460,155 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Returns whether Scm basic auth is allowed and whether Ftp is
+        /// allowed for a given site.
+        /// </summary>
+        /// <remarks>
+        /// Description for Returns whether Scm basic auth is allowed and
+        /// whether Ftp is allowed for a given site.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesCollection>> GetBasicPublishingCredentialsPoliciesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns whether FTP is allowed on the site or not.
+        /// </summary>
+        /// <remarks>
+        /// Description for Returns whether FTP is allowed on the site or not.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> GetFtpAllowedWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates whether FTP is allowed on the site or not.
+        /// </summary>
+        /// <remarks>
+        /// Description for Updates whether FTP is allowed on the site or not.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='csmPublishingAccessPoliciesEntity'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> UpdateFtpAllowedWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns whether Scm basic auth is allowed on the site or not.
+        /// </summary>
+        /// <remarks>
+        /// Description for Returns whether Scm basic auth is allowed on the
+        /// site or not.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> GetScmAllowedWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates whether user publishing credentials are allowed on the site
+        /// or not.
+        /// </summary>
+        /// <remarks>
+        /// Description for Updates whether user publishing credentials are
+        /// allowed on the site or not.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='csmPublishingAccessPoliciesEntity'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> UpdateScmAllowedWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List the configurations of an app
         /// </summary>
         /// <remarks>
@@ -609,6 +758,69 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<SiteAuthSettings>> GetAuthSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <remarks>
+        /// Description for Updates site's Authentication / Authorization
+        /// settings for apps via the V2 format
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app.
+        /// </param>
+        /// <param name='siteAuthSettingsV2'>
+        /// Auth settings associated with web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> UpdateAuthSettingsV2WithHttpMessagesAsync(string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <remarks>
+        /// Description for Gets site's Authentication / Authorization settings
+        /// for apps via the V2 format
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> GetAuthSettingsV2WithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Updates the Azure storage account configurations of an app.
         /// </summary>
         /// <remarks>
@@ -753,66 +965,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<BackupRequest>> GetBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<KeyVaultReferenceCollection>> GetAppSettingsKeyVaultReferencesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference and status of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='appSettingKey'>
-        /// App Setting key name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<KeyVaultReferenceResource>> GetAppSettingKeyVaultReferenceWithHttpMessagesAsync(string resourceGroupName, string name, string appSettingKey, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Replaces the connection strings of an app.
         /// </summary>
@@ -2901,7 +3053,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SiteInstance>>> ListInstanceIdentifiersWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebSiteInstanceStatus>>> ListInstanceIdentifiersWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all scale-out instances of an app.
         /// </summary>
@@ -5505,6 +5657,77 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<SiteAuthSettings>> GetAuthSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <remarks>
+        /// Description for Updates site's Authentication / Authorization
+        /// settings for apps via the V2 format
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app.
+        /// </param>
+        /// <param name='siteAuthSettingsV2'>
+        /// Auth settings associated with web app.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to
+        /// production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <remarks>
+        /// Description for Gets site's Authentication / Authorization settings
+        /// for apps via the V2 format
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the deployment slot. If a slot is not specified, the API
+        /// will get the settings for the production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> GetAuthSettingsV2SlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Updates the Azure storage account configurations of an app.
         /// </summary>
         /// <remarks>
@@ -7938,7 +8161,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SiteInstance>>> ListInstanceIdentifiersSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebSiteInstanceStatus>>> ListInstanceIdentifiersSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all scale-out instances of an app.
         /// </summary>
@@ -13667,7 +13890,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SiteInstance>>> ListInstanceIdentifiersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebSiteInstanceStatus>>> ListInstanceIdentifiersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.
@@ -14191,7 +14414,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SiteInstance>>> ListInstanceIdentifiersSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebSiteInstanceStatus>>> ListInstanceIdentifiersSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.

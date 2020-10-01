@@ -113,10 +113,14 @@
         /// <param name='assignmentName'>
         /// name of the assignment.
         /// </param>
-        public static Assignment DeleteInSubscription(this IAssignmentsOperations operations, string subscriptionId, string assignmentName)
+        /// <param name='assignmentDeleteBehavior'>
+        /// If set to <see cref='AssignmentDeleteBehavior.All' />, this will delete all of the resources created by the assignment.
+        /// This functionality is disabled by default.
+        /// </param>
+        public static Assignment DeleteInSubscription(this IAssignmentsOperations operations, string subscriptionId, string assignmentName, string assignmentDeleteBehavior = default(string))
         {
             var scope = string.Format(Constants.ResourceScopes.SubscriptionScope, subscriptionId);
-            return operations.DeleteAsync(scope, assignmentName).GetAwaiter().GetResult();
+            return operations.DeleteAsync(scope, assignmentName, assignmentDeleteBehavior).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -131,13 +135,17 @@
         /// <param name='assignmentName'>
         /// name of the assignment.
         /// </param>
+        /// <param name='assignmentDeleteBehavior'>
+        /// If set to <see cref='AssignmentDeleteBehavior.All' />, this will delete all of the resources created by the assignment.
+        /// This functionality is disabled by default.
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<Assignment> DeleteInSubscriptionAsync(this IAssignmentsOperations operations, string subscriptionId, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Assignment> DeleteInSubscriptionAsync(this IAssignmentsOperations operations, string subscriptionId, string assignmentName, string assignmentDeleteBehavior = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var scope = string.Format(Constants.ResourceScopes.SubscriptionScope, subscriptionId);
-            using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, assignmentName, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, assignmentName, assignmentDeleteBehavior, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

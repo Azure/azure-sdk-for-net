@@ -1,0 +1,44 @@
+{
+  "parameters": {
+    "querySpecification": {
+      "query": "SELECT * FROM DIGITALTWINS WHERE temp = 79"
+    },
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "items": [
+          {
+            "$dtId": "Twin-01",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample01",
+            "temp": 79,
+            "comfortIndex": 50
+          },
+          {
+            "$dtId": "Twin-02",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample02",
+            "temp": 79,
+            "comfortIndex": 50
+          },
+          {
+            "$dtId": "Twin-03",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample03",
+            "temp": 79,
+            "comfortIndex": 50
+          }
+        ],
+        "continuationToken": "<token>"
+      }
+    }
+  }
+}

@@ -5,94 +5,94 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language tokenizer. </summary>
     public enum MicrosoftTokenizerLanguage
     {
-        /// <summary> bangla. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Bangla. </summary>
         Bangla,
-        /// <summary> bulgarian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Bulgarian. </summary>
         Bulgarian,
-        /// <summary> catalan. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Catalan. </summary>
         Catalan,
-        /// <summary> chineseSimplified. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Chinese (Simplified). </summary>
         ChineseSimplified,
-        /// <summary> chineseTraditional. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Chinese (Traditional). </summary>
         ChineseTraditional,
-        /// <summary> croatian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Croatian. </summary>
         Croatian,
-        /// <summary> czech. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Czech. </summary>
         Czech,
-        /// <summary> danish. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Danish. </summary>
         Danish,
-        /// <summary> dutch. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Dutch. </summary>
         Dutch,
-        /// <summary> english. </summary>
+        /// <summary> Selects the Microsoft tokenizer for English. </summary>
         English,
-        /// <summary> french. </summary>
+        /// <summary> Selects the Microsoft tokenizer for French. </summary>
         French,
-        /// <summary> german. </summary>
+        /// <summary> Selects the Microsoft tokenizer for German. </summary>
         German,
-        /// <summary> greek. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Greek. </summary>
         Greek,
-        /// <summary> gujarati. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Gujarati. </summary>
         Gujarati,
-        /// <summary> hindi. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Hindi. </summary>
         Hindi,
-        /// <summary> icelandic. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Icelandic. </summary>
         Icelandic,
-        /// <summary> indonesian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Indonesian. </summary>
         Indonesian,
-        /// <summary> italian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Italian. </summary>
         Italian,
-        /// <summary> japanese. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Japanese. </summary>
         Japanese,
-        /// <summary> kannada. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Kannada. </summary>
         Kannada,
-        /// <summary> korean. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Korean. </summary>
         Korean,
-        /// <summary> malay. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Malay. </summary>
         Malay,
-        /// <summary> malayalam. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Malayalam. </summary>
         Malayalam,
-        /// <summary> marathi. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Marathi. </summary>
         Marathi,
-        /// <summary> norwegianBokmaal. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Norwegian (Bokmål). </summary>
         NorwegianBokmaal,
-        /// <summary> polish. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Polish. </summary>
         Polish,
-        /// <summary> portuguese. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Portuguese. </summary>
         Portuguese,
-        /// <summary> portugueseBrazilian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Portuguese (Brazil). </summary>
         PortugueseBrazilian,
-        /// <summary> punjabi. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Punjabi. </summary>
         Punjabi,
-        /// <summary> romanian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Romanian. </summary>
         Romanian,
-        /// <summary> russian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Russian. </summary>
         Russian,
-        /// <summary> serbianCyrillic. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Serbian (Cyrillic). </summary>
         SerbianCyrillic,
-        /// <summary> serbianLatin. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Serbian (Latin). </summary>
         SerbianLatin,
-        /// <summary> slovenian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Slovenian. </summary>
         Slovenian,
-        /// <summary> spanish. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Spanish. </summary>
         Spanish,
-        /// <summary> swedish. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Swedish. </summary>
         Swedish,
-        /// <summary> tamil. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Tamil. </summary>
         Tamil,
-        /// <summary> telugu. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Telugu. </summary>
         Telugu,
-        /// <summary> thai. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Thai. </summary>
         Thai,
-        /// <summary> ukrainian. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Ukrainian. </summary>
         Ukrainian,
-        /// <summary> urdu. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Urdu. </summary>
         Urdu,
-        /// <summary> vietnamese. </summary>
+        /// <summary> Selects the Microsoft tokenizer for Vietnamese. </summary>
         Vietnamese
     }
 }

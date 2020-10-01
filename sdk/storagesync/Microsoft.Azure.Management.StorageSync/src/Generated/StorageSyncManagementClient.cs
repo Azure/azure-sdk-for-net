@@ -85,6 +85,16 @@ namespace Microsoft.Azure.Management.StorageSync
         public virtual IStorageSyncServicesOperations StorageSyncServices { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets the ISyncGroupsOperations.
         /// </summary>
         public virtual ISyncGroupsOperations SyncGroups { get; private set; }
@@ -357,6 +367,8 @@ namespace Microsoft.Azure.Management.StorageSync
         {
             Operations = new Operations(this);
             StorageSyncServices = new StorageSyncServicesOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             CloudEndpoints = new CloudEndpointsOperations(this);
             ServerEndpoints = new ServerEndpointsOperations(this);
@@ -364,7 +376,7 @@ namespace Microsoft.Azure.Management.StorageSync
             Workflows = new WorkflowsOperations(this);
             OperationStatus = new OperationStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -43,7 +43,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// tenant.</param>
         /// <param name="displayName">The display name of the tenant.</param>
         /// <param name="domains">The list of domains for the tenant.</param>
-        public TenantIdDescription(string id = default(string), string tenantId = default(string), TenantCategory? tenantCategory = default(TenantCategory?), string country = default(string), string countryCode = default(string), string displayName = default(string), IList<string> domains = default(IList<string>))
+        /// <param name="defaultDomain">The default domain for the
+        /// tenant.</param>
+        /// <param name="tenantType">The tenant type. Only available for 'Home'
+        /// tenant category.</param>
+        /// <param name="tenantBrandingLogoUrl">The tenant's branding logo URL.
+        /// Only available for 'Home' tenant category.</param>
+        public TenantIdDescription(string id = default(string), string tenantId = default(string), TenantCategory? tenantCategory = default(TenantCategory?), string country = default(string), string countryCode = default(string), string displayName = default(string), IList<string> domains = default(IList<string>), string defaultDomain = default(string), string tenantType = default(string), string tenantBrandingLogoUrl = default(string))
         {
             Id = id;
             TenantId = tenantId;
@@ -52,6 +58,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             CountryCode = countryCode;
             DisplayName = displayName;
             Domains = domains;
+            DefaultDomain = defaultDomain;
+            TenantType = tenantType;
+            TenantBrandingLogoUrl = tenantBrandingLogoUrl;
             CustomInit();
         }
 
@@ -104,6 +113,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "domains")]
         public IList<string> Domains { get; private set; }
+
+        /// <summary>
+        /// Gets the default domain for the tenant.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultDomain")]
+        public string DefaultDomain { get; private set; }
+
+        /// <summary>
+        /// Gets the tenant type. Only available for 'Home' tenant category.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantType")]
+        public string TenantType { get; private set; }
+
+        /// <summary>
+        /// Gets the tenant's branding logo URL. Only available for 'Home'
+        /// tenant category.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantBrandingLogoUrl")]
+        public string TenantBrandingLogoUrl { get; private set; }
 
     }
 }

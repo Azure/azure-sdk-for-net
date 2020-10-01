@@ -93,13 +93,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </exception>
         Task<AzureOperationResponse<Workspace>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Workspace parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a workspace instance.
+        /// Deletes a workspace resource. To recover the workspace, create it
+        /// again with the same name, in the same subscription, resource group
+        /// and location. The name is kept for 14 days and cannot be used for
+        /// another workspace. To remove the workspace completely and release
+        /// the name, use the force flag.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the workspace without the recovery option. A workspace that
+        /// was deleted with this flag cannot be recovered.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,7 +121,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a workspace instance.
         /// </summary>
@@ -168,31 +176,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </exception>
         Task<AzureOperationResponse<Workspace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, WorkspacePatch parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the available service tiers for the workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IList<AvailableServiceTier>>> AvailableServiceTiersWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Create or update a workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -221,13 +204,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </exception>
         Task<AzureOperationResponse<Workspace>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Workspace parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a workspace instance.
+        /// Deletes a workspace resource. To recover the workspace, create it
+        /// again with the same name, in the same subscription, resource group
+        /// and location. The name is kept for 14 days and cannot be used for
+        /// another workspace. To remove the workspace completely and release
+        /// the name, use the force flag.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the workspace without the recovery option. A workspace that
+        /// was deleted with this flag cannot be recovered.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -241,6 +232,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

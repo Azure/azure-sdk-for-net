@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -16,6 +17,8 @@ namespace Azure.Search.Documents
         /// <summary> Initializes a new instance of SearchOptions. </summary>
         public SearchOptions()
         {
+            Facets = new ChangeTrackingList<string>();
+            ScoringParameters = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SearchOptions. </summary>

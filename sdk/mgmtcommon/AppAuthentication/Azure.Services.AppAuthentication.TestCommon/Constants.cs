@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value2;";
         public static readonly string NoMethodWorkedToGetTokenError = "methods to get an access token, but none of them worked";
         public static readonly string ProgramNotFoundError = "No such file";
-        public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
@@ -71,6 +70,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string CertificateConnStringThumbprintCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringSubjectNameCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateSubjectName=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifier = $"RunAs=App;AppId={TestAppId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
+        public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifierUserAssignedMsi = $"RunAs=App;AppId={TestAppId};KeyVaultCertificateSecretIdentifier=SecretIdentifier;KeyVaultAppId={TestUserAssignedManagedIdentityId}";
         public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
         public static readonly string ClientSecretConnString = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};AppKey={ClientSecret}";
         public static readonly string ConnectionStringEnvironmentVariableName = "AzureServicesAuthConnectionString";
@@ -88,9 +88,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AppType = "App";
 
         // MSI related constants
-        public static readonly string MsiAppServiceEndpointEnv = "MSI_ENDPOINT";
-        public static readonly string MsiAppServiceSecretEnv = "MSI_SECRET";
+        public static readonly string MsiAppServiceEndpointEnv = "IDENTITY_ENDPOINT";
+        public static readonly string MsiAppServiceHeaderEnv = "IDENTITY_HEADER";
         public static readonly string MsiEndpoint = "http://localhost:3748/oauth2/token";
+
+        public static readonly string MsiServiceFabricEndpointEnv = MsiAppServiceEndpointEnv;
+        public static readonly string MsiServiceFabricHeaderEnv = MsiAppServiceHeaderEnv;
+        public static readonly string MsiServiceFabricThumbprintEnv = "IDENTITY_SERVER_THUMBPRINT";
+        public static readonly string MsiServiceFabricApiVersionEnv = "IDENTITY_API_VERSION";
 
         // Unit test certificate
         //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Certificate is used for tests only")] 
@@ -109,10 +114,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ServiceConfigFileArgument = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json";
         public static readonly string ServiceConfigFileArgumentName = "--serviceConfigFile";
         public static readonly string LocalAppDataEnv = "LOCALAPPDATA";
-        public static readonly string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
-        public static readonly string TokenProviderExceptionMessage = "Exception for Visual Studio token provider";
         public static readonly string PreferenceNotFound = "'Preference' was not found";
-        public static readonly string TokenProviderFileFormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
 
         // Test files path
         public static readonly string TestFilesPath = "TestFiles";

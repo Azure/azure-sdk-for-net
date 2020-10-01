@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="loadBalancerBackendAddressPools">Specifies an array of
         /// references to backend address pools of load balancers. A scale set
         /// can reference backend address pools of one public and one internal
-        /// load balancer. Multiple scale sets cannot use the same load
-        /// balancer.</param>
+        /// load balancer. Multiple scale sets cannot use the same basic sku
+        /// load balancer.</param>
         /// <param name="loadBalancerInboundNatPools">Specifies an array of
         /// references to inbound Nat pools of the load balancers. A scale set
         /// can reference inbound nat pools of one public and one internal load
-        /// balancer. Multiple scale sets cannot use the same load
-        /// balancer</param>
+        /// balancer. Multiple scale sets cannot use the same basic sku load
+        /// balancer.</param>
         public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies an array of references to backend address
         /// pools of load balancers. A scale set can reference backend address
         /// pools of one public and one internal load balancer. Multiple scale
-        /// sets cannot use the same load balancer.
+        /// sets cannot use the same basic sku load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies an array of references to inbound Nat pools
         /// of the load balancers. A scale set can reference inbound nat pools
         /// of one public and one internal load balancer. Multiple scale sets
-        /// cannot use the same load balancer
+        /// cannot use the same basic sku load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
         public IList<SubResource> LoadBalancerInboundNatPools { get; set; }

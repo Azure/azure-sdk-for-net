@@ -107,7 +107,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// extensions are present on the virtual machine.</param>
         /// <param name="requireGuestProvisionSignal">Specifies whether the
         /// guest provision signal is required to infer provision success of
-        /// the virtual machine.</param>
+        /// the virtual machine.  **Note: This property is for private testing
+        /// only, and all customers must not set the property to
+        /// false.**</param>
         public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?), bool? requireGuestProvisionSignal = default(bool?))
         {
             ComputerName = computerName;
@@ -251,6 +253,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies whether the guest provision signal is
         /// required to infer provision success of the virtual machine.
+        /// **Note: This property is for private testing only, and all
+        /// customers must not set the property to false.**
         /// </summary>
         [JsonProperty(PropertyName = "requireGuestProvisionSignal")]
         public bool? RequireGuestProvisionSignal { get; set; }

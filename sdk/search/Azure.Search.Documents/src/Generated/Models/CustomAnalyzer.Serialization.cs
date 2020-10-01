@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CustomAnalyzer : IUtf8JsonSerializable
     {
@@ -17,8 +17,8 @@ namespace Azure.Search.Documents.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer");
-            writer.WriteStringValue(Tokenizer.ToString());
-            if (TokenFilters != null)
+            writer.WriteStringValue(TokenizerName.ToString());
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null)
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();
@@ -48,8 +48,8 @@ namespace Azure.Search.Documents.Models
         internal static CustomAnalyzer DeserializeCustomAnalyzer(JsonElement element)
         {
             LexicalTokenizerName tokenizer = default;
-            IList<TokenFilterName> tokenFilters = default;
-            IList<string> charFilters = default;
+            Optional<IList<TokenFilterName>> tokenFilters = default;
+            Optional<IList<string>> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -61,10 +61,6 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("tokenFilters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TokenFilterName> array = new List<TokenFilterName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -75,21 +71,10 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("charFilters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     charFilters = array;
                     continue;
@@ -105,7 +90,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CustomAnalyzer(odataType, name, tokenizer, tokenFilters, charFilters);
+            return new CustomAnalyzer(odataType, name, tokenizer, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
         }
     }
 }

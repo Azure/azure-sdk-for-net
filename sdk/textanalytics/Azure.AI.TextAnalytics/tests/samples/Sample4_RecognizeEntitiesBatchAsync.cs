@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Console.WriteLine($"    Document error code: {result.Error.Code}.");
+                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
                     Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
@@ -61,6 +61,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (CategorizedEntity entity in result.Entities)
                     {
+                        Console.WriteLine($"        Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
                         Console.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
                     }
 

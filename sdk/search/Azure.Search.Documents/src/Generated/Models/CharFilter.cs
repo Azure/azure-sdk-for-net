@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for character filters. </summary>
     public partial class CharFilter

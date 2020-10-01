@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// KeyVault configuration when using an encryption KeySource of
+    /// Microsoft.KeyVault.
+    /// </summary>
     public partial class KeyVaultProperties
     {
         /// <summary>
@@ -28,7 +32,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <param name="keyIdentifier">Full path to the versioned secret.
         /// Example
-        /// https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053</param>
+        /// https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053.
+        /// To be usable the following prerequisites must be met:
+        ///
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and
+        /// Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled</param>
         public KeyVaultProperties(string keyIdentifier = default(string))
         {
             KeyIdentifier = keyIdentifier;
@@ -42,7 +52,13 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets full path to the versioned secret. Example
-        /// https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053
+        /// https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053.
+        /// To be usable the following prerequisites must be met:
+        ///
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and
+        /// Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled
         /// </summary>
         [JsonProperty(PropertyName = "keyIdentifier")]
         public string KeyIdentifier { get; set; }

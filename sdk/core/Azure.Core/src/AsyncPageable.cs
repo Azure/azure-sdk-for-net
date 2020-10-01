@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -13,6 +13,37 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
+    /// <example>
+    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
+    /// <code snippet="Snippet:AsyncPageable">
+    /// // call a service method, which returns AsyncPageable&lt;T&gt;
+    /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
+    ///
+    /// await foreach (SecretProperties secretProperties in allSecretProperties)
+    /// {
+    ///     Console.WriteLine(secretProperties.Name);
+    /// }
+    /// </code>
+    /// or using a while loop:
+    /// <code snippet="Snippet:AsyncPageableLoop">
+    /// // call a service method, which returns AsyncPageable&lt;T&gt;
+    /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
+    ///
+    /// IAsyncEnumerator&lt;SecretProperties&gt; enumerator = allSecretProperties.GetAsyncEnumerator();
+    /// try
+    /// {
+    ///     while (await enumerator.MoveNextAsync())
+    ///     {
+    ///         SecretProperties secretProperties = enumerator.Current;
+    ///         Console.WriteLine(secretProperties.Name);
+    ///     }
+    /// }
+    /// finally
+    /// {
+    ///     await enumerator.DisposeAsync();
+    /// }
+    /// </code>
+    /// </example>
     public abstract class AsyncPageable<T> : IAsyncEnumerable<T> where T : notnull
     {
         /// <summary>

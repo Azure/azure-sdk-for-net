@@ -521,7 +521,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             if (this.partitionPumps.TryGetValue(partitionId, out capturedPump))
             {
                 // There already is a pump. Make sure the pump is working and replace the lease.
-                if (capturedPump.PumpStatus == PartitionPumpStatus.Errored || capturedPump.IsClosing)
+                if (capturedPump.PumpStatus != PartitionPumpStatus.Running && capturedPump.PumpStatus != PartitionPumpStatus.Opening)
                 {
                     // The existing pump is bad. Remove it.
                     await TryRemovePumpAsync(partitionId, CloseReason.Shutdown).ConfigureAwait(false);

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search.Models
     public class ValueFacetResult<T>
     {
         /// <summary>
-        /// Creates a new instance of the <c cref="ValueFacetResult{T}">ValueFacetResult</c> class.
+        /// Creates a new instance of the <see cref="ValueFacetResult{T}" /> class.
         /// </summary>
         /// <param name="count">The approximate count of documents falling within the bucket described by this facet.</param>
         /// <param name="value">The value of the facet, or the inclusive lower bound if it's an interval facet.</param>

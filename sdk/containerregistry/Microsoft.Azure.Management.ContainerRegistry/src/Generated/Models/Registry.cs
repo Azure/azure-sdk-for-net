@@ -69,7 +69,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// serve data when dataEndpointEnabled is true.</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections for a container registry.</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for the container registry. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -86,6 +89,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             DataEndpointEnabled = dataEndpointEnabled;
             DataEndpointHostNames = dataEndpointHostNames;
             PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -184,6 +188,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// the container registry. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

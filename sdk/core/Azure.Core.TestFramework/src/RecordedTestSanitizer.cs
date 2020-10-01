@@ -5,15 +5,26 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.TestFramework
 {
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
+        public List<string> JsonPathSanitizers { get; } = new List<string>();
+
+        /// <summary>
+        /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
+        //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.
+        //  this property will be removed in the future.
+        /// </summary>
+        public bool DoNotConvertJsonDateTokens { get; set; }
+
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
-        private static readonly string[] s_sanitizedHeaders = { "Authorization" };
+        public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
 
         public virtual string SanitizeUri(string uri)
         {
@@ -22,7 +33,7 @@ namespace Azure.Core.TestFramework
 
         public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
-            foreach (var header in s_sanitizedHeaders)
+            foreach (var header in SanitizedHeaders)
             {
                 if (headers.ContainsKey(header))
                 {
@@ -33,7 +44,40 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
-            return body;
+            if (JsonPathSanitizers.Count == 0)
+                return body;
+            try
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    DateParseHandling = DateParseHandling.None
+                };
+
+                JToken jsonO;
+                // Prevent default behavior where JSON.NET will convert DateTimeOffset
+                // into a DateTime.
+                if (DoNotConvertJsonDateTokens)
+                {
+                    jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
+                }
+                else
+                {
+                    jsonO = JToken.Parse(body);
+                }
+
+                foreach (string jsonPath in JsonPathSanitizers)
+                {
+                    foreach (JToken token in jsonO.SelectTokens(jsonPath))
+                    {
+                        token.Replace(JToken.FromObject(SanitizeValue));
+                    }
+                }
+                return JsonConvert.SerializeObject(jsonO, settings);
+            }
+            catch
+            {
+                return body;
+            }
         }
 
         public virtual byte[] SanitizeBody(string contentType, byte[] body)
@@ -72,7 +116,10 @@ namespace Azure.Core.TestFramework
 
             SanitizeHeaders(entry.Response.Headers);
 
-            SanitizeBody(entry.Response);
+            if (entry.RequestMethod != RequestMethod.Head)
+            {
+                SanitizeBody(entry.Response);
+            }
         }
 
         public virtual void Sanitize(RecordSession session)

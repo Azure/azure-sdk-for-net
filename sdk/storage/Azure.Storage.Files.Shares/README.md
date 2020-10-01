@@ -1,6 +1,6 @@
 # Azure Storage File Shares client library for .NET
 
-> Server Version: 2019-07-07
+> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure File Shares offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file
@@ -196,8 +196,8 @@ catch (RequestFailedException ex)
 
 Get started with our [File samples][samples]:
 
-1. [Hello World](samples/Sample01a_HelloWorld.cs): Upload files, download files, and traverse shares (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
-2. [Auth](samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, and shared access signatures.
+1. [Hello World](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/samples/Sample01a_HelloWorld.cs): Upload files, download files, and traverse shares (or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, and shared access signatures.
 
 ## Contributing
 
@@ -231,8 +231,8 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/file-service-error-codes
-[samples]: samples/
-[storage_contrib]: ../CONTRIBUTING.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/samples/
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

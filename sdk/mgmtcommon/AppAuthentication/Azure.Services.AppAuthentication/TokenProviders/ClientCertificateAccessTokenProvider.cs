@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="tenantId"></param>
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
             string certificateIdentifier, CertificateIdentifierType certificateIdentifierType, string storeLocation,
-            string azureAdInstance, string tenantId = default(string), int msiRetryTimeoutInSeconds = 0,
+            string azureAdInstance, string tenantId = default, int msiRetryTimeoutInSeconds = 0,
+            string keyVaultUserAssignedManagedIdentityId = null,
             IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
@@ -89,6 +90,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         $"StoreLocation {storeLocation} is not valid. Valid values are CurrentUser and LocalMachine.");
                 }
             }
+            else
+            {
+                _keyVaultClient = keyVaultClient ?? new KeyVaultClient(msiRetryTimeoutInSeconds, keyVaultUserAssignedManagedIdentityId);
+            }
 
             _clientId = clientId;
 
@@ -96,7 +101,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _azureAdInstance = azureAdInstance;
             _tenantId = tenantId;
             _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
-            _keyVaultClient = keyVaultClient ?? new KeyVaultClient(msiRetryTimeoutInSeconds);
 
             _certificateIdentifier = certificateIdentifier;
 
@@ -115,7 +119,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="authority">Authority where resource is.</param>
         /// <returns></returns>
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // If authority is not specified and tenantId was present in connection string, create it using azureAdInstance and tenantId. 
             if (string.IsNullOrWhiteSpace(authority) && !string.IsNullOrWhiteSpace(_tenantId))

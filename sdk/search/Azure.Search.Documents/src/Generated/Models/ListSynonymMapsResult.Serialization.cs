@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListSynonymMapsResult
     {
@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Models
                     List<SynonymMap> array = new List<SynonymMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SynonymMap.DeserializeSynonymMap(item));
-                        }
+                        array.Add(SynonymMap.DeserializeSynonymMap(item));
                     }
                     value = array;
                     continue;

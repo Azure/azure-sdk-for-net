@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public abstract bool TryAdd(ServiceBusMessage message);
+        public abstract bool TryAddMessage(ServiceBusMessage message);
 
         /// <summary>
         ///   Clears the batch, removing all messages and resetting the

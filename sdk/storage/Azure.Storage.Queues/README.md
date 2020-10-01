@@ -1,6 +1,6 @@
 # Azure Storage Queues client library for .NET
 
-> Server Version: 2019-07-07 and 2019-02-02
+> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
@@ -155,8 +155,8 @@ catch (RequestFailedException ex)
 
 Get started with our [Queue samples][samples]:
 
-1. [Hello World](samples/Sample01a_HelloWorld.cs): Enqueue, Dequeue, Peek, and Update queue messages (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
-2. [Auth](samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, shared access signatures, and Azure Active Directory.
+1. [Hello World](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/samples/Sample01a_HelloWorld.cs): Enqueue, Dequeue, Peek, and Update queue messages (or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, shared access signatures, and Azure Active Directory.
 
 ## Contributing
 
@@ -193,8 +193,8 @@ additional questions or comments.
 [storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/queue-service-error-codes
-[samples]: samples/
-[storage_contrib]: ../CONTRIBUTING.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/samples/
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

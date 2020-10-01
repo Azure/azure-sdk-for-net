@@ -48,11 +48,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="databaseAccountOfferType">The offer type for the
         /// Cosmos DB database account. Default value: Standard. Possible
         /// values include: 'Standard'</param>
-        /// <param name="ipRangeFilter">Cosmos DB Firewall Support: This value
-        /// specifies the set of IP addresses or IP address ranges in CIDR form
-        /// to be included as the allowed list of client IPs for a given
-        /// database account. IP addresses/ranges must be comma separated and
-        /// must not contain any spaces.</param>
+        /// <param name="ipRules">List of IpRules.</param>
         /// <param name="isVirtualNetworkFilterEnabled">Flag to indicate
         /// whether to enable/disable Virtual Network ACL rules.</param>
         /// <param name="enableAutomaticFailover">Enables automatic failover of
@@ -90,14 +86,31 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="publicNetworkAccess">Whether requests from Public
         /// Network are allowed. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), string ipRangeFilter = default(string), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string))
-            : base(id, name, type, location, tags)
+        /// <param name="enableFreeTier">Flag to indicate whether Free Tier is
+        /// enabled.</param>
+        /// <param name="apiProperties">API specific properties.</param>
+        /// <param name="enableAnalyticalStorage">Flag to indicate whether to
+        /// enable storage analytics.</param>
+        /// <param name="instanceId">A unique identifier assigned to the
+        /// database account</param>
+        /// <param name="createMode">Enum to indicate the mode of account
+        /// creation. Possible values include: 'Default', 'Restore'</param>
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore.</param>
+        /// <param name="backupPolicy">The object representing the policy for
+        /// taking backups on an account.</param>
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), string instanceId = default(string), string createMode = default(string), RestoreParameters restoreParameters = default(RestoreParameters), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), SystemData systemData = default(SystemData))
+            : base(id, name, type, location, tags, identity)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
             DocumentEndpoint = documentEndpoint;
             DatabaseAccountOfferType = databaseAccountOfferType;
-            IpRangeFilter = ipRangeFilter;
+            IpRules = ipRules;
             IsVirtualNetworkFilterEnabled = isVirtualNetworkFilterEnabled;
             EnableAutomaticFailover = enableAutomaticFailover;
             ConsistencyPolicy = consistencyPolicy;
@@ -114,6 +127,15 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
             KeyVaultKeyUri = keyVaultKeyUri;
             PublicNetworkAccess = publicNetworkAccess;
+            EnableFreeTier = enableFreeTier;
+            ApiProperties = apiProperties;
+            EnableAnalyticalStorage = enableAnalyticalStorage;
+            InstanceId = instanceId;
+            CreateMode = createMode;
+            RestoreParameters = restoreParameters;
+            BackupPolicy = backupPolicy;
+            Cors = cors;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -149,14 +171,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public DatabaseAccountOfferType? DatabaseAccountOfferType { get; private set; }
 
         /// <summary>
-        /// Gets or sets cosmos DB Firewall Support: This value specifies the
-        /// set of IP addresses or IP address ranges in CIDR form to be
-        /// included as the allowed list of client IPs for a given database
-        /// account. IP addresses/ranges must be comma separated and must not
-        /// contain any spaces.
+        /// Gets or sets list of IpRules.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipRangeFilter")]
-        public string IpRangeFilter { get; set; }
+        [JsonProperty(PropertyName = "properties.ipRules")]
+        public IList<IpAddressOrRange> IpRules { get; set; }
 
         /// <summary>
         /// Gets or sets flag to indicate whether to enable/disable Virtual
@@ -271,6 +289,63 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
+        /// Gets or sets flag to indicate whether Free Tier is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFreeTier")]
+        public bool? EnableFreeTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets API specific properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiProperties")]
+        public ApiProperties ApiProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether to enable storage analytics.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAnalyticalStorage")]
+        public bool? EnableAnalyticalStorage { get; set; }
+
+        /// <summary>
+        /// Gets a unique identifier assigned to the database account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instanceId")]
+        public string InstanceId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of account creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restoreParameters")]
+        public RestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object representing the policy for taking backups
+        /// on an account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backupPolicy")]
+        public BackupPolicy BackupPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -319,6 +394,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                     if (element3 != null)
                     {
                         element3.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element4 in Cors)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
                     }
                 }
             }

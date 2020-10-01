@@ -6,11 +6,13 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 
 namespace Azure.Search.Documents.Tests.Samples
@@ -34,13 +36,15 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+            string indexName = "nycjobs";
+
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -62,7 +66,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
-            SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 // Print out the title and job description (we'll see below how to
@@ -74,7 +78,9 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
         }
 
+#if EXPERIMENTAL_DYNAMIC
         [Test]
+#endif
         [SyncOnly]
         public async Task CreateAndQuery()
         {
@@ -96,19 +102,21 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
-            SearchResults<SearchDocument> response = client.Search("luxury");
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
-                string id = (string)doc["hotelId"];
-                string name = (string)doc["hotelName"];
+                //@@ string id = (string)doc["HotelId"];
+                /*@@*/ string id = (string)doc["hotelId"];
+                //@@ string name = (string)doc["HotelName"];
+                /*@@*/ string name = (string)doc["hotelName"];
                 Console.WriteLine("{id}: {name}");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-            //@@ SearchResults<SearchDocument> response = client.Search("luxury");
-            /*@@*/ response = client.Search("luxury");
+            //@@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+            /*@@*/ response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -122,10 +130,14 @@ namespace Azure.Search.Documents.Tests.Samples
         #region Snippet:Azure_Search_Tests_Samples_Readme_StaticType
         public class Hotel
         {
-            [JsonPropertyName("hotelId")]
+            //@@ [JsonPropertyName("HotelId")]
+            /*@@*/ [JsonPropertyName("hotelId")]
+            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
             public string Id { get; set; }
 
-            [JsonPropertyName("hotelName")]
+            //@@ [JsonPropertyName("HotelName")]
+            /*@@*/ [JsonPropertyName("hotelName")]
+            [SearchableField(IsFilterable = true, IsSortable = true)]
             public string Name { get; set; }
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
@@ -168,10 +180,12 @@ namespace Azure.Search.Documents.Tests.Samples
             int stars = 4;
             SearchOptions options = new SearchOptions
             {
-                // Filter to only ratings greater than or equal our preference
-                Filter = SearchFilter.Create($"rating ge {stars}"),
+                // Filter to only Rating greater than or equal our preference
+                //@@ Filter = SearchFilter.Create($"Rating ge {stars}"),
+                /*@@*/ Filter = SearchFilter.Create($"rating ge {stars}"),
                 Size = 5, // Take only 5 results
-                OrderBy = new[] { "rating desc" } // Sort by rating from high to low
+                //@@ OrderBy = { "Rating desc" } // Sort by Rating from high to low
+                /*@@*/ OrderBy = { "rating desc" } // Sort by rating from high to low
             };
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
@@ -182,7 +196,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [SyncOnly]
         public async Task CreateIndex()
         {
-            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -192,10 +206,39 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a service client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
-            /*@@*/ client = resources.GetServiceClient();
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            /*@@*/ client = resources.GetIndexClient();
 
-            // Create the index
+            // Create the index using FieldBuilder.
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex
+            //@@SearchIndex index = new SearchIndex("hotels")
+            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+            {
+                Fields = new FieldBuilder().Build(typeof(Hotel)),
+                Suggesters =
+                {
+                    // Suggest query terms from the hotelName field.
+                    new SearchSuggester("sg", "hotelName")
+                }
+            };
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex
+
+            client.CreateIndex(index);
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+
+            resources.IndexName = index.Name;
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task CreateManualIndex()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            SearchIndexClient client = resources.GetIndexClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+            // Create the index using field definitions.
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex
             //@@SearchIndex index = new SearchIndex("hotels")
             /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
             {
@@ -203,7 +246,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                    new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new ComplexField("address")
                     {
@@ -219,13 +262,29 @@ namespace Azure.Search.Documents.Tests.Samples
                 },
                 Suggesters =
                 {
-                    // Suggest query terms from both the hotelName and description fields.
-                    new Suggester("sg", "hotelName", "description")
+                    // Suggest query terms from the hotelName field.
+                    new SearchSuggester("sg", "hotelName")
                 }
             };
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex
 
             client.CreateIndex(index);
-            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+
+            resources.IndexName = index.Name;
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task GetDocument()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resources.GetQueryClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_GetDocument
+            Hotel doc = client.GetDocument<Hotel>("1");
+            Console.WriteLine($"{doc.Id}: {doc.Name}");
+            #endregion
         }
 
         [Test]
@@ -238,8 +297,8 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_Readme_Index
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-                IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-                IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+                    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+                    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
 
                 IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
                 client.IndexDocuments(batch, options);

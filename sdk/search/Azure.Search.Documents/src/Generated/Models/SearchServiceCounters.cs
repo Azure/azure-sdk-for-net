@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
@@ -19,8 +19,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="dataSourceCounter"> Total number of data sources. </param>
         /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        /// <exception cref="ArgumentNullException"> <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, or <paramref name="synonymMapCounter"/> is null. </exception>
+        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter)
         {
             if (documentCounter == null)
             {
@@ -46,10 +46,6 @@ namespace Azure.Search.Documents.Models
             {
                 throw new ArgumentNullException(nameof(synonymMapCounter));
             }
-            if (skillsetCounter == null)
-            {
-                throw new ArgumentNullException(nameof(skillsetCounter));
-            }
 
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
@@ -57,7 +53,6 @@ namespace Azure.Search.Documents.Models
             DataSourceCounter = dataSourceCounter;
             StorageSizeCounter = storageSizeCounter;
             SynonymMapCounter = synonymMapCounter;
-            SkillsetCounter = skillsetCounter;
         }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
@@ -72,7 +67,5 @@ namespace Azure.Search.Documents.Models
         public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
         public SearchResourceCounter SynonymMapCounter { get; }
-        /// <summary> Total number of skillsets. </summary>
-        public SearchResourceCounter SkillsetCounter { get; }
     }
 }

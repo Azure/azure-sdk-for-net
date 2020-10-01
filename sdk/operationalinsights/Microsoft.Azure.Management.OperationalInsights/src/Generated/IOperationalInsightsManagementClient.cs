@@ -125,6 +125,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IWorkspacesOperations Workspaces { get; }
 
         /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
@@ -138,6 +143,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the ISavedSearchesOperations.
         /// </summary>
         ISavedSearchesOperations SavedSearches { get; }
+
+        /// <summary>
+        /// Gets the IAvailableServiceTiersOperations.
+        /// </summary>
+        IAvailableServiceTiersOperations AvailableServiceTiers { get; }
 
         /// <summary>
         /// Gets the IGatewaysOperations.

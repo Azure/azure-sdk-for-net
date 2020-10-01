@@ -20,10 +20,6 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (property.NameEquals("fieldName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fieldName = property.Value.GetString();
                     continue;
                 }
@@ -31,6 +27,7 @@ namespace Azure.AI.FormRecognizer.Training
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        accuracy = null;
                         continue;
                     }
                     accuracy = property.Value.GetSingle();

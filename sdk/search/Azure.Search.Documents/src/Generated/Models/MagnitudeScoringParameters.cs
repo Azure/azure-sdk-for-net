@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a magnitude scoring function. </summary>
     public partial class MagnitudeScoringParameters

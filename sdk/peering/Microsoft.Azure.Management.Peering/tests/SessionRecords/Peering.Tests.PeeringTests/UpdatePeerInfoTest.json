@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 65000,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc65000@contoso.com\",\r\n        \"phone\": \"9999999\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso65000\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a7a490f3-5bb4-4f61-8597-fbc6b43641a1"
+          "0b143f9c-fb44-40fb-9f6d-c4124ba4de64"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,10 +33,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "e2464e91-2953-4506-bd3b-a80b3ea16f21"
+          "04c810fa-6091-47bd-8b27-82b8dc84c827"
         ],
         "Date": [
-          "Fri, 24 Jan 2020 19:24:34 GMT"
+          "Tue, 12 May 2020 17:41:38 GMT"
         ],
         "Content-Length": [
           "448"
@@ -49,22 +49,22 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1d1e2a9d-1e0d-413c-a950-2364c3fe4ca8"
+          "c8c14053-01ea-4e6b-8a23-74ad25a82af0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -75,10 +75,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "ab3c3098-2833-44ff-a073-1d337dfea1d6"
+          "0318cc9f-d5fc-4bb5-a1cf-e6b0bdee1ee7"
         ],
         "Date": [
-          "Fri, 24 Jan 2020 19:24:34 GMT"
+          "Tue, 12 May 2020 17:41:38 GMT"
         ],
         "Content-Length": [
           "448"
@@ -91,22 +91,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "59754906-87c6-4a12-b64b-f8e8addcf7c5"
+          "e35efe40-51e5-4a0d-b458-a8ca7d16080e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -117,10 +117,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "0299c692-6fd3-4f1a-8f5a-55a2dda75f74"
+          "66cde390-d589-4297-8fcf-4c6683e79562"
         ],
         "Date": [
-          "Fri, 24 Jan 2020 19:24:34 GMT"
+          "Tue, 12 May 2020 17:41:38 GMT"
         ],
         "Content-Length": [
           "68"
@@ -133,22 +133,22 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e9e75d5c-992e-4599-853a-ec76b5d58458"
+          "a6c4ff2d-5973-4373-a310-84f7ad03fd61"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -159,10 +159,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "326ccd65-8c72-4cbb-89f2-eb11b4073d73"
+          "3079bf70-4cb8-407f-a01f-ab7ca6a6e370"
         ],
         "Date": [
-          "Fri, 24 Jan 2020 19:24:34 GMT"
+          "Tue, 12 May 2020 17:41:38 GMT"
         ],
         "Content-Length": [
           "0"

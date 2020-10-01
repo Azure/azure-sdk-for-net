@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -15,7 +17,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusSessionReceiver(
                 GetMockedConnection(),
                 "fakeQueue",
-                options: new ServiceBusReceiverOptions());
+                options: new ServiceBusSessionReceiverOptions(),
+                plugins: new ServiceBusPlugin[] { });
 
             Assert.That(async () => await receiver.RenewMessageLockAsync(
                 new ServiceBusReceivedMessage()),

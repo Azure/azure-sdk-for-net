@@ -1,0 +1,35 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "dtmi:com:example:Sample;1",
+            "uploadTime": "2020-03-01T17:32:28Z",
+            "decommissioned": false
+          },
+          {
+            "id": "dtmi:com:example:SampleDeviceModel;1",
+            "displayName": {
+              "en": "My Device Model"
+            },
+            "uploadTime": "2020-05-01T17:32:28Z",
+            "decommissioned": false
+          },
+          {
+            "id": "dtmi:com:example:AnotherSample;1",
+            "displayName": {
+              "en": "My Sample"
+            },
+            "uploadTime": "2020-03-01T17:32:28Z",
+            "decommissioned": false
+          }
+        ],
+        "nextLink": "url-to-next-page"
+      }
+    }
+  }
+}

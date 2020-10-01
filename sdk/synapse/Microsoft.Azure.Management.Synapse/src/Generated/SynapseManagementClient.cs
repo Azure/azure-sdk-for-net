@@ -260,6 +260,11 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkHubsOperations.
+        /// </summary>
+        public virtual IPrivateLinkHubsOperations PrivateLinkHubs { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -537,6 +542,7 @@ namespace Microsoft.Azure.Management.Synapse
             IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkHubs = new PrivateLinkHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-06-01-preview";
             AcceptLanguage = "en-US";

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
     public partial class WebApiSkill : SearchIndexerSkill
@@ -17,6 +18,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/>, or <paramref name="uri"/> is null. </exception>
         public WebApiSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string uri) : base(inputs, outputs)
         {
             if (inputs == null)
@@ -33,6 +35,7 @@ namespace Azure.Search.Documents.Models
             }
 
             Uri = uri;
+            HttpHeaders = new ChangeTrackingDictionary<string, string>();
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
@@ -62,8 +65,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The url for the Web API. </summary>
         public string Uri { get; set; }
-        /// <summary> The headers required to make the http request. </summary>
-        public IDictionary<string, string> HttpHeaders { get; set; }
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }
         /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>

@@ -20,19 +20,11 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }

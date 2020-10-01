@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    public class DeviceCodeCredentialOptions : TokenCredentialOptions
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
         /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken"/> and <see cref="DeviceCodeCredential.GetTokenAsync"/> in the case that
@@ -27,13 +29,23 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
-        /// If set to true the credential will store tokens in a persistent cache shared by other user credentials.
+        /// If set to true the credential will store tokens in a cache persisted to the machine, protected to the current user, which can be shared by other credentials and processes.
         /// </summary>
         public bool EnablePersistentCache { get; set; }
+
+        /// <summary>
+        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
+        /// </summary>
+        public bool AllowUnencryptedCache { get; set; }
 
         /// <summary>
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
         public AuthenticationRecord AuthenticationRecord { get; set; }
+
+        /// <summary>
+        /// The callback which will be executed to display the device code login details to the user. In not specified the device code and login instructions will be printed to the console.
+        /// </summary>
+        public Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; set; }
     }
 }

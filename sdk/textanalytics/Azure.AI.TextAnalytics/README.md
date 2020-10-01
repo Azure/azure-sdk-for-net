@@ -4,6 +4,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Sentiment Analysis
 * Key Phrase Extraction
 * Named Entity Recognition
+* Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
@@ -14,8 +15,9 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.TextAnalytics --version 1.0.0-preview.4
+dotnet add package Azure.AI.TextAnalytics
 ```
+**Note:** This package version targets Azure Text Analytics service API version v3.0 and above.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -33,13 +35,13 @@ You can create either resource using:
 Below is an example of how you can create a Text Analytics resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the text analytics resource -
+# Create a new resource group to hold the Text Analytics resource -
 # if using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
 
 ```PowerShell
-# Create text analytics
+# Create Text Analytics
 az cognitiveservices account create \
     --name <your-resource-name> \
     --resource-group <your-resource-group-name> \
@@ -123,6 +125,7 @@ The following section provides several code snippets using the `client` [created
 * [Analyze Sentiment](#analyze-sentiment)
 * [Extract Key Phrases](#extract-key-phrases)
 * [Recognize Entities](#recognize-entities)
+* [Recognize PII Entities](#recognize-pii-entities)
 * [Recognize Linked Entities](#recognize-linked-entities)
 
 ### Async examples
@@ -158,6 +161,8 @@ Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScore
 ```
 For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
 
+To get more granular information about the opinions related to aspects of a product/service, also known as Aspect-based Sentiment Analysis in Natural Language Processing (NLP), see a sample on sentiment analysis with opinion mining [here][analyze_sentiment_opinion_mining_sample].
+
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
 ### Extract Key Phrases
@@ -166,7 +171,7 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string document = "My cat might need to see a veterinarian.";
 
-IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
+KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 
 Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -184,17 +189,45 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
+CategorizedEntityCollection entities = client.RecognizeEntities(document);
 
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here][recognize_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
+
+### Recognize PII Entities
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in document or batch of documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
+
+```C# Snippet:RecognizePiiEntities
+string document = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
+
+PiiEntityCollection entities = client.RecognizePiiEntities(document).Value;
+
+Console.WriteLine($"Redacted Text: {entities.RedactedText}");
+if (entities.Count > 0)
+{
+    Console.WriteLine($"Recognized {entities.Count} PII entit{(entities.Count > 1 ? "ies" : "y")}:");
+    foreach (PiiEntity entity in entities)
+    {
+        Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    }
+}
+else
+{
+    Console.WriteLine("No entities were found.");
+}
+```
+
+For samples on using the production recommended option `RecognizePiiEntitiesBatch` see [here][recognize_pii_entities_sample].
+
+Please refer to the service documentation for supported [PII entity types][pii_entity_type].
 
 ### Recognize Linked Entities
 Run a predictive model to identify a collection of entities found in the passed-in document or batch of documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
@@ -202,7 +235,7 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
+LinkedEntityCollection linkedEntities = client.RecognizeLinkedEntities(document);
 
 Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
@@ -210,7 +243,8 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
+        Console.WriteLine($"    Match Text: {match.Text}, Offset (in UTF-16 code units): {match.Offset}");
+        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
     }
 }
 ```
@@ -235,12 +269,13 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(document);
+CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
-Console.WriteLine($"Recognized {entities.Value.Count} entities:");
-foreach (CategorizedEntity entity in entities.Value)
+Console.WriteLine($"Recognized {entities.Count} entities:");
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 
@@ -303,7 +338,11 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Analyze Sentiment][analyze_sentiment_sample]
 - [Extract Key Phrases][extract_key_phrases_sample]
 - [Recognize Entities][recognize_entities_sample]
+- [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
+
+### Advanced samples
+- [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
 - [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
@@ -319,12 +358,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 
 <!-- LINKS -->
-[textanalytics_client_src]: src
+[textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src
 [textanalytics_docs]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
-[textanalytics_samples]: /samples/README.md
-[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
+[textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
+[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
@@ -333,24 +372,27 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [key_phrase_extraction]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
 [named_entity_recognition]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
 [named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types
+[pii_entity_type]:https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal 
 
-[textanalytics_client_class]: src/TextAnalyticsClient.cs
-[azure_identity]: ../../identity/Azure.Identity
+[textanalytics_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src/TextAnalyticsClient.cs
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
-[logging]: ../../core/Azure.Core/samples/Diagnostics.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
-[contributing]: ../../../CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 
-[detect_language_sample]: samples/Sample1_DetectLanguage.md
-[analyze_sentiment_sample]: samples/Sample2_AnalyzeSentiment.md
-[extract_key_phrases_sample]: samples/Sample3_ExtractKeyPhrases.md
-[recognize_entities_sample]: samples/Sample4_RecognizeEntities.md
-[recognize_linked_entities_sample]: samples/Sample6_RecognizeLinkedEntities.md
-[mock_client_sample]: samples/Sample_MockClient.md
+[detect_language_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md
+[analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
+[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
+[extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
+[recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
+[recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
+[recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
+[mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

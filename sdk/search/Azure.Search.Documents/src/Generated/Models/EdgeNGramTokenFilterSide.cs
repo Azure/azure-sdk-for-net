@@ -5,14 +5,14 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies which side of the input an n-gram should be generated from. </summary>
     public enum EdgeNGramTokenFilterSide
     {
-        /// <summary> front. </summary>
+        /// <summary> Specifies that the n-gram should be generated from the front of the input. </summary>
         Front,
-        /// <summary> back. </summary>
+        /// <summary> Specifies that the n-gram should be generated from the back of the input. </summary>
         Back
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The set of options to apply to the batch.
         /// </summary>
         ///
-        private CreateBatchOptions Options { get; }
+        private CreateMessageBatchOptions Options { get; }
 
         /// <summary>
         ///   The set of messages that have been added to the batch.
@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="options">The set of options to apply to the batch.</param>
         ///
-        public AmqpMessageBatch(CreateBatchOptions options)
+        public AmqpMessageBatch(CreateMessageBatchOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.MaxSizeInBytes, nameof(options.MaxSizeInBytes));
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public override bool TryAdd(ServiceBusMessage message)
+        public override bool TryAddMessage(ServiceBusMessage message)
         {
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotDisposed(_disposed, nameof(ServiceBusMessageBatch));

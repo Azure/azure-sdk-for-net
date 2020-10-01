@@ -21,32 +21,35 @@ namespace Azure.Identity
         private const string AuthorityPropertyName = "authority";
         private const string HomeAccountIdPropertyName = "homeAccountId";
         private const string TenantIdPropertyName = "tenantId";
+        private const string ClientIdPropertyName = "clientId";
 
         private static readonly JsonEncodedText s_usernamePropertyNameBytes = JsonEncodedText.Encode(UsernamePropertyName);
         private static readonly JsonEncodedText s_authorityPropertyNameBytes = JsonEncodedText.Encode(AuthorityPropertyName);
         private static readonly JsonEncodedText s_homeAccountIdPropertyNameBytes = JsonEncodedText.Encode(HomeAccountIdPropertyName);
         private static readonly JsonEncodedText s_tenantIdPropertyNameBytes = JsonEncodedText.Encode(TenantIdPropertyName);
+        private static readonly JsonEncodedText s_clientIdPropertyNameBytes = JsonEncodedText.Encode(ClientIdPropertyName);
 
         internal AuthenticationRecord()
         {
 
         }
 
-        internal AuthenticationRecord(AuthenticationResult authResult)
+        internal AuthenticationRecord(AuthenticationResult authResult, string clientId)
         {
             Username = authResult.Account.Username;
             Authority = authResult.Account.Environment;
             AccountId = authResult.Account.HomeAccountId;
             TenantId = authResult.TenantId;
+            ClientId = clientId;
         }
 
-        internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId)
+        internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
         {
-
             Username = username;
             Authority = authority;
-            AccountId = new AccountId(homeAccountId);
+            AccountId = BuildAccountIdFromString(homeAccountId);
             TenantId = tenantId;
+            ClientId = clientId;
         }
 
         /// <summary>
@@ -68,6 +71,11 @@ namespace Azure.Identity
         /// The tenant the account should authenticate in.
         /// </summary>
         public string TenantId { get; private set; }
+
+        /// <summary>
+        /// The client id of the application which performed the original authentication
+        /// </summary>
+        public string ClientId { get; private set; }
 
         internal AccountId AccountId { get; private set; }
 
@@ -135,6 +143,8 @@ namespace Azure.Identity
 
                 json.WriteString(s_tenantIdPropertyNameBytes, TenantId);
 
+                json.WriteString(s_clientIdPropertyNameBytes, ClientId);
+
                 json.WriteEndObject();
 
                 if (async)
@@ -165,15 +175,35 @@ namespace Azure.Identity
                         authProfile.Authority = prop.Value.GetString();
                         break;
                     case HomeAccountIdPropertyName:
-                        authProfile.AccountId = new AccountId(prop.Value.GetString());
+                        authProfile.AccountId = BuildAccountIdFromString(prop.Value.GetString());
                         break;
                     case TenantIdPropertyName:
                         authProfile.TenantId = prop.Value.GetString();
+                        break;
+                    case ClientIdPropertyName:
+                        authProfile.ClientId = prop.Value.GetString();
                         break;
                 }
             }
 
             return authProfile;
+        }
+
+        private static AccountId BuildAccountIdFromString(string homeAccountId)
+        {
+            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
+            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
+            var homeAccountSegments = homeAccountId.Split('.');
+            AccountId accountId;
+            if (homeAccountSegments.Length == 2)
+            {
+                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
+            }
+            else
+            {
+                accountId = new AccountId(homeAccountId);
+            }
+            return accountId;
         }
     }
 }

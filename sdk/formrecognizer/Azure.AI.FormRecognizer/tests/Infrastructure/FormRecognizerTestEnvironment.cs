@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using Azure.Core.TestFramework;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -14,7 +13,8 @@ namespace Azure.AI.FormRecognizer.Tests
     /// </summary>
     public class FormRecognizerTestEnvironment: TestEnvironment
     {
-        public FormRecognizerTestEnvironment() : base("formrecognizer")
+        public FormRecognizerTestEnvironment()
+            : base("formrecognizer")
         {
         }
 
@@ -24,105 +24,73 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
         internal const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS Url use for storing documents used for live tests.</summary>
+        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents used for live tests.</summary>
         internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
+
+        /// <summary>The name of the environment variable for the multipage Blob Container SAS URL to use for storing documents used for live tests.</summary>
+        internal const string MultipageBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL";
+
+        /// <summary>The name of the environment variable for the target resource identifier to use for copying custom models live tests.</summary>
+        internal const string TargetResourceIdEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_ID";
+
+        /// <summary>The name of the environment variable for the target resource region to use for copying custom models live tests.</summary>
+        internal const string TargetResourceRegionEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_REGION";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
 
-        /// <summary>The name of the JPG file which contains the receipt to be used for tests.</summary>
-        private const string JpgReceiptFilename = "contoso-receipt.jpg";
-
-        /// <summary>The name of the PNG file which contains the receipt to be used for tests.</summary>
-        private const string PngReceiptFilename = "contoso-allinone.png";
-
-        /// <summary>The format to generate the filenames of the forms to be used for tests.</summary>
-        private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
-
-        /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
-        private const string FormFilename = "Form_1.jpg";
-
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
-        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
+        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
+        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName);
+        public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
+        public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 
         /// <summary>
-        /// The name of the directory where the running assembly is located.
+        /// The absolute path of the directory where the running assembly is located.
         /// </summary>
-        /// <value>The name of the current working directory.</value>
+        /// <value>The absolute path of the current working directory.</value>
         private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
-        /// The relative path to the JPG file which contains the form to be used for tests.
+        /// Creates an absolute path to a file contained in the local test assets folder.
         /// </summary>
-        /// <value>The relative path to the JPG file.</value>
-        public static string FormPath => CreatePath(FormFilename);
+        /// <param name="filename">The name of the file to create a path to.</param>
+        /// <returns>An absolute path to the specified file.</returns>
+        public static string CreatePath(string filename) =>
+            Path.Combine(CurrentWorkingDirectory, AssetsFolderName, filename);
 
         /// <summary>
-        /// The URI string to the JPG file which contains the form to be used for tests.
+        /// Creates a URI string to a file contained in the test assets folder stored in
+        /// the azure-sdk-for-net GitHub repo.
         /// </summary>
-        /// <value>The URI string to the JPG file.</value>
-        public static string FormUri => CreateUri(FormFilename);
+        /// <param name="filename">The name of the file to create a URI string to.</param>
+        /// <returns>A URI string to the specified file.</returns>
+        public static string CreateUriString(string filename) =>
+            string.Format(FileUriFormat, AssetsFolderName, filename);
 
         /// <summary>
-        /// The relative path to the JPG file which contains the receipt to be used for tests.
+        /// Creates a <see cref="FileStream"/> to read file contained in the local test
+        /// assets folder.
         /// </summary>
-        /// <value>The relative path to the JPG file.</value>
-        public static string JpgReceiptPath => CreatePath(JpgReceiptFilename);
+        /// <param name="filename">The name of the file to read with the stream.</param>
+        /// <returns>A <see cref="FileStream"/> to read the specified file.</returns>
+        /// <remarks>
+        /// The returned stream needs to be disposed of by the calling method.
+        /// </remarks>
+        public static FileStream CreateStream(string filename) =>
+            new FileStream(CreatePath(filename), FileMode.Open);
 
         /// <summary>
-        /// The relative path to the PNG file which contains the receipt to be used for tests.
+        /// Creates a URI to a file contained in the test assets folder stored in the
+        /// azure-sdk-for-net GitHub repo.
         /// </summary>
-        /// <value>The relative path to the PNG file.</value>
-        public static string PngReceiptPath => CreatePath(PngReceiptFilename);
-
-        /// <summary>
-        /// The URI string to the JPG file which contains the receipt to be used for tests.
-        /// </summary>
-        /// <value>The URI string to the JPG file.</value>
-        public static string JpgReceiptUri => CreateUri(JpgReceiptFilename);
-
-        /// <summary>
-        /// Retrieves the relative path to a PDF or TIFF form available in the test assets.
-        /// </summary>
-        /// <param name="index">The index to specify the form to be retrieved.</param>
-        /// <param name="contentType">The type of the form to be retrieved. Currently only PDF and TIFF are available.</param>
-        /// <returns>The relative path to the PDF or TIFF form corresponding to the specified index.</returns>
-        public static string RetrieveInvoicePath(int index, ContentType contentType)
-        {
-            var extension = contentType switch
-            {
-                ContentType.Pdf => "pdf",
-                ContentType.Tiff => "tiff",
-                _ => throw new ArgumentException("The requested content type is not available.", nameof(contentType))
-            };
-
-            var filename = string.Format(InvoiceFilenameFormat, index, extension);
-            return CreatePath(filename);
-        }
-
-        /// <summary>
-        /// Retrieves the URI string to a PDF form available in the test assets.
-        /// </summary>
-        /// <param name="index">The index to specify the form to be retrieved.</param>
-        /// <returns>The URI string to the PDF form corresponding to the specified index.</returns>
-        public static string RetrieveInvoiceUri(int index)
-        {
-            var filename = string.Format(InvoiceFilenameFormat, index, "pdf");
-            return CreateUri(filename);
-        }
-
-        public static string CreatePath(string fileName, string assetFolder = default)
-        {
-            return Path.Combine(CurrentWorkingDirectory, assetFolder ?? AssetsFolderName, fileName);
-        }
-
-        public static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
-        {
-            return string.Format(fileUriFormat ?? FileUriFormat, assetFolder ?? AssetsFolderName, fileName);
-        }
+        /// <param name="filename">The name of the file to create a URI to.</param>
+        /// <returns>A URI to the specified file.</returns>
+        public static Uri CreateUri(string filename) =>
+            new Uri(CreateUriString(filename));
     }
 }

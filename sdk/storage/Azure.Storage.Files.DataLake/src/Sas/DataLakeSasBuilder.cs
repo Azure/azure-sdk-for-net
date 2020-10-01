@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +14,10 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="DataLakeSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for a Data Lake file system or path
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Constructing a Service SAS</see>.
     /// </summary>
     public class DataLakeSasBuilder
     {
@@ -83,8 +87,21 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The name of the path being made accessible, or
         /// <see cref="String.Empty"/> for a file system SAS.
+        /// Beginning in version 2020-02-10, setting
+        /// <see cref="IsDirectory"/> to true means we will accept the
+        /// Path as a directory for a directory SAS. If not set, this
+        /// value is assumed to be a File Path for a File Path SAS.
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// Beginning in version 2020-02-10, this value defines whether or
+        /// not the <see cref="Path"/> is a directory. If this value is
+        /// set to true, the Path is a Directory for a Directory SAS.
+        /// If set to false or default, the Path is a File Path for a
+        /// File Path SAS.
+        /// </summary>
+        public bool? IsDirectory { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
@@ -101,6 +118,11 @@ namespace Azure.Storage.Sas
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
+        ///
+        /// Beginning in version 2020-02-10, specify "d" if the shared resource
+        /// is a DataLake directory. This grants access to the paths in the
+        /// directory and to list the paths in the directory. When "d" is
+        /// specified, the sdd query parameter is also required.
         /// </summary>
         public string Resource { get; set; }
 
@@ -129,6 +151,48 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This cannot be used in conjuction with <see cref="AgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string PreauthorizedAgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// the Azure Storage Service will perform an additional POSIX ACL check to
+        /// determine if the user is authorized to perform the requested operation.
+        /// This cannot be used in conjuction with <see cref="PreauthorizedAgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string AgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
+        /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
+        /// depth of the directory specified in the canonicalizedresource field of the
+        /// string-to-sign to indicate the depth of the directory specified in the
+        /// canonicalizedresource field of the string-to-sign. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        private int? _directoryDepth;
 
         /// <summary>
         /// Sets the permissions for a file SAS.
@@ -166,11 +230,48 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: s_validPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
             Permissions = rawPermissions;
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Move,
+            Constants.Sas.Permissions.Execute,
+            Constants.Sas.Permissions.ManageOwnership,
+            Constants.Sas.Permissions.ManageAccessControl,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -269,6 +370,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
+                CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
@@ -304,7 +408,11 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                unauthorizedAadObjectId: AgentObjectId,
+                correlationId: CorrelationId,
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -363,15 +471,35 @@ namespace Azure.Storage.Sas
             {
                 Resource = Constants.Sas.Resource.Container;
             }
-
             // Path
             else
             {
-                Resource = Constants.Sas.Resource.Blob;
+                if (IsDirectory != true)
+                {
+                    Resource = Constants.Sas.Resource.Blob;
+                }
+                else
+                {
+                    Resource = Constants.Sas.Resource.Directory;
+                    if (!Path.Equals("/", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        _directoryDepth = Path.Trim('/').Split('/').Length;
+                    }
+                    else
+                    {
+                        _directoryDepth = 0;
+                    }
+                }
             }
+
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
+            }
+
+            if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
+            {
+                throw Errors.SasDataInConjunction(nameof(PreauthorizedAgentObjectId), nameof(AgentObjectId));
             }
         }
 

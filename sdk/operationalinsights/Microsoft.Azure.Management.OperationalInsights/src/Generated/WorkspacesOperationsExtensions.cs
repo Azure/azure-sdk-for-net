@@ -132,7 +132,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Deletes a workspace instance.
+            /// Deletes a workspace resource. To recover the workspace, create it again
+            /// with the same name, in the same subscription, resource group and location.
+            /// The name is kept for 14 days and cannot be used for another workspace. To
+            /// remove the workspace completely and release the name, use the force flag.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,13 +146,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static void Delete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
+            /// <param name='force'>
+            /// Deletes the workspace without the recovery option. A workspace that was
+            /// deleted with this flag cannot be recovered.
+            /// </param>
+            public static void Delete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a workspace instance.
+            /// Deletes a workspace resource. To recover the workspace, create it again
+            /// with the same name, in the same subscription, resource group and location.
+            /// The name is kept for 14 days and cannot be used for another workspace. To
+            /// remove the workspace completely and release the name, use the force flag.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -159,13 +169,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
+            /// </param>
+            /// <param name='force'>
+            /// Deletes the workspace without the recovery option. A workspace that was
+            /// deleted with this flag cannot be recovered.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -255,46 +269,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Gets the available service tiers for the workspace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            public static IList<AvailableServiceTier> AvailableServiceTiers(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
-            {
-                return operations.AvailableServiceTiersAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the available service tiers for the workspace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<AvailableServiceTier>> AvailableServiceTiersAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AvailableServiceTiersWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Create or update a workspace.
             /// </summary>
             /// <param name='operations'>
@@ -341,7 +315,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Deletes a workspace instance.
+            /// Deletes a workspace resource. To recover the workspace, create it again
+            /// with the same name, in the same subscription, resource group and location.
+            /// The name is kept for 14 days and cannot be used for another workspace. To
+            /// remove the workspace completely and release the name, use the force flag.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -352,13 +329,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static void BeginDelete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
+            /// <param name='force'>
+            /// Deletes the workspace without the recovery option. A workspace that was
+            /// deleted with this flag cannot be recovered.
+            /// </param>
+            public static void BeginDelete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, bool? force = default(bool?))
             {
-                operations.BeginDeleteAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, workspaceName, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a workspace instance.
+            /// Deletes a workspace resource. To recover the workspace, create it again
+            /// with the same name, in the same subscription, resource group and location.
+            /// The name is kept for 14 days and cannot be used for another workspace. To
+            /// remove the workspace completely and release the name, use the force flag.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -368,13 +352,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
+            /// </param>
+            /// <param name='force'>
+            /// Deletes the workspace without the recovery option. A workspace that was
+            /// deleted with this flag cannot be recovered.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

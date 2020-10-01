@@ -15,6 +15,8 @@ pr:
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
     - sdk/automation/Microsoft.Azure.Management.Automation
+    - sdk/automanage/Microsoft.Azure.Management.Automanage
+    - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Commerce.Admin
@@ -28,6 +30,7 @@ pr:
     - sdk/azurestack/Microsoft.AzureStack.Management.Subscription
     - sdk/azurestack/Microsoft.AzureStack.Management.Subscriptions.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Update.Admin
+    - sdk/azurestackhci/Microsoft.Azure.Management.AzureStackHCI
     - sdk/batch/Microsoft.Azure.Management.Batch
     - sdk/batchai/Microsoft.Azure.Management.BatchAI
     - sdk/billing/Microsoft.Azure.Management.Billing
@@ -55,6 +58,7 @@ pr:
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices
     - sdk/devspaces/Microsoft.Azure.Management.DevSpaces
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
+    - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
     - sdk/eng/mgmt
@@ -70,6 +74,7 @@ pr:
     - sdk/iotcentral/Microsoft.Azure.Management.IotCentral
     - sdk/iothub/Microsoft.Azure.Management.IotHub
     - sdk/keyvault/Microsoft.Azure.Management.KeyVault
+    - sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration
     - sdk/kusto/Microsoft.Azure.Management.Kusto
     - sdk/labservices/Microsoft.Azure.Management.LabServices
     - sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices
@@ -83,8 +88,8 @@ pr:
     - sdk/managementgroups/Microsoft.Azure.Management.ManagementGroups
     - sdk/managementpartner/Microsoft.Azure.Management.ManagementPartner
     - sdk/maps/Microsoft.Azure.Management.Maps
-    - sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering
     - sdk/marketplace/Microsoft.Azure.Management.Marketplace
+    - sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering
     - sdk/mediaservices/Microsoft.Azure.Management.Media
     - sdk/mgmtcommon/AppAuthentication
     - sdk/mgmtcommon/Auth
@@ -96,6 +101,7 @@ pr:
     - sdk/mgmtcommon/TestFramework
     - sdk/mixedreality/Microsoft.Azure.Management.MixedReality
     - sdk/monitor/Microsoft.Azure.Management.Monitor
+    - sdk/mysql/Microsoft.Azure.Management.MySQL
     - sdk/netapp/Microsoft.Azure.Management.NetApp
     - sdk/network/Microsoft.Azure.Management.Network
     - sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs
@@ -109,6 +115,7 @@ pr:
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
+    - sdk/regionmove/Microsoft.Azure.Management.Migrate
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
@@ -135,14 +142,8 @@ pr:
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - eng/pipelines/mgmt.yml
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
-resources:
-  repositories:
-  - repository: azure-sdk-tools
-    type: github
-    name: Azure/azure-sdk-tools
-    endpoint: azure
+
 variables:
-  DotNetCoreSDKVersion: '2.2.202'
   skipComponentGovernanceDetection: true
   msBuildLogDir: msbuildlogs
   loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'

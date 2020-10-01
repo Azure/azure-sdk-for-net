@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/detect",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2RldGVjdA==",
+      "RequestUri": "/vision/v3.0/detect",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2RldGVjdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/satya.jpg\"\r\n}",
       "RequestHeaders": {

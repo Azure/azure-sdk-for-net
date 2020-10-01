@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// configuration for the service instance.</param>
         /// <param name="corsConfiguration">The settings for the CORS
         /// configuration of the service instance.</param>
-        public ServicesProperties(IList<ServiceAccessPolicyEntry> accessPolicies, string provisioningState = default(string), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo))
+        /// <param name="exportConfiguration">The settings for the export
+        /// operation of the service instance.</param>
+        public ServicesProperties(IList<ServiceAccessPolicyEntry> accessPolicies, string provisioningState = default(string), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo))
         {
             ProvisioningState = provisioningState;
             AccessPolicies = accessPolicies;
             CosmosDbConfiguration = cosmosDbConfiguration;
             AuthenticationConfiguration = authenticationConfiguration;
             CorsConfiguration = corsConfiguration;
+            ExportConfiguration = exportConfiguration;
             CustomInit();
         }
 
@@ -93,6 +96,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "corsConfiguration")]
         public ServiceCorsConfigurationInfo CorsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for the export operation of the service
+        /// instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportConfiguration")]
+        public ServiceExportConfigurationInfo ExportConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

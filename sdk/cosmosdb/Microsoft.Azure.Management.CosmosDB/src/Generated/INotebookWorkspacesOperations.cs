@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Creates the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Retrieves the connection info for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Regenerates the auth token for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Starts the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Creates the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes the notebook workspace for a Cosmos DB account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Regenerates the auth token for the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Starts the notebook workspace
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.

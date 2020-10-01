@@ -6,22 +6,27 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Represents a page interval from the input document. Page numbers are 1-based.
     /// </summary>
-    public class FormPageRange
+    public struct FormPageRange
     {
-        internal FormPageRange(int first, int last)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormPageRange"/> structure.
+        /// </summary>
+        /// <param name="firstPageNumber">The first page number of the range.</param>
+        /// <param name="lastPageNumber">The last page number of the range.</param>
+        internal FormPageRange(int firstPageNumber, int lastPageNumber)
         {
-            FirstPageNumber = first;
-            LastPageNumber = last;
+            FirstPageNumber = firstPageNumber;
+            LastPageNumber = lastPageNumber;
         }
 
         /// <summary>
         /// The first page number of the range.
         /// </summary>
-        public int FirstPageNumber { get; internal set; }
+        public int FirstPageNumber { get; }
 
         /// <summary>
         /// The last page number of the range.
         /// </summary>
-        public int LastPageNumber { get; internal set; }
+        public int LastPageNumber { get; }
     }
 }

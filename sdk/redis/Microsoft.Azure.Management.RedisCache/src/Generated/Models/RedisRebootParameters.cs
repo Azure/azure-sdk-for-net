@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Redis.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,10 +37,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'</param>
         /// <param name="shardId">If clustering is enabled, the ID of the shard
         /// to be rebooted.</param>
-        public RedisRebootParameters(string rebootType, int? shardId = default(int?))
+        /// <param name="ports">A list of redis instances to reboot, specified
+        /// by per-instance SSL ports or non-SSL ports.</param>
+        public RedisRebootParameters(string rebootType = default(string), int? shardId = default(int?), IList<int?> ports = default(IList<int?>))
         {
             RebootType = rebootType;
             ShardId = shardId;
+            Ports = ports;
             CustomInit();
         }
 
@@ -63,17 +68,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         public int? ShardId { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets a list of redis instances to reboot, specified by
+        /// per-instance SSL ports or non-SSL ports.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (RebootType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RebootType");
-            }
-        }
+        [JsonProperty(PropertyName = "ports")]
+        public IList<int?> Ports { get; set; }
     }
 }

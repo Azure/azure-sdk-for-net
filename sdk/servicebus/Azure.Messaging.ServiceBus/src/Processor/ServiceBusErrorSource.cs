@@ -3,7 +3,7 @@
 
 namespace Azure.Messaging.ServiceBus
 {
-    /// <summary>Action taking place when <see cref="ProcessErrorEventArgs"/> is raised.</summary>
+    /// <summary>The source of the error when <see cref="ProcessErrorEventArgs"/> is raised.</summary>
     public enum ServiceBusErrorSource
     {
         /// <summary>Message completion operation</summary>

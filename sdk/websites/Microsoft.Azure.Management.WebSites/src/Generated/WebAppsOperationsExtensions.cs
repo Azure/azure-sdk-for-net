@@ -767,6 +767,252 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesCollection GetBasicPublishingCredentialsPolicies(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetBasicPublishingCredentialsPoliciesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesCollection> GetBasicPublishingCredentialsPoliciesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBasicPublishingCredentialsPoliciesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetFtpAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateFtpAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetScmAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetScmAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateScmAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateScmAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
@@ -1013,6 +1259,112 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            public static SiteAuthSettingsV2 UpdateAuthSettingsV2(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
+            {
+                return operations.UpdateAuthSettingsV2Async(resourceGroupName, name, siteAuthSettingsV2).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> UpdateAuthSettingsV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAuthSettingsV2WithHttpMessagesAsync(resourceGroupName, name, siteAuthSettingsV2, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAuthSettingsV2Async(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2WithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
@@ -1246,104 +1598,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<BackupRequest> GetBackupConfigurationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the config reference app settings and status of an app
-            /// </summary>
-            /// <remarks>
-            /// Description for Gets the config reference app settings and status of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static KeyVaultReferenceCollection GetAppSettingsKeyVaultReferences(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAppSettingsKeyVaultReferencesAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the config reference app settings and status of an app
-            /// </summary>
-            /// <remarks>
-            /// Description for Gets the config reference app settings and status of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<KeyVaultReferenceCollection> GetAppSettingsKeyVaultReferencesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetAppSettingsKeyVaultReferencesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the config reference and status of an app
-            /// </summary>
-            /// <remarks>
-            /// Description for Gets the config reference and status of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='appSettingKey'>
-            /// App Setting key name.
-            /// </param>
-            public static KeyVaultReferenceResource GetAppSettingKeyVaultReference(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey)
-            {
-                return operations.GetAppSettingKeyVaultReferenceAsync(resourceGroupName, name, appSettingKey).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the config reference and status of an app
-            /// </summary>
-            /// <remarks>
-            /// Description for Gets the config reference and status of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='appSettingKey'>
-            /// App Setting key name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<KeyVaultReferenceResource> GetAppSettingKeyVaultReferenceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetAppSettingKeyVaultReferenceWithHttpMessagesAsync(resourceGroupName, name, appSettingKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -4814,7 +5068,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
             {
                 return operations.ListInstanceIdentifiersAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
@@ -4837,7 +5091,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -9259,6 +9513,128 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static SiteAuthSettingsV2 UpdateAuthSettingsV2Slot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, string slot)
+            {
+                return operations.UpdateAuthSettingsV2SlotAsync(resourceGroupName, name, siteAuthSettingsV2, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> UpdateAuthSettingsV2SlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAuthSettingsV2SlotWithHttpMessagesAsync(resourceGroupName, name, siteAuthSettingsV2, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2Slot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetAuthSettingsV2SlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2SlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2SlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
@@ -13376,7 +13752,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API gets the
             /// production slot instances.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
                 return operations.ListInstanceIdentifiersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
@@ -13403,7 +13779,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -23132,7 +23508,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
             {
                 return operations.ListInstanceIdentifiersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -23152,7 +23528,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -23964,7 +24340,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
             {
                 return operations.ListInstanceIdentifiersSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -23984,7 +24360,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

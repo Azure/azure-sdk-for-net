@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Console.WriteLine($"    Document error: {result.Error.Code}.");
+                    Console.WriteLine($"    Document error: {result.Error.ErrorCode}.");
                     Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
@@ -72,6 +72,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
                         Console.WriteLine($"    For sentence: \"{sentenceSentiment.Text}\"");
+                        Console.WriteLine($"    Offset (in UTF-16 code units): {sentenceSentiment.Offset}");
                         Console.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
                         Console.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
                         Console.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");

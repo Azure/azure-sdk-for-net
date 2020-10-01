@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Guest configuration assignment is an association between a VM and guest
-    /// configuration.
+    /// Guest configuration assignment is an association between a machine and
+    /// guest configuration.
     /// </summary>
     public partial class GuestConfigurationAssignment : ProxyResource
     {

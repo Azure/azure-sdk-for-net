@@ -30,6 +30,8 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+**NOTE:** The content is logged at the `Verbose` level so you might need to change the listener settings for content logs to appear.
+
 ### Changing log level
 
 The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
@@ -68,7 +70,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ### ASP.NET Core applications
 
-If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](../../Microsoft.Extensions.Azure/README.md) for more details.
+If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
 
 ### Custom logging callback
@@ -94,8 +96,22 @@ Application Insights, a feature of Azure Monitor, is an extensible Application P
 
 If you application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`. 
 
-To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/en-us/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
+To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
 ### OpenTelemetry with Azure Monitor, Zipkin and others
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
+
+## Setting x-ms-client-request-id value sent with requests
+
+By default x-ms-client-request-id header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
+
+```C# Snippet:ClientRequestId
+var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+using (HttpPipeline.CreateClientRequestIdScope("<custom-client-request-id>"))
+{
+    // The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+    secretClient.GetSecret("<secret-name>");
+}
+```

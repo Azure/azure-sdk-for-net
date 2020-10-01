@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerDataContainer : IUtf8JsonSerializable
     {
@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query");
                 writer.WriteStringValue(Query);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
         internal static SearchIndexerDataContainer DeserializeSearchIndexerDataContainer(JsonElement element)
         {
             string name = default;
-            string query = default;
+            Optional<string> query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("query"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     query = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndexerDataContainer(name, query);
+            return new SearchIndexerDataContainer(name, query.Value);
         }
     }
 }

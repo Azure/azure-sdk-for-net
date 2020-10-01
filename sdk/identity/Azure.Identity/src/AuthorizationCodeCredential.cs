@@ -21,6 +21,7 @@ namespace Azure.Identity
         private readonly IConfidentialClientApplication _confidentialClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
+        private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
 
@@ -56,8 +57,9 @@ namespace Azure.Identity
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
         {
             if (tenantId is null) throw new ArgumentNullException(nameof(tenantId));
-            if (clientId is null) throw new ArgumentNullException(nameof(clientId));
             if (clientSecret is null) throw new ArgumentNullException(nameof(clientSecret));
+
+            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _authCode = authorizationCode ?? throw new ArgumentNullException(nameof(authorizationCode));
 
@@ -104,7 +106,7 @@ namespace Azure.Identity
                 {
                     AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    _record = new AuthenticationRecord(result);
+                    _record = new AuthenticationRecord(result, _clientId);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
@@ -117,15 +119,9 @@ namespace Azure.Identity
 
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
     }

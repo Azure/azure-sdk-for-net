@@ -1,7 +1,117 @@
 # Release History
 
-## 5.2.0-preview.1 (Unreleased)
+## 5.3.0-beta.4 (Unreleased)
 
+## 5.3.0-beta.3 (2020-09-30)
+
+### Changes
+
+#### Key Bug Fixes
+
+- An issue with package publishing which blocked referencing and use has been fixed.
+
+## 5.3.0-beta.2 (2020-09-28)
+
+### Changes
+
+#### New Features
+
+- The `EventData` representation has been extended with the ability to treat the `Body` as `BinaryData`.  `BinaryData` supports a variety of data transformations and allows the ability to provide serialization logic when sending or receiving events.  Any type that derives from `ObjectSerializer`, such as `JsonObjectSerializer` can be used, with Schema Registry support available via the `SchemaRegistryAvroObjectSerializer`.
+
+- `EventData` has been integrated with the new Schema Registry service, via use of the `ObjectSerializer` with `BinaryData`.
+
+**Note:** Azure Schema Registry is a new hosted schema repository service provided by Azure Event Hubs, and may not yet be available in all regions or Azure clouds.
+
+## 5.3.0-beta.1 (2020-09-15)
+
+### Changes
+
+#### New Features
+
+- Introduction of an option for the various event consumers allowing the prefetch cache to be filled based on a size-based heuristic rather than a count of events.  This feature is considered a special case, helpful in scenarios where the size of events being read is not able to be known or predicted upfront and limiting resource use is valued over consistent and predictable performance.
+
+## 5.2.0 (2020-09-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Key Bug Fixes
+
+- The approach used for creation of checkpoints has been updated to interact with Azure Blob storage more efficiently.  This will yield major performance improvements when soft delete was enabled and minor improvements otherwise.
+
+- The `EventProcessorClient` will now perform an eager validation of connection strings upon creation.  Previously, validation was deferred until a partition was claimed which made debugging difficult.
+
+- Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
+
+#### New Features
+
+- Load balancing will now detect when it has reached a balanced state more accurately; this will allow it to operate more efficiently when `LoadBalancingStrategy.Greedy` is in use.
+
+- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+
+- Connection strings for each of the clients now supports a `SharedAccessSignature` token, allowing a pre-generated SAS to be used for authorization.
+
+- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle. 
+
+## 5.2.0-preview.3 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 5.2.0-preview.2 (2020-08-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Processing events
+
+- Load balancing will now detect when it has reached a balanced state more accurately; this will allow it to operate more efficiently when `LoadBalancingStrategy.Greedy` is in use.
+
+- The approach used for creation of checkpoints has been updated to interact with Azure Blob storage more efficiently.  This will yield major performance improvements when soft delete was enabled and minor improvements otherwise.
+
+- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle. 
+
+#### Bug fixes and foundation
+
+- The underlying AMQP library has been enhanced for more efficient resource usage, particularly when no events are available; this will result in a noticeable reduction in memory use.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+- The `EventProcessorClient` will now perform an eager validation of connection strings upon creation.  Previously, validation was deferred until a partition was claimed which made debugging difficult.
+
+- Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
+
+## 5.2.0-preview.1 (2020-07-06)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Processing events
+
+- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+
+#### Bug fixes and foundation
+
+- Surfacing of exceptions has been fixed to consistently preserve the stack trace in cases where it was previously lost.  (A community contribution, courtesy of _(danielmarbach](https://github.com/danielmarbach))_
+
+- A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
 ## 5.1.0
 
@@ -40,13 +150,13 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Logging for the Storage Manager for Azure Blobs now follows the common pattern for other Event Hubs types, as well as providing additional context and information.
 
-- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes]((https://github.com/christothes)))
+- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
 - Diagnostic activities have been extended with additional information about events being processed and with additional environmental context.
 
 - Parsing of connection strings is now more permissive for the `Endpoint` key, allowing additional formats that result from common mistakes when building the string rather than copying the value from the portal.
 
-- The partition manager has been renamed to `StorageManager` to better represent its purpose.  (A community contribution, courtesy of ([marusyk](https://github.com/marusyk))
+- The partition manager has been renamed to `StorageManager` to better represent its purpose.  (A community contribution, courtesy of [marusyk](https://github.com/marusyk))
 
 #### Testing
 

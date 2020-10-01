@@ -14,7 +14,7 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class MongoResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "db001";
@@ -55,23 +55,23 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Locations = new List<Location>
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                     };
 
-                   databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
                 }
 
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
-                    Resource = new MongoDBDatabaseResource {Id = databaseName},
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
                 };
 
                 MongoDBDatabaseGetResults mongoDBDatabaseGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -89,7 +89,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new MongoDBDatabaseResource { Id = databaseName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -112,10 +112,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Id = collectionName,
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 MongoDBCollectionGetResults mongoDBCollectionGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -125,7 +122,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
                 }

@@ -7,14 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). This token filter is implemented using Apache Lucene. </summary>
     public partial class ElisionTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of ElisionTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ElisionTokenFilter(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Articles = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
@@ -34,8 +37,5 @@ namespace Azure.Search.Documents.Models
             Articles = articles;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
-
-        /// <summary> The set of articles to remove. </summary>
-        public IList<string> Articles { get; set; }
     }
 }

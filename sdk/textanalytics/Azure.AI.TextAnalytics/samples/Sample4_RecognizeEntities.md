@@ -18,12 +18,13 @@ To recognize entities in a document, use the `RecognizeEntities` method.  The re
 ```C# Snippet:RecognizeEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
+CategorizedEntityCollection entities = client.RecognizeEntities(document);
 
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

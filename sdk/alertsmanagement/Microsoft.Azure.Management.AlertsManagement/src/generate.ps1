@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "alertsmanagement/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "alertsmanagement/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-preview-2019-05

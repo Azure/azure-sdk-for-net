@@ -559,7 +559,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             string providerName = "ssladmin";
 
-            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName)
+            {
+                AdministratorContacts =
+                {
+                    new AdministratorContact
+                    {
+                        Email = "email@domain.tld",
+                        FirstName ="fName",
+                        LastName = "lName",
+                        Phone = "1234"
+                    },
+                },
+            };
 
             RegisterForCleanupIssuer(issuerName);
 

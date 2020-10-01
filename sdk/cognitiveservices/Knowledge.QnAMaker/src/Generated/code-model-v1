@@ -1,0 +1,3030 @@
+{
+ "$id": "1",
+ "modelTypes": [
+  {
+   "$id": "2",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "3",
+     "isReadOnly": false,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "4",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "5",
+      "fixed": false,
+      "raw": "Metadata name."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "6",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "7",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "8",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "9",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "10",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "11",
+      "fixed": false,
+      "raw": "Metadata value."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "12",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "13",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "14",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "MetadataDTO",
+   "documentation": "Name - value pair of metadata.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "15",
+    "fixed": false,
+    "raw": "MetadataDTO"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "MetadataDTO",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/MetadataDTO"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "16",
+   "$type": "CompositeType",
+   "serializedName": "QnADTO-context",
+   "baseModelType": {
+    "$id": "17",
+    "$type": "CompositeType",
+    "properties": [
+     {
+      "$id": "18",
+      "isReadOnly": false,
+      "realPath": [
+       "isContextOnly"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "19",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "20",
+       "fixed": false,
+       "raw": "To mark if a prompt is relevant only with a previous question or not.\ntrue - Do not include this QnA as search result for queries without context\nfalse - ignores context and includes this QnA in search result"
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "21",
+       "fixed": false,
+       "raw": "isContextOnly"
+      },
+      "serializedName": "isContextOnly",
+      "modelType": {
+       "$id": "22",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "boolean",
+       "name": {
+        "$id": "23",
+        "fixed": false,
+        "raw": "Boolean"
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "24",
+      "isReadOnly": false,
+      "realPath": [
+       "prompts"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "25",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "26",
+       "fixed": false,
+       "raw": "List of prompts associated with the answer."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "27",
+       "fixed": false,
+       "raw": "prompts"
+      },
+      "serializedName": "prompts",
+      "modelType": {
+       "$id": "28",
+       "$type": "SequenceType",
+       "elementType": {
+        "$id": "29",
+        "$type": "CompositeType",
+        "properties": [
+         {
+          "$id": "30",
+          "isReadOnly": false,
+          "realPath": [
+           "displayOrder"
+          ],
+          "collectionFormat": "none",
+          "defaultValue": {
+           "$id": "31",
+           "fixed": false
+          },
+          "deprecated": false,
+          "documentation": {
+           "$id": "32",
+           "fixed": false,
+           "raw": "Index of the prompt - used in ordering of the prompts"
+          },
+          "isRequired": false,
+          "isConstant": false,
+          "name": {
+           "$id": "33",
+           "fixed": false,
+           "raw": "displayOrder"
+          },
+          "serializedName": "displayOrder",
+          "modelType": {
+           "$id": "34",
+           "$type": "PrimaryType",
+           "format": "int32",
+           "knownPrimaryType": "int",
+           "name": {
+            "$id": "35",
+            "fixed": false,
+            "raw": "Int"
+           },
+           "deprecated": false
+          }
+         },
+         {
+          "$id": "36",
+          "isReadOnly": false,
+          "realPath": [
+           "qnaId"
+          ],
+          "collectionFormat": "none",
+          "defaultValue": {
+           "$id": "37",
+           "fixed": false
+          },
+          "deprecated": false,
+          "documentation": {
+           "$id": "38",
+           "fixed": false,
+           "raw": "Qna id corresponding to the prompt - if QnaId is present, QnADTO object is ignored."
+          },
+          "isRequired": false,
+          "isConstant": false,
+          "name": {
+           "$id": "39",
+           "fixed": false,
+           "raw": "qnaId"
+          },
+          "serializedName": "qnaId",
+          "modelType": {
+           "$id": "40",
+           "$type": "PrimaryType",
+           "format": "int32",
+           "knownPrimaryType": "int",
+           "name": {
+            "$id": "41",
+            "fixed": false,
+            "raw": "Int"
+           },
+           "deprecated": false
+          }
+         },
+         {
+          "$id": "42",
+          "isReadOnly": false,
+          "realPath": [
+           "qna"
+          ],
+          "collectionFormat": "none",
+          "defaultValue": {
+           "$id": "43",
+           "fixed": false
+          },
+          "deprecated": false,
+          "documentation": {
+           "$id": "44",
+           "fixed": false,
+           "raw": "QnADTO - Either QnaId or QnADTO needs to be present in a PromptDTO object"
+          },
+          "isRequired": false,
+          "isConstant": false,
+          "name": {
+           "$id": "45",
+           "fixed": false,
+           "raw": "qna"
+          },
+          "serializedName": "qna",
+          "modelType": {
+           "$id": "46",
+           "$type": "CompositeType",
+           "serializedName": "PromptDTO-qna",
+           "baseModelType": {
+            "$id": "47",
+            "$type": "CompositeType",
+            "properties": [
+             {
+              "$id": "48",
+              "isReadOnly": false,
+              "realPath": [
+               "id"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "49",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "50",
+               "fixed": false,
+               "raw": "Unique id for the Q-A."
+              },
+              "isRequired": false,
+              "isConstant": false,
+              "name": {
+               "$id": "51",
+               "fixed": false,
+               "raw": "id"
+              },
+              "serializedName": "id",
+              "modelType": {
+               "$id": "52",
+               "$type": "PrimaryType",
+               "format": "int32",
+               "knownPrimaryType": "int",
+               "name": {
+                "$id": "53",
+                "fixed": false,
+                "raw": "Int"
+               },
+               "deprecated": false
+              }
+             },
+             {
+              "$id": "54",
+              "isReadOnly": false,
+              "realPath": [
+               "answer"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "55",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "56",
+               "fixed": false,
+               "raw": "Answer text"
+              },
+              "isRequired": true,
+              "isConstant": false,
+              "name": {
+               "$id": "57",
+               "fixed": false,
+               "raw": "answer"
+              },
+              "serializedName": "answer",
+              "modelType": {
+               "$id": "58",
+               "$type": "PrimaryType",
+               "knownPrimaryType": "string",
+               "name": {
+                "$id": "59",
+                "fixed": false,
+                "raw": "String"
+               },
+               "deprecated": false
+              }
+             },
+             {
+              "$id": "60",
+              "isReadOnly": false,
+              "realPath": [
+               "source"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "61",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "62",
+               "fixed": false,
+               "raw": "Source from which Q-A was indexed. eg. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs"
+              },
+              "isRequired": false,
+              "isConstant": false,
+              "name": {
+               "$id": "63",
+               "fixed": false,
+               "raw": "source"
+              },
+              "serializedName": "source",
+              "modelType": {
+               "$id": "64",
+               "$type": "PrimaryType",
+               "knownPrimaryType": "string",
+               "name": {
+                "$id": "65",
+                "fixed": false,
+                "raw": "String"
+               },
+               "deprecated": false
+              }
+             },
+             {
+              "$id": "66",
+              "isReadOnly": false,
+              "realPath": [
+               "questions"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "67",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "68",
+               "fixed": false,
+               "raw": "List of questions associated with the answer."
+              },
+              "isRequired": true,
+              "isConstant": false,
+              "name": {
+               "$id": "69",
+               "fixed": false,
+               "raw": "questions"
+              },
+              "serializedName": "questions",
+              "modelType": {
+               "$id": "70",
+               "$type": "SequenceType",
+               "elementType": {
+                "$id": "71",
+                "$type": "PrimaryType",
+                "knownPrimaryType": "string",
+                "name": {
+                 "$id": "72",
+                 "fixed": false,
+                 "raw": "String"
+                },
+                "deprecated": false
+               },
+               "name": {
+                "$id": "73",
+                "fixed": false
+               },
+               "deprecated": false
+              }
+             },
+             {
+              "$id": "74",
+              "isReadOnly": false,
+              "realPath": [
+               "metadata"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "75",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "76",
+               "fixed": false,
+               "raw": "List of metadata associated with the answer."
+              },
+              "isRequired": false,
+              "isConstant": false,
+              "name": {
+               "$id": "77",
+               "fixed": false,
+               "raw": "metadata"
+              },
+              "serializedName": "metadata",
+              "modelType": {
+               "$id": "78",
+               "$type": "SequenceType",
+               "elementType": {
+                "$ref": "2"
+               },
+               "name": {
+                "$id": "79",
+                "fixed": false
+               },
+               "deprecated": false
+              }
+             },
+             {
+              "$id": "80",
+              "isReadOnly": false,
+              "realPath": [
+               "context"
+              ],
+              "collectionFormat": "none",
+              "defaultValue": {
+               "$id": "81",
+               "fixed": false
+              },
+              "deprecated": false,
+              "documentation": {
+               "$id": "82",
+               "fixed": false,
+               "raw": "Context of a QnA"
+              },
+              "isRequired": false,
+              "isConstant": false,
+              "name": {
+               "$id": "83",
+               "fixed": false,
+               "raw": "context"
+              },
+              "serializedName": "context",
+              "modelType": {
+               "$ref": "16"
+              }
+             }
+            ],
+            "serializedName": "QnADTO",
+            "documentation": "Q-A object.",
+            "containsConstantProperties": false,
+            "name": {
+             "$id": "84",
+             "fixed": false,
+             "raw": "QnADTO"
+            },
+            "extensions": {
+             "x-ms-metadata": {
+              "apiVersions": [
+               "4.0"
+              ],
+              "filename": [
+               "mem:///129?oai3.shaken.json"
+              ],
+              "name": "QnADTO",
+              "originalLocations": [
+               "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QnADTO"
+              ]
+             }
+            },
+            "deprecated": false
+           },
+           "documentation": "QnADTO - Either QnaId or QnADTO needs to be present in a PromptDTO object",
+           "containsConstantProperties": false,
+           "name": {
+            "$id": "85",
+            "fixed": false,
+            "raw": "PromptDTO-qna"
+           },
+           "extensions": {
+            "x-ms-metadata": {
+             "apiVersions": [
+              "4.0"
+             ],
+             "filename": [
+              "mem:///129?oai3.shaken.json"
+             ],
+             "name": "PromptDTO-qna",
+             "originalLocations": [
+              "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/PromptDTO-qna"
+             ]
+            },
+            "x-internal-autorest-anonymous-schema": {
+             "anonymous": true
+            }
+           },
+           "deprecated": false
+          }
+         },
+         {
+          "$id": "86",
+          "isReadOnly": false,
+          "realPath": [
+           "displayText"
+          ],
+          "collectionFormat": "none",
+          "defaultValue": {
+           "$id": "87",
+           "fixed": false
+          },
+          "deprecated": false,
+          "documentation": {
+           "$id": "88",
+           "fixed": false,
+           "raw": "Text displayed to represent a follow up question prompt"
+          },
+          "isRequired": false,
+          "isConstant": false,
+          "name": {
+           "$id": "89",
+           "fixed": false,
+           "raw": "displayText"
+          },
+          "serializedName": "displayText",
+          "modelType": {
+           "$id": "90",
+           "$type": "PrimaryType",
+           "knownPrimaryType": "string",
+           "name": {
+            "$id": "91",
+            "fixed": false,
+            "raw": "String"
+           },
+           "deprecated": false
+          }
+         }
+        ],
+        "serializedName": "PromptDTO",
+        "documentation": "Prompt for an answer.",
+        "containsConstantProperties": false,
+        "name": {
+         "$id": "92",
+         "fixed": false,
+         "raw": "PromptDTO"
+        },
+        "extensions": {
+         "x-ms-metadata": {
+          "apiVersions": [
+           "4.0"
+          ],
+          "filename": [
+           "mem:///129?oai3.shaken.json"
+          ],
+          "name": "PromptDTO",
+          "originalLocations": [
+           "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/PromptDTO"
+          ]
+         }
+        },
+        "deprecated": false
+       },
+       "name": {
+        "$id": "93",
+        "fixed": false
+       },
+       "deprecated": false
+      }
+     }
+    ],
+    "serializedName": "ContextDTO",
+    "documentation": "Context associated with Qna.",
+    "containsConstantProperties": false,
+    "name": {
+     "$id": "94",
+     "fixed": false,
+     "raw": "ContextDTO"
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "4.0"
+      ],
+      "filename": [
+       "mem:///129?oai3.shaken.json"
+      ],
+      "name": "ContextDTO",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/ContextDTO"
+      ]
+     }
+    },
+    "deprecated": false
+   },
+   "documentation": "Context of a QnA",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "95",
+    "fixed": false,
+    "raw": "QnADTO-context"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QnADTO-context",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QnADTO-context"
+     ]
+    },
+    "x-internal-autorest-anonymous-schema": {
+     "anonymous": true
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$ref": "47"
+  },
+  {
+   "$ref": "46"
+  },
+  {
+   "$ref": "29"
+  },
+  {
+   "$ref": "17"
+  },
+  {
+   "$id": "96",
+   "$type": "CompositeType",
+   "serializedName": "ErrorResponse-error",
+   "baseModelType": {
+    "$id": "97",
+    "$type": "CompositeType",
+    "properties": [
+     {
+      "$id": "98",
+      "isReadOnly": false,
+      "realPath": [
+       "code"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "99",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "100",
+       "fixed": false,
+       "raw": "One of a server-defined set of error codes."
+      },
+      "extensions": {
+       "x-ms-metadata": {
+        "apiVersions": [
+         "4.0"
+        ],
+        "filename": [
+         "mem:///129?oai3.shaken.json"
+        ],
+        "name": "ErrorCodeType",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/ErrorCode"
+        ]
+       },
+       "x-ms-enum": {
+        "name": "ErrorCodeType",
+        "modelAsString": true,
+        "oldModelAsString": true
+       }
+      },
+      "isRequired": true,
+      "isConstant": false,
+      "name": {
+       "$id": "101",
+       "fixed": false,
+       "raw": "code"
+      },
+      "serializedName": "code",
+      "modelType": {
+       "$id": "102",
+       "$type": "EnumType",
+       "values": [
+        {
+         "$id": "103",
+         "name": "BadArgument",
+         "serializedName": "BadArgument"
+        },
+        {
+         "$id": "104",
+         "name": "Forbidden",
+         "serializedName": "Forbidden"
+        },
+        {
+         "$id": "105",
+         "name": "NotFound",
+         "serializedName": "NotFound"
+        },
+        {
+         "$id": "106",
+         "name": "KbNotFound",
+         "serializedName": "KbNotFound"
+        },
+        {
+         "$id": "107",
+         "name": "Unauthorized",
+         "serializedName": "Unauthorized"
+        },
+        {
+         "$id": "108",
+         "name": "Unspecified",
+         "serializedName": "Unspecified"
+        },
+        {
+         "$id": "109",
+         "name": "EndpointKeysError",
+         "serializedName": "EndpointKeysError"
+        },
+        {
+         "$id": "110",
+         "name": "QuotaExceeded",
+         "serializedName": "QuotaExceeded"
+        },
+        {
+         "$id": "111",
+         "name": "QnaRuntimeError",
+         "serializedName": "QnaRuntimeError"
+        },
+        {
+         "$id": "112",
+         "name": "SKULimitExceeded",
+         "serializedName": "SKULimitExceeded"
+        },
+        {
+         "$id": "113",
+         "name": "OperationNotFound",
+         "serializedName": "OperationNotFound"
+        },
+        {
+         "$id": "114",
+         "name": "ServiceError",
+         "serializedName": "ServiceError"
+        },
+        {
+         "$id": "115",
+         "name": "ValidationFailure",
+         "serializedName": "ValidationFailure"
+        },
+        {
+         "$id": "116",
+         "name": "ExtractionFailure",
+         "serializedName": "ExtractionFailure"
+        }
+       ],
+       "oldModelAsString": true,
+       "modelAsString": true,
+       "underlyingType": {
+        "$id": "117",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "118",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       },
+       "name": {
+        "$id": "119",
+        "fixed": false,
+        "raw": "ErrorCodeType"
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "120",
+      "isReadOnly": false,
+      "realPath": [
+       "message"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "121",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "122",
+       "fixed": false,
+       "raw": "A human-readable representation of the error."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "123",
+       "fixed": false,
+       "raw": "message"
+      },
+      "serializedName": "message",
+      "modelType": {
+       "$id": "124",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "125",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "126",
+      "isReadOnly": false,
+      "realPath": [
+       "target"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "127",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "128",
+       "fixed": false,
+       "raw": "The target of the error."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "129",
+       "fixed": false,
+       "raw": "target"
+      },
+      "serializedName": "target",
+      "modelType": {
+       "$id": "130",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "131",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "132",
+      "isReadOnly": false,
+      "realPath": [
+       "details"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "133",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "134",
+       "fixed": false,
+       "raw": "An array of details about specific errors that led to this reported error."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "135",
+       "fixed": false,
+       "raw": "details"
+      },
+      "serializedName": "details",
+      "modelType": {
+       "$id": "136",
+       "$type": "SequenceType",
+       "elementType": {
+        "$ref": "97"
+       },
+       "name": {
+        "$id": "137",
+        "fixed": false
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "138",
+      "isReadOnly": false,
+      "realPath": [
+       "innerError"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "139",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "140",
+       "fixed": false,
+       "raw": "An object containing more specific information than the current object about the error."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "141",
+       "fixed": false,
+       "raw": "innerError"
+      },
+      "serializedName": "innerError",
+      "modelType": {
+       "$id": "142",
+       "$type": "CompositeType",
+       "properties": [
+        {
+         "$id": "143",
+         "isReadOnly": false,
+         "realPath": [
+          "code"
+         ],
+         "collectionFormat": "none",
+         "defaultValue": {
+          "$id": "144",
+          "fixed": false
+         },
+         "deprecated": false,
+         "documentation": {
+          "$id": "145",
+          "fixed": false,
+          "raw": "A more specific error code than was provided by the containing error."
+         },
+         "isRequired": false,
+         "isConstant": false,
+         "name": {
+          "$id": "146",
+          "fixed": false,
+          "raw": "code"
+         },
+         "serializedName": "code",
+         "modelType": {
+          "$id": "147",
+          "$type": "PrimaryType",
+          "knownPrimaryType": "string",
+          "name": {
+           "$id": "148",
+           "fixed": false,
+           "raw": "String"
+          },
+          "deprecated": false
+         }
+        },
+        {
+         "$id": "149",
+         "isReadOnly": false,
+         "realPath": [
+          "innerError"
+         ],
+         "collectionFormat": "none",
+         "defaultValue": {
+          "$id": "150",
+          "fixed": false
+         },
+         "deprecated": false,
+         "documentation": {
+          "$id": "151",
+          "fixed": false,
+          "raw": "An object containing more specific information than the current object about the error."
+         },
+         "isRequired": false,
+         "isConstant": false,
+         "name": {
+          "$id": "152",
+          "fixed": false,
+          "raw": "innerError"
+         },
+         "serializedName": "innerError",
+         "modelType": {
+          "$ref": "142"
+         }
+        }
+       ],
+       "serializedName": "InnerErrorModel",
+       "documentation": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+       "containsConstantProperties": false,
+       "name": {
+        "$id": "153",
+        "fixed": false,
+        "raw": "InnerErrorModel"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "InnerErrorModel",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/InnerErrorModel"
+         ]
+        }
+       },
+       "deprecated": false
+      }
+     }
+    ],
+    "serializedName": "Error",
+    "documentation": "The error object. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+    "containsConstantProperties": false,
+    "name": {
+     "$id": "154",
+     "fixed": false,
+     "raw": "Error"
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "4.0"
+      ],
+      "filename": [
+       "mem:///129?oai3.shaken.json"
+      ],
+      "name": "Error",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/Error"
+      ]
+     }
+    },
+    "deprecated": false
+   },
+   "documentation": "The error object.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "155",
+    "fixed": false,
+    "raw": "ErrorResponse-error"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "ErrorResponse-error",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/ErrorResponse-error"
+     ]
+    },
+    "x-internal-autorest-anonymous-schema": {
+     "anonymous": true
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "156",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "157",
+     "isReadOnly": false,
+     "realPath": [
+      "error"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "158",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "159",
+      "fixed": false,
+      "raw": "The error object."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "160",
+      "fixed": false,
+      "raw": "error"
+     },
+     "serializedName": "error",
+     "modelType": {
+      "$ref": "96"
+     }
+    }
+   ],
+   "serializedName": "ErrorResponse",
+   "documentation": "Error response. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "161",
+    "fixed": false,
+    "raw": "ErrorResponse"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "ErrorResponse",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/ErrorResponse"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$ref": "142"
+  },
+  {
+   "$ref": "97"
+  },
+  {
+   "$id": "162",
+   "$type": "CompositeType",
+   "serializedName": "QueryDTO-context",
+   "baseModelType": {
+    "$id": "163",
+    "$type": "CompositeType",
+    "properties": [
+     {
+      "$id": "164",
+      "isReadOnly": false,
+      "realPath": [
+       "previousQnaId"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "165",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "166",
+       "fixed": false,
+       "raw": "Previous QnA Id - qnaId of the top result."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "167",
+       "fixed": false,
+       "raw": "previousQnaId"
+      },
+      "serializedName": "previousQnaId",
+      "modelType": {
+       "$id": "168",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "169",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "170",
+      "isReadOnly": false,
+      "realPath": [
+       "previousUserQuery"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "171",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "172",
+       "fixed": false,
+       "raw": "Previous user query."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "173",
+       "fixed": false,
+       "raw": "previousUserQuery"
+      },
+      "serializedName": "previousUserQuery",
+      "modelType": {
+       "$id": "174",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "175",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      }
+     }
+    ],
+    "serializedName": "QueryContextDTO",
+    "documentation": "Context object with previous QnA's information.",
+    "containsConstantProperties": false,
+    "name": {
+     "$id": "176",
+     "fixed": false,
+     "raw": "QueryContextDTO"
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "4.0"
+      ],
+      "filename": [
+       "mem:///129?oai3.shaken.json"
+      ],
+      "name": "QueryContextDTO",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QueryContextDTO"
+      ]
+     }
+    },
+    "deprecated": false
+   },
+   "documentation": "Context object with previous QnA's information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "177",
+    "fixed": false,
+    "raw": "QueryDTO-context"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QueryDTO-context",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QueryDTO-context"
+     ]
+    },
+    "x-internal-autorest-anonymous-schema": {
+     "anonymous": true
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "178",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "179",
+     "isReadOnly": false,
+     "realPath": [
+      "qnaId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "180",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "181",
+      "fixed": false,
+      "raw": "Exact qnaId to fetch from the knowledgebase, this field takes priority over question."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "182",
+      "fixed": false,
+      "raw": "qnaId"
+     },
+     "serializedName": "qnaId",
+     "modelType": {
+      "$id": "183",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "184",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "185",
+     "isReadOnly": false,
+     "realPath": [
+      "question"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "186",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "187",
+      "fixed": false,
+      "raw": "User question to query against the knowledge base."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "188",
+      "fixed": false,
+      "raw": "question"
+     },
+     "serializedName": "question",
+     "modelType": {
+      "$id": "189",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "190",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "191",
+     "isReadOnly": false,
+     "realPath": [
+      "top"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "192",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "193",
+      "fixed": false,
+      "raw": "Max number of answers to be returned for the question."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "194",
+      "fixed": false,
+      "raw": "top"
+     },
+     "serializedName": "top",
+     "modelType": {
+      "$id": "195",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "196",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "197",
+     "isReadOnly": false,
+     "realPath": [
+      "userId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "198",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "199",
+      "fixed": false,
+      "raw": "Unique identifier for the user."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "200",
+      "fixed": false,
+      "raw": "userId"
+     },
+     "serializedName": "userId",
+     "modelType": {
+      "$id": "201",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "202",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "203",
+     "isReadOnly": false,
+     "realPath": [
+      "isTest"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "204",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "205",
+      "fixed": false,
+      "raw": "Query against the test index."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "206",
+      "fixed": false,
+      "raw": "isTest"
+     },
+     "serializedName": "isTest",
+     "modelType": {
+      "$id": "207",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "boolean",
+      "name": {
+       "$id": "208",
+       "fixed": false,
+       "raw": "Boolean"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "209",
+     "isReadOnly": false,
+     "realPath": [
+      "scoreThreshold"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "210",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "211",
+      "fixed": false,
+      "raw": "Threshold for answers returned based on score."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "212",
+      "fixed": false,
+      "raw": "scoreThreshold"
+     },
+     "serializedName": "scoreThreshold",
+     "modelType": {
+      "$id": "213",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "214",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "215",
+     "isReadOnly": false,
+     "realPath": [
+      "context"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "216",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "217",
+      "fixed": false,
+      "raw": "Context object with previous QnA's information."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "218",
+      "fixed": false,
+      "raw": "context"
+     },
+     "serializedName": "context",
+     "modelType": {
+      "$ref": "162"
+     }
+    },
+    {
+     "$id": "219",
+     "isReadOnly": false,
+     "realPath": [
+      "rankerType"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "220",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "221",
+      "fixed": false,
+      "raw": "Optional field. Set to 'QuestionOnly' for using a question only Ranker."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "222",
+      "fixed": false,
+      "raw": "rankerType"
+     },
+     "serializedName": "rankerType",
+     "modelType": {
+      "$id": "223",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "224",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "225",
+     "isReadOnly": false,
+     "realPath": [
+      "strictFilters"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "226",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "227",
+      "fixed": false,
+      "raw": "Find only answers that contain these metadata."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "228",
+      "fixed": false,
+      "raw": "strictFilters"
+     },
+     "serializedName": "strictFilters",
+     "modelType": {
+      "$id": "229",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "2"
+      },
+      "name": {
+       "$id": "230",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "231",
+     "isReadOnly": false,
+     "realPath": [
+      "strictFiltersCompoundOperationType"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "232",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "233",
+      "fixed": false,
+      "raw": "Optional field. Set to OR for using OR as Operation for Strict Filters."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "4.0"
+       ],
+       "filename": [
+        "mem:///129?oai3.shaken.json"
+       ],
+       "name": "StrictFiltersCompoundOperationType",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QueryDTO-strictFiltersCompoundOperationType"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "StrictFiltersCompoundOperationType",
+       "modelAsString": true,
+       "oldModelAsString": true
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "234",
+      "fixed": false,
+      "raw": "strictFiltersCompoundOperationType"
+     },
+     "serializedName": "strictFiltersCompoundOperationType",
+     "modelType": {
+      "$id": "235",
+      "$type": "EnumType",
+      "values": [
+       {
+        "$id": "236",
+        "name": "AND",
+        "serializedName": "AND"
+       },
+       {
+        "$id": "237",
+        "name": "OR",
+        "serializedName": "OR"
+       }
+      ],
+      "oldModelAsString": true,
+      "modelAsString": true,
+      "underlyingType": {
+       "$id": "238",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "239",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "240",
+       "fixed": false,
+       "raw": "StrictFiltersCompoundOperationType"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "QueryDTO",
+   "documentation": "POST body schema to query the knowledgebase.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "241",
+    "fixed": false,
+    "raw": "QueryDTO"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QueryDTO",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QueryDTO"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$ref": "163"
+  },
+  {
+   "$id": "242",
+   "$type": "CompositeType",
+   "serializedName": "QnASearchResult-context",
+   "baseModelType": {
+    "$ref": "17"
+   },
+   "documentation": "Context object of the QnA",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "243",
+    "fixed": false,
+    "raw": "QnASearchResult-context"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QnASearchResult-context",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QnASearchResult-context"
+     ]
+    },
+    "x-internal-autorest-anonymous-schema": {
+     "anonymous": true
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "244",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "245",
+     "isReadOnly": false,
+     "realPath": [
+      "questions"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "246",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "247",
+      "fixed": false,
+      "raw": "List of questions."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "248",
+      "fixed": false,
+      "raw": "questions"
+     },
+     "serializedName": "questions",
+     "modelType": {
+      "$id": "249",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "250",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "251",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "252",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "253",
+     "isReadOnly": false,
+     "realPath": [
+      "answer"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "254",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "255",
+      "fixed": false,
+      "raw": "Answer."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "256",
+      "fixed": false,
+      "raw": "answer"
+     },
+     "serializedName": "answer",
+     "modelType": {
+      "$id": "257",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "258",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "259",
+     "isReadOnly": false,
+     "realPath": [
+      "score"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "260",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "261",
+      "fixed": false,
+      "raw": "Search result score."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "262",
+      "fixed": false,
+      "raw": "score"
+     },
+     "serializedName": "score",
+     "modelType": {
+      "$id": "263",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "264",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "265",
+     "isReadOnly": false,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "266",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "267",
+      "fixed": false,
+      "raw": "Id of the QnA result."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "268",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "269",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "270",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "271",
+     "isReadOnly": false,
+     "realPath": [
+      "source"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "272",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "273",
+      "fixed": false,
+      "raw": "Source of QnA result."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "274",
+      "fixed": false,
+      "raw": "source"
+     },
+     "serializedName": "source",
+     "modelType": {
+      "$id": "275",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "276",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "277",
+     "isReadOnly": false,
+     "realPath": [
+      "metadata"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "278",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "279",
+      "fixed": false,
+      "raw": "List of metadata."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "280",
+      "fixed": false,
+      "raw": "metadata"
+     },
+     "serializedName": "metadata",
+     "modelType": {
+      "$id": "281",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "2"
+      },
+      "name": {
+       "$id": "282",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "283",
+     "isReadOnly": false,
+     "realPath": [
+      "context"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "284",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "285",
+      "fixed": false,
+      "raw": "Context object of the QnA"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "286",
+      "fixed": false,
+      "raw": "context"
+     },
+     "serializedName": "context",
+     "modelType": {
+      "$ref": "242"
+     }
+    }
+   ],
+   "serializedName": "QnASearchResult",
+   "documentation": "Represents Search Result.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "287",
+    "fixed": false,
+    "raw": "QnASearchResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QnASearchResult",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QnASearchResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "288",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "289",
+     "isReadOnly": false,
+     "realPath": [
+      "answers"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "290",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "291",
+      "fixed": false,
+      "raw": "Represents Search Result list."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "292",
+      "fixed": false,
+      "raw": "answers"
+     },
+     "serializedName": "answers",
+     "modelType": {
+      "$id": "293",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "244"
+      },
+      "name": {
+       "$id": "294",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "QnASearchResultList",
+   "documentation": "Represents List of Question Answers.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "295",
+    "fixed": false,
+    "raw": "QnASearchResultList"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "QnASearchResultList",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/QnASearchResultList"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "296",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "297",
+     "isReadOnly": false,
+     "realPath": [
+      "userId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "298",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "299",
+      "fixed": false,
+      "raw": "Unique identifier for the user."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "300",
+      "fixed": false,
+      "raw": "userId"
+     },
+     "serializedName": "userId",
+     "modelType": {
+      "$id": "301",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "302",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "303",
+     "isReadOnly": false,
+     "realPath": [
+      "userQuestion"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "304",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "305",
+      "fixed": false,
+      "raw": "The suggested question being provided as feedback."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "306",
+      "fixed": false,
+      "raw": "userQuestion"
+     },
+     "serializedName": "userQuestion",
+     "modelType": {
+      "$id": "307",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "308",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "309",
+     "isReadOnly": false,
+     "realPath": [
+      "qnaId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "310",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "311",
+      "fixed": false,
+      "raw": "The qnaId for which the suggested question is provided as feedback."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "312",
+      "fixed": false,
+      "raw": "qnaId"
+     },
+     "serializedName": "qnaId",
+     "modelType": {
+      "$id": "313",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "314",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "FeedbackRecordDTO",
+   "documentation": "Active learning feedback record.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "315",
+    "fixed": false,
+    "raw": "FeedbackRecordDTO"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "FeedbackRecordDTO",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/FeedbackRecordDTO"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "316",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "317",
+     "isReadOnly": false,
+     "realPath": [
+      "feedbackRecords"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "318",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "319",
+      "fixed": false,
+      "raw": "List of feedback records."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "320",
+      "fixed": false,
+      "raw": "feedbackRecords"
+     },
+     "serializedName": "feedbackRecords",
+     "modelType": {
+      "$id": "321",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "296"
+      },
+      "name": {
+       "$id": "322",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "FeedbackRecordsDTO",
+   "documentation": "Active learning feedback records.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "323",
+    "fixed": false,
+    "raw": "FeedbackRecordsDTO"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "FeedbackRecordsDTO",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/schemas/FeedbackRecordsDTO"
+     ]
+    }
+   },
+   "deprecated": false
+  }
+ ],
+ "errorTypes": [
+  {
+   "$ref": "156"
+  }
+ ],
+ "enumTypes": [
+  {
+   "$ref": "102"
+  },
+  {
+   "$ref": "235"
+  }
+ ],
+ "hostParametersFront": [
+  {
+   "$id": "324",
+   "clientProperty": {
+    "$id": "325",
+    "isReadOnly": false,
+    "realPath": [
+     "RuntimeEndpoint"
+    ],
+    "collectionFormat": "none",
+    "defaultValue": {
+     "$id": "326",
+     "fixed": false
+    },
+    "deprecated": false,
+    "documentation": {
+     "$id": "327",
+     "fixed": false,
+     "raw": "QnA Maker App Service endpoint (for example: https://{qnaservice-hostname}.azurewebsites.net)."
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "4.0"
+      ],
+      "filename": [
+       "mem:///129?oai3.shaken.json"
+      ],
+      "name": "RuntimeEndpoint",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/parameters/RuntimeEndpoint"
+      ]
+     },
+     "x-ms-parameter-location": "client",
+     "x-ms-skip-url-encoding": true
+    },
+    "isRequired": true,
+    "isConstant": false,
+    "name": {
+     "$id": "328",
+     "fixed": false,
+     "raw": "RuntimeEndpoint"
+    },
+    "serializedName": "RuntimeEndpoint",
+    "modelType": {
+     "$id": "329",
+     "$type": "PrimaryType",
+     "knownPrimaryType": "string",
+     "name": {
+      "$id": "330",
+      "fixed": false,
+      "raw": "String"
+     },
+     "deprecated": false
+    }
+   },
+   "location": "path",
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "331",
+    "fixed": false,
+    "raw": ""
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "332",
+    "fixed": false,
+    "raw": "QnA Maker App Service endpoint (for example: https://{qnaservice-hostname}.azurewebsites.net)."
+   },
+   "extensions": {
+    "x-name": "RuntimeEndpoint",
+    "x-ms-parameter-location": "client",
+    "x-required": true,
+    "x-type": "string",
+    "x-in": "path",
+    "x-ms-skip-url-encoding": true,
+    "x-ms-original": {
+     "$ref": "#/components/parameters/parameters:1"
+    },
+    "hostParameter": true
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "333",
+    "fixed": false,
+    "raw": "RuntimeEndpoint"
+   },
+   "serializedName": "RuntimeEndpoint",
+   "modelType": {
+    "$id": "334",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "335",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  }
+ ],
+ "name": "QnAMakerRuntimeClient",
+ "namespace": "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker",
+ "modelsName": "Models",
+ "apiVersion": "4.0",
+ "baseUrl": "{RuntimeEndpoint}/qnamaker",
+ "documentation": "An API for QnAMaker runtime",
+ "extensions": {
+  "security": [
+   {
+    "auth_key": []
+   }
+  ],
+  "x-ms-parameterized-host": true
+ },
+ "properties": [
+  {
+   "$id": "336",
+   "isReadOnly": false,
+   "realPath": [
+    "kbId"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "337",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "338",
+    "fixed": false,
+    "raw": "Knowledgebase id."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "4.0"
+     ],
+     "filename": [
+      "mem:///129?oai3.shaken.json"
+     ],
+     "name": "KbId",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/parameters/KbId"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "339",
+    "fixed": false,
+    "raw": "kbId"
+   },
+   "serializedName": "kbId",
+   "modelType": {
+    "$id": "340",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "341",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$ref": "325"
+  }
+ ],
+ "operations": [
+  {
+   "$id": "342",
+   "methods": [
+    {
+     "$id": "343",
+     "parameters": [
+      {
+       "$id": "344",
+       "clientProperty": {
+        "$ref": "336"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "345",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "346",
+        "fixed": false,
+        "raw": "Knowledgebase id."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "KbId",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/parameters/KbId"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "347",
+        "fixed": false,
+        "raw": "kbId"
+       },
+       "serializedName": "kbId",
+       "modelType": {
+        "$id": "348",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "349",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "350",
+       "location": "body",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "351",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "352",
+        "fixed": false,
+        "raw": "Post body of the request."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "paths·kqllak·knowledgebases-kbid-generateanswer·post·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/requestBodies/paths·kqllak·knowledgebases-kbid-generateanswer·post·requestbody"
+         ]
+        },
+        "x-ms-parameter-location": "method",
+        "x-nullable": true,
+        "x-ms-requestBody-name": "generateAnswerPayload"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "353",
+        "fixed": false,
+        "raw": "generateAnswerPayload"
+       },
+       "serializedName": "generateAnswerPayload",
+       "modelType": {
+        "$ref": "178"
+       }
+      }
+     ],
+     "name": {
+      "$id": "354",
+      "fixed": false,
+      "raw": "GenerateAnswer"
+     },
+     "group": {
+      "$id": "355",
+      "fixed": false,
+      "raw": "Runtime"
+     },
+     "serializedName": "Runtime_GenerateAnswer",
+     "url": "/knowledgebases/{kbId}/generateAnswer",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "OK": {
+       "$id": "356",
+       "body": {
+        "$ref": "288"
+       },
+       "extensions": {
+        "$id": "357",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "paths·1ag94u1·knowledgebases-kbid-generateanswer·post·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/responses/paths·1ag94u1·knowledgebases-kbid-generateanswer·post·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "358",
+      "body": {
+       "$ref": "156"
+      },
+      "extensions": {
+       "$id": "359",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "4.0"
+        ],
+        "filename": [
+         "mem:///129?oai3.shaken.json"
+        ],
+        "name": "paths·2qg083·knowledgebases-kbid-generateanswer·post·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/responses/paths·2qg083·knowledgebases-kbid-generateanswer·post·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "360",
+      "body": {
+       "$ref": "288"
+      },
+      "isNullable": true
+     },
+     "summary": "GenerateAnswer call to query the knowledgebase.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "{RuntimeEndpoint}/qnamaker",
+        "variables": {
+         "RuntimeEndpoint": {
+          "x-name": "RuntimeEndpoint",
+          "description": "QnA Maker App Service endpoint (for example: https://{qnaservice-hostname}.azurewebsites.net).",
+          "x-ms-parameter-location": "client",
+          "x-required": true,
+          "x-type": "string",
+          "x-in": "path",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-original": {
+           "$ref": "#/components/parameters/parameters:1"
+          },
+          "default": ""
+         }
+        }
+       }
+      ],
+      "x-ms-requestBody-index": "1",
+      "x-ms-examples": {
+       "Successful query": {
+        "parameters": {
+         "RuntimeEndpoint": "{RuntimeEndpoint}",
+         "Authorization": "EndpointKey {Primary/Secondary EndpointKey}",
+         "Content-Type": "application/json",
+         "kbId": "9d091697-fb8c-4ed5-9ac0-35bf8273bfff",
+         "generateAnswerPayload": {
+          "question": "qna maker and luis",
+          "top": "6",
+          "isTest": true,
+          "scoreThreshold": "20",
+          "strictFilters": [
+           {
+            "name": "category",
+            "value": "api"
+           }
+          ],
+          "userId": "sd53lsY="
+         }
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "answers": [
+            {
+             "score": "28.54820341616869",
+             "id": "20",
+             "answer": "There is no direct integration of LUIS with QnA Maker. But, in your bot code, you can use LUIS and QnA Maker together.",
+             "source": "Custom Editorial",
+             "questions": [
+              "How can I integrate LUIS with QnA Maker?"
+             ],
+             "metadata": [
+              {
+               "name": "category",
+               "value": "api"
+              }
+             ]
+            }
+           ]
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "361",
+     "parameters": [
+      {
+       "$id": "362",
+       "clientProperty": {
+        "$ref": "336"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "363",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "364",
+        "fixed": false,
+        "raw": "Knowledgebase id."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "KbId",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/parameters/KbId"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "365",
+        "fixed": false,
+        "raw": "kbId"
+       },
+       "serializedName": "kbId",
+       "modelType": {
+        "$id": "366",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "367",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "368",
+       "location": "body",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "369",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "370",
+        "fixed": false,
+        "raw": "Post body of the request."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "paths·1p0wnwz·knowledgebases-kbid-train·post·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/requestBodies/paths·1p0wnwz·knowledgebases-kbid-train·post·requestbody"
+         ]
+        },
+        "x-ms-parameter-location": "method",
+        "x-nullable": true,
+        "x-ms-requestBody-name": "trainPayload"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "371",
+        "fixed": false,
+        "raw": "trainPayload"
+       },
+       "serializedName": "trainPayload",
+       "modelType": {
+        "$ref": "316"
+       }
+      }
+     ],
+     "name": {
+      "$id": "372",
+      "fixed": false,
+      "raw": "Train"
+     },
+     "group": {
+      "$id": "373",
+      "fixed": false,
+      "raw": "Runtime"
+     },
+     "serializedName": "Runtime_Train",
+     "url": "/knowledgebases/{kbId}/train",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "NoContent": {
+       "$id": "374",
+       "extensions": {
+        "$id": "375",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "4.0"
+         ],
+         "filename": [
+          "mem:///129?oai3.shaken.json"
+         ],
+         "name": "paths·2l7fj6·knowledgebases-kbid-train·post·responses·204",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/responses/paths·2l7fj6·knowledgebases-kbid-train·post·responses·204"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "376",
+      "body": {
+       "$ref": "156"
+      },
+      "extensions": {
+       "$id": "377",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "4.0"
+        ],
+        "filename": [
+         "mem:///129?oai3.shaken.json"
+        ],
+        "name": "paths·1v30x2q·knowledgebases-kbid-train·post·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/stable/v4.0/QnAMakerRuntime.json#/components/responses/paths·1v30x2q·knowledgebases-kbid-train·post·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "378",
+      "isNullable": true
+     },
+     "summary": "Train call to add suggestions to the knowledgebase.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "{RuntimeEndpoint}/qnamaker",
+        "variables": {
+         "RuntimeEndpoint": {
+          "x-name": "RuntimeEndpoint",
+          "description": "QnA Maker App Service endpoint (for example: https://{qnaservice-hostname}.azurewebsites.net).",
+          "x-ms-parameter-location": "client",
+          "x-required": true,
+          "x-type": "string",
+          "x-in": "path",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-original": {
+           "$ref": "#/components/parameters/parameters:1"
+          },
+          "default": ""
+         }
+        }
+       }
+      ],
+      "x-ms-requestBody-index": "1",
+      "x-ms-examples": {
+       "Successful query": {
+        "parameters": {
+         "RuntimeEndpoint": "{RuntimeEndpoint}",
+         "Authorization": "EndpointKey {Primary/Secondary Endpoint Key}",
+         "Content-Type": "application/json",
+         "kbId": "9d091697-fb8c-4ed5-9ac0-35bf8273bfff",
+         "trainPayload": {
+          "feedbackRecords": [
+           {
+            "userId": "sd53lsY=",
+            "userQuestion": "qna maker with luis",
+            "qnaId": "4"
+           }
+          ]
+         }
+        },
+        "responses": {
+         "204": {}
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "379",
+    "fixed": false,
+    "raw": "Runtime"
+   },
+   "typeName": {
+    "$id": "380",
+    "fixed": false
+   },
+   "nameForProperty": "Runtime"
+  }
+ ]
+}

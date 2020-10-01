@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data deletion detection policy that implements a soft-deletion strategy. It determines whether an item should be deleted based on the value of a designated &apos;soft delete&apos; column. </summary>
     public partial class SoftDeleteColumnDeletionDetectionPolicy : DataDeletionDetectionPolicy

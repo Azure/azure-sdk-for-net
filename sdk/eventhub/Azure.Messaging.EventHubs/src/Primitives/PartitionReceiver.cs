@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
+            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -380,7 +380,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -396,12 +396,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the transport
@@ -466,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    PartitionReceiverOptions options) =>
-            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount, options.PrefetchSizeInBytes);
 
         /// <summary>
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -17,28 +18,20 @@ namespace Azure.Messaging.ServiceBus.Tests
     ///
     public class ServiceBusTestEnvironment: TestEnvironment
     {
-        public ServiceBusTestEnvironment() : base("servicebus")
-        {
-            ActiveServiceBusNamespace = new Lazy<NamespaceProperties>(EnsureServiceBusNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
-            ParsedConnectionString = new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(ServiceBusConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
-        }
+        /// <summary>The name of the environment variable used to specify the Service Bus namespace to use for the test run.</summary>
+        public const string ServiceBusConnectionStringEnvironmentVariable  = "SERVICEBUS_CONNECTION_STRING";
 
-        /// <summary>
-        /// A shared instance of <see cref="ServiceBusTestEnvironment"/>.
-        /// </summary>
+        /// <summary>The name of the shared access key to be used for accessing an Service Bus namespace.</summary>
+        public const string ServiceBusDefaultSharedAccessKey = "RootManageSharedAccessKey";
+
+        /// <summary>A shared instance of <see cref="ServiceBusTestEnvironment"/>. </summary>
         public static ServiceBusTestEnvironment Instance { get; } = new ServiceBusTestEnvironment();
-
-        /// <summary>The environment variable value for the override connection string to indicate an existing namespace should be used, lazily evaluated.</summary>
-        private string ServiceBusOverrideConnectionString => GetOptionalVariable("SERVICE_BUS_NAMESPACE_CONNECTION_STRING");
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveServiceBusNamespace;
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
         private readonly Lazy<ConnectionStringProperties> ParsedConnectionString;
-
-        /// <summary>The name of the shared access key to be used for accessing an Service Bus namespace.</summary>
-        public const string ServiceBusDefaultSharedAccessKey = "RootManageSharedAccessKey";
 
         /// <summary>
         ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
@@ -90,12 +83,36 @@ namespace Azure.Messaging.ServiceBus.Tests
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
+        ///   The Azure Authority host to be used for authentication with the active cloud environment.
+        /// </summary>
+        ///
+        public new string AuthorityHostUrl => base.AuthorityHostUrl ?? "https://login.microsoftonline.com/";
+
+        /// <summary>
+        ///   The Azure Service Management endpoint to be used for management plane authentication with the active cloud environment.
+        /// </summary>
+        ///
+        public new string ServiceManagementUrl => base.ServiceManagementUrl ?? "https://management.core.windows.net/";
+
+        /// <summary>
+        ///   The location of the resource manager for the active cloud environment.
+        /// </summary>
+        ///
+        public new string ResourceManagerUrl  => base.ResourceManagerUrl ?? "https://management.azure.com/";
+
+        /// <summary>
+        ///   The environment variable value for the override connection string to indicate an existing namespace should be used.
+        /// </summary>
+        ///
+        public string OverrideServiceBusConnectionString => GetRecordedOptionalVariable(ServiceBusConnectionStringEnvironmentVariable, options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
+
+        /// <summary>
         ///   The name of an existing Service Bus queue to consider an override and use when
         ///   requesting a test scope, overriding the creation of a new dynamic queue specific to
         ///   the scope.
         /// </summary>
         ///
-        public string OverrideQueueName => GetOptionalVariable("SERVICE_BUS_OVERRIDE_QUEUE");
+        public string OverrideQueueName => GetOptionalVariable("SERVICEBUS_OVERRIDE_QUEUE");
 
         /// <summary>
         ///   The name of an existing Service Bus topic to consider an override and use when
@@ -103,7 +120,17 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   the scope.
         /// </summary>
         ///
-        public string OverrideTopicName => GetOptionalVariable("SERVICE_BUS_OVERRIDE_TOPIC");
+        public string OverrideTopicName => GetOptionalVariable("SERVICEBUS_OVERRIDE_TOPIC");
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusTestEnvironment"/> class.
+        /// </summary>
+        ///
+        public ServiceBusTestEnvironment() : base("servicebus")
+        {
+            ActiveServiceBusNamespace = new Lazy<NamespaceProperties>(EnsureServiceBusNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
+            ParsedConnectionString = new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(ServiceBusConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
+        }
 
         /// <summary>
         ///   Builds a connection string for a specific Service Bus entity instance under the namespace used for
@@ -116,9 +143,27 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public string BuildConnectionStringForEntity(string entityName) => $"{ ServiceBusConnectionString };EntityPath={ entityName }";
 
+        /// <summary>
+        ///   Builds a connection string for the Service Bus namespace used for Live tests, creating a shared access signature
+        ///   in place of the shared key.
+        /// </summary>
+        ///
+        /// <param name="entityName">The name of the entity for which the connection string is being built.</param>
+        /// <param name="signatureAudience">The audience to use for the shared access signature.</param>
+        /// <param name="validDurationMinutes">The duration, in minutes, that the signature should be considered valid for.</param>
+        ///
+        /// <returns>The namespace connection string with a shared access signature based on the shared key of the current scope.</value>
+        ///
+        public string BuildConnectionStringWithSharedAccessSignature(string entityName,
+                                                                     string signatureAudience,
+                                                                     int validDurationMinutes = 30)
+        {
+            var signature = new SharedAccessSignature(signatureAudience, SharedAccessKeyName, SharedAccessKey, TimeSpan.FromMinutes(validDurationMinutes));
+            return $"Endpoint={ ParsedConnectionString.Value.Endpoint };EntityPath={ entityName };SharedAccessSignature={ signature.Value }";
+        }
 
         /// <summary>
-        ///   Ensures that a Service Bus namespace is available.  If the <see cref="ServiceBusOverrideConnectionString"/> override was set for the environment,
+        ///   Ensures that a Service Bus namespace is available.  If the <see cref="OverrideServiceBusConnectionString"/> override was set for the environment,
         ///   that namespace will be respected.  Otherwise, a new Service Bus namespace will be created on Azure for this test run.
         /// </summary>
         ///
@@ -126,14 +171,14 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         private NamespaceProperties EnsureServiceBusNamespace()
         {
-            if (!string.IsNullOrEmpty(ServiceBusOverrideConnectionString))
+            if (!string.IsNullOrEmpty(OverrideServiceBusConnectionString))
             {
-                var parsed = ConnectionStringParser.Parse(ServiceBusOverrideConnectionString);
+                var parsed = ConnectionStringParser.Parse(OverrideServiceBusConnectionString);
 
                 return new NamespaceProperties
                 (
                     parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
-                    ServiceBusOverrideConnectionString.Replace($";EntityPath={ parsed.EntityPath }", string.Empty),
+                    OverrideServiceBusConnectionString.Replace($";EntityPath={ parsed.EntityPath }", string.Empty),
                     false
                 );
             }

@@ -2,8 +2,35 @@
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs'))">
+    <IsWebjobsProject>true</IsWebjobsProject>
+    <SupportsNetStandard20>true</SupportsNetStandard20>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs.Host.TestCommon'))">
+    <IsTestProject>false</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+  
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-
+  
+  <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
+    <NoWarn>
+      $(NoWarn);
+      AZC0001;
+      AZC0006;
+      AZC0007;
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')">
+    <NoWarn>
+      $(NoWarn);
+      AZC0100;
+      CA1307;
+      CS1591;
+      SA1402;
+      SA1649;
+    </NoWarn>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!--
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
@@ -30,7 +57,7 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
+  <Import Condition="'$(IsClientLibrary)' == 'true' AND '$(IsMgmtClientLibrary)' != 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
@@ -51,10 +78,11 @@
     <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
-
   
   <!--Add shared storage properties-->
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
+    <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
+    <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
   </PropertyGroup>
 </Project>

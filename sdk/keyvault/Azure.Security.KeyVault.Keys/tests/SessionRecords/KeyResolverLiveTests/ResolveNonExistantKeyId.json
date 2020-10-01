@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/1997865383?api-version=7.1-preview",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1997865383?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-cd823be276bce1488fe36fcd2165b306-85c77f1cbe277a4e-00",
+        "traceparent": "00-c390c2ee1a0c114996d1df709a113ea4-ec11d69a8947c747-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.0.0-dev.20190929.1\u002B6c0963aef095f4e84bfb6eac4b35eea1c0224968",
-          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200729.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "4e3185a09900f378832dd964e28cef0d",
         "x-ms-return-client-request-id": "true"
@@ -19,31 +19,30 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "70",
+        "Content-Length": "298",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 29 Sep 2019 15:00:32 GMT",
+        "Date": "Wed, 29 Jul 2020 22:51:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=98.237.193.253;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus",
-        "x-ms-keyvault-service-version": "1.1.0.878",
-        "x-ms-request-id": "add65fae-f2c5-4e4f-988f-075289db883e",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus2",
+        "x-ms-keyvault-service-version": "1.1.10.0",
+        "x-ms-request-id": "dbc109ca-6aba-4d36-ae75-e222fba444bb",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "error": {
           "code": "KeyNotFound",
-          "message": "Key not found: 1997865383"
+          "message": "A key with (name/id) 1997865383 was not found in this key vault. If you recently deleted this key you may be able to recover it using the correct recovery command. For help resolving this issue, please see https://go.microsoft.com/fwlink/?linkid=2125182"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://dotnettestvault.vault.azure.net/",
+    "AZURE_KEYVAULT_URL": "https://heathskv.vault.azure.net",
     "RandomSeed": "356916101"
   }
 }

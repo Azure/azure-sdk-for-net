@@ -14,11 +14,11 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class TableResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup2510";
-        const string databaseAccountName = "db2527";
+        const string resourceGroupName = "CosmosDBResourceGroup3668";
+        const string databaseAccountName = "db2048";
 
         const string tableName = "tableName2527";
         const string tableName2 = "tableName22527";
@@ -56,10 +56,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 TableCreateUpdateParameters tableCreateUpdateParameters = new TableCreateUpdateParameters
                 {
                     Resource = new TableResource { Id = tableName },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 TableGetResults tableGetResults = cosmosDBManagementClient.TableResources.CreateUpdateTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, tableName, tableCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -79,7 +76,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new TableResource { Id = tableName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 

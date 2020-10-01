@@ -34,21 +34,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task ClientRequestIdRountrips()
-        {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchClient client = resources.GetSearchClient();
-            Guid id = Recording.Random.NewGuid();
-            Response<long> response = await client.GetDocumentCountAsync(
-                new SearchRequestOptions { ClientRequestId = id });
-
-            // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
-            // (Assertion is here to remind us to fix this when we do - just
-            // change to AreEqual and re-record)
-            Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
-        }
-
-        [Test]
         public async Task GetDocumentCount()
         {
             await using SearchResources search = await SearchResources.GetSharedHotelsIndexAsync(this);

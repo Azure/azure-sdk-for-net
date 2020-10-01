@@ -58,22 +58,21 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 
 ## Development history
 
-For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure App Configuration .NET repository]().
+For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure App Configuration .NET repository](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration).
 
 <!-- LINKS -->
 [azconfig_root]: ../../sdk/appconfiguration
-[azconfig_api]: ./Azure.Data.AppConfiguration/api/Azure.Data.AppConfiguration.netstandard2.0.cs
-[azconfig_export_api]: ../../eng/scripts/Export-API.ps1
+[azconfig_api]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/api/Azure.Data.AppConfiguration.netstandard2.0.cs
+[azconfig_export_api]: https://github.com/Azure/azure-sdk-for-net/blob/master/eng/scripts/Export-API.ps1
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[core_tests]: ../../sdk/core/Azure.Core/tests/TestFramework
+[core_tests]: https://github.com/azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/tests
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AAzConfig
 [sdk_readme]: https://github.com/Azure/azure-sdk
-[sdk_contributing]: ./CONTRIBUTING.md
+[sdk_contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/CONTRIBUTING.md
 [sdk_design_guidelines]: https://azure.github.io/azure-sdk/general_introduction.html
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
-[sdk_dotnet_code_readme]: ../../sdk/core/Azure.Core/README.md
-[tests_sanitized]: ./Azure.Data.AppConfiguration/tests/ConfigurationRecordedTestSanitizer.cs
+[sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md
 [email_opencode]: mailto:opencode@microsoft.com

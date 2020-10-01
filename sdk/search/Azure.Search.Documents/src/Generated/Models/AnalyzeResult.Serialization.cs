@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class AnalyzeResult
     {
@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Models
                     List<AnalyzedTokenInfo> array = new List<AnalyzedTokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
-                        }
+                        array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
                     }
                     tokens = array;
                     continue;

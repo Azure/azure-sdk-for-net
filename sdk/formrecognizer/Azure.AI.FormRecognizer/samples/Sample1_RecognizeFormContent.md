@@ -22,8 +22,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize the content from a given file at a URI, use the `StartRecognizeContentFromUri` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
-foreach (FormPage page in formPages.Value)
+FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
+foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
 
@@ -52,7 +52,7 @@ To recognize the content from a file stream, use the `StartRecognizeContent` met
 ```C# Snippet:FormRecognizerRecognizeFormContentFromFile
 using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
 {
-    Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+    FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
     /*
      *
      */

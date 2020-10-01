@@ -6,6 +6,10 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Search.Documents.csproj" />
@@ -27,15 +31,18 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Microsoft.Azure.Management.Search" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" />
-
-    <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->
     <PackageReference Include="Microsoft.Spatial" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Samples\Sample01_HelloWorld.Data.cs" DependentUpon="Sample01_HelloWorld.cs" />
   </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <!-- Pull in Microsoft.Azure.Core.Spatial -->
+  <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
 </Project>

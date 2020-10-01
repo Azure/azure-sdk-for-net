@@ -37,7 +37,7 @@ namespace Azure.Search.Documents
         {
             Argument.AssertNotNull(writer, nameof(writer));
             Debug.Assert(options != null);
-            writer.WriteStringValue(JsonExtensions.Date(value, CultureInfo.InvariantCulture));
+            writer.WriteStringValue(JsonSerialization.Date(value, CultureInfo.InvariantCulture));
         }
     }
 }

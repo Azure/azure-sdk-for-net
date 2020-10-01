@@ -5,9 +5,4 @@
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-
-  <PropertyGroup Condition="'$(IsDataPlaneProject)' == 'true'">
-    <VersionPrefix>3.0.5</VersionPrefix>
-    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
-  </PropertyGroup>
 </Project>

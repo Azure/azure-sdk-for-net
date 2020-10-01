@@ -7,45 +7,41 @@ namespace Azure.AI.FormRecognizer.Models
     /// Represents a field recognized in the input form, where the field's value is of a known type.
     /// </summary>
     /// <typeparam name="T">The type of the value in the field this instance represents.</typeparam>
-    /// <remarks>
-    /// This class is used in place of a generic <see cref="FormField"/> when its value
-    /// has a known type.
-    /// </remarks>
     public class FormField<T>
     {
-        internal FormField(T value)
-        {
-            Value = value;
-        }
-
-        internal FormField(FormField field, T value)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormField{T}"/> class.
+        /// </summary>
+        /// <param name="field">The weakly-typed field this instance is associated with.</param>
+        /// <param name="value">The strongly-typed value of this <see cref="FormField{T}"/>.</param>
+        public FormField(FormField field, T value)
         {
             Confidence = field.Confidence;
-            LabelText = field.LabelText;
+            LabelData = field.LabelData;
             Name = field.Name;
-            ValueText = field.ValueText;
+            ValueData = field.ValueData;
             Value = value;
         }
 
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; internal set; }
+        public FieldData LabelData { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; internal set; }
+        public FieldData ValueData { get; }
 
         /// <summary>
         /// The strongly-typed value of this <see cref="FormField{T}"/>.
         /// </summary>
-        public T Value { get; internal set; }
+        public T Value { get; }
 
         /// <summary>
         /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].

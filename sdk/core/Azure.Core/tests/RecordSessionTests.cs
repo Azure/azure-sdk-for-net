@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -16,8 +17,13 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\\\"value\\\"\"}", "application/json")]
+        [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
+        [TestCase("{\"json\"\n:\"value\"}", "application/json")]
+        [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
+        [TestCase("\"\"", "application/json")]
         [TestCase("invalid json", "application/json")]
         [TestCase("{ \"json\": \"value\" }", "unknown")]
         [TestCase("multi\rline", "application/xml")]
@@ -48,7 +54,10 @@ namespace Azure.Core.Tests
             session.Entries.Add(recordEntry);
 
             var arrayBufferWriter = new ArrayBufferWriter<byte>();
-            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter);
+            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter, new JsonWriterOptions()
+            {
+                Indented = true
+            });
             session.Serialize(jsonWriter);
             jsonWriter.Flush();
 
@@ -116,7 +125,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(requestEntry, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -165,6 +174,55 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal", true, true)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value2", true, true)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1&VolatileParam2=Value2", "http://localhost?param=paramVal&VolatileParam1=Value3&VolatileParam2=Value3", true, true)]
+        // order should still be respected
+        [TestCase("http://localhost?param=paramVal&VolatileParam2=Value2&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value3&VolatileParam2=Value3", true, false)]
+        // presence of volatile param is still required
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1&VolatileParam2=Value2", "http://localhost?param=paramVal&VolatileParam1=Value3", true, false)]
+        // non-volatile param values should be respected
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal2", true, false)]
+        // regression test cases
+        [TestCase("http://localhost?VolatileParam1=Value&param=paramVal", "http://localhost?param=paramVal2&VolatileParam1=Value", false, false)]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal", false, false)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value2", false, false)]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal2", false, false)]
+        public void RecordMatcherRespectsVolatiledQueryParameters(string requestUri, string entryUri, bool includeVolatile, bool shouldMatch)
+        {
+            var matcher = new RecordMatcher();
+            if (includeVolatile)
+            {
+                matcher.VolatileQueryParameters.Add("VolatileParam1");
+                matcher.VolatileQueryParameters.Add("VolatileParam2");
+            }
+
+            var mockRequest = new RecordEntry()
+            {
+                RequestUri = requestUri,
+                RequestMethod = RequestMethod.Put,
+            };
+
+            RecordEntry[] entries = new[]
+            {
+                new RecordEntry()
+                {
+                    RequestUri = entryUri,
+                    RequestMethod = RequestMethod.Put
+                }
+            };
+
+            if (shouldMatch)
+            {
+                Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+            }
+            else
+            {
+                Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
+            }
+        }
+
+        [Test]
         public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
         {
             var matcher = new RecordMatcher();
@@ -177,7 +235,7 @@ namespace Azure.Core.Tests
 
             RecordEntry[] entries = { };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
@@ -196,6 +254,38 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("SANITIZED", session.Variables["A"]);
             Assert.AreEqual("Totally not a SANITIZED", session.Variables["B"]);
+        }
+
+        [TestCase("*", "invalid json", "invalid json")]
+        [TestCase("..secret",
+                "[{\"secret\":\"I should be sanitized\"},{\"secret\":\"I should be sanitized\"}]",
+                "[{\"secret\":\"Sanitized\"},{\"secret\":\"Sanitized\"}]")]
+        [TestCase("$..secret",
+                "{\"secret\":\"I should be sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"I should be sanitized\"}}",
+                "{\"secret\":\"Sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"Sanitized\"}}")]
+        public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add(jsonPath);
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void RecordingSessionSanitizeTextBodyMultipleValues()
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add("$..secret");
+            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+
+            var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
+            var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
         }
 
         [Test]
@@ -234,7 +324,33 @@ namespace Azure.Core.Tests
 
             var matcher = new RecordMatcher();
             var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
-            var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
+            var entry = RecordTransport.CreateEntry(playbackRequest, new MockResponse(200));
+
+            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
+        }
+
+        [Theory]
+        [TestCase("Content-Type")]
+        [TestCase("Accept")]
+        [TestCase("Random-Header")]
+        public void SpecialHeadersNormalizedForMatchingMultiValue(string name)
+        {
+            // Use HttpClientTransport as it does header normalization
+            var originalRequest = new HttpClientTransport().CreateRequest();
+            originalRequest.Method = RequestMethod.Get;
+            originalRequest.Uri.Reset(new Uri("http://localhost"));
+            originalRequest.Headers.Add(name, "application/json, text/json");
+            originalRequest.Headers.Add("Date", "This should be ignored");
+
+            var playbackRequest = new MockTransport().CreateRequest();
+            playbackRequest.Method = RequestMethod.Get;
+            playbackRequest.Uri.Reset(new Uri("http://localhost"));
+            playbackRequest.Headers.Add(name, "application/json, text/json");
+            playbackRequest.Headers.Add("Date", "It doesn't match");
+
+            var matcher = new RecordMatcher();
+            var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
+            var entry = RecordTransport.CreateEntry(playbackRequest, new MockResponse(200));
 
             Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
         }
@@ -265,6 +381,75 @@ namespace Azure.Core.Tests
 
             StringAssert.DoesNotContain(body, text);
             StringAssert.Contains($"\"RequestBody\": null", text);
+        }
+
+        [Test]
+        public void RecordSessionLookupSkipsRequestBodyWhenFilterIsOn()
+        {
+            var request = new MockRequest();
+            request.Uri.Reset(new Uri("https://mockuri.com"));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A nice and long body."));
+            request.Headers.Add("Content-Type", "text/json");
+
+            HttpMessage message = new HttpMessage(request, null);
+            message.Response = new MockResponse(200);
+
+            var session = new RecordSession();
+            var recordTransport = new RecordTransport(session, Mock.Of<HttpPipelineTransport>(), entry => EntryRecordModel.RecordWithoutRequestBody, Mock.Of<Random>());
+
+            recordTransport.Process(message);
+
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body"));
+
+            var skipRequestBody = true;
+            var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);
+
+            playbackTransport.Process(message);
+
+            skipRequestBody = false;
+            Assert.Throws<TestRecordingMismatchException>(() => playbackTransport.Process(message));
+        }
+
+        [Test]
+        public void ContentLengthNotChangedOnHeadRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: true);
+        }
+
+        [Test]
+        public void ContentLengthResetToZeroOnGetRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: false);
+        }
+
+        private void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            var entry = new RecordEntry()
+            {
+                RequestUri = "http://localhost/",
+                RequestMethod = isHeadRequest ? RequestMethod.Head : RequestMethod.Get,
+                Response =
+                {
+                    Headers =
+                    {
+                        {"Content-Length", new[] {"41"}},
+                        {"Some-Header", new[] {"Random value"}},
+                        {"Some-Other-Header", new[] {"V"}}
+                    },
+                    Body = new byte[0]
+                }
+            };
+            sanitizer.Sanitize(entry);
+
+            if (isHeadRequest)
+            {
+                Assert.AreEqual(new[] { "41" }, entry.Response.Headers["Content-Length"]);
+            }
+            else
+            {
+                Assert.AreEqual(new[] { "0" }, entry.Response.Headers["Content-Length"]);
+            }
         }
 
         private class TestSanitizer : RecordedTestSanitizer

@@ -5,32 +5,32 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Identifies the type of phonetic encoder to use with a PhoneticTokenFilter. </summary>
     public enum PhoneticEncoder
     {
-        /// <summary> metaphone. </summary>
+        /// <summary> Encodes a token into a Metaphone value. </summary>
         Metaphone,
-        /// <summary> doubleMetaphone. </summary>
+        /// <summary> Encodes a token into a double metaphone value. </summary>
         DoubleMetaphone,
-        /// <summary> soundex. </summary>
+        /// <summary> Encodes a token into a Soundex value. </summary>
         Soundex,
-        /// <summary> refinedSoundex. </summary>
+        /// <summary> Encodes a token into a Refined Soundex value. </summary>
         RefinedSoundex,
-        /// <summary> caverphone1. </summary>
+        /// <summary> Encodes a token into a Caverphone 1.0 value. </summary>
         Caverphone1,
-        /// <summary> caverphone2. </summary>
+        /// <summary> Encodes a token into a Caverphone 2.0 value. </summary>
         Caverphone2,
-        /// <summary> cologne. </summary>
+        /// <summary> Encodes a token into a Cologne Phonetic value. </summary>
         Cologne,
-        /// <summary> nysiis. </summary>
+        /// <summary> Encodes a token into a NYSIIS value. </summary>
         Nysiis,
-        /// <summary> koelnerPhonetik. </summary>
+        /// <summary> Encodes a token using the Kölner Phonetik algorithm. </summary>
         KoelnerPhonetik,
-        /// <summary> haasePhonetik. </summary>
+        /// <summary> Encodes a token using the Haase refinement of the Kölner Phonetik algorithm. </summary>
         HaasePhonetik,
-        /// <summary> beiderMorse. </summary>
+        /// <summary> Encodes a token into a Beider-Morse value. </summary>
         BeiderMorse
     }
 }

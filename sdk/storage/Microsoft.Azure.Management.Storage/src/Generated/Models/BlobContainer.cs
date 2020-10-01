@@ -42,6 +42,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="etag">Resource Etag.</param>
+        /// <param name="version">The version of the deleted blob
+        /// container.</param>
+        /// <param name="deleted">Indicates whether the blob container was
+        /// deleted.</param>
+        /// <param name="deletedTime">Blob container deletion time.</param>
+        /// <param name="remainingRetentionDays">Remaining retention days for
+        /// soft deleted blob container.</param>
         /// <param name="defaultEncryptionScope">Default the container to use
         /// specified encryption scope for all writes.</param>
         /// <param name="denyEncryptionScopeOverride">Block override of
@@ -75,9 +82,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// been created for this container. The hasImmutabilityPolicy public
         /// property is set to false by SRP if ImmutabilityPolicy has not been
         /// created for this container.</param>
-        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
             : base(id, name, type, etag)
         {
+            Version = version;
+            Deleted = deleted;
+            DeletedTime = deletedTime;
+            RemainingRetentionDays = remainingRetentionDays;
             DefaultEncryptionScope = defaultEncryptionScope;
             DenyEncryptionScopeOverride = denyEncryptionScopeOverride;
             PublicAccess = publicAccess;
@@ -97,6 +108,30 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the version of the deleted blob container.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; private set; }
+
+        /// <summary>
+        /// Gets indicates whether the blob container was deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleted")]
+        public bool? Deleted { get; private set; }
+
+        /// <summary>
+        /// Gets blob container deletion time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deletedTime")]
+        public System.DateTime? DeletedTime { get; private set; }
+
+        /// <summary>
+        /// Gets remaining retention days for soft deleted blob container.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remainingRetentionDays")]
+        public int? RemainingRetentionDays { get; private set; }
 
         /// <summary>
         /// Gets or sets default the container to use specified encryption

@@ -478,7 +478,10 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     return result;
                 }
 
-                await Task.Delay(pullingInterval);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    await Task.Delay(pullingInterval);
+                }
             }
 
             throw new TimeoutException();

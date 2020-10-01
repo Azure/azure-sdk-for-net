@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
@@ -10,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-
     public class AmqpConverterTests : ServiceBusTestBase
     {
         [Test]
@@ -23,7 +23,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = AmqpMessage.Create(data);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.AreEqual(messageBody, sbMessage.Body.ToArray());
+            ReadOnlyMemory<byte> sbBody = sbMessage.Body;
+            Assert.AreEqual(messageBody, sbBody.ToArray());
         }
 
         [Test]
@@ -46,29 +47,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             {
                 MessageId = messageId,
                 PartitionKey = partitionKey,
-                ViaPartitionKey = viaPartitionKey,
+                TransactionPartitionKey = viaPartitionKey,
                 SessionId = sessionId,
                 CorrelationId = correlationId,
-                Label = label,
+                Subject = label,
                 To = to,
                 ContentType = contentType,
                 ReplyTo = replyTo,
                 ReplyToSessionId = replyToSessionId,
                 TimeToLive = timeToLive,
             };
-            sbMessage.Properties.Add("UserProperty", "SomeUserProperty");
+            sbMessage.ApplicationProperties.Add("UserProperty", "SomeUserProperty");
 
             var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
             var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
-            Assert.AreEqual("SomeUserProperty", convertedSbMessage.Properties["UserProperty"]);
-            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
+            Assert.AreEqual("SomeUserProperty", convertedSbMessage.ApplicationProperties["UserProperty"]);
+            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToBytes().ToArray());
             Assert.AreEqual(messageId, convertedSbMessage.MessageId);
             Assert.AreEqual(partitionKey, convertedSbMessage.PartitionKey);
             Assert.AreEqual(viaPartitionKey, convertedSbMessage.ViaPartitionKey);
             Assert.AreEqual(sessionId, convertedSbMessage.SessionId);
             Assert.AreEqual(correlationId, convertedSbMessage.CorrelationId);
-            Assert.AreEqual(label, convertedSbMessage.Label);
+            Assert.AreEqual(label, convertedSbMessage.Subject);
             Assert.AreEqual(to, convertedSbMessage.To);
             Assert.AreEqual(contentType, convertedSbMessage.ContentType);
             Assert.AreEqual(replyTo, convertedSbMessage.ReplyTo);

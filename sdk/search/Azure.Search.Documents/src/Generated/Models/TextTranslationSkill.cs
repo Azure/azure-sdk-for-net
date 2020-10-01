@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill to translate text from one language to another. </summary>
     public partial class TextTranslationSkill : SearchIndexerSkill
@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultToLanguageCode"> The language code to translate documents into for documents that don&apos;t specify the to language explicitly. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public TextTranslationSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, TextTranslationSkillLanguage defaultToLanguageCode) : base(inputs, outputs)
         {
             if (inputs == null)

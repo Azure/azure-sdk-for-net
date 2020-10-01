@@ -255,6 +255,51 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the effective routes configured for the Virtual Hub resource or the
+            /// specified resource .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='effectiveRoutesParameters'>
+            /// Parameters supplied to get the effective routes for a specific resource.
+            /// </param>
+            public static void GetEffectiveVirtualHubRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = default(EffectiveRoutesParameters))
+            {
+                operations.GetEffectiveVirtualHubRoutesAsync(resourceGroupName, virtualHubName, effectiveRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the effective routes configured for the Virtual Hub resource or the
+            /// specified resource .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='effectiveRoutesParameters'>
+            /// Parameters supplied to get the effective routes for a specific resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GetEffectiveVirtualHubRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = default(EffectiveRoutesParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GetEffectiveVirtualHubRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, effectiveRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a VirtualHub resource if it doesn't exist else updates the existing
             /// VirtualHub.
             /// </summary>
@@ -337,6 +382,51 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginDeleteAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the effective routes configured for the Virtual Hub resource or the
+            /// specified resource .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='effectiveRoutesParameters'>
+            /// Parameters supplied to get the effective routes for a specific resource.
+            /// </param>
+            public static void BeginGetEffectiveVirtualHubRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = default(EffectiveRoutesParameters))
+            {
+                operations.BeginGetEffectiveVirtualHubRoutesAsync(resourceGroupName, virtualHubName, effectiveRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the effective routes configured for the Virtual Hub resource or the
+            /// specified resource .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='effectiveRoutesParameters'>
+            /// Parameters supplied to get the effective routes for a specific resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginGetEffectiveVirtualHubRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = default(EffectiveRoutesParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginGetEffectiveVirtualHubRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, effectiveRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

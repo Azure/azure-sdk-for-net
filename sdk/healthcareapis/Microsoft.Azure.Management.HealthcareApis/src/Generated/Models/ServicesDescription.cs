@@ -40,10 +40,12 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="etag">An etag associated with the resource, used for
         /// optimistic concurrency when editing it.</param>
+        /// <param name="identity">Setting indicating whether the service has a
+        /// managed identity associated with it.</param>
         /// <param name="properties">The common properties of a
         /// service.</param>
-        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesProperties properties = default(ServicesProperties))
-            : base(kind, location, id, name, type, tags, etag)
+        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity), ServicesProperties properties = default(ServicesProperties))
+            : base(kind, location, id, name, type, tags, etag, identity)
         {
             Properties = properties;
             CustomInit();

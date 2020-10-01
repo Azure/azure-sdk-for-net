@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -13,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// The properties and content returned from downloading a file
     /// </summary>
-    public partial class ShareFileDownloadInfo : IDisposable
+    public partial class ShareFileDownloadInfo : IDisposable, IDownloadedContent
     {
         /// <summary>
         /// Internal flattened property representation

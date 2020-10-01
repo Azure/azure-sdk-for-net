@@ -1,7 +1,33 @@
+resources:
+  repositories:
+    - repository: azure-sdk-build-tools
+      type: git
+      name: internal/azure-sdk-build-tools
+      ref: refs/tags/azure-sdk-build-tools_20200916.1
+
 parameters:
-  Artifacts: []
-  ServiceDirectory: not-specified
-  
+- name: Artifacts
+  type: object
+  default: []
+- name: ArtifactName
+  type: string
+  default: packages
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToBuild
+  type: string
+  default: ''
+- name: TargetDocRepoOwner
+  type: string
+  default: Azure
+- name: TargetDocRepoName
+  type: string
+  default: azure-docs-sdk-dotnet
+- name: TestSetupSteps
+  type: stepList
+  default: []
+
 stages:
   - stage: Build
     jobs:
@@ -11,6 +37,7 @@ stages:
         ServiceDirectory: ${{parameters.ServiceDirectory}}
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages
+        TestSetupSteps: ${{parameters.TestSetupSteps}}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
@@ -20,3 +47,5 @@ stages:
         DependsOn: Build
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages
+        TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+        TargetDocRepoName: ${{parameters.TargetDocRepoName}} 

@@ -1,0 +1,131 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar627?api-version=2017-05-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "28",
+        "Content-Type": "application/json",
+        "traceparent": "00-7a5450f3d0d147428b73d4431075b4ab-96b5fe86dedc034b-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute.Tests/1.0.0-alpha.20200910.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "119659190b2f39eb5e8220b3bff3c260",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westcentralus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "184",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 11 Sep 2020 01:34:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4fcc78d2-ab2b-4b0e-893b-3270e5403f3e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1177",
+        "x-ms-request-id": "4fcc78d2-ab2b-4b0e-893b-3270e5403f3e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T013422Z:4fcc78d2-ab2b-4b0e-893b-3270e5403f3e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar627",
+        "name": "crptestar627",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar627/providers/Microsoft.Compute/disks/diskrp4538?api-version=2019-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "699",
+        "Content-Type": "application/json",
+        "traceparent": "00-982746662e622c408915f05aa79660b7-71eeb44c86e29c48-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "62727e8f16b1a94883f1d19e3a440310",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "location": "westcentralus",
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 10,
+          "encryptionSettingsCollection": {
+            "enabled": true,
+            "encryptionSettings": [
+              {
+                "diskEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/testrg/providers/Microsoft.KeyVault/vaults/keyvault"
+                  },
+                  "secretUrl": "https://testvault.vault.azure.net/secrets/swaggersecret/test123"
+                },
+                "keyEncryptionKey": {
+                  "sourceVault": {
+                    "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/testrg/providers/Microsoft.KeyVault/vaults/keyvault"
+                  },
+                  "keyUrl": "https://testvault.vault.azure.net/secrets/swaggersecret/test123"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "339",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 11 Sep 2020 01:34:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "62727e8f16b1a94883f1d19e3a440310",
+        "x-ms-correlation-request-id": "f163770b-3133-4317-85d0-b455697e4550",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;999,Microsoft.Compute/CreateUpdateDisks30Min;7999",
+        "x-ms-ratelimit-remaining-subscription-writes": "1176",
+        "x-ms-request-id": "beded55a-ac48-4f6a-98c1-bda5dc351ee4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T013430Z:f163770b-3133-4317-85d0-b455697e4550",
+        "x-ms-served-by": "3bbd2fb7-705d-48bb-adb1-4a357cfc519a_132325324992857927"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022error\u0022: {\r\n",
+        "    \u0022code\u0022: \u0022InvalidParameter\u0022,\r\n",
+        "    \u0022message\u0022: \u0022https://testvault.vault.azure.net/secrets/swaggersecret/test123 is not a valid versioned Key Vault Secret URL. It should be in the format https://\u003CvaultEndpoint\u003E/secrets/\u003CsecretName\u003E/\u003CsecretVersion\u003E.\u0022,\r\n",
+        "    \u0022target\u0022: \u0022encryptionSettings.diskEncryptionKey.secretUrl\u0022\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2086987096",
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+  }
+}

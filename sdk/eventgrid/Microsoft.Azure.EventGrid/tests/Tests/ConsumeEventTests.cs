@@ -1149,7 +1149,189 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             StorageDirectoryRenamedEventData eventData = (StorageDirectoryRenamedEventData)events[0].Data;
             Assert.Equal("https://example.blob.core.windows.net/testcontainer/testDir", eventData.DestinationUrl);
         }
+
+        [Fact]
+        public void ConsumeWebAppUpdatedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.AppUpdated\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebAppUpdatedEventData);
+            WebAppUpdatedEventData eventData = (WebAppUpdatedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebBackupOperationStartedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebBackupOperationStartedEventData);
+            WebBackupOperationStartedEventData eventData = (WebBackupOperationStartedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebBackupOperationCompletedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebBackupOperationCompletedEventData);
+            WebBackupOperationCompletedEventData eventData = (WebBackupOperationCompletedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebBackupOperationFailedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebBackupOperationFailedEventData);
+            WebBackupOperationFailedEventData eventData = (WebBackupOperationFailedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebRestoreOperationStartedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebRestoreOperationStartedEventData);
+            WebRestoreOperationStartedEventData eventData = (WebRestoreOperationStartedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebRestoreOperationCompletedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebRestoreOperationCompletedEventData);
+            WebRestoreOperationCompletedEventData eventData = (WebRestoreOperationCompletedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebRestoreOperationFailedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebRestoreOperationFailedEventData);
+            WebRestoreOperationFailedEventData eventData = (WebRestoreOperationFailedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
         
+        [Fact]
+        public void ConsumeWebSlotSwapStartedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebSlotSwapStartedEventData);
+            WebSlotSwapStartedEventData eventData = (WebSlotSwapStartedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebSlotSwapCompletedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebSlotSwapCompletedEventData);
+            WebSlotSwapCompletedEventData eventData = (WebSlotSwapCompletedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebSlotSwapFailedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebSlotSwapFailedEventData);
+            WebSlotSwapFailedEventData eventData = (WebSlotSwapFailedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebSlotSwapWithPreviewStartedEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapWithPreviewStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebSlotSwapWithPreviewStartedEventData);
+            WebSlotSwapWithPreviewStartedEventData eventData = (WebSlotSwapWithPreviewStartedEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebSlotSwapWithPreviewCancelledEvent()
+        {
+            string siteName = "testSite01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapWithPreviewCancelled\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": null,\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebSlotSwapWithPreviewCancelledEventData);
+            WebSlotSwapWithPreviewCancelledEventData eventData = (WebSlotSwapWithPreviewCancelledEventData)events[0].Data;
+            Assert.Equal(siteName, eventData.Name);
+        }
+
+        [Fact]
+        public void ConsumeWebAppServicePlanUpdatedEvent()
+        {
+            string planName = "testPlan01";
+            string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/serverfarms/testPlan01\", \"subject\": \"/Microsoft.Web/serverfarms/testPlan01\",\"eventType\": \"Microsoft.Web.AppServicePlanUpdated\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appServicePlanEventTypeDetail\": {{ \"stampKind\": \"Public\",\"action\": \"Updated\",\"status\": \"Started\" }},\"name\": \"{planName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is WebAppServicePlanUpdatedEventData);
+            WebAppServicePlanUpdatedEventData eventData = (WebAppServicePlanUpdatedEventData)events[0].Data;
+            Assert.Equal(planName, eventData.Name);
+        }
+
         // TODO: When new event types are introduced, add one test here for each event type
 
         static Stream GetStreamFromString(string eventData)

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of VirtualNetworkRules - NetworkRules resource.
+    /// The response from the List namespace operation.
     /// </summary>
     public partial class NWRuleSetVirtualNetworkRules
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         /// <param name="subnet">Subnet properties</param>
         /// <param name="ignoreMissingVnetServiceEndpoint">Value that indicates
-        /// whether to ignore missing VNet Service Endpoint</param>
+        /// whether to ignore missing Vnet Service Endpoint</param>
         public NWRuleSetVirtualNetworkRules(Subnet subnet = default(Subnet), bool? ignoreMissingVnetServiceEndpoint = default(bool?))
         {
             Subnet = subnet;
@@ -53,24 +53,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets value that indicates whether to ignore missing VNet
+        /// Gets or sets value that indicates whether to ignore missing Vnet
         /// Service Endpoint
         /// </summary>
         [JsonProperty(PropertyName = "ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Subnet != null)
-            {
-                Subnet.Validate();
-            }
-        }
     }
 }

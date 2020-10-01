@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
@@ -21,14 +22,21 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   If the means for deserializaing the raw data is not apparent to consumers, a
+        ///   If the means for deserializing the raw data is not apparent to consumers, a
         ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
         ///   as an aid to consumers who wish to deserialize the binary data.
         /// </remarks>
         ///
         /// <seealso cref="EventData.Properties" />
         ///
-        public ReadOnlyMemory<byte> Body { get; }
+        public ReadOnlyMemory<byte> Body => BodyAsBinaryData.ToBytes();
+
+        /// <summary>
+        ///   The <see cref="Body" /> data associated with the event, in <see cref="BinaryData" /> form, providing support
+        ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
+        /// </summary>
+        ///
+        public BinaryData BodyAsBinaryData { get; }
 
         /// <summary>
         ///   The data associated with the event, in stream form.
@@ -48,10 +56,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="EventData.Properties" />
         ///
-        public Stream BodyAsStream
-        {
-            get => new MemoryStream(Body.ToArray());
-        }
+        public Stream BodyAsStream => BodyAsBinaryData.ToStream();
 
         /// <summary>
         ///   The set of free-form event properties which may be used for passing metadata associated with the event body
@@ -83,6 +88,24 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public IReadOnlyDictionary<string, object> SystemProperties { get; }
+
+        /// <summary>
+        ///   The publishing sequence number assigned to the event at the time it was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number that was assigned during publishing, if the event was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the event has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public int? PublishedSequenceNumber { get; private set; }
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
@@ -176,12 +199,70 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? LastPartitionPropertiesRetrievalTime { get; }
 
         /// <summary>
+        ///   The publishing sequence number assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal int? PendingPublishSequenceNumber { get; set; }
+
+        /// <summary>
+        ///   The producer group identifier assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The producer group identifier is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal long? PendingProducerGroupId { get; set; }
+
+        /// <summary>
+        ///   The producer owner level assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The producer group identifier is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal short? PendingProducerOwnerLevel { get; set; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
+        ///
+        public EventData(BinaryData eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
         /// <param name="eventBody">The raw data to use as the body of the event.</param>
         ///
-        public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        public EventData(ReadOnlyMemory<byte> eventBody) : this(new BinaryData(eventBody), lastPartitionSequenceNumber: null)
         {
         }
 
@@ -200,6 +281,10 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
+        /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
+        /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingProducerGroupId">The producer group identifier assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingOwnerLevel">The producer owner level assigned to the event as part of a publishing operation.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
@@ -211,9 +296,53 @@ namespace Azure.Messaging.EventHubs
                            long? lastPartitionSequenceNumber = null,
                            long? lastPartitionOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
-                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
+                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
+                           int? publishedSequenceNumber = null,
+                           int? pendingPublishSequenceNumber = null,
+                           long? pendingProducerGroupId = null,
+                           short? pendingOwnerLevel = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey,
+                           lastPartitionSequenceNumber, lastPartitionOffset, lastPartitionEnqueuedTime, lastPartitionPropertiesRetrievalTime, publishedSequenceNumber, pendingPublishSequenceNumber,
+                           pendingProducerGroupId, pendingOwnerLevel)
         {
-            Body = eventBody;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
+        /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
+        /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingProducerGroupId">The producer group identifier assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingOwnerLevel">The producer owner level assigned to the event as part of a publishing operation.</param>
+        ///
+        internal EventData(BinaryData eventBody,
+                           IDictionary<string, object> properties = null,
+                           IReadOnlyDictionary<string, object> systemProperties = null,
+                           long sequenceNumber = long.MinValue,
+                           long offset = long.MinValue,
+                           DateTimeOffset enqueuedTime = default,
+                           string partitionKey = null,
+                           long? lastPartitionSequenceNumber = null,
+                           long? lastPartitionOffset = null,
+                           DateTimeOffset? lastPartitionEnqueuedTime = null,
+                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
+                           int? publishedSequenceNumber = null,
+                           int? pendingPublishSequenceNumber = null,
+                           long? pendingProducerGroupId = null,
+                           short? pendingOwnerLevel = null)
+        {
+            BodyAsBinaryData = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
             SystemProperties = systemProperties ?? new Dictionary<string, object>();
             SequenceNumber = sequenceNumber;
@@ -224,6 +353,10 @@ namespace Azure.Messaging.EventHubs
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
             LastPartitionPropertiesRetrievalTime = lastPartitionPropertiesRetrievalTime;
+            PublishedSequenceNumber = publishedSequenceNumber;
+            PendingPublishSequenceNumber = pendingPublishSequenceNumber;
+            PendingProducerGroupId = pendingProducerGroupId;
+            PendingProducerOwnerLevel = pendingOwnerLevel;
         }
 
         /// <summary>
@@ -278,6 +411,27 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   Transitions the pending state to its permanent form.
+        /// </summary>
+        ///
+        internal void CommitPublishingState()
+        {
+            PublishedSequenceNumber = PendingPublishSequenceNumber;
+            ClearPublishingState();
+        }
+
+        /// <summary>
+        ///   Clears the pending publishing state.
+        /// </summary>
+        ///
+        internal void ClearPublishingState()
+        {
+            PendingProducerGroupId = default;
+            PendingProducerOwnerLevel = default;
+            PendingPublishSequenceNumber = default;
+        }
+
+        /// <summary>
         ///   Creates a new copy of the current <see cref="EventData" />, cloning its attributes into a new instance.
         /// </summary>
         ///
@@ -286,7 +440,7 @@ namespace Azure.Messaging.EventHubs
         internal EventData Clone() =>
             new EventData
             (
-                Body,
+                BodyAsBinaryData,
                 new Dictionary<string, object>(Properties),
                 SystemProperties,
                 SequenceNumber,
@@ -296,7 +450,9 @@ namespace Azure.Messaging.EventHubs
                 LastPartitionSequenceNumber,
                 LastPartitionOffset,
                 LastPartitionEnqueuedTime,
-                LastPartitionPropertiesRetrievalTime
+                LastPartitionPropertiesRetrievalTime,
+                PublishedSequenceNumber,
+                PendingPublishSequenceNumber
             );
     }
 }

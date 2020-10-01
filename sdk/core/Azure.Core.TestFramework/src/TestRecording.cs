@@ -17,6 +17,8 @@ namespace Azure.Core.TestFramework
     public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
+        private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
@@ -43,7 +45,14 @@ namespace Azure.Core.TestFramework
                     }
                     break;
                 case RecordedTestMode.Playback:
-                    _session = Load();
+                    try
+                    {
+                        _session = Load();
+                    }
+                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                    {
+                        throw new TestRecordingMismatchException(ex.Message, ex);
+                    }
                     break;
             }
         }
@@ -192,6 +201,12 @@ namespace Azure.Core.TestFramework
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Not making the timeout zero so retry code still goes async
+                clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
+                clientOptions.Retry.Mode = RetryMode.Fixed;
+            }
             return clientOptions;
         }
 
@@ -201,7 +216,8 @@ namespace Azure.Core.TestFramework
             {
                 RecordedTestMode.Live => currentTransport,
                 RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => _disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random,
+                    entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
         }
@@ -211,12 +227,40 @@ namespace Azure.Core.TestFramework
             return Random.Next().ToString();
         }
 
-        public string GenerateId(string prefix, int maxLength)
+        public string GenerateAlphaNumericId(string prefix, int? maxLength = null, bool useOnlyLowercase = false)
         {
-            return $"{prefix}{Random.Next()}".Substring(0, maxLength);
+            var stringChars = new char[8];
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                if (useOnlyLowercase)
+                {
+                    stringChars[i] = charsLower[Random.Next(charsLower.Length)];
+                }
+                else
+                {
+                    stringChars[i] = chars[Random.Next(chars.Length)];
+                }
+            }
+
+            var finalString = new string(stringChars);
+            if (maxLength.HasValue)
+            {
+                return $"{prefix}{finalString}".Substring(0, maxLength.Value);
+            }
+            else
+            {
+                return $"{prefix}{finalString}";
+            }
         }
 
-        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        public string GenerateId(string prefix, int maxLength)
+        {
+            var id = $"{prefix}{Random.Next()}";
+            return id.Length > maxLength ? id.Substring(0, maxLength) : id;
+        }
+
+        public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {
