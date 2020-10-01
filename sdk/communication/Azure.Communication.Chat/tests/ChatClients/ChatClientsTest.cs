@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication.Administration;
@@ -147,6 +148,8 @@ namespace Azure.Communication.Chat.Tests
             chatClient.DeleteChatThread(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_DeleteChatThread
 
+            Thread.Sleep(500);
+
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
             Assert.AreEqual(2, chatThread.Members.Count);
@@ -161,7 +164,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatThreadMembersAfterOneAddedCount);
             Assert.AreEqual(2, chatThreadMembersAfterOneDeletedCount);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
-            //Assert.AreEqual(1, readReceiptsCount);
+            Assert.AreEqual(1, readReceiptsCount);
         }
 
         [AsyncOnly]
@@ -238,6 +241,8 @@ namespace Azure.Communication.Chat.Tests
             var readReceiptsCount = readReceipts.ToEnumerableAsync().Result.Count();
 
             await chatClient.DeleteChatThreadAsync(chatThreadClient.Id);
+
+            Thread.Sleep(500);
 
             //assert
             Assert.AreEqual(updatedTopic, chatThread.Topic);
