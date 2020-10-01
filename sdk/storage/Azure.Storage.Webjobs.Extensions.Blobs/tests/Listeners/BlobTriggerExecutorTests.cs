@@ -11,17 +11,16 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
 using Azure.Storage.Blobs.Specialized;
 using System.IO;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    [Collection(AzuriteCollection.Name)]
     public class BlobTriggerExecutorTests
     {
         // Note: The tests that return true consume the notification.
@@ -30,24 +29,26 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private const string ContainerName = "container-blobtriggerexecutortests";
 
-        private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
-        private readonly ILogger<BlobListener> _logger;
-        private readonly StorageAccount account;
+        private TestLoggerProvider _loggerProvider;
+        private ILogger<BlobListener> _logger;
+        private StorageAccount _account;
 
-        public BlobTriggerExecutorTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
-            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            _loggerProvider = new TestLoggerProvider();
+            _account = AzuriteNUnitFixture.Instance.GetAccount();
+            _account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfBlobDoesNotMatchPattern_ReturnsSuccessfulResult()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
+            var client = _account.CreateBlobServiceClient();
             string containerName = ContainerName;
             var container = client.GetBlobContainerClient(containerName);
             var otherContainer = client.GetBlobContainerClient("other");
@@ -72,18 +73,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("BlobDoesNotMatchPattern", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(6, logMessage.State.Count());
-            Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(containerName + "/{name}", logMessage.GetStateValue<string>("pattern"));
-            Assert.Equal(blob.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual("BlobDoesNotMatchPattern", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(6, logMessage.State.Count());
+            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
+            Assert.AreEqual(containerName + "/{name}", logMessage.GetStateValue<string>("pattern"));
+            Assert.AreEqual(blob.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.Null(logMessage.GetStateValue<string>("pollId"));
-            Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfBlobDoesNotExist_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -100,17 +101,17 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("BlobHasNoETag", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(5, logMessage.State.Count());
-            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual("BlobHasNoETag", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(5, logMessage.State.Count());
+            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
+            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfCompletedBlobReceiptExists_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -129,18 +130,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("BlobAlreadyProcessed", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(6, logMessage.State.Count());
-            Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.Equal(expectedETag, logMessage.GetStateValue<string>("eTag"));
-            Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual("BlobAlreadyProcessed", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(6, logMessage.State.Count());
+            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
+            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual(expectedETag, logMessage.GetStateValue<string>("eTag"));
+            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfIncompleteBlobReceiptExists_TriesToAcquireLease()
         {
             // Arrange
@@ -165,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfBlobReceiptDoesNotExist_TriesToCreateReceipt()
         {
             // Arrange
@@ -190,7 +191,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfTryCreateReceiptFails_ReturnsUnsuccessfulResult()
         {
             // Arrange
@@ -213,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfTryCreateReceiptSucceeds_TriesToAcquireLease()
         {
             // Arrange
@@ -240,7 +241,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfTryAcquireLeaseFails_ReturnsFailureResult()
         {
             // Arrange
@@ -263,7 +264,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfTryAcquireLeaseSucceeds_ReadsLatestReceipt()
         {
             // Arrange
@@ -291,10 +292,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Assert
             task.GetAwaiter().GetResult();
-            Assert.Equal(2, calls);
+            Assert.AreEqual(2, calls);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfLeasedReceiptBecameCompleted_ReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange
@@ -328,7 +329,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfEnqueueAsyncThrows_ReleasesLease()
         {
             // Arrange
@@ -364,10 +365,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
                 () => task.GetAwaiter().GetResult());
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfLeasedIncompleteReceipt_EnqueuesMessageMarksCompletedReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange
@@ -422,15 +423,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("BlobMessageEnqueued", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(7, logMessage.State.Count());
-            Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.Equal("testQueueName", logMessage.GetStateValue<string>("queueName"));
-            Assert.Equal("testMessageId", logMessage.GetStateValue<string>("messageId"));
-            Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
+            Assert.AreEqual("BlobMessageEnqueued", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(7, logMessage.State.Count());
+            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
+            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual("testQueueName", logMessage.GetStateValue<string>("queueName"));
+            Assert.AreEqual("testMessageId", logMessage.GetStateValue<string>("messageId"));
+            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
+            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
@@ -446,7 +447,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private BlobWithContainer<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
         {
-            var client = account.CreateBlobServiceClient();
+            var client = _account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(containerName);
             container.CreateIfNotExists();
             var blobClient = container.GetBlockBlobClient(blobName);
@@ -511,7 +512,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
         {
-            var blobServiceClient = account.CreateBlobServiceClient();
+            var blobServiceClient = _account.CreateBlobServiceClient();
             var blobContainerClient = blobServiceClient.GetBlobContainerClient("receipts");
             var receiptBlob = blobContainerClient.GetBlockBlobClient("item");
             Mock<IBlobReceiptManager> mock = new Mock<IBlobReceiptManager>(MockBehavior.Strict);
