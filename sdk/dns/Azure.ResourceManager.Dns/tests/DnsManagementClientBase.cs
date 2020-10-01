@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns.Tests
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
-            DnsManagementClient = this.GetManagementClient<DnsManagementClient>(new DnsManagementClientOptions(), TestEnvironment.SubscriptionId);
+            DnsManagementClient = this.GetManagementClient<DnsManagementClient>(new DnsManagementClientOptions());
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }

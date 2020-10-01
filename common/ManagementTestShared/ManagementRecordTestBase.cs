@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        protected T GetManagementClient<T>(ClientOptions options, string subscriptionId) where T : class
+        protected T GetManagementClient<T>(ClientOptions options) where T : class
         {
-            return this.CreateClient<T>(subscriptionId,
+            return this.CreateClient<T>(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential, Recording.InstrumentClientOptions(options));
         }
 
