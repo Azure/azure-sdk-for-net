@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <!-- Remove sms data plane tests from nightly live runs -->
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Communication.Sms\**\*.csproj" Condition="'$(AZURE_TEST_MODE)' == 'Record'" />
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Communication.Sms\**\*.csproj" Condition="'$(AZURE_TEST_MODE)' == 'Record'" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Communication.Sms\**\*.csproj" />
   </ItemGroup>
 </Project>
