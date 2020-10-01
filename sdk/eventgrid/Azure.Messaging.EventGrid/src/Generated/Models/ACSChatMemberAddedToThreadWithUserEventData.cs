@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="time"> The time at which the user was added to the thread. </param>
         /// <param name="addedBy"> The MRI of the user who added the user. </param>
         /// <param name="memberAdded"> The details of the user who was added. </param>
-        internal ACSChatMemberAddedToThreadWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version, DateTimeOffset? time, string addedBy, ACSChatThreadMemberProperties memberAdded) : base(recipientId, transactionId, threadId, createTime, version)
+        internal ACSChatMemberAddedToThreadWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, DateTimeOffset? time, string addedBy, ACSChatThreadMemberProperties memberAdded) : base(recipientId, transactionId, threadId, createTime, version)
         {
             Time = time;
             AddedBy = addedBy;

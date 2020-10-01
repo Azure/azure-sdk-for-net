@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcssmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties
     {
-        internal static AcssmsDeliveryAttemptProperties DeserializeAcssmsDeliveryAttemptProperties(JsonElement element)
+        internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element)
         {
             Optional<DateTimeOffset> timestamp = default;
             Optional<int> segmentsSucceeded = default;
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcssmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
+            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
-        internal ACSChatMessageEditedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, int? version, string messageBody, DateTimeOffset? editTime) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
+        internal ACSChatMessageEditedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, DateTimeOffset? editTime) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
         {
             MessageBody = messageBody;
             EditTime = editTime;

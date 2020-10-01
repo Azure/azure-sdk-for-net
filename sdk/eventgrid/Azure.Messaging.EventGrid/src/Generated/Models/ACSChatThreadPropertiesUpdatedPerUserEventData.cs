@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="editedBy"> The MRI of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
-        internal ACSChatThreadPropertiesUpdatedPerUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version, string editedBy, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties) : base(recipientId, transactionId, threadId, createTime, version)
+        internal ACSChatThreadPropertiesUpdatedPerUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, string editedBy, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties) : base(recipientId, transactionId, threadId, createTime, version)
         {
             EditedBy = editedBy;
             EditTime = editTime;

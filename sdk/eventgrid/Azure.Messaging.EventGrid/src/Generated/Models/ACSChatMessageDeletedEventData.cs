@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
-        internal ACSChatMessageDeletedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, int? version, DateTimeOffset? deleteTime) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
+        internal ACSChatMessageDeletedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, DateTimeOffset? deleteTime) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
         {
             DeleteTime = deleteTime;
         }

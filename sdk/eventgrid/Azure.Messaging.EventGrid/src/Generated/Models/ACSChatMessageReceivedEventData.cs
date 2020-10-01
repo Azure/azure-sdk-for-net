@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
-        internal ACSChatMessageReceivedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, int? version, string messageBody) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
+        internal ACSChatMessageReceivedEventData(string recipientId, string transactionId, string threadId, string messageId, string senderId, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody) : base(recipientId, transactionId, threadId, messageId, senderId, senderDisplayName, composeTime, type, version)
         {
             MessageBody = messageBody;
         }

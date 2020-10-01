@@ -10,18 +10,18 @@ using System;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema for details of a delivery attempt. </summary>
-    public partial class AcssmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties
     {
-        /// <summary> Initializes a new instance of AcssmsDeliveryAttemptProperties. </summary>
-        internal AcssmsDeliveryAttemptProperties()
+        /// <summary> Initializes a new instance of AcsSmsDeliveryAttemptProperties. </summary>
+        internal AcsSmsDeliveryAttemptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcssmsDeliveryAttemptProperties. </summary>
+        /// <summary> Initializes a new instance of AcsSmsDeliveryAttemptProperties. </summary>
         /// <param name="timestamp"> TimeStamp when delivery was attempted. </param>
         /// <param name="segmentsSucceeded"> Number of segments that were successfully delivered. </param>
         /// <param name="segmentsFailed"> Number of segments whose delivery failed. </param>
-        internal AcssmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed)
+        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed)
         {
             Timestamp = timestamp;
             SegmentsSucceeded = segmentsSucceeded;
