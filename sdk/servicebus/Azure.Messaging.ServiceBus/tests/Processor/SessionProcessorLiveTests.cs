@@ -359,7 +359,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete
+                    AutoComplete = autoComplete,
+                    PrefetchCount = 5
                 };
 
                 await using ServiceBusSessionProcessor processor = GetNoRetryClient().CreateSessionProcessor(scope.QueueName, options);

@@ -38,7 +38,7 @@ await senderA.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Fir
 
 ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
 {
-    ViaQueueOrTopicName = queueA
+    TransactionQueueOrTopicName = queueA
 });
 
 ServiceBusReceiver receiverA = client.CreateReceiver(queueA);
