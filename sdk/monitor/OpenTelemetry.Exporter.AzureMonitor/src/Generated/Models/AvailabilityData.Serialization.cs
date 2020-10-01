@@ -15,8 +15,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Version);
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name");
@@ -57,11 +55,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Test))
-            {
-                writer.WritePropertyName("test");
-                writer.WriteStringValue(Test);
-            }
+            writer.WritePropertyName("ver");
+            writer.WriteNumberValue(Version);
             writer.WriteEndObject();
         }
     }

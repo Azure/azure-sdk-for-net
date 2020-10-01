@@ -11,28 +11,25 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    /// <summary> Instances of Message represent printf-like trace statements that are text-searched. Log4Net, NLog and other text-based log file entries are translated into intances of this type. The message does not have measurements. </summary>
+    /// <summary> Instances of Message represent printf-like trace statements that are text-searched. Log4Net, NLog and other text-based log file entries are translated into instances of this type. The message does not have measurements. </summary>
     public partial class MessageData : MonitorDomain
     {
         /// <summary> Initializes a new instance of MessageData. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="message"> Trace message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public MessageData(int version, string message)
+        public MessageData(int version, string message) : base(version)
         {
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            Version = version;
             Message = message;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> Trace message. </summary>
         public string Message { get; }
         /// <summary> Trace severity level. </summary>
