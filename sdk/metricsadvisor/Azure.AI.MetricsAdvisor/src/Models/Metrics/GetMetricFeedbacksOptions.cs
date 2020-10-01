@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The GetMetricFeedbackOptions. </summary>
-    public class GetMetricFeedbackOptions
+    public class GetMetricFeedbacksOptions
     {
         internal MetricFeedbackFilter _metricFeedbackFilter;
 
         /// <summary> Initializes a new instance of GetMetricFeedbackOptions. </summary>
         /// <param name="metricId"> filter feedbacks by metric id. </param>
-        public GetMetricFeedbackOptions(string metricId)
+        public GetMetricFeedbacksOptions(string metricId)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Guid metricIdGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));

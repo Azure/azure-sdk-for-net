@@ -457,7 +457,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbackAsync(string metricId, GetMetricFeedbackOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksAsync(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
@@ -476,7 +476,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<MetricFeedback>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
                 scope.Start();
 
                 try
@@ -493,7 +493,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<MetricFeedback>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
                 scope.Start();
 
                 try
@@ -518,7 +518,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<MetricFeedback> GetMetricFeedback(string metricId, GetMetricFeedbackOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricFeedback> GetMetricFeedbacks(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
@@ -537,7 +537,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<MetricFeedback> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
                 scope.Start();
 
                 try
@@ -554,7 +554,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<MetricFeedback> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedbacks)}");
                 scope.Start();
 
                 try
