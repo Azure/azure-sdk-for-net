@@ -6,3 +6,4 @@ extends:
     MaxParallel: 4
     ServiceDirectory: servicebus
     TimeoutInMinutes: 120
+    TestCanary: true
