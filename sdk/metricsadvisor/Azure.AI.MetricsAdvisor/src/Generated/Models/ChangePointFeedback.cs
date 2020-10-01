@@ -10,31 +10,8 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ChangePointFeedback. </summary>
-    internal partial class ChangePointFeedback : MetricFeedback
+    public partial class ChangePointFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of ChangePointFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        public ChangePointFeedback(Guid metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value) : base(metricId, dimensionFilter)
-        {
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            StartTime = startTime;
-            EndTime = endTime;
-            Value = value;
-            FeedbackType = FeedbackType.ChangePoint;
-        }
 
         /// <summary> Initializes a new instance of ChangePointFeedback. </summary>
         /// <param name="feedbackType"> feedback type. </param>
@@ -58,6 +35,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset StartTime { get; set; }
         /// <summary> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </summary>
         public DateTimeOffset EndTime { get; set; }
-        public ChangePointFeedbackValue Value { get; set; }
     }
 }

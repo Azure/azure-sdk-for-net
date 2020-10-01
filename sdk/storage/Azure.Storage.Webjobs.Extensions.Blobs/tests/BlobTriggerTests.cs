@@ -15,23 +15,26 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTriggerTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobTriggerTests
     {
-        private const string ContainerName = "container";
+        private const string ContainerName = "container-blobtriggertests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public BlobTriggerTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            // make sure our system containers are present
+            CreateContainer(account, "azure-webjobs-hosts");
         }
 
         [Fact]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var container = CreateContainer(account, ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
 
@@ -60,7 +63,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             var app = new BindToCloudBlob2Program();
             var activator = new FakeActivator(app);
-            var account = CreateFakeStorageAccount();
             var provider = new FakeStorageAccountProvider(account);
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
@@ -104,16 +106,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var container = client.GetBlobContainerClient(containerName);
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
             return container;
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            var account = azuriteFixture.GetAccount();
-
-            // make sure our system containers are present
-            var container = CreateContainer(account, "azure-webjobs-hosts");
-
-            return account;
         }
 
         private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,

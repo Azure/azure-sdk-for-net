@@ -11,20 +11,34 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class CommentFeedback : IUtf8JsonSerializable
+    public partial class CommentFeedback : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime");
+                    writer.WriteStringValue(StartTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime");
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
             }
             writer.WritePropertyName("value");
             writer.WriteObjectValue(Value);
@@ -39,8 +53,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static CommentFeedback DeserializeCommentFeedback(JsonElement element)
         {
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             CommentFeedbackValue value = default;
             FeedbackType feedbackType = default;
             Optional<Guid> feedbackId = default;
@@ -52,11 +66,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        startTime = null;
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

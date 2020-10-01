@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Azure.AI.MetricsAdvisor.Models;
 
 namespace Azure.AI.MetricsAdvisor
 {
@@ -102,6 +103,22 @@ namespace Azure.AI.MetricsAdvisor
             if (match.Success)
             {
                 return match.Groups["hookId"].Value;
+            }
+            else
+            {
+                throw new ArgumentException(UnexpectedHeaderFormat);
+            }
+        }
+
+        private static readonly Regex s_feedbackIdRegex = new Regex(@"/feedback/metric/(?<feedbackId>[\d\w-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
+        public static Guid GetFeedbackId(string locationHeader)
+        {
+            Match match = s_feedbackIdRegex.Match(locationHeader);
+
+            if (match.Success)
+            {
+                return new Guid(match.Groups["feedbackId"].Value);
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,12 +13,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricsAdvisorClientLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string DetectionConfigurationId = "59f26a57-55f7-41eb-8899-a7268d125557";
-        private const string IncidentId = "013c34456c5aed901c66ca1dff0714aa-174995c5800";
-        private const string AlertConfigurationId = "08318302-6006-4019-9afc-975bc63ee566";
-        private const string AlertId = "174995c5800";
-        private const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";
-
         public MetricsAdvisorClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
@@ -279,6 +274,108 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             Assert.That(pages, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        public async Task GetEnrichmentStatus()
+        {
+            var client = GetMetricsAdvisorClient();
+
+            int pages = 0;
+
+            await foreach (var status in client.GetEnrichmentStatusesAsync(MetricId, new GetEnrichmentStatusOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
+            {
+                Assert.That(status, Is.Not.Null);
+
+                // Just fetch 2 pages
+                if (++pages > 2)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(pages, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        public async Task GetMetricFeedbacks()
+        {
+            var client = GetMetricsAdvisorClient();
+
+            Guid expectedId = new Guid(MetricId);
+            int pages = 0;
+
+            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(new GetMetricFeedbackOptions(MetricId) { TopCount = 2 }))
+            {
+                Assert.That(feedback, Is.Not.Null);
+                Assert.That(feedback.MetricId, Is.EqualTo(expectedId));
+                switch (feedback.FeedbackType.ToString())
+                {
+                    case "Anomaly":
+                        Assert.That(feedback is AnomalyFeedback);
+                        break;
+                    case "ChangePoint":
+                        Assert.That(feedback is ChangePointFeedback);
+                        break;
+                    case "Period":
+                        Assert.That(feedback is PeriodFeedback);
+                        break;
+                    case "Comment":
+                        Assert.That(feedback is CommentFeedback);
+                        break;
+                    default:
+                        Assert.Fail("Unexpected MetricFeedback type");
+                        break;
+                }
+
+                // Just fetch 2 pages
+                if (++pages > 2)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(pages, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        public async Task CreateMetricFeedback()
+        {
+            var client = GetMetricsAdvisorClient();
+            Guid metricIdGuid = new Guid(MetricId);
+            FeedbackDimensionFilter dimensionFilter = new FeedbackDimensionFilter(
+                new Dictionary<string, string>
+                {
+                    {"Dim1", "Common Lime"},
+                    {"Dim2", "Ant"}
+                });
+            DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
+            DateTimeOffset end = Recording.UtcNow;
+
+            AnomalyFeedback anomalyFeedback = new AnomalyFeedback(metricIdGuid, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
+            ChangePointFeedback changePointFeedback = new ChangePointFeedback(metricIdGuid, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
+            PeriodFeedback periodFeedback = new PeriodFeedback(metricIdGuid, dimensionFilter, new PeriodFeedbackValue(PeriodType.AssignValue, 5));
+            CommentFeedback commentFeedback = new CommentFeedback(metricIdGuid, dimensionFilter, "my comment");
+
+            var feedbacks = new List<MetricFeedback>
+            {
+                anomalyFeedback,
+                changePointFeedback,
+                periodFeedback,
+                commentFeedback
+            };
+
+            foreach (var feedback in feedbacks)
+            {
+                MetricFeedback createdFeedback = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
+
+                Assert.That(createdFeedback.MetricId, Is.EqualTo(metricIdGuid));
+                Assert.That(createdFeedback.FeedbackId, Is.Not.Null);
+
+                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(createdFeedback.FeedbackId.ToString()).ConfigureAwait(false);
+
+                Assert.That(createdFeedback.FeedbackId, Is.EqualTo(getFeedback.FeedbackId));
+            }
         }
     }
 }

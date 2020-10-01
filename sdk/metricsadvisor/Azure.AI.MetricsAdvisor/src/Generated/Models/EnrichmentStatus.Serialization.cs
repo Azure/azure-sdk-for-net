@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class EnrichmentStatus
+    public partial class EnrichmentStatus
     {
         internal static EnrichmentStatus DeserializeEnrichmentStatus(JsonElement element)
         {
