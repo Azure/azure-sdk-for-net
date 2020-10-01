@@ -283,6 +283,26 @@ namespace Azure.Storage.Sas
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
             }
 
+            if (!string.IsNullOrWhiteSpace(parameters.PreauthorizedAgentObjectId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.PreauthorizedAgentObjectId, WebUtility.UrlEncode(parameters.PreauthorizedAgentObjectId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.AgentObjectId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.AgentObjectId, WebUtility.UrlEncode(parameters.AgentObjectId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.CorrelationId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CorrelationId, WebUtility.UrlEncode(parameters.CorrelationId));
+            }
+
+            if (!(parameters.DirectoryDepth == default))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.DirectoryDepth, WebUtility.UrlEncode(parameters.DirectoryDepth.ToString()));
+            }
+
             if (!string.IsNullOrWhiteSpace(parameters.Signature))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));

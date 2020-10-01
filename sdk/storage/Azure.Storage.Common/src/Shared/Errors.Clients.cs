@@ -52,6 +52,9 @@ namespace Azure.Storage
         public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
             => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
 
+        public static InvalidOperationException SasDataInConjunction(string paramName, string paramName2)
+            => new InvalidOperationException($"SAS cannot have the following parameters specified in conjunction: {paramName}, {paramName2}");
+
         public static ArgumentException InvalidPermission(char s)
             => new ArgumentException($"Invalid permission: '{s}'");
 

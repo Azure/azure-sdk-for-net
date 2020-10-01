@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -645,8 +646,8 @@ namespace Azure.Storage.Files.Shares
 
         #region CreateShare
         /// <summary>
-        /// The <see cref="CreateShare"/> operation creates a new share
-        /// under the specified account. If a share with the same name
+        /// The <see cref="CreateShare(string, ShareCreateOptions, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -656,11 +657,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareName">
         /// The name of the share to create.
         /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this share.
-        /// </param>
-        /// <param name="quotaInGB">
-        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -676,15 +674,15 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareClient> CreateShare(
             string shareName,
-            IDictionary<string, string> metadata = default,
-            int? quotaInGB = default,
+            ShareCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
 
             Response<ShareInfo> response = share.CreateInternal(
-                metadata,
-                quotaInGB,
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -694,8 +692,54 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateShareAsync"/> operation creates a new share
-        /// under the specified account. If a share with the same name
+        /// The <see cref="CreateShare(string, ShareCreateOptions, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareClient}"/> referencing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareClient>> CreateShareAsync(
+            string shareName,
+            ShareCreateOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClient share = GetShareClient(shareName);
+
+            Response<ShareInfo> response = await share.CreateInternal(
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
+                .ConfigureAwait(false);
+
+            return Response.FromValue(share, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateShare(string, IDictionary{string, string}, int?, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -723,6 +767,58 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareClient> CreateShare(
+            string shareName,
+            IDictionary<string, string> metadata = default,
+            int? quotaInGB = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClient share = GetShareClient(shareName);
+
+            Response<ShareInfo> response = share.CreateInternal(
+                metadata,
+                quotaInGB,
+                accessTier: default,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
+                .EnsureCompleted();
+
+            return Response.FromValue(share, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateShareAsync(string, IDictionary{string, string}, int?, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareClient}"/> referencing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -734,6 +830,7 @@ namespace Azure.Storage.Files.Shares
             Response<ShareInfo> response = await share.CreateInternal(
                 metadata,
                 quotaInGB,
+                accessTier: default,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -779,6 +876,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             GetShareClient(shareName).DeleteInternal(
                 includeSnapshots,
+                conditions: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
@@ -819,6 +917,7 @@ namespace Azure.Storage.Files.Shares
             await GetShareClient(shareName)
                 .DeleteInternal(
                     includeSnapshots,
+                    conditions: default,
                     async: true,
                     cancellationToken,
                     operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")

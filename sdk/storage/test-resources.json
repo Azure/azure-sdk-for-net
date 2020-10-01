@@ -31,6 +31,7 @@
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
         "softDeleteAccountName": "[concat(parameters('baseName'), 'sftdl')]",
+        "premiumFileAccountName": "[concat(parameters('baseName'), 'pfile')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
         "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
@@ -194,6 +195,10 @@
                 "deleteRetentionPolicy": {
                       "enabled": true,
                       "days": 1
+                },
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
                 }
             },
             "dependsOn": [
@@ -213,6 +218,23 @@
             "dependsOn": [
                 "[variables('softDeleteAccountName')]"
             ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('premiumFileAccountName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "FileStorage",
+            "properties": {
+                "networkAcls": "[variables('networkAcls')]",
+                "supportsHttpsTrafficOnly": true,
+                "encryption": "[variables('encryption')]",
+                "accessTier": "Hot"
+            }
         },
         {
             "type": "Microsoft.KeyVault/vaults",
@@ -334,6 +356,14 @@
     "SOFT_DELETE_ACCOUNT_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    },
+    "PREMIUM_FILE_STORAGE_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('premiumFileAccountName')]"
+    },
+    "PREMIUM_FILE_STORAGE_ACCOUNT_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
     "KEYVAULT_URI":{
       "type": "string",
