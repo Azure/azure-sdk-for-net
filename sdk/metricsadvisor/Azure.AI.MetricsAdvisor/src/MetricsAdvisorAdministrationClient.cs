@@ -1195,7 +1195,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Hook
 
         /// <summary>
+        /// Creates an <see cref="AlertingHook"/> and attributes it a unique ID.
         /// </summary>
+        /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/> instance
+        /// containing the ID of the newly created hook.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual async Task<Response<AlertingHook>> CreateHookAsync(AlertingHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
@@ -1223,7 +1232,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Creates an <see cref="AlertingHook"/> and attributes it a unique ID.
         /// </summary>
+        /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/> instance
+        /// containing the ID of the newly created hook.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual Response<AlertingHook> CreateHook(AlertingHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
@@ -1309,7 +1327,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Retrieves information about an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<AlertingHook>> GetHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
@@ -1331,7 +1358,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Retrieves information about an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual Response<AlertingHook> GetHook(string hookId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
@@ -1353,7 +1389,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Deletes an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> DeleteHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
@@ -1375,7 +1419,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Deletes an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual Response DeleteHook(string hookId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
@@ -1397,11 +1449,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        ///
+        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this Metrics Advisor
+        /// resource.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
         public virtual AsyncPageable<AlertingHook> GetHooksAsync(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<AlertingHook>> FirstPageFunc(int? pageSizeHint)
@@ -1442,11 +1495,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        ///
+        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this Metrics Advisor
+        /// resource.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
         public virtual Pageable<AlertingHook> GetHooks(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
             Page<AlertingHook> FirstPageFunc(int? pageSizeHint)
