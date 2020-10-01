@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -34,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ? await client.AcceptNextSessionAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -61,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -69,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
 
-                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
@@ -95,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    await GetNoRetryClient().AcceptNextSessionAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };
@@ -169,12 +168,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
 
                 ServiceBusReceiver receiver = sessionEnabled ?
-                    await client.CreateSessionReceiverAsync(
+                    await client.AcceptSessionAsync(
                         scope.QueueName,
-                        new ServiceBusSessionReceiverOptions
-                        {
-                            SessionId = "sessionId"
-                        })
+                        "sessionId")
                     : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
@@ -201,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     partitioned ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ? await client.AcceptNextSessionAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
