@@ -1145,7 +1145,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.SetStateAsync(
-                    It.IsAny<byte[]>(),
+                    It.IsAny<BinaryData>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusSessionReceiver(

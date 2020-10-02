@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus
                 sessionId: SessionId);
             scope.Start();
 
-            byte[] sessionState = null;
+            BinaryData sessionState;
 
             try
             {
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.GetSessionStateComplete(Identifier);
-            return new BinaryData(sessionState);
+            return sessionState;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                await InnerReceiver.SetStateAsync(sessionState.ToBytes().ToArray(), cancellationToken).ConfigureAwait(false);
+                await InnerReceiver.SetStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
