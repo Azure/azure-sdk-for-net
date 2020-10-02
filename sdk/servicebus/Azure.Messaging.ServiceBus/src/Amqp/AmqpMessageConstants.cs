@@ -24,12 +24,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal const string UriName = AmqpConstants.Vendor + ":uri";
         internal const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
         /// <summary>
-        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
+        ///  Property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
+        ///  This key and the associated values are stored in the <see cref="ServiceBusReceivedMessage.ApplicationProperties"/> dictionary
+        ///  for dead lettered messages.
         /// </summary>
         internal const string DeadLetterReasonHeader = "DeadLetterReason";
 
         /// <summary>
-        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
+        ///  Property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
+        ///  This key and the associated values are stored in the <see cref="ServiceBusReceivedMessage.ApplicationProperties"/> dictionary
+        ///  for dead lettered messages.
         /// </summary>
         internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
     }
