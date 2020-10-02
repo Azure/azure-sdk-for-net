@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Console.Tests
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 {
     /// <summary>
     /// These tests are to verify that the IntegrationTests work (i.e. This project can communicate with the <see cref="AspNetCoreWebApp"/> project).
