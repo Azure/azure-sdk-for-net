@@ -10,7 +10,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class ComponentHelper
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private const string ehInProcKind = "InProc | Azure Event Hubs";
+        private const string ehQueueKind = "Queue Message | Azure Event Hubs";
+        private const string inProcKind = "InProc | ";
+        private const string queueKind = "Queue Message | ";
+
         internal static void ExtractComponentProperties(Dictionary<string, string> tags, ActivityKind activityKind, out string type, out string sourceOrTarget)
         {
             sourceOrTarget = null;
@@ -26,25 +30,16 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return;
             }
 
-            string kind = null;
-
-            switch (activityKind)
-            {
-                case ActivityKind.Internal:
-                    kind = "InProc";
-                    break;
-                case ActivityKind.Producer:
-                    kind = "Queue Message";
-                    break;
-                default:
-                    break;
-            }
-
             switch (component)
             {
                 case "eventhubs":
                 case "Microsoft.EventHub":
-                    type = kind == null ? RemoteDependencyConstants.AzureEventHubs : string.Concat(kind, " | ", RemoteDependencyConstants.AzureEventHubs);
+                    type = activityKind switch
+                    {
+                        ActivityKind.Internal => ehInProcKind,
+                        ActivityKind.Producer => ehQueueKind,
+                        _ => RemoteDependencyConstants.AzureEventHubs,
+                    };
                     tags.TryGetValue(SemanticConventions.AttributeEndpointAddress, out var endpoint);
                     tags.TryGetValue(SemanticConventions.AttributeMessageBusDestination, out var queueName);
 
@@ -65,7 +60,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                     break;
                 default:
-                    type = kind == null ? component : string.Concat(kind, " | ", component);
+                    type = activityKind switch
+                    {
+                        ActivityKind.Internal => inProcKind + component,
+                        ActivityKind.Producer => queueKind + component,
+                        _ => component,
+                    };
                     break;
             }
         }
@@ -73,13 +73,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetMessagingUrl(Dictionary<string, string> tags)
         {
-            if (tags == null)
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url))
             {
-                return null;
+                return url;
             }
 
-            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
-            return url;
+            return null;
         }
     }
 }

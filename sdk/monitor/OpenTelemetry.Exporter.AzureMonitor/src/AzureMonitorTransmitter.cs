@@ -6,11 +6,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
-using OpenTelemetry.Exporter.AzureMonitor.HttpParsers;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -187,20 +185,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     case PartBType.Http:
                         dependency.Data = HttpHelper.GetUrl(partBTags);
                         dependency.Target = HttpHelper.GetHost(partBTags);
-                        bool parsed = AzureBlobHttpParser.TryParse(ref dependency)
-                                        || AzureTableHttpParser.TryParse(ref dependency)
-                                        || AzureQueueHttpParser.TryParse(ref dependency)
-                                        || DocumentDbHttpParser.TryParse(ref dependency)
-                                        || AzureServiceBusHttpParser.TryParse(ref dependency)
-                                        || GenericServiceHttpParser.TryParse(ref dependency)
-                                        || AzureIotHubHttpParser.TryParse(ref dependency)
-                                        || AzureSearchHttpParser.TryParse(ref dependency);
-
-                        if (!parsed)
-                        {
-                            dependency.Type = RemoteDependencyConstants.HTTP;
-                        }
-
+                        dependency.Type = RemoteDependencyConstants.HTTP;
                         var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
                         dependency.ResultCode = statusCode;
                         dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
