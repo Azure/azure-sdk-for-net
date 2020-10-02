@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// Describes a Sql Server data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class SqlServerDataFeedSource : DataFeedSource
     {
