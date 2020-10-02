@@ -654,12 +654,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 rejected = new Rejected { Error = new Error { Condition = AmqpClientConstants.DeadLetterName, Info = new Fields() } };
                 if (deadLetterReason != null)
                 {
-                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterReasonHeader, deadLetterReason);
+                    rejected.Error.Info.Add(AmqpMessageConstants.DeadLetterReasonHeader, deadLetterReason);
                 }
 
                 if (deadLetterErrorDescription != null)
                 {
-                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader, deadLetterErrorDescription);
+                    rejected.Error.Info.Add(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, deadLetterErrorDescription);
                 }
 
                 if (propertiesToModify != null)

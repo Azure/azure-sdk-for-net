@@ -17,7 +17,8 @@ namespace Azure.Core.Amqp
         /// <param name="message">The message to copy.</param>
         public AmqpAnnotatedMessage(AmqpAnnotatedMessage message)
         {
-            Body = message.Body;
+            var data = message.Body as AmqpDataBody;
+            Body = new AmqpDataBody(data!.Data);
             ApplicationProperties = new Dictionary<string, object>(message.ApplicationProperties);
             Properties = new AmqpMessageProperties(message.Properties);
             MessageAnnotations = new Dictionary<string, object>(message.MessageAnnotations);

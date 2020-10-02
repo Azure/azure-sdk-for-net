@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Amqp;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -486,8 +487,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         var props = new Dictionary<string, object>();
                         // these should be ignored by DeadLetter property getters as they are not strings
-                        props[ServiceBusReceivedMessage.DeadLetterReasonHeader] = DateTime.UtcNow;
-                        props[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader] = DateTime.UtcNow;
+                        props[AmqpMessageConstants.DeadLetterReasonHeader] = DateTime.UtcNow;
+                        props[AmqpMessageConstants.DeadLetterErrorDescriptionHeader] = DateTime.UtcNow;
 
                         await receiver.DeadLetterMessageAsync(item.LockToken, props);
                     }
@@ -514,8 +515,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.IsNull(msg.DeadLetterErrorDescription);
                         Assert.IsNull(msg.DeadLetterReason);
-                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterReasonHeader]);
-                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterErrorDescriptionHeader]);
                         await deadLetterReceiver.CompleteMessageAsync(msg.LockToken);
                     }
                 }
