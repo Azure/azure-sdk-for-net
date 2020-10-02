@@ -30,7 +30,7 @@
 /sdk/batch/                                     @paterasMSFT @dpwatrous
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe
+/sdk/communication/                             @RezaJooyandeh @DominikMe @Azure/azure-sdk-communication-code-reviewers
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
