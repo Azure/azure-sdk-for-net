@@ -259,7 +259,7 @@
     <value>The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shard Access Signature to be valid.</value>
   </data>
   <data name="OnlyOneEntityNameMayBeSpecified" xml:space="preserve">
-    <value>The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both.</value>
+    <value>The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor.</value>
   </data>
   <data name="OperationNotSupported" xml:space="preserve">
     <value>The operation is only supported in 'PeekLock' receive mode.</value>

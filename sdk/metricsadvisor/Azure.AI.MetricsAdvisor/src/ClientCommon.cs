@@ -4,6 +4,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
@@ -20,6 +21,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException">Thrown when parsing fails.</exception>
         public static Guid ValidateGuid(string id, string paramName)
         {
+            Argument.AssertNotNullOrEmpty(id, paramName);
+
             Guid guid;
 
             try
@@ -112,13 +115,13 @@ namespace Azure.AI.MetricsAdvisor
 
         private static readonly Regex s_feedbackIdRegex = new Regex(@"/feedback/metric/(?<feedbackId>[\d\w-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        public static Guid GetFeedbackId(string locationHeader)
+        public static string GetFeedbackId(string locationHeader)
         {
             Match match = s_feedbackIdRegex.Match(locationHeader);
 
             if (match.Success)
             {
-                return new Guid(match.Groups["feedbackId"].Value);
+                return match.Groups["feedbackId"].Value;
             }
             else
             {
