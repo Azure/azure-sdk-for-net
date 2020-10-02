@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -180,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.AreEqual(DiagnosticProperty.RenewSessionLockActivityName + ".Stop", renewStop.Key);
 
                     // set state
-                    var state = new BinaryData(Encoding.UTF8.GetBytes("state"));
+                    var state = new BinaryData("state");
                     await sessionReceiver.SetSessionStateAsync(state);
                     (string Key, object Value, DiagnosticListener) setStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.SetSessionStateActivityName + ".Start", setStateStart.Key);
