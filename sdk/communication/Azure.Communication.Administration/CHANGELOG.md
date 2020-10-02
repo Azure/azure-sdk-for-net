@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.2 (Unreleased)
-
+This release adds phone number administration capability. For more information, please see the [README][read_me] and [documentation][documentation].
 
 ## 1.0.0-beta.1 (2020-09-22)
 This is the first release of Azure Communication Administration, which manages users, tokens, and phone numbers for Azure Communication Services. For more information, please see the [README][read_me] and [documentation][documentation].

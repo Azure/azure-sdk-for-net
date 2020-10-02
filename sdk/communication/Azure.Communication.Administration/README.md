@@ -101,9 +101,9 @@ Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans 
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
-### Searching and Acquiring numbers
+### Searching and acquiring numbers
 
-Phone numbers search can be search through the search creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This search of phone numbers can either be cancelled or purchased. If the search is cancelled, then the phone numbers will become available to others. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+Phone numbers search can be performed through the search creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This search of phone numbers can either be cancelled or purchased. If the search is cancelled, then the phone numbers will become available to others. If the search is purchased, then the phone numbers are acquired for the Azure resources.
 
 ### Configuring / Assigning numbers
 
@@ -111,7 +111,7 @@ Phone numbers can be assigned to a callback URL via the configure number API. As
 
 ## Examples
 
-### Get Countries
+### Get list of the countries that are supported by the service
 
 ```C#
 string connectionString = "<connection_string>";
@@ -124,7 +124,7 @@ foreach (var country in countries)
 }
 ```
 
-### Get Phone Plan Groups
+### Get phone plan groups
 
 Phone plan groups come in two types, Geographic and Toll-Free.
 
@@ -137,7 +137,7 @@ foreach (var group in phonePlanGroups)
 }
 ```
 
-### Get Phone Plans
+### Get phone plans
 
 Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
 
@@ -155,7 +155,7 @@ foreach (var plan in phonePlans)
 }
 ```
 
-### Get Location Options
+### Get location options
 
 For Geographic phone plans, you can query the available geographic locations. The locations options are structured like the geographic hierarchy of a country. For example, the US has states and within each state are cities.
 
@@ -170,7 +170,7 @@ foreach(var locationOption in locationOprions.Options)
 }
 ```
 
-### Get Area Codes
+### Get area codes
 
 Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
 
@@ -190,7 +190,7 @@ foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
 }
 ```
 
-### Create Search
+### Create search
 
 ```C#
 var searchOptions = new CreateSearchOptions(displayName, description, plans, areaCode) { Quantity = 1 };
@@ -199,13 +199,13 @@ var createSearchResponse = client.CreateSearch(searchOptions);
 Console.WriteLine($"Search result: SearchId: {createSearchResponse.Value.SearchId}");
 ```
 
-### Purchase Search
+### Purchase search
 
 ```C#
 client.PurchaseSearch(searchId);
 ```
 
-### Configure Phone Number
+### Configure phone number
 
 ```C#
 var pstnConfiguration = new PstnConfiguration("<url>");
