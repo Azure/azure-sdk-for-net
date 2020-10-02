@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class FormTrainingClient
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceRestClient ServiceClient;
+        internal readonly FormRecognizerRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         internal readonly ClientDiagnostics Diagnostics;
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             Diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         #region Training
@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
 
-                ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
 
-                ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+                ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)

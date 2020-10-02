@@ -487,8 +487,12 @@ namespace Azure.Data.Tables.Tests
 
             entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
 
+            Assert.That(entityResults.First().PartitionKey, Is.TypeOf<string>(), "The entity property should be of type string");
+            Assert.That(entityResults.First().RowKey, Is.TypeOf<string>(), "The entity property should be of type string");
+            Assert.That(entityResults.First().Timestamp, Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTimeOffset?");
+            Assert.That(entityResults.First().Timestamp, Is.Not.Null, "The entity property should not be null");
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
@@ -519,7 +523,7 @@ namespace Azure.Data.Tables.Tests
             entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
@@ -975,26 +979,23 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task BatchInsert()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
-            }
-            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
             // Create the batch.
-            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
+            var batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add the entities to the batch.
             batch.AddEntities(entitiesToCreate);
-            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
-            foreach (var response in responses.Value)
+            foreach (var entity in entitiesToCreate)
             {
-                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.That(response.GetResponseForEntity(entity.RowKey).Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
-            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            Assert.That(response.ResponseCount, Is.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
@@ -1009,11 +1010,8 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task BatchInsertAndMergeAndDelete()
         {
-            const string updatedString = "the was updated!";
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
-            }
+            const string updatedString = "the string was updated!";
+
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
 
             // Add just the first two entities
@@ -1021,7 +1019,7 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
 
             // Create the batch.
-            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
+            TableTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
@@ -1038,13 +1036,14 @@ namespace Azure.Data.Tables.Tests
             var entityToDelete = entitiesToCreate[1];
             batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
 
-            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
-            foreach (var response in responses.Value)
+            foreach (var entity in entitiesToCreate)
             {
-                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.That(response.GetResponseForEntity(entity.RowKey).Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
-            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            Assert.That(response.ResponseCount, Is.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
@@ -1054,5 +1053,4 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
         }
     }
-
 }
