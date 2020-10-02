@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
@@ -70,11 +71,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (async)
             {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                // TODO: RequestFailedException is thrown when http response is not equal to 200 or 206. Implement logic to catch exception.
+                response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
             }
 
             // TODO: Handle exception, check telemetryItems has items
@@ -83,7 +85,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture));
             ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
             telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
