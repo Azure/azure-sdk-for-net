@@ -284,6 +284,7 @@
             "RequestHeaders": {
                 "Authorization": "Sanitized",
                 "Content-Length": "0",
+                "If-None-Match": "*",
                 "traceparent": "00-8b44041c3d04c346b0b58fc478582502-34511c00b96b4848-00",
                 "User-Agent": [
                     "azsdk-net-Storage.Blobs/12.5.0-dev.20200713.1",
@@ -535,6 +536,7 @@
             "RequestHeaders": {
                 "Authorization": "Sanitized",
                 "Content-Length": "0",
+                "If-None-Match": "*",
                 "traceparent": "00-4c8bfe0aaf2a8e41a005d86ec813f15d-815e75250846804c-00",
                 "User-Agent": [
                     "azsdk-net-Storage.Blobs/12.5.0-dev.20200713.1",
@@ -786,6 +788,7 @@
             "RequestHeaders": {
                 "Authorization": "Sanitized",
                 "Content-Length": "0",
+                "If-None-Match": "*",
                 "traceparent": "00-57b3e39fcb66bd44bc38cf155f296747-448a0d1b0a4fb743-00",
                 "User-Agent": [
                     "azsdk-net-Storage.Blobs/12.5.0-dev.20200713.1",
@@ -1071,6 +1074,7 @@
             "RequestHeaders": {
                 "Authorization": "Sanitized",
                 "Content-Length": "0",
+                "If-None-Match": "*",
                 "traceparent": "00-cc9a20a20794034280d521013ed7a72c-c2478d82506b3543-00",
                 "User-Agent": [
                     "azsdk-net-Storage.Blobs/12.5.0-dev.20200713.1",
