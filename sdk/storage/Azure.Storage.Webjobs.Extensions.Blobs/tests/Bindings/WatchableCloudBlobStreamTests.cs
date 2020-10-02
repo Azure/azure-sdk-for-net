@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
     public class WatchableCloudBlobStreamTests
     {
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void CanRead_DelegatesToInnerStreamCanRead(bool expected)
         {
             // Arrange
@@ -30,12 +29,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             bool canRead = product.CanRead;
 
             // Assert
-            Assert.Equal(expected, canRead);
+            Assert.AreEqual(expected, canRead);
         }
 
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void CanSeek_DelegatesToInnerStreamCanSeek(bool expected)
         {
             // Arrange
@@ -48,12 +46,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             bool canSeek = product.CanSeek;
 
             // Assert
-            Assert.Equal(expected, canSeek);
+            Assert.AreEqual(expected, canSeek);
         }
 
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void CanTimeout_DelegatesToInnerStreamCanTimeout(bool expected)
         {
             // Arrange
@@ -66,12 +63,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             bool canTimeout = product.CanTimeout;
 
             // Assert
-            Assert.Equal(expected, canTimeout);
+            Assert.AreEqual(expected, canTimeout);
         }
 
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
+        [TestCase(false)]
+        [TestCase(true)]
         public void CanWrite_DelegatesToInnerStreamCanWrite(bool expected)
         {
             // Arrange
@@ -84,10 +80,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             bool canWrite = product.CanWrite;
 
             // Assert
-            Assert.Equal(expected, canWrite);
+            Assert.AreEqual(expected, canWrite);
         }
 
-        [Fact]
+        [Test]
         public void Length_DelegatesToInnerStreamLength()
         {
             // Arrange
@@ -101,10 +97,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             long length = product.Length;
 
             // Assert
-            Assert.Equal(expected, length);
+            Assert.AreEqual(expected, length);
         }
 
-        [Fact]
+        [Test]
         public void GetPosition_DelegatesToInnerStreamGetPosition()
         {
             // Arrange
@@ -118,10 +114,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             long position = product.Position;
 
             // Assert
-            Assert.Equal(expected, position);
+            Assert.AreEqual(expected, position);
         }
 
-        [Fact]
+        [Test]
         public void SetPosition_DelegatesToInnerStreamSetPosition()
         {
             // Arrange
@@ -138,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void GetReadTimeout_DelegatesToInnerStreamGetReadTimeout()
         {
             // Arrange
@@ -152,10 +148,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int readTimeout = product.ReadTimeout;
 
             // Assert
-            Assert.Equal(expected, readTimeout);
+            Assert.AreEqual(expected, readTimeout);
         }
 
-        [Fact]
+        [Test]
         public void SetReadTimeout_DelegatesToInnerStreamSetReadTimeout()
         {
             // Arrange
@@ -172,7 +168,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void GetWriteTimeout_DelegatesToInnerStreamGetWriteTimeout()
         {
             // Arrange
@@ -186,10 +182,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int writeTimeout = product.WriteTimeout;
 
             // Assert
-            Assert.Equal(expected, writeTimeout);
+            Assert.AreEqual(expected, writeTimeout);
         }
 
-        [Fact]
+        [Test]
         public void SetWriteTimeout_DelegatesToInnerStreamSetWriteTimeout()
         {
             // Arrange
@@ -206,7 +202,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void BeginRead_DelegatesToInnerStreamBeginRead()
         {
             // Arrange
@@ -233,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void BeginRead_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
@@ -254,10 +250,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Act & Assert
             Exception exception = Assert.Throws<Exception>(() => product.BeginRead(buffer, offset, count, callback,
                 state));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void BeginRead_WhenNotYetCompleted_ReturnsUncompletedResult()
         {
             // Arrange
@@ -290,7 +286,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             result.AsyncWaitHandle.Dispose();
         }
 
-        [Fact]
+        [Test]
         public void BeginRead_WhenCompletedSynchronously_CallsCallbackAndReturnsCompletedResult()
         {
             // Arrange
@@ -333,11 +329,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Assert
             Assert.True(callbackCalled);
             // An AsyncCallback must be called with the same IAsyncResult instance as the Begin method returned.
-            Assert.Same(result, callbackResult);
+            Assert.AreSame(result, callbackResult);
             AssertEqual(expectedResult, result, disposeActual: true);
         }
 
-        [Fact]
+        [Test]
         public void BeginRead_WhenCompletedAsynchronously_CallsCallbackAndCompletesResult()
         {
             // Arrange
@@ -383,11 +379,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Assert
             Assert.True(callbackCalled);
             // An AsyncCallback must be called with the same IAsyncResult instance as the Begin method returned.
-            Assert.Same(result, callbackResult);
+            Assert.AreSame(result, callbackResult);
             AssertEqual(expectedResult, result, disposeActual: true);
         }
 
-        [Fact]
+        [Test]
         public void EndRead_DelegatesToInnerStreamEndRead()
         {
             // Arrange
@@ -418,11 +414,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int bytesRead = product.EndRead(result);
 
             // Assert
-            Assert.Equal(expectedBytesRead, bytesRead);
+            Assert.AreEqual(expectedBytesRead, bytesRead);
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void EndRead_DuringCallback_DelegatesToInnerStreamEndRead()
         {
             // Arrange
@@ -460,11 +456,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.True(callbackCalled);
-            Assert.Equal(expectedBytesRead, bytesRead);
+            Assert.AreEqual(expectedBytesRead, bytesRead);
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void EndRead_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
@@ -490,10 +486,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Act & Assert
             Exception exception = Assert.Throws<Exception>(() => product.EndRead(result));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void BeginWrite_DelegatesToInnerStreamBeginWrite()
         {
             // Arrange
@@ -520,7 +516,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void BeginWrite_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
@@ -541,10 +537,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Act & Assert
             Exception exception = Assert.Throws<Exception>(() => product.BeginWrite(buffer, offset, count, callback,
                 state));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void BeginWrite_WhenNotYetCompleted_ReturnsUncompletedResult()
         {
             // Arrange
@@ -577,7 +573,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             result.AsyncWaitHandle.Dispose();
         }
 
-        [Fact]
+        [Test]
         public void BeginWrite_WhenCompletedSynchronously_CallsCallbackAndReturnsCompletedResult()
         {
             // Arrange
@@ -629,11 +625,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Assert
             Assert.True(callbackCalled);
             // An AsyncCallback must be called with the same IAsyncResult instance as the Begin method returned.
-            Assert.Same(result, callbackResult);
+            Assert.AreSame(result, callbackResult);
             AssertEqual(expectedResult, result, disposeActual: true);
         }
 
-        [Fact]
+        [Test]
         public void BeginWrite_WhenCompletedAsynchronously_CallsCallbackAndCompletesResult()
         {
             // Arrange
@@ -677,11 +673,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Assert
             Assert.True(callbackCalled);
             // An AsyncCallback must be called with the same IAsyncResult instance as the Begin method returned.
-            Assert.Same(result, callbackResult);
+            Assert.AreSame(result, callbackResult);
             AssertEqual(expectedResult, result, disposeActual: true);
         }
 
-        [Fact]
+        [Test]
         public void EndWrite_DelegatesToInnerStreamEndWrite()
         {
             // Arrange
@@ -712,7 +708,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void EndWrite_DuringCallback_DelegatesToInnerStreamEndWrite()
         {
             // Arrange
@@ -749,7 +745,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void EndWrite_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
@@ -775,10 +771,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Act & Assert
             Exception exception = Assert.Throws<Exception>(() => product.EndWrite(result));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void Close_DelegatesToInnerStreamClose()
         {
             // Arrange
@@ -796,7 +792,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void CopyToAsync_DelegatesToInnerStreamCopyToAsync()
         {
             // Arrange
@@ -817,11 +813,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             Task task = product.CopyToAsync(expectedDestination, expectedBufferSize, expectedCancellationToken);
 
             // Assert
-            Assert.Same(task, expectedTask);
+            Assert.AreSame(task, expectedTask);
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void Flush_DelegatesToInnerStreamFlush()
         {
             // Arrange
@@ -839,7 +835,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void Read_DelegatesToInnerStreamRead()
         {
             byte[] expectedBuffer = new byte[0];
@@ -859,11 +855,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int bytesRead = product.Read(expectedBuffer, expectedOffset, expectedCount);
 
             // Assert
-            Assert.Equal(expectedBytesRead, bytesRead);
+            Assert.AreEqual(expectedBytesRead, bytesRead);
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void ReadAsync_DelegatesToInnerStreamReadAsync()
         {
             // Arrange
@@ -887,8 +883,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
-        public async Task ReadAsync_WhenInnerStreamThrows_PropogatesException()
+        [Test]
+        public void ReadAsync_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
             Exception expectedException = new Exception();
@@ -906,12 +902,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             CancellationToken cancellationToken = CancellationToken.None;
 
             // Act & Assert
-            Exception exception = await Assert.ThrowsAsync<Exception>(
+            Exception exception = Assert.ThrowsAsync<Exception>(
                 () => product.ReadAsync(buffer, offset, count, cancellationToken));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void ReadAsync_WhenInnerStreamHasNotYetCompleted_ReturnsIncompleteTask()
         {
             // Arrange
@@ -937,7 +933,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             Assert.False(task.IsCompleted);
         }
 
-        [Fact]
+        [Test]
         public void ReadAsync_WhenInnerStreamHasCompleted_ReturnsRanToCompletionTask()
         {
             // Arrange
@@ -962,11 +958,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.Equal(expectedBytesRead, task.Result);
+            Assert.AreEqual(TaskStatus.RanToCompletion, task.Status);
+            Assert.AreEqual(expectedBytesRead, task.Result);
         }
 
-        [Fact]
+        [Test]
         public void ReadAsync_WhenInnerStreamHasCanceled_ReturnsCanceledTask()
         {
             // Arrange
@@ -990,10 +986,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Canceled, task.Status);
+            Assert.AreEqual(TaskStatus.Canceled, task.Status);
         }
 
-        [Fact]
+        [Test]
         public void ReadAsync_WhenInnerStreamHasFaulted_ReturnsFaultedTask()
         {
             // Arrange
@@ -1018,12 +1014,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Faulted, task.Status);
+            Assert.AreEqual(TaskStatus.Faulted, task.Status);
             Assert.NotNull(task.Exception);
-            Assert.Same(expectedException, task.Exception.InnerException);
+            Assert.AreSame(expectedException, task.Exception.InnerException);
         }
 
-        [Fact]
+        [Test]
         public void ReadByte_DelegatesToInnerStreamReadByte()
         {
             // Arrange
@@ -1037,10 +1033,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int actual = product.ReadByte();
 
             // Assert
-            Assert.Equal(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
-        [Fact]
+        [Test]
         public void Seek_DelegatesToInnerStreamSeek()
         {
             long expectedOffset = 123;
@@ -1059,11 +1055,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             long position = product.Seek(expectedOffset, expectedOrigin);
 
             // Assert
-            Assert.Equal(expectedPosition, position);
+            Assert.AreEqual(expectedPosition, position);
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void SetLength_DelegatesToInnerStreamSetLength()
         {
             long expectedValue = 123;
@@ -1082,7 +1078,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void Write_DelegatesToInnerStreamWrite()
         {
             byte[] expectedBuffer = new byte[0];
@@ -1103,7 +1099,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void WriteAsync_DelegatesToInnerStreamWriteAsync()
         {
             // Arrange
@@ -1127,8 +1123,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
-        public async Task WriteAsync_WhenInnerStreamThrows_PropogatesException()
+        [Test]
+        public void WriteAsync_WhenInnerStreamThrows_PropogatesException()
         {
             // Arrange
             Exception expectedException = new Exception();
@@ -1146,12 +1142,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             CancellationToken cancellationToken = CancellationToken.None;
 
             // Act & Assert
-            Exception exception = await Assert.ThrowsAsync<Exception>(
+            Exception exception = Assert.ThrowsAsync<Exception>(
                 () => product.WriteAsync(buffer, offset, count, cancellationToken));
-            Assert.Same(expectedException, exception);
+            Assert.AreSame(expectedException, exception);
         }
 
-        [Fact]
+        [Test]
         public void WriteAsync_WhenInnerStreamHasNotYetCompleted_ReturnsIncompleteTask()
         {
             // Arrange
@@ -1177,7 +1173,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             Assert.False(task.IsCompleted);
         }
 
-        [Fact]
+        [Test]
         public void WriteAsync_WhenInnerStreamHasCompleted_ReturnsRanToCompletionTask()
         {
             // Arrange
@@ -1201,10 +1197,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
+            Assert.AreEqual(TaskStatus.RanToCompletion, task.Status);
         }
 
-        [Fact]
+        [Test]
         public void WriteAsync_WhenInnerStreamHasCanceled_ReturnsCanceledTask()
         {
             // Arrange
@@ -1228,10 +1224,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Canceled, task.Status);
+            Assert.AreEqual(TaskStatus.Canceled, task.Status);
         }
 
-        [Fact]
+        [Test]
         public void WriteAsync_WhenInnerStreamHasFaulted_ReturnsFaultedTask()
         {
             // Arrange
@@ -1256,12 +1252,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Faulted, task.Status);
+            Assert.AreEqual(TaskStatus.Faulted, task.Status);
             Assert.NotNull(task.Exception);
-            Assert.Same(expectedException, task.Exception.InnerException);
+            Assert.AreSame(expectedException, task.Exception.InnerException);
         }
 
-        [Fact]
+        [Test]
         public void WriteByte_DelegatesToInnerStreamWriteByte()
         {
             // Arrange
@@ -1280,7 +1276,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public async Task Commit_IfCommittedActionIsNotNull_CallsCommittedAction()
         {
             // Arrange
@@ -1306,7 +1302,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             committedActionMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public async Task GetStatus_AfterCommit_ReturnsZeroBytesWritten()
         {
             // Arrange
@@ -1323,7 +1319,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterFlush_ReturnsZeroBytesWritten()
         {
             // Arrange
@@ -1341,7 +1337,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWrite_ReturnsBytesWritten()
         {
             // Arrange
@@ -1359,7 +1355,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWriteTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
@@ -1378,7 +1374,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterBeginEndWrite_ReturnsBytesWritten()
         {
             // Arrange
@@ -1396,7 +1392,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterBeginEndWriteTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
@@ -1415,7 +1411,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWriteAsync_ReturnsBytesWritten()
         {
             // Arrange
@@ -1433,7 +1429,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWriteAsyncTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
@@ -1452,7 +1448,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWriteByte_ReturnsOneByteWritten()
         {
             // Arrange
@@ -1469,7 +1465,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        [Fact]
+        [Test]
         public void GetStatus_AfterWriteByteTwice_ReturnsTwoBytesWritten()
         {
             // Arrange
@@ -1491,13 +1487,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             bool disposeActual = false)
         {
             Assert.NotNull(actual);
-            Assert.Same(expected.AsyncState, actual.AsyncState);
-            Assert.Equal(expected.CompletedSynchronously, actual.CompletedSynchronously);
-            Assert.Equal(expected.IsCompleted, actual.IsCompleted);
+            Assert.AreSame(expected.AsyncState, actual.AsyncState);
+            Assert.AreEqual(expected.CompletedSynchronously, actual.CompletedSynchronously);
+            Assert.AreEqual(expected.IsCompleted, actual.IsCompleted);
 
             try
             {
-                Assert.Equal(expected.IsCompleted, actual.AsyncWaitHandle.WaitOne(0));
+                Assert.AreEqual(expected.IsCompleted, actual.AsyncWaitHandle.WaitOne(0));
             }
             finally
             {
@@ -1510,18 +1506,18 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
         private static void AssertEqualStatus(int expectedBytesWritted, ParameterLog actual)
         {
-            Assert.IsType<WriteBlobParameterLog>(actual);
+            Assert.IsInstanceOf<WriteBlobParameterLog>(actual);
             WriteBlobParameterLog actualBlobLog = (WriteBlobParameterLog)actual;
-            Assert.Equal(expectedBytesWritted, actualBlobLog.BytesWritten);
+            Assert.AreEqual(expectedBytesWritted, actualBlobLog.BytesWritten);
             Assert.True(actualBlobLog.WasWritten);
         }
 
         private static void AssertNotWritten(ParameterLog actual)
         {
-            Assert.IsType<WriteBlobParameterLog>(actual);
+            Assert.IsInstanceOf<WriteBlobParameterLog>(actual);
             WriteBlobParameterLog actualBlobLog = (WriteBlobParameterLog)actual;
             Assert.False(actualBlobLog.WasWritten);
-            Assert.Equal(0, actualBlobLog.BytesWritten);
+            Assert.AreEqual(0, actualBlobLog.BytesWritten);
         }
 
         private static Stream CreateDummyStream()

@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 using Azure.Storage.Queues;
 using System.Linq;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
 {
-    [Trait("SecretsRequired", "true")]
     public class StorageAccountTests
     {
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task CloudQueueCreate_IfNotExist_CreatesQueue()
         {
             // Arrange
@@ -53,7 +53,8 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             }
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task CloudQueueAddMessage_AddsMessage()
         {
             // Arrange
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
                 // Assert
                 QueueMessage sdkMessage = (await sdkQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 Assert.NotNull(sdkMessage);
-                Assert.Equal(expectedContent, sdkMessage.MessageText);
+                Assert.AreEqual(expectedContent, sdkMessage.MessageText);
             }
             finally
             {

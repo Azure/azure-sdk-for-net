@@ -3,17 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
 {
     public class StorageQueuesWebJobsBuilderExtensionsTests
     {
-        [Fact]
+        [Test]
         public void ConfigureOptions_AppliesValuesCorrectly_Singleton()
         {
             string path = "AzureWebJobs:Singleton";
@@ -31,14 +30,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
                 b.AddAzureStorageQueues();
             }, values);
 
-            Assert.Equal(TimeSpan.FromSeconds(22), options.LockPeriod);
-            Assert.Equal(TimeSpan.FromSeconds(22), options.ListenerLockPeriod);
-            Assert.Equal(TimeSpan.FromSeconds(22), options.LockAcquisitionTimeout);
-            Assert.Equal(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
-            Assert.Equal(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(22), options.LockPeriod);
+            Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockPeriod);
+            Assert.AreEqual(TimeSpan.FromSeconds(22), options.LockAcquisitionTimeout);
+            Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
+            Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
         }
 
-        [Fact]
+        [Test]
         public void ConfigureOptions_AppliesValuesCorrectly_Queues()
         {
             string extensionPath = "AzureWebJobs:Extensions:Queues";
@@ -56,11 +55,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
                 b.AddAzureStorageQueues();
             }, values);
 
-            Assert.Equal(30, options.BatchSize);
-            Assert.Equal(123, options.NewBatchThreshold);
-            Assert.Equal(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
-            Assert.Equal(10, options.MaxDequeueCount);
-            Assert.Equal(TimeSpan.FromSeconds(15), options.VisibilityTimeout);
+            Assert.AreEqual(30, options.BatchSize);
+            Assert.AreEqual(123, options.NewBatchThreshold);
+            Assert.AreEqual(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
+            Assert.AreEqual(10, options.MaxDequeueCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(15), options.VisibilityTimeout);
         }
     }
 }

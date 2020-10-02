@@ -8,33 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Newtonsoft.Json;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
-    [Collection(AzuriteCollection.Name)]
     public class HostCallTests
     {
         private const string QueueName = "input-hostcalltests";
         private const string OutputQueueName = "output-hostcalltests";
         private const int TestValue = Int32.MinValue;
         private const string TestQueueMessage = "ignore";
-        private readonly StorageAccount account;
+        private StorageAccount account;
 
-        public HostCallTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
+            account = AzuriteNUnitFixture.Instance.GetAccount();
             account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
             account.CreateQueueServiceClient().GetQueueClient(OutputQueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             // Arrange
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             int result = await CallAsync<int>(account, typeof(UnboundInt32Program), "Call", arguments,
                 (s) => UnboundInt32Program.TaskSource = s);
 
-            Assert.Equal(15, result);
+            Assert.AreEqual(15, result);
         }
 
         private class UnboundInt32Program
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutPoco_CanCall()
         {
             // Act
@@ -72,19 +71,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new PocoMessage { Value = "15" }, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToICollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToICollectorPoco");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToIAsyncCollectorPoco");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
             // Act
@@ -94,16 +93,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
             // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-            Assert.Equal("test1", sortedMessages[0].MessageText);
-            Assert.Equal("test2", sortedMessages[1].MessageText);
-            Assert.Equal("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].MessageText);
+            Assert.AreEqual("test2", sortedMessages[1].MessageText);
+            Assert.AreEqual("test3", sortedMessages[2].MessageText);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
             // Act
@@ -113,25 +112,25 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
-            Assert.Equal("test1", sortedMessages[0].MessageText);
-            Assert.Equal("test2", sortedMessages[1].MessageText);
-            Assert.Equal("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].MessageText);
+            Assert.AreEqual("test2", sortedMessages[1].MessageText);
+            Assert.AreEqual("test3", sortedMessages[2].MessageText);
         }
 
-        [Fact]
-        public async Task Queue_IfBoundToIAsyncCollectorInt_NotSupported()
+        [Test]
+        public void Queue_IfBoundToIAsyncCollectorInt_NotSupported()
         {
             // Act
-            FunctionIndexingException ex = await Assert.ThrowsAsync<FunctionIndexingException>(() =>
+            FunctionIndexingException ex = Assert.ThrowsAsync<FunctionIndexingException>(() =>
             {
                 return CallAsync(account, typeof(QueueNotSupportedProgram), "BindToICollectorInt");
             });
 
             // Assert
-            Assert.Equal("Primitive types are not supported.", ex.InnerException.Message);
+            Assert.AreEqual("Primitive types are not supported.", ex.InnerException.Message);
         }
 
         private async Task TestEnqueueMultiplePocoMessages(string methodName)
@@ -143,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             IEnumerable<QueueMessage> sortedMessages = messages.OrderBy((m) => m.MessageText);
             QueueMessage firstMessage = sortedMessages.ElementAt(0);
             QueueMessage secondMessage = sortedMessages.ElementAt(1);
@@ -153,14 +152,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(new PocoMessage { Value = "30" }, thirdMessage);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollector_AddEnqueuesImmediately()
         {
             // Act
             await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorEnqueuesImmediately");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToCloudQueue_CanCall()
         {
             // Act
@@ -169,10 +168,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(QueueName, result.Name);
+            Assert.AreEqual(QueueName, result.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToCloudQueueAndQueueIsMissing_Creates()
         {
             // Act
@@ -195,11 +194,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Theory]
-        [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
-        [InlineData("FuncWithOutByteArray", TestQueueMessage)]
-        [InlineData("FuncWithOutString", TestQueueMessage)]
-        [InlineData("FuncWithICollector", TestQueueMessage)]
+        [TestCase("FuncWithOutCloudQueueMessage", TestQueueMessage)]
+        [TestCase("FuncWithOutByteArray", TestQueueMessage)]
+        [TestCase("FuncWithOutString", TestQueueMessage)]
+        [TestCase("FuncWithICollector", TestQueueMessage)]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_CreatesAndSends(string methodName, string expectedMessage)
         {
             // Act
@@ -211,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(expectedMessage, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutPocoAndQueueIsMissing_CreatesAndSends()
         {
             // Act
@@ -223,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new PocoMessage { Value = TestQueueMessage }, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutStructAndQueueIsMissing_CreatesAndSends()
         {
             // Act
@@ -235,11 +233,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
 
-        [Theory]
-        [InlineData("FuncWithOutCloudQueueMessageNull")]
-        [InlineData("FuncWithOutByteArrayNull")]
-        [InlineData("FuncWithOutStringNull")]
-        [InlineData("FuncWithICollectorNoop")]
+        [TestCase("FuncWithOutCloudQueueMessageNull")]
+        [TestCase("FuncWithOutByteArrayNull")]
+        [TestCase("FuncWithOutStringNull")]
+        [TestCase("FuncWithICollectorNoop")]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_DoesNotCreate(string methodName)
         {
             // Act
@@ -255,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(queue);
             QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
             Assert.NotNull(message);
-            Assert.Equal(expectedMessage, message.MessageText);
+            Assert.AreEqual(expectedMessage, message.MessageText);
         }
 
         private static void AssertMessageSent(PocoMessage expected, QueueClient queue)
@@ -298,12 +295,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 return;
             }
 
-            Assert.Equal(expected.Value, actual.Value);
+            Assert.AreEqual(expected.Value, actual.Value);
         }
 
         private static void AssertEqual(StructMessage expected, StructMessage actual)
         {
-            Assert.Equal(expected.Value, actual.Value);
+            Assert.AreEqual(expected.Value, actual.Value);
         }
 
         private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
@@ -397,7 +394,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 await collector.AddAsync(expectedContents);
                 QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 Assert.NotNull(message);
-                Assert.Equal(expectedContents, message.MessageText);
+                Assert.AreEqual(expectedContents, message.MessageText);
             }
         }
 

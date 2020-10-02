@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Moq;
-using Xunit;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
 {
     public class BlobCausalityManagerTests
     {
-        [Fact]
+        [Test]
         public void SetWriter_IfValidGuid_AddsWriter()
         {
             // Arrange
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             AssertWriterEqual(g, metadata);
         }
 
-        [Fact]
+        [Test]
         public void SetWriter_IfNullObject_Throws()
         {
             // Arrange
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             ExceptionAssert.ThrowsArgumentNull(() => BlobCausalityManager.SetWriter(null, g), "metadata");
         }
 
-        [Fact]
+        [Test]
         public void GetWriter_IfMetadataDoesNotHaveWriterProperty_ReturnsNull()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             blobMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void GetWriter_IfFetchFails_ReturnsNull()
         {
             // Arrange
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             blobMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void GetWriter_IfMetadataPropertyIsNotGuid_ReturnsNull()
         {
             // Arrange
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             blobMock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void GetWriter_IfMetadataPropertyIsGuid_ReturnsThatGuid()
         {
             // Arrange
@@ -99,14 +99,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
 
             // Assert
-            Assert.Equal(expected, writer);
+            Assert.AreEqual(expected, writer);
             blobMock.Verify();
         }
 
         private static void AssertWriterEqual(Guid expectedWriter, IDictionary<string, string> metadata)
         {
             Guid? owner = GetWriter(metadata);
-            Assert.Equal(expectedWriter, owner);
+            Assert.AreEqual(expectedWriter, owner);
         }
 
         private static Mock<BlobBaseClient> SetupBlobMock(bool? isFetchSuccess = null, Dictionary<string, string> metadata = null)

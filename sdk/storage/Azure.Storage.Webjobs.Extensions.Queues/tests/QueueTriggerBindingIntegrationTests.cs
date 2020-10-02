@@ -9,25 +9,26 @@ using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Newtonsoft.Json;
-using Xunit;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    [Collection(AzuriteCollection.Name)]
-    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>
+    public class QueueTriggerBindingIntegrationTests
     {
         private ITriggerBinding _binding;
+        private InvariantCultureFixture _invariantCultureFixture;
 
-        public QueueTriggerBindingIntegrationTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
+            _invariantCultureFixture = new InvariantCultureFixture();
             IQueueTriggerArgumentBindingProvider provider = new UserTypeArgumentBindingProvider();
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
-            var fakeAccount = azuriteFixture.GetAccount();
+            var fakeAccount = AzuriteNUnitFixture.Instance.GetAccount();
             QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
             QueueClient queue = queueServiceClient.GetQueueClient("queueName-queuetriggerbindingintegrationtests");
 
@@ -39,11 +40,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 null, null);
         }
 
-        [Theory]
-        [InlineData("RequestId", "4b957741-c22e-471d-9f0f-e1e8534b9cb6")]
-        [InlineData("RequestReceivedTime", "8/16/2014 12:09:36 AM")]
-        [InlineData("DeliveryCount", "8")]
-        [InlineData("IsSuccess", "False")]
+        [TearDown]
+        public void TearDown()
+        {
+            _invariantCultureFixture.Dispose();
+        }
+
+        [TestCase("RequestId", "4b957741-c22e-471d-9f0f-e1e8534b9cb6")]
+        [TestCase("RequestReceivedTime", "8/16/2014 12:09:36 AM")]
+        [TestCase("DeliveryCount", "8")]
+        [TestCase("IsSuccess", "False")]
         public void BindAsync_IfUserDataType_ReturnsValidBindingData(string userPropertyName, string userPropertyValue)
         {
             // Arrange
@@ -63,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.NotNull(data.ValueProvider);
             Assert.NotNull(data.BindingData);
             Assert.True(data.BindingData.ContainsKey(userPropertyName));
-            Assert.Equal(userProperty.GetValue(expectedObject, null), data.BindingData[userPropertyName]);
+            Assert.AreEqual(userProperty.GetValue(expectedObject, null), data.BindingData[userPropertyName]);
         }
 
         private class StubParameterInfo : ParameterInfo

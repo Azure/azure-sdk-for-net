@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Loggers;
 using Microsoft.Azure.WebJobs.Host.Protocols;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles
 {
@@ -40,12 +41,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles
             if (message != null && message.Failure != null && message.Function != null &&
                 !_ignoreFailureFunctions.Contains(message.Function.FullName))
             {
-                _taskSource.SetException(message.Failure.Exception);
+                _taskSource.TrySetException(message.Failure.Exception);
             }
 
             if (_signalOnFirst)
             {
-                _taskSource.SetResult(default(TResult));
+                _taskSource.TrySetResult(default(TResult));
             }
 
             return Task.CompletedTask;

@@ -5,13 +5,13 @@ using System;
 using System.Globalization;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
     public class StorageAnalyticsLogEntryTests
     {
-        [Fact]
+        [Test]
         public void TryParse_IfValidFieldValues_ReturnsLogEntryInstance()
         {
             string requestStartTime = "2014-09-08T18:44:18.9681025Z";
@@ -24,14 +24,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             Assert.NotNull(entry);
             DateTime expectedRequestStartTime = new DateTime(635457986589681025L, DateTimeKind.Utc);
-            Assert.Equal(expectedRequestStartTime, entry.RequestStartTime);
-            Assert.Equal(DateTimeKind.Utc, entry.RequestStartTime.Kind);
-            Assert.Equal(StorageServiceOperationType.PutBlob, entry.OperationType);
-            Assert.Equal(StorageServiceType.Blob, entry.ServiceType);
-            Assert.Equal(requestedObjectKey, entry.RequestedObjectKey);
+            Assert.AreEqual(expectedRequestStartTime, entry.RequestStartTime);
+            Assert.AreEqual(DateTimeKind.Utc, entry.RequestStartTime.Kind);
+            Assert.AreEqual(StorageServiceOperationType.PutBlob, entry.OperationType);
+            Assert.AreEqual(StorageServiceType.Blob, entry.ServiceType);
+            Assert.AreEqual(requestedObjectKey, entry.RequestedObjectKey);
         }
 
-        [Fact]
+        [Test]
         public void TryParse_IfMalformedStartTime_ReturnsNull()
         {
             string[] fields = CreateArray("<INVALID>", "PutBlob", "blob", @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt");
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Null(entry);
         }
 
-        [Fact]
+        [Test]
         public void TryParse_IfUnrecognizedService_IgnoresIt()
         {
             string[] fields = CreateArray("2014-09-08T18:44:18.9681025Z", "PutBlob", "INVALID", @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt");
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(entry.ServiceType.HasValue);
         }
 
-        [Fact]
+        [Test]
         public void TryParse_IfUnrecognizedOperation_IgnoresIt()
         {
             string[] fields = CreateArray("2014-09-08T18:44:18.9681025Z", "INVALID", "blob", @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt");
@@ -63,26 +63,27 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(entry.OperationType.HasValue);
         }
 
-        [Theory]
-        [InlineData(StorageServiceOperationType.PutBlob, StorageServiceType.Blob, @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt", "sample-container", @"""0x8D199A96CB71468""/sample-blob.txt")]
-        [InlineData(StorageServiceOperationType.CopyBlobDestination, StorageServiceType.Blob, @"https://storagesample.blob.core.windows.net/sample-container/sample-blob.txt", "sample-container", "sample-blob.txt")]
-        internal void ToBlobPath_IfValidBlobOperationEntry_ReturnsBlobPath(StorageServiceOperationType operationType, StorageServiceType serviceType, string requestedObjectKey, string expectedContainerName, string expectedBlobName)
+        [TestCase(StorageServiceOperationType.PutBlob, StorageServiceType.Blob, @"/storagesample/sample-container/""0x8D199A96CB71468""/sample-blob.txt", "sample-container", @"""0x8D199A96CB71468""/sample-blob.txt")]
+        [TestCase(StorageServiceOperationType.CopyBlobDestination, StorageServiceType.Blob, @"https://storagesample.blob.core.windows.net/sample-container/sample-blob.txt", "sample-container", "sample-blob.txt")]
+        public void ToBlobPath_IfValidBlobOperationEntry_ReturnsBlobPath(object operationType, object serviceType, string requestedObjectKey, string expectedContainerName, string expectedBlobName)
         {
-            StorageAnalyticsLogEntry entry = CreateEntry("2014-09-08T18:44:18.9681025Z", operationType, serviceType, requestedObjectKey);
+            StorageAnalyticsLogEntry entry = CreateEntry(
+                "2014-09-08T18:44:18.9681025Z",
+                (StorageServiceOperationType) operationType,
+                (StorageServiceType) serviceType, requestedObjectKey);
 
             BlobPath blobPath = entry.ToBlobPath();
 
             Assert.NotNull(blobPath);
-            Assert.Equal(expectedContainerName, blobPath.ContainerName);
-            Assert.Equal(expectedBlobName, blobPath.BlobName);
+            Assert.AreEqual(expectedContainerName, blobPath.ContainerName);
+            Assert.AreEqual(expectedBlobName, blobPath.BlobName);
         }
 
-        [Theory]
-        [InlineData(@"random-string-with-no-slashes")]
-        [InlineData(@"https://random.url.com")]
-        [InlineData(@"/")]
-        [InlineData(@"")]
-        [InlineData(@"\\")]
+        [TestCase(@"random-string-with-no-slashes")]
+        [TestCase(@"https://random.url.com")]
+        [TestCase(@"/")]
+        [TestCase(@"")]
+        [TestCase(@"\\")]
         public void ToBlobPath_IfMalformedObjectKey_ReturnsNull(string requestedObjectKey)
         {
             StorageAnalyticsLogEntry entry = CreateEntry("2014-09-08T18:44:18.9681025Z", StorageServiceOperationType.PutBlob, StorageServiceType.Blob, requestedObjectKey);
@@ -91,9 +92,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Null(blobPath);
         }
 
-        [Theory]
-        [InlineData(@"http://random:aaa/path???qw")]
-        [InlineData(@"\\\")]
+        [TestCase(@"http://random:aaa/path???qw")]
+        [TestCase(@"\\\")]
         public void ToBlobPath_IfMalformedUri_PropogatesUriFormatException(string requestedObjectKey)
         {
             StorageAnalyticsLogEntry entry = CreateEntry("2014-09-08T18:44:18.9681025Z", StorageServiceOperationType.PutBlob, StorageServiceType.Blob, requestedObjectKey);
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Throws<UriFormatException>(() => entry.ToBlobPath());
         }
 
-        [Fact]
+        [Test]
         public void ToBlobPath_IfMalformedBlobPath_ReturnsNull()
         {
             string requestedObjectKey = "/account/malformed-blob-path";

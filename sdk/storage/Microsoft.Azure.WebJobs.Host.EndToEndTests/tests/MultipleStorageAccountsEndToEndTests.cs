@@ -10,17 +10,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
-using Xunit;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class MultipleStorageAccountsEndToEndTests : IClassFixture<MultipleStorageAccountsEndToEndTests.TestFixture>
+    public class MultipleStorageAccountsEndToEndTests
     {
         private const string TestArtifactPrefix = "e2etestmultiaccount";
         private const string Input = TestArtifactPrefix + "-input-%rnd%";
@@ -29,14 +29,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private const string OutputTableName = TestArtifactPrefix + "tableinput%rnd%";
         private const string TestData = "TestData";
         private const string Secondary = "SecondaryStorage";
-        private readonly TestFixture _fixture;
+        private static TestFixture _fixture;
 
-        public MultipleStorageAccountsEndToEndTests(TestFixture fixture)
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
         {
-            _fixture = fixture;
+            _fixture = new TestFixture();
+            await _fixture.InitializeAsync();
         }
 
-        [LiveFact]
+        [OneTimeTearDown]
+        public async Task OneTimeTearDown()
+        {
+            await _fixture.DisposeAsync();
+        }
+
+        [Test]
+        [WebJobsLiveOnly]
         public async Task BlobToBlob_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -54,11 +64,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             });
 
             string data = await resultBlob.DownloadTextAsync();
-            Assert.Equal("blob1", resultBlob.Name);
-            Assert.Equal(TestData, data);
+            Assert.AreEqual("blob1", resultBlob.Name);
+            Assert.AreEqual(TestData, data);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task BlobToBlob_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -76,11 +87,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             });
 
             string data = await resultBlob.DownloadTextAsync();
-            Assert.Equal("blob2", resultBlob.Name);
-            Assert.Equal(TestData, data);
+            Assert.AreEqual("blob2", resultBlob.Name);
+            Assert.AreEqual(TestData, data);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task QueueToQueue_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             QueueMessage resultMessage = null;
@@ -91,12 +103,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 return resultMessage != null;
             });
 
-            Assert.Equal(TestData, resultMessage.MessageText);
+            Assert.AreEqual(TestData, resultMessage.MessageText);
         }
 
-        [LiveTheory]
-        [InlineData("QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver")]
-        [InlineData("QueueToBlob_DifferentAccounts_PrimaryToSecondary_FullSettingName")]
+        [WebJobsLiveOnly]
+        [TestCase("QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver")]
+        [TestCase("QueueToBlob_DifferentAccounts_PrimaryToSecondary_FullSettingName")]
         public async Task QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver_Succeeds(string methodName)
         {
             var method = typeof(MultipleStorageAccountsEndToEndTests).GetMethod(methodName);
@@ -121,10 +133,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     data = reader.ReadToEnd();
                 }
             }
-            Assert.Equal(TestData, data);
+            Assert.AreEqual(TestData, data);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task QueueToQueue_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             QueueMessage resultMessage = null;
@@ -135,10 +148,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 return resultMessage != null;
             });
 
-            Assert.Equal(TestData, resultMessage.MessageText);
+            Assert.AreEqual(TestData, resultMessage.MessageText);
         }
 
-#pragma warning disable xUnit1013 // Public method should be marked as test
         public static void BlobToBlob_DifferentAccounts_PrimaryToSecondary(
             [BlobTrigger(Input + "/{name}")] string input,
             [Blob(Output + "/{name}", Connection = Secondary)] out string output)
@@ -184,8 +196,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             output = input;
         }
 
-#pragma warning restore xUnit1013 // Public method should be marked as test
-
         private class TestNameResolver : RandomNameResolver
         {
             public override string Resolve(string name)
@@ -198,7 +208,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class TestFixture : IAsyncLifetime
+        public class TestFixture
         {
             public async Task InitializeAsync()
             {

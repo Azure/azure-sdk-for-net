@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
-using Xunit;
+using NUnit.Framework;
 
-[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
+[assembly: NonParallelizable]
