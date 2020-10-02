@@ -38,12 +38,18 @@ jobs:
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+          /p:ArtifactsPackagesDir=$(Build.SourcesDirectory)/packages
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
+      - ${{ each artifact in parameters.Artifacts }}:
+        - pwsh: |
+            Copy-Item $(Build.SourcesDirectory)/packages/${{artifact.name}} $(Build.ArtifactStagingDirectory) -Recurse
+            Get-ChildItem $(Build.ArtifactStagingDirectory)
+            Get-ChildItem $(Build.ArtifactStagingDirectory)/${{artifact.name}}
+          displayName: Copying ${{artifact.name}} to artifact staging directory
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
