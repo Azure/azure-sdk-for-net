@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedStatus? Status { get; }
 
         /// <summary>
-        /// Date and time(UTC) when this <see cref="DataFeed"/> was created.
+        /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
         public DateTimeOffset? CreatedTime { get; }
 
