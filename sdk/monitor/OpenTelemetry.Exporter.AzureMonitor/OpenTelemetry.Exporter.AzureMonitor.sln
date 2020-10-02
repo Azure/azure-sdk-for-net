@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp.csproj", "{E00C15D6-96E5-4A3B-8701-AC24292301CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Console.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Console.Tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Console.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
