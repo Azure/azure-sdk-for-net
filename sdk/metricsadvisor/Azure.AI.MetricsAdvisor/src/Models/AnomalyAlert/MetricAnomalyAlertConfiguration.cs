@@ -57,9 +57,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// If defined, this <see cref="MetricAnomalyAlertConfiguration"/> won't trigger alerts by itself. It
         /// will only serve as a filter to its containing <see cref="AnomalyAlertConfiguration"/>, specifying
-        /// which anomalies can get an alert triggered. If <c>true</c>, anomalies need to satisfy the conditions
-        /// set by this filter to be able to trigger an alert. If <c>false</c>, anomalies must not satisfy those
-        /// conditions instead.
+        /// which anomalies can trigger an alert. If <c>true</c>, anomalies need to satisfy the conditions
+        /// set by this filter to trigger an alert. If <c>false</c>, anomalies must not satisfy those
+        /// conditions.
         /// </summary>
         [CodeGenMember("NegationOperation")]
         public bool? UseDetectionResultToFilterAnomalies { get; set; }
