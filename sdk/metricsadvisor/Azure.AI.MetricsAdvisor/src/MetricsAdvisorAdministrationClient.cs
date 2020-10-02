@@ -295,6 +295,70 @@ namespace Azure.AI.MetricsAdvisor.Administration
         ///
         /// </summary>
         /// <param name="dataFeedId"></param>
+        /// <param name="dataFeed"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+            }
+
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dataFeedId"></param>
+        /// <param name="dataFeed"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+            }
+
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dataFeedId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Response{DataFeed}"/>.</returns>
         public virtual async Task<Response> DeleteDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
@@ -406,7 +470,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
 
                 return await _serviceRestClient.ResetDataFeedIngestionStatusAsync(dataFeedGuid, options, cancellationToken).ConfigureAwait(false);
             }
@@ -434,7 +498,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                var options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime));
 
                 return _serviceRestClient.ResetDataFeedIngestionStatus(dataFeedGuid, options, cancellationToken);
             }
@@ -979,6 +1043,64 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 hook.Id = ClientCommon.GetHookId(response.Headers.Location);
 
                 return Response.FromValue(hook, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual async Task<Response> UpdateHookAsync(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(hook, nameof(hook));
+
+            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+            if (hook is EmailHook emailHook)
+            {
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+            scope.Start();
+
+            try
+            {
+                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
+
+                return await _serviceRestClient.UpdateHookAsync(hookGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(hook, nameof(hook));
+
+            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+
+            if (hook is EmailHook emailHook)
+            {
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
+            scope.Start();
+
+            try
+            {
+                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
+
+                return _serviceRestClient.UpdateHook(hookGuid, patch, cancellationToken);
             }
             catch (Exception e)
             {
