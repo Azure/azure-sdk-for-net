@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public MetricAnomalyAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
 
         /// <summary>
-        /// A description about the <see cref="AnomalyAlertConfiguration"/>.
+        /// A description of the <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
     }
