@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public bool? UseDetectionResultToFilterAnomalies { get; set; }
 
         /// <summary>
-        /// Sets extra conditions that a data point must satisfy to be able to trigger alerts.
+        /// Sets extra conditions that a data point must satisfy to trigger alerts.
         /// </summary>
         public MetricAnomalyAlertConditions AlertConditions { get; set; }
 
