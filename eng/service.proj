@@ -30,6 +30,12 @@
   </Target>
 
   <Target Name="GenerateCode">
+    <!-- This will print which wildcard matched with a specific project -->
+    <Message Text="*** TestProjects  $(TestProjects)" Importance="high"/>
+    <Message Text="*** SamplesProjects  $(SamplesProjects)" Importance="high"/>
+    <Message Text="*** SampleApplications  $(SampleApplications)" Importance="high"/>
+    <Message Text="*** SrcProjects  $(SrcProjects)" Importance="high"/>
+
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
              BuildInParallel="$(BuildInParallel)"
