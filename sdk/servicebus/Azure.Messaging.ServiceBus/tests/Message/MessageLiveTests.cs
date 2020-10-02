@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Messaging.ServiceBus.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -112,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.To = "to";
                 await sender.SendMessageAsync(msg);
 
-                var receiver = await client.CreateSessionReceiverAsync(
+                var receiver = await client.AcceptNextSessionAsync(
                     scope.QueueName,
                     new ServiceBusSessionReceiverOptions
                     {
@@ -121,6 +122,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var received = await receiver.ReceiveMessageAsync();
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
+
+                // verify that all system set properties have been cleared out
+                Assert.IsNull(toSend.AmqpMessage.Header.DeliveryCount);
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
@@ -140,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual(received.SessionId, sentMessage.SessionId);
                     Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
                     Assert.AreEqual(received.To, sentMessage.To);
-                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.ViaPartitionKey);
+                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.TransactionPartitionKey);
                 }
             }
         }

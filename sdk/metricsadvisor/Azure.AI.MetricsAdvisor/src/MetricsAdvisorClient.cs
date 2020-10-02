@@ -349,19 +349,19 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options.SkipCount;
+            int? top = options.TopCount;
 
             async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -378,7 +378,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<EnrichmentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -403,19 +403,19 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options.SkipCount;
+            int? top = options.TopCount;
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -432,7 +432,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<EnrichmentStatus> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatusesAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -453,20 +453,23 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         ///
         /// </summary>
+        /// <param name="metricId"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksAsync(GetMetricFeedbackOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksAsync(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(options.MetricId)
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {
-                DimensionFilter = options.DimensionFilter,
-                EndTime = options.EndTime,
-                FeedbackType = options.FeedbackType,
-                StartTime = options.StartTime,
-                TimeMode = options.TimeMode
+                DimensionFilter = options?.DimensionFilter,
+                EndTime = options?.EndTime,
+                FeedbackType = options?.FeedbackType,
+                StartTime = options?.StartTime,
+                TimeMode = options?.TimeMode
             };
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
@@ -511,20 +514,23 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         ///
         /// </summary>
+        /// <param name="metricId"></param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<MetricFeedback> GetMetricFeedbacks(GetMetricFeedbackOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricFeedback> GetMetricFeedbacks(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(options.MetricId)
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {
-                DimensionFilter = options.DimensionFilter,
-                EndTime = options.EndTime,
-                FeedbackType = options.FeedbackType,
-                StartTime = options.StartTime,
-                TimeMode = options.TimeMode
+                DimensionFilter = options?.DimensionFilter,
+                EndTime = options?.EndTime,
+                FeedbackType = options?.FeedbackType,
+                StartTime = options?.StartTime,
+                TimeMode = options?.TimeMode
             };
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
@@ -583,7 +589,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
 
-                feedback.FeedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
+                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
                 return Response.FromValue(feedback, response.GetRawResponse());
             }
@@ -611,7 +617,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
 
-                feedback.FeedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
+                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
                 return Response.FromValue(feedback, response.GetRawResponse());
             }
@@ -632,14 +638,14 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
 
-            Guid feedbackIdGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+            Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
             scope.Start();
 
             try
             {
-                return await _serviceRestClient.GetMetricFeedbackAsync(feedbackIdGuid, cancellationToken).ConfigureAwait(false);
+                return await _serviceRestClient.GetMetricFeedbackAsync(feedbackGuid, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -658,14 +664,14 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
 
-            Guid feedbackIdGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+            Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
             scope.Start();
 
             try
             {
-                return _serviceRestClient.GetMetricFeedback(feedbackIdGuid, cancellationToken);
+                return _serviceRestClient.GetMetricFeedback(feedbackGuid, cancellationToken);
             }
             catch (Exception e)
             {

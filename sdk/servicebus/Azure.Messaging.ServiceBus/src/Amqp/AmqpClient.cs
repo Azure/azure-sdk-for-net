@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceEndpoint,
                 credential,
                 options.TransportType,
-                options.Proxy);
+                options.WebProxy);
 
         }
 
