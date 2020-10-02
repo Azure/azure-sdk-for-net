@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "4bc5b81f-480c-adcf-44c7-426ff7f9f7d9",
         "x-ms-date": "Fri, 03 Apr 2020 00:11:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "4bc5b81f-480c-adcf-44c7-426ff7f9f7d9",
         "x-ms-request-id": "4d516f79-201e-0097-5b4c-091bad000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "97c8ea9c-f91f-f749-77b4-e27c19b8b458",
         "x-ms-date": "Fri, 03 Apr 2020 00:11:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -59,7 +59,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "97c8ea9c-f91f-f749-77b4-e27c19b8b458",
         "x-ms-request-id": "4d517120-201e-0097-5c4c-091bad000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanragrscanary.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-container-1f2b0920-d198-cf05-0a9e-cbe84fe44455\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 00:11:36 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D763933FF2BB\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-64409c18-915d-6a6f-0255-e8f5ffe6a376\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 00:00:29 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D762057D4CC5\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-container-93fd8620-cc18-8531-6158-1670ab368a56\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 00:01:55 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D76238E00517\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -76,7 +76,7 @@
         "x-ms-client-request-id": "0dd203ab-5f31-eeba-6087-d4b9e10eaa28",
         "x-ms-date": "Fri, 03 Apr 2020 00:11:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -89,7 +89,7 @@
         ],
         "x-ms-client-request-id": "0dd203ab-5f31-eeba-6087-d4b9e10eaa28",
         "x-ms-request-id": "4d51712f-201e-0097-6a4c-091bad000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

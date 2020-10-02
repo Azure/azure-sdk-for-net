@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "590a1325-285b-e29a-16ec-a4488596979f",
         "x-ms-date": "Fri, 03 Apr 2020 00:10:36 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -29,7 +29,7 @@
         "x-ms-is-hns-enabled": "false",
         "x-ms-request-id": "51f53efb-b01e-004e-4b4c-096328000000",
         "x-ms-sku-name": "Standard_GRS",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

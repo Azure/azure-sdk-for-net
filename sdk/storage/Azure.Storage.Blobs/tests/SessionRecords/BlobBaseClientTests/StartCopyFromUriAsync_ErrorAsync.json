@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "92193743-b964-e58a-d41b-a182313f2314",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "92193743-b964-e58a-d41b-a182313f2314",
         "x-ms-request-id": "6f104c7a-301e-0040-2e48-094a98000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-copy-source": "https://seanmcccanary.blob.core.windows.net/test-container-a02fab16-99c6-cc9a-b66a-f00bb1af2cf3/test-blob-7703def0-6322-50ed-3ba2-5a0bb99113af",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "13e4f208-a977-567f-4eef-0dc79e1e2b4d",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "6f104c7f-301e-0040-3148-094a98000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "32c6812e-4809-ed8f-4bc3-8d1448e7412c",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "32c6812e-4809-ed8f-4bc3-8d1448e7412c",
         "x-ms-request-id": "6f104c88-301e-0040-3948-094a98000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

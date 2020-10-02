@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "5fa294f2-d9be-6d26-785a-97a2d2de4138",
         "x-ms-date": "Thu, 02 Apr 2020 23:43:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "5fa294f2-d9be-6d26-785a-97a2d2de4138",
         "x-ms-request-id": "c8e3efaf-201e-003e-7148-09dadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "87dea6d4-a2f7-c058-5d81-9beaa25b7961",
         "x-ms-date": "Thu, 02 Apr 2020 23:43:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "KgBvL5jEumY\u002BRS/TPWkhK75d8he8e0Jl8SJ47Ts5uAsAb3fSbhKf9q0TonBdz0J9r3IuWHpCa6\u002B\u002BCT52TM0rBI0j0s7yT7ysvftqqdnRCCHf\u002Bj7IC1\u002BRvgPIFGTTKarg553iOf10i2C2gZt\u002B18LV7AEcllGOY/kukhPKKTpX2ZNQisE8784ka27eEonEEuZA8ydit5NZUYOjs6bpqWIlXqgHLk0Amf0z\u002BCrisFFwaoAsiTYS9SEA9zg9mDsoOsEMubTgvOSZP1kqL79odqEyM0klvSAsEmiGBzYUwgHBCr1o1vecj66ck0nc58Vil4GXC2XxAn2h4KZLWbSthH1YaSQBAJ\u002BqlaObiSrWTyqjJHC0fbeczwhAx/ZQUTX57g7MhH6gYJfh7XXBVnlSy5B7pzVE\u002BAfFvJkcwTipWURuoZobCcusA8PZ0o9C2nmP7fxl1akAtfUHB8jkg59eOJQxU7XeN8HFzqRxaiV3g\u002BEgjdM8Q4OabeukFAIDx38kepr7EYfEsLY6oAYFjkrQkITmxPbLIfUQluXJOiO\u002BwgckTfCLe3FZXN0dAaJ9ld6h1IR\u002BHAOJWFil63qi\u002BnWSfN7/4EFaRBQSjWcYriBSkwAGJ2afQKUDm/SX5pD2tmFnioXEfbWdRo9va46bcKk4Ulh5nNMP8zs4\u002B0RMw16EG9YGsSSajRVLaOHWL9QXaCpLXpM3fBqOV5ZJjIFwUIMx61C4lL\u002BFncRCLjPxOcRnIZMZAWTKTJ67d1mNUQGU2xhdpUSEX9NrxsDO9U7nnB7S4WruVk8fZp6x/Bxl90zCrlMalJN/48K/rTuj\u002B1ZQ1Ns6u2\u002BXpYTJPj6l0mK2Bs90C0f7zAeLUv6oLqgUe2pIYSdBKjvdKwjOUVZV2hBfCKdsL\u002B8PVAfTr2lw7nfbtcLTXXE7dduTluA/LXqxNXfuSSYBp0x7OA0fbnvSbD2R8pyTgn2fJJPM2JgPzyeNIXrxgqVR2g12WCRjGwdgwSqjrjrdHbP6TiSSNc\u002Bza2nlkkwB4OqXQBePHSlZOwmMaxdubCHsrwTG9zOAvqU\u002Bwuy6fYi6X\u002BBAC24iTgCJoRMbBcm3Rf5I\u002BeNIOum2F4FyUVo9nr2A0Qw2LWGyyWEEPVUgZLjchn3tcoSlciT3ivPssPylTANVmzO8gBedlS\u002BCQ/2TlbPIlsrdTys521/nP6NtxhhkXvBSysmFHwVlUN1UIi4nY/RAJBoyx/3XHL/U1UFzL88WHuUMQMrqQ3bFd/5N5Lgwv9uvLaH\u002BMpbze64JsErE8SAOPQRJGyIpVuGjbVD\u002BijgGpBVlxAItGOxOGcUc4JMsAIXePqa05qS4hdbAWsRG9PB2Ags1Xi0d4SQY\u002BwFdDHVNdw==",
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-content-crc64": "OvlgE/vEiCM=",
         "x-ms-request-id": "c8e3efb4-201e-003e-7448-09dadf000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -85,7 +85,7 @@
         "x-ms-copy-source": "https://seanmcccanary.blob.core.windows.net/test-container-a7c4f354-4bee-d81a-5d86-f861c43a2379/test-blob-e07968ba-8db6-7fa2-e7d0-9eedb56d5927",
         "x-ms-date": "Thu, 02 Apr 2020 23:43:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -100,7 +100,7 @@
         "x-ms-client-request-id": "dbf9cac5-8bce-2f50-c12f-3a32f069cee8",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "c8e3efbd-201e-003e-7b48-09dadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
@@ -121,7 +121,7 @@
         "x-ms-client-request-id": "27295ff7-8b7a-6822-8d59-a5678b4dd809",
         "x-ms-date": "Thu, 02 Apr 2020 23:43:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -134,7 +134,7 @@
         ],
         "x-ms-client-request-id": "27295ff7-8b7a-6822-8d59-a5678b4dd809",
         "x-ms-request-id": "c8e3efca-201e-003e-0648-09dadf000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

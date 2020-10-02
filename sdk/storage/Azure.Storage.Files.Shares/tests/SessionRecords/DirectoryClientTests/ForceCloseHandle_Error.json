@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1e66dccf-bc7b-aa27-ba66-a5d324b3868b",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "1e66dccf-bc7b-aa27-ba66-a5d324b3868b",
         "x-ms-request-id": "c9ef5fed-f01a-0012-4336-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:42:37 GMT",
         "x-ms-handle-id": "nonExistantHandleId",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "51e512dc-0a7f-84ce-9266-d099d0ccb56c",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "c9ef5fef-f01a-0012-4436-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
@@ -83,7 +83,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:42:37 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "e27e5a5b-b368-5139-8c5f-2affb72dadcb",
         "x-ms-request-id": "c9ef5ff0-f01a-0012-4536-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

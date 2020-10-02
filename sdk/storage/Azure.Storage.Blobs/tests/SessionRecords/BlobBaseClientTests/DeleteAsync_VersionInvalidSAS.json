@@ -13,7 +13,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "3b7c9d73-efe7-ebdf-8281-db0692420abe",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "3b7c9d73-efe7-ebdf-8281-db0692420abe",
         "x-ms-request-id": "8069e3aa-601e-0008-3aad-553fa6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-blob-type": "AppendBlob",
         "x-ms-client-request-id": "189b0c18-63cc-63f4-44d8-8e3142950dfd",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "189b0c18-63cc-63f4-44d8-8e3142950dfd",
         "x-ms-request-id": "8069e3b0-601e-0008-3dad-553fa6000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-07-09T05:00:10.2369405Z"
       },
       "ResponseBody": []
@@ -83,7 +83,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -99,7 +99,7 @@
         "x-ms-client-request-id": "d13131b6-71e9-babc-a845-dadc06f85072",
         "x-ms-request-id": "8069e3b6-601e-0008-41ad-553fa6000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-07-09T05:00:10.3408844Z"
       },
       "ResponseBody": []
@@ -118,7 +118,7 @@
         ],
         "x-ms-client-request-id": "117a0411-3c63-8514-962d-4d52102bcd7d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CKeyInfo\u003E\u003CExpiry\u003E2020-07-09T06:00:10Z\u003C/Expiry\u003E\u003C/KeyInfo\u003E",
       "StatusCode": 200,
@@ -132,12 +132,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "117a0411-3c63-8514-962d-4d52102bcd7d",
         "x-ms-request-id": "8069e3ba-601e-0008-45ad-553fa6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2020-07-09T05:00:10Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2020-07-09T06:00:10Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2019-12-12\u003C/SignedVersion\u003E\u003CValue\u003EJ8CM4jH2qrM7NgC\u002Bm1ncj1c8h9GIsc/lzo6VsZCJLp8=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6949d85b-a76d-4288-1c24-d21cbd32d011/test-blob-a2c69f68-0f41-a359-adb6-ac4add848a88?versionid=2020-07-09T05%3A00%3A10.2369405Z\u0026skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2020-07-09T05%3A00%3A10Z\u0026ske=2020-07-09T06%3A00%3A10Z\u0026sks=b\u0026skv=2019-12-12\u0026sv=2020-02-10\u0026st=2020-07-09T04%3A00%3A10Z\u0026se=2020-07-09T06%3A00%3A10Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6949d85b-a76d-4288-1c24-d21cbd32d011/test-blob-a2c69f68-0f41-a359-adb6-ac4add848a88?versionid=2020-07-09T05%3A00%3A10.2369405Z\u0026skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2020-07-09T05%3A00%3A10Z\u0026ske=2020-07-09T06%3A00%3A10Z\u0026sks=b\u0026skv=2019-12-12\u0026sv=2020-04-08\u0026st=2020-07-09T04%3A00%3A10Z\u0026se=2020-07-09T06%3A00%3A10Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "User-Agent": [
@@ -146,7 +146,7 @@
         ],
         "x-ms-client-request-id": "01cb859a-3f7d-3b0e-44ec-f30dbc8f1cd7",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -161,7 +161,7 @@
         "x-ms-client-request-id": "01cb859a-3f7d-3b0e-44ec-f30dbc8f1cd7",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
         "x-ms-request-id": "ab0f7a59-301e-0058-80ad-55fdf6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationPermissionMismatch\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation using this permission.\n",
@@ -181,7 +181,7 @@
         ],
         "x-ms-client-request-id": "8bb8dd3b-cc60-a2ff-1a08-1a904a40efbf",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -194,7 +194,7 @@
         ],
         "x-ms-client-request-id": "8bb8dd3b-cc60-a2ff-1a08-1a904a40efbf",
         "x-ms-request-id": "8069e485-601e-0008-55ad-553fa6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

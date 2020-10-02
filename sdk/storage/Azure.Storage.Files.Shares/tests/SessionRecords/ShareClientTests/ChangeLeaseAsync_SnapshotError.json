@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "0fb4ae61-8237-aa57-81d2-bba0de3c4d4d",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "0fb4ae61-8237-aa57-81d2-bba0de3c4d4d",
         "x-ms-request-id": "4e7a30ac-901a-008f-2777-6b53a8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-lease-id": "d6139f49-b91b-e207-5cea-d2ce34749762",
         "x-ms-proposed-lease-id": "d6139f49-b91b-e207-5cea-d2ce34749762",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "3586ddda-c36c-a8fa-a7d1-b34daf88750d",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "4e7a30af-901a-008f-2877-6b53a8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
@@ -85,7 +85,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:23 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "56f4820a-61ed-bef5-e8bd-0968c7c5852a",
         "x-ms-request-id": "4e7a30b0-901a-008f-2977-6b53a8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

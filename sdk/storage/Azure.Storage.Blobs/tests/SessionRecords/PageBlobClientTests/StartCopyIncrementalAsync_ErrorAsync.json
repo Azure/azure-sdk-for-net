@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "2ae9531e-700b-831e-3d3d-d5ed54058896",
         "x-ms-date": "Thu, 01 Oct 2020 23:02:09 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "2ae9531e-700b-831e-3d3d-d5ed54058896",
         "x-ms-request-id": "87d59476-701e-0038-3e46-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "62ab9ec3-2908-74c1-cc78-4406428f1c13",
         "x-ms-date": "Thu, 01 Oct 2020 23:02:09 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "62ab9ec3-2908-74c1-cc78-4406428f1c13",
         "x-ms-request-id": "87d59490-701e-0038-5346-980316000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -85,7 +85,7 @@
         "x-ms-copy-source": "https://storagedotnettesting.blob.core.windows.net/test-container-4387d0f9-9cda-a6cf-274f-6b21743650d1/test-blob-61fff116-6603-d34a-56ff-380ea486bce8?snapshot=2019-03-29T18:12:15.6608647Z",
         "x-ms-date": "Thu, 01 Oct 2020 23:02:09 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -100,7 +100,7 @@
         "x-ms-client-request-id": "c2eaf28c-ccfe-5c0d-54d7-0b08f1b2cf46",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "87d594a8-701e-0038-6746-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -121,7 +121,7 @@
         "x-ms-client-request-id": "b281c807-fa9b-09ea-106f-74a8b9d2d27e",
         "x-ms-date": "Thu, 01 Oct 2020 23:02:09 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -134,7 +134,7 @@
         ],
         "x-ms-client-request-id": "b281c807-fa9b-09ea-106f-74a8b9d2d27e",
         "x-ms-request-id": "87d594c7-701e-0038-0546-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

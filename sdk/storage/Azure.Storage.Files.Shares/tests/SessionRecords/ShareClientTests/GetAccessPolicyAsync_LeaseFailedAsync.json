@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "404a4a36-c460-60bc-abde-2bf6f137fe72",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "404a4a36-c460-60bc-abde-2bf6f137fe72",
         "x-ms-request-id": "9ae5a10d-001a-009d-4e77-6b2878000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:55 GMT",
         "x-ms-lease-id": "94ed9f26-a120-8fb6-e42f-4b28ee9bca82",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "ac71b32f-ae82-957f-94ba-5c317994720f",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "9ae5a111-001a-009d-4f77-6b2878000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the file share.\n",
@@ -83,7 +83,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:55 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "3bf88344-1d2a-18ff-2b02-81667bce3083",
         "x-ms-request-id": "9ae5a113-001a-009d-5177-6b2878000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

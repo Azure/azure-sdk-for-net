@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "bb454327-a333-0884-0134-e4e9dd5f9f0b",
         "x-ms-date": "Thu, 01 Oct 2020 22:57:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "bb454327-a333-0884-0134-e4e9dd5f9f0b",
         "x-ms-request-id": "e943f1af-a01e-0076-5746-982d9e000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "aabc50b4-336b-52aa-1526-0d100493ea3d",
         "x-ms-date": "Thu, 01 Oct 2020 22:57:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "aabc50b4-336b-52aa-1526-0d100493ea3d",
         "x-ms-request-id": "e943f1c8-a01e-0076-6c46-982d9e000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -85,7 +85,7 @@
         "x-ms-date": "Thu, 01 Oct 2020 22:57:41 GMT",
         "x-ms-range": "bytes=5120-9215",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -101,7 +101,7 @@
         "x-ms-client-request-id": "ce3c8336-a807-0c01-47a3-d8b2646edd51",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "e943f1d9-a01e-0076-7b46-982d9e000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidRange\u003C/Code\u003E\u003CMessage\u003EThe range specified is invalid for the current size of the resource.\n",
@@ -122,7 +122,7 @@
         "x-ms-client-request-id": "81d985c4-1b57-3a36-769d-a3c6da7fd840",
         "x-ms-date": "Thu, 01 Oct 2020 22:57:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -135,7 +135,7 @@
         ],
         "x-ms-client-request-id": "81d985c4-1b57-3a36-769d-a3c6da7fd840",
         "x-ms-request-id": "e943f1de-a01e-0076-8046-982d9e000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

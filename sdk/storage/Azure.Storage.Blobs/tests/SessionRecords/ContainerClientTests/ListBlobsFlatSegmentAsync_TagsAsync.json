@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "8ccbc824-e1ed-dcbc-a5a2-6d510940424c",
         "x-ms-date": "Mon, 06 Apr 2020 00:11:04 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "8ccbc824-e1ed-dcbc-a5a2-6d510940424c",
         "x-ms-request-id": "f653ed4e-801e-008e-0ea7-0b9b16000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-date": "Mon, 06 Apr 2020 00:11:04 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-tags": "tagKey0=tagValue0\u0026tagKey1=tagValue1",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "a7815f08-d7d9-bc28-8cd1-ed4bd89f7e41",
         "x-ms-request-id": "f653ed5c-801e-008e-1aa7-0b9b16000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-04-06T00:11:03.7691432Z"
       },
       "ResponseBody": []
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "ff15e25b-74e2-3af4-e791-6e826510a68e",
         "x-ms-date": "Mon, 06 Apr 2020 00:11:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -96,7 +96,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "ff15e25b-74e2-3af4-e791-6e826510a68e",
         "x-ms-request-id": "f653ed6e-801e-008e-2aa7-0b9b16000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://blobindex1.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-70f1dd91-0a68-e441-419e-c671c41fdf49\u0022\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b59a225a-688e-f93b-9ea1-091d5e641bcd\u003C/Name\u003E\u003CVersionId\u003E2020-04-06T00:11:03.7691432Z\u003C/VersionId\u003E\u003CIsCurrentVersion\u003Etrue\u003C/IsCurrentVersion\u003E\u003CProperties\u003E\u003CCreation-Time\u003EMon, 06 Apr 2020 00:11:03 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EMon, 06 Apr 2020 00:11:03 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D7D9BEFEC6FB11\u003C/Etag\u003E\u003CContent-Length\u003E0\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EAppendBlob\u003C/BlobType\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003CTagCount\u003E2\u003C/TagCount\u003E\u003C/Properties\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EtagKey0\u003C/Key\u003E\u003CValue\u003EtagValue0\u003C/Value\u003E\u003C/Tag\u003E\u003CTag\u003E\u003CKey\u003EtagKey1\u003C/Key\u003E\u003CValue\u003EtagValue1\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -113,7 +113,7 @@
         "x-ms-client-request-id": "f5f03c02-7e89-135e-ac05-1362d876a2b5",
         "x-ms-date": "Mon, 06 Apr 2020 00:11:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -126,7 +126,7 @@
         ],
         "x-ms-client-request-id": "f5f03c02-7e89-135e-ac05-1362d876a2b5",
         "x-ms-request-id": "f653ed78-801e-008e-32a7-0b9b16000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

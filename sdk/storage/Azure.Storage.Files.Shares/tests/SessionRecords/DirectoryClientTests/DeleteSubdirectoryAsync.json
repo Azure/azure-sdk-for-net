@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "9865645d-c0f1-f270-2067-71c6cf565cee",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:36 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "9865645d-c0f1-f270-2067-71c6cf565cee",
         "x-ms-request-id": "c9ef5fd9-f01a-0012-3536-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -72,7 +72,7 @@
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "c9ef5fdb-f01a-0012-3636-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -93,7 +93,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -116,7 +116,7 @@
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "c9ef5fdc-f01a-0012-3736-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -133,7 +133,7 @@
         "x-ms-client-request-id": "3f7049b4-ada0-c1fa-5ba0-44d41ddde6cf",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:36 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -146,7 +146,7 @@
         ],
         "x-ms-client-request-id": "3f7049b4-ada0-c1fa-5ba0-44d41ddde6cf",
         "x-ms-request-id": "c9ef5fdd-f01a-0012-3836-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -162,7 +162,7 @@
         "x-ms-client-request-id": "39a4c115-ee7f-4c40-62a5-bc93424bbba1",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:36 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -178,7 +178,7 @@
         "x-ms-client-request-id": "39a4c115-ee7f-4c40-62a5-bc93424bbba1",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "c9ef5fde-f01a-0012-3936-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
@@ -200,7 +200,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:42:36 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -213,7 +213,7 @@
         ],
         "x-ms-client-request-id": "5bbf463d-ac38-c050-7ca4-cdbda6773efe",
         "x-ms-request-id": "c9ef5fe0-f01a-0012-3a36-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

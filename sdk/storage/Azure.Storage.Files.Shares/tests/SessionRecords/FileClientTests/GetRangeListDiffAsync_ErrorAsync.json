@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "04883410-4030-ce29-c211-279c097edab2",
         "x-ms-date": "Fri, 04 Sep 2020 17:47:04 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "04883410-4030-ce29-c211-279c097edab2",
         "x-ms-request-id": "4cc7aafc-801a-0016-2de3-8220d7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -72,7 +72,7 @@
         "x-ms-file-permission-key": "14827816195503570342*11897905858180131375",
         "x-ms-request-id": "4cc7ab00-801a-0016-2fe3-8220d7000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -118,7 +118,7 @@
         "x-ms-file-permission-key": "990002565778260641*11897905858180131375",
         "x-ms-request-id": "4cc7ab01-801a-0016-30e3-8220d7000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "b82c3d1b-d293-4d75-714d-651c9404fa89",
         "x-ms-date": "Fri, 04 Sep 2020 17:47:04 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -150,7 +150,7 @@
         "x-ms-client-request-id": "b82c3d1b-d293-4d75-714d-651c9404fa89",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "4cc7ab02-801a-0016-31e3-8220d7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
@@ -172,7 +172,7 @@
         "x-ms-date": "Fri, 04 Sep 2020 17:47:04 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -185,7 +185,7 @@
         ],
         "x-ms-client-request-id": "f0729321-cd45-042b-ae5f-3c63dc0cca9f",
         "x-ms-request-id": "4cc7ab04-801a-0016-32e3-8220d7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

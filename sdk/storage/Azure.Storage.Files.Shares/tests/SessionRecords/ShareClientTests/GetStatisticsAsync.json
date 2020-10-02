@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1549c411-5a14-e813-fb95-afe5a7a20bec",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "1549c411-5a14-e813-fb95-afe5a7a20bec",
         "x-ms-request-id": "c9ef6e07-f01a-0012-5637-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "168947e6-f92c-8c97-e000-c2ace5c00326",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -60,7 +60,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "168947e6-f92c-8c97-e000-c2ace5c00326",
         "x-ms-request-id": "c9ef6e09-f01a-0012-5737-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CShareStats\u003E\u003CShareUsageBytes\u003E0\u003C/ShareUsageBytes\u003E\u003C/ShareStats\u003E"
     },
@@ -78,7 +78,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:42 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -91,7 +91,7 @@
         ],
         "x-ms-client-request-id": "5ffe939f-f419-dfc0-1c1e-6ac04066fe54",
         "x-ms-request-id": "c9ef6e0a-f01a-0012-5837-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

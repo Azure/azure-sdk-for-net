@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ef25a877-5e69-4190-9325-1085ea474d75",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ef25a877-5e69-4190-9325-1085ea474d75",
         "x-ms-request-id": "9622cb63-f01e-0012-7afb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -65,7 +65,7 @@
         ],
         "x-ms-client-request-id": "e421de44-2eee-1b76-7578-65970cf9370c",
         "x-ms-request-id": "9622cb7a-f01e-0012-0ffb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "0c406794-6825-3686-6561-9729a279c6d5",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -95,7 +95,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "0c406794-6825-3686-6561-9729a279c6d5",
         "x-ms-request-id": "9622cb8c-f01e-0012-20fb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seannsecanary.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-061d29b7-55d3-37a6-5b67-625870cd1ddf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:04:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812A1D27A61\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-07b06b48-33b1-dcea-1e39-6abb01b77467\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:04:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812A1B1A5F4\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-13d64b59-322f-ff1c-1561-9e43e3bf66b5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:04:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812A193DF63\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-33df4610-7629-de7b-e336-5c3ea35dc761\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 20:52:04 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D810DD5409A3\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-3e7c4def-90dc-7c37-936d-82988c131edf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:06:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812D72400A3\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Cfoo\u003Ebar\u003C/foo\u003E\u003Cmeta\u003Edata\u003C/meta\u003E\u003CCapital\u003Eletter\u003C/Capital\u003E\u003CUPPER\u003Ecase\u003C/UPPER\u003E\u003C/Metadata\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-495ee9f6-6d21-525d-fda7-333f44985f97\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:05:20 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812B7E0E1EE\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-5d81a6e3-b46b-91ed-96b3-8701b4423809\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:05:20 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812B7C6C57F\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-af77300e-88f9-b482-8b00-27ae308e9c0d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:06:07 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812D433BE22\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-bac4bba7-27a3-0541-672e-aa56c9232e1a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:06:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812D6D9DEF2\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-c786a51d-a0e1-8978-b3a0-35955052cdc1\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:06:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812D670A99A\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-ce57f5fe-50b7-b421-19ba-8706839abbad\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:05:20 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812B7FAD746\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -112,7 +112,7 @@
         "x-ms-client-request-id": "a403b86e-2ab8-67e6-5db5-a80b84d8cd1d",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -125,7 +125,7 @@
         ],
         "x-ms-client-request-id": "a403b86e-2ab8-67e6-5db5-a80b84d8cd1d",
         "x-ms-request-id": "9622cba7-f01e-0012-3afb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

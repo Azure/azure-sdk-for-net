@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-e84aa669-0eaa-b042-c022-bc3a4ab1377a?sv=2020-02-10\u0026st=2020-06-01T19%3A21%3A33Z\u0026se=2020-06-01T21%3A21%3A33Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-e84aa669-0eaa-b042-c022-bc3a4ab1377a?sv=2020-04-08\u0026st=2020-06-01T19%3A21%3A33Z\u0026se=2020-06-01T21%3A21%3A33Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-c2a43b02441fc94ca089f6b92b7f5aa9-318cd2ce6444d144-00",
@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "9f19c243-b033-8df3-56fd-5c15360807ae",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "9f19c243-b033-8df3-56fd-5c15360807ae",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "40853caa-601a-0010-7252-3888c8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",

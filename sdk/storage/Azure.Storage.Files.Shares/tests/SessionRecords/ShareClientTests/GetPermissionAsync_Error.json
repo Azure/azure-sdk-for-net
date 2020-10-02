@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "9504e189-f485-5190-87f1-04da4a262aa1",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "9504e189-f485-5190-87f1-04da4a262aa1",
         "x-ms-request-id": "c9ef6dfb-f01a-0012-4d37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:41 GMT",
         "x-ms-file-permission-key": "invalidPermission",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "9c8b7c2e-9070-51b4-4d9a-c3c011f47764",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "c9ef6dfd-f01a-0012-4e37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
@@ -84,7 +84,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:41 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "cdac4104-8e9b-c731-ac32-cb5f3714c9e4",
         "x-ms-request-id": "c9ef6dfe-f01a-0012-4f37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

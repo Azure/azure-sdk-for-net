@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "d6466281-263e-8133-6905-d414c6d39cb4",
         "x-ms-date": "Thu, 01 Oct 2020 23:01:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "d6466281-263e-8133-6905-d414c6d39cb4",
         "x-ms-request-id": "87d51e1b-701e-0038-5d46-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "1ae7f168-96a8-c7ce-aba8-5b9c172f8179",
         "x-ms-date": "Thu, 01 Oct 2020 23:01:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "1ae7f168-96a8-c7ce-aba8-5b9c172f8179",
         "x-ms-request-id": "87d51e2b-701e-0038-6946-980316000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -88,7 +88,7 @@
         "x-ms-page-write": "clear",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "0e9a2151-9008-494a-ac60-7024e860278c",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "87d51e3f-701e-0038-7c46-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
@@ -124,7 +124,7 @@
         "x-ms-client-request-id": "f64bbf5a-7295-c971-97ea-a04b10c3a30f",
         "x-ms-date": "Thu, 01 Oct 2020 23:01:07 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -137,7 +137,7 @@
         ],
         "x-ms-client-request-id": "f64bbf5a-7295-c971-97ea-a04b10c3a30f",
         "x-ms-request-id": "87d51e51-701e-0038-0c46-980316000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

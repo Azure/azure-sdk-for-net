@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "03b2a871-750a-58de-1547-e9c593631b89",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "03b2a871-750a-58de-1547-e9c593631b89",
         "x-ms-request-id": "9622cb24-f01e-0012-41fb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "0b723233-c56e-d3f7-dd02-5899b189ee94",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -62,7 +62,7 @@
         ],
         "x-ms-client-request-id": "0b723233-c56e-d3f7-dd02-5899b189ee94",
         "x-ms-request-id": "9622cb30-f01e-0012-4cfb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "372131b0-420e-c6d8-e611-436ed276c3e2",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -92,7 +92,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "372131b0-420e-c6d8-e611-436ed276c3e2",
         "x-ms-request-id": "9622cb3e-f01e-0012-59fb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seannsecanary.blob.core.windows.net/\u0022\u003E\u003CMaxResults\u003E1\u003C/MaxResults\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-061d29b7-55d3-37a6-5b67-625870cd1ddf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 03 Apr 2020 21:04:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7D812A1D27A61\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker\u003E/seannsecanary/test-filesystem-07b06b48-33b1-dcea-1e39-6abb01b77467\u003C/NextMarker\u003E\u003C/EnumerationResults\u003E"
     },
@@ -109,7 +109,7 @@
         "x-ms-client-request-id": "80e9f760-b667-b685-ca73-cf6cb6aa5124",
         "x-ms-date": "Fri, 03 Apr 2020 21:06:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -122,7 +122,7 @@
         ],
         "x-ms-client-request-id": "80e9f760-b667-b685-ca73-cf6cb6aa5124",
         "x-ms-request-id": "9622cb4f-f01e-0012-68fb-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

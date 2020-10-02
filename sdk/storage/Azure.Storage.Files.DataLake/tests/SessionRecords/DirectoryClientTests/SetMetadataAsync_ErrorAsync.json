@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "9f3f91de-7474-81cf-7ea1-0fa3342a1149",
         "x-ms-date": "Fri, 03 Apr 2020 20:58:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "9f3f91de-7474-81cf-7ea1-0fa3342a1149",
         "x-ms-request-id": "9621e4c4-f01e-0012-6bfa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "78e46142-ee2e-b7b1-b870-d1f77933488e",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "9621e4d7-f01e-0012-79fa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -86,7 +86,7 @@
         "x-ms-client-request-id": "d85ad304-990a-8603-ddd5-c944b650b069",
         "x-ms-date": "Fri, 03 Apr 2020 20:58:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -99,7 +99,7 @@
         ],
         "x-ms-client-request-id": "d85ad304-990a-8603-ddd5-c944b650b069",
         "x-ms-request-id": "9621e4e1-f01e-0012-02fa-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

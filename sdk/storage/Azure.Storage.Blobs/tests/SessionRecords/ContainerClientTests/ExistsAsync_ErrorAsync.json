@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1cbdeecd-7af8-3382-067b-16d24ecfc713",
         "x-ms-date": "Thu, 02 Jul 2020 00:31:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "1cbdeecd-7af8-3382-067b-16d24ecfc713",
         "x-ms-request-id": "77f65829-a01e-00a1-2b08-504aff000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "80b6f58a-8e33-b586-55a6-b05e61c894f6",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 401,
@@ -59,7 +59,7 @@
         "x-ms-client-request-id": "80b6f58a-8e33-b586-55a6-b05e61c894f6",
         "x-ms-error-code": "NoAuthenticationInformation",
         "x-ms-request-id": "646eff0c-301e-000a-1d08-503535000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ENoAuthenticationInformation\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",
@@ -80,7 +80,7 @@
         "x-ms-client-request-id": "5847afb0-4618-c0df-4ee8-b2f8c7f44ff3",
         "x-ms-date": "Thu, 02 Jul 2020 00:31:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,7 +93,7 @@
         ],
         "x-ms-client-request-id": "5847afb0-4618-c0df-4ee8-b2f8c7f44ff3",
         "x-ms-request-id": "77f6587f-a01e-00a1-7708-504aff000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }
