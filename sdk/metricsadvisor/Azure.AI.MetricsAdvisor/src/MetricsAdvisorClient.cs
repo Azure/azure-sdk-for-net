@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
     /// The client to use to connect to the Metrics Advisor Cognitive Service to query information
-    /// about the data being monitored, such as detected anomalies, alerts, incidents and their
+    /// about the data being monitored, such as detected anomalies, alerts, incidents, and their
     /// root causes. It also provides the ability to send feedback to the service to customize the
     /// behavior of the machine learning models being used.
     /// </summary>
