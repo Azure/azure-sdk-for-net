@@ -544,6 +544,44 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
+        [Fact]
+        public void ChangePoolForVolume()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // create the volume
+                var volume = ResourceUtils.CreateVolume(netAppMgmtClient);
+                // create the other pool
+                var secondPool = ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName2, accountName: ResourceUtils.accountName1, resourceGroup: ResourceUtils.resourceGroup, location: ResourceUtils.location, poolOnly: true, serviceLevel: ServiceLevel.Standard);
+
+                Assert.Equal("Premium", volume.ServiceLevel);
+                Assert.Equal(100 * ResourceUtils.gibibyte, volume.UsageThreshold);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+                var poolChangeRequest = new PoolChangeRequest() { NewPoolResourceId = secondPool.Id };
+                //Change pools
+                netAppMgmtClient.Volumes.PoolChange(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, poolChangeRequest);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+                // retrieve the volume and check 
+                var volume2 = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName2, ResourceUtils.volumeName1);
+                Assert.Equal(volume2.Name, ResourceUtils.accountName1 + '/' + ResourceUtils.poolName2 + '/' + ResourceUtils.volumeName1);
+                                
+                // cleanup
+                ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: ResourceUtils.volumeName1, accountName: ResourceUtils.accountName1, poolName: ResourceUtils.poolName2);
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeletePool(netAppMgmtClient, poolName: ResourceUtils.poolName2);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;
@@ -551,3 +589,4 @@ namespace NetApp.Tests.ResourceTests
         }
     }
 }
+
