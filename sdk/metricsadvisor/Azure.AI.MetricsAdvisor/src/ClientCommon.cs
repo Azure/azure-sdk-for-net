@@ -4,6 +4,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
@@ -20,6 +21,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException">Thrown when parsing fails.</exception>
         public static Guid ValidateGuid(string id, string paramName)
         {
+            Argument.AssertNotNullOrEmpty(id, paramName);
+
             Guid guid;
 
             try
