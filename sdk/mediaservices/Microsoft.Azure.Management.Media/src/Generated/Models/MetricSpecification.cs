@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.Media.Models
     /// <summary>
     /// A metric emitted by service.
     /// </summary>
-    public partial class Metric
+    public partial class MetricSpecification
     {
         /// <summary>
-        /// Initializes a new instance of the Metric class.
+        /// Initializes a new instance of the MetricSpecification class.
         /// </summary>
-        public Metric()
+        public MetricSpecification()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Metric class.
+        /// Initializes a new instance of the MetricSpecification class.
         /// </summary>
         /// <param name="name">The metric name.</param>
         /// <param name="displayName">The metric display name.</param>
@@ -39,14 +39,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Bytes', 'Count', 'Milliseconds'</param>
         /// <param name="aggregationType">The metric aggregation type. Possible
         /// values include: 'Average', 'Count', 'Total'</param>
+        /// <param name="supportedAggregationTypes">Supported aggregation
+        /// types.</param>
         /// <param name="dimensions">The metric dimensions.</param>
-        public Metric(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), IList<string> supportedAggregationTypes = default(IList<string>), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
+            SupportedAggregationTypes = supportedAggregationTypes;
             Dimensions = dimensions;
             CustomInit();
         }
@@ -87,6 +90,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "aggregationType")]
         public MetricAggregationType AggregationType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets supported aggregation types.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAggregationTypes")]
+        public IList<string> SupportedAggregationTypes { get; set; }
 
         /// <summary>
         /// Gets the metric dimensions.

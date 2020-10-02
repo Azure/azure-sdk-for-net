@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.Media
     public partial interface ILiveEventsOperations
     {
         /// <summary>
-        /// List Live Events
+        /// List live events
         /// </summary>
         /// <remarks>
-        /// Lists the Live Events in the account.
+        /// Lists all the live events in the account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get Live Event
         /// </summary>
         /// <remarks>
-        /// Gets a Live Event.
+        /// Gets properties of a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Event
         /// </summary>
         /// <remarks>
-        /// Creates a Live Event.
+        /// Creates a new live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -95,10 +95,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse<LiveEvent>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters, bool? autoStart = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a existing Live Event.
+        /// Updates settings on an existing live event.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -130,10 +130,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for patch.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Event
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Event.
+        /// Deletes a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -180,10 +180,11 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Start Live Event
+        /// Allocate resources for a live event
         /// </summary>
         /// <remarks>
-        /// Starts an existing Live Event.
+        /// A live event is in StandBy state after allocation completes, and is
+        /// ready to start.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -192,7 +193,36 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> AllocateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Start Live Event
+        /// </summary>
+        /// <remarks>
+        /// A live event in Stopped or StandBy state will be in Running state
+        /// after the start operation completes.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='liveEventName'>
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -211,7 +241,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop Live Event
         /// </summary>
         /// <remarks>
-        /// Stops an existing Live Event.
+        /// Stops a running live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -220,10 +250,12 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='removeOutputsOnStop'>
-        /// The flag indicates if remove LiveOutputs on Stop.
+        /// The flag indicates whether live outputs are automatically deleted
+        /// when live event is being stopped. Deleting live outputs do not
+        /// delete the underlying assets.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -242,7 +274,10 @@ namespace Microsoft.Azure.Management.Media
         /// Reset Live Event
         /// </summary>
         /// <remarks>
-        /// Resets an existing Live Event.
+        /// Resets an existing live event. All live outputs for the live event
+        /// are deleted and the live event is stopped and will be started
+        /// again. All assets used by the live outputs and streaming locators
+        /// created on these assets are unaffected.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -251,7 +286,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -270,7 +305,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Event
         /// </summary>
         /// <remarks>
-        /// Creates a Live Event.
+        /// Creates a new live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -279,10 +314,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started
@@ -305,7 +340,7 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse<LiveEvent>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters, bool? autoStart = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a existing Live Event.
+        /// Updates settings on an existing live event.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -314,10 +349,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for patch.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -339,7 +374,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Event
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Event.
+        /// Deletes a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -348,7 +383,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -364,10 +399,11 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Start Live Event
+        /// Allocate resources for a live event
         /// </summary>
         /// <remarks>
-        /// Starts an existing Live Event.
+        /// A live event is in StandBy state after allocation completes, and is
+        /// ready to start.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -376,7 +412,36 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginAllocateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Start Live Event
+        /// </summary>
+        /// <remarks>
+        /// A live event in Stopped or StandBy state will be in Running state
+        /// after the start operation completes.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='liveEventName'>
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -395,7 +460,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop Live Event
         /// </summary>
         /// <remarks>
-        /// Stops an existing Live Event.
+        /// Stops a running live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -404,10 +469,12 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='removeOutputsOnStop'>
-        /// The flag indicates if remove LiveOutputs on Stop.
+        /// The flag indicates whether live outputs are automatically deleted
+        /// when live event is being stopped. Deleting live outputs do not
+        /// delete the underlying assets.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -426,7 +493,10 @@ namespace Microsoft.Azure.Management.Media
         /// Reset Live Event
         /// </summary>
         /// <remarks>
-        /// Resets an existing Live Event.
+        /// Resets an existing live event. All live outputs for the live event
+        /// are deleted and the live event is stopped and will be started
+        /// again. All assets used by the live outputs and streaming locators
+        /// created on these assets are unaffected.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -435,7 +505,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -451,10 +521,10 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse> BeginResetWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Live Events
+        /// List live events
         /// </summary>
         /// <remarks>
-        /// Lists the Live Events in the account.
+        /// Lists all the live events in the account.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
