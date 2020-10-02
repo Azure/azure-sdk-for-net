@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
-    <IncludeTests Condition="'$(IncludeTests)' == ''">false</IncludeTests>
+    <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>

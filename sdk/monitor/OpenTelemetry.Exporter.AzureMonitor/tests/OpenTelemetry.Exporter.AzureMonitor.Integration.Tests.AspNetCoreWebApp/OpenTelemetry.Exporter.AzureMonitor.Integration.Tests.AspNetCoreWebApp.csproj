@@ -3,11 +3,6 @@
   
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- THIS SHOULDN'T BE NECESSARY, BUT THE BUILD PIPELINE IS INSISTING THAT THIS BE SET:
-    error : This project cannot be packaged because packaging has been disabled. 
-    Add <IsPackable>true</IsPackable> to the project file to enable producing a package from this project. -->
-    <!--<IsPackable>true</IsPackable>-->
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
