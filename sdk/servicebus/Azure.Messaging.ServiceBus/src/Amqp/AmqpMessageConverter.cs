@@ -111,10 +111,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     firstMessage.PartitionKey;
             }
 
-            if (firstMessage?.ViaPartitionKey != null)
+            if (firstMessage?.TransactionPartitionKey != null)
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] =
-                    firstMessage.ViaPartitionKey;
+                    firstMessage.TransactionPartitionKey;
             }
 
             batchEnvelope.Batchable = true;
@@ -179,9 +179,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.PartitionKeyName, sbMessage.PartitionKey);
             }
 
-            if (sbMessage.ViaPartitionKey != null)
+            if (sbMessage.TransactionPartitionKey != null)
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ViaPartitionKeyName, sbMessage.ViaPartitionKey);
+                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ViaPartitionKeyName, sbMessage.TransactionPartitionKey);
             }
 
             if (sbMessage.ApplicationProperties != null && sbMessage.ApplicationProperties.Count > 0)
