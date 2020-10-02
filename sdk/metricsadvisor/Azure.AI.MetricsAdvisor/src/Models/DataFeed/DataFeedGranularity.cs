@@ -4,7 +4,7 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The frequency with which ingestion from the data source will happen.
+    /// The frequency with which ingestion from the data source will occur.
     /// </summary>
     public class DataFeedGranularity
     {
