@@ -1075,6 +1075,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains(expectedLabelData)).FirstOrDefault();
                 Assert.IsNotNull(fieldInPage);
+                Assert.IsNotNull(fieldInPage.ValueData);
                 Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
             }
         }
