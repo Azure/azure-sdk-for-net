@@ -8,7 +8,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// Used to avoid outright labeling every single unexpected data point as an anomaly. An
     /// anomaly will be detected only when the latest ingested points contain a minimum
-    /// threshold of unexpected values, indicating that there's in fact something wrong with
+    /// threshold of unexpected values, indicating that there's, in fact, something wrong with
     /// the data.
     /// </summary>
     public partial class SuppressCondition
