@@ -82,7 +82,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedIngestionSettings IngestionSettings { get; }
 
         /// <summary>
-        /// A set of options configuring the behavior of this <see cref="DataFeed"/>.
+        /// A set of options configuring the behavior of this <see cref="DataFeed"/>. Options include administrators,
+        /// roll-up settings, access mode, and others.
         /// </summary>
         public DataFeedOptions Options { get; }
     }

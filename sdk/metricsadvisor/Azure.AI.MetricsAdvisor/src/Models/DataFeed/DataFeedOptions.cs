@@ -8,7 +8,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A set of options configuring the behavior of a <see cref="DataFeed"/>.
+    /// A set of options configuring the behavior of a <see cref="DataFeed"/>. Options include administrators,
+    /// roll-up settings, access mode, and others.
     /// </summary>
     public class DataFeedOptions
     {

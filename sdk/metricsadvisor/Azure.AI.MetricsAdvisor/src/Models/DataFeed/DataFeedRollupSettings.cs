@@ -32,8 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The value a dimension assumes when it represents a rolled-up value in the data source. Common values
-        /// include <c>__SUM__</c>, <c>NULL</c>, or even an empty string.
+        /// The value a dimension assumes when it represents a rolled-up value in the original data source.
         /// </summary>
         public string AlreadyRollupIdentificationValue { get; set; }
 

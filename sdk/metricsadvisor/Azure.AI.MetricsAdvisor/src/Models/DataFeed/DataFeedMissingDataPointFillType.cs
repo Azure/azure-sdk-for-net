@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedMissingDataPointFillType SmartFilling { get; } = new DataFeedMissingDataPointFillType(SmartFillingValue);
 
         /// <summary>
-        /// Simply repeats the last ingested value in the same time series.
+        /// Repeats the last ingested value in the same time series.
         /// </summary>
         public static DataFeedMissingDataPointFillType PreviousValue { get; } = new DataFeedMissingDataPointFillType(PreviousValueValue);
 
