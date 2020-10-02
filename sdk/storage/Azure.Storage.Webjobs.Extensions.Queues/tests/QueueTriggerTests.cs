@@ -25,6 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             account = AzuriteNUnitFixture.Instance.GetAccount();
             account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName + "-poison").DeleteIfExists();
         }
 
         private async Task SetupAsync(StorageAccount account, object contents)

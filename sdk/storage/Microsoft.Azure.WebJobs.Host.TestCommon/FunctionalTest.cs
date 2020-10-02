@@ -45,14 +45,18 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             {
                 using (JobHost jobHost = host.GetJobHost())
                 {
-                    // start listeners. One of them will set the completition task
-                    await jobHost.StartAsync();
+                    try
+                    {
+                        // start listeners. One of them will set the completition task
+                        await jobHost.StartAsync();
 
-                    var result = await src.Task.AwaitWithTimeout(); // blocks
+                        var result = await src.Task.AwaitWithTimeout(); // blocks
 
-                    await jobHost.StopAsync();
-
-                    return result;
+                        return result;
+                    } finally
+                    {
+                        await jobHost.StopAsync();
+                    }
                 }
             }
             catch (Exception exception)

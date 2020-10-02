@@ -50,9 +50,16 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             // Act
             using (this)
             {
-                await this.StartAsync();
-                // Assert
-                result = await TestHelpers.AwaitWithTimeout(taskSource);
+                try
+                {
+                    await this.StartAsync();
+                    // Assert
+                    result = await TestHelpers.AwaitWithTimeout(taskSource);
+                }
+                finally
+                {
+                    await this.StopAsync();
+                }
             }
             return result;
         }
