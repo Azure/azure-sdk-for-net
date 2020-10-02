@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_02_10) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_04_08) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -97,6 +97,7 @@ namespace Azure.Storage.Files.Shares
             V2019_07_07 = 2,
             V2019_12_12 = 3,
             V2020_02_10 = 4,
+            V2020_04_08 = 5,
         }
     }
     public partial class ShareDirectoryClient
