@@ -59,8 +59,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The operator to be applied between <see cref="MetricAnomalyAlertConfiguration"/>s in this
-        /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if at least two
-        /// configurations in <see cref="MetricAlertConfigurations"/> are defined.
+        /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if more than one
+        /// configuration is defined in <see cref="MetricAlertConfigurations"/>.
         /// </summary>
         public MetricAnomalyAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
 
