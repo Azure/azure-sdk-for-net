@@ -5,7 +5,7 @@ using System.Net;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp
 {
     /// <summary>
     /// This controller is used to verify that the IntegrationTests project can send requests to this WebApp and receive responses.

@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.AspNetCoreWebApp
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp
 {
     public class Program
     {
