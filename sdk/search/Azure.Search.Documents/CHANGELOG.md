@@ -5,6 +5,7 @@
 ### Fixed
 
 - Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
+- Fixed issues preventing mocking clients or initializing all models.
 
 ### Added
 

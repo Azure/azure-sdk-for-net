@@ -175,7 +175,7 @@ namespace Azure.Search.Documents
                 ClientDiagnostics,
                 Pipeline,
                 endpoint.ToString(),
-                IndexName,
+                indexName,
                 null,
                 Version.ToVersionString());
         }
