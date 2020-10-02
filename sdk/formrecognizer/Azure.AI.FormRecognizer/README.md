@@ -1,5 +1,5 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
