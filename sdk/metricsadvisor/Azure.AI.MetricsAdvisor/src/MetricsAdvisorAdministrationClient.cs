@@ -859,6 +859,62 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// </summary>
+        public virtual async Task<Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
+            Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
+            if (!alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+            }
+
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyAlertingConfigurationPatch patch = alertConfiguration.GetPatchModel();
+                return await _serviceRestClient.UpdateAnomalyAlertingConfigurationAsync(alertConfigurationGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
+            Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
+            if (!alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+            }
+
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyAlertingConfigurationPatch patch = alertConfiguration.GetPatchModel();
+                return _serviceRestClient.UpdateAnomalyAlertingConfiguration(alertConfigurationGuid, patch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         public virtual async Task<Response<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));

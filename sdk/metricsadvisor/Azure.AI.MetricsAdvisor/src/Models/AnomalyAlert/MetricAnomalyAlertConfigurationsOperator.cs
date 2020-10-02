@@ -13,16 +13,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// </summary>
         [CodeGenMember("AND")]
-        public static DataFeedAutoRollupMethod And { get; } = new DataFeedAutoRollupMethod(AndValue);
+        public static MetricAnomalyAlertConfigurationsOperator And { get; } = new MetricAnomalyAlertConfigurationsOperator(AndValue);
 
         /// <summary>
         /// </summary>
         [CodeGenMember("OR")]
-        public static DataFeedAutoRollupMethod Or { get; } = new DataFeedAutoRollupMethod(OrValue);
+        public static MetricAnomalyAlertConfigurationsOperator Or { get; } = new MetricAnomalyAlertConfigurationsOperator(OrValue);
 
         /// <summary>
         /// </summary>
         [CodeGenMember("XOR")]
-        public static DataFeedAutoRollupMethod Xor { get; } = new DataFeedAutoRollupMethod(XorValue);
+        public static MetricAnomalyAlertConfigurationsOperator Xor { get; } = new MetricAnomalyAlertConfigurationsOperator(XorValue);
     }
 }

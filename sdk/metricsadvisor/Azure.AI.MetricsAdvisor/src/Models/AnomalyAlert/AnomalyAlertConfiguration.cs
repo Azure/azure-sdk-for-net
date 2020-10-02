@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -41,5 +43,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("MetricAlertingConfigurations")]
         public IList<MetricAnomalyAlertConfiguration> MetricAlertConfigurations { get; }
+
+        /// <summary>
+        /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
+        /// </summary>
+        /// <returns></returns>
+        internal AnomalyAlertingConfigurationPatch GetPatchModel()
+        {
+            return new AnomalyAlertingConfigurationPatch()
+            {
+                CrossMetricsOperator = CrossMetricsOperator.HasValue ? new AnomalyAlertingConfigurationPatchCrossMetricsOperator(CrossMetricsOperator.Value.ToString()) : default,
+                Description = Description,
+                Name = Name,
+                HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),
+                MetricAlertingConfigurations = MetricAlertConfigurations
+            };
+        }
     }
 }
