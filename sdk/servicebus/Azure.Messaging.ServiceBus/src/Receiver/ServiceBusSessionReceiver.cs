@@ -95,8 +95,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The session state as byte array.</returns>
-        public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
+        /// <returns>The session state as <see cref="BinaryData"/>.</returns>
+        public virtual async Task<BinaryData> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -120,21 +120,21 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.GetSessionStateComplete(Identifier);
-            return sessionState;
+            return new BinaryData(sessionState);
         }
 
         /// <summary>
         /// Set a custom state on the session which can be later retrieved using <see cref="GetSessionStateAsync"/>
         /// </summary>
         ///
-        /// <param name="sessionState">A byte array of session state</param>
+        /// <param name="sessionState">A <see cref="BinaryData"/> of session state</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public virtual async Task SetSessionStateAsync(
-            byte[] sessionState,
+            BinaryData sessionState,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                await InnerReceiver.SetStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
+                await InnerReceiver.SetStateAsync(sessionState.ToBytes().ToArray(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
