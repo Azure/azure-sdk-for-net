@@ -6,7 +6,7 @@
 - It defaults to the latest supported API version, which currently is `2.1-preview.1`.
 
 ### New Features
-- Added ability to create a composed model from the `FormTrainingClient`.
+- Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
 - Added the properties `DisplayName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
 - Added property `DisplayName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.

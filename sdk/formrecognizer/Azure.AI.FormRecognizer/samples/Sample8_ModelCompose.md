@@ -46,7 +46,7 @@ Response<CustomFormModel> purchaseOrderFurnitureModel = await client.StartTraini
 Response<CustomFormModel> purchaseOrderCleaningSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { DisplayName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync();
 ```
 
-When a purchase order happens, the employee in charge uploads the form to our application. The application then needs to recognize the form to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the form, you can create a composed model that aggregates the previews models, and use that model in `StartRecognizeCustomForms` and let the service decide which model fits best according to the form provided.
+When a purchase order happens, the employee in charge uploads the form to our application. The application then needs to recognize the form to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the form, you can create a composed model that aggregates the previous models, and use that model in `StartRecognizeCustomForms` and let the service decide which model fits best according to the form provided.
 
 ```C# Snippet:FormRecognizerSampleCreateComposedModel
 List<string> modelIds = new List<string>()
