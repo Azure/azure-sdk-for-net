@@ -755,11 +755,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(message.Body.ToBytes().ToArray(), receivedMessage.Body.ToBytes().ToArray());
 
                 var sessionStateString = "Received Message From Session!";
-                var sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                var sessionState = new BinaryData(Encoding.UTF8.GetBytes(sessionStateString));
                 await receiver.SetSessionStateAsync(sessionState);
 
                 var returnedSessionState = await receiver.GetSessionStateAsync();
-                var returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                var returnedSessionStateString = returnedSessionState.ToString();
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
 
                 // Complete message using Session Receiver
@@ -769,11 +769,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNull(peekedMessage.Result);
 
                 sessionStateString = "Completed Message On Session!";
-                sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                sessionState = new BinaryData(Encoding.UTF8.GetBytes(sessionStateString));
                 await receiver.SetSessionStateAsync(sessionState);
 
                 returnedSessionState = await receiver.GetSessionStateAsync();
-                returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                returnedSessionStateString = returnedSessionState.ToString();
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
             }
         }

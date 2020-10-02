@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.AreEqual(DiagnosticProperty.RenewSessionLockActivityName + ".Stop", renewStop.Key);
 
                     // set state
-                    var state = Encoding.UTF8.GetBytes("state");
+                    var state = new BinaryData(Encoding.UTF8.GetBytes("state"));
                     await sessionReceiver.SetSessionStateAsync(state);
                     (string Key, object Value, DiagnosticListener) setStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.SetSessionStateActivityName + ".Start", setStateStart.Key);
@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
-                    Assert.AreEqual(state, getState);
+                    Assert.AreEqual(state.ToBytes().ToArray(), getState.ToBytes().ToArray());
                     (string Key, object Value, DiagnosticListener) getStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.GetSessionStateActivityName + ".Start", getStateStart.Key);
                     Activity getStateActivity = (Activity)getStateStart.Value;
