@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace NetApp.Tests.ResourceTests
 {
-    public class BackupPolicyTests : TestBase
+    public class ANFBackupPolicyTests : TestBase
     {
         private const int delay = 5000;
         [Fact]
@@ -285,7 +285,7 @@ namespace NetApp.Tests.ResourceTests
 
         private static string GetSessionsDirectoryPath()
         {
-            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.BackupPolicyTests).GetTypeInfo().Assembly.Location;
+            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.ANFBackupPolicyTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
