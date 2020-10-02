@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         Selected,
 
         /// <summary>
-        /// Values is unselected.
+        /// Value is unselected.
         /// </summary>
         Unselected
     }

@@ -58,7 +58,10 @@ namespace Azure.AI.FormRecognizer.Models
             Page = page;
 
             if (Type == FieldValueType.SelectionMark)
-                Text = FormSelectionMarkStateExtensions.ToFormSelectionMarkState(text).ToString();
+            {
+                ValueSelectionMark = FormSelectionMarkStateExtensions.ToFormSelectionMarkState(text);
+                Text = ValueSelectionMark.ToString();
+            }
             else
                 Text = text;
         }
