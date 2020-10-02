@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// A description about the <see cref="DataFeed"/>.
+        /// A description of the <see cref="DataFeed"/>.
         /// </summary>
         public string FeedDescription { get; set; }
 
