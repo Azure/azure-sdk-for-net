@@ -269,7 +269,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
 
@@ -489,7 +489,7 @@ namespace Azure.Storage.Test.Shared
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
         {
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-            await blob.CreateAsync(size, 0).ConfigureAwait(false);
+            await blob.CreateIfNotExistsAsync(size, 0).ConfigureAwait(false);
             return blob;
         }
 
@@ -656,7 +656,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     try
                     {
-                        await Container.DeleteAsync();
+                        await Container.DeleteIfExistsAsync();
                         Container = null;
                     }
                     catch

@@ -19,24 +19,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(emailsToAlert, nameof(emailsToAlert));
 
-            EmailsToAlert = emailsToAlert;
+            HookParameter = new EmailHookParameter(emailsToAlert);
             HookType = HookType.Email;
         }
 
         internal EmailHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
-            EmailsToAlert = hookParameter.ToList;
+            HookParameter = hookParameter;
             HookType = hookType;
         }
 
         /// <summary>
         /// </summary>
-        public IList<string> EmailsToAlert { get; private set; }
+        public IList<string> EmailsToAlert => HookParameter.ToList;
 
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal EmailHookParameter HookParameter => new EmailHookParameter(EmailsToAlert);
+        internal EmailHookParameter HookParameter { get; private set; }
     }
 }

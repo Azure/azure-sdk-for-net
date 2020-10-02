@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var options = new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
-                Proxy = Mock.Of<IWebProxy>()
+                WebProxy = Mock.Of<IWebProxy>()
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.WebProxy, Is.EqualTo(defaultOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         public void ConstructorWithConnectionStringValidatesOptions()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
 
             Assert.That(() => new ServiceBusClient(fakeConnection, invalidOptions), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate client options");
         }
@@ -215,7 +215,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
             var token = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
             Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The expanded argument constructor should validate client options");
         }
 
