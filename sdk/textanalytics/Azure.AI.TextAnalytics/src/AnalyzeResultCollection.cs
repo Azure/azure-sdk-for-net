@@ -8,7 +8,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="HealthcareResult"/> objects corresponding
+    /// Collection of <see cref="JobMetadata"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
     public class AnalyzeResultCollection : ReadOnlyCollection<JobMetadata>
@@ -19,8 +19,14 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics"></param>
         internal AnalyzeResultCollection(IList<JobMetadata> list, TextDocumentBatchStatistics statistics) : base(list)
         {
+            Documents = list;
             Statistics = statistics;
         }
+
+        /// <summary>
+        /// Documents.
+        /// </summary>
+        public IList<JobMetadata> Documents { get; }
 
         /// <summary>
         /// Gets statistics about the documents batch and how it was processed

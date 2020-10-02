@@ -12,14 +12,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentPiiEntities
+    internal partial class PiiDocumentEntities
     {
-        internal static DocumentPiiEntities DeserializeDocumentPiiEntities(JsonElement element)
+        internal static PiiDocumentEntities DeserializePiiDocumentEntities(JsonElement element)
         {
             string id = default;
-            IReadOnlyList<PiiEntity> entities = default;
+            IReadOnlyList<Entity> entities = default;
             IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
+            string redactedText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -29,10 +30,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("entities"))
                 {
-                    List<PiiEntity> array = new List<PiiEntity>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PiiEntity.DeserializePiiEntity(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;
@@ -52,8 +53,13 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
+                if (property.NameEquals("redactedText"))
+                {
+                    redactedText = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DocumentPiiEntities(id, entities, warnings, Optional.ToNullable(statistics));
+            return new PiiDocumentEntities(id, entities, warnings, Optional.ToNullable(statistics), redactedText);
         }
     }
 }

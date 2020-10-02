@@ -43,9 +43,5 @@ namespace Azure.AI.TextAnalytics.Models
         public string RelationType { get; }
         /// <summary> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </summary>
         public bool Bidirectional { get; }
-        /// <summary> Reference link to the source entity. </summary>
-        public string Source { get; }
-        /// <summary> Reference link to the target entity. </summary>
-        public string Target { get; }
     }
 }

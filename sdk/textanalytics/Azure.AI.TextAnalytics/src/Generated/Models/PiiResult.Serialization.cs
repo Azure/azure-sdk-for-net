@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static PiiResult DeserializePiiResult(JsonElement element)
         {
-            IReadOnlyList<DocumentPiiEntities> documents = default;
+            IReadOnlyList<PiiDocumentEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -24,10 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentPiiEntities> array = new List<DocumentPiiEntities>();
+                    List<PiiDocumentEntities> array = new List<PiiDocumentEntities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentPiiEntities.DeserializeDocumentPiiEntities(item));
+                        array.Add(PiiDocumentEntities.DeserializePiiDocumentEntities(item));
                     }
                     documents = array;
                     continue;

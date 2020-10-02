@@ -1865,12 +1865,13 @@
         }
       }
     },
-    "DocumentPiiEntities": {
+    "PiiDocumentEntities": {
       "type": "object",
       "required": [
         "id",
         "entities",
-        "warnings"
+				"warnings",
+				"redactedText"
       ],
       "properties": {
         "id": {
@@ -1881,7 +1882,7 @@
           "type": "array",
           "description": "Recognized entities in the document.",
           "items": {
-            "$ref": "#/definitions/PiiEntity"
+            "$ref": "#/definitions/Entity"
           }
         },
         "warnings": {
@@ -1894,7 +1895,10 @@
         "statistics": {
           "description": "if showStats=true was specified in the request this field will contain information about the document payload.",
           "$ref": "#/definitions/DocumentStatistics"
-        }
+				},
+				"redactedText": {
+					"type": "string"
+				}
       }
     },
     "Entity": {
@@ -1935,24 +1939,6 @@
           "description": "Confidence score between 0 and 1 of the extracted entity."
         }
       }
-    },
-    "PiiEntity": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Entity"
-        },
-        {
-          "type": "object",
-          "required": [
-            "redactedText"
-          ],
-          "properties": {
-            "redactedText": {
-              "type": "string"
-            }
-          }
-        }
-      ]
     },
     "EntityLinkingResult": {
       "type": "object",
@@ -2463,7 +2449,7 @@
           "type": "array",
           "description": "Response by document",
           "items": {
-            "$ref": "#/definitions/DocumentPiiEntities"
+            "$ref": "#/definitions/PiiDocumentEntities"
           }
         },
         "errors": {

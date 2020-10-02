@@ -51,9 +51,5 @@ namespace Azure.AI.TextAnalytics.Models
             IsNegated = isNegated;
             Links = links;
         }
-
-        public bool IsNegated { get; }
-        /// <summary> Entity references in known data sources. </summary>
-        public IReadOnlyList<HealthcareEntityLink> Links { get; }
     }
 }

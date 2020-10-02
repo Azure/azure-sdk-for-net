@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, or <paramref name="modelVersion"/> is null. </exception>
-        internal PiiResult(IEnumerable<DocumentPiiEntities> documents, IEnumerable<DocumentError> errors, string modelVersion)
+        internal PiiResult(IEnumerable<PiiDocumentEntities> documents, IEnumerable<DocumentError> errors, string modelVersion)
         {
             if (documents == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal PiiResult(IReadOnlyList<DocumentPiiEntities> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
+        internal PiiResult(IReadOnlyList<PiiDocumentEntities> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
         {
             Documents = documents;
             Errors = errors;
@@ -54,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<DocumentPiiEntities> Documents { get; }
+        public IReadOnlyList<PiiDocumentEntities> Documents { get; }
         /// <summary> Errors by document id. </summary>
         public IReadOnlyList<DocumentError> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>

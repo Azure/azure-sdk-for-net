@@ -163,13 +163,10 @@ namespace Azure.AI.TextAnalytics
         internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
             => entities.Select((entity) => new PiiEntity(entity)).ToList();
 
-        internal static PiiEntityCollection ConvertToPiiEntityCollection(DocumentPiiEntities documentEntities)
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
         {
             return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
         }
-
-        internal static IList<PiiEntity> ConvertToPiiEntityList(List<Models.PiiEntity> entities)
-            => entities.Select((entity) => new PiiEntity(entity)).ToList();
 
         internal static RecognizePiiResultCollection ConvertToRecognizePiiResultCollection(PiiResult results, IDictionary<string, int> idToIndexMap)
         {
@@ -182,7 +179,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             //Read document entities
-            foreach (DocumentPiiEntities docEntities in results.Documents)
+            foreach (PiiDocumentEntities docEntities in results.Documents)
             {
                 recognizeEntities.Add(new RecognizePiiResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
             }

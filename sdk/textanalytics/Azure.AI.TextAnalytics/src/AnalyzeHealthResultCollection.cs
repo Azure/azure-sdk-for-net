@@ -20,9 +20,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"></param>
         internal AnalyzeHealthResultCollection(IList<HealthcareResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
+            Documents = list;
             Statistics = statistics;
             ModelVersion = modelVersion;
         }
+
+        /// <summary>
+        /// Gets statistics about the documents batch and how it was processed
+        /// by the service.  This property will have a value when IncludeStatistics
+        /// is set to true in the client call.
+        /// </summary>
+        public IList<HealthcareResult> Documents { get; }
 
         /// <summary>
         /// Gets statistics about the documents batch and how it was processed

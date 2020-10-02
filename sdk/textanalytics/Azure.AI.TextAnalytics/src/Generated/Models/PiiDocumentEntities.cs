@@ -12,15 +12,16 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The DocumentPiiEntities. </summary>
-    internal partial class DocumentPiiEntities
+    /// <summary> The PiiDocumentEntities. </summary>
+    internal partial class PiiDocumentEntities
     {
-        /// <summary> Initializes a new instance of DocumentPiiEntities. </summary>
+        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentPiiEntities(string id, IEnumerable<PiiEntity> entities, IEnumerable<TextAnalyticsWarningInternal> warnings)
+        /// <param name="redactedText"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="warnings"/>, or <paramref name="redactedText"/> is null. </exception>
+        internal PiiDocumentEntities(string id, IEnumerable<Entity> entities, IEnumerable<TextAnalyticsWarningInternal> warnings, string redactedText)
         {
             if (id == null)
             {
@@ -34,28 +35,40 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(warnings));
             }
+            if (redactedText == null)
+            {
+                throw new ArgumentNullException(nameof(redactedText));
+            }
 
             Id = id;
             Entities = entities.ToList();
             Warnings = warnings.ToList();
+            RedactedText = redactedText;
         }
 
-        /// <summary> Initializes a new instance of DocumentPiiEntities. </summary>
+        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentPiiEntities(string id, IReadOnlyList<PiiEntity> entities, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
+        /// <param name="redactedText"> . </param>
+        internal PiiDocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics, string redactedText)
         {
             Id = id;
             Entities = entities;
             Warnings = warnings;
             Statistics = statistics;
+            RedactedText = redactedText;
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
+        /// <summary> Recognized entities in the document. </summary>
+        public IReadOnlyList<Entity> Entities { get; }
+        /// <summary> Warnings encountered while processing document. </summary>
+        public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
+        public string RedactedText { get; }
     }
 }
