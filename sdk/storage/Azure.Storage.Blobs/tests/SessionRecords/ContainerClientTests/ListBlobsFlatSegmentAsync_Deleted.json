@@ -20,7 +20,6 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 10 Apr 2020 23:11:16 GMT",
         "ETag": "\u00220x8D7DDA479130FCF\u0022",
         "Last-Modified": "Fri, 10 Apr 2020 23:11:17 GMT",
         "Server": [
@@ -39,6 +38,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "If-None-Match": "*",
         "traceparent": "00-2199397d32989a428b9736cfef508ac7-848962dd67785645-00",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200410.1",
