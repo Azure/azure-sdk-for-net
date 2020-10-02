@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Describes an Influx DB data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// Describes an InfluxDB data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class InfluxDbDataFeedSource : DataFeedSource
     {

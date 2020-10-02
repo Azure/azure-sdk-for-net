@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Describes a Posgres Sql data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// Describes a PostgreSQL data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class PostgreSqlDataFeedSource : DataFeedSource
     {

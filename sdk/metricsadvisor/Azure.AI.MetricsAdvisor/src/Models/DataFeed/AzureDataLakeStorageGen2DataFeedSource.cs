@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Describes an Azure Data Lake Storage Gen 2 data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// Describes an Azure Data Lake Storage Gen2 data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class AzureDataLakeStorageGen2DataFeedSource : DataFeedSource
     {
