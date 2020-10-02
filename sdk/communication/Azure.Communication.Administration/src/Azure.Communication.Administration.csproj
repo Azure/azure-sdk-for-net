@@ -7,7 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
     <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
