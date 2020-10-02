@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -166,6 +167,276 @@ namespace Azure.Search.Documents.Tests.Models
         {
             IndexingParameters parameters = new IndexingParameters();
             Assert.Throws<InvalidCastException>(() => parameters.Configuration["excludedFileNameExtensions"] = false);
+        }
+
+        [Test]
+        public void ConfigurationKeysGrowAndShrink()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+            ICollection<string> keys = parameters.Configuration.Keys;
+
+            Assert.AreEqual(0, keys.Count);
+
+            parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
+            {
+                ParsingMode = BlobIndexerParsingMode.Json,
+                ["customTestProperty"] = "custom",
+            };
+
+            Assert.AreEqual(2, keys.Count);
+            CollectionAssert.Contains(keys, "parsingMode");
+            CollectionAssert.Contains(keys, "customTestProperty");
+
+            parameters.Configuration.Clear();
+
+            Assert.AreEqual(0, keys.Count);
+        }
+
+        [Test]
+        public void ConfigurationValuesGrowAndShrink()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+            ICollection<object> values = parameters.Configuration.Values;
+
+            Assert.AreEqual(0, values.Count);
+
+            parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
+            {
+                ParsingMode = BlobIndexerParsingMode.Json,
+                ["customTestProperty"] = "custom",
+            };
+
+            Assert.AreEqual(2, values.Count);
+            CollectionAssert.Contains(values, BlobIndexerParsingMode.Json);
+            CollectionAssert.Contains(values, "custom");
+
+            parameters.Configuration.Clear();
+
+            Assert.AreEqual(0, values.Count);
+        }
+
+        [Test]
+        public void ConfigurationKeysAreReadOnly()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+            ICollection<string> keys = parameters.Configuration.Keys;
+
+            Assert.IsTrue(keys.IsReadOnly);
+            Assert.Throws<NotSupportedException>(() => keys.Add("customTestProperty"));
+            Assert.Throws<NotSupportedException>(() => keys.Remove("customTestProperty"));
+            Assert.Throws<NotSupportedException>(() => keys.Clear());
+        }
+
+        [Test]
+        public void ConfigurationValuesAreReadOnly()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+            ICollection<object> values = parameters.Configuration.Values;
+
+            Assert.IsTrue(values.IsReadOnly);
+            Assert.Throws<NotSupportedException>(() => values.Add("custom"));
+            Assert.Throws<NotSupportedException>(() => values.Remove("custom"));
+            Assert.Throws<NotSupportedException>(() => values.Clear());
+        }
+
+        [Test]
+        public void CopiesConfigurationKeys()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            string[] keys = new string[parameters.Configuration.Count];
+            parameters.Configuration.Keys.CopyTo(keys, 0);
+            Assert.AreEqual(new[] { "parsingMode", "customTestProperty" }, keys);
+        }
+
+        [Test]
+        public void CopiesConfigurationValues()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            object[] values = new object[parameters.Configuration.Count];
+            parameters.Configuration.Values.CopyTo(values, 0);
+            Assert.AreEqual(new object[] { BlobIndexerParsingMode.Json, "custom" }, values);
+        }
+
+        [Test]
+        public void ConfigurationIsReadWrite() =>
+            Assert.IsFalse(new IndexingParameters().Configuration.IsReadOnly);
+
+        [Test]
+        public void AddsToCorrectConfiguration()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+
+            parameters.Configuration.Add("parsingMode", "json");
+            Assert.AreEqual(1, parameters.Configuration.Count);
+            Assert.IsTrue(parameters.Configuration.ContainsKey("parsingMode"));
+            Assert.IsFalse(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", "json")));
+            Assert.IsTrue(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)));
+            Assert.AreEqual(0, parameters.IndexingParametersConfiguration.Count());
+            Assert.IsFalse(parameters.IndexingParametersConfiguration.ContainsKey("parsingMode"));
+
+            parameters.Configuration.Add("customTestProperty", "custom");
+            Assert.AreEqual(2, parameters.Configuration.Count);
+            Assert.IsTrue(parameters.Configuration.ContainsKey("customTestProperty"));
+            Assert.AreEqual(1, parameters.IndexingParametersConfiguration.Count());
+            Assert.IsTrue(parameters.IndexingParametersConfiguration.ContainsKey("customTestProperty"));
+            Assert.IsTrue(parameters.IndexingParametersConfiguration.Contains(new KeyValuePair<string, object>("customTestProperty", "custom")));
+        }
+
+        [Test]
+        public void AddExistingConfigurationThrows()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                },
+            };
+
+            //Assert.Throws<ArgumentException>(() => parameters.Configuration.Add("parsingMode", "json"));
+            Assert.Throws<ArgumentException>(() => parameters.Configuration.Add(new KeyValuePair<string, object>("parsingMode", "json")));
+        }
+
+        [Test]
+        public void CopyToNullThrows() =>
+            Assert.Throws<ArgumentNullException>(() => new IndexingParameters().Configuration.CopyTo(null, 0));
+
+        [Test]
+        public void CopyToNegativeStartIndexThrows() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() => new IndexingParameters().Configuration.CopyTo(Array.Empty<KeyValuePair<string, object>>(), -1));
+
+        [Test]
+        public void CopiesConfiguration()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                    IndexedFileNameExtensions = ".json",
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            KeyValuePair<string, object>[] pairs = new KeyValuePair<string, object>[parameters.Configuration.Count + 1];
+            parameters.Configuration.CopyTo(pairs, 1);
+
+            Assert.IsNull(pairs[0].Key);
+
+            // Dictionary order is guaranteed, so check the last one which should be from AdditionalProperties.
+            Assert.AreEqual("customTestProperty", pairs[3].Key);
+        }
+
+        [Test]
+        public void SettingIndexingParametersConfigurationOverwritesConfiguration()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                Configuration =
+                {
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            Assert.AreEqual(1, parameters.Configuration.Count);
+            CollectionAssert.Contains(parameters.Configuration.Keys, "customTestProperty");
+
+            parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
+            {
+                ParsingMode = BlobIndexerParsingMode.Json,
+            };
+
+            Assert.AreEqual(1, parameters.Configuration.Count);
+            CollectionAssert.Contains(parameters.Configuration.Keys, "parsingMode");
+        }
+
+        [Test]
+        public void RemoveWellKnownConfigurationNullsValue()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                },
+            };
+
+            parameters.Configuration.Remove("parsingMode");
+
+            Assert.AreEqual(0, parameters.Configuration.Count);
+            Assert.IsNull(parameters.IndexingParametersConfiguration.ParsingMode);
+        }
+
+        [Test]
+        public void RemovesCustomConfiguration()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            parameters.Configuration.Remove("customTestProperty");
+
+            Assert.AreEqual(0, parameters.Configuration.Count);
+            Assert.AreEqual(0, parameters.IndexingParametersConfiguration.Count());
+        }
+
+        [Test]
+        public void RemovePairChecksWellKnownPropertyValue()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ParsingMode = BlobIndexerParsingMode.Json,
+                },
+            };
+
+            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "text")));
+            Assert.AreEqual(1, parameters.Configuration.Count);
+
+            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "json")));
+            Assert.AreEqual(1, parameters.Configuration.Count);
+
+            Assert.IsTrue(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)));
+            Assert.AreEqual(0, parameters.Configuration.Count);
+        }
+
+        [Test]
+        public void RemovePairChecksCustomPropertyValue()
+        {
+            IndexingParameters parameters = new IndexingParameters
+            {
+                IndexingParametersConfiguration = new IndexingParametersConfiguration
+                {
+                    ["customTestProperty"] = "custom",
+                },
+            };
+
+            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "other")));
+            Assert.AreEqual(1, parameters.Configuration.Count);
+
+            Assert.IsTrue(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "custom")));
+            Assert.AreEqual(0, parameters.Configuration.Count);
         }
     }
 }

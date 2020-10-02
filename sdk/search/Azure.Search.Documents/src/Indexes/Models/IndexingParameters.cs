@@ -119,6 +119,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
                 if (IndexingParametersConfiguration.WellKnownProperties.TryGetValue(key, out (Func<IndexingParametersConfiguration, object> Get, Action<IndexingParametersConfiguration, object> Set) property))
                 {
+                    if (property.Get(configuration) is { })
+                    {
+                        throw new ArgumentException($"An item with the same key has already been added. Key: {key}");
+                    }
+
                     property.Set(configuration, value);
                 }
                 else
@@ -134,8 +139,22 @@ namespace Azure.Search.Documents.Indexes.Models
             public void Clear() => _parameters._indexingParametersConfiguration?.Reset();
 
             /// <inheritdoc />
-            public bool Contains(KeyValuePair<string, object> item) =>
-                ((IEnumerable<KeyValuePair<string, object>>)this).Contains(item);
+            public bool Contains(KeyValuePair<string, object> item)
+            {
+                IndexingParametersConfiguration configuration = _parameters._indexingParametersConfiguration;
+                if (configuration is null)
+                {
+                    return false;
+                }
+
+                // Have to check ourselves since Enumerable.Contains() will call into this method causing a StackOverflowException.
+                if (IndexingParametersConfiguration.WellKnownProperties.TryGetValue(item.Key, out (Func<IndexingParametersConfiguration, object> Get, Action<IndexingParametersConfiguration, object> Set) property))
+                {
+                    return property.Get(configuration) is { } value && value.Equals(item.Value);
+                }
+
+                return ((ICollection<KeyValuePair<string, object>>)configuration).Contains(item);
+            }
 
             /// <inheritdoc />
             public bool ContainsKey(string key)
