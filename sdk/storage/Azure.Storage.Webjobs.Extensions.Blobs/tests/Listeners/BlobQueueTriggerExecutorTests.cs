@@ -13,44 +13,44 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
-using Xunit;
+using NUnit.Framework;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    [Collection(AzuriteCollection.Name)]
     public class BlobQueueTriggerExecutorTests
     {
         private const string TestBlobName = "TestBlobName";
         private const string TestContainerName = "container-blobqueuetriggerexecutortests";
         private const string TestQueueMessageId = "abc123";
 
-        private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
-        private readonly ILogger<BlobListener> _logger;
-        private readonly BlobServiceClient blobServiceClient;
-        private readonly BlobContainerClient blobContainer;
+        private TestLoggerProvider _loggerProvider = new TestLoggerProvider();
+        private ILogger<BlobListener> _logger;
+        private BlobServiceClient _blobServiceClient;
+        private BlobContainerClient _blobContainer;
 
-        public BlobQueueTriggerExecutorTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
+            _loggerProvider = new TestLoggerProvider();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            var account = azuriteFixture.GetAccount();
-            blobServiceClient = account.CreateBlobServiceClient();
-            blobContainer = blobServiceClient.GetBlobContainerClient(TestContainerName);
-            blobContainer.DeleteIfExists();
-            blobContainer.CreateIfNotExists();
+            var account = AzuriteNUnitFixture.Instance.GetAccount();
+            _blobServiceClient = account.CreateBlobServiceClient();
+            _blobContainer = _blobServiceClient.GetBlobContainerClient(TestContainerName);
+            _blobContainer.DeleteIfExists();
+            _blobContainer.CreateIfNotExists();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfMessageIsNotJson_Throws()
         {
             // Arrange
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Throws<JsonReaderException>(() => task.GetAwaiter().GetResult());
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfMessageIsJsonNull_Throws()
         {
             // Arrange
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
                 "Invalid blob trigger message.");
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfFunctionIdIsNull_Throws()
         {
             // Arrange
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ExceptionAssert.ThrowsInvalidOperation(() => task.GetAwaiter().GetResult(), "Invalid function ID.");
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfMessageIsFunctionIdIsNotRegistered_ReturnsSuccessResult()
         {
             // Arrange
@@ -108,16 +108,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("FunctionNotFound", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(4, logMessage.State.Count());
-            Assert.Equal(TestBlobName, logMessage.GetStateValue<string>("blobName"));
-            Assert.Equal("Missing", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
+            Assert.AreEqual("FunctionNotFound", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(4, logMessage.State.Count());
+            Assert.AreEqual(TestBlobName, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual("Missing", logMessage.GetStateValue<string>("functionName"));
+            Assert.AreEqual(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfBlobHasBeenDeleted_ReturnsSuccessResult()
         {
             // Arrange
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobServiceClient = blobServiceClient,
+                BlobServiceClient = _blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -143,15 +143,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.Equal("BlobNotFound", logMessage.EventId.Name);
-            Assert.Equal(LogLevel.Debug, logMessage.Level);
-            Assert.Equal(3, logMessage.State.Count());
-            Assert.Equal(TestBlobName, logMessage.GetStateValue<string>("blobName"));
-            Assert.Equal(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
+            Assert.AreEqual("BlobNotFound", logMessage.EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
+            Assert.AreEqual(3, logMessage.State.Count());
+            Assert.AreEqual(TestBlobName, logMessage.GetStateValue<string>("blobName"));
+            Assert.AreEqual(TestQueueMessageId, logMessage.GetStateValue<string>("queueMessageId"));
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfBlobHasChanged_NotifiesWatcherAndReturnsSuccessResult()
         {
             // Arrange
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobServiceClient = blobServiceClient,
+                BlobServiceClient = _blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
         }
 
-        [Fact]
+        [Test]
         public async Task ExecuteAsync_IfBlobIsUnchanged_CallsInnerExecutor()
         {
             // Arrange
@@ -200,10 +200,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
                 .Callback<TriggeredFunctionData, CancellationToken>(
                 (mockInput, mockCancellationToken) =>
                 {
-                    Assert.Equal(expectedParentId, mockInput.ParentId);
+                    Assert.AreEqual(expectedParentId, mockInput.ParentId);
 
                     var resultBlob = (BlobBaseClient)mockInput.TriggerValue;
-                    Assert.Equal(TestBlobName, resultBlob.Name);
+                    Assert.AreEqual(TestBlobName, resultBlob.Name);
                 })
                 .ReturnsAsync(expectedResult)
                 .Verifiable();
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobServiceClient = blobServiceClient,
+                BlobServiceClient = _blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -222,11 +222,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             FunctionResult result = await product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.Same(expectedResult, result);
+            Assert.AreSame(expectedResult, result);
             mock.Verify();
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfInnerExecutorSucceeds_ReturnsSuccessResult()
         {
             // Arrange
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobServiceClient = blobServiceClient,
+                BlobServiceClient = _blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -258,10 +258,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.Same(expectedResult, task.Result);
+            Assert.AreSame(expectedResult, task.Result);
         }
 
-        [Fact]
+        [Test]
         public void ExecuteAsync_IfInnerExecutorFails_ReturnsFailureResult()
         {
             // Arrange
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobServiceClient = blobServiceClient,
+                BlobServiceClient = _blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         private string TouchBlob(string containerName, string blobName)
         {
             string content = Guid.NewGuid().ToString();
-            var blobClient = blobContainer.GetBlobClient(blobName);
+            var blobClient = _blobContainer.GetBlobClient(blobName);
             BlobContentInfo blobContentInfo = blobClient.Upload(new MemoryStream(Encoding.UTF8.GetBytes(content)), overwrite: true);
             return blobContentInfo.ETag.ToString();
         }

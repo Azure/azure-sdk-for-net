@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
@@ -11,13 +11,13 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public static void ThrowsArgumentNull(Action action, string expectedParameterName)
         {
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() => action.Invoke());
-            Assert.Equal(expectedParameterName, exception.ParamName);
+            Assert.AreEqual(expectedParameterName, exception.ParamName);
         }
 
         public static void ThrowsInvalidOperation(Action action, string expectedMessage)
         {
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => action.Invoke());
-            Assert.Equal(expectedMessage, exception.Message);
+            Assert.AreEqual(expectedMessage, exception.Message);
         }
     }
 }
