@@ -4,11 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Extensions.Options;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
@@ -69,8 +68,8 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             catch (FunctionIndexingException e)
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
-                Assert.Equal("Error indexing method '" + functionName + "'", e.Message);
-                Assert.Contains(expectedErrorMessage, e.InnerException.Message, StringComparison.InvariantCulture);
+                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
+                StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
                 return;
             }
             Assert.True(false, "Invoker should have failed");

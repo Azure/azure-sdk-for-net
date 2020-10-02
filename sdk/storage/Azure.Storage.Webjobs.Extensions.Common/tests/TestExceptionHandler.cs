@@ -6,7 +6,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Hosting;
-using Xunit;
+using NUnit.Framework;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {

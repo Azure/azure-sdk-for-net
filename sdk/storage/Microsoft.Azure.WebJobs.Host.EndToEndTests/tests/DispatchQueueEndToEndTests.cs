@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
-using Xunit;
-using Xunit.Abstractions;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -23,9 +21,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         // tells you how many function with different arguments have been ran
         private static ConcurrentStringSet _funcInvocation;
 
-        // shows the concurrent execution when using sharedQueue
-        // also make it easy to debug
-        private static ITestOutputHelper _output;
         private static Stopwatch _stopwatch = new Stopwatch();
 
         private QueueClient _sharedQueue;
@@ -61,12 +56,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public DispatchQueueEndToEndTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
-        [Fact(Skip = "Fix DispatchQueue")]
+        [Test]
+        [Ignore("Fix DispatchQueue")]
         // same trigger type, multiple functions
         public async Task DispatchQueueBatchTriggerTest()
         {
@@ -92,15 +83,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                                         7000, 1000);
 
                 // make sure each function is triggered once and only once
-                Assert.Equal(twoFuncCount, _funcInvocation.TotalAdd());
+                Assert.AreEqual(twoFuncCount, _funcInvocation.TotalAdd());
                 Assert.False(_funcInvocation.HasDuplicate());
 
                 _stopwatch.Stop();
             }
         }
 
-        [Fact(Skip = "Fix DispatchQueue")]
-        public async void PoisonQueueTest()
+        [Test]
+        [Ignore("Fix DispatchQueue")]
+        public async Task PoisonQueueTest()
         {
             _host = new HostBuilder()
                 .ConfigureDefaultTestHost<SampleTriggerWithPoisonQueue>(b =>
@@ -124,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int funcWithExceptionCount = DispatchQueueTestConfig.BatchSize + _host.GetOptions<QueuesOptions>().MaxDequeueCount;
                 await TestHelpers.Await(() => _funcInvocation.TotalAdd() >= funcWithExceptionCount, 10000, 1000);
 
-                Assert.Equal(funcWithExceptionCount, _funcInvocation.TotalAdd());
+                Assert.AreEqual(funcWithExceptionCount, _funcInvocation.TotalAdd());
                 Assert.True(_funcInvocation.HasDuplicate());
                 Assert.True(SampleTriggerWithPoisonQueue.PoisonQueueResult);
 
@@ -136,13 +128,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             // each test will have a different hostId
             // and therefore a different sharedQueue and poisonQueue
-            var client = _host.GetStorageAccount().CreateQueueServiceClient();
-            _sharedQueue = client.GetQueueClient("azure-webjobs-shared-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
-            _poisonQueue = client.GetQueueClient("azure-webjobs-poison-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
-            _sharedQueue.DeleteIfExistsAsync().Wait();
-            _poisonQueue.DeleteIfExistsAsync().Wait();
+            if (_host != null)
+            {
+                var client = _host.GetStorageAccount().CreateQueueServiceClient();
+                _sharedQueue = client.GetQueueClient("azure-webjobs-shared-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
+                _poisonQueue = client.GetQueueClient("azure-webjobs-poison-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
+                _sharedQueue.DeleteIfExistsAsync().Wait();
+                _poisonQueue.DeleteIfExistsAsync().Wait();
 
-            _host.Dispose();
+                _host.Dispose();
+            }
         }
 
         public class SampleTriggerWithPoisonQueue
@@ -153,7 +148,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int order = json["order"].Value<int>();
                 string funcSignature = "PoisonQueueTrigger arg: " + order;
                 _funcInvocation.Add(funcSignature);
-                _output.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
+                TestContext.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
                 if (order == 0)
                 {
                     throw new Exception("Can't deal with zero :(");
@@ -169,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     PoisonQueueResult = true;
                 }
                 _funcInvocation.Add("PosionQueueProcess");
-                _output.WriteLine("PoisonQueueProcess" + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
+                TestContext.WriteLine("PoisonQueueProcess" + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
             }
         }
 
@@ -179,14 +174,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 string funcSignature = "DispatchQueueTrigger arg: " + json["order"].Value<int>();
                 _funcInvocation.Add(funcSignature);
-                _output.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
+                TestContext.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
             }
 
             public void DispatchQueueTrigger2([DispatchQueueTrigger]JObject json)
             {
                 string funcSignature = "DispatchQueueTrigger2 arg: " + json["order"].Value<int>();
                 _funcInvocation.Add(funcSignature);
-                _output.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
+                TestContext.WriteLine(funcSignature + " elapsed time: " + _stopwatch.ElapsedMilliseconds + " ms");
             }
         }
     }
