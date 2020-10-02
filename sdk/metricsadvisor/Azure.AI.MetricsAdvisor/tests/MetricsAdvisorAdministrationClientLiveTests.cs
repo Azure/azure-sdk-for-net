@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateMetricAnomalyDetectionConfiguration()
+        public async Task MetricAnomalyDetectionConfigurationOperations()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -85,6 +85,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricAnomalyDetectionConfiguration getConfig = await adminClient.GetMetricAnomalyDetectionConfigurationAsync(createdConfiguration.Id).ConfigureAwait(false);
 
             Assert.That(getConfig.Id, Is.EqualTo(createdConfiguration.Id));
+
+            getConfig.Description = "updated";
+
+            await adminClient.UpdateMetricAnomalyDetectionConfigurationAsync(getConfig.Id.ToString(), getConfig);
 
             await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(createdConfiguration.Id);
         }
