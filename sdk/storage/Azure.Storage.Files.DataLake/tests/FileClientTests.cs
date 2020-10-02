@@ -301,7 +301,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
 
             // Act
             Response<PathInfo> response = await file.CreateIfNotExistsAsync();
@@ -332,7 +332,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await file.ExistsAsync();
@@ -393,7 +393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await file.DeleteIfExistsAsync();
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
 
             // Act
@@ -1657,7 +1657,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
             TestProgress progress = new TestProgress();
 
@@ -1681,7 +1681,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
             byte[] contentHash = MD5.Create().ComputeHash(data);
 
@@ -1717,7 +1717,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data0 = GetRandomBuffer(Constants.KB);
             var data1 = GetRandomBuffer(Constants.KB);
 
@@ -1747,7 +1747,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1767,7 +1767,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
 
             // Act
@@ -1786,7 +1786,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
 
             // Act
             using (var stream = (MemoryStream)null)
@@ -1808,7 +1808,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -1830,7 +1830,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             byte[] data = GetRandomBuffer(Constants.KB);
             byte[] contentHash = MD5.Create().ComputeHash(data);
             PathHttpHeaders headers = new PathHttpHeaders
@@ -1868,7 +1868,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -1890,7 +1890,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -1912,7 +1912,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await file.CreateAsync();
+            await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -1958,7 +1958,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Arrange
                 DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-                await file.CreateAsync();
+                await file.CreateIfNotExistsAsync();
                 var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
@@ -1987,7 +1987,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Arrange
                 DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-                await file.CreateAsync();
+                await file.CreateIfNotExistsAsync();
                 var data = GetRandomBuffer(Size);
 
                 using (var stream = new MemoryStream(data))

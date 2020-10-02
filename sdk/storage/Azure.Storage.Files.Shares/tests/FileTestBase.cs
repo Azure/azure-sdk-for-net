@@ -284,7 +284,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata);
+                await share.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     try
                     {
-                        await Share.DeleteAsync(true);
+                        await Share.DeleteIfExistsAsync();
                         Share = null;
                     }
                     catch
@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
             {
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
                 return new DisposingDirectory(test, directory);
             }
 
