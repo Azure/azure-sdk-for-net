@@ -11,22 +11,23 @@ using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BinderTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BinderTests
     {
-        private const string QueueName = "input";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "input-bindertests";
+        private readonly StorageAccount account;
 
         public BinderTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange
             const string expectedContents = "abc";
-            var account = CreateFakeStorageAccount();
             QueueClient queue = CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedContents);
 
@@ -36,11 +37,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.Equal("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
         private static QueueClient CreateQueue(StorageAccount account, string queueName)

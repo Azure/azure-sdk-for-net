@@ -1,6 +1,14 @@
 # Release History
+## 14.1.0-beta.1 (Unreleased)
 
-## 13.1.0-preview.1 (Unreleased)
+
+## 14.0.0 (2020-09-10)
+### Features
+- **[Breaking]** Removed proprty `MaxTasksPerNode` on CloudPool and added property `TaskSlotsPerNode`. Using this property `CloudTasks`
+in a `CloudJob` can consume a dynamic amount of slots allowing for more fine-grained control over resource consumption.
+- **[Breaking]** Changed the return type of `GetJobTaskCounts` operations to return a `TaskCountsResult` object, which is a complex object containing the previous
+`TaskCounts` object and a new `TaskSlotCounts` object providing similar information in the context of slots being used.
+- Added property `RequiredSlots` to CloudTask allowing user to specify how many slots on a node they should take up.
 
 
 ## 13.0.0 (2020-03-01)

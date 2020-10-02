@@ -270,7 +270,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessagesAsync(messages);
 
-                var receiver = client.CreateReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    PrefetchCount = 10
+                });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 

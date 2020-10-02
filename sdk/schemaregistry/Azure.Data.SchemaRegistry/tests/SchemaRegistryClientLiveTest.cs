@@ -25,6 +25,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string SchemaContent = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanRegisterSchema()
         {
             var client = CreateClient();
@@ -40,6 +41,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchemaId()
         {
             var client = CreateClient();
@@ -56,6 +58,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchema()
         {
             var client = CreateClient();

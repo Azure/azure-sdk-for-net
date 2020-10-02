@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal ACSChatThreadEventBaseProperties(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version) : base(recipientId, transactionId, threadId)
+        internal ACSChatThreadEventBaseProperties(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(recipientId, transactionId, threadId)
         {
             CreateTime = createTime;
             Version = version;
@@ -32,6 +32,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The original creation time of the thread. </summary>
         public DateTimeOffset? CreateTime { get; }
         /// <summary> The version of the thread. </summary>
-        public int? Version { get; }
+        public long? Version { get; }
     }
 }

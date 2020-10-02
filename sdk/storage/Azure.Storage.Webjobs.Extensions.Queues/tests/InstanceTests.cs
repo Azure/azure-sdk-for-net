@@ -13,22 +13,23 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class InstanceTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class InstanceTests
     {
-        private const string QueueName = "input";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "input-instancetests";
+        private readonly StorageAccount account;
 
         public InstanceTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_CanBeInstanceMethod()
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceProgram();
@@ -59,12 +60,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_CanBeAsyncInstanceMethod()
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceAsyncProgram();
@@ -96,11 +96,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ this test should apply to any trigger and be in the Unit tests.
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()
@@ -130,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ Not really a queue test
-        [AzuriteFact]
+        [Fact]
         public async Task Trigger_IfClassConstructorHasDependencies_CanUseCustomJobActivator()
         {
             // Arrange
@@ -145,7 +144,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                          .Returns(() => new InstanceCustomActivatorProgram(resultFactory));
             IJobActivator activator = activatorMock.Object;
 
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()

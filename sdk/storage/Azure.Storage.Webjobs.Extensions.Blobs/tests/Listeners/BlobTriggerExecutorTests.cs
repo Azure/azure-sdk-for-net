@@ -21,31 +21,34 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    public class BlobTriggerExecutorTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobTriggerExecutorTests
     {
         // Note: The tests that return true consume the notification.
         // The tests that return false reset the notification (to be provided again later).
         private const string TestClientRequestId = "testClientRequestId";
 
+        private const string ContainerName = "container-blobtriggerexecutortests";
+
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public BlobTriggerExecutorTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobDoesNotMatchPattern_ReturnsSuccessfulResult()
         {
             // Arrange
-            var account = CreateAccount();
             var client = account.CreateBlobServiceClient();
-            string containerName = "container";
+            string containerName = ContainerName;
             var container = client.GetBlobContainerClient(containerName);
             var otherContainer = client.GetBlobContainerClient("other");
 
@@ -80,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobDoesNotExist_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -107,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfCompletedBlobReceiptExists_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -137,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfIncompleteBlobReceiptExists_TriesToAcquireLease()
         {
             // Arrange
@@ -162,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobReceiptDoesNotExist_TriesToCreateReceipt()
         {
             // Arrange
@@ -187,7 +190,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryCreateReceiptFails_ReturnsUnsuccessfulResult()
         {
             // Arrange
@@ -210,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryCreateReceiptSucceeds_TriesToAcquireLease()
         {
             // Arrange
@@ -237,7 +240,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryAcquireLeaseFails_ReturnsFailureResult()
         {
             // Arrange
@@ -260,7 +263,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryAcquireLeaseSucceeds_ReadsLatestReceipt()
         {
             // Arrange
@@ -291,7 +294,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Equal(2, calls);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfLeasedReceiptBecameCompleted_ReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange
@@ -325,7 +328,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfEnqueueAsyncThrows_ReleasesLease()
         {
             // Arrange
@@ -364,7 +367,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Same(expectedException, exception);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfLeasedIncompleteReceipt_EnqueuesMessageMarksCompletedReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange
@@ -431,16 +434,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        private StorageAccount CreateAccount()
-        {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-        }
-
         private BlobTriggerExecutorContext CreateExecutorContext(bool createBlob = true)
         {
             return new BlobTriggerExecutorContext
             {
-                Blob = CreateBlobReference("container", "blob", createBlob),
+                Blob = CreateBlobReference(ContainerName, "blob", createBlob),
                 PollId = TestClientRequestId,
                 TriggerSource = BlobTriggerSource.ContainerScan
             };
@@ -448,7 +446,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private BlobWithContainer<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
         {
-            var account = CreateAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(containerName);
             container.CreateIfNotExists();
@@ -514,7 +511,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
         {
-            var blobServiceClient = CreateAccount().CreateBlobServiceClient();
+            var blobServiceClient = account.CreateBlobServiceClient();
             var blobContainerClient = blobServiceClient.GetBlobContainerClient("receipts");
             var receiptBlob = blobContainerClient.GetBlockBlobClient("item");
             Mock<IBlobReceiptManager> mock = new Mock<IBlobReceiptManager>(MockBehavior.Strict);

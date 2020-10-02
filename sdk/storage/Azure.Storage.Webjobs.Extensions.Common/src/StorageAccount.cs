@@ -3,9 +3,11 @@
 
 using System;
 using System.Net.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
@@ -17,15 +19,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     // TODO (kasobol-msft) split this between blobs and queues.
     public class StorageAccount
     {
-        private readonly string _connectionString;
+        private readonly BlobServiceClient _blobServiceClient;
+        private readonly QueueServiceClient _queueServiceClient;
 
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="connectionString"></param>
-        public StorageAccount(string connectionString)
+        public StorageAccount(BlobServiceClient blobServiceClient, QueueServiceClient queueServiceClient)
         {
-            _connectionString = connectionString;
+            _blobServiceClient = blobServiceClient;
+            _queueServiceClient = queueServiceClient;
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <returns></returns>
         public static StorageAccount NewFromConnectionString(string accountConnectionString)
         {
-            return new StorageAccount(accountConnectionString);
+            return new StorageAccount(new BlobServiceClient(accountConnectionString), new QueueServiceClient(accountConnectionString));
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         public virtual bool IsDevelopmentStorageAccount()
         {
             // see the section "Addressing local storage resources" in http://msdn.microsoft.com/en-us/library/windowsazure/hh403989.aspx
-            var blobServiceClient = CreateBlobServiceClient();
+            var blobServiceClient = _blobServiceClient;
             return String.Equals(
                 blobServiceClient.Uri.PathAndQuery.TrimStart('/'),
                 blobServiceClient.AccountName,
@@ -57,41 +60,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// </summary>
         public virtual string Name
         {
-            get { return CreateBlobServiceClient().AccountName; }
+            get { return _blobServiceClient.AccountName; }
         }
 
         /// <summary>
         /// TODO
         /// </summary>
         /// <returns></returns>
-        public virtual BlobServiceClient CreateBlobServiceClient()
-        {
-            var blobClientOptions = SkuUtility.IsDynamicSku ? new BlobClientOptions()
-            {
-                Transport = CreateTransportForDynamicSku()
-            } : default;
-            return new BlobServiceClient(_connectionString, blobClientOptions);
-        }
+        public virtual BlobServiceClient CreateBlobServiceClient() => _blobServiceClient;
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <returns></returns>
-        public virtual QueueServiceClient CreateQueueServiceClient()
-        {
-            var queueClientOptions = SkuUtility.IsDynamicSku ? new QueueClientOptions()
-            {
-                Transport = CreateTransportForDynamicSku()
-            } : default;
-            return new QueueServiceClient(_connectionString, queueClientOptions);
-        }
-
-        private HttpPipelineTransport CreateTransportForDynamicSku()
-        {
-            return new HttpClientTransport(new HttpClient(new HttpClientHandler()
-            {
-                MaxConnectionsPerServer = 50
-            }));
-        }
+        public virtual QueueServiceClient CreateQueueServiceClient() => _queueServiceClient;
     }
 }

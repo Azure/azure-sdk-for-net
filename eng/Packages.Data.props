@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20200922.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201001.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.5.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.5" />
+    <PackageReference Update="Azure.Core" Version="1.5.1" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.6" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
@@ -162,6 +162,8 @@
     <!-- Extension packages -->
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
+
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
 
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />

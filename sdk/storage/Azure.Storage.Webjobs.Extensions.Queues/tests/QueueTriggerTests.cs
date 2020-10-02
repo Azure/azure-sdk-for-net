@@ -16,14 +16,16 @@ using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueTriggerTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class QueueTriggerTests
     {
-        private const string QueueName = "input";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "input-queuetriggertests";
+        private readonly StorageAccount account;
 
         public QueueTriggerTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
         private async Task SetupAsync(StorageAccount account, object contents)
@@ -48,12 +50,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await queue.SendMessageAsync(message);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToCloudQueueMessage_Binds()
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedGuid);
 
@@ -65,14 +66,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedGuid, result.MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToString_Binds()
         {
             string expectedContent = Guid.NewGuid().ToString();
             await TestBindToString(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsEmpty_Binds()
         {
             await TestBindToString(string.Empty);
@@ -81,7 +82,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToString(string expectedContent)
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedContent);
 
@@ -98,7 +98,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(content));
 
@@ -122,7 +121,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToByteArray(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsEmpty_Binds()
         {
             byte[] expectedContent = new byte[0];
@@ -139,7 +138,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) Revisit base64 encoding story
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(expectedContent));
 
@@ -151,14 +149,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPoco_Binds()
         {
             Poco expectedContent = new Poco { Value = "abc" };
             await TestBindToPoco(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsJsonNull_Binds()
         {
             Poco expectedContent = null;
@@ -168,7 +166,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToPoco(Poco expectedContent)
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(Poco), settings: null);
             await queue.SendMessageAsync(content);
@@ -194,12 +191,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(expected.Child, actual.Child);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsNotJson_DoesNotBind()
         {
             // Arrange
             const string content = "not json"; // Not a valid JSON byte sequence.
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(content);
 
@@ -221,12 +217,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInnerMessage, actual);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsIncompatibleJson_DoesNotBind()
         {
             // Arrange
             const string content = "123"; // A JSON int rather than a JSON object.
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(content);
 
@@ -248,12 +243,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInnerMessage, actual);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoStruct_Binds()
         {
             // Arrange
             const int expectedContent = 123;
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(int), settings: null);
             await queue.SendMessageAsync(content);
@@ -266,12 +260,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfMessageIsString_ProvidesQueueTriggerBindingData()
         {
             // Arrange
             string expectedQueueTrigger = Guid.NewGuid().ToString();
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedQueueTrigger);
 
@@ -283,13 +276,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedQueueTrigger, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfMessageIsUtf8ByteArray_ProvidesQueueTriggerBindingData()
         {
             // Arrange
             const string expectedQueueTrigger = "abc";
             byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) Revisit base64 encoding story
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedQueueTrigger);
 
@@ -306,7 +298,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(content));
 
@@ -322,11 +313,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("Binding data does not contain expected value 'queueTrigger'.", innerException.Message);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             // message.DequeueCount is provided by FakeStorageAccount when the message is retrieved.
             await queue.SendMessageAsync("ignore");
@@ -339,11 +329,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(1, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             // message.ExpirationTime is provided by FakeStorageAccount when the message is inserted.
             await queue.SendMessageAsync("ignore");
@@ -356,11 +345,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             // message.Id is provided by FakeStorageAccount when the message is inserted.
             await queue.SendMessageAsync("ignore");
@@ -374,11 +362,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotEmpty(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             await SetupAsync(account, "ignore");
 
             // Act
@@ -389,11 +376,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             await SetupAsync(account, "ignore");
 
             // Act
@@ -404,11 +390,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             await SetupAsync(account, "ignore");
 
             // Act
@@ -420,12 +405,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotEmpty(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPocoStructPropertyBindingData()
         {
             // Arrange
             const int expectedInt32Value = 123;
-            var account = CreateFakeStorageAccount();
 
             Poco value = new Poco { Int32Value = expectedInt32Value };
             string content = JsonConvert.SerializeObject(value, typeof(Poco), settings: null);
@@ -440,7 +424,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInt32Value, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPocoComplexPropertyBindingData()
         {
             // Arrange
@@ -449,7 +433,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Value = "abc",
                 Int32Value = 123
             };
-            var account = CreateFakeStorageAccount();
 
             Poco value = new Poco { Child = expectedChild };
             string content = JsonConvert.SerializeObject(value, typeof(Poco), settings: null);
@@ -464,12 +447,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(expectedChild, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBindingAlwaysFails_MovesToPoisonQueue()
         {
             // Arrange
             const string expectedContents = "abc";
-            var account = CreateFakeStorageAccount();
             await SetupAsync(account, expectedContents);
 
             // Act
@@ -481,14 +463,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContents, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfDequeueCountReachesMaxDequeueCount_MovesToPoisonQueue()
         {
             try
             {
                 // Arrange
                 const string expectedContents = "abc";
-                var account = CreateFakeStorageAccount();
                 await SetupAsync(account, expectedContents);
 
                 // Act
@@ -509,7 +490,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsCloudQueueMessage_Binds()
         {
             // Arrange
@@ -523,7 +504,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedMessage, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsString_Binds()
         {
             // Arrange
@@ -538,7 +519,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContents, result.MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsIStorageQueueMessage_Binds()
         {
             // Arrange
@@ -552,7 +533,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedMessage, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
@@ -567,7 +548,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedDequeueCount, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
@@ -583,7 +564,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedExpirationTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfExpirationTimeIsNull_ProvidesMaxValueExpirationTimeBindingData()
         {
             // Arrange
@@ -599,7 +580,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(DateTimeOffset.MaxValue, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
@@ -614,7 +595,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedId, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
@@ -630,7 +611,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInsertionTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfInsertionTimeIsNull_ProvidesUtcNowInsertionTimeBindingData()
         {
             // Arrange
@@ -647,7 +628,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(TimeSpan.Zero, result.Offset);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
@@ -663,7 +644,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedNextVisibleTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfNextVisibleTimeIsNull_ProvidesMaxValueNextVisibleTimeBindingData()
         {
             // Arrange
@@ -679,7 +660,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(DateTimeOffset.MaxValue, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
@@ -715,7 +696,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var method = programType.GetMethod("Run");
             Assert.NotNull(method);
 
@@ -725,11 +705,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }, setTaskSource);
 
             return result;
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
         private static async Task<QueueClient> CreateQueue(StorageAccount account, string queueName)

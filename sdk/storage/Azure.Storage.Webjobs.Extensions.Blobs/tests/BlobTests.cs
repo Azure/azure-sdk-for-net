@@ -15,27 +15,27 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobTests
     {
-        private const string TriggerQueueName = "input";
-        private const string ContainerName = "container";
+        private const string TriggerQueueName = "input-blobtests";
+        private const string ContainerName = "container-blobtests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
 
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public BlobTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(TriggerQueueName).DeleteIfExists();
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
-            var azuriteAccount = azuriteFixture.GetAccount();
-            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
-
             var prog = new BindToCloudBlockBlobProgram();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
@@ -61,13 +61,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.False(await blob.ExistsAsync());
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange
             const string expectedContent = "message";
-            var azuriteAccount = azuriteFixture.GetAccount();
-            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
             QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
 

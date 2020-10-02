@@ -16,7 +16,8 @@ using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>, IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>
     {
         private ITriggerBinding _binding;
 
@@ -26,9 +27,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
-            var fakeAccount = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var fakeAccount = azuriteFixture.GetAccount();
             QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
-            QueueClient queue = queueServiceClient.GetQueueClient("queueName");
+            QueueClient queue = queueServiceClient.GetQueueClient("queueName-queuetriggerbindingintegrationtests");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);
             var enqueueWatcher = new Host.Queues.Listeners.SharedQueueWatcher();
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 null, null);
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("RequestId", "4b957741-c22e-471d-9f0f-e1e8534b9cb6")]
         [InlineData("RequestReceivedTime", "8/16/2014 12:09:36 AM")]
         [InlineData("DeliveryCount", "8")]

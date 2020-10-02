@@ -13,23 +13,24 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStartTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class HostStartTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
         public HostStartTests(AzuriteFixture azuriteFixture)
         {
-            this.azuriteFixture = azuriteFixture;
+            account = azuriteFixture.GetAccount();
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfNameIsInvalid_ThrowsDuringIndexing()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
                     b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    .UseStorage(account);
                 })
                 .Build();
 

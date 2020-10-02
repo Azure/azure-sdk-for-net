@@ -149,7 +149,8 @@ namespace Azure.Storage.Blobs
                 TagCount = properties.TagCount,
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,
-                RehydratePriority = properties.RehydratePriority
+                RehydratePriority = properties.RehydratePriority,
+                LastAccessed = properties.LastAccessed
             };
 
         /// <summary>

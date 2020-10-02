@@ -25,10 +25,11 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    public class BlobQueueTriggerExecutorTests : IClassFixture<AzuriteFixture>
+    [Collection(AzuriteCollection.Name)]
+    public class BlobQueueTriggerExecutorTests
     {
         private const string TestBlobName = "TestBlobName";
-        private const string TestContainerName = "container";
+        private const string TestContainerName = "container-blobqueuetriggerexecutortests";
         private const string TestQueueMessageId = "abc123";
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
@@ -36,21 +37,20 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         private readonly BlobServiceClient blobServiceClient;
         private readonly BlobContainerClient blobContainer;
 
-        private readonly AzuriteFixture azuriteFixture;
-
         public BlobQueueTriggerExecutorTests(AzuriteFixture azuriteFixture)
         {
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            this.azuriteFixture = azuriteFixture;
-            blobServiceClient = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString).CreateBlobServiceClient();
+            var account = azuriteFixture.GetAccount();
+            blobServiceClient = account.CreateBlobServiceClient();
             blobContainer = blobServiceClient.GetBlobContainerClient(TestContainerName);
+            blobContainer.DeleteIfExists();
             blobContainer.CreateIfNotExists();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfMessageIsNotJson_Throws()
         {
             // Arrange
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Throws<JsonReaderException>(() => task.GetAwaiter().GetResult());
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfMessageIsJsonNull_Throws()
         {
             // Arrange
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
                 "Invalid blob trigger message.");
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfFunctionIdIsNull_Throws()
         {
             // Arrange
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ExceptionAssert.ThrowsInvalidOperation(() => task.GetAwaiter().GetResult(), "Invalid function ID.");
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfMessageIsFunctionIdIsNotRegistered_ReturnsSuccessResult()
         {
             // Arrange
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobHasBeenDeleted_ReturnsSuccessResult()
         {
             // Arrange
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobHasChanged_NotifiesWatcherAndReturnsSuccessResult()
         {
             // Arrange
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task ExecuteAsync_IfBlobIsUnchanged_CallsInnerExecutor()
         {
             // Arrange
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfInnerExecutorSucceeds_ReturnsSuccessResult()
         {
             // Arrange
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Same(expectedResult, task.Result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfInnerExecutorFails_ReturnsFailureResult()
         {
             // Arrange
