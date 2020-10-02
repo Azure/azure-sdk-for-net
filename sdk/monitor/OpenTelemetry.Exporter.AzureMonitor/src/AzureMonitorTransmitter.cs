@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = exporterOptions.ServiceRestClient ?? new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            serviceRestClient = exporterOptions.ServiceRestClient ?? new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
@@ -72,11 +72,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             if (async)
             {
                 // TODO: RequestFailedException is thrown when http response is not equal to 200 or 206. Implement logic to catch exception.
-                response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
             }
 
             // TODO: Handle exception, check telemetryItems has items

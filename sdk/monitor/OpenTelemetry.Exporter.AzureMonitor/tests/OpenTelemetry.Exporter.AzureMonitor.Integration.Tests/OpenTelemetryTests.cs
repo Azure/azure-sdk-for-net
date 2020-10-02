@@ -9,11 +9,11 @@ using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 {
-    public class OpenTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<WebApp.Startup>>
+    public class OpenTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup>>
     {
-        private readonly OpenTelemetryWebApplicationFactory<WebApp.Startup> factory;
+        private readonly OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory;
 
-        public OpenTelemetryTests(OpenTelemetryWebApplicationFactory<WebApp.Startup> factory)
+        public OpenTelemetryTests(OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory)
         {
             this.factory = factory;
         }
@@ -39,7 +39,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             this.factory.ForceFlush();
 
             // Assert
-            Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");
+            Assert.True(this.factory.TelemetryItems.Any(), "test project did not capture telemetry");
 
             var item = this.factory.TelemetryItems.Single();
             var baseData = (Models.RequestData)item.Data.BaseData;
