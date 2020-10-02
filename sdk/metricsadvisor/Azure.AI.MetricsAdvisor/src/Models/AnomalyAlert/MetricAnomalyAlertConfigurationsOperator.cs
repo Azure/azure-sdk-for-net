@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary>
         /// The data point will trigger an alert if every <see cref="MetricAnomalyAlertConfiguration"/> defined
-        /// in <see cref="AnomalyAlertConfiguration"/> is satisfied. Keep in mind that, if two
+        /// in <see cref="AnomalyAlertConfiguration"/> is satisfied. Note: If two
         /// <see cref="MetricAnomalyAlertConfiguration"/>s have different dimension names, an alert will never
         /// be triggered.
         /// </summary>
