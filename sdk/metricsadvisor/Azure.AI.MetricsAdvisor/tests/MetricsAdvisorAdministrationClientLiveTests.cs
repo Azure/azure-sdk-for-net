@@ -133,8 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricAnomalyDetectionConfiguration createdAnomalyDetectionConfiguration = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfig).ConfigureAwait(false);
 
-            AnomalyAlertConfiguration createdAlertConfig = await adminClient.CreateAnomalyAlertConfigurationAsync(
-                new AnomalyAlertConfiguration(
+            var alertConfigToCreate = new AnomalyAlertConfiguration(
                     Recording.GenerateAlphaNumericId("test"),
                     new List<string>(),
                     new List<MetricAnomalyAlertConfiguration>
@@ -148,8 +147,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                                     new KeyValuePair<string, string>("test", "test2")
                                 }),
                                 new TopNGroupScope(8, 4, 2)))
-                    })
-            ).ConfigureAwait(false);
+                    });
+
+            AnomalyAlertConfiguration createdAlertConfig = await adminClient.CreateAnomalyAlertConfigurationAsync(alertConfigToCreate).ConfigureAwait(false);
 
             Assert.That(createdAlertConfig.Id, Is.Not.Null);
 
@@ -159,6 +159,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(getAlertConfig.Id, Is.EqualTo(createdAlertConfig.Id));
             Assert.That(getAlertConfigs.Value.Any(c => c.Id == createdAlertConfig.Id));
+
+            getAlertConfig.Description = "Updated";
+            getAlertConfig.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
+
+            await adminClient.UpdateAnomalyAlertConfigurationAsync(getAlertConfig.Id.ToString(), getAlertConfig).ConfigureAwait(false);
 
             // Cleanup
             await adminClient.DeleteAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
