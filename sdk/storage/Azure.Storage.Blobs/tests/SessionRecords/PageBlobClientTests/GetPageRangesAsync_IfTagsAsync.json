@@ -39,6 +39,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "If-None-Match": "*",
         "traceparent": "00-bd052bb151e971438f50cc72c4792434-340c1f374e79e34b-00",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",

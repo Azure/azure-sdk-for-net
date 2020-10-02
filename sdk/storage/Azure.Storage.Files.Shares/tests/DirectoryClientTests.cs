@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             // Directory is intentionally created twice
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -274,7 +274,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<ShareDirectoryInfo> response = await directory.CreateIfNotExistsAsync();
@@ -338,7 +338,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.ExistsAsync();
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
             await directory.CreateFileAsync(GetNewFileName(), Constants.KB);
 
             // Act
@@ -474,7 +474,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
-            Response<ShareDirectoryInfo> createResponse = await directory.CreateAsync();
+            Response<ShareDirectoryInfo> createResponse = await directory.CreateIfNotExistsAsync();
             Response<ShareDirectoryProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
 
             // Assert
@@ -543,7 +543,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(filePermission: filePermission);
@@ -572,7 +572,7 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
 
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(smbProperties: smbProperties);
@@ -593,7 +593,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             var filePermission = new string('*', 9 * Constants.KB);
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
@@ -617,7 +617,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 FilePermissionKey = "filePermissionKey"
             };
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
@@ -674,7 +674,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             foreach (var fileName in fileNames)
             {
@@ -687,7 +687,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 ShareDirectoryClient subDir = InstrumentClient(directory.GetSubdirectoryClient(subDirName));
 
-                await subDir.CreateAsync();
+                await subDir.CreateIfNotExistsAsync();
             }
 
             var directories = new List<ShareFileItem>();

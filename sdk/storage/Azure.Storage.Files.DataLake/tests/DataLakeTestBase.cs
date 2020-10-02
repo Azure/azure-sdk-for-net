@@ -424,7 +424,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     try
                     {
-                        await FileSystem.DeleteAsync();
+                        await FileSystem.DeleteIfExistsAsync();
                         FileSystem = null;
                     }
                     catch
