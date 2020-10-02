@@ -180,14 +180,14 @@ namespace Microsoft.Azure.Batch
             return newJob;
         }
 
-        internal async Task<TaskCounts> GetJobTaskCountsAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        internal async Task<TaskCountsResult> GetJobTaskCountsAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders> response = await this.ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
+            AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders> response = await this.ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
                 jobId,
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-            Models.TaskCounts protoTaskCounts = response.Body;
-            TaskCounts result = new TaskCounts(protoTaskCounts);
+            Models.TaskCountsResult protoTaskCounts = response.Body;
+            TaskCountsResult result = new TaskCountsResult(protoTaskCounts);
 
             return result;
         }
@@ -200,14 +200,14 @@ namespace Microsoft.Azure.Batch
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <remarks>The get job task counts operation runs asynchronously.</remarks>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job.</returns>
-        public async Task<TaskCounts> GetJobTaskCountsAsync(
+        public async Task<TaskCountsResult> GetJobTaskCountsAsync(
             string jobId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel: null);
-            TaskCounts counts = await GetJobTaskCountsAsyncImpl(jobId, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+            TaskCountsResult counts = await GetJobTaskCountsAsyncImpl(jobId, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
             return counts;
         }
@@ -219,9 +219,9 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job.</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetJobTaskCountsAsync"/>.</remarks>
-        public TaskCounts GetJobTaskCounts(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public TaskCountsResult GetJobTaskCounts(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            TaskCounts result = GetJobTaskCountsAsync(jobId, additionalBehaviors).WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            TaskCountsResult result = GetJobTaskCountsAsync(jobId, additionalBehaviors).WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             return result;
         }
 

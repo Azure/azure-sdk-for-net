@@ -1,9 +1,18 @@
 # Release History
 
-## 12.5.0-preview.1 (Unreleased)
+## 12.5.0-preview.2 (Unreleased)
+
+
+## 12.5.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for Directory SAS.
+- Added support for File Set Expiry.
 - Fixed bug where Stream returned from DataLakeFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
 - Fixed bug where DataLakeFileClient.Upload() could not upload read-only files.
 - Fixed bug where DataLakeBlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added Close and RetainUncommitedData to DataLakeFileUploadOptions.
+- Fixed bug where DataLakeDirectoryClient.Rename(), DataLakeFileClient.Rename(), and DataLakeFileClient.Rename() couldn't handle source paths with special characters.
+- Added DataLakeClientBuilderExtensions.
 
 ## 12.4.0 (2020-08-31)
 - Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.

@@ -3,8 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
@@ -512,6 +511,76 @@ namespace Azure.Search.Documents.Tests
 
                 Response<IReadOnlyList<string>> names = await client.GetSkillsetNamesAsync();
                 CollectionAssert.DoesNotContain(names.Value, skillsetName);
+            }
+            catch
+            {
+                if (Recording.Mode != RecordedTestMode.Playback)
+                {
+                    await client.DeleteSkillsetAsync(skillsetName);
+                }
+
+                throw;
+            }
+        }
+
+        [Test]
+        public async Task RoundtripAllSkills()
+        {
+            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/15108
+
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            SearchIndexerClient client = resources.GetIndexerClient();
+            string skillsetName = Recording.Random.GetName();
+
+            // Enumerate all skills and create them with consistently fake input to test for nullability during deserialization.
+            SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
+            {
+                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" } ).ToList();
+                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+
+                return t switch
+                {
+                    // TODO: Should TextSplitMode be added to constructor (required input)?
+                    Type _ when t == typeof(SplitSkill) => new SplitSkill(inputs, outputs) { TextSplitMode = TextSplitMode.Pages },
+
+                    Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
+                    Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
+                    _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
+                };
+            }
+
+            List<SearchIndexerSkill> skills = typeof(SearchIndexerSkill).Assembly.GetExportedTypes()
+                .Where(t => t != typeof(SearchIndexerSkill) && typeof(SearchIndexerSkill).IsAssignableFrom(t))
+                .Select(t => t switch
+                {
+                    Type _ when t == typeof(ConditionalSkill) => CreateSkill(t, new[] { "condition", "whenTrue", "whenFalse" }, new[] { "output" }),
+                    Type _ when t == typeof(EntityRecognitionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
+                    Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
+                    Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
+                    Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
+                    Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
+                    Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
+                    Type _ when t == typeof(SentimentSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "score" }),
+                    Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
+                    Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
+                    Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
+                    Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
+                    _ => throw new NotSupportedException(),
+                })
+                .ToList();
+
+            SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
+            {
+                CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
+            };
+
+            try
+            {
+                SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(specifiedSkillset);
+
+                Assert.AreEqual(skillsetName, createdSkillset.Name);
+                Assert.AreEqual(skills.Count, createdSkillset.Skills.Count);
             }
             catch
             {

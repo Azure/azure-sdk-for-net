@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.2</Version>
+    <PackageId>Azure.ResourceManager.Communication</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.Communication</Description>
+    <PackageTags>azure;management;communication</PackageTags>
+    <Nullable>enable</Nullable>
+
+    <!--
+    AZC0001 - Communication namespace needs to be registered in the analyzer
+    AZC0008 - ClientOptions complains about a missing nested enum
+    -->
+    <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
+  </PropertyGroup>
+</Project>

@@ -3,7 +3,7 @@
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-Run `dotnet msbuild /t:GenerateCode` in src directory to re-generate.
+Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 
 ``` yaml
 title: Azure.Security.KeyVault.Administration

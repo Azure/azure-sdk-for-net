@@ -9,12 +9,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 
 namespace Azure.Search.Documents.Indexes
@@ -38,7 +36,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
 #if EXPERIMENTAL_SPATIAL
-                    [typeof(PointGeometry)] = SearchFieldDataType.GeographyPoint,
+                    [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
 #endif
                 });
 
@@ -224,9 +222,13 @@ namespace Azure.Search.Documents.Indexes
             static bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
-            if (s_primitiveTypeMap.TryGetValue(propertyType, out SearchFieldDataType SearchFieldDataType))
+            if (s_primitiveTypeMap.TryGetValue(propertyType, out SearchFieldDataType searchFieldDataType))
             {
-                return DataTypeInfo.Simple(SearchFieldDataType);
+                return DataTypeInfo.Simple(searchFieldDataType);
+            }
+            else if (SpatialProxyFactory.IsSupportedPoint(propertyType))
+            {
+                return DataTypeInfo.Simple(SearchFieldDataType.GeographyPoint);
             }
             else if (IsNullableType(propertyType))
             {
@@ -364,7 +366,12 @@ namespace Azure.Search.Documents.Indexes
             public static bool TryGet(Type type, IMemberNameConverter nameProvider, out ObjectInfo info)
             {
                 // Close approximation to Newtonsoft.Json.Serialization.DefaultContractResolver that was used in Microsoft.Azure.Search.
-                if (!type.IsPrimitive && !type.IsEnum && !s_unsupportedTypes.Contains(type) && !s_primitiveTypeMap.ContainsKey(type) && !typeof(IEnumerable).IsAssignableFrom(type))
+                if (!type.IsPrimitive &&
+                    !type.IsEnum &&
+                    !s_unsupportedTypes.Contains(type) &&
+                    !s_primitiveTypeMap.ContainsKey(type) &&
+                    !SpatialProxyFactory.IsSupportedPoint(type) &&
+                    !typeof(IEnumerable).IsAssignableFrom(type))
                 {
                     const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 

@@ -20,11 +20,17 @@
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
-# PRLabel: %AzConfig
+# PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
+
 # PRLabel: %Batch
-/sdk/batch/                                     @bgklein @xingwu1 
+/sdk/batch/                                     @paterasMSFT @dpwatrous
+
+# PRLabel: %Communication
+/sdk/communication/                             @RezaJooyandeh @DominikMe @Azure/azure-sdk-communication-code-reviewers
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
@@ -48,6 +54,9 @@
 # PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
 
+# PRLabel: %Cognitive - Metrics Advisor
+sdk/metricsadvisor/                             @kinelski
+
 # PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
@@ -63,11 +72,17 @@
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
 
+# PRLabel: %EngSys
+/sdk/template/                                  @Azure/azure-sdk-eng
+
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                             @annelo-msft @maririos
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
+
+# PRLabel: %Monitor - Exporter
+/sdk/monitor/OpenTelemetry.*/                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire

@@ -5,6 +5,13 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
+      - task: PowerShell@2
+        displayName: Prep template pipeline for release
+        condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
+        inputs:
+          pwsh: true
+          workingDirectory: $(Build.SourcesDirectory)
+          filePath: eng/scripts/SetTestPipelineVersion.ps1
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -24,39 +31,35 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
-        parameters:
-          TargetFolder: '.'
-          RootFolder: '.'
-          BuildSHA: $(Build.SourceVersion)
-          RepoId: 'Azure/azure-sdk-for-net'
       - script: >-
-          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
-          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          dotnet pack eng/service.proj -warnaserror
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}}
+          /p:PublicSign=false $(VersioningProperties)
+          /p:Configuration=$(BuildConfiguration)
+          /p:CommitSHA=$(Build.SourceVersion)
+          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: PublishPipelineArtifact@1
-        condition: succeeded()
-        inputs:
-          artifactName: packages
-          path: $(Build.ArtifactStagingDirectory)
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
+      - task: PublishPipelineArtifact@1
+        condition: succeeded()
+        inputs:
+          artifactName: packages
+          path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
     condition: ne(variables['Skip.Analyze'], true)
     variables:
       - template: ../variables/globals.yml
-    dependsOn:
-      - Build
     pool:
-      vmImage: "windows-2019"
+      vmImage: ubuntu-18.04
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -65,6 +68,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
@@ -73,17 +77,9 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: NodeTool@0
         inputs:
-          # AutoRest doesn't work with versions 12.x
-          versionSpec: '10.15.0'
+          versionSpec: '13.13.0'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
@@ -96,6 +92,13 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
@@ -129,6 +132,9 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"

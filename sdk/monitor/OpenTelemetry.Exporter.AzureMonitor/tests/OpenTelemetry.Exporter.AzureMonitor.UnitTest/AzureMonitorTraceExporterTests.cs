@@ -68,11 +68,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 .ToString();
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)
-                .GetField("serviceRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(transmitter);
 
-            endpoint = typeof(ServiceRestClient)
-                .GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic)
+            endpoint = typeof(ApplicationInsightsRestClient)
+                .GetField("host", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(serviceRestClient)
                 .ToString();
         }

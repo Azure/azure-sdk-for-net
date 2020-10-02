@@ -2042,7 +2042,7 @@ namespace Azure.Storage.Files.DataLake
         /// flush operation completes successfully, the service raises a file change notification with a property indicating that
         /// this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the
         /// file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that
-        /// the file stream has been closed."
+        /// the file stream has been closed.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -3468,7 +3468,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual Response<PathInfo> ScheduleDeletion(
+        public virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => ScheduleDeletionInternal(
@@ -3494,7 +3494,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => await ScheduleDeletionInternal(
@@ -4136,7 +4136,8 @@ namespace Azure.Storage.Files.DataLake
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    closeEvent: options?.Close);
             }
             catch (Exception ex)
             {
@@ -4150,7 +4151,7 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion OpenWrite
 
-        #region PartitionedUplaoder
+        #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
@@ -4197,7 +4198,7 @@ namespace Azure.Storage.Files.DataLake
                     return await client.FlushInternal(
                         position: newPosition,
                         retainUncommittedData: default,
-                        close: default,
+                        close: args.Close,
                         args.HttpHeaders,
                         args.Conditions,
                         async,
@@ -4224,7 +4225,7 @@ namespace Azure.Storage.Files.DataLake
                     return await client.FlushInternal(
                         offset + size,
                         retainUncommittedData: default,
-                        close: default,
+                        close: args.Close,
                         httpHeaders: args.HttpHeaders,
                         conditions: args.Conditions,
                         async,

@@ -2,7 +2,7 @@
 
 This sample demonstrates how to publish both Event Grid and CloudEvent 1.0 schema events to the Event Grid service. You can publish events from your own application using the `EventGridPublisherClient`.
 
-To begin, create separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema. See the [Prerequisites](../#prerequisites) section of the README for more instructions on creating custom topics.
+To begin, create separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema. See the [Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/#prerequisites) section of the README for more instructions on creating custom topics.
 
 ## Creating and Authenticating `EventGridPublisherClient`
 Once you have your access key and topic endpoint, you can create the publisher client using the `AzureKeyCredential` class as follows:
@@ -16,7 +16,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 ```C# Snippet:CreateClientWithOptions
 EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
 {
-    DataSerializer = myCustomDataSerializer
+    Serializer = myCustomDataSerializer
 };
 
 EventGridPublisherClient client = new EventGridPublisherClient(
@@ -79,4 +79,4 @@ await client.SendEventsAsync(eventsList);
 ## Source
 
 To view the full example source, see:
-- [Sample1_SendEventsToTopicAndDomain.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)
+- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

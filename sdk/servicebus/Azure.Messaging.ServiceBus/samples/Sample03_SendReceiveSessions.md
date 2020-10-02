@@ -26,7 +26,7 @@ await sender.SendMessageAsync(message);
 
 // create a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -44,12 +44,9 @@ byte[] state = await receiver.GetSessionStateAsync();
 
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
 // create a receiver specifying a particular session
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
+ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
     queueName,
-    new ServiceBusSessionReceiverOptions
-    {
-        SessionId = "Session2"
-    });
+    "Session2");
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -60,4 +57,4 @@ Console.WriteLine(receivedMessage.SessionId);
 
 To see the full example source, see:
 
-* [Sample03_SendReceiveSessions.cs](../tests/Samples/Sample03_SendReceiveSessions.cs)
+* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)

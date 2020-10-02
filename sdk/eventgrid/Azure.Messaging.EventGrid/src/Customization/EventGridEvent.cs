@@ -36,8 +36,19 @@ namespace Azure.Messaging.EventGrid
             DataVersion = dataVersion;
         }
 
-        internal EventGridEvent()
+        internal EventGridEvent(JsonElement serializedData, string subject, string eventType, string dataVersion, DateTimeOffset eventTime, string id)
         {
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(eventType, nameof(eventType));
+            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
+            Argument.AssertNotNull(id, nameof(id));
+
+            Subject = subject;
+            SerializedData = serializedData;
+            EventType = eventType;
+            DataVersion = dataVersion;
+            EventTime = eventTime;
+            Id = id;
         }
 
         /// <summary> An unique identifier for the event. </summary>
@@ -100,14 +111,15 @@ namespace Azure.Messaging.EventGrid
 
             foreach (EventGridEventInternal egEventInternal in egEventsInternal)
             {
-                EventGridEvent egEvent = new EventGridEvent()
+                EventGridEvent egEvent = new EventGridEvent(
+                    egEventInternal.Data,
+                    egEventInternal.Subject,
+                    egEventInternal.EventType,
+                    egEventInternal.DataVersion,
+                    egEventInternal.EventTime,
+                    egEventInternal.Id)
                 {
-                    Subject = egEventInternal.Subject,
-                    EventType = egEventInternal.EventType,
-                    DataVersion = egEventInternal.DataVersion,
-                    Id = egEventInternal.Id,
-                    EventTime = egEventInternal.EventTime,
-                    SerializedData = egEventInternal.Data
+                    Topic = egEventInternal.Topic
                 };
 
                 egEvents.Add(egEvent);
