@@ -91,10 +91,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("executionEnvironment");
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout");
-                writer.WriteStringValue(QueryTimeout);
+                writer.WriteStringValue(_queryTimeout);
             }
             foreach (var item in AdditionalProperties)
             {

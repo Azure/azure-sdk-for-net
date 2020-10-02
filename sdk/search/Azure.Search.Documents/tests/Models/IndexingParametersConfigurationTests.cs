@@ -17,18 +17,15 @@ namespace Azure.Search.Documents.Tests.Models
         // interested in testing how well Configuration and IndexingParametersConfiguration are synchronized.
 
         [Test]
-        public void DeclaredPropertiesAreHandled()
+        public void DeclaredPropertiesAreWellKnownProperties()
         {
-            // Check that each declared public property has an associated constant defined,
-            // which works as an analogue to make sure no properties were generated of which we weren't aware.
-            ILookup<string, FieldInfo> constants = typeof(IndexingParametersConfiguration)
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(f => f.IsPrivate && f.IsLiteral && f.FieldType == typeof(string) && f.Name.EndsWith("Key"))
-                .ToLookup(f => f.Name);
-
             foreach (PropertyInfo property in DeclaredProperties)
             {
-                Assert.IsTrue(constants.Contains($"{property.Name}Key"), $"No key name found for property '{property.Name}'");
+                // Assumes property names match JSON property names sans case. This would still alert us if properties were added,
+                // but any custom name overrides would break this check and require specific handling.
+                Assert.IsTrue(
+                    IndexingParametersConfiguration.WellKnownProperties.Keys.Contains(property.Name, StringComparer.OrdinalIgnoreCase),
+                    $"Property '{property.Name}' was not found in {nameof(IndexingParametersConfiguration.WellKnownProperties)}");
             }
         }
 
@@ -83,159 +80,14 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsTrue(configuration.AllowSkillsetToReadFileData);
             Assert.AreEqual(BlobIndexerPdfTextRotationAlgorithm.DetectAngles, configuration.PdfTextRotationAlgorithm);
             Assert.AreEqual(IndexerExecutionEnvironment.Standard, configuration.ExecutionEnvironment);
-            Assert.AreEqual("12:34:56", configuration.QueryTimeout);
+            Assert.AreEqual(TimeSpan.Parse("12:34:56"), configuration.QueryTimeout);
 
             Assert.AreEqual(1, configuration.Count());
             Assert.AreEqual("custom", configuration["customTestProperty"]);
-        }
-
-        [Test]
-        public void RoundtripsFromConfiguration()
-        {
-            IndexingParameters parameters = new IndexingParameters
-            {
-                Configuration =
-                {
-                    ["parsingMode"] = "json",
-                    ["excludedFileNameExtensions"] = ".png",
-                    ["indexedFileNameExtensions"] = ".json,.jsonc",
-                    ["failOnUnsupportedContentType"] = false,
-                    ["failOnUnprocessableDocument"] = false,
-                    ["indexStorageMetadataOnlyForOversizedDocuments"] = true,
-                    ["delimitedTextHeaders"] = "A,B",
-                    ["delimitedTextDelimiter"] = "|",
-                    ["firstLineContainsHeaders"] = true,
-                    ["documentRoot"] = "$.values",
-                    ["dataToExtract"] = "allMetadata",
-                    ["imageAction"] = "generateNormalizedImages",
-                    ["allowSkillsetToReadFileData"] = true,
-                    ["pdfTextRotationAlgorithm"] = "detectAngles",
-                    ["executionEnvironment"] = "standard",
-                    ["queryTimeout"] = "12:34:56",
-                    ["customTestProperty"] = "custom",
-                },
-            };
-
-            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
-
-            Assert.AreEqual(BlobIndexerParsingMode.Json, configuration.ParsingMode);
-            Assert.AreEqual(".png", configuration.ExcludedFileNameExtensions);
-            Assert.AreEqual(".json,.jsonc", configuration.IndexedFileNameExtensions);
-            Assert.IsFalse(configuration.FailOnUnsupportedContentType);
-            Assert.IsFalse(configuration.FailOnUnprocessableDocument);
-            Assert.IsTrue(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.AreEqual("A,B", configuration.DelimitedTextHeaders);
-            Assert.AreEqual("|", configuration.DelimitedTextDelimiter);
-            Assert.IsTrue(configuration.FirstLineContainsHeaders);
-            Assert.AreEqual("$.values", configuration.DocumentRoot);
-            Assert.AreEqual(BlobIndexerDataToExtract.AllMetadata, configuration.DataToExtract);
-            Assert.AreEqual(BlobIndexerImageAction.GenerateNormalizedImages, configuration.ImageAction);
-            Assert.IsTrue(configuration.AllowSkillsetToReadFileData);
-            Assert.AreEqual(BlobIndexerPdfTextRotationAlgorithm.DetectAngles, configuration.PdfTextRotationAlgorithm);
-            Assert.AreEqual(IndexerExecutionEnvironment.Standard, configuration.ExecutionEnvironment);
-            Assert.AreEqual("12:34:56", configuration.QueryTimeout);
-
-            Assert.AreEqual(1, configuration.Count());
-            Assert.AreEqual("custom", configuration["customTestProperty"]);
-        }
-
-        [Test]
-        public void RoundtripsFromConfigurationWithExplicitNulls()
-        {
-            IndexingParameters parameters = new IndexingParameters
-            {
-                Configuration =
-                {
-                    ["parsingMode"] = null,
-                    ["excludedFileNameExtensions"] = null,
-                    ["indexedFileNameExtensions"] = null,
-                    ["failOnUnsupportedContentType"] = null,
-                    ["failOnUnprocessableDocument"] = null,
-                    ["indexStorageMetadataOnlyForOversizedDocuments"] = null,
-                    ["delimitedTextHeaders"] = null,
-                    ["delimitedTextDelimiter"] = null,
-                    ["firstLineContainsHeaders"] = null,
-                    ["documentRoot"] = null,
-                    ["dataToExtract"] = null,
-                    ["imageAction"] = null,
-                    ["allowSkillsetToReadFileData"] = null,
-                    ["pdfTextRotationAlgorithm"] = null,
-                    ["executionEnvironment"] = null,
-                    ["queryTimeout"] = null,
-                    ["customTestProperty"] = null,
-                },
-            };
-
-            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
-
-            Assert.IsNull(configuration.ParsingMode);
-            Assert.IsNull(configuration.ExcludedFileNameExtensions);
-            Assert.IsNull(configuration.IndexedFileNameExtensions);
-            Assert.IsNull(configuration.FailOnUnsupportedContentType);
-            Assert.IsNull(configuration.FailOnUnprocessableDocument);
-            Assert.IsNull(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.IsNull(configuration.DelimitedTextHeaders);
-            Assert.IsNull(configuration.DelimitedTextDelimiter);
-            Assert.IsNull(configuration.FirstLineContainsHeaders);
-            Assert.IsNull(configuration.DocumentRoot);
-            Assert.IsNull(configuration.DataToExtract);
-            Assert.IsNull(configuration.ImageAction);
-            Assert.IsNull(configuration.AllowSkillsetToReadFileData);
-            Assert.IsNull(configuration.PdfTextRotationAlgorithm);
-            Assert.IsNull(configuration.ExecutionEnvironment);
-            Assert.IsNull(configuration.QueryTimeout);
-
-            Assert.AreEqual(1, configuration.Count());
-            Assert.IsNull(configuration["customTestProperty"]);
-        }
-
-        [Test]
-        public void UnexpectedValueTypeForBool()
-        {
-            IndexingParameters parameters = new IndexingParameters
-            {
-                Configuration =
-                {
-                    ["failOnUnsupportedContentType"] = "meh",
-                },
-            };
-
-            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
-            Assert.Throws<InvalidCastException>(() => { _ = configuration.FailOnUnsupportedContentType; });
-        }
-
-        [Test]
-        public void UnexpectedValueTypeForEnum()
-        {
-            IndexingParameters parameters = new IndexingParameters
-            {
-                Configuration =
-                {
-                    ["parsingMode"] = false,
-                },
-            };
-
-            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
-            Assert.Throws<InvalidCastException>(() => { _ = configuration.ParsingMode; });
-        }
-
-        [Test]
-        public void UnexpectedValueTypeForString()
-        {
-            IndexingParameters parameters = new IndexingParameters
-            {
-                Configuration =
-                {
-                    ["excludedFileNameExtensions"] = false,
-                },
-            };
-
-            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
-            Assert.Throws<InvalidCastException>(() => { _ = configuration.ExcludedFileNameExtensions; });
         }
 
         private static IEnumerable<PropertyInfo> DeclaredProperties => typeof(IndexingParametersConfiguration)
             .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-            .Where(p => p.CanRead && p.CanWrite && p.GetIndexParameters() == null);
+            .Where(p => p.CanRead && p.CanWrite && p.GetIndexParameters() is null);
     }
 }
