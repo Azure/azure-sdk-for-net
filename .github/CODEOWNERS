@@ -55,7 +55,7 @@
 /sdk/keyvault/                                  @schaabs @heaths
 
 # PRLabel: %Cognitive - Metrics Advisor
-sdk/metricsadvisor/                             @kinelski
+/sdk/metricsadvisor/                            @kinelski
 
 # PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths

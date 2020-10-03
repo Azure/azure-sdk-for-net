@@ -30,6 +30,13 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
+    /// <remarks>
+    ///   The <see cref="EventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
+    ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    /// </remarks>
+    ///
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -371,6 +378,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
         ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
+        ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
             await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -380,6 +395,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
+        ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
         ///
         public virtual void StopProcessing(CancellationToken cancellationToken = default) =>
             StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
