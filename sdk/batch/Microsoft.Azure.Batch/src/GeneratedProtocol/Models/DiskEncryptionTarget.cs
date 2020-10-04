@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum DiskEncryptionTarget
     {
         /// <summary>
-        /// The OS Disk on the compute node is encrypted.
+        /// The temporary disk on the compute node is encrypted. On Linux this
+        /// encryption applies to other partitions (such as those on mounted
+        /// data disks) when encryption occurs at boot time.
         /// </summary>
         [EnumMember(Value = "osdisk")]
         OsDisk,

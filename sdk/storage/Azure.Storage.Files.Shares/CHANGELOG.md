@@ -1,6 +1,15 @@
 # Release History
 
-## 12.5.0-preview.1 (Unreleased)
+## 12.5.0-preview.2 (Unreleased)
+
+
+## 12.5.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for 4 TB files.
+- Added support for SMB Multichannel.
+- Added support for Share and Share Snapshot Leases.
+- Added support for Get File Range Diff.
+- Added support for Set Share Tier.
 - Fixed bug where Stream returned from ShareFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
 - Fixed bug where ShareAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
 

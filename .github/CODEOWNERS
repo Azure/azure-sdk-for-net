@@ -23,11 +23,14 @@
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
+
 # PRLabel: %Batch
-/sdk/batch/                                     @bgklein @xingwu1 
+/sdk/batch/                                     @paterasMSFT @dpwatrous
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe
+/sdk/communication/                             @RezaJooyandeh @DominikMe @Azure/azure-sdk-communication-code-reviewers
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
@@ -50,6 +53,9 @@
 
 # PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
+
+# PRLabel: %Cognitive - Metrics Advisor
+/sdk/metricsadvisor/                            @kinelski
 
 # PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
+    <IsPackable>false</IsPackable>
+    <PublicSign>false</PublicSign>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.WebJobs.Extensions.Storage.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="cert.pem" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

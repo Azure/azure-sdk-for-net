@@ -175,7 +175,7 @@ namespace Azure.Search.Documents
                 ClientDiagnostics,
                 Pipeline,
                 endpoint.ToString(),
-                IndexName,
+                indexName,
                 null,
                 Version.ToVersionString());
         }
@@ -451,7 +451,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Edm.GeographyPoint</term>
-        /// <description> Azure.Core.Spatial.PointGeometry
+        /// <description> Azure.Core.GeoJson.GeoPoint
         /// </description>
         /// </item>
         /// <item>
@@ -500,8 +500,8 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Collection(Edm.GeographyPoint)</term>
-        /// <description>sequence of Azure.Core.Spatial.PointGeometry
-        /// (seq&lt;PointGeometry&gt; in F#)</description>
+        /// <description>sequence of Azure.Core.GeoJson.GeoPoint
+        /// (seq&lt;GeoPoint&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.ComplexType)</term>

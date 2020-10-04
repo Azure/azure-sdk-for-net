@@ -16,7 +16,7 @@ namespace Azure.Communication.Sms
     {
         /// <summary> Initializes a new instance of SendMessageRequest. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
+        /// <param name="to"> The recipients&apos; phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
         public SendMessageRequest(string @from, IEnumerable<string> to, string message)
@@ -41,7 +41,7 @@ namespace Azure.Communication.Sms
 
         /// <summary> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </summary>
         public string From { get; }
-        /// <summary> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </summary>
+        /// <summary> The recipients&apos; phone number in E.164 format. In this version, only one recipient in the list is supported. </summary>
         public IList<string> To { get; }
         /// <summary> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </summary>
         public string Message { get; }

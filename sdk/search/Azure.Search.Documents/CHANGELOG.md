@@ -1,10 +1,17 @@
 # Release History
 
-## 11.2.0-preview.1 (Unreleased)
+## 11.2.0-beta.1 (2020-10-06)
 
 ### Fixed
 
 - Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
+- Fixed issues preventing mocking clients or initializing all models.
+
+### Added
+
+- Add support to `FieldBuilder` to define search fields for `Microsoft.Spatial` types without an explicit assembly dependency.
+- Add support to `SearchFilter` to encode geometric types from `Microsoft.Spatial` without an explicit assembly dependency.
+- Add `IndexingParameters.IndexingParametersConfiguration` property to define well-known properties supported by Azure Cognitive Search.
 
 ## 11.1.1 (2020-08-18)
 

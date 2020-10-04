@@ -2,6 +2,9 @@
 
 ## 1.6.0-beta.1 (Unreleased)
 
+
+## 1.5.1 (2020-10-01)
+
 ### Changed
 - `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints. 
 
