@@ -791,7 +791,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task ComputeNodeUploadLogs()
         {
-            Action test = async () =>
+            Func<Task> test = async () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
                 {
@@ -855,7 +855,7 @@ namespace BatchClientIntegrationTests
                 }
             };
 
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         [Fact]

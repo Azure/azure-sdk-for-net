@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.Batch;
 using Microsoft.Azure.Batch.FileStaging;
+using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -431,7 +434,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <summary>
         /// Stage a single file.
         /// </summary>
-        private async static System.Threading.Tasks.Task StageOneFileAsync(FileToStage stageThisFile, SequentialFileStagingArtifact seqArtifacts)
+        private async static Task StageOneFileAsync(FileToStage stageThisFile, SequentialFileStagingArtifact seqArtifacts)
         {
             StagingStorageAccount storecreds = stageThisFile.StagingStorageAccount;
             string containerName = seqArtifacts.BlobContainerCreated;
@@ -439,49 +442,20 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             // TODO: this flattens all files to the top of the compute node/task relative file directory. solve the hiearchy problem (virt dirs?)
             string blobName = Path.GetFileName(stageThisFile.LocalFileToStage);
 
-            // Create the storage account with the connection string.
-            CloudStorageAccount storageAccount = new CloudStorageAccount(
-                                                        new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(storecreds.StorageAccount, storecreds.StorageAccountKey),
-                                                        blobEndpoint: storecreds.BlobUri,
-                                                        queueEndpoint: null,
-                                                        tableEndpoint: null,
-                                                        fileEndpoint: null);
+            BlobContainerClient blobContainerClient = BlobUtilities.GetBlobContainerClient(containerName, storecreds);
+            BlockBlobClient blobClient = blobContainerClient.GetBlockBlobClient(blobName);
 
-            CloudBlobClient client = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(containerName);
-            ICloudBlob blob = container.GetBlockBlobReference(blobName);
-            bool doesBlobExist;
-
-            try
-            {
-                // fetch attributes so we can compare file lengths
-                System.Threading.Tasks.Task fetchTask = blob.FetchAttributesAsync();
-
-                await fetchTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                doesBlobExist = true;
-            }
-            catch (StorageException scex)
-            {
-                // check to see if blob does not exist
-                if ((int)System.Net.HttpStatusCode.NotFound == scex.RequestInformation.HttpStatusCode)
-                {
-                    doesBlobExist = false;
-                }
-                else
-                {
-                    throw;  // unknown exception, throw to caller
-                }
-            }
-
+            bool doesBlobExist = await blobClient.ExistsAsync(); 
             bool mustUploadBlob = true;  // we do not re-upload blobs if they have already been uploaded
 
             if (doesBlobExist) // if the blob exists, compare
             {
                 FileInfo fi = new FileInfo(stageThisFile.LocalFileToStage);
 
+                var properties = await blobClient.GetPropertiesAsync();
+                var length = properties.Value.ContentLength;
                 // since we don't have a hash of the contents... we check length
-                if (blob.Properties.Length == fi.Length)
+                if (length == fi.Length)
                 {
                     mustUploadBlob = false;
                 }
@@ -489,8 +463,10 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (mustUploadBlob)
             {
+                using FileStream stream = new FileStream(stageThisFile.LocalFileToStage, FileMode.Open);
+                
                 // upload the file
-                System.Threading.Tasks.Task uploadTask = blob.UploadFromFileAsync(stageThisFile.LocalFileToStage);
+                Task uploadTask = blobClient.UploadAsync(stream);
 
                 await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
             }

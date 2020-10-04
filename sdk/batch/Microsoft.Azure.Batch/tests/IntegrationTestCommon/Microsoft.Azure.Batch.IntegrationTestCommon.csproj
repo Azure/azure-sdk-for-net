@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Portable.BouncyCastle" />
     <PackageReference Include="System.IO.Compression" />
