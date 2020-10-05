@@ -3,7 +3,6 @@
 
 namespace BatchClientIntegrationTests
 {
-    using Microsoft.Azure.Batch.Integration.Tests.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,9 +14,10 @@ namespace BatchClientIntegrationTests
     using IntegrationTestUtilities;
     using Xunit;
     using Xunit.Abstractions;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Blob;
+    using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
+    using Azure.Storage.Blobs;
+    using Azure.Storage.Blobs.Models;
+    using System.Threading.Tasks;
 
     [Collection("SharedLinuxPoolCollection")]
     public class CloudTaskLinuxIntegrationTests
@@ -35,49 +35,37 @@ namespace BatchClientIntegrationTests
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
-        public void RunTaskAndUploadFiles_FilesAreSuccessfullyUploaded()
+        public async Task RunTaskAndUploadFiles_FilesAreSuccessfullyUploaded()
         {
-            Action test = async () =>
+            Func<Task> test = async () =>
             {
-                string containerName = "runtaskanduploadfiles";
-                StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
-                CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
-                    new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
-                    blobEndpoint: storageAccount.BlobUri,
-                    queueEndpoint: null,
-                    tableEndpoint: null,
-                    fileEndpoint: null);
-                CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
-
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
                     string jobId = "RunTaskAndUploadFiles-" + TestUtilities.GetMyName();
+                    string containerName = "runtaskanduploadfiles";
+                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                    BlobServiceClient blobClient = BlobUtilities.GetBlobServiceClient(storageAccount);
+                    BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, blobClient, storageAccount);
 
                     try
                     {
                         // Create container and writeable SAS
-                        var container = blobClient.GetContainerReference(containerName);
-                        await container.CreateIfNotExistsAsync();
-                        var sas = container.GetSharedAccessSignature(new SharedAccessBlobPolicy()
-                        {
-                            Permissions = SharedAccessBlobPermissions.Write,
-                            SharedAccessExpiryTime = DateTime.UtcNow.AddDays(1)
-                        });
-                        var fullSas = container.Uri + sas;
+                        containerClient.CreateIfNotExists();
+                        string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
 
                         CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
                         createJob.Commit();
 
                         const string blobPrefix = "foo/bar";
                         const string taskId = "simpletask";
+
+                        OutputFileDestination destination = new OutputFileDestination(new OutputFileBlobContainerDestination(sasUri, blobPrefix));
+                        OutputFileUploadOptions uploadOptions = new OutputFileUploadOptions(uploadCondition: OutputFileUploadCondition.TaskCompletion);
                         CloudTask unboundTask = new CloudTask(taskId, "echo test")
                         {
                             OutputFiles = new List<OutputFile>
                             {
-                                new OutputFile(
-                                    filePattern: @"../*.txt",
-                                    destination: new OutputFileDestination(new OutputFileBlobContainerDestination(fullSas, blobPrefix)),
-                                    uploadOptions: new OutputFileUploadOptions(uploadCondition: OutputFileUploadCondition.TaskCompletion))
+                                new OutputFile(@"../*.txt", destination, uploadOptions)
                             }
                         };
 
@@ -89,25 +77,22 @@ namespace BatchClientIntegrationTests
                         monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
 
                         // Ensure that the correct files got uploaded
-                        var blobs = await BlobStorageExtensions.ListBlobs(container, useFlatBlobListing: true);
-                        blobs = blobs.ToList();
+                        var blobs = containerClient.GetAllBlobs();
                         Assert.Equal(4, blobs.Count()); //There are 4 .txt files created, stdout, stderr, fileuploadout, and fileuploaderr
                         foreach (var blob in blobs)
                         {
-                            var blockBlob = blob as CloudBlockBlob;
-                            Assert.StartsWith(blobPrefix, blockBlob.Name);
+                            Assert.StartsWith(blobPrefix, blob.Name);
                         }
                     }
                     finally
                     {
-                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
-                        var container = blobClient.GetContainerReference(containerName);
-                        await container.DeleteIfExistsAsync();
+                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
+                        await containerClient.DeleteIfExistsAsync();
                     }
                 }
             };
 
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         [Fact]

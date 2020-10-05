@@ -104,10 +104,9 @@
                         TaskStateMonitor tsm = utilities.CreateTaskStateMonitor();
 
                         IPagedEnumerable<CloudTask> taskList = boundJob.ListTasks();
-                        ODATAMonitorControl odmc = new ODATAMonitorControl();
-
+                        
                         // try to set really low delay
-                        odmc.DelayBetweenDataFetch = new TimeSpan(0);
+                        ODATAMonitorControl odmc = new ODATAMonitorControl { DelayBetweenDataFetch = new TimeSpan(0) };
 
                         // confirm the floor is enforced
                         Assert.Equal(500, odmc.DelayBetweenDataFetch.Milliseconds);
@@ -465,13 +464,14 @@
 
                             Assert.Equal(OnTaskFailure.PerformExitOptionsJobAction, boundJob.OnTaskFailure);
 
-                            CloudTask cloudTask = new CloudTask(taskId, "cmd /c exit 3");
-
-                            cloudTask.ExitConditions = new ExitConditions
+                            CloudTask cloudTask = new CloudTask(taskId, "cmd /c exit 3")
                             {
-                                ExitCodeRanges = new List<ExitCodeRangeMapping>
+                                ExitConditions = new ExitConditions
                                 {
-                                    new ExitCodeRangeMapping(2, 4, new ExitOptions { JobAction = JobAction.Terminate})
+                                    ExitCodeRanges = new List<ExitCodeRangeMapping>
+                                    {
+                                        new ExitCodeRangeMapping(2, 4, new ExitOptions { JobAction = JobAction.Terminate})
+                                    }
                                 }
                             };
 

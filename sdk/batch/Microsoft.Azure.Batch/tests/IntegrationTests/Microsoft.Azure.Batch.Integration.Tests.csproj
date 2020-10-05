@@ -34,9 +34,9 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>-->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Batch" />
-    <PackageReference Include="WindowsAzure.Storage" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
+		<PackageReference Include="Azure.Storage.Blobs" />
+		<PackageReference Include="Microsoft.Azure.Management.Batch" />
+		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
 
   <PropertyGroup>

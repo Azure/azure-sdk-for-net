@@ -160,10 +160,8 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         {
             Exception theOneInner = ex;
 
-            if (ex is AggregateException)
+            if (ex is AggregateException ae)
             {
-                AggregateException ae = (AggregateException)ex;
-
                 // some ugly mechanics all for confirming we get the correct exception and it has the correct "message"
                 // there can be only one
                 Assert.Single(ae.InnerExceptions);
@@ -733,11 +731,6 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         private static bool IsExceptionConflict(BatchException e)
         {
             return e.RequestInformation != null && e.RequestInformation.HttpStatusCode == HttpStatusCode.Conflict;
-        }
-
-        private static void SetDeserializationSettings(BatchClient batchClient)
-        {
-            GetServiceClient(batchClient).DeserializationSettings.MissingMemberHandling = MissingMemberHandling.Error;
         }
 
         #endregion

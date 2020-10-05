@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-
 namespace BatchClientIntegrationTests
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Azure.Storage.Blobs;
     using BatchTestCommon;
     using Fixtures;
     using Microsoft.Azure.Batch;
@@ -23,9 +22,9 @@ namespace BatchClientIntegrationTests
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Blob;
+    using Azure.Storage;
+    using Azure.Storage.Blobs.Models;
+    using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
 
     public class CloudPoolIntegrationTests
     {
@@ -1089,17 +1088,10 @@ namespace BatchClientIntegrationTests
                     string poolId = TestUtilities.GenerateResourceId();
 
                     const string containerName = "blobfusecontainer";
-                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
-                        new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
-                        blobEndpoint: storageAccount.BlobUri,
-                        queueEndpoint: null,
-                        tableEndpoint: null,
-                        fileEndpoint: null);
-                    CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
 
-                    var container = blobClient.GetContainerReference(containerName);
-                    await container.CreateIfNotExistsAsync();
+                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                    BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, storageAccount);
+                    await containerClient.CreateIfNotExistsAsync();
 
                     try
                     {
