@@ -403,11 +403,11 @@
     },
     "AzureWebJobsStorage": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsPrimaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsPrimaryAccountName')), variables('mgmtApiVersion')).keys[0].value,';EndpointSuffix=core.windows.net')]"
     },
     "AzureWebJobsSecondaryStorage": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsSecondaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsSecondaryAccountName')), variables('mgmtApiVersion')).keys[0].value,';EndpointSuffix=core.windows.net')]"
     },
     "KEYVAULT_URI":{
       "type": "string",
