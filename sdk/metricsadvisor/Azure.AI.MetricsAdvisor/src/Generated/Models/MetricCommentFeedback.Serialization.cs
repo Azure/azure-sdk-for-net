@@ -18,13 +18,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime, "O");
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime");
+                    writer.WriteStringValue(StartTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime, "O");
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime");
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
             }
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
@@ -39,8 +53,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricCommentFeedback DeserializeMetricCommentFeedback(JsonElement element)
         {
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             CommentFeedbackValue value = default;
             FeedbackType feedbackType = default;
             Optional<string> feedbackId = default;
@@ -52,11 +66,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        startTime = null;
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -96,7 +120,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value);
+            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value);
         }
     }
 }

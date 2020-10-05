@@ -39,12 +39,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The start timestamp of feedback time range.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
         /// </summary>
-        public DateTimeOffset EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// The comment content for the feedback.

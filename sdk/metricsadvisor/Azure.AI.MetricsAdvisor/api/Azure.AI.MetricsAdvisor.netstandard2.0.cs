@@ -999,7 +999,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class MetricPeriodFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
-        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodFeedbackValue valueInternal) { }
+        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodFeedbackValue value) { }
         public Azure.AI.MetricsAdvisor.Models.PeriodType PeriodType { get { throw null; } }
         public int PeriodValue { get { throw null; } }
     }
