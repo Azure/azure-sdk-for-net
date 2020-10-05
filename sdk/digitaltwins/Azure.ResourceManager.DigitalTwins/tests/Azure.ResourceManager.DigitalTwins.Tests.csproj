@@ -3,6 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);TESTFRAMEWORK</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TestHelperProjects>Resources201705;</TestHelperProjects>
   </PropertyGroup>
   
   <ItemGroup>
