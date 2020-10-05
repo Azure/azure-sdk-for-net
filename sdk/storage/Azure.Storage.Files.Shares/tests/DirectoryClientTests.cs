@@ -331,6 +331,21 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ParentDirectoryNotExists()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient parentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            ShareDirectoryClient directory = InstrumentClient(parentDirectory.GetSubdirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task Exists_Exists()
         {
             // Arrange
