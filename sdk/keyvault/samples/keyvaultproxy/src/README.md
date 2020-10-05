@@ -5,7 +5,6 @@ languages:
 products:
 - azure
 - azure-key-vault
-urlFragment: keyvaultproxy
 name: Cache certain responses from Key Vault
 description: Shows how to implement a pipeline policy to cache certain responses from Key Vault to mitigate rate limiting.
 ---
