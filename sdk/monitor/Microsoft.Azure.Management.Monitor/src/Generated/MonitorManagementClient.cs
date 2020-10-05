@@ -200,6 +200,11 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IPrivateLinkScopedResourcesOperations PrivateLinkScopedResources { get; private set; }
 
         /// <summary>
+        /// Gets the IDataCollectionRules.
+        /// </summary>
+        public virtual IDataCollectionRules DataCollectionRules { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the MonitorManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -466,6 +471,7 @@ namespace Microsoft.Azure.Management.Monitor
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkScopedResources = new PrivateLinkScopedResourcesOperations(this);
+            DataCollectionRules = new DataCollectionRules(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
