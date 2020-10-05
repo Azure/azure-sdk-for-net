@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// pool.</param>
         /// <param name="initialAdminObjectIds">Array of initial administrators
         /// object ids for this managed hsm pool.</param>
-        /// <param name="hsmPoolUri">The URI of the managed hsm pool for
-        /// performing operations on keys.</param>
+        /// <param name="hsmUri">The URI of the managed hsm pool for performing
+        /// operations on keys.</param>
         /// <param name="enableSoftDelete">Property to specify whether the
         /// 'soft delete' functionality is enabled for this managed HSM pool.
         /// If it's not set to any value(true or false) when creating new
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// include: 'Succeeded', 'Provisioning', 'Failed', 'Updating',
         /// 'Deleting', 'Activated', 'SecurityDomainRestore',
         /// 'Restoring'</param>
-        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmPoolUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string))
+        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string))
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
-            HsmPoolUri = hsmPoolUri;
+            HsmUri = hsmUri;
             EnableSoftDelete = enableSoftDelete;
             SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             EnablePurgeProtection = enablePurgeProtection;
@@ -97,8 +97,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets the URI of the managed hsm pool for performing
         /// operations on keys.
         /// </summary>
-        [JsonProperty(PropertyName = "hsmPoolUri")]
-        public string HsmPoolUri { get; set; }
+        [JsonProperty(PropertyName = "hsmUri")]
+        public string HsmUri { get; set; }
 
         /// <summary>
         /// Gets or sets property to specify whether the 'soft delete'

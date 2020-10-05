@@ -120,5 +120,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// A description about the <see cref="MetricAnomalyDetectionConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Creates a <see cref="AnomalyDetectionConfigurationPatch"/> model from an existing <see cref="MetricAnomalyDetectionConfiguration"/> instance.
+        /// </summary>
+        /// <returns></returns>
+        internal AnomalyDetectionConfigurationPatch GetPatchModel()
+        {
+            return new AnomalyDetectionConfigurationPatch()
+            {
+                Description = Description,
+                DimensionGroupOverrideConfigurations = SeriesGroupDetectionConditions,
+                Name = Name,
+                SeriesOverrideConfigurations = SeriesDetectionConditions,
+                WholeMetricConfiguration = WholeSeriesDetectionConditions
+            };
+        }
     }
 }
