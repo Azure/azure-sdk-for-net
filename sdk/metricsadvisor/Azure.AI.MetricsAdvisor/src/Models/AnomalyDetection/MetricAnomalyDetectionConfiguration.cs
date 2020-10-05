@@ -84,9 +84,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The anomaly detection conditions to be applied to a group of time series associated with this configuration's
-        /// <see cref="MetricId"/>. Different conditions in the list don't need to be all applied to the same series group.
-        /// These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>.
+        /// The anomaly detection conditions to be applied to the time series associated with this configuration's
+        /// <see cref="MetricId"/>. These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesGroupDetectionConditions"/> is null.</exception>
         [CodeGenMember("DimensionGroupOverrideConfigurations")]
@@ -101,9 +100,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The anomaly detection conditions to be applied to only one of the time series associated with this
-        /// configuration's <see cref="MetricId"/>. Different conditions in the list don't need to be all applied
-        /// to the same series. These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>
+        /// The anomaly detection conditions to be applied to the time series associated with this configuration's
+        /// <see cref="MetricId"/>. These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>
         /// and <see cref="SeriesGroupDetectionConditions"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesDetectionConditions"/> is null.</exception>
