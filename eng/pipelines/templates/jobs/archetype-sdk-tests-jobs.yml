@@ -72,7 +72,6 @@ jobs:
             dotnet test eng/service.proj
             --framework ${{ platform.TestTargetFramework }}
             --filter "TestCategory!=Manually"
-            --filter WebJobs
             --logger "trx"
             --logger:"console;verbosity=normal"
             /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
