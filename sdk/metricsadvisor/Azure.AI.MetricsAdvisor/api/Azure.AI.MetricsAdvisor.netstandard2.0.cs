@@ -1135,7 +1135,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string CertificateKey { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
