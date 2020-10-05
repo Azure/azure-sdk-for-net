@@ -201,6 +201,20 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartCreateComposedModelFailsWithInvalidId()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var modelIds = new List<string> { trainedModelA.ModelId, "00000000-0000-0000-0000-000000000000" };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { DisplayName = "My composed model" }));
+            Assert.AreEqual("1001", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task StartTrainingSucceedsWithValidPrefix()
         {
             var client = CreateFormTrainingClient();
@@ -235,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var displayName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { DisplayName = displayName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = displayName });
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -251,7 +265,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var displayName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { DisplayName = displayName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = displayName });
 
             await operation.WaitForCompletionAsync(PollingInterval);
 

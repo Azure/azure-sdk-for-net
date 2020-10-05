@@ -455,7 +455,7 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class TrainingOptions
     {
         public TrainingOptions() { }
-        public string DisplayName { get { throw null; } set { } }
+        public string ModelDisplayName { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.Training.TrainingFileFilter TrainingFileFilter { get { throw null; } set { } }
     }
     public enum TrainingStatus

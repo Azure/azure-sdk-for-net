@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { DisplayName = "My Model with labels" }).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "My Model with labels" }).WaitForCompletionAsync();
 
             Console.WriteLine($"Custom Model Info:");
             Console.WriteLine($"    Model Id: {model.ModelId}");

@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels,
-                    ModelName = trainingOptions.DisplayName
+                    ModelName = trainingOptions.ModelDisplayName
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels,
-                    ModelName = trainingOptions.DisplayName
+                    ModelName = trainingOptions.ModelDisplayName
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
