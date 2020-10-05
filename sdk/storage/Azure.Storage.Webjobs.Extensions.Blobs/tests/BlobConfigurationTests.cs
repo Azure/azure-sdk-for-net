@@ -9,21 +9,20 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class BlobConfigurationTests
     {
         private readonly AzuriteFixture azuriteFixture;
 
-        public BlobConfigurationTests(AzuriteFixture azuriteFixture)
+        public BlobConfigurationTests()
         {
-            this.azuriteFixture = azuriteFixture;
+            azuriteFixture = AzuriteNUnitFixture.Instance;
         }
 
-        [Fact]
+        [Test]
         public async Task BlobClient_CanConnect_ConnectionString()
         {
             var account = azuriteFixture.GetAzureAccount();
@@ -51,13 +50,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("csblob", result.Name);
-            Assert.Equal("cscontainer", result.BlobContainerName);
+            Assert.AreEqual("csblob", result.Name);
+            Assert.AreEqual("cscontainer", result.BlobContainerName);
             Assert.NotNull(result.BlobContainerName);
             Assert.False(await result.ExistsAsync());
         }
 
-        [Fact]
+        [Test]
         public async Task BlobClient_CanConnect_EndPoint()
         {
             var account = azuriteFixture.GetAzureAccount();
@@ -85,8 +84,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("endpointblob", result.Name);
-            Assert.Equal("endpointcontainer", result.BlobContainerName);
+            Assert.AreEqual("endpointblob", result.Name);
+            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
             Assert.NotNull(result.BlobContainerName);
             Assert.False(await result.ExistsAsync());
         }

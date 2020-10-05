@@ -6,14 +6,12 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class ScenarioTests
     {
         private const string ContainerName = "container-scenariotests";
@@ -22,18 +20,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string OutputBlobName = "blob.out";
         private const string OutputBlobPath = ContainerName + "/" + OutputBlobName;
         private const string QueueName = "queue-scenariotests";
-        private readonly StorageAccount account;
+        private StorageAccount account;
 
-        public ScenarioTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
+            account = AzuriteNUnitFixture.Instance.GetAccount();
             account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
             // make sure our system containers are present
             account.CreateBlobServiceClient().GetBlobContainerClient("azure-webjobs-hosts").CreateIfNotExists();
             account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTriggerToQueueTriggerToBlob_WritesFinalBlob()
         {
             // Arrange
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             var outputBlob = container.GetBlockBlobClient(OutputBlobName);
             string content = await outputBlob.DownloadTextAsync();
-            Assert.Equal("16", content);
+            Assert.AreEqual("16", content);
         }
 
         private static async Task<BlobContainerClient> CreateContainerAsync(StorageAccount account, string containerName)
@@ -85,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static void StepTwo([QueueTrigger(QueueName)] Payload input, int value,
                 [Blob(ContainerName + "/{Output}")] TextWriter output, [Queue(CommittedQueueName)] out string committed)
             {
-                Assert.Equal(input.Value, value);
+                Assert.AreEqual(input.Value, value);
                 output.Write(value);
                 committed = string.Empty;
             }

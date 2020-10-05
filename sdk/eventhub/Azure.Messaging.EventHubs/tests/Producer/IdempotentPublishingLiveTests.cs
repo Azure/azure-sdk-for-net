@@ -542,5 +542,50 @@ namespace Azure.Messaging.EventHubs.Tests.Producer
                 Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token), Throws.Nothing);
             }
         }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   perform operations when the idempotent publishing feature is enabled.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerIsRejectedWithPartitionOptionsForInvalidState()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var partition = default(string);
+                var partitionProperties =  default(PartitionPublishingProperties);
+
+                // Create a producer for a small scope that will Send some events and read the properties.
+
+                await using (var initialProducer = new EventHubProducerClient(connectionString, options))
+                {
+                    partition = (await initialProducer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
+
+                    await initialProducer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token);
+                    partitionProperties = await initialProducer.GetPartitionPublishingPropertiesAsync(partition);
+                }
+
+                // Create a new producer using the previously read properties to set options for the partition.
+
+                options.PartitionOptions.Add(partition, new PartitionPublishingOptions
+                {
+                    ProducerGroupId = partitionProperties.ProducerGroupId,
+                    OwnerLevel = partitionProperties.OwnerLevel,
+                    StartingSequenceNumber = (partitionProperties.LastPublishedSequenceNumber - 5)
+                });
+
+                await using var producer = new EventHubProducerClient(connectionString, options);
+
+                Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token),
+                    Throws.InstanceOf<EventHubsException>().And.Property("Reason").EqualTo(EventHubsException.FailureReason.InvalidClientState));
+            }
+        }
     }
 }

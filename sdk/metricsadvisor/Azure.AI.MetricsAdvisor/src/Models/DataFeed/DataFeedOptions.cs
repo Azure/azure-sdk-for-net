@@ -34,6 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
+            Creator = dataFeedDetail.Creator;
         }
 
         /// <summary>
@@ -57,6 +58,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// in the data ingested from the data source.
         /// </summary>
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
+
+        // TODODOCS.
+        /// <summary>
+        /// </summary>
+        public string Creator { get; }
 
         /// <summary>
         /// The emails of this data feed's administrators. Administrators have total control over a
