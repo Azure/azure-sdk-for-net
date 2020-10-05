@@ -45,6 +45,11 @@ namespace Sql.Tests
                         Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.Basic)
                     });
 
+                // Test GET operation can get default retention days and diffbackupinterval value. 
+                BackupShortTermRetentionPolicy policyDefault = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(defaultRetentionDays, policyDefault.RetentionDays);
+                Assert.Equal(defaultDiffBackupIntervalHours, policyDefault.DiffBackupIntervalInHours);
+
                 // Attempt to set retention period to 8 days (invalid); Attemp to set the differential backup interval to 12 hours (valid); Verify the operation fails on updating the policy.
                 BackupShortTermRetentionPolicy parameters1 = new BackupShortTermRetentionPolicy(retentionDays: 8, diffBackupIntervalInHours: 12);
                 sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters1);
@@ -77,7 +82,7 @@ namespace Sql.Tests
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 // Valid Retention Days for Basic DB is 1 to 35 days. 
-                int defaultRetentionDays = 35;
+                int defaultRetentionDays = 7;
 
                 // Valid Differential Backup Interval Hours is 12 or 24. 
                 int defaultDiffBackupIntervalHours = 24;
@@ -93,6 +98,11 @@ namespace Sql.Tests
                         Location = server.Location,
                         Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1)
                     });
+
+                // Test GET operation can get default retention days and diffbackupinterval value. 
+                BackupShortTermRetentionPolicy policyDefault = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(defaultRetentionDays, policyDefault.RetentionDays);
+                Assert.Equal(defaultDiffBackupIntervalHours, policyDefault.DiffBackupIntervalInHours);
 
                 // Attempt to set retention period to 36 days (invalid); Attemp to set the differential backup interval to 12 hours (valid); Verify the operation fails on updating the policy.
                 BackupShortTermRetentionPolicy parameters1 = new BackupShortTermRetentionPolicy(retentionDays: 36, diffBackupIntervalInHours: 12);
@@ -134,7 +144,7 @@ namespace Sql.Tests
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 // Valid Retention Days for GeneralPurpose DB is 1 to 35 days. 
-                int defaultRetentionDays = 35;
+                int defaultRetentionDays = 7;
 
                 // Valid Differential Backup Interval Hours is 12 or 24. 
                 int defaultDiffBackupIntervalHours = 24;
