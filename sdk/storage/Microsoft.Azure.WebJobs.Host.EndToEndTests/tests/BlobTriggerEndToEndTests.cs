@@ -20,7 +20,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class BlobTriggerEndToEndTests : IDisposable
+    public class BlobTriggerEndToEndTests : WebJobsTestBase, IDisposable
     {
         private const string TestArtifactPrefix = "e2etests";
 
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [TestCase("AzureWebJobsStorage")]
         public async Task PoisonMessage_CreatedInCorrectStorageAccount(string storageAccountSetting)
         {
-            var storageAccount = StorageAccount.NewFromConnectionString(Environment.GetEnvironmentVariable(storageAccountSetting));
+            var storageAccount = StorageAccount.NewFromConnectionString(GetVariable(storageAccountSetting.ToUpperInvariant()));
             var blobClient = storageAccount.CreateBlobServiceClient();
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
             var container = blobClient.GetBlobContainerClient(containerName);
