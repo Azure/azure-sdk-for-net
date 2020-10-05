@@ -865,9 +865,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MetricAnomalyAlertConfigurationsOperator(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod And { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod Or { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod Xor { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator And { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator Or { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator Xor { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
