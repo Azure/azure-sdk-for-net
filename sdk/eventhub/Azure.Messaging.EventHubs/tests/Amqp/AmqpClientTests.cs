@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "myName";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var mockScope = new Mock<AmqpConnectionScope>();
@@ -587,7 +587,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "Barney";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var mockScope = new Mock<AmqpConnectionScope>();
@@ -700,7 +700,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, null, null), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, null, null, null), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateProducer(null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(() => client.CreateProducer(null, TransportProducerFeatures.None, null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>

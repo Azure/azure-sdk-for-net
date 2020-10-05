@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// Initializes a new instance of the AppPatch class.
         /// </summary>
         /// <param name="tags">Instance tags</param>
+        /// <param name="sku">A valid instance SKU.</param>
         /// <param name="applicationId">The ID of the application.</param>
         /// <param name="displayName">The display name of the
         /// application.</param>
@@ -44,9 +45,10 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// application. Optional; if not specified, defaults to a blank
         /// blueprint and allows the application to be defined from
         /// scratch.</param>
-        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
+        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
         {
             Tags = tags;
+            Sku = sku;
             ApplicationId = applicationId;
             DisplayName = displayName;
             Subdomain = subdomain;
@@ -64,6 +66,12 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets a valid instance SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public AppSkuInfo Sku { get; set; }
 
         /// <summary>
         /// Gets the ID of the application.
@@ -100,19 +108,9 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DisplayName != null)
+            if (Sku != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^.{1,200}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^.{1,200}$");
-                }
-            }
-            if (Subdomain != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Subdomain, "^[a-z0-9-]{1,63}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Subdomain", "^[a-z0-9-]{1,63}$");
-                }
+                Sku.Validate();
             }
         }
     }

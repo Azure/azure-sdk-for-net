@@ -87,7 +87,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// details.</param>
         /// <param name="policyDefinitionGroupNames">Policy definition group
         /// names.</param>
-        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), PolicyEvaluationDetails policyEvaluationDetails = default(PolicyEvaluationDetails), IList<string> policyDefinitionGroupNames = default(IList<string>))
+        /// <param name="policyDefinitionVersion">Evaluated policy definition
+        /// version.</param>
+        /// <param name="policySetDefinitionVersion">Evaluated policy set
+        /// definition version.</param>
+        /// <param name="policyAssignmentVersion">Evaluated policy assignment
+        /// version.</param>
+        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), PolicyEvaluationDetails policyEvaluationDetails = default(PolicyEvaluationDetails), IList<string> policyDefinitionGroupNames = default(IList<string>), string policyDefinitionVersion = default(string), string policySetDefinitionVersion = default(string), string policyAssignmentVersion = default(string))
         {
             AdditionalProperties = additionalProperties;
             Odataid = odataid;
@@ -120,6 +126,9 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             ComplianceState = complianceState;
             PolicyEvaluationDetails = policyEvaluationDetails;
             PolicyDefinitionGroupNames = policyDefinitionGroupNames;
+            PolicyDefinitionVersion = policyDefinitionVersion;
+            PolicySetDefinitionVersion = policySetDefinitionVersion;
+            PolicyAssignmentVersion = policyAssignmentVersion;
             CustomInit();
         }
 
@@ -326,6 +335,24 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyDefinitionGroupNames")]
         public IList<string> PolicyDefinitionGroupNames { get; set; }
+
+        /// <summary>
+        /// Gets evaluated policy definition version.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDefinitionVersion")]
+        public string PolicyDefinitionVersion { get; private set; }
+
+        /// <summary>
+        /// Gets evaluated policy set definition version.
+        /// </summary>
+        [JsonProperty(PropertyName = "policySetDefinitionVersion")]
+        public string PolicySetDefinitionVersion { get; private set; }
+
+        /// <summary>
+        /// Gets evaluated policy assignment version.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyAssignmentVersion")]
+        public string PolicyAssignmentVersion { get; private set; }
 
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class ServiceClientTests : DataLakeTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 items.Where(i => i.Name == test.FileSystem.Name).FirstOrDefault().Properties.Metadata);
         }

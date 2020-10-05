@@ -142,7 +142,8 @@ namespace Microsoft.Azure.Management.Support.Tests.ScenarioTests
             var createCommunicationParameters = new CommunicationDetails
             {
                 Subject = subject,
-                Body = body
+                Body = body,
+                Sender = "user@contoso.com"
             };
 
             var communicationName = TestUtilities.GenerateName("Communication");

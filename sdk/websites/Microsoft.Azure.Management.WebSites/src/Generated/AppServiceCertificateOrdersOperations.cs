@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all certificate orders in a subscription.
         /// </summary>
         /// <remarks>
-        /// List all certificate orders in a subscription.
+        /// Description for List all certificate orders in a subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +83,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -91,7 +94,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -100,9 +102,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -228,7 +230,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Validate information for a certificate order.
         /// </summary>
         /// <remarks>
-        /// Validate information for a certificate order.
+        /// Description for Validate information for a certificate order.
         /// </remarks>
         /// <param name='appServiceCertificateOrder'>
         /// Information for a certificate order.
@@ -239,7 +241,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -265,7 +267,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -274,7 +279,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appServiceCertificateOrder", appServiceCertificateOrder);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ValidatePurchaseInformation", tracingParameters);
             }
@@ -283,9 +287,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -353,14 +357,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -370,10 +373,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -404,7 +403,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get certificate orders in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get certificate orders in a resource group.
+        /// Description for Get certificate orders in a resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -455,7 +454,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -464,7 +466,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
             }
@@ -474,9 +475,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -602,7 +603,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a certificate order.
         /// </summary>
         /// <remarks>
-        /// Get a certificate order.
+        /// Description for Get a certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -660,7 +661,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -670,7 +674,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -681,9 +684,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -809,7 +812,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a certificate purchase order.
         /// </summary>
         /// <remarks>
-        /// Create or update a certificate purchase order.
+        /// Description for Create or update a certificate purchase order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -837,7 +840,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete an existing certificate order.
         /// </summary>
         /// <remarks>
-        /// Delete an existing certificate order.
+        /// Description for Delete an existing certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -851,7 +854,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -892,7 +895,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -902,7 +908,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -913,9 +918,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -977,14 +982,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -994,10 +998,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1028,7 +1028,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a certificate purchase order.
         /// </summary>
         /// <remarks>
-        /// Create or update a certificate purchase order.
+        /// Description for Create or update a certificate purchase order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1093,7 +1093,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1104,7 +1107,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("certificateDistinguishedName", certificateDistinguishedName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -1115,9 +1117,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1267,7 +1269,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all certificates associated with a certificate order.
         /// </summary>
         /// <remarks>
-        /// List all certificates associated with a certificate order.
+        /// Description for List all certificates associated with a certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1325,7 +1327,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1335,7 +1340,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListCertificates", tracingParameters);
             }
@@ -1346,9 +1350,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1474,7 +1478,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get the certificate associated with a certificate order.
         /// </summary>
         /// <remarks>
-        /// Get the certificate associated with a certificate order.
+        /// Description for Get the certificate associated with a certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1539,7 +1543,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1550,7 +1557,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetCertificate", tracingParameters);
             }
@@ -1562,9 +1568,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1690,7 +1696,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a certificate and associates with key vault secret.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a certificate and associates with key vault secret.
+        /// Description for Creates or updates a certificate and associates with key
+        /// vault secret.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1721,7 +1728,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete the certificate associated with a certificate order.
         /// </summary>
         /// <remarks>
-        /// Delete the certificate associated with a certificate order.
+        /// Description for Delete the certificate associated with a certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1738,7 +1745,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1783,7 +1790,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1794,7 +1804,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCertificate", tracingParameters);
             }
@@ -1806,9 +1815,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1870,14 +1879,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1887,10 +1895,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1921,7 +1925,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a certificate and associates with key vault secret.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a certificate and associates with key vault secret.
+        /// Description for Creates or updates a certificate and associates with key
+        /// vault secret.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1993,7 +1998,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2005,7 +2013,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("keyVaultCertificate", keyVaultCertificate);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateCertificate", tracingParameters);
             }
@@ -2017,9 +2024,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2169,7 +2176,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Reissue an existing certificate order.
         /// </summary>
         /// <remarks>
-        /// Reissue an existing certificate order.
+        /// Description for Reissue an existing certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2186,7 +2193,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2231,7 +2238,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2242,7 +2252,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("reissueCertificateOrderRequest", reissueCertificateOrderRequest);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Reissue", tracingParameters);
             }
@@ -2253,9 +2262,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2323,14 +2332,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2340,10 +2348,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2374,7 +2378,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Renew an existing certificate order.
         /// </summary>
         /// <remarks>
-        /// Renew an existing certificate order.
+        /// Description for Renew an existing certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2391,7 +2395,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2436,7 +2440,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2447,7 +2454,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("renewCertificateOrderRequest", renewCertificateOrderRequest);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Renew", tracingParameters);
             }
@@ -2458,9 +2464,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2528,14 +2534,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2545,10 +2550,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2579,7 +2580,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Resend certificate email.
         /// </summary>
         /// <remarks>
-        /// Resend certificate email.
+        /// Description for Resend certificate email.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2593,7 +2594,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2634,7 +2635,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2644,7 +2648,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResendEmail", tracingParameters);
             }
@@ -2655,9 +2658,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2719,14 +2722,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2736,10 +2738,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2770,7 +2768,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Verify domain ownership for this certificate order.
         /// </summary>
         /// <remarks>
-        /// Verify domain ownership for this certificate order.
+        /// Description for Verify domain ownership for this certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2787,7 +2785,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2832,7 +2830,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2843,7 +2844,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("nameIdentifier", nameIdentifier);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResendRequestEmails", tracingParameters);
             }
@@ -2854,9 +2854,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2924,14 +2924,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2941,10 +2940,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2975,7 +2970,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Verify domain ownership for this certificate order.
         /// </summary>
         /// <remarks>
-        /// Verify domain ownership for this certificate order.
+        /// Description for Verify domain ownership for this certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3040,7 +3035,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3051,7 +3049,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("siteSealRequest", siteSealRequest);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RetrieveSiteSeal", tracingParameters);
             }
@@ -3062,9 +3059,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3196,7 +3193,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Verify domain ownership for this certificate order.
         /// </summary>
         /// <remarks>
-        /// Verify domain ownership for this certificate order.
+        /// Description for Verify domain ownership for this certificate order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3210,7 +3207,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3251,7 +3248,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3261,7 +3261,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyDomainOwnership", tracingParameters);
             }
@@ -3272,9 +3271,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3336,14 +3335,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -3353,10 +3351,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -3387,7 +3381,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Retrieve the list of certificate actions.
         /// </summary>
         /// <remarks>
-        /// Retrieve the list of certificate actions.
+        /// Description for Retrieve the list of certificate actions.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3445,7 +3439,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3455,7 +3452,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RetrieveCertificateActions", tracingParameters);
             }
@@ -3466,9 +3462,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3594,7 +3590,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Retrieve email history.
         /// </summary>
         /// <remarks>
-        /// Retrieve email history.
+        /// Description for Retrieve email history.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3652,7 +3648,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3662,7 +3661,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RetrieveCertificateEmailHistory", tracingParameters);
             }
@@ -3673,9 +3671,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3801,7 +3799,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a certificate purchase order.
         /// </summary>
         /// <remarks>
-        /// Create or update a certificate purchase order.
+        /// Description for Create or update a certificate purchase order.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3870,7 +3868,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3881,7 +3882,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("certificateDistinguishedName", certificateDistinguishedName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
@@ -3892,9 +3892,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{certificateOrderName}", System.Uri.EscapeDataString(certificateOrderName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4044,7 +4044,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a certificate and associates with key vault secret.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a certificate and associates with key vault secret.
+        /// Description for Creates or updates a certificate and associates with key
+        /// vault secret.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -4120,7 +4121,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4132,7 +4136,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("keyVaultCertificate", keyVaultCertificate);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdateCertificate", tracingParameters);
             }
@@ -4144,9 +4147,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4296,7 +4299,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all certificate orders in a subscription.
         /// </summary>
         /// <remarks>
-        /// List all certificate orders in a subscription.
+        /// Description for List all certificate orders in a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4467,7 +4470,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get certificate orders in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get certificate orders in a resource group.
+        /// Description for Get certificate orders in a resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4638,7 +4641,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all certificates associated with a certificate order.
         /// </summary>
         /// <remarks>
-        /// List all certificates associated with a certificate order.
+        /// Description for List all certificates associated with a certificate order.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -85,5 +85,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

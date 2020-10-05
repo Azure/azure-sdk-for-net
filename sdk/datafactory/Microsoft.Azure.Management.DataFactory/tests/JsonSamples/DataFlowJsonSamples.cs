@@ -53,5 +53,44 @@ namespace DataFactory.Tests.JsonSamples
         }
       }
 ";
+        [JsonSample]
+        public const string MappingDataFlowWithLinkedServices = @"
+      {
+        ""name"": ""exampleDataFlow"",
+        ""properties"": {
+          ""description"": ""Sample demo data flow to convert currencies showing usage of union, derive and conditional split transformation."",
+          ""type"": ""MappingDataFlow"",
+          ""typeProperties"": {
+            ""sources"": [
+              {
+                ""linkedService"": {
+                  ""referenceName"": ""SourceLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""schemaLinkedService"": {
+                  ""referenceName"": ""SourceSchemaLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""name"": ""USDCurrency""
+              }
+            ],
+            ""sinks"": [
+              {
+                ""linkedService"": {
+                  ""referenceName"": ""SinkLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""schemaLinkedService"": {
+                  ""referenceName"": ""SinkSchemaLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""name"": ""USDSink""
+              }
+            ],
+            ""script"": ""some script""
+          }
+        }
+      }
+";
     }
 }

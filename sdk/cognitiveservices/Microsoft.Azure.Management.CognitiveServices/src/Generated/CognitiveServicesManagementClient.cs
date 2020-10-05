@@ -49,13 +49,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2017-04-18
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -91,6 +90,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
@@ -336,6 +345,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
             Accounts = new AccountsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Operations = new Operations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-18";
             AcceptLanguage = "en-US";
@@ -411,9 +422,23 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
             if (ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
             }
             if (location == null)
             {
@@ -627,9 +652,23 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
             if (ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
             }
             if (subdomainName == null)
             {

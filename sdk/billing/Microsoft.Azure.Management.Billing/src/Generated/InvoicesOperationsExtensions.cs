@@ -22,44 +22,54 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class InvoicesOperationsExtensions
     {
             /// <summary>
-            /// List of invoices for a billing account.
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
-            public static InvoiceListResult ListByBillingAccount(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate)
+            public static IPage<Invoice> ListByBillingAccount(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate)
             {
                 return operations.ListByBillingAccountAsync(billingAccountName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List of invoices for a billing account.
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceListResult> ListByBillingAccountAsync(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Invoice>> ListByBillingAccountAsync(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -68,50 +78,60 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// List of invoices for a billing profile.
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
-            public static InvoiceListResult ListByBillingProfile(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate)
+            public static IPage<Invoice> ListByBillingProfile(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate)
             {
                 return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List of invoices for a billing profile.
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceListResult> ListByBillingProfileAsync(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Invoice>> ListByBillingProfileAsync(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -120,63 +140,147 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the invoice by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceName'>
-            /// Invoice Id.
-            /// </param>
-            public static Invoice Get(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
-            {
-                return operations.GetAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the invoice by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='invoiceName'>
-            /// Invoice Id.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Invoice> GetAsync(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Gets an invoice by billing account name and ID. The operation is supported
+            /// for billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
-            /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            public static Invoice Get(this IInvoicesOperations operations, string billingAccountName, string invoiceName)
+            {
+                return operations.GetAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an invoice by billing account name and ID. The operation is supported
+            /// for billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Invoice> GetAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets an invoice by ID. The operation is supported for billing accounts with
+            /// agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            public static Invoice GetById(this IInvoicesOperations operations, string invoiceName)
+            {
+                return operations.GetByIdAsync(invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an invoice by ID. The operation is supported for billing accounts with
+            /// agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Invoice> GetByIdAsync(this IInvoicesOperations operations, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice. The operation is supported for billing
+            /// accounts with agreement type Microsoft Partner Agreement or Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl DownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken)
+            {
+                return operations.DownloadInvoiceAsync(billingAccountName, invoiceName, downloadToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice. The operation is supported for billing
+            /// accounts with agreement type Microsoft Partner Agreement or Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> DownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the invoices for a subscription.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='periodStartDate'>
             /// Invoice period start date.
@@ -184,23 +288,17 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='periodEndDate'>
             /// Invoice period end date.
             /// </param>
-            public static IPage<Invoice> ListByBillingSubscription(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string periodStartDate, string periodEndDate)
+            public static IPage<Invoice> ListByBillingSubscription(this IInvoicesOperations operations, string periodStartDate, string periodEndDate)
             {
-                return operations.ListByBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
+                return operations.ListByBillingSubscriptionAsync(periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
             /// </param>
             /// <param name='periodStartDate'>
             /// Invoice period start date.
@@ -211,64 +309,268 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Invoice>> ListByBillingSubscriptionAsync(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Invoice>> ListByBillingSubscriptionAsync(this IInvoicesOperations operations, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingSubscriptionWithHttpMessagesAsync(billingAccountName, billingSubscriptionName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingSubscriptionWithHttpMessagesAsync(periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the invoice by name.
+            /// Gets an invoice by subscription ID and invoice ID.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
-            /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
-            public static Invoice GetById(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string invoiceName)
+            public static Invoice GetBySubscriptionAndInvoiceId(this IInvoicesOperations operations, string invoiceName)
             {
-                return operations.GetByIdAsync(billingAccountName, billingSubscriptionName, invoiceName).GetAwaiter().GetResult();
+                return operations.GetBySubscriptionAndInvoiceIdAsync(invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the invoice by name.
+            /// Gets an invoice by subscription ID and invoice ID.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
-            /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Invoice> GetByIdAsync(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Invoice> GetBySubscriptionAndInvoiceIdAsync(this IInvoicesOperations operations, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(billingAccountName, billingSubscriptionName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetBySubscriptionAndInvoiceIdWithHttpMessagesAsync(invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Gets a URL to download an invoice.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl DownloadBillingSubscriptionInvoice(this IInvoicesOperations operations, string invoiceName, string downloadToken)
+            {
+                return operations.DownloadBillingSubscriptionInvoiceAsync(invoiceName, downloadToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> DownloadBillingSubscriptionInvoiceAsync(this IInvoicesOperations operations, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DownloadBillingSubscriptionInvoiceWithHttpMessagesAsync(invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice. The operation is supported for billing
+            /// accounts with agreement type Microsoft Partner Agreement or Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl BeginDownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken)
+            {
+                return operations.BeginDownloadInvoiceAsync(billingAccountName, invoiceName, downloadToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice. The operation is supported for billing
+            /// accounts with agreement type Microsoft Partner Agreement or Microsoft
+            /// Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> BeginDownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl BeginDownloadBillingSubscriptionInvoice(this IInvoicesOperations operations, string invoiceName, string downloadToken)
+            {
+                return operations.BeginDownloadBillingSubscriptionInvoiceAsync(invoiceName, downloadToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download an invoice.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> BeginDownloadBillingSubscriptionInvoiceAsync(this IInvoicesOperations operations, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDownloadBillingSubscriptionInvoiceWithHttpMessagesAsync(invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Invoice> ListByBillingAccountNext(this IInvoicesOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Invoice>> ListByBillingAccountNextAsync(this IInvoicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Invoice> ListByBillingProfileNext(this IInvoicesOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingProfileNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Invoice>> ListByBillingProfileNextAsync(this IInvoicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingProfileNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -283,7 +585,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>

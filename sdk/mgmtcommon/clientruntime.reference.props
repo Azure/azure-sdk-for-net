@@ -2,7 +2,7 @@
 	<!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />	 -->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.20, 3.0.0)" />
-		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
 	</ItemGroup>
   
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

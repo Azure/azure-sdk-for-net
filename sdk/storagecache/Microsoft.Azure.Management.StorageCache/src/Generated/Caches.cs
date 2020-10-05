@@ -376,7 +376,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -411,9 +412,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -594,7 +595,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -629,9 +631,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -776,7 +778,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='cache'>
         /// Object containing the user-selectable properties of the new Cache. If
@@ -824,10 +827,14 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
+            }
+            if (cache != null)
+            {
+                cache.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -988,7 +995,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='cache'>
         /// Object containing the user-selectable properties of the Cache. If read-only
@@ -1036,9 +1044,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             // Tracing
@@ -1183,7 +1191,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1226,9 +1235,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             // Tracing
@@ -1401,7 +1410,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1444,9 +1454,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             // Tracing
@@ -1619,7 +1629,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1662,9 +1673,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             // Tracing
@@ -1838,7 +1849,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars must be
+        /// in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1881,9 +1893,9 @@ namespace Microsoft.Azure.Management.StorageCache
             }
             if (cacheName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,31}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(cacheName, "^[-0-9a-zA-Z_]{1,80}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,31}$");
+                    throw new ValidationException(ValidationRules.Pattern, "cacheName", "^[-0-9a-zA-Z_]{1,80}$");
                 }
             }
             // Tracing

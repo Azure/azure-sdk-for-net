@@ -1,0 +1,93 @@
+# Expects azuresdk-github-pat is set to the PAT for azure-sdk
+# Expects the buildtools to be cloned
+
+parameters:
+  BaseBranchName: $(Build.SourceBranch)
+  PRBranchName: not-specified
+  PROwner: azure-sdk
+  CommitMsg: not-specified
+  RepoOwner: Azure
+  RepoName: $(Build.Repository.Name)
+  PushArgs:
+  WorkingDirectory: $(System.DefaultWorkingDirectory)
+  PRTitle: not-specified
+  PRBody: ''
+  ScriptDirectory: eng/common/scripts
+  GHReviewersVariable: '' 
+  GHTeamReviewersVariable: ''
+  # Multiple labels seperated by comma, e.g. "bug, APIView"
+  PRLabels: ''
+
+steps:
+
+- pwsh: |
+    echo "git add -A"
+    git add -A
+
+    echo "git diff --name-status --cached --exit-code"
+    git diff --name-status --cached --exit-code
+
+    if ($LastExitCode -ne 0) {
+      echo "##vso[task.setvariable variable=HasChanges]$true"
+      echo "Changes detected so setting HasChanges=true"
+    }
+    else {
+      echo "##vso[task.setvariable variable=HasChanges]$false"
+      echo "No changes so skipping code push"
+    }
+
+    # Remove the repo owner from the front of the repo name if it exists there
+    $repoName = "${{ parameters.RepoName }}" -replace "^${{ parameters.RepoOwner }}/", ""
+    echo "##vso[task.setvariable variable=RepoNameWithoutOwner]$repoName"
+    echo "RepoName = $repName"
+
+  displayName: Check for changes
+  workingDirectory: ${{ parameters.WorkingDirectory }}
+  ignoreLASTEXITCODE: true
+
+- task: PowerShell@2
+  displayName: Push changes
+  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  inputs:
+    pwsh: true
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+    filePath: ${{ parameters.ScriptDirectory }}/git-branch-push.ps1
+    arguments: >
+      -PRBranchName "${{ parameters.PRBranchName }}"
+      -CommitMsg "${{ parameters.CommitMsg }}"
+      -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/$(RepoNameWithoutOwner).git"
+      -PushArgs "${{ parameters.PushArgs }}"
+
+- task: PowerShell@2
+  displayName: Create pull request
+  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  inputs:
+    pwsh: true
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+    filePath: ${{ parameters.ScriptDirectory }}/Submit-PullRequest.ps1
+    arguments: >
+      -RepoOwner "${{ parameters.RepoOwner }}"
+      -RepoName "$(RepoNameWithoutOwner)"
+      -BaseBranch "${{ parameters.BaseBranchName }}"
+      -PROwner "${{ parameters.PROwner }}"
+      -PRBranch "${{ parameters.PRBranchName }}"
+      -AuthToken "$(azuresdk-github-pat)"
+      -PRTitle "${{ parameters.PRTitle }}"
+      -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
+      -PRLabels "${{ parameters.PRLabels}}"
+
+- task: PowerShell@2
+  displayName: Tag a Reviewer on PR
+  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  continueOnError: true
+  inputs:
+    pwsh: true
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+    filePath: ${{ parameters.ScriptDirectory }}/add-pullrequest-reviewers.ps1
+    arguments: >
+      -RepoOwner "${{ parameters.RepoOwner }}"
+      -RepoName "$(RepoNameWithoutOwner)"
+      -AuthToken "$(azuresdk-github-pat)"
+      -GitHubUsers "$(${{ parameters.GHReviewersVariable }})"
+      -GitHubTeams "$(${{ parameters.GHTeamReviewersVariable }})"
+      -PRNumber "$(Submitted.PullRequest.Number)"

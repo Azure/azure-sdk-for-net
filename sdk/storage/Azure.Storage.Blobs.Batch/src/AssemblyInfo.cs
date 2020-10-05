@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Azure.Storage.Blobs.Batch.Tests, PublicKey=" +
@@ -10,3 +11,4 @@ using System.Runtime.CompilerServices;
     "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
     "aa7b11b4")]
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Storage")]
+[assembly: SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "Batch client is exempted from normal return type rules.")]

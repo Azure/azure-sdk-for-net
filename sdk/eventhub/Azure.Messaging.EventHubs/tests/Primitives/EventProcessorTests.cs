@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
-using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -19,154 +20,17 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   class.
     /// </summary>
     ///
+    /// <remarks>
+    ///   This segment of the partial class defines types and members for use throughout the
+    ///   <see cref="EventProcessor{TPartition}" /> test suite, which are referenced by the
+    ///   other partial classes defined in the <c>EventProcessorTests.[[ CATEGORY ]].cs</c> files.
+    /// </remarks>
+    ///
     [TestFixture]
-    public class EventProcessorTests
+    public partial class EventProcessorTests
     {
-        /// <summary>
-        ///   Verifies functionality of the <see cref="StorageManager" />
-        ///   used by the processor.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessorStorageManagerDelegatesCalls()
-        {
-            var listCheckpointsDelegated = false;
-            var listOwnershipDelegated = false;
-            var claimOwnershipDelegated = false;
-            var fqNamespace = "fqns";
-            var eventHub = "eh";
-            var consumerGroup = "cg";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-
-            mockProcessor
-                .Protected()
-                .Setup<Task<IEnumerable<EventProcessorCheckpoint>>>("ListCheckpointsAsync", ItExpr.IsAny<CancellationToken>())
-                .Callback(() => listCheckpointsDelegated = true)
-                .Returns(Task.FromResult(default(IEnumerable<EventProcessorCheckpoint>)));
-
-            mockProcessor
-                .Protected()
-                .Setup<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ListOwnershipAsync", ItExpr.IsAny<CancellationToken>())
-                .Callback(() => listOwnershipDelegated = true)
-                .Returns(Task.FromResult(default(IEnumerable<EventProcessorPartitionOwnership>)));
-
-            mockProcessor
-                .Protected()
-                .Setup<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ClaimOwnershipAsync", ItExpr.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), ItExpr.IsAny<CancellationToken>())
-                .Callback(() => claimOwnershipDelegated = true)
-                .Returns(Task.FromResult(default(IEnumerable<EventProcessorPartitionOwnership>)));
-
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
-            Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
-
-            await storageManager.ListCheckpointsAsync("na", "na", "na", CancellationToken.None);
-            Assert.That(listCheckpointsDelegated, Is.True, $"The call to { nameof(storageManager.ListCheckpointsAsync) } should have been delegated.");
-
-            await storageManager.ListOwnershipAsync("na", "na", "na", CancellationToken.None);
-            Assert.That(listOwnershipDelegated, Is.True, $"The call to { nameof(storageManager.ListOwnershipAsync) } should have been delegated.");
-
-            await storageManager.ClaimOwnershipAsync(default(IEnumerable<EventProcessorPartitionOwnership>), CancellationToken.None);
-            Assert.That(claimOwnershipDelegated, Is.True, $"The call to { nameof(storageManager.ClaimOwnershipAsync) } should have been delegated.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="StorageManager" />
-        ///   used by the processor.
-        /// </summary>
-        ///
-        [Test]
-        public void ProcessorStorageManagerDoesNotAllowCheckpointUpdate()
-        {
-            var fqNamespace = "fqns";
-            var eventHub = "eh";
-            var consumerGroup = "cg";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
-            Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
-
-            Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(Array.Empty<byte>()), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="StorageManager" />
-        ///   used by the processor.
-        /// </summary>
-        ///
-        [Test]
-        public async Task TheStorageManagerDoesNotKeepTheProcessorAlive()
-        {
-            var fqNamespace = "fqns";
-            var eventHub = "eh";
-            var consumerGroup = "cg";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
-
-            mockProcessor
-                .Protected()
-                .Setup<Task<IEnumerable<EventProcessorCheckpoint>>>("ListCheckpointsAsync", ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(default(IEnumerable<EventProcessorCheckpoint>)));
-
-            Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
-            Assert.That(() => storageManager.ListCheckpointsAsync(fqNamespace, eventHub, consumerGroup, CancellationToken.None), Throws.Nothing, "The initial call should be successful.");
-
-            // Attempt to clear out the processor and force GC.
-
-            mockProcessor = null;
-
-            // Because cleanup may be non-deterministic, allow a small set of retries.
-
-            var attempts = 0;
-            var maxAttempts = 5;
-
-            while (attempts <= maxAttempts)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(1));
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                try
-                {
-                    Assert.That(() => storageManager.ListCheckpointsAsync(fqNamespace, eventHub, consumerGroup, CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-                }
-                catch (AssertionException)
-                {
-                    if (++attempts <= maxAttempts)
-                    {
-                        continue;
-                    }
-
-                    throw;
-                }
-
-                // If things have gotten here, the test passes.
-
-                break;
-            }
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessorLoadBalancerUsesTheExpectedStorageManager()
-        {
-            var fqNamespace = "fqns";
-            var eventHub = "eh";
-            var consumerGroup = "cg";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-            var loadBalancer = GetLoadBalancer(mockProcessor.Object);
-
-            Assert.That(loadBalancer, Is.Not.Null, "The load balancer should have been created.");
-            await loadBalancer.RelinquishOwnershipAsync(CancellationToken.None);
-
-            mockProcessor
-                .Protected()
-                .Verify<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ClaimOwnershipAsync", Times.Once(), ItExpr.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), ItExpr.IsAny<CancellationToken>());
-        }
+        /// <summary>An empty event batch to use for mocking.</summary>
+        private readonly IReadOnlyList<EventData> EmptyBatch = new List<EventData>(0);
 
         /// <summary>
         ///   Retrieves the load balancer for an event processor instance, using its private accessor.
@@ -174,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
         ///
-        /// <param name="processor">The processor instance to read the load balancer for.</param>
+        /// <param name="processor">The processor instance to operate on.</param>
         ///
         /// <returns>The load balancer used by the processor.</returns>
         ///
@@ -183,5 +47,115 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventProcessor<T>)
                     .GetProperty("LoadBalancer", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(processor);
+
+        /// <summary>
+        ///   Creates a connection using a processor client's ConnectionFactory and returns its ConnectionOptions.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        ///
+        /// <returns>The set of options used by the connection.</returns>
+        ///
+        private static EventHubConnectionOptions GetConnectionOptions<T>(EventProcessor<T> processor) where T : EventProcessorPartition, new() =>
+            (EventHubConnectionOptions)
+                typeof(EventHubConnection)
+                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(processor.CreateConnection());
+
+        /// <summary>
+        ///   Retrieves the task used to track the processor's activity when running, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        ///
+        /// <returns>The task for tracking the processor's activity when running.</returns>
+        ///
+        private static Task GetRunningProcessorTask<T>(EventProcessor<T> processor) where T : EventProcessorPartition, new() =>
+            (Task)
+                typeof(EventProcessor<T>)
+                    .GetField("_runningProcessorTask", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(processor);
+
+        /// <summary>
+        ///   Retrieves the active set of partition processors for an event processor, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        ///
+        /// <returns>The set of active partition processors.</returns>
+        ///
+        private static ConcurrentDictionary<string, EventProcessor<T>.PartitionProcessor> GetActivePartitionProcessors<T>(EventProcessor<T> processor) where T : EventProcessorPartition, new() =>
+            (ConcurrentDictionary<string, EventProcessor<T>.PartitionProcessor>)
+                typeof(EventProcessor<T>)
+                    .GetProperty("ActivePartitionProcessors", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(processor);
+
+        /// <summary>
+        ///   A basic custom partition type, allowing for testing or processor functionality.
+        /// </summary>
+        ///
+        public class CustomPartition : EventProcessorPartition
+        {
+            public string Description { get; set; }
+        }
+
+        /// <summary>
+        ///   A basic mock of the event processor, allowing for testing of specific base class
+        ///   functionality.
+        /// </summary>
+        ///
+        public class MinimalProcessorMock : EventProcessor<EventProcessorPartition>
+        {
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string connectionString,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, options) { }
+
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string connectionString,
+                                        string eventHubName,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options) { }
+
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        TokenCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+
+            internal MinimalProcessorMock(int eventBatchMaximumCount,
+                                          string consumerGroup,
+                                          string fullyQualifiedNamespace,
+                                          string eventHubName,
+                                          TokenCredential credential,
+                                          EventProcessorOptions options,
+                                          PartitionLoadBalancer loadBalancer) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, loadBalancer) { }
+
+            public LastEnqueuedEventProperties InvokeReadLastEnqueuedEventProperties(string partitionId) => ReadLastEnqueuedEventProperties(partitionId);
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   A shim for the transport consumer, allowing setting of base class
+        ///   protected properties.
+        /// </summary>
+        ///
+        internal class SettableTransportConsumer : TransportConsumer
+        {
+            public void SetLastEvent(EventData lastEvent) => LastReceivedEvent = lastEvent;
+            public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData>(0));
+        }
     }
 }

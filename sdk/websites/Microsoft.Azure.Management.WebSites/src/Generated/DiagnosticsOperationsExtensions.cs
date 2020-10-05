@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Hosting Environment Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Hosting Environment Detector Responses
+            /// Description for List Hosting Environment Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Hosting Environment Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Hosting Environment Detector Responses
+            /// Description for List Hosting Environment Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Hosting Environment Detector Response
             /// </summary>
             /// <remarks>
-            /// Get Hosting Environment Detector Response
+            /// Description for Get Hosting Environment Detector Response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Hosting Environment Detector Response
             /// </summary>
             /// <remarks>
-            /// Get Hosting Environment Detector Response
+            /// Description for Get Hosting Environment Detector Response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get site detector response
             /// </summary>
             /// <remarks>
-            /// Get site detector response
+            /// Description for Get site detector response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get site detector response
             /// </summary>
             /// <remarks>
-            /// Get site detector response
+            /// Description for Get site detector response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Category
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Category
+            /// Description for Get Diagnostics Category
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Category
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Category
+            /// Description for Get Diagnostics Category
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -407,7 +407,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analysis
             /// </summary>
             /// <remarks>
-            /// Get Site Analysis
+            /// Description for Get Site Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='analysisName'>
             /// Analysis Name
             /// </param>
-            public static DiagnosticAnalysis GetSiteAnalysis(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName)
+            public static AnalysisDefinition GetSiteAnalysis(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName)
             {
                 return operations.GetSiteAnalysisAsync(resourceGroupName, siteName, diagnosticCategory, analysisName).GetAwaiter().GetResult();
             }
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analysis
             /// </summary>
             /// <remarks>
-            /// Get Site Analysis
+            /// Description for Get Site Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DiagnosticAnalysis> GetSiteAnalysisAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AnalysisDefinition> GetSiteAnalysisAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSiteAnalysisWithHttpMessagesAsync(resourceGroupName, siteName, diagnosticCategory, analysisName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -465,7 +465,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Analysis
             /// </summary>
             /// <remarks>
-            /// Execute Analysis
+            /// Description for Execute Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Analysis
             /// </summary>
             /// <remarks>
-            /// Execute Analysis
+            /// Description for Execute Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -593,7 +593,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detector
             /// </summary>
             /// <remarks>
-            /// Get Detector
+            /// Description for Get Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='detectorName'>
             /// Detector Name
             /// </param>
-            public static IPage<DetectorDefinition> GetSiteDetector(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName)
+            public static DetectorDefinition GetSiteDetector(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName)
             {
                 return operations.GetSiteDetectorAsync(resourceGroupName, siteName, diagnosticCategory, detectorName).GetAwaiter().GetResult();
             }
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detector
             /// </summary>
             /// <remarks>
-            /// Get Detector
+            /// Description for Get Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -639,7 +639,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DetectorDefinition>> GetSiteDetectorAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectorDefinition> GetSiteDetectorAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSiteDetectorWithHttpMessagesAsync(resourceGroupName, siteName, diagnosticCategory, detectorName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -651,7 +651,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Detector
             /// </summary>
             /// <remarks>
-            /// Execute Detector
+            /// Description for Execute Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Detector
             /// </summary>
             /// <remarks>
-            /// Execute Detector
+            /// Description for Execute Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -750,7 +750,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -779,7 +779,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get site detector response
             /// </summary>
             /// <remarks>
-            /// Get site detector response
+            /// Description for Get site detector response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -814,7 +814,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get site detector response
             /// </summary>
             /// <remarks>
-            /// Get site detector response
+            /// Description for Get site detector response
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -855,7 +855,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -878,7 +878,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -907,7 +907,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Category
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Category
+            /// Description for Get Diagnostics Category
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -933,7 +933,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Category
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Category
+            /// Description for Get Diagnostics Category
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -965,7 +965,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -991,7 +991,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1023,7 +1023,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analysis
             /// </summary>
             /// <remarks>
-            /// Get Site Analysis
+            /// Description for Get Site Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1043,7 +1043,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// Slot - optional
             /// </param>
-            public static DiagnosticAnalysis GetSiteAnalysisSlot(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, string slot)
+            public static AnalysisDefinition GetSiteAnalysisSlot(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, string slot)
             {
                 return operations.GetSiteAnalysisSlotAsync(resourceGroupName, siteName, diagnosticCategory, analysisName, slot).GetAwaiter().GetResult();
             }
@@ -1052,7 +1052,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analysis
             /// </summary>
             /// <remarks>
-            /// Get Site Analysis
+            /// Description for Get Site Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1075,7 +1075,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DiagnosticAnalysis> GetSiteAnalysisSlotAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AnalysisDefinition> GetSiteAnalysisSlotAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSiteAnalysisSlotWithHttpMessagesAsync(resourceGroupName, siteName, diagnosticCategory, analysisName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1087,7 +1087,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Analysis
             /// </summary>
             /// <remarks>
-            /// Execute Analysis
+            /// Description for Execute Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1125,7 +1125,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Analysis
             /// </summary>
             /// <remarks>
-            /// Execute Analysis
+            /// Description for Execute Analysis
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1169,7 +1169,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1195,7 +1195,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1227,7 +1227,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detector
             /// </summary>
             /// <remarks>
-            /// Get Detector
+            /// Description for Get Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1247,7 +1247,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// Slot Name
             /// </param>
-            public static IPage<DetectorDefinition> GetSiteDetectorSlot(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, string slot)
+            public static DetectorDefinition GetSiteDetectorSlot(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, string slot)
             {
                 return operations.GetSiteDetectorSlotAsync(resourceGroupName, siteName, diagnosticCategory, detectorName, slot).GetAwaiter().GetResult();
             }
@@ -1256,7 +1256,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detector
             /// </summary>
             /// <remarks>
-            /// Get Detector
+            /// Description for Get Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1279,7 +1279,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DetectorDefinition>> GetSiteDetectorSlotAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectorDefinition> GetSiteDetectorSlotAsync(this IDiagnosticsOperations operations, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSiteDetectorSlotWithHttpMessagesAsync(resourceGroupName, siteName, diagnosticCategory, detectorName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1291,7 +1291,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Detector
             /// </summary>
             /// <remarks>
-            /// Execute Detector
+            /// Description for Execute Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1329,7 +1329,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Execute Detector
             /// </summary>
             /// <remarks>
-            /// Execute Detector
+            /// Description for Execute Detector
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1373,7 +1373,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Hosting Environment Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Hosting Environment Detector Responses
+            /// Description for List Hosting Environment Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1390,7 +1390,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Hosting Environment Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Hosting Environment Detector Responses
+            /// Description for List Hosting Environment Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1413,7 +1413,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1430,7 +1430,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1453,7 +1453,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1470,7 +1470,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1493,7 +1493,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1510,7 +1510,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1533,7 +1533,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1550,7 +1550,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1570,50 +1570,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get Detector
-            /// </summary>
-            /// <remarks>
-            /// Get Detector
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DetectorDefinition> GetSiteDetectorNext(this IDiagnosticsOperations operations, string nextPageLink)
-            {
-                return operations.GetSiteDetectorNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get Detector
-            /// </summary>
-            /// <remarks>
-            /// Get Detector
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DetectorDefinition>> GetSiteDetectorNextAsync(this IDiagnosticsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSiteDetectorNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1630,7 +1590,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List Site Detector Responses
             /// </summary>
             /// <remarks>
-            /// List Site Detector Responses
+            /// Description for List Site Detector Responses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1653,7 +1613,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1670,7 +1630,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Diagnostics Categories
             /// </summary>
             /// <remarks>
-            /// Get Diagnostics Categories
+            /// Description for Get Diagnostics Categories
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1693,7 +1653,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1710,7 +1670,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Site Analyses
             /// </summary>
             /// <remarks>
-            /// Get Site Analyses
+            /// Description for Get Site Analyses
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1733,7 +1693,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1750,7 +1710,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get Detectors
             /// </summary>
             /// <remarks>
-            /// Get Detectors
+            /// Description for Get Detectors
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1764,46 +1724,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<DetectorDefinition>> ListSiteDetectorsSlotNextAsync(this IDiagnosticsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSiteDetectorsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get Detector
-            /// </summary>
-            /// <remarks>
-            /// Get Detector
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DetectorDefinition> GetSiteDetectorSlotNext(this IDiagnosticsOperations operations, string nextPageLink)
-            {
-                return operations.GetSiteDetectorSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get Detector
-            /// </summary>
-            /// <remarks>
-            /// Get Detector
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DetectorDefinition>> GetSiteDetectorSlotNextAsync(this IDiagnosticsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSiteDetectorSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

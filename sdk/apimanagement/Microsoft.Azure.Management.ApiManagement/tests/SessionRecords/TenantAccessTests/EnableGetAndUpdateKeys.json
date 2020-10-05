@@ -1,67 +1,67 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxP2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3720586b-7dda-4649-ba0d-414998091828"
+          "31f81b4a-e441-496c-bade-c9d6a4a4b6f9"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "289"
+          "286"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:57 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAABp+o=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAHRdg=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "fd011438-3445-4753-b5a7-8f5e11698cb7",
-          "e8333edf-cc07-4a7a-8c22-2ec83d34489f"
+          "6b94dc39-05dd-4129-8c8d-261283c54336",
+          "fb44aa28-bcf8-4789-8fad-c818ec6ecbd7"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "8722c933-02f6-4790-9889-b985aaab7ad7"
+          "37d5ebf9-ae96-45d5-815e-93c3f73da93b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010658Z:8722c933-02f6-4790-9889-b985aaab7ad7"
+          "NORTHEUROPE:20200325T190456Z:37d5ebf9-ae96-45d5-815e-93c3f73da93b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:56 GMT"
+        ],
         "Content-Length": [
-          "2188"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -70,64 +70,64 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101\",\r\n  \"name\": \"sdktestservice20190101\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAABp+o=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-02-07T00:15:54.6331815Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice20190101.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice20190101-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice20190101.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice20190101.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice20190101.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice20190101.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice20190101.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"40.78.133.78\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxP2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7a7e878c-edf1-4594-b343-88e9ca8113eb"
+          "4a82897b-213a-49fd-bff1-9a583ff985d2"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:57 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAABp+o=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAHRdg=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7a7b7ea0-14a0-4b57-a819-677cb7d36767"
+          "60e74324-f792-469c-af08-9b24a97bac79"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "7dcf5314-6302-4f1d-b7e7-ba2981bbefa1"
+          "f79d7738-dbfb-4740-8a83-294b50072f4a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010658Z:7dcf5314-6302-4f1d-b7e7-ba2981bbefa1"
+          "NORTHEUROPE:20200325T190456Z:f79d7738-dbfb-4740-8a83-294b50072f4a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:56 GMT"
+        ],
         "Content-Length": [
-          "2188"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -136,61 +136,259 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101\",\r\n  \"name\": \"sdktestservice20190101\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAABp+o=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-02-07T00:15:54.6331815Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice20190101.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice20190101-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice20190101.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice20190101.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice20190101.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice20190101.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice20190101.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"40.78.133.78\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5ff7f878-f443-4b7e-911f-953b8da965eb"
+          "0760b434-6556-4ec7-8352-25f26c452318"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:57 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAACHQAAAAAAAAAAA==\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAAMYcAAAAAAAAAAA==\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b8c12fe8-4dc5-4538-8c50-cd8adf775052"
+          "455ab4c3-4a54-47d2-9a83-5e64d6851788"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "5d816c2c-79c9-4138-8cc1-808920463fd9"
+          "dfa9a521-ae41-48f9-a74e-072f10ac8475"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010658Z:5d816c2c-79c9-4138-8cc1-808920463fd9"
+          "NORTHEUROPE:20200325T190456Z:dfa9a521-ae41-48f9-a74e-072f10ac8475"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:56 GMT"
+        ],
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": null,\r\n  \"secondaryKey\": null,\r\n  \"enabled\": false\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "632ee709-ec68-464c-8957-e55dd5dedec3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAANFYAAAAAAAAAAA==\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5eb04eda-182d-41a2-bc8b-4e84d41db764"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "da3b509e-79ab-41cb-a8e9-2cc4e1771a8c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190458Z:da3b509e-79ab-41cb-a8e9-2cc4e1771a8c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:57 GMT"
+        ],
+        "Content-Length": [
+          "73"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": null,\r\n  \"secondaryKey\": null,\r\n  \"enabled\": true\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "35d804e3-4c3d-4a96-a7bc-de3c923e5ad5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAANFkAAAAAAAAAAA==\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "32c34035-f128-4587-ba44-d072f6bf307a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "6d31a0ae-68dc-4ea0-8d7c-e4e8591ee704"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190459Z:6d31a0ae-68dc-4ea0-8d7c-e4e8591ee704"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:59 GMT"
+        ],
+        "Content-Length": [
+          "73"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": null,\r\n  \"secondaryKey\": null,\r\n  \"enabled\": true\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access/listSecrets?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcy9saXN0U2VjcmV0cz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e45638ed-4d30-4cd0-b9d8-a7abcbaeea58"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAAMYcAAAAAAAAAAA==\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "9cc22ad9-3b7c-4127-8efc-13c04e9f0416"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "9ee555bf-2d92-4406-b175-75b96067e102"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190457Z:9ee555bf-2d92-4406-b175-75b96067e102"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:57 GMT"
         ],
         "Content-Length": [
           "246"
@@ -202,61 +400,61 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"MxiO8n8F9pCUbQPVG/Rk5VH5sYSoGKmFJJinPSKfcv4auR6iAjQRmHxmdlBXMwyjrLiI6y8u0oY1rBuu1FpnMQ==\",\r\n  \"secondaryKey\": \"LxbNBlCxSYNNpOQDFBNoVKDSfJ5yilJwPFPTZEmABGKwMOSyktt4DPtBd7LSEDTf5/MdOALBL1xUpRaB/InVjQ==\",\r\n  \"enabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"5pkuAtS5akWujR+X7CGQ+cLUeiGPGq+AscdJi6GmJ62fzCw6lMbC0jwwbtXUpO8HM/zkDjdqXRWifeIv3K4lag==\",\r\n  \"secondaryKey\": \"ByGSr+aHaz+vIT8RXFTLPs1ba3Yn4KS5bqxPBRxYYKDLZAhVxzSSbte4h/zO5/PSJ3hBOUulYFcm8vIIi0NElw==\",\r\n  \"enabled\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
-      "RequestMethod": "GET",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access/listSecrets?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcy9saXN0U2VjcmV0cz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d625693f-b07a-418f-8bde-622cd9d24213"
+          "72da5eee-6d3f-4a8c-8443-9b19b2d28fa9"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAC14AAAAAAAAAAA==\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAANFcAAAAAAAAAAA==\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3eb95e3a-79a6-404a-8f9a-217e32c933e7"
+          "8c6057f3-17db-4644-9935-0bfde33a5458"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "03e289ff-9e48-4777-a470-c1a7d8611b97"
+          "6c34bd05-5b77-4233-919d-5facce934633"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:03e289ff-9e48-4777-a470-c1a7d8611b97"
+          "NORTHEUROPE:20200325T190459Z:6c34bd05-5b77-4233-919d-5facce934633"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:58 GMT"
         ],
         "Content-Length": [
           "245"
@@ -268,161 +466,29 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"MxiO8n8F9pCUbQPVG/Rk5VH5sYSoGKmFJJinPSKfcv4auR6iAjQRmHxmdlBXMwyjrLiI6y8u0oY1rBuu1FpnMQ==\",\r\n  \"secondaryKey\": \"LxbNBlCxSYNNpOQDFBNoVKDSfJ5yilJwPFPTZEmABGKwMOSyktt4DPtBd7LSEDTf5/MdOALBL1xUpRaB/InVjQ==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"wnpAhfGQRS1oOwdstiOQGFHPDzzxrAOFmgz1X1hvvF6jLeaPbx1fATRt6eG/PYqpGMGkcFcy/SuULDlb1qfpUQ==\",\r\n  \"secondaryKey\": \"ByGSr+aHaz+vIT8RXFTLPs1ba3Yn4KS5bqxPBRxYYKDLZAhVxzSSbte4h/zO5/PSJ3hBOUulYFcm8vIIi0NElw==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "0775cf47-8f5f-41ca-a775-7300f0fbdd0c"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"AAAAAAAAC18AAAAAAAAAAA==\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "119913f3-4e2c-475e-8077-cf53d18cea2b"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
-        ],
-        "x-ms-correlation-request-id": [
-          "fa30b3bd-a784-4826-892d-ad288d16be59"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:fa30b3bd-a784-4826-892d-ad288d16be59"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "245"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"T9yBMxXsP3t8IXCbSso1nvuCBFbdtmpiimh0Y1z7bMImXH4UaWRHMYTGpJNH5oYuaOlcVuOzUyl5phIas+MkJg==\",\r\n  \"secondaryKey\": \"LxbNBlCxSYNNpOQDFBNoVKDSfJ5yilJwPFPTZEmABGKwMOSyktt4DPtBd7LSEDTf5/MdOALBL1xUpRaB/InVjQ==\",\r\n  \"enabled\": true\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "cebde2ae-a123-4103-b262-361baeff54a8"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"AAAAAAAAC2EAAAAAAAAAAA==\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "a582d2be-3bd0-42e9-8d00-ae1421cd0520"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-correlation-request-id": [
-          "81a0c6b5-2ce8-4f08-b2f0-5b0e8e632ede"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:81a0c6b5-2ce8-4f08-b2f0-5b0e8e632ede"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "245"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"integration\",\r\n  \"primaryKey\": \"T9yBMxXsP3t8IXCbSso1nvuCBFbdtmpiimh0Y1z7bMImXH4UaWRHMYTGpJNH5oYuaOlcVuOzUyl5phIas+MkJg==\",\r\n  \"secondaryKey\": \"sfg7scCws8X9dzR92WI340CB9MVwn/xi8tGa03IGiDjjKGanJ3PPZ79PO8MVyr7Pa8NPd4VJq5D2Zz8uAof1jQ==\",\r\n  \"enabled\": true\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"enabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bd418d01-7db4-44bc-a4cc-0239dac70328"
+          "04878099-7bec-4ef5-9817-6c94a336b217"
         ],
         "If-Match": [
           "*"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -435,32 +501,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:57 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "020d0215-3bf8-4d05-942f-8702c71f5e33"
+          "e85c90f4-6d79-4e6e-99a3-a72668fa3c05"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "018bfff1-2509-4a8c-a99b-c721a696aa8d"
+          "98b53b43-21fe-428b-8ac5-d822f77a1377"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010658Z:018bfff1-2509-4a8c-a99b-c721a696aa8d"
+          "NORTHEUROPE:20200325T190457Z:98b53b43-21fe-428b-8ac5-d822f77a1377"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:57 GMT"
         ],
         "Expires": [
           "-1"
@@ -470,25 +536,25 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3M/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"enabled\": false\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e54fe08c-5ae5-4269-aa88-c6b7917385d0"
+          "076ed052-df52-4019-ac93-06fa270d6796"
         ],
         "If-Match": [
           "*"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -501,32 +567,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b69cf1f6-3d5d-4b59-a207-d1b7356652a8"
+          "e3026960-5889-4d32-80e3-508143edf0ea"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "efe65d00-a97a-4f49-b5d9-1114764ccba7"
+          "a8d20640-8a7f-4964-8a0f-4b10922a1091"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:efe65d00-a97a-4f49-b5d9-1114764ccba7"
+          "NORTHEUROPE:20200325T190500Z:a8d20640-8a7f-4964-8a0f-4b10922a1091"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:59 GMT"
         ],
         "Expires": [
           "-1"
@@ -536,111 +602,111 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access/regeneratePrimaryKey?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3MvcmVnZW5lcmF0ZVByaW1hcnlLZXk/YXBpLXZlcnNpb249MjAxOS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access/regeneratePrimaryKey?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcy9yZWdlbmVyYXRlUHJpbWFyeUtleT9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2fa38aae-547f-4ef1-8b05-c7b2e6e5dc87"
+          "df41378c-9ca5-475c-988d-95c713f955b3"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "56371ea8-66be-4d23-af3a-5dbf4e3f5bb6"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "2b352f34-14b2-43d3-ad07-eae98eefc749"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:2b352f34-14b2-43d3-ad07-eae98eefc749"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/tenant/access/regenerateSecondaryKey?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL3RlbmFudC9hY2Nlc3MvcmVnZW5lcmF0ZVNlY29uZGFyeUtleT9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7e474ac2-c3a3-437b-a31f-525836c167de"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:06:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
+          "3c0d9ee2-7d50-4103-ae22-7ef80a041ce1"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "bb97fe19-4448-4387-8e4a-d9de0c5ca99b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "cd9fc849-5d3a-4c4d-9e4d-f2678798ca8c"
+          "9683ac0f-3e8e-46f6-9be9-d7ea32d2571a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T010659Z:cd9fc849-5d3a-4c4d-9e4d-f2678798ca8c"
+          "NORTHEUROPE:20200325T190458Z:9683ac0f-3e8e-46f6-9be9-d7ea32d2571a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:58 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tenant/access/regenerateSecondaryKey?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGVuYW50L2FjY2Vzcy9yZWdlbmVyYXRlU2Vjb25kYXJ5S2V5P2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "68838d33-315c-41ee-b742-488315a25ba9"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "79d19b3e-4782-4094-b5b0-cabc46d90744"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce606045-de5d-43cf-9350-62cdf83dfc94"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190459Z:ce606045-de5d-43cf-9350-62cdf83dfc94"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:04:59 GMT"
         ],
         "Expires": [
           "-1"
@@ -652,12 +718,12 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
+    "SubscriptionId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
     "TestCertificate": "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",
     "TestCertificatePassword": "Password",
-    "SubId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
-    "ServiceName": "sdktestservice20190101",
-    "Location": "CentralUS",
-    "ResourceGroup": "Api-Default-CentralUS"
+    "SubId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
+    "ServiceName": "sdktestservicemapi",
+    "Location": "eastus",
+    "ResourceGroup": "ApiM-SDK-EastUS"
   }
 }

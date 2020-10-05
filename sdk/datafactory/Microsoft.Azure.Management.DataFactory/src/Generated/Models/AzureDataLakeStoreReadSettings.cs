@@ -49,22 +49,43 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// file (relative path to the path configured in the dataset) that you
         /// want to copy. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="listAfter">Lists files after the value (exclusive)
+        /// based on file/folder names’ lexicographical order. Applies under
+        /// the folderPath in data set, and filter files/sub-folders under the
+        /// folderPath. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="listBefore">Lists files before the value (inclusive)
+        /// based on file/folder names’ lexicographical order. Applies under
+        /// the folderPath in data set, and filter files/sub-folders under the
+        /// folderPath. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="enablePartitionDiscovery">Indicates whether to enable
         /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="deleteFilesAfterCompletion">Indicates whether the
+        /// source files need to be deleted after copy completion. Default is
+        /// false. Type: boolean (or Expression with resultType
+        /// boolean).</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AzureDataLakeStoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public AzureDataLakeStoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object fileListPath = default(object), object listAfter = default(object), object listBefore = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
             FileListPath = fileListPath;
+            ListAfter = listAfter;
+            ListBefore = listBefore;
             EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
+            DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
             CustomInit();
@@ -106,10 +127,43 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object FileListPath { get; set; }
 
         /// <summary>
+        /// Gets or sets lists files after the value (exclusive) based on
+        /// file/folder names’ lexicographical order. Applies under the
+        /// folderPath in data set, and filter files/sub-folders under the
+        /// folderPath. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "listAfter")]
+        public object ListAfter { get; set; }
+
+        /// <summary>
+        /// Gets or sets lists files before the value (inclusive) based on
+        /// file/folder names’ lexicographical order. Applies under the
+        /// folderPath in data set, and filter files/sub-folders under the
+        /// folderPath. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "listBefore")]
+        public object ListBefore { get; set; }
+
+        /// <summary>
         /// Gets or sets indicates whether to enable partition discovery.
         /// </summary>
         [JsonProperty(PropertyName = "enablePartitionDiscovery")]
         public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the source files need to be deleted
+        /// after copy completion. Default is false. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteFilesAfterCompletion")]
+        public object DeleteFilesAfterCompletion { get; set; }
 
         /// <summary>
         /// Gets or sets the start of file's modified datetime. Type: string

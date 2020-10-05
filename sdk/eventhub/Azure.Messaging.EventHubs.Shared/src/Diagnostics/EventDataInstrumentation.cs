@@ -13,8 +13,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     internal static class EventDataInstrumentation
     {
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory("Azure.Messaging.EventHubs", "Microsoft.EventHub", true);
+        /// <summary>The namespace used for the Event Hubs diagnostic scope.</summary>
+        public const string DiagnosticNamespace = "Azure.Messaging.EventHubs";
+
+        /// <summary>The namespace used for the Azure Resource Manager provider namespace.</summary>
+        public const string ResourceProviderNamespace = "Microsoft.EventHub";
+
+        /// <summary>
+        ///   The client diagnostics instance responsible for managing scope.
+        /// </summary>
+        ///
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.

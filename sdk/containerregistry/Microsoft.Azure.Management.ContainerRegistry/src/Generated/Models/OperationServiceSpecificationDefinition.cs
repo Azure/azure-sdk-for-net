@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The definition of Azure Monitoring metrics list.
+    /// The definition of Azure Monitoring list.
     /// </summary>
     public partial class OperationServiceSpecificationDefinition
     {

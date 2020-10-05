@@ -38,38 +38,57 @@ namespace Azure.Messaging.ServiceBus.Core
 
 
         /// <summary>
-        ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
+        ///   Creates a sender strongly aligned with the active protocol and transport,
+        ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
-        /// <param name="entityName"></param>
-        ///
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityName, ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
 
         /// <summary>
-        ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
+        ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         ///
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
         public abstract TransportReceiver CreateReceiver(
-            string entityName,
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
+            string identifier,
             string sessionId,
             bool isSessionReceiver);
+
+        /// <summary>
+        ///   Creates a rule manager strongly aligned with the active protocol and transport,
+        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
+        /// </summary>
+        ///
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the rule manager.</param>
+        ///
+        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
+        ///
+        public abstract TransportRuleManager CreateRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.
@@ -87,7 +106,5 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
-
-
     }
 }

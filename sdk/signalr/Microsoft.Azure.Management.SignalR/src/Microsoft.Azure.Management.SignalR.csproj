@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.SignalR</PackageId>
 		<Description>Provides management capabilities for Azure SignalR.</Description>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.SignalR</AssemblyName>
 		<PackageTags>Microsoft Azure SignalR;SignalR;</PackageTags>
-		<PackageReleaseNotes>This is a public release of the Azure SignalR management SDK. Included with this release are CORS support.</PackageReleaseNotes>
+		<PackageReleaseNotes>This is a public release of the Azure SignalR management SDK. Included with this release are SignalR Upstream settings and Private Link support.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

@@ -46,8 +46,46 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// of the maintenanceConfiguration</param>
         /// <param name="maintenanceScope">Gets or sets maintenanceScope of the
         /// configuration. Possible values include: 'All', 'Host', 'Resource',
-        /// 'InResource'</param>
-        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string))
+        /// 'InResource', 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
+        /// 'SQLManagedInstance'</param>
+        /// <param name="startDateTime">Effective start date of the maintenance
+        /// window in YYYY-MM-DD hh:mm format. The start date can be set to
+        /// either the current date or future date. The window will be created
+        /// in the time zone provided and adjusted to daylight savings
+        /// according to that time zone.</param>
+        /// <param name="expirationDateTime">Effective expiration date of the
+        /// maintenance window in YYYY-MM-DD hh:mm format. The window will be
+        /// created in the time zone provided and adjusted to daylight savings
+        /// according to that time zone. Expiration date must be set to a
+        /// future date. If not provided, it will be set to the maximum
+        /// datetime 9999-12-31 23:59:59.</param>
+        /// <param name="duration">Duration of the maintenance window in HH:mm
+        /// format. If not provided, default value will be used based on
+        /// maintenance scope provided. Example: 05:00.</param>
+        /// <param name="timeZone">Name of the timezone. List of timezones can
+        /// be obtained by executing
+        /// [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example:
+        /// Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard
+        /// Time, Cen. Australia Standard Time.</param>
+        /// <param name="recurEvery">Rate at which a Maintenance window is
+        /// expected to recur. The rate can be expressed as daily, weekly, or
+        /// monthly schedules. Daily schedule are formatted as recurEvery:
+        /// [Frequency as integer]['Day(s)']. If no frequency is provided, the
+        /// default frequency is 1. Daily schedule examples are recurEvery:
+        /// Day, recurEvery: 3Days.  Weekly schedule are formatted as
+        /// recurEvery: [Frequency as integer]['Week(s)'] [Optional comma
+        /// separated list of weekdays Monday-Sunday]. Weekly schedule examples
+        /// are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly
+        /// schedules are formatted as [Frequency as integer]['Month(s)']
+        /// [Comma separated list of month days] or [Frequency as
+        /// integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth,
+        /// Last)] [Weekday Monday-Sunday]. Monthly schedule examples are
+        /// recurEvery: Month, recurEvery: 2Months, recurEvery: Month
+        /// day23,day24, recurEvery: Month Last Sunday, recurEvery: Month
+        /// Fourth Monday.</param>
+        /// <param name="visibility">Gets or sets the visibility of the
+        /// configuration. Possible values include: 'Custom', 'Public'</param>
+        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string), string startDateTime = default(string), string expirationDateTime = default(string), string duration = default(string), string timeZone = default(string), string recurEvery = default(string), string visibility = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -55,6 +93,12 @@ namespace Microsoft.Azure.Management.Maintenance.Models
             NamespaceProperty = namespaceProperty;
             ExtensionProperties = extensionProperties;
             MaintenanceScope = maintenanceScope;
+            StartDateTime = startDateTime;
+            ExpirationDateTime = expirationDateTime;
+            Duration = duration;
+            TimeZone = timeZone;
+            RecurEvery = recurEvery;
+            Visibility = visibility;
             CustomInit();
         }
 
@@ -89,10 +133,76 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 
         /// <summary>
         /// Gets or sets maintenanceScope of the configuration. Possible values
-        /// include: 'All', 'Host', 'Resource', 'InResource'
+        /// include: 'All', 'Host', 'Resource', 'InResource', 'OSImage',
+        /// 'Extension', 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceScope")]
         public string MaintenanceScope { get; set; }
+
+        /// <summary>
+        /// Gets or sets effective start date of the maintenance window in
+        /// YYYY-MM-DD hh:mm format. The start date can be set to either the
+        /// current date or future date. The window will be created in the time
+        /// zone provided and adjusted to daylight savings according to that
+        /// time zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceWindow.startDateTime")]
+        public string StartDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets effective expiration date of the maintenance window in
+        /// YYYY-MM-DD hh:mm format. The window will be created in the time
+        /// zone provided and adjusted to daylight savings according to that
+        /// time zone. Expiration date must be set to a future date. If not
+        /// provided, it will be set to the maximum datetime 9999-12-31
+        /// 23:59:59.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceWindow.expirationDateTime")]
+        public string ExpirationDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets duration of the maintenance window in HH:mm format. If
+        /// not provided, default value will be used based on maintenance scope
+        /// provided. Example: 05:00.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceWindow.duration")]
+        public string Duration { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the timezone. List of timezones can be
+        /// obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones()
+        /// in PowerShell. Example: Pacific Standard Time, UTC, W. Europe
+        /// Standard Time, Korea Standard Time, Cen. Australia Standard Time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceWindow.timeZone")]
+        public string TimeZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets rate at which a Maintenance window is expected to
+        /// recur. The rate can be expressed as daily, weekly, or monthly
+        /// schedules. Daily schedule are formatted as recurEvery: [Frequency
+        /// as integer]['Day(s)']. If no frequency is provided, the default
+        /// frequency is 1. Daily schedule examples are recurEvery: Day,
+        /// recurEvery: 3Days.  Weekly schedule are formatted as recurEvery:
+        /// [Frequency as integer]['Week(s)'] [Optional comma separated list of
+        /// weekdays Monday-Sunday]. Weekly schedule examples are recurEvery:
+        /// 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are
+        /// formatted as [Frequency as integer]['Month(s)'] [Comma separated
+        /// list of month days] or [Frequency as integer]['Month(s)'] [Week of
+        /// Month (First, Second, Third, Fourth, Last)] [Weekday
+        /// Monday-Sunday]. Monthly schedule examples are recurEvery: Month,
+        /// recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery:
+        /// Month Last Sunday, recurEvery: Month Fourth Monday.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceWindow.recurEvery")]
+        public string RecurEvery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visibility of the configuration. Possible values
+        /// include: 'Custom', 'Public'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.visibility")]
+        public string Visibility { get; set; }
 
     }
 }

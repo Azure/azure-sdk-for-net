@@ -47,15 +47,20 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 // implement case
                 try
                 {
                     string shareName = TestUtilities.GenerateName("share");
-                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName);
+                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName, new FileShare());
                     Assert.Null(share.Metadata);
 
                     share = storageMgmtClient.FileShares.Get(rgName, accountName, shareName);
@@ -66,15 +71,18 @@ namespace Storage.Tests
                     metaData.Add("metadata1", "true");
                     metaData.Add("metadata2", "value2");
                     int shareQuota = 500;
-                    FileShare share2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName2, metaData, shareQuota);
+                    FileShare share2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName2, 
+                        new FileShare( metadata: metaData,shareQuota: shareQuota, accessTier: ShareAccessTier.Hot));
                     Assert.Equal(2, share2.Metadata.Count);
                     Assert.Equal(metaData, share2.Metadata);
                     Assert.Equal(shareQuota, share2.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Hot, share2.AccessTier);
 
                     share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName2);
                     Assert.Equal(2, share2.Metadata.Count);
                     Assert.Equal(metaData, share2.Metadata);
                     Assert.Equal(shareQuota, share2.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Hot, share2.AccessTier);
 
                     //Delete share
                     storageMgmtClient.FileShares.Delete(rgName, accountName, shareName);
@@ -116,7 +124,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = new StorageAccountCreateParameters
                 {
-                    Location = "westeurope",
+                    Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     LargeFileSharesState = LargeFileSharesState.Enabled
@@ -127,22 +135,25 @@ namespace Storage.Tests
                 try
                 {
                     string shareName = TestUtilities.GenerateName("share");
-                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName);
+                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName, new FileShare());
                     Assert.Null(share.Metadata);
 
                     Dictionary<string, string> metaData = new Dictionary<string, string>();
                     metaData.Add("metadata1", "true");
                     metaData.Add("metadata2", "value2");
                     int shareQuota = 5200;
-                    var shareSet = storageMgmtClient.FileShares.Update(rgName, accountName, shareName, metaData, shareQuota);
+                    var shareSet = storageMgmtClient.FileShares.Update(rgName, accountName, shareName,
+                        new FileShare(metadata: metaData, shareQuota: shareQuota, accessTier: ShareAccessTier.Cool));
                     Assert.NotNull(shareSet.Metadata);
                     Assert.Equal(shareQuota, shareSet.ShareQuota);
                     Assert.Equal(metaData, shareSet.Metadata);
-                    
+                    Assert.Equal(ShareAccessTier.Cool, shareSet.AccessTier);
+
                     var shareGet = storageMgmtClient.FileShares.Get(rgName, accountName, shareName);
                     Assert.NotNull(shareGet.Metadata);
                     Assert.Equal(metaData, shareGet.Metadata);
                     Assert.Equal(shareQuota, shareGet.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Cool, shareGet.AccessTier);
                 }
                 finally
                 {
@@ -245,6 +256,129 @@ namespace Storage.Tests
                     storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
                     resourcesClient.ResourceGroups.Delete(rgName);
                 }
+            }
+        }
+
+        // test share soft delete
+        [Fact]
+        public void FileSharesSoftDeleteTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // implement case
+                try
+                {
+                    // Enable share soft delete in service properties
+                    FileServiceProperties properties = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                    properties.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy();
+                    properties.ShareDeleteRetentionPolicy.Enabled = true;
+                    properties.ShareDeleteRetentionPolicy.Days = 5;
+                    properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy);
+                    Assert.True(properties.ShareDeleteRetentionPolicy.Enabled);
+                    Assert.Equal(5, properties.ShareDeleteRetentionPolicy.Days);
+
+                    //Create 2 shares
+                    string shareName1 = TestUtilities.GenerateName("share1");
+                    string shareName2 = TestUtilities.GenerateName("share2");
+                    FileShare share1 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName1, 
+                        new FileShare( accessTier: ShareAccessTier.Hot, 
+                            enabledProtocols: EnabledProtocols.NFS,
+                            rootSquash: RootSquashType.AllSquash));
+                    Assert.Equal(shareName1, share1.Name);
+                    Assert.Equal(EnabledProtocols.NFS, share1.EnabledProtocols);
+                    Assert.Equal(RootSquashType.AllSquash, share1.RootSquash);
+                    //Assert.Equal(ShareAccessTier.Hot, share1.AccessTier);
+                    FileShare share2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName2,
+                        new FileShare(accessTier: ShareAccessTier.Cool,
+                            enabledProtocols: EnabledProtocols.SMB));
+                    Assert.Equal(shareName2, share2.Name);
+                    Assert.Equal(EnabledProtocols.SMB, share2.EnabledProtocols);
+
+                    //Update 1 share
+                    share1 = storageMgmtClient.FileShares.Update(rgName, accountName, shareName1,
+                        new FileShare(accessTier: ShareAccessTier.TransactionOptimized,
+                            rootSquash: RootSquashType.RootSquash));
+                    Assert.Equal(shareName1, share1.Name);
+                    Assert.Equal(RootSquashType.RootSquash, share1.RootSquash);
+                    //Assert.Equal(ShareAccessTier.TransactionOptimized, share1.AccessTier);
+
+
+                    // Delete 1 share
+                    storageMgmtClient.FileShares.Delete(rgName, accountName, shareName1);
+
+                    //List normally
+                    IPage<FileShareItem> shares = storageMgmtClient.FileShares.List(rgName, accountName);
+                    Assert.Single(shares);
+
+                    //List with includeDeleted
+                    string deletedShareVersion = null;
+                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    Assert.Equal(2, shares.Count());
+                    foreach(FileShareItem share in shares)
+                    {
+                        if (share.Name == shareName1)
+                        {
+                            Assert.True(share.Deleted);
+                            Assert.NotNull(share.Version);
+                            deletedShareVersion = share.Version;
+                        }
+                    }
+
+                    //Get not deleted share
+                    share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName2, expand: GetShareExpand.Stats);
+                    Assert.NotNull(share2.ShareQuota);
+                    Assert.NotNull(share2.ShareUsageBytes);
+
+                    //Get Deleted Share
+                    try {
+                        share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName1);
+                        Assert.True(false, "Get Share on deleted Share should fail with NotFound.");
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+
+                    // restore deleted share
+                    //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        System.Threading.Thread.Sleep(30000);
+                    }
+                    storageMgmtClient.FileShares.Restore(rgName, accountName, shareName1, shareName1, deletedShareVersion);
+
+                    //List normally
+                    shares = storageMgmtClient.FileShares.List(rgName, accountName);
+                    Assert.Equal(2, shares.Count());
+
+                    //List with includeDeleted
+                    shares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    Assert.Equal(2, shares.Count());
+                    }
+                    finally
+                    {
+                        // clean up
+                        storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                        resourcesClient.ResourceGroups.Delete(rgName);
+                    }
             }
         }
     }

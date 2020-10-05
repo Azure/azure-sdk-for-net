@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Management", "DeploymentOperations", "2019-10-01"),
-                new Tuple<string, string, string>("Management", "Deployments", "2019-10-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2019-10-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2019-10-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2019-10-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2019-10-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2019-10-01"),
-                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2019-10-01"),
-                new Tuple<string, string, string>("Resources", "Deployments", "2019-10-01"),
-                new Tuple<string, string, string>("Resources", "Operations", "2019-10-01"),
-                new Tuple<string, string, string>("Resources", "Tags", "2019-10-01"),
+                new Tuple<string, string, string>("Management", "DeploymentOperations", "2020-06-01"),
+                new Tuple<string, string, string>("Management", "Deployments", "2020-06-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2020-06-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2020-06-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2020-06-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2020-06-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2020-06-01"),
+                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2020-06-01"),
+                new Tuple<string, string, string>("Resources", "Deployments", "2020-06-01"),
+                new Tuple<string, string, string>("Resources", "Operations", "2020-06-01"),
+                new Tuple<string, string, string>("Resources", "Tags", "2020-06-01"),
               }.AsEnumerable();
           }
       }

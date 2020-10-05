@@ -9,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using static Moq.It;
@@ -34,6 +35,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             LeaseId = "MyImportantLease"
         };
+        private static readonly Dictionary<string, string> s_metadata = new Dictionary<string, string>
+        {
+            { "key", "value" }
+        };
+        private static readonly string s_permissions = "permissions";
+        private static readonly string s_umask = "umask";
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly Response<PathInfo> s_response = Response.FromValue(
             new PathInfo(),
@@ -57,14 +64,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(clientMock.Object, default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                transferOptions: default,
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
@@ -72,7 +82,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task UploadsStreamInBlocksIfLengthIsOverTheLimit()
         {
-            TestStream content = new TestStream(_async, 30, TestStream.Read(0, 10));
+            PredictableStream content = new PredictableStream(30);
             TrackingArrayPool testPool = new TrackingArrayPool();
             AppendSink sink = new AppendSink();
 
@@ -80,17 +90,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
-            Assert.AreEqual(1, sink.Appended.Count);
+            Assert.AreEqual(2, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
-            AssertAppended(sink, content);
         }
 
         [Test]
@@ -107,10 +116,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions() { MaximumTransferLength = 20 },
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Appended.Count);
@@ -135,15 +146,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                clientMock.Object, default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                transferOptions: default,
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
@@ -162,10 +175,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions() { MaximumTransferLength = 100 },
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(s_response, info);
@@ -173,7 +188,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(41, testPool.TotalRents);
             AssertAppended(sink, content);
 
-            foreach (byte[] bytes in sink.Appended.Values)
+            foreach ((byte[] bytes, _) in sink.Appended.Values)
             {
                 Assert.LessOrEqual(bytes.Length, 100);
                 Assert.GreaterOrEqual(bytes.Length, 50);
@@ -194,190 +209,188 @@ namespace Azure.Storage.Files.DataLake.Tests
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             clientMock.SetupGet(c => c.Version).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions() { MaximumTransferLength = 20 },
+                arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Appended.Count);
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0]);
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0].Data);
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
 
-        private async Task<Response<PathInfo>> InvokeUploadAsync(DataLakePartitionedUploader uploader, TestStream content)
+        [Test]
+        [Explicit]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
+        public async Task CanHandleLongAppendBufferedUpload()
         {
-            if (_async)
+            const long blockSize = int.MaxValue + 1024L;
+            const int numBlocks = 2;
+            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
+            TrackingArrayPool testPool = new TrackingArrayPool();
+            AppendSink sink = new AppendSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
+
+            Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            clientMock.SetupGet(c => c.Version).CallBase();
+            SetupInternalStaging(clientMock, sink);
+
+            var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions
+                {
+                    InitialTransferSize = 1, // forces buffered upload
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = 2
+                },
+                arrayPool: testPool);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+
+            Assert.AreEqual(s_response, info);
+            foreach (var block in sink.Appended.Values)
             {
-                return await uploader.UploadAsync(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
-            }
-            else
-            {
-                return uploader.Upload(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
+                Assert.AreEqual(blockSize, block.Length);
             }
         }
 
-        private void SetupAsyncStaging(Mock<DataLakeFileClient> clientMock, AppendSink sink)
+        private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader, Stream content)
+            => await uploader.UploadInternal(
+                content,
+                new DataLakeFileUploadOptions
+                {
+                    HttpHeaders = s_pathHttpHeaders,
+                    Conditions = s_conditions,
+                    Umask = s_umask,
+                    Permissions = s_permissions
+                },
+                s_progress,
+                _async,
+                s_cancellationToken);
+
+        private void SetupInternalStaging(Mock<DataLakeFileClient> clientMock, AppendSink sink)
         {
-            if (_async)
-            {
-                clientMock.Setup(
-                    c => c.CreateAsync(
-                        s_pathHttpHeaders,
-                        default,
-                        default,
-                        default,
-                        s_conditions,
-                        s_cancellationToken
-                    )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.CreateAsync);
+            clientMock.Setup(
+                c => c.CreateInternal(
+                    IsAny<PathResourceType>(),
+                    s_pathHttpHeaders,
+                    default,
+                    s_permissions,
+                    s_umask,
+                    s_conditions,
+                    _async,
+                    s_cancellationToken
+                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
 
-                clientMock.Setup(
-                    c => c.AppendAsync(
-                        IsAny<Stream>(),
-                        IsAny<long>(),
-                        IsAny<byte[]>(),
-                        IsAny<string>(),
-                        IsAny<IProgress<long>>(),
-                        s_cancellationToken
-                    )).Returns<Stream, long, byte[], string, IProgress<long>, CancellationToken>(sink.AppendAsync);
+            clientMock.Setup(
+                c => c.AppendInternal(
+                    IsAny<Stream>(),
+                    IsAny<long>(),
+                    IsAny<byte[]>(),
+                    IsAny<string>(),
+                    IsAny<IProgress<long>>(),
+                    _async,
+                    s_cancellationToken
+                )).Returns<Stream, long, byte[], string, IProgress<long>, bool, CancellationToken>(sink.AppendInternal);
 
-                clientMock.Setup(
-                    c => c.FlushAsync(
-                        IsAny<long>(),
-                        IsAny<bool?>(),
-                        IsAny<bool?>(),
-                        s_pathHttpHeaders,
-                        IsAny<DataLakeRequestConditions>(),
-                        s_cancellationToken
-                    )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken>(sink.FlushAsync);
-            }
-            else
-            {
-                clientMock.Setup(
-                    c => c.Create(
-                        s_pathHttpHeaders,
-                        default,
-                        default,
-                        default,
-                        s_conditions,
-                        s_cancellationToken
-                    )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.Create);
-
-                clientMock.Setup(
-                    c => c.Append(
-                        IsAny<Stream>(),
-                        IsAny<long>(),
-                        IsAny<byte[]>(),
-                        IsAny<string>(),
-                        IsAny<IProgress<long>>(),
-                        s_cancellationToken
-                    )).Returns<Stream, long, byte[], string, IProgress<long>, CancellationToken>(sink.Append);
-
-                clientMock.Setup(
-                    c => c.Flush(
-                        IsAny<long>(),
-                        IsAny<bool?>(),
-                        IsAny<bool?>(),
-                        s_pathHttpHeaders,
-                        IsAny<DataLakeRequestConditions>(),
-                        s_cancellationToken
-                    )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken>(sink.Flush);
-            }
+            clientMock.Setup(
+                c => c.FlushInternal(
+                    IsAny<long>(),
+                    IsAny<bool?>(),
+                    IsAny<bool?>(),
+                    s_pathHttpHeaders,
+                    IsAny<DataLakeRequestConditions>(),
+                    _async,
+                    s_cancellationToken
+                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, bool, CancellationToken>(sink.FlushInternal);
         }
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
         {
             Assert.AreEqual(sink.Appended.Count, sink.Appended.Count);
+
             CollectionAssert.AreEqual(
                 stream.AllBytes,
-                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value));
+                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value.Data));
         }
 
         private class AppendSink
         {
-            public Dictionary<long, byte[]> Appended { get; }
+            private readonly bool _saveBytes;
 
-            public AppendSink()
+            public Dictionary<long, (byte[] Data, long? Length)> Appended { get; }
+
+            public AppendSink(bool saveBytes = true)
             {
-                Appended = new Dictionary<long, byte[]>();
+                _saveBytes = saveBytes;
+                Appended = new Dictionary<long, (byte[] Data, long? Length)>();
             }
 
-            public async Task<Response<PathInfo>> CreateAsync(
+            public async Task<Response<PathInfo>> CreateInternal(
+                PathResourceType type,
                 PathHttpHeaders httpHeaders,
                 IDictionary<string, string> metadata,
                 string permissions,
                 string umask,
                 DataLakeRequestConditions conditions,
+                bool async,
                 CancellationToken cancellationToken)
             {
-                await Task.Delay(25);
-                return Create(httpHeaders, metadata, permissions, umask, conditions, cancellationToken);
-            }
-
-            public Response<PathInfo> Create(
-                PathHttpHeaders httpHeaders,
-                IDictionary<string, string> metadata,
-                string permissions,
-                string umask,
-                DataLakeRequestConditions conditions,
-                CancellationToken cancellationToken)
-            {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
                 return s_response;
             }
 
-            public async Task<Response<PathInfo>> FlushAsync(
+            public async Task<Response<PathInfo>> FlushInternal(
                 long position,
                 bool? retainUncommittedData,
                 bool? close,
                 PathHttpHeaders httpHeaders,
                 DataLakeRequestConditions conditions,
+                bool async,
                 CancellationToken cancellationToken)
             {
-                await Task.Delay(25);
-                return Flush(position, retainUncommittedData, close, httpHeaders, conditions, cancellationToken);
-            }
-
-            public Response<PathInfo> Flush(
-                long position,
-                bool? retainUncommittedData,
-                bool? close,
-                PathHttpHeaders httpHeaders,
-                DataLakeRequestConditions conditions,
-                CancellationToken cancellationToken)
-            {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
                 return s_response;
             }
 
-            public async Task<Response> AppendAsync(
+            public async Task<Response> AppendInternal(
                 Stream stream,
                 long offset,
                 byte[] hash,
                 string leaseId,
                 IProgress<long> progress,
+                bool async,
                 CancellationToken cancellationToken)
             {
-                await Task.Delay(25);
-                return Append(stream, offset, hash, leaseId, progress, cancellationToken);
-            }
-
-            public Response Append(
-                Stream stream,
-                long offset,
-                byte[] hash,
-                string leaseId,
-                IProgress<long> progress,
-                CancellationToken cancellationToken)
-            {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
                 progress.Report(stream.Length);
-                var memoryStream = new MemoryStream();
-                stream.CopyTo(memoryStream);
-                memoryStream.Position = 0;
+
+                byte[] data = default;
+                if (_saveBytes)
+                {
+                    var memoryStream = new MemoryStream();
+                    stream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+                    data = memoryStream.ToArray();
+                }
                 lock (Appended)
                 {
-                    Appended.Add(offset, memoryStream.ToArray());
+                    Appended.Add(offset, (data, stream.Length));
                 }
                 return new MockResponse(200);
             }

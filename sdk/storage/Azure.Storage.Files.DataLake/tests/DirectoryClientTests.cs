@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -16,8 +19,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class DirectoryClientTests : PathTestBase
     {
-        public DirectoryClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public DirectoryClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -292,7 +295,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<PathInfo> response = await directory.CreateIfNotExistsAsync();
@@ -321,7 +324,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.ExistsAsync();
@@ -345,6 +348,21 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task ExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -355,7 +373,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -364,13 +382,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
 
             // Assert
             Assert.IsTrue(response.Value);
+
+            // Act
+            response = await directory.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -379,6 +400,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -409,7 +445,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             var name = GetNewDirectoryName();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response response = await directory.DeleteAsync();
@@ -474,6 +510,51 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task RenameAsync_FileSystemSAS()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = null,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            SasQueryParameters sourceSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
+            string destDirectoryName = GetNewDirectoryName();
+            sourceDirectory = new DataLakeDirectoryClient(
+                new Uri(sourceDirectory.Uri.ToString() + "?" + sourceSasQueryParameters), GetOptions());
+
+            sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = null,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-2),
+                ExpiresOn = Recording.UtcNow.AddHours(+2),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            SasQueryParameters destSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(
+                destinationPath: destDirectoryName + "?" + destSasQueryParameters);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(destDirectory.Uri);
+            Assert.AreEqual(destSasQueryParameters.ToString(), uriBuilder.Sas.ToString());
         }
 
         [Test]
@@ -619,6 +700,53 @@ namespace Azure.Storage.Files.DataLake.Tests
                         sourceConditions: conditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool directory ")]
+        [TestCase("directory")]
+        public async Task RenameAsync_DestinationSpecialCharacters(string destDirectoryName)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(destDirectoryName)}");
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            Assert.AreEqual(destDirectoryName, destDirectory.Name);
+            Assert.AreEqual(destDirectoryName, destDirectory.Path);
+            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
+        }
+
+        [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool directory ")]
+        [TestCase("directory")]
+        public async Task RenameAsync_SourceSpecialCharacters(string sourceDirectoryName)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            string destDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{destDirectoryName}");
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            Assert.AreEqual(destDirectoryName, destDirectory.Name);
+            Assert.AreEqual(destDirectoryName, destDirectory.Path);
+            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
         }
 
         [Test]
@@ -876,7 +1004,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetAccessControlAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            //DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(""));
 
             // Act
             Response<PathInfo> response = await directory.SetPermissionsAsync(permissions: PathPermissions);
@@ -936,6 +1065,2082 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(AccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_InBatches()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
+                AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_InBatches_StopAndResume()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Act
+            try
+            {
+                await directory.SetAccessControlRecursiveAsync(
+                    AccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Cancelled Exception
+            }
+
+            options.ProgressHandler = null;
+
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
+                AccessControlList,
+                continuationToken: intermediateResult.ContinuationToken,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = progress
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
+                AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+            Assert.AreEqual(4, progress.BatchCounters.Count);
+            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
+            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters.Count);
+            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
+            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
+            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                MaxBatches = 2,
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                result = await directory.SetAccessControlRecursiveAsync(
+                    AccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(4, changedFilesCount);
+            Assert.AreEqual(0, failedChangesCount);
+            Assert.AreEqual(2, iterationCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner rights to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add file without assigning subowner permissions to the file
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: new AccessControlChangeOptions() { ProgressHandler = progress });
+
+            // Assert
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            AccessControlChangeFailure failure = progress.Failures[0];
+            StringAssert.Contains(file4.Name, failure.Name);
+            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetAccessControlRecursiveAsync_ContinueOnFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner rights to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files without assigning subowner permissions to the files
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory without assigning subowner permissions to the directory
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files without assigning subowner permissions to the files
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory without assigning subowner permissions to the directory
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Add files and a directory and only allow subowner permissions
+            DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file8 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory4 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file9 = await subdirectory4.CreateFileAsync(GetNewFileName());
+            await file7.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file8.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory4.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file9.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            try
+            {
+                await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Canceled Exception
+            }
+
+            // Assert
+            Assert.IsNotNull(intermediateResult.ContinuationToken);
+
+            // Arrange
+            options.ProgressHandler = null;
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options,
+                continuationToken: intermediateResult.ContinuationToken);
+
+            // Assert
+            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetAccessControlRecursiveAsync_BatchFailures_BatchSize()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true,
+                ProgressHandler = progress,
+                BatchSize = 2
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_NetworkError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+                await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeClientOptions options = GetFaultyDataLakeConnectionOptions(
+                raise: new RequestFailedException((int)HttpStatusCode.InternalServerError, "Internal Server Interuption"));
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, options));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: sampleToken),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_TaskCanceledError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: sampleToken,
+                    cancellationToken: cancellationTokenSource.Token),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.SetAccessControlRecursiveAsync(accessControlList: AccessControlList),
+                    e => { });
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(AccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_InBatches()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_InBatches_StopAndResume()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Act
+            try
+            {
+                await directory.UpdateAccessControlRecursiveAsync(
+                    AccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Canceled Exception
+            }
+
+            options.ProgressHandler = null;
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
+                AccessControlList,
+                intermediateResult.ContinuationToken,
+                options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = progress
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
+                AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+            Assert.AreEqual(4, progress.BatchCounters.Count);
+            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
+            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters.Count);
+            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
+            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
+            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                MaxBatches = 2,
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                result = await directory.UpdateAccessControlRecursiveAsync(
+                    AccessControlList,
+                    result.ContinuationToken,
+                    options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(4, changedFilesCount);
+            Assert.AreEqual(0, failedChangesCount);
+            Assert.AreEqual(2, iterationCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UpdateAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner rights to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add file without subowner rights
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ProgressHandler = progress
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            AccessControlChangeFailure failure = progress.Failures[0];
+            StringAssert.Contains(file4.Name, failure.Name);
+            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner rights to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add file as superuser
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory as superuser
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true
+            };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files as superuser
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory as superuser
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Add files and a directory as AAD app
+            DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file8 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory4 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file9 = await subdirectory4.CreateFileAsync(GetNewFileName());
+            await file7.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file8.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory4.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file9.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            try
+            {
+                await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Canceled Exception
+            }
+
+            // Assert
+            Assert.IsNotNull(intermediateResult.ContinuationToken);
+
+            // Arrange
+            options.ProgressHandler = null;
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options,
+                continuationToken: intermediateResult.ContinuationToken);
+
+            // Assert
+            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UpdateAccessControlRecursiveAsync_BatchFailures_BatchSize()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true,
+                ProgressHandler = progress,
+                BatchSize = 2
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_NetworkError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeClientOptions options = GetFaultyDataLakeConnectionOptions(
+                raise: new RequestFailedException((int)HttpStatusCode.InternalServerError, "Internal Server Interuption"));
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, options));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: sampleToken),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_TaskCanceledError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    continuationToken: sampleToken,
+                    cancellationToken: cancellationTokenSource.Token),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList),
+                    e => { });
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
+                RemoveAccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches_StopAndResume()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Act
+            try
+            {
+                await directory.RemoveAccessControlRecursiveAsync(
+                    RemoveAccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Canceled Exception
+            }
+
+            options.ProgressHandler = null;
+
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
+                RemoveAccessControlList,
+                intermediateResult.ContinuationToken,
+                options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = progress
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
+                RemoveAccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+            Assert.AreEqual(4, progress.BatchCounters.Count);
+            Assert.AreEqual(2, progress.BatchCounters[0].ChangedDirectoriesCount + progress.BatchCounters[0].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[1].ChangedDirectoriesCount + progress.BatchCounters[1].ChangedFilesCount);
+            Assert.AreEqual(2, progress.BatchCounters[2].ChangedDirectoriesCount + progress.BatchCounters[2].ChangedFilesCount);
+            Assert.AreEqual(1, progress.BatchCounters[3].ChangedDirectoriesCount + progress.BatchCounters[3].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters.Count);
+            Assert.AreEqual(2, progress.CummulativeCounters[0].ChangedDirectoriesCount + progress.CummulativeCounters[0].ChangedFilesCount);
+            Assert.AreEqual(4, progress.CummulativeCounters[1].ChangedDirectoriesCount + progress.CummulativeCounters[1].ChangedFilesCount);
+            Assert.AreEqual(6, progress.CummulativeCounters[2].ChangedDirectoriesCount + progress.CummulativeCounters[2].ChangedFilesCount);
+            Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                MaxBatches = 2,
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                result = await directory.RemoveAccessControlRecursiveAsync(
+                    RemoveAccessControlList,
+                    result.ContinuationToken,
+                    options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(4, changedFilesCount);
+            Assert.AreEqual(0, failedChangesCount);
+            Assert.AreEqual(2, iterationCount);
+            Assert.IsNull(result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RemoveAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add file without subowner permissions
+            DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                accessControlList: RemoveAccessControlList,
+                options: new AccessControlChangeOptions() { ProgressHandler = progress });
+
+            // Assert
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(1, progress.Failures.Count);
+            Assert.AreEqual(1, result.BatchFailures.Length);
+            Assert.AreEqual(file4.Path, result.BatchFailures.First().Name);
+            Assert.AreEqual(false, result.BatchFailures.First().IsDirectory);
+            Assert.That(progress.BatchCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            Assert.That(progress.CummulativeCounters.FindIndex(x => x.FailedChangesCount > 0) >= 0);
+            AccessControlChangeFailure failure = progress.Failures[0];
+            StringAssert.Contains(file4.Name, failure.Name);
+            Assert.IsFalse(failure.IsDirectory);
+            Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files without assigning subowner permissions to the files
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory without assigning subowner permissions to the directory
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                accessControlList: RemoveAccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.BatchFailures.Length);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files without assigning subowner permissions to the files
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            // Add directory without assigning subowner permissions to the directory
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Add files and a directory and only allow subowner permissions
+            DataLakeFileClient file7 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file8 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory4 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file9 = await subdirectory4.CreateFileAsync(GetNewFileName());
+            await file7.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file8.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory4.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file9.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+            // Act
+            try
+            {
+                await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    options: options,
+                    cancellationToken: cancellationTokenSource.Token);
+            }
+            catch (DataLakeAclChangeFailedException)
+            {
+                // skip Task Canceled Exception
+            }
+
+            // Assert
+            Assert.IsNotNull(intermediateResult.ContinuationToken);
+
+            // Arrange
+            options.ProgressHandler = null;
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                accessControlList: RemoveAccessControlList,
+                options: options,
+                continuationToken: intermediateResult.ContinuationToken);
+
+            // Assert
+            Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
+            foreach (AccessControlChangeFailure failure in result.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            foreach (AccessControlChangeFailure failure in intermediateResult.BatchFailures)
+            {
+                Assert.Contains(failure.Name, failedPathNames);
+            }
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RemoveAccessControlRecursiveAsync_BatchFailures_BatchSize()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                MaxBatches = 2,
+                BatchSize = 2,
+                ContinueOnFailure = true
+            };
+
+            long changedDirectoriesCount = 0;
+            long changedFilesCount = 0;
+            long failedChangesCount = 0;
+            int iterationCount = 0;
+            AccessControlChangeResult result = default;
+
+            // Act
+            do
+            {
+                InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+                options.ProgressHandler = progress;
+                result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    continuationToken: result.ContinuationToken,
+                    options: options);
+                changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
+                changedFilesCount += result.Counters.ChangedFilesCount;
+                failedChangesCount += result.Counters.FailedChangesCount;
+                if (result.Counters.FailedChangesCount > 0)
+                {
+                    Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+                    foreach (AccessControlChangeFailure failure in result.BatchFailures)
+                    {
+                        Assert.Contains(failure.Name, failedPathNames);
+                    }
+                }
+                iterationCount++;
+            } while (!string.IsNullOrWhiteSpace(result.ContinuationToken) && iterationCount < 10);
+
+            // Assert
+            Assert.AreEqual(3, changedDirectoriesCount);
+            Assert.AreEqual(3, changedFilesCount);
+            Assert.AreEqual(4, failedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Only allow subowner permissions to the directory and it's subpaths
+            string subowner = Recording.Random.NewGuid().ToString();
+            await directory.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file1.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await subdirectory2.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+            await file3.SetPermissionsAsync(permissions: PathPermissions, owner: subowner);
+
+            // Add files and directories without subowner permissions
+            DataLakeFileClient file4 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            string[] failedPathNames = { file4.Path, file5.Path, file6.Path, subdirectory3.Path };
+
+            // Create a User Delegation SAS that delegates an owner when creating files
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
+            {
+                Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ContinueOnFailure = true,
+                ProgressHandler = progress,
+                BatchSize = 2
+            };
+
+            // Create DirectoryClient with the SAS that the owner only has access to
+            DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
+
+            // Act
+            AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
+                accessControlList: RemoveAccessControlList,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
+            Assert.Greater(result.BatchFailures.Length, 0);
+            Assert.AreEqual(progress.BatchFailures.First(), result.BatchFailures);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_NetworkError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeClientOptions options = GetFaultyDataLakeConnectionOptions(
+                raise: new RequestFailedException((int)HttpStatusCode.InternalServerError, "Internal Server Interuption"));
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, options));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    continuationToken: sampleToken),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_TaskCanceledError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    continuationToken: sampleToken,
+                    cancellationToken: cancellationTokenSource.Token),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
+                directory.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList),
+                    e => { });
+        }
+
+        [Test]
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -952,7 +3157,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetPermissionsAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            //DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(""));
 
             // Act
             Response<PathInfo> response = await directory.SetPermissionsAsync(permissions: PathPermissions);
@@ -1022,6 +3228,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.IsTrue(response.Value.IsDirectory);
         }
 
         [Test]
@@ -1138,15 +3345,15 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
             DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
-            await directoryClient.CreateAsync();
+            await directoryClient.CreateIfNotExistsAsync();
 
             DataLakeSignedIdentifier signedIdentifier = new DataLakeSignedIdentifier
             {
                 Id = signedIdentifierId,
                 AccessPolicy = new DataLakeAccessPolicy
                 {
-                    StartsOn = Recording.UtcNow.AddHours(-1),
-                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                    PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                     Permissions = "rw"
                 }
             };
@@ -1578,7 +3785,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string fileName = GetNewFileName();
             DataLakeFileClient fileClient = directory.GetFileClient(fileName);
-            await fileClient.CreateAsync();
+            await fileClient.CreateIfNotExistsAsync();
 
             // Assert
             await directory.DeleteFileAsync(fileName);
@@ -1752,6 +3959,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("Nightly live test is failing")]
         public async Task DeleteSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1760,7 +3968,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string directoryName = GetNewDirectoryName();
             DataLakeDirectoryClient directoryClient = directory.GetSubDirectoryClient(directoryName);
-            await directoryClient.CreateAsync();
+            await directoryClient.CreateIfNotExistsAsync();
 
             // Assert
             await directory.DeleteFileAsync(directoryName);
@@ -2264,6 +4472,227 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient()).BreakAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task GetDirectoryClientAsync_AsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            await directory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(directoryName, names);
+        }
+
+        [Test]
+        public async Task GetDirectoryClientAsync_NonAsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewNonAsciiDirectoryName();
+            DataLakeDirectoryClient file = test.FileSystem.GetDirectoryClient(directoryName);
+            await file.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(directoryName, names);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClientAsync_AsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            string subDirectoryName = GetNewDirectoryName();
+            string fullPathName = string.Join("/", directoryName, subDirectoryName);
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(subDirectoryName);
+
+            await subdirectory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(2, names.Count);
+            Assert.Contains(fullPathName, names);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClientAsync_NonAsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            string subDirectoryName = GetNewNonAsciiDirectoryName();
+            string fullPathName = string.Join("/", directoryName, subDirectoryName);
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(subDirectoryName);
+
+            await subdirectory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(2, names.Count);
+            Assert.Contains(fullPathName, names);
+        }
+
+        [Test]
+        [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("directory", "%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("!'();[]", "%21%27%28%29%5DäÄöÖüÜß%3B")]
+        [TestCase("%21%27%28%", "%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("directory", "my cool directory")]
+        [TestCase("directory0", "directory1")]
+        public async Task GetSubDirectoryClient_SpecialCharacters(string directoryName, string subDirectoryName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeDirectoryClient subDirectory = InstrumentClient(directory.GetSubDirectoryClient(subDirectoryName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
+            string expectedPath = $"{directoryName}/{subDirectoryName}";
+
+            // Act
+            Response<PathInfo> createResponse = await subDirectory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subDirectory.Uri);
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(subDirectoryName, subDirectory.Name);
+            Assert.AreEqual(expectedPath, subDirectory.Path);
+
+            Assert.AreEqual(blobUri, subDirectory.Uri);
+            Assert.AreEqual(blobUri, subDirectory.BlobUri);
+            Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+
+            Assert.AreEqual(subDirectoryName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+        }
+
+        [Test]
+        [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("directory", "%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("!'();[]", "%21%27%28%29%2C%23äÄöÖüÜß%3B")]
+        [TestCase("%29%3B%5B%5D", "%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("directory", "my cool file")]
+        [TestCase("directory", "file")]
+        public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
+            string expectedPath = $"{directoryName}/{fileName}";
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri);
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(expectedPath, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
+
+            Assert.AreEqual(fileName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndFileAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeFileClient file = await subdirectory.CreateFileAsync(fileName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}", file.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}", file.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndSubDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string lowerSubDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeDirectoryClient lowerSubDirectory = await subdirectory.CreateSubDirectoryAsync(lowerSubDirectoryName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
         }
     }
 }

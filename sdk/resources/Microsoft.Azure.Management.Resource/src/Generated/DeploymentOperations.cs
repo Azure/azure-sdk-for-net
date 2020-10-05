@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             List<string> _queryParameters = new List<string>();
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (top != null)

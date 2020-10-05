@@ -1,100 +1,223 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "baseName": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "description": "The base resource name."
-            }
-        },
-        "subscriptionId": {
-            "type": "string",
-            "defaultValue": "[subscription().subscriptionId]",
-            "metadata": {
-                "description": "The subscription ID to which the application and resources belong."
-            }
-        },
-        "tenantId": {
-            "type": "string",
-            "defaultValue": "[subscription().tenantId]",
-            "metadata": {
-                "description": "The tenant ID to which the application and resources belong."
-            }
-        },
-        "testApplicationOid": {
-            "type": "string",
-            "metadata": {
-                "description": "The client OID to grant access to test resources."
-            }
-        },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location of the resources. By default, this is the same as the resource group."
-            }
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
     },
-    "variables": {
-        "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-        "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec"
+    "subscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "metadata": {
+        "description": "The subscription ID to which the application and resources belong."
+      }
     },
-    "resources": [
-      {
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'))]",
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
-          "principalId": "[parameters('testApplicationOid')]",
-          "scope": "[resourceGroup().id]"
-        }
+    "tenantId": {
+      "type": "string",
+      "defaultValue": "[subscription().tenantId]",
+      "metadata": {
+        "description": "The tenant ID to which the application and resources belong."
+      }
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    },
+    "testApplicationId": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client ID used to run tests."
+      }
+    },
+    "testApplicationSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client secret used to run tests."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resources. By default, this is the same as the resource group."
+      }
+    },
+    "storageEndpointSuffix": {
+      "type": "string",
+      "defaultValue": "core.windows.net",
+      "metadata": {
+        "description": "The url suffix to use when creating storage connection strings."
+      }
+    },
+    "perTestExecutionLimitMinutes": {
+      "type": "string",
+      "defaultValue": "10",
+      "metadata": {
+        "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
+      }
+    }
+  },
+  "variables": {
+    "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+    "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec",
+    "eventHubsNamespace": "[concat('eh-', parameters('baseName'))]",
+    "storageAccount": "[concat('blb', parameters('baseName'))]",
+    "eventHubsNamespace_T1": "[concat('t1-', variables('eventHubsNamespace'))]",
+    "storageAccount_T1": "[concat('t1', variables('storageAccount'))]",
+    "defaultSASKeyName": "RootManageSharedAccessKey",
+    "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace'), variables('defaultSASKeyName'))]",
+    "eventHubsAuthRuleResourceId_T1": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace_T1'), variables('defaultSASKeyName'))]",
+    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount'))]",
+    "storageAccountId_T1": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_T1'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[variables('eventHubsNamespace')]",
+      "type": "Microsoft.EventHub/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-04-01",
+      "name": "[variables('storageAccount')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
       },
-      {
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
-          "principalId": "[parameters('testApplicationOid')]",
-          "scope": "[resourceGroup().id]"
+      "kind": "BlobStorage",
+      "properties": {
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot"
+      }
+    },
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[variables('eventHubsNamespace_T1')]",
+      "type": "Microsoft.EventHub/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-04-01",
+      "name": "[variables('storageAccount_T1')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "BlobStorage",
+      "properties": {
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices",
+      "apiVersion": "2019-04-01",
+      "name": "[concat(variables('storageAccount'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount'))]"
+      ],
+      "properties": {
+        "cors": {
+          "corsRules": []
+        },
+        "deleteRetentionPolicy": {
+          "enabled": false
         }
       }
-    ],
-    "outputs": {
-        "EVENT_HUBS_SUBSCRIPTION": {
-            "type": "string",
-            "value": "[parameters('subscriptionId')]"
-        },
-        "EVENT_HUBS_TENANT": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "EVENT_HUBS_CLIENT": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "EVENT_HUBS_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "EVENT_HUBS_RESOURCEGROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'))]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
     }
+  ],
+  "outputs": {
+    "EVENTHUB_PER_TEST_LIMIT_MINUTES": {
+      "type": "string",
+      "value": "[parameters('perTestExecutionLimitMinutes')]"
+    },
+    "EVENTHUB_NAMESPACE_CONNECTION_STRING": {
+        "type": "string",
+        "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
+    },
+    "EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount'), ';AccountKey=', listKeys(variables('storageAccountId'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
+    },
+    "EVENTHUB_T1_NAMESPACE_CONNECTION_STRING": {
+        "type": "string",
+        "value": "[listkeys(variables('eventHubsAuthRuleResourceId_T1'), '2015-08-01').primaryConnectionString]"
+    },
+    "EVENTHUB_T1_STORAGE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount_T1'), ';AccountKey=', listKeys(variables('storageAccountId_T1'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
+    }
+  }
 }

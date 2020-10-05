@@ -123,17 +123,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Name != null)
-            {
-                if (Name.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 100);
-                }
-                if (Name.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
-                }
-            }
             if (QnaList != null)
             {
                 foreach (var element in QnaList)
@@ -152,28 +141,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                     {
                         element1.Validate();
                     }
-                }
-            }
-            if (DefaultAnswerUsedForExtraction != null)
-            {
-                if (DefaultAnswerUsedForExtraction.Length > 300)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswerUsedForExtraction", 300);
-                }
-                if (DefaultAnswerUsedForExtraction.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswerUsedForExtraction", 1);
-                }
-            }
-            if (Language != null)
-            {
-                if (Language.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Language", 100);
-                }
-                if (Language.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Language", 1);
                 }
             }
         }

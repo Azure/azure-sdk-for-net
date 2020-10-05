@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Net.Sockets;
-    using System.Text;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-
     internal static class AmqpExceptionHelper
     {
         private static readonly Dictionary<string, AmqpResponseStatusCode> s_conditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
@@ -73,165 +74,179 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpResponseStatusCode;
         }
 
-        //public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
-        //{
-        //    AmqpSymbol errorCondition = AmqpExceptionHelper.GetResponseErrorCondition(responseMessage, statusCode);
-        //    var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
-        //    return AmqpExceptionHelper.ToMessagingContractException(errorCondition.Value, statusDescription);
-        //}
+        public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
+        {
+            AmqpSymbol errorCondition = GetResponseErrorCondition(responseMessage, statusCode);
+            var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
+            return ToMessagingContractException(errorCondition.Value, statusDescription);
+        }
 
-        //public static Exception ToMessagingContractException(this Error error, bool connectionError = false)
-        //{
-        //    if (error == null)
-        //    {
-        //        return new ServiceBusException(true, "Unknown error.");
-        //    }
+        public static Exception ToMessagingContractException(this Error error, bool connectionError = false)
+        {
+            if (error == null)
+            {
+                return new ServiceBusException(true, "Unknown error.");
+            }
 
-        //    return ToMessagingContractException(error.Condition.Value, error.Description, connectionError);
-        //}
+            return ToMessagingContractException(error.Condition.Value, error.Description, connectionError);
+        }
 
-        //static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
-        //{
-        //    if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
-        //    {
-        //        return new ServiceBusTimeoutException(message);
-        //    }
+        public static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
+        {
+            if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceTimeout);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.NotFound.Value))
-        //    {
-        //        if (connectionError)
-        //        {
-        //            return new ServiceBusCommunicationException(message, null);
-        //        }
+            if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (connectionError)
+                {
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem);
+                }
 
-        //        return new MessagingEntityNotFoundException(message, null);
-        //    }
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityNotFound);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value))
-        //    {
-        //        return new NotSupportedException(message);
-        //    }
+            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new NotSupportedException(message);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value))
-        //    {
-        //        return new InvalidOperationException(message);
-        //    }
+            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new InvalidOperationException(message);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value) ||
-        //        string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value))
-        //    {
-        //        return new UnauthorizedException(message);
-        //    }
+            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase) ||
+                string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.Unauthorized);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value))
-        //    {
-        //        return new ServerBusyException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceBusy);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value))
-        //    {
-        //        return new ArgumentException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ArgumentException(message);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value))
-        //    {
-        //        return new ArgumentOutOfRangeException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ArgumentOutOfRangeException(message);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value))
-        //    {
-        //        return new MessagingEntityDisabledException(message, null);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityDisabled);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value))
-        //    {
-        //        return new MessageLockLostException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageLockLost);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value))
-        //    {
-        //        return new SessionLockLostException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.EntityAlreadyExistsError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.MessagingEntityAlreadyExists);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value))
-        //    {
-        //        return new QuotaExceededException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.SessionLockLost);
+            }
 
-        //    if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value))
-        //    {
-        //        return new MessageSizeExceededException(message);
-        //    }
+            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.QuotaExceeded);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value))
-        //    {
-        //        return new MessageNotFoundException(message);
-        //    }
+            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageSizeExceeded);
+            }
 
-        //    if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value))
-        //    {
-        //        return new SessionCannotBeLockedException(message);
-        //    }
+            if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.MessageNotFound);
+            }
 
-        //    return new ServiceBusException(true, message);
-        //}
+            if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.SessionCannotBeLocked);
+            }
 
-        //public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
-        //{
-        //    var stringBuilder = new StringBuilder();
-        //    stringBuilder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
-        //    if (referenceId != null)
-        //    {
-        //        stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
-        //    }
+            return new ServiceBusException(true, message);
+        }
 
-        //    var message = stringBuilder.ToString();
-        //    var aggregateException = innerException == null ? exception : new AggregateException(exception, innerException);
+        public static Exception TranslateException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
+            if (referenceId != null)
+            {
+                stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
+            }
 
-        //    switch (exception)
-        //    {
-        //        case SocketException _:
-        //            message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
-        //            return new ServiceBusCommunicationException(message, aggregateException);
+            var message = stringBuilder.ToString();
+            var aggregateException = innerException == null ? exception : new AggregateException(exception, innerException);
 
-        //        case IOException _:
-        //            if (exception.InnerException is SocketException socketException)
-        //            {
-        //                message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
-        //            }
-        //            return new ServiceBusCommunicationException(message, aggregateException);
+            switch (exception)
+            {
+                case SocketException _:
+                    message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
-        //        case AmqpException amqpException:
-        //            return amqpException.Error.ToMessagingContractException(connectionError);
+                case IOException _:
+                    if (exception.InnerException is SocketException socketException)
+                    {
+                        message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
+                    }
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
-        //        case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
-        //            return amqpException.Error.ToMessagingContractException(connectionError);
+                case AmqpException amqpException:
+                    return amqpException.Error.ToMessagingContractException(connectionError);
 
-        //        case OperationCanceledException _ when connectionError:
-        //            return new ServiceBusCommunicationException(message, aggregateException);
+                case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
+                    return amqpException.Error.ToMessagingContractException(connectionError);
 
-        //        case OperationCanceledException _:
-        //            return new ServiceBusException(true, message, aggregateException);
+                case OperationCanceledException _ when connectionError:
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
-        //        case TimeoutException _:
-        //            return new ServiceBusTimeoutException(message, aggregateException);
+                case OperationCanceledException operationCanceledException when
+                operationCanceledException.InnerException != null:
+                    return operationCanceledException.InnerException;
 
-        //        case InvalidOperationException _ when connectionError:
-        //            return new ServiceBusCommunicationException(message, aggregateException);
-        //    }
+                case OperationCanceledException operationEx when !(operationEx is TaskCanceledException):
+                    return new ServiceBusException(operationEx.Message, ServiceBusFailureReason.ServiceTimeout);
 
-        //    if (connectionError)
-        //    {
-        //        return new ServiceBusCommunicationException(message, aggregateException);
-        //    }
+                case TimeoutException _:
+                    return new ServiceBusException(
+                        message,
+                        ServiceBusFailureReason.ServiceTimeout,
+                        innerException: aggregateException);
 
-        //    return aggregateException;
-        //}
+                case InvalidOperationException _ when connectionError:
+                    return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+            }
+
+            if (connectionError)
+            {
+                return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
+            }
+
+            return aggregateException;
+        }
 
         public static string GetTrackingId(this AmqpLink link)
         {
             if (link.Settings.Properties != null &&
-                link.Settings.Properties.TryGetValue<string>(AmqpClientConstants.TrackingIdName, out var trackingContext))
+                link.Settings.Properties.TryGetValue<string>(
+                    AmqpClientConstants.TrackingIdName,
+                    out var trackingContext))
             {
                 return trackingContext;
             }
@@ -239,30 +254,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return null;
         }
 
-        //public static Exception GetInnerException(this AmqpObject amqpObject)
-        //{
-        //    var connectionError = false;
-        //    Exception innerException;
-        //    switch (amqpObject)
-        //    {
-        //        case AmqpSession amqpSession:
-        //            innerException = amqpSession.TerminalException ?? amqpSession.Connection.TerminalException;
-        //            break;
+        public static Exception GetInnerException(this AmqpObject amqpObject)
+        {
+            var connectionError = false;
+            Exception innerException;
+            switch (amqpObject)
+            {
+                case AmqpSession amqpSession:
+                    innerException = amqpSession.TerminalException ?? amqpSession.Connection.TerminalException;
+                    break;
 
-        //        case AmqpLink amqpLink:
-        //            connectionError = amqpLink.Session.IsClosing();
-        //            innerException = amqpLink.TerminalException ?? amqpLink.Session.TerminalException ?? amqpLink.Session.Connection.TerminalException;
-        //            break;
+                case AmqpLink amqpLink:
+                    connectionError = amqpLink.Session.IsClosing();
+                    innerException = amqpLink.TerminalException ?? amqpLink.Session.TerminalException ?? amqpLink.Session.Connection.TerminalException;
+                    break;
 
-        //        case RequestResponseAmqpLink amqpReqRespLink:
-        //            innerException = amqpReqRespLink.TerminalException ?? amqpReqRespLink.Session.TerminalException ?? amqpReqRespLink.Session.Connection.TerminalException;
-        //            break;
+                case RequestResponseAmqpLink amqpReqRespLink:
+                    innerException = amqpReqRespLink.TerminalException ?? amqpReqRespLink.Session.TerminalException ?? amqpReqRespLink.Session.Connection.TerminalException;
+                    break;
 
-        //        default:
-        //            return null;
-        //    }
+                default:
+                    return null;
+            }
 
-        //    return innerException == null ? null : GetClientException(innerException, null, null, connectionError);
-        //}
+            return innerException == null ? null : TranslateException(innerException, null, null, connectionError);
+        }
     }
 }

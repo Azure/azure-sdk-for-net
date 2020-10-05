@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
-        /// <param name="perRetryPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
         {
@@ -48,6 +48,8 @@ namespace Azure.Core.Pipeline
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
+            policies.Add(ReadClientRequestIdPolicy.Shared);
+
             policies.AddRange(perCallPolicies);
 
             policies.AddRange(options.PerCallPolicies);
@@ -69,8 +71,10 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
+                string assemblyName = options.GetType().Assembly.GetName().Name;
+
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));

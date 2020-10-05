@@ -41,16 +41,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,9 +70,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
 
 
         /// <summary>
-        /// Gets the ILinkedServicesOperations.
+        /// Gets the IDataExportsOperations.
         /// </summary>
-        ILinkedServicesOperations LinkedServices { get; }
+        IDataExportsOperations DataExports { get; }
 
         /// <summary>
         /// Gets the IDataSourcesOperations.
@@ -82,14 +80,89 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IDataSourcesOperations DataSources { get; }
 
         /// <summary>
-        /// Gets the IWorkspacesOperations.
+        /// Gets the IIntelligencePacksOperations.
         /// </summary>
-        IWorkspacesOperations Workspaces { get; }
+        IIntelligencePacksOperations IntelligencePacks { get; }
+
+        /// <summary>
+        /// Gets the ILinkedServicesOperations.
+        /// </summary>
+        ILinkedServicesOperations LinkedServices { get; }
+
+        /// <summary>
+        /// Gets the ILinkedStorageAccountsOperations.
+        /// </summary>
+        ILinkedStorageAccountsOperations LinkedStorageAccounts { get; }
+
+        /// <summary>
+        /// Gets the IManagementGroupsOperations.
+        /// </summary>
+        IManagementGroupsOperations ManagementGroups { get; }
 
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        IOperationStatusesOperations OperationStatuses { get; }
+
+        /// <summary>
+        /// Gets the ISharedKeysOperations.
+        /// </summary>
+        ISharedKeysOperations SharedKeys { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        IClustersOperations Clusters { get; }
+
+        /// <summary>
+        /// Gets the IStorageInsightConfigsOperations.
+        /// </summary>
+        IStorageInsightConfigsOperations StorageInsightConfigs { get; }
+
+        /// <summary>
+        /// Gets the ISavedSearchesOperations.
+        /// </summary>
+        ISavedSearchesOperations SavedSearches { get; }
+
+        /// <summary>
+        /// Gets the IAvailableServiceTiersOperations.
+        /// </summary>
+        IAvailableServiceTiersOperations AvailableServiceTiers { get; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        IGatewaysOperations Gateways { get; }
+
+        /// <summary>
+        /// Gets the ISchemaOperations.
+        /// </summary>
+        ISchemaOperations Schema { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacePurgeOperations.
+        /// </summary>
+        IWorkspacePurgeOperations WorkspacePurge { get; }
 
     }
 }

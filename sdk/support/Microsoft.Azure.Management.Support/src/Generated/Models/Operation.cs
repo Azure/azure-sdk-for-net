@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// The operation supported by Microsoft Support RP.
+    /// The operation supported by Microsoft Support resource provider.
     /// </summary>
     public partial class Operation
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Initializes a new instance of the Operation class.
         /// </summary>
         /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}</param>
+        /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">The object that describes the
         /// operation.</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets operation name: {provider}/{resource}/{operation}
+        /// Gets operation name: {provider}/{resource}/{operation}.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

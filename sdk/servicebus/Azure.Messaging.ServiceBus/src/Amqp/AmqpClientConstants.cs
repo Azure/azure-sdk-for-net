@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using System;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-
     internal class AmqpClientConstants
     {
         // AMQP Management Operation

@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </return>
         public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<OperationDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

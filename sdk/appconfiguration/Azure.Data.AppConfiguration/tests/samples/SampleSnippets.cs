@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -12,13 +12,12 @@ namespace Azure.Data.AppConfiguration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
-    public partial class Snippets
+    public partial class Snippets: SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void CreateClient()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:CreateConfigurationClient
             //@@ string connectionString = "<connection_string>";
@@ -29,7 +28,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateClientTokenCredential()
         {
-            var endpoint = Environment.GetEnvironmentVariable("APPCONFIGURATION_ENDPOINT_STRING");
+            var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:CreateConfigurationClientTokenCredential
             //@@ string endpoint = "<endpoint>";
@@ -40,7 +39,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:CreateConfigurationSetting
             //@@ string connectionString = "<connection_string>";
@@ -53,7 +52,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             // Make sure a setting exists.
             var setupClient = new ConfigurationClient(connectionString);
@@ -70,7 +69,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void UpdateSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:UpdateConfigurationSetting
             //@@ string connectionString = "<connection_string>";
@@ -82,7 +81,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void DeleteSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:DeleteConfigurationSetting
             //@@ string connectionString = "<connection_string>";
@@ -94,7 +93,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void ThrowNotFoundError()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             try
             {
@@ -112,7 +111,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [OneTimeTearDown]
         public async Task CleanUp()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
             ConfigurationClient client = new ConfigurationClient(connectionString);
             await client.DeleteConfigurationSettingAsync("some_key");
         }

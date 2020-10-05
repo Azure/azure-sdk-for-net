@@ -48,8 +48,18 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// whether Azure Resource Manager is permitted to retrieve secrets
         /// from the key vault.</param>
         /// <param name="enableSoftDelete">Property to specify whether the
-        /// 'soft delete' functionality is enabled for this key vault. It does
-        /// not accept false value.</param>
+        /// 'soft delete' functionality is enabled for this key vault. Once set
+        /// to true, it cannot be reverted to false.</param>
+        /// <param name="enableRbacAuthorization">Property that controls how
+        /// data actions are authorized. When true, the key vault will use Role
+        /// Based Access Control (RBAC) for authorization of data actions, and
+        /// the access policies specified in vault properties will be  ignored
+        /// (warning: this is a preview feature). When false, the key vault
+        /// will use the access policies specified in vault properties, and any
+        /// policy stored on Azure Resource Manager will be ignored. If null or
+        /// not specified, the value of this property will not change.</param>
+        /// <param name="softDeleteRetentionInDays">softDelete data retention
+        /// days. It accepts &gt;=7 and &lt;=90.</param>
         /// <param name="createMode">The vault's create mode to indicate
         /// whether the vault need to be recovered or not. Possible values
         /// include: 'recover', 'default'</param>
@@ -62,7 +72,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// - that is, the property does not accept false as its value.</param>
         /// <param name="networkAcls">A collection of rules governing the
         /// accessibility of the vault from specific network locations.</param>
-        public VaultPatchProperties(System.Guid? tenantId = default(System.Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
+        public VaultPatchProperties(System.Guid? tenantId = default(System.Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), bool? enableRbacAuthorization = default(bool?), int? softDeleteRetentionInDays = default(int?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
         {
             TenantId = tenantId;
             Sku = sku;
@@ -71,6 +81,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             EnabledForDiskEncryption = enabledForDiskEncryption;
             EnabledForTemplateDeployment = enabledForTemplateDeployment;
             EnableSoftDelete = enableSoftDelete;
+            EnableRbacAuthorization = enableRbacAuthorization;
+            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             CreateMode = createMode;
             EnablePurgeProtection = enablePurgeProtection;
             NetworkAcls = networkAcls;
@@ -127,11 +139,31 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 
         /// <summary>
         /// Gets or sets property to specify whether the 'soft delete'
-        /// functionality is enabled for this key vault. It does not accept
-        /// false value.
+        /// functionality is enabled for this key vault. Once set to true, it
+        /// cannot be reverted to false.
         /// </summary>
         [JsonProperty(PropertyName = "enableSoftDelete")]
         public bool? EnableSoftDelete { get; set; }
+
+        /// <summary>
+        /// Gets or sets property that controls how data actions are
+        /// authorized. When true, the key vault will use Role Based Access
+        /// Control (RBAC) for authorization of data actions, and the access
+        /// policies specified in vault properties will be  ignored (warning:
+        /// this is a preview feature). When false, the key vault will use the
+        /// access policies specified in vault properties, and any policy
+        /// stored on Azure Resource Manager will be ignored. If null or not
+        /// specified, the value of this property will not change.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableRbacAuthorization")]
+        public bool? EnableRbacAuthorization { get; set; }
+
+        /// <summary>
+        /// Gets or sets softDelete data retention days. It accepts &amp;gt;=7
+        /// and &amp;lt;=90.
+        /// </summary>
+        [JsonProperty(PropertyName = "softDeleteRetentionInDays")]
+        public int? SoftDeleteRetentionInDays { get; set; }
 
         /// <summary>
         /// Gets or sets the vault's create mode to indicate whether the vault

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
@@ -9,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///   A set of information about the enqueued state of a partition, as observed by the consumer.
     /// </summary>
     ///
-    public struct LastEnqueuedEventProperties
+    public struct LastEnqueuedEventProperties : IEquatable<LastEnqueuedEventProperties>
     {
         /// <summary>
         ///   The sequence number of the last observed event to be enqueued in the partition.
@@ -68,5 +70,88 @@ namespace Azure.Messaging.EventHubs.Consumer
                  sourceEvent?.LastPartitionPropertiesRetrievalTime)
         {
         }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="other">The <see cref="LastEnqueuedEventProperties" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="LastEnqueuedEventProperties" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        public bool Equals(LastEnqueuedEventProperties other)
+        {
+            return (Offset == other.Offset)
+                && (SequenceNumber == other.SequenceNumber)
+                && (EnqueuedTime == other.EnqueuedTime)
+                && (LastReceivedTime == other.LastReceivedTime);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) =>
+            obj switch
+            {
+                LastEnqueuedEventProperties other => Equals(other),
+                _ => false
+            };
+
+        /// <summary>
+        ///   Returns a hash code for this instance.
+        /// </summary>
+        ///
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Offset);
+            hashCode.Add(SequenceNumber);
+            hashCode.Add(EnqueuedTime);
+            hashCode.Add(LastReceivedTime);
+
+            return hashCode.ToHashCode();
+        }
+
+        /// <summary>
+        ///   Converts the instance to string representation.
+        /// </summary>
+        ///
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ Offset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are equal to each other.
+        /// </summary>
+        ///
+        /// <param name="left">The first <see cref="LastEnqueuedEventProperties" /> to consider.</param>
+        /// <param name="right">The second <see cref="LastEnqueuedEventProperties" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="LastEnqueuedEventProperties" /> instances are equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator ==(LastEnqueuedEventProperties left,
+                                       LastEnqueuedEventProperties right) => left.Equals(right);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are not equal to each other.
+        /// </summary>
+        ///
+        /// <param name="left">The first <see cref="LastEnqueuedEventProperties" /> to consider.</param>
+        /// <param name="right">The second <see cref="LastEnqueuedEventProperties" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="LastEnqueuedEventProperties" /> instances are not equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator !=(LastEnqueuedEventProperties left,
+                                       LastEnqueuedEventProperties right) => (!left.Equals(right));
     }
 }

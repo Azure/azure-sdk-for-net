@@ -40,29 +40,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="CreateBatchOptions.ToSendOptions" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void ToSendOptionsTranslatesProperly()
-        {
-            var options = new CreateBatchOptions
-            {
-                PartitionId = "0",
-                PartitionKey = "some_partition_123",
-                MaximumSizeInBytes = (int.MaxValue + 122L)
-            };
-
-            var sendOptions = options.ToSendOptions();
-            Assert.That(sendOptions, Is.Not.Null, "The send options should not be null.");
-            Assert.That(sendOptions, Is.TypeOf<SendEventOptions>(), "The send options should be a SendEventOptions instance.");
-            Assert.That(sendOptions, Is.Not.SameAs(options), "The send options should not the same reference as the options.");
-            Assert.That(sendOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the send options should match.");
-            Assert.That(sendOptions.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the send options should match.");
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="CreateBatchOptions.MaximumSizeInBytes" />
         ///   method.
         /// </summary>

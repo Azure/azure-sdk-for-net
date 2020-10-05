@@ -34,7 +34,9 @@ namespace Microsoft.Azure.Management.HybridData.Models
         [EnumMember(Value = "Cancelled")]
         Cancelled,
         [EnumMember(Value = "Cancelling")]
-        Cancelling
+        Cancelling,
+        [EnumMember(Value = "PartiallySucceeded")]
+        PartiallySucceeded
     }
     internal static class JobStatusEnumExtension
     {
@@ -61,6 +63,8 @@ namespace Microsoft.Azure.Management.HybridData.Models
                     return "Cancelled";
                 case JobStatus.Cancelling:
                     return "Cancelling";
+                case JobStatus.PartiallySucceeded:
+                    return "PartiallySucceeded";
             }
             return null;
         }
@@ -83,6 +87,8 @@ namespace Microsoft.Azure.Management.HybridData.Models
                     return JobStatus.Cancelled;
                 case "Cancelling":
                     return JobStatus.Cancelling;
+                case "PartiallySucceeded":
+                    return JobStatus.PartiallySucceeded;
             }
             return null;
         }

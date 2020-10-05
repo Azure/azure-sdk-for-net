@@ -1,0 +1,2530 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.EventHub?api-version=2017-05-10",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-bcd56d3bd7c6c34ab92da5e0e130b3d0-82d02a44cc6f8544-00",
+        "traceparent": "00-bcd56d3bd7c6c34ab92da5e0e130b3d0-82d02a44cc6f8544-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs.Tests/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2c4471f786c3d8858c996b3d2f032090",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4613",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:15:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9f9626ff-7cfc-48d6-b07a-e22565fc3b12",
+        "x-ms-ratelimit-remaining-subscription-reads": "11941",
+        "x-ms-request-id": "9f9626ff-7cfc-48d6-b07a-e22565fc3b12",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091511Z:9f9626ff-7cfc-48d6-b07a-e22565fc3b12"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.EventHub",
+        "namespace": "Microsoft.EventHub",
+        "authorizations": [
+          {
+            "applicationId": "80369ed6-5f11-4dd9-bef3-692475845e77",
+            "roleDefinitionId": "eb8e1991-5de0-42a6-a64b-29b059341b7b"
+          },
+          {
+            "applicationId": "6201d19e-14fb-4472-a2d6-5634a5c97568"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "namespaces",
+            "locations": [
+              "Australia East",
+              "Australia Southeast",
+              "Central US",
+              "East US",
+              "East US 2",
+              "West US",
+              "West US 2",
+              "North Central US",
+              "South Central US",
+              "West Central US",
+              "East Asia",
+              "Southeast Asia",
+              "Brazil South",
+              "Japan East",
+              "Japan West",
+              "North Europe",
+              "West Europe",
+              "Central India",
+              "South India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "UK West",
+              "UK South",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Australia Central",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Central US EUAP",
+              "East US 2 EUAP"
+            ],
+            "apiVersions": [
+              "2018-01-01-preview",
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity"
+          },
+          {
+            "resourceType": "clusters",
+            "locations": [
+              "Australia East",
+              "Australia Southeast",
+              "Central US",
+              "East US",
+              "East US 2",
+              "West US",
+              "West US 2",
+              "North Central US",
+              "South Central US",
+              "West Central US",
+              "East Asia",
+              "Southeast Asia",
+              "Brazil South",
+              "Japan East",
+              "Japan West",
+              "North Europe",
+              "West Europe",
+              "Central India",
+              "South India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "UK West",
+              "UK South",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "Australia Central",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Central US EUAP",
+              "East US 2 EUAP"
+            ],
+            "apiVersions": [
+              "2018-01-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+          },
+          {
+            "resourceType": "namespaces/authorizationrules",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/networkrulesets",
+            "locations": [],
+            "apiVersions": [
+              "2018-01-01-preview",
+              "2017-04-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/eventhubs",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/eventhubs/authorizationrules",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/eventhubs/consumergroups",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "checkNamespaceAvailability",
+            "locations": [],
+            "apiVersions": [
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2015-08-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "checkNameAvailability",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "sku",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "operations",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/disasterrecoveryconfigs",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "namespaces/disasterrecoveryconfigs/checkNameAvailability",
+            "locations": [],
+            "apiVersions": [
+              "2017-04-01",
+              "2015-08-01",
+              "2014-09-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "locations",
+            "locations": [],
+            "apiVersions": [
+              "2018-01-01-preview",
+              "2017-04-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "locations/deleteVirtualNetworkOrSubnets",
+            "locations": [],
+            "apiVersions": [
+              "2018-01-01-preview",
+              "2017-04-01"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2017-04-01"
+              }
+            ]
+          },
+          {
+            "resourceType": "availableClusterRegions",
+            "locations": [],
+            "apiVersions": [
+              "2018-01-01-preview"
+            ],
+            "apiProfiles": [
+              {
+                "profileVersion": "2018-06-01-profile",
+                "apiVersion": "2018-01-01-preview"
+              }
+            ]
+          }
+        ],
+        "registrationState": "Registered"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767?api-version=2017-05-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "29",
+        "Content-Type": "application/json",
+        "Request-Id": "00-a680c082f078c24ca2f9f9ff26c04f23-edf96bcb7ed99d41-00",
+        "traceparent": "00-a680c082f078c24ca2f9f9ff26c04f23-edf96bcb7ed99d41-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs.Tests/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "33f132b2841ad9ababfb13e10899e787",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Australia East"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "202",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "aacf423e-2b2b-4703-8e0d-e8c3c1171781",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "aacf423e-2b2b-4703-8e0d-e8c3c1171781",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091645Z:aacf423e-2b2b-4703-8e0d-e8c3c1171781"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767",
+        "name": "Default-EventHub-3767",
+        "location": "australiaeast",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "86",
+        "Content-Type": "application/json",
+        "Request-Id": "00-48db05902942a94bbb497a3d6a1059af-4ef25e14ef347e45-00",
+        "traceparent": "00-48db05902942a94bbb497a3d6a1059af-4ef25e14ef347e45-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "cb411247f715c662238631337196401e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cb411247f715c662238631337196401e",
+        "x-ms-correlation-request-id": "af5c7457-5ae1-4b52-a899-293ad1d28b58",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "48",
+        "x-ms-request-id": "0fbfcf3b-0b50-43cc-93c7-d277d79a9ebd_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091652Z:af5c7457-5ae1-4b52-a899-293ad1d28b58"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d476e-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "0dbb4eb6d24f3b9d8f6df6fd79a63964",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0dbb4eb6d24f3b9d8f6df6fd79a63964",
+        "x-ms-correlation-request-id": "92459215-8917-4b79-bd9d-5ee6667fa4cc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11940",
+        "x-ms-request-id": "ab7f73ca-bd1e-439e-a6fd-80c176adefd8_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091653Z:92459215-8917-4b79-bd9d-5ee6667fa4cc"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d476f-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "0e23c3d2a57b692925a879fd6cf0cf9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0e23c3d2a57b692925a879fd6cf0cf9f",
+        "x-ms-correlation-request-id": "f03efc20-926c-473b-a9d2-c5e9410af9bf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11939",
+        "x-ms-request-id": "1a2c6b1e-b120-410a-859c-4bbd511356fe_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091655Z:f03efc20-926c-473b-a9d2-c5e9410af9bf"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4770-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "227cad8632da12cfee305248e7ef1fac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "227cad8632da12cfee305248e7ef1fac",
+        "x-ms-correlation-request-id": "c7b2ad47-06b4-4873-b00a-26974f22971b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11938",
+        "x-ms-request-id": "0c61bf18-737f-4582-9c25-781c6a2f4b0c_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091656Z:c7b2ad47-06b4-4873-b00a-26974f22971b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4771-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "339f26def05f10092451e8a7599fce9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:16:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "339f26def05f10092451e8a7599fce9f",
+        "x-ms-correlation-request-id": "5151d3d3-b587-4221-9082-c0d353d10dd6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11937",
+        "x-ms-request-id": "1a016a77-a2a5-44af-8782-9bd830565fc6_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091659Z:5151d3d3-b587-4221-9082-c0d353d10dd6"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4772-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "cc76569e17299f89f311204a53e08236",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cc76569e17299f89f311204a53e08236",
+        "x-ms-correlation-request-id": "8183b118-05f2-4533-873d-9c207b099e66",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "0c1985cf-96bd-492e-9057-7422d4485e8d_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091701Z:8183b118-05f2-4533-873d-9c207b099e66"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4773-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "461ecc899c519640a36bfd894a28b84e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "461ecc899c519640a36bfd894a28b84e",
+        "x-ms-correlation-request-id": "d57784f5-2a9d-47f8-a0aa-1a67827ea49b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11935",
+        "x-ms-request-id": "74c24627-ec04-44b9-b162-fcc85ceae56c_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091702Z:d57784f5-2a9d-47f8-a0aa-1a67827ea49b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4774-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "91aab2625278c7829cff3f4ed0bebd43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "91aab2625278c7829cff3f4ed0bebd43",
+        "x-ms-correlation-request-id": "0dec664d-3296-4c2a-a938-649d32693e98",
+        "x-ms-ratelimit-remaining-subscription-reads": "11934",
+        "x-ms-request-id": "abe0fe47-d05e-4649-905e-cd1ecaaa2881_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091704Z:0dec664d-3296-4c2a-a938-649d32693e98"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4775-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "8d1eb1cf8880024e16e028be190055cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8d1eb1cf8880024e16e028be190055cb",
+        "x-ms-correlation-request-id": "4e24a4a0-451f-495f-9ed1-634eabd9ca5e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11933",
+        "x-ms-request-id": "6a163100-0136-48ca-8a4e-7e95a408d09c_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091718Z:4e24a4a0-451f-495f-9ed1-634eabd9ca5e"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4776-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a0e8d259f13636bd4957aa515cf1c5e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a0e8d259f13636bd4957aa515cf1c5e5",
+        "x-ms-correlation-request-id": "63e637da-6a66-4cd7-8b8c-64f4e6a8cdf7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11932",
+        "x-ms-request-id": "dee66608-a507-4b91-8f6b-52470fa1988c_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091720Z:63e637da-6a66-4cd7-8b8c-64f4e6a8cdf7"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4777-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "98bab9ae2b0adacd64a87b9729c4ad9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "98bab9ae2b0adacd64a87b9729c4ad9b",
+        "x-ms-correlation-request-id": "6ee69039-776b-41be-bb83-9354c51d03e9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11931",
+        "x-ms-request-id": "ffc42da9-b294-4672-9ff9-110c41c46acc_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091722Z:6ee69039-776b-41be-bb83-9354c51d03e9"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4778-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "fef574aa1cd6de0df3e74329ddfca524",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fef574aa1cd6de0df3e74329ddfca524",
+        "x-ms-correlation-request-id": "2af71be5-0e36-466f-a534-707e3f2062d0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11930",
+        "x-ms-request-id": "ac7abd1f-248c-4d17-9b47-262cb8a4865a_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091724Z:2af71be5-0e36-466f-a534-707e3f2062d0"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4779-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "5f10431abc462dc1040d3b8d75260c84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5f10431abc462dc1040d3b8d75260c84",
+        "x-ms-correlation-request-id": "a3e0c46e-0c28-4f85-a36b-1232158b8f87",
+        "x-ms-ratelimit-remaining-subscription-reads": "11929",
+        "x-ms-request-id": "53dfc354-299e-4275-9753-b9fca8d01872_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091725Z:a3e0c46e-0c28-4f85-a36b-1232158b8f87"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477a-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e7a70fa9c7fc910eacdba422e7a3fc68",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e7a70fa9c7fc910eacdba422e7a3fc68",
+        "x-ms-correlation-request-id": "6ae37039-8812-4be5-ba60-fb9b389ed900",
+        "x-ms-ratelimit-remaining-subscription-reads": "11928",
+        "x-ms-request-id": "210d705e-e981-4a2b-93f4-047827ce42a0_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091727Z:6ae37039-8812-4be5-ba60-fb9b389ed900"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477b-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e67c56034eb4ed54b2c7f9c8e08068cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e67c56034eb4ed54b2c7f9c8e08068cd",
+        "x-ms-correlation-request-id": "c7fac049-a0e2-4d67-8c79-148bb25158c4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11927",
+        "x-ms-request-id": "d7f78e11-2314-4952-a71f-e759b76d7773_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091728Z:c7fac049-a0e2-4d67-8c79-148bb25158c4"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477c-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ce80bedabd545327347eb36a179e4560",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ce80bedabd545327347eb36a179e4560",
+        "x-ms-correlation-request-id": "dddc2823-34ee-4052-95aa-cc72cc2995b0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11926",
+        "x-ms-request-id": "b6bad7e4-7b45-4c05-9cba-027d8be67ec9_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091729Z:dddc2823-34ee-4052-95aa-cc72cc2995b0"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477d-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "1f8ad31126a95bd0baba3435ce46b02b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f8ad31126a95bd0baba3435ce46b02b",
+        "x-ms-correlation-request-id": "122240c0-22eb-4dc4-baae-d5a70e90bf30",
+        "x-ms-ratelimit-remaining-subscription-reads": "11925",
+        "x-ms-request-id": "43fccc96-cbd3-4d7f-af46-d7d4726e9701_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091736Z:122240c0-22eb-4dc4-baae-d5a70e90bf30"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:16:50.407Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477e-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2947d7732e2345132f29b1359ae9d614",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:17:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2947d7732e2345132f29b1359ae9d614",
+        "x-ms-correlation-request-id": "d61c4a52-0f65-484f-94f2-3bd489640008",
+        "x-ms-ratelimit-remaining-subscription-reads": "11924",
+        "x-ms-request-id": "1b7a929d-52e7-4849-ba4f-1af871c00958_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091748Z:d61c4a52-0f65-484f-94f2-3bd489640008"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:17:40.327Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-ba412ac6e5925c4b948262be85d9d9e2-9b4b40b14c629747-00",
+        "traceparent": "00-ba412ac6e5925c4b948262be85d9d9e2-9b4b40b14c629747-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "0cb7998149f6b424ee25149a88f185ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:18:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0cb7998149f6b424ee25149a88f185ee",
+        "x-ms-correlation-request-id": "b62d3167-6e1b-4411-91ed-a82120290709",
+        "x-ms-ratelimit-remaining-subscription-reads": "11923",
+        "x-ms-request-id": "7998563e-3d2f-4302-a034-f5d25adf770f_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091821Z:b62d3167-6e1b-4411-91ed-a82120290709"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:17:40.327Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-a9ef51595c81944cb8e55071a0260831-d82ef4b46326ad40-00",
+        "traceparent": "00-a9ef51595c81944cb8e55071a0260831-d82ef4b46326ad40-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "40f788ce1c56e33cc045ef7f749ac0d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:18:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "40f788ce1c56e33cc045ef7f749ac0d0",
+        "x-ms-correlation-request-id": "6afe161b-9821-47c9-9c0c-71e5e19a04f3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11922",
+        "x-ms-request-id": "e94b474d-dea7-4b01-8ff6-754cce0421ea_M8CH3_M8CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T091821Z:6afe161b-9821-47c9-9c0c-71e5e19a04f3"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:17:40.327Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default?api-version=2018-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "820",
+        "Content-Type": "application/json",
+        "Request-Id": "00-e920f1e674ffdf4586cf6669c580129e-536914fe5ec7ed43-00",
+        "traceparent": "00-e920f1e674ffdf4586cf6669c580129e-536914fe5ec7ed43-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "34b320e3a38f2a34b2923afe1978bc3d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "defaultAction": "Deny",
+          "virtualNetworkRules": [
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default"
+              }
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault"
+              }
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01"
+              }
+            }
+          ],
+          "ipRules": [
+            {
+              "ipMask": "1.1.1.1",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.2",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.3",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.4",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.5",
+              "action": "Allow"
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1231",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "34b320e3a38f2a34b2923afe1978bc3d",
+        "x-ms-correlation-request-id": "89c008fa-7dd8-4459-a167-eab67bf7d0d8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "e2f2aa06-45c7-44c4-9e5e-c6e77227b6c0_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092107Z:89c008fa-7dd8-4459-a167-eab67bf7d0d8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default",
+        "name": "default",
+        "type": "Microsoft.EventHub/Namespaces/NetworkRuleSets",
+        "location": "Australia East",
+        "properties": {
+          "defaultAction": "Deny",
+          "virtualNetworkRules": [
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            }
+          ],
+          "ipRules": [
+            {
+              "ipMask": "1.1.1.1",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.2",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.3",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.4",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.5",
+              "action": "Allow"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-bfe3bb2b3459db42bdf0cc08a9ffa3ef-61994dc223b99145-00",
+        "traceparent": "00-bfe3bb2b3459db42bdf0cc08a9ffa3ef-61994dc223b99145-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "1267c3a496f265bd5cd34cb159a44053",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1231",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1267c3a496f265bd5cd34cb159a44053",
+        "x-ms-correlation-request-id": "e93bda5d-49b0-4c64-a09f-c2424a0de3b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11921",
+        "x-ms-request-id": "b2a925d4-f28d-43dd-9e61-17468cd9c222_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092108Z:e93bda5d-49b0-4c64-a09f-c2424a0de3b4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default",
+        "name": "default",
+        "type": "Microsoft.EventHub/Namespaces/NetworkRuleSets",
+        "location": "Australia East",
+        "properties": {
+          "defaultAction": "Deny",
+          "virtualNetworkRules": [
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/default-eventhub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/default-eventhub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            },
+            {
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/default-eventhub-3767/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01"
+              },
+              "ignoreMissingVnetServiceEndpoint": false
+            }
+          ],
+          "ipRules": [
+            {
+              "ipMask": "1.1.1.1",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.2",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.3",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.4",
+              "action": "Allow"
+            },
+            {
+              "ipMask": "1.1.1.5",
+              "action": "Allow"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default?api-version=2018-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "40",
+        "Content-Type": "application/json",
+        "Request-Id": "00-f76fdfdb1b6bcf47a31524b305d5fac0-8179d122c6216745-00",
+        "traceparent": "00-f76fdfdb1b6bcf47a31524b305d5fac0-8179d122c6216745-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "68b64464503e2a5e53cd8dc4e13ec947",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "defaultAction": "Allow"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "366",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "68b64464503e2a5e53cd8dc4e13ec947",
+        "x-ms-correlation-request-id": "948aafc1-ccf1-4b44-b19f-65a6887a44c8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "ea35c4bb-1dea-4ba9-a73d-f5207d2caeab_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092117Z:948aafc1-ccf1-4b44-b19f-65a6887a44c8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default",
+        "name": "default",
+        "type": "Microsoft.EventHub/Namespaces/NetworkRuleSets",
+        "location": "Australia East",
+        "properties": {
+          "defaultAction": "Allow",
+          "virtualNetworkRules": [],
+          "ipRules": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-8b88926de3a3ed4e92c2372a55f6b2bf-2ab911ac14252a46-00",
+        "traceparent": "00-8b88926de3a3ed4e92c2372a55f6b2bf-2ab911ac14252a46-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "b0dab188ae334ddd634ed8bb5683d00d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "366",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b0dab188ae334ddd634ed8bb5683d00d",
+        "x-ms-correlation-request-id": "8fe9099d-a88f-44f8-94fe-902c318b14a7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11920",
+        "x-ms-request-id": "d3625211-c2c7-43a6-bbe8-41e3d1240cfb_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092118Z:8fe9099d-a88f-44f8-94fe-902c318b14a7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/networkRuleSets/default",
+        "name": "default",
+        "type": "Microsoft.EventHub/Namespaces/NetworkRuleSets",
+        "location": "Australia East",
+        "properties": {
+          "defaultAction": "Allow",
+          "virtualNetworkRules": [],
+          "ipRules": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "00-eb169649532ea5488e4a3427e3851f76-3d29288d7302da4e-00",
+        "traceparent": "00-eb169649532ea5488e4a3427e3851f76-3d29288d7302da4e-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "d599e75253c154ff643cbe2508f9831d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 08 Sep 2020 09:21:20 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d599e75253c154ff643cbe2508f9831d",
+        "x-ms-correlation-request-id": "3e4d3cc6-ec53-4ea6-b97a-c34c45582fce",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "e3973a34-0de4-4ae2-bec0-3e00e6724245_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092121Z:3e4d3cc6-ec53-4ea6-b97a-c34c45582fce"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d477f-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "fa717ffcf4a53485b2854bf6efb7456a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:23 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "34",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fa717ffcf4a53485b2854bf6efb7456a",
+        "x-ms-correlation-request-id": "b450244f-c970-4f91-9548-5d4675248e55",
+        "x-ms-ratelimit-remaining-subscription-reads": "11919",
+        "x-ms-request-id": "ec05b79b-6291-47c0-93c9-3b8d07945cab_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092124Z:b450244f-c970-4f91-9548-5d4675248e55"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4780-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "51b1bbca285ac243c7e26f594f0eddc1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:24 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "58",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "51b1bbca285ac243c7e26f594f0eddc1",
+        "x-ms-correlation-request-id": "8f77bd86-722a-4751-aef5-dae69cba1562",
+        "x-ms-ratelimit-remaining-subscription-reads": "11918",
+        "x-ms-request-id": "5bbfc590-30fb-411a-aeb2-c9fd2df5baef_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092125Z:8f77bd86-722a-4751-aef5-dae69cba1562"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4781-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "8929ee69898715787ff3f4444429c7ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:27 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "34",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8929ee69898715787ff3f4444429c7ae",
+        "x-ms-correlation-request-id": "487981b7-329b-440f-95ec-df98b487e613",
+        "x-ms-ratelimit-remaining-subscription-reads": "11917",
+        "x-ms-request-id": "5429f557-9c1e-49be-850b-f9242da3bea1_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092128Z:487981b7-329b-440f-95ec-df98b487e613"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4782-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "bb259a2381f1d4753baf33c2842ce5a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:37 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "45",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bb259a2381f1d4753baf33c2842ce5a4",
+        "x-ms-correlation-request-id": "a3740884-8759-435e-8be1-9e55447b8bde",
+        "x-ms-ratelimit-remaining-subscription-reads": "11916",
+        "x-ms-request-id": "29ed92c3-7c72-419b-b7b1-261467d2feea_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092137Z:a3740884-8759-435e-8be1-9e55447b8bde"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4783-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "008d8aa8bb8e41e2429bd26733fe7e9d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:39 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "50",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "008d8aa8bb8e41e2429bd26733fe7e9d",
+        "x-ms-correlation-request-id": "0a37797d-acd2-4b71-8632-34dc99d88d0e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11915",
+        "x-ms-request-id": "7260ce87-ae36-4543-ae66-0d1c4866ffb4_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092139Z:0a37797d-acd2-4b71-8632-34dc99d88d0e"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4784-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "b435c01a21e8e7d079554ed755b69153",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:42 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "56",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b435c01a21e8e7d079554ed755b69153",
+        "x-ms-correlation-request-id": "4627afe5-82db-430d-a500-7869f596430f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11914",
+        "x-ms-request-id": "468770a3-c184-458c-809b-7a077c5ae7ad_M1CH3_M1CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092142Z:4627afe5-82db-430d-a500-7869f596430f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4785-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "b99c500dc79c681fb8e47855af0da03c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Sep 2020 09:21:43 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "38",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b99c500dc79c681fb8e47855af0da03c",
+        "x-ms-correlation-request-id": "90cb79a2-4a2b-490e-8f12-2aa006441c0a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11913",
+        "x-ms-request-id": "54f1ff7d-1ad9-4151-b56c-79ecad09d5ed_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092143Z:90cb79a2-4a2b-490e-8f12-2aa006441c0a"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660",
+        "name": "sdk-eventhub-Namespace-6660",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "Australia East",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "properties": {
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-eventhub-namespace-6660",
+          "createdAt": "2020-09-08T09:16:50.407Z",
+          "updatedAt": "2020-09-08T09:21:20.977Z",
+          "serviceBusEndpoint": "https://sdk-eventhub-Namespace-6660.servicebus.windows.net:443/",
+          "status": "Removing"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-3767/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-6660/operationresults/sdk-eventhub-Namespace-6660?api-version=2018-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Request-Id": "|3b1d4786-4ca097a6611d889e.",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.EventHubs/1.0.0-alpha.20200908.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "c3a7953131f686bbb9a586396d0aeb8c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 08 Sep 2020 09:21:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c3a7953131f686bbb9a586396d0aeb8c",
+        "x-ms-correlation-request-id": "81acf5fa-1233-4327-9486-9d2ab90ddeed",
+        "x-ms-ratelimit-remaining-subscription-reads": "11912",
+        "x-ms-request-id": "af2075bf-f233-495a-a031-bbb09c3dae2e_M5CH3_M5CH3",
+        "x-ms-routing-request-id": "KOREASOUTH:20200908T092145Z:81acf5fa-1233-4327-9486-9d2ab90ddeed"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1701724876",
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+  }
+}

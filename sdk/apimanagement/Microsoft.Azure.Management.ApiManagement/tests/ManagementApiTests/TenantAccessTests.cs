@@ -31,6 +31,12 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(getResponse);
                 Assert.False(getResponse.Enabled);
+                Assert.Null(getResponse.PrimaryKey);
+                Assert.Null(getResponse.SecondaryKey);
+
+                var getSecrets = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName);
+                Assert.NotNull(getSecrets.PrimaryKey);
+                Assert.NotNull(getSecrets.SecondaryKey);
 
                 try
                 {
@@ -55,18 +61,18 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     testBase.client.TenantAccess.RegeneratePrimaryKey(testBase.rgName, testBase.serviceName);
 
-                    var getResponse2 = testBase.client.TenantAccess.Get(testBase.rgName, testBase.serviceName);
+                    var getSecrets2 = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName);
 
-                    Assert.NotNull(getResponse2);
-                    Assert.Equal(getResponse.SecondaryKey, getResponse2.SecondaryKey);
-                    Assert.NotEqual(getResponse.PrimaryKey, getResponse2.PrimaryKey);
+                    Assert.NotNull(getSecrets2);
+                    Assert.Equal(getSecrets.SecondaryKey, getSecrets2.SecondaryKey);
+                    Assert.NotEqual(getSecrets.PrimaryKey, getSecrets2.PrimaryKey);
 
                     testBase.client.TenantAccess.RegenerateSecondaryKey(testBase.rgName, testBase.serviceName);
 
-                    getResponse2 = testBase.client.TenantAccess.Get(testBase.rgName, testBase.serviceName);
+                    getSecrets2 = testBase.client.TenantAccess.Get(testBase.rgName, testBase.serviceName);
 
-                    Assert.NotNull(getResponse2);
-                    Assert.NotEqual(getResponse.SecondaryKey, getResponse2.SecondaryKey);
+                    Assert.NotNull(getSecrets2);
+                    Assert.NotEqual(getSecrets.SecondaryKey, getSecrets2.SecondaryKey);
                 }
                 finally
                 {

@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,6 +97,42 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task AuthenticateWithDeviceCodeNoCallback()
+        {
+            var capturedOut = new StringBuilder();
+
+            var capturedOutWriter = new StringWriter(capturedOut);
+
+            var stdOut = Console.Out;
+
+            Console.SetOut(capturedOutWriter);
+
+            try
+            {
+                var expectedCode = Guid.NewGuid().ToString();
+
+                var expectedToken = Guid.NewGuid().ToString();
+
+                var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
+
+                var options = new DeviceCodeCredentialOptions() { Transport = mockTransport };
+
+                var cred = InstrumentClient(new DeviceCodeCredential(options));
+
+                AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
+
+                Assert.AreEqual(token.Token, expectedToken);
+
+                Assert.AreEqual(expectedCode + Environment.NewLine, capturedOut.ToString());
+            }
+            finally
+            {
+                Console.SetOut(stdOut);
+            }
+        }
+
+        [Test]
         public async Task AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
         {
             var expectedCode = Guid.NewGuid().ToString();
@@ -155,6 +192,20 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
 
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
+        }
+
+        [Test]
+        public void DisableAutomaticAuthenticationException()
+        {
+            var expectedCode = Guid.NewGuid().ToString();
+
+            var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
+
+            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
+
+            var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
+
+            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)

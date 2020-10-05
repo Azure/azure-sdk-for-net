@@ -33,10 +33,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     string propertyDisplayName = TestUtilities.GenerateName("propertydisplay");
                     string propertyValue = TestUtilities.GenerateName("propertyValue");
-                    var createParameters = new PropertyContract(propertyDisplayName, propertyValue);
+                    var createParameters = new NamedValueCreateContract(propertyDisplayName, propertyValue);
 
                     // create a property
-                    var propertyResponse = testBase.client.Property.CreateOrUpdate(
+                    var propertyResponse = testBase.client.NamedValue.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         propertyId,
@@ -45,7 +45,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     ValidateProperty(propertyResponse, testBase, propertyId, propertyDisplayName, propertyValue, false);
 
                     // get the property
-                    var getResponse = testBase.client.Property.Get(
+                    var getResponse = testBase.client.NamedValue.Get(
                         testBase.rgName,
                         testBase.serviceName,
                         propertyId);
@@ -56,13 +56,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string secretPropertyDisplayName = TestUtilities.GenerateName("secretPropertydisplay");
                     string secretPropertyValue = TestUtilities.GenerateName("secretPropertyValue");
                     List<string> tags = new List<string> { "secret" };
-                    var secretCreateParameters = new PropertyContract(secretPropertyDisplayName, secretPropertyValue)
+                    var secretCreateParameters = new NamedValueCreateContract(secretPropertyDisplayName, secretPropertyValue)
                     {
                         Secret = true,
                         Tags = tags
                     };
 
-                    var secretPropertyResponse = testBase.client.Property.CreateOrUpdate(
+                    var secretPropertyResponse = testBase.client.NamedValue.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId,
@@ -70,23 +70,31 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     ValidateProperty(secretPropertyResponse, testBase, secretPropertyId, secretPropertyDisplayName, secretPropertyValue, true);
 
+                    var secretValueResponse = testBase.client.NamedValue.ListValue(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId);
+
+                    Assert.Equal(secretPropertyValue, secretValueResponse.Value);
+
                     // list the properties
-                    var listResponse = testBase.client.Property.ListByService(testBase.rgName, testBase.serviceName, null);
+                    var listResponse = testBase.client.NamedValue.ListByService(testBase.rgName, testBase.serviceName, null);
                     Assert.NotNull(listResponse);
+
                     Assert.Equal(2, listResponse.Count());
 
                     // delete a property
-                    testBase.client.Property.Delete(
+                    testBase.client.NamedValue.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         propertyId,
                         "*");
 
                     Assert.Throws<ErrorResponseException>(()
-                        => testBase.client.Property.Get(testBase.rgName, testBase.serviceName, propertyId));
+                        => testBase.client.NamedValue.Get(testBase.rgName, testBase.serviceName, propertyId));
 
                     // get the property etag
-                    var propertyTag = await testBase.client.Property.GetEntityTagAsync(
+                    var propertyTag = await testBase.client.NamedValue.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId);
@@ -94,11 +102,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(propertyTag.ETag);
 
                     // patch the secret property
-                    var updateProperty = new PropertyUpdateParameters()
+                    var updateProperty = new NamedValueUpdateParameters()
                     {
                         Secret = false
                     };
-                    testBase.client.Property.Update(
+                    testBase.client.NamedValue.Update(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId,
@@ -106,7 +114,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         propertyTag.ETag);
 
                     // check it is patched
-                    var secretResponse = await testBase.client.Property.GetAsync(
+                    var secretResponse = await testBase.client.NamedValue.GetAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId);
@@ -120,25 +128,25 @@ namespace ApiManagement.Tests.ManagementApiTests
                         false);
 
                     // delete this property
-                    testBase.client.Property.Delete(
+                    testBase.client.NamedValue.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId,
                         "*");
 
                     Assert.Throws<ErrorResponseException>(()
-                        => testBase.client.Property.Get(testBase.rgName, testBase.serviceName, secretPropertyId));
+                        => testBase.client.NamedValue.Get(testBase.rgName, testBase.serviceName, secretPropertyId));
                 }
                 finally
                 {
-                    testBase.client.Property.Delete(testBase.rgName, testBase.serviceName, propertyId, "*");
-                    testBase.client.Property.Delete(testBase.rgName, testBase.serviceName, secretPropertyId, "*");
+                    testBase.client.NamedValue.Delete(testBase.rgName, testBase.serviceName, propertyId, "*");
+                    testBase.client.NamedValue.Delete(testBase.rgName, testBase.serviceName, secretPropertyId, "*");
                 }
             }
         }
 
         static void ValidateProperty(
-            PropertyContract contract,
+            NamedValueContract contract,
             ApiManagementTestBase testBase,
             string propertyId,
             string propertyDisplayName,
@@ -148,7 +156,14 @@ namespace ApiManagement.Tests.ManagementApiTests
         {
             Assert.NotNull(contract);
             Assert.Equal(propertyDisplayName, contract.DisplayName);
-            Assert.Equal(propertyValue, contract.Value);
+            if (isSecret)
+            {
+                Assert.Null(contract.Value);
+            }
+            else
+            {
+                Assert.Equal(propertyValue, contract.Value);
+            }
             Assert.Equal(isSecret, contract.Secret);
             Assert.Equal(propertyId, contract.Name);
             if (tags != null)

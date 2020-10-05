@@ -19,24 +19,24 @@ namespace Microsoft.Azure.Management.HybridData
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("HybridData", "DataManagers", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "DataServices", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "DataStoreTypes", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "DataStores", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "JobDefinitions", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "Jobs", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "Operations", "2016-06-01"),
-                new Tuple<string, string, string>("HybridData", "PublicKeys", "2016-06-01"),
+                new Tuple<string, string, string>("HybridData", "DataManagers", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "DataServices", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "DataStoreTypes", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "DataStores", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "JobDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "Jobs", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "Operations", "2019-06-01"),
+                new Tuple<string, string, string>("HybridData", "PublicKeys", "2019-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hybriddatamanager/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\t-prta\\GitHub\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestVersion = "2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hybriddatamanager/resource-manager/readme.md --csharp --version=2.0.4413 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\prtank\\GitHub\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "463b431f324d40c08f510276509d2f851ace4a54";
+      public static readonly String GithubCommidId = "d692fc97bf6d7affc02b75709b276461c4521b33";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

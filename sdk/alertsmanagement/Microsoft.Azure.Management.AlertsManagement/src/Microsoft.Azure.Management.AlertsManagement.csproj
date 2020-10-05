@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.AlertsManagement</PackageId>
     <Description>Provides developers with libraries for the Alerts Management</Description>
-    <Version>0.9.1-preview</Version>
+    <Version>0.9.2-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.AlertsManagement</AssemblyName>
     <PackageTags>alerts;notification;alertsmanagement;</PackageTags>
     <PackageReleaseNotes>

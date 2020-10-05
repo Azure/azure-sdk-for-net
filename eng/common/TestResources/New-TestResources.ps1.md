@@ -14,18 +14,19 @@ Deploys live test resources defined for a service directory to Azure.
 
 ### Default (Default)
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] [-DeleteAfterHours <Int32>]
- [-Location <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
+ -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>]
+ [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
 ```
-New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String>
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>]
- [-Location <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf] [-Confirm]
+New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
+ -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+ -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
+ -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -53,11 +54,10 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ### EXAMPLE 1
 ```
-$subscriptionId = "REPLACE_WITH_SUBSCRIPTION_ID"
-Connect-AzAccount -Subscription $subscriptionId
+Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-.\eng\common\LiveTestResources\New-TestResources.ps1 `
-    -BaseName 'myalias' `
+New-TestResources.ps1 `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -71,7 +71,7 @@ the SecureString to plaintext by another means.
 
 ### EXAMPLE 2
 ```
-eng/New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
@@ -108,6 +108,22 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceGroupName
+Set this value to deploy directly to a Resource Group that has already been
+created.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -181,7 +197,7 @@ It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 ```yaml
 Type: String
@@ -208,6 +224,23 @@ Parameter Sets: Provisioner
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner.
+You can also use Set-AzContext if not provisioning.
+
+```yaml
+Type: String
+Parameter Sets: Provisioner
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -283,8 +316,13 @@ Accept wildcard characters: False
 
 ### -Location
 Optional location where resources should be created.
-By default this is
-'westus2'.
+If left empty, the default
+is based on the cloud to which the template is being deployed:
+
+* AzureCloud -\> 'westus2'
+* AzureUSGovernment -\> 'usgovvirginia'
+* AzureChinaCloud -\> 'chinaeast2'
+* Dogfood -\> 'westus'
 
 ```yaml
 Type: String
@@ -293,7 +331,24 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: Westus2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Environment
+Name of the cloud environment.
+The default is the Azure Public Cloud
+('PublicCloud')
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: AzureCloud
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -344,6 +399,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutFile
+Save test environment settings into a test-resources.json.env file next to test-resources.json.
+File is protected via DPAPI.
+Supported only on windows.
+The environment file would be scoped to the current repository directory.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
@@ -378,16 +451,10 @@ Accept wildcard characters: False
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+## INPUTS
+
 ## OUTPUTS
 
-### Entries from the ARM templates' "output" section in environment variable syntax
-### (e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-### live tests.
-### If run in -CI mode the environment variables will be output in syntax that Azure
-### DevOps can consume.
 ## NOTES
 
 ## RELATED LINKS
-
-[Remove-TestResources.ps1](./New-TestResources.ps1.md)
-

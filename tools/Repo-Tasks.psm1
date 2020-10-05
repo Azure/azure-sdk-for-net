@@ -350,7 +350,7 @@ Function Install-VSProjectTemplates
 .SYNOPSIS
 
 Install-VSProjectTemplates will install getting started project templates for
-1) Autorest-.NET SDKProject
+1) AutoRest-.NET SDKProject
 2) .NET SDK Test projectct
 
 After executing the cmdlet, restart VS (if already open), create new project

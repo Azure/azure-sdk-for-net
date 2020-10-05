@@ -39,19 +39,20 @@ namespace SmokeTest
             var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING");
             var storageConnectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
 
-            await CreateSenderAndReceiver(connectionString, storageConnectionString);
-            await SendAndReceiveEvents();
+            try
+            {
+                CreateSenderAndReceiver(connectionString, storageConnectionString);
+                await SendAndReceiveEvents();
+            }
+            finally
+            {
+                await Cleanup();
+            }
         }
 
-        private static async Task<string> GetPartitionId(string connectionString)
-        {
-            var client = new EventHubProducerClient(connectionString);
-            var result = (await client.GetPartitionIdsAsync()).First();
-            await client.DisposeAsync();
-            return result;
-        }
+        public static Task Cleanup() => sender.CloseAsync();
 
-        private static async Task CreateSenderAndReceiver(string connectionString, string storageConnectionString)
+        private static void CreateSenderAndReceiver(string connectionString, string storageConnectionString)
         {
             Console.Write("Creating the Sender and Receivers... ");
 
@@ -78,8 +79,6 @@ namespace SmokeTest
             {
                 eventBatch.TryAdd(ev);
             }
-
-            await sender.SendAsync(eventBatch);
 
             Console.Write("Ready to send a batch of " + eventBatch.Count.ToString() + " events... ");
             await sender.SendAsync(eventBatch);

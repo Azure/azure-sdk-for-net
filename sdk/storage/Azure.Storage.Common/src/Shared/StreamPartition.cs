@@ -88,7 +88,10 @@ namespace Azure.Storage
 
         private bool _disposedValue = false; // To detect redundant calls
 
-        public override void Flush() => throw Errors.NotImplemented();
+        public override void Flush()
+        {
+            // Flush is allowed on read-only stream
+        }
 
         public int Read(out ReadOnlyMemory<byte> buffer, int count)
         {

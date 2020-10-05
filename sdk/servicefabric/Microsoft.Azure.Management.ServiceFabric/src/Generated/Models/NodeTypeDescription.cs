@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// understand how much resource a node has.</param>
         /// <param name="durabilityLevel">The durability level of the node
         /// type. Learn about
-        /// [DurabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - Bronze - No privileges. This is the default.
         /// - Silver - The infrastructure jobs can be paused for a duration of
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 
         /// <summary>
         /// Gets or sets the durability level of the node type. Learn about
-        /// [DurabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - Bronze - No privileges. This is the default.
         /// - Silver - The infrastructure jobs can be paused for a duration of

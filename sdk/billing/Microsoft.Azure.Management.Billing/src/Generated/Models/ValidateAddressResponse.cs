@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="status">status of the address validation. Possible
         /// values include: 'Valid', 'Invalid'</param>
-        /// <param name="suggestedAddresses">list of suggested
+        /// <param name="suggestedAddresses">The list of suggested
         /// addresses.</param>
         /// <param name="validationMessage">Validation error message.</param>
         public ValidateAddressResponse(string status = default(string), IList<AddressDetails> suggestedAddresses = default(IList<AddressDetails>), string validationMessage = default(string))
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets list of suggested addresses.
+        /// Gets or sets the list of suggested addresses.
         /// </summary>
         [JsonProperty(PropertyName = "suggestedAddresses")]
         public IList<AddressDetails> SuggestedAddresses { get; set; }

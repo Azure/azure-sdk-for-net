@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingPropertyOperations
     {
         /// <summary>
-        /// Get billing property by subscription Id.
+        /// Get the billing properties for a subscription. This operation is
+        /// not supported for billing accounts with agreement type Enterprise
+        /// Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='customHeaders'>
@@ -43,5 +45,30 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<BillingProperty>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the billing property of a subscription. Currently, cost
+        /// center can be updated. The operation is supported only for billing
+        /// accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the update billing property
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BillingProperty>> UpdateWithHttpMessagesAsync(BillingProperty parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

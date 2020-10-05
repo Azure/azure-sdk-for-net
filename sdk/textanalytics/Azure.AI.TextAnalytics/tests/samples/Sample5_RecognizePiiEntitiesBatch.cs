@@ -1,80 +1,86 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Azure.AI.TextAnalytics.Tests;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
     [LiveOnly]
-    public partial class TextAnalyticsSamples
+    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
         public void RecognizePiiEntitiesBatch()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
+                new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+                new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
                 {
                      Language = "en",
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(documents, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
-            Debug.WriteLine("");
+            Console.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
+            Console.WriteLine("");
 
             foreach (RecognizePiiEntitiesResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
                 if (result.HasError)
                 {
-                    Debug.WriteLine($"    Document error code: {result.Error.Code}.");
-                    Debug.WriteLine($"    Message: {result.Error.Message}.");
+                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
+                    Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.Entities.Count()} PII entit{(result.Entities.Count() > 1 ? "ies" : "y ")}:");
-
-                    foreach (PiiEntity entity in result.Entities)
+                    if (result.Entities.Count > 0)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                        Console.WriteLine($"    Redacted Text: {result.Entities.RedactedText}");
+                        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entit{(result.Entities.Count > 1 ? "ies" : "y ")}:");
+                        foreach (PiiEntity entity in result.Entities)
+                        {
+                            Console.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No entities were found.");
                     }
 
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Console.WriteLine("");
                 }
             }
 
-            Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Debug.WriteLine("");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Console.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Console.WriteLine("");
         }
     }
 }

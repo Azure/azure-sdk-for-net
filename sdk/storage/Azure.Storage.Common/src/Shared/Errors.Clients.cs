@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Security.Authentication;
 using Azure.Core.Pipeline;
 
@@ -51,6 +52,9 @@ namespace Azure.Storage
         public static InvalidOperationException SasDataNotAllowed(string paramName, string paramNameNotAllowed)
             => new InvalidOperationException($"SAS cannot have the {paramNameNotAllowed} parameter when the {paramName} parameter is present");
 
+        public static InvalidOperationException SasDataInConjunction(string paramName, string paramName2)
+            => new InvalidOperationException($"SAS cannot have the following parameters specified in conjunction: {paramName}, {paramName2}");
+
         public static ArgumentException InvalidPermission(char s)
             => new ArgumentException($"Invalid permission: '{s}'");
 
@@ -83,6 +87,35 @@ namespace Azure.Storage
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
             }
+        }
+
+        public static class ClientSideEncryption
+        {
+            public static InvalidOperationException ClientSideEncryptionVersionNotSupported(string versionString = default)
+                => new InvalidOperationException("This library does not support the given version of client-side encryption." +
+                    versionString == default ? "" : $" Version ID = {versionString}");
+
+            public static InvalidOperationException TypeNotSupported(Type type)
+                => new InvalidOperationException(
+                    $"Client-side encryption is not supported for type \"{type.FullName}\". " +
+                    "Please use a supported client type or create this client without specifying client-side encryption options.");
+
+            public static InvalidOperationException MissingRequiredEncryptionResources(params string[] resourceNames)
+                => new InvalidOperationException("Cannot encrypt without specifying " + string.Join(",", resourceNames.AsEnumerable()));
+
+            public static ArgumentException KeyNotFound(string keyId)
+            => new ArgumentException($"Resolution of id {keyId} returned null.");
+
+            public static ArgumentException BadEncryptionAgent(string agent)
+                => new ArgumentException("Invalid Encryption Agent. This version of the client library does not understand" +
+                    $"the Encryption Agent protocol \"{agent}\" set on the blob.");
+
+            public static ArgumentException BadEncryptionAlgorithm(string algorithm)
+                => new ArgumentException($"Invalid Encryption Algorithm \"{algorithm}\" found on the resource. This version of the client" +
+                    "library does not support the given encryption algorithm.");
+
+            public static InvalidOperationException MissingEncryptionMetadata(string field)
+                => new InvalidOperationException($"Missing field \"{field}\" in encryption metadata");
         }
     }
 }

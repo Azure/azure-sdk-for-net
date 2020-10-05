@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     // These tests are intended to be only run live on an azure VM with managed identity enabled.
-    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
+    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
         {
@@ -25,12 +25,12 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsSystemAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
             var cred = CreateManagedIdentityCredential();
 
@@ -49,14 +49,14 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsUserAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var clientId = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
+            var clientId = TestEnvironment.IMDSClientId;
 
             var cred = CreateManagedIdentityCredential(clientId);
 
@@ -77,7 +77,9 @@ namespace Azure.Identity.Tests
             var pipeline = CredentialPipeline.GetInstance(options);
 
             // if we're in playback mode we need to mock the ImdsAvailable call since we won't be able to open a connection
-            var client = (Mode == RecordedTestMode.Playback) ? new MockManagedIdentityClient(pipeline, clientId) { ImdsAvailableFunc = _ => true } : new ManagedIdentityClient(pipeline, clientId);
+            var client = (Mode == RecordedTestMode.Playback)
+                ? new MockManagedIdentityClient(pipeline, clientId) { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, clientId) }
+                : new ManagedIdentityClient(pipeline, clientId);
 
             var cred = new ManagedIdentityCredential(pipeline, client);
 

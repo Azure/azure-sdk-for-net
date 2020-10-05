@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -19,6 +19,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, serviceVersion)
         {
             _serviceVersion = serviceVersion;
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]
@@ -367,7 +369,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             recording ??= Recording;
 
             CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
-            CryptographyClient client = new CryptographyClient(keyId, recording.GetCredential(new DefaultAzureCredential()), options, forceRemote);
+            CryptographyClient client = new CryptographyClient(keyId, TestEnvironment.Credential, options, forceRemote);
             return InstrumentClient(client);
         }
 
@@ -376,7 +378,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             recording ??= Recording;
 
             CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
-            CryptographyClient client = new CryptographyClient(key, recording.GetCredential(new DefaultAzureCredential()), options);
+            CryptographyClient client = new CryptographyClient(key, TestEnvironment.Credential, options);
             CryptographyClient clientProxy = InstrumentClient(client);
 
             ICryptographyProvider remoteClientProxy = null;
@@ -418,48 +420,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            JsonWebKey keyMaterial = null;
-            switch (algorithm.ToString())
-            {
-                case SignatureAlgorithm.PS256Value:
-                case SignatureAlgorithm.PS384Value:
-                case SignatureAlgorithm.PS512Value:
-                case SignatureAlgorithm.RS256Value:
-                case SignatureAlgorithm.RS384Value:
-                case SignatureAlgorithm.RS512Value:
-                    keyMaterial = KeyUtilities.CreateRsaKey(includePrivateParameters: true);
-                    break;
-
-                case SignatureAlgorithm.ES256Value:
-                case SignatureAlgorithm.ES256KValue:
-                case SignatureAlgorithm.ES384Value:
-                case SignatureAlgorithm.ES512Value:
-#if NET461
-                    Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
-#else
-                    KeyCurveName curveName = algorithm.GetEcKeyCurveName();
-                    ECCurve curve = ECCurve.CreateFromOid(curveName.Oid);
-
-                    using (ECDsa ecdsa = ECDsa.Create())
-                    {
-                        try
-                        {
-                            ecdsa.GenerateKey(curve);
-                            keyMaterial = new JsonWebKey(ecdsa, includePrivateParameters: true);
-                        }
-                        catch (NotSupportedException)
-                        {
-                            Assert.Inconclusive("This platform does not support OID {0}", curveName.Oid);
-                        }
-                    }
-#endif
-
-                    break;
-
-                default:
-                    throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
-            }
-
+            JsonWebKey keyMaterial = KeyUtilities.CreateKey(algorithm, includePrivateParameters: true);
             KeyVaultKey key = await Client.ImportKeyAsync(keyName, keyMaterial);
 
             keyMaterial.Id = key.Key.Id;

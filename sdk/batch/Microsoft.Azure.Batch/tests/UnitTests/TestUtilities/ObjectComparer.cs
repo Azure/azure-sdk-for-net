@@ -66,7 +66,7 @@
             if (o1 is Enum && o2 is Enum)
             {
                 //Match enums based on an ignore-cased ToString
-                bool matches = o1.ToString().Equals(o2.ToString(), StringComparison.CurrentCultureIgnoreCase);
+                bool matches = o1.ToString().Equals(o2.ToString(), StringComparison.InvariantCultureIgnoreCase);
                 if (matches)
                 {
                     return CheckEqualityResult.True;
@@ -189,10 +189,8 @@
             {
                 return CheckEqualityResult.False("Collection counts do not match");
             }
-
-            bool anyFailures = list1.Select((item1, i) => this.CheckEquality(item1, list2[i])).Any(s => !s.Equal);
-
-            return anyFailures ? CheckEqualityResult.False("Collection mismatch") : CheckEqualityResult.True;
+            var checkResult = list1.Select((item1, i) => this.CheckEquality(item1, list2[i])).FirstOrDefault(check => !check.Equal);
+            return checkResult != null ? checkResult : CheckEqualityResult.True;
         }
 
         private string GetPropertyMappingOrNull(Type type, string propertyName)

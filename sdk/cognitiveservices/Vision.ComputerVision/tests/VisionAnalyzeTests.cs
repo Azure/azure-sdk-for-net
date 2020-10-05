@@ -23,7 +23,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     ImageAnalysis result = client.AnalyzeImageInStreamAsync(
                         stream,
-                        new List<VisualFeatureTypes>()
+                        new List<VisualFeatureTypes?>()
                         {
                             VisualFeatureTypes.Adult,
                             VisualFeatureTypes.Categories,
@@ -62,7 +62,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     ImageAnalysis result = client.AnalyzeImageAsync(
                         GetTestImageUrl("house.jpg"),
-                        new List<VisualFeatureTypes>()
+                        new List<VisualFeatureTypes?>()
                         {
                             VisualFeatureTypes.Adult,
                             VisualFeatureTypes.Categories,
@@ -102,7 +102,7 @@ namespace ComputerVisionSDK.Tests
                 {
                     ImageAnalysis result = client.AnalyzeImageInStreamAsync(
                         stream,
-                        new List<VisualFeatureTypes>()
+                        new List<VisualFeatureTypes?>()
                         {
                             VisualFeatureTypes.Brands
                         })

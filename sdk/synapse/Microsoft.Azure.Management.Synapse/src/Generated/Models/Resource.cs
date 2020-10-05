@@ -10,10 +10,12 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Resource
+    public partial class Resource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Resource class.

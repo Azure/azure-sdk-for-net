@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 parameters.Validate();
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -833,7 +833,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

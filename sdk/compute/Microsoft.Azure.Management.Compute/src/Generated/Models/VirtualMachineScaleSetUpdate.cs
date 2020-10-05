@@ -53,8 +53,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// hence ensure that the extensions do not run on the extra
         /// overprovisioned VMs.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
-        /// set to a single placement group, of max size 100 virtual
-        /// machines.</param>
+        /// set to a single placement group, of max size 100 virtual machines.
+        /// NOTE: If singlePlacementGroup is true, it may be modified to false.
+        /// However, if singlePlacementGroup is false, it may not be modified
+        /// to true.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the Virtual Machines in the
         /// Virtual Machine Scale Set. For instance: whether the Virtual
@@ -141,7 +143,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets when true this limits the scale set to a single
-        /// placement group, of max size 100 virtual machines.
+        /// placement group, of max size 100 virtual machines. NOTE: If
+        /// singlePlacementGroup is true, it may be modified to false. However,
+        /// if singlePlacementGroup is false, it may not be modified to true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }

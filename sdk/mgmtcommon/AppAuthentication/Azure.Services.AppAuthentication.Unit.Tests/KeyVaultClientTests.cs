@@ -44,17 +44,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         [Fact]
-        public async Task SecretIdentifierInvalidHostTest()
-        {
-            KeyVaultClient keyVaultClient = new KeyVaultClient();
-
-            string secretIdentifier = Constants.TestKeyVaultCertificateSecretIdentifier.Replace("vault.azure.net", "vault.baddudes.net");
-
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(secretIdentifier)));
-            Assert.Contains(KeyVaultClient.SecretIdentifierInvalidHostError, exception.Message);
-        }
-
-        [Fact]
         public async Task SecretIdentifierInvalidTypeTest()
         {
             KeyVaultClient keyVaultClient = new KeyVaultClient();

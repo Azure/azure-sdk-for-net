@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="subnet">The reference to the subnet resource.</param>
         /// <param name="publicIPAddress">The reference to the public IP
         /// resource.</param>
+        /// <param name="privateIPAddress">Private IP Address for this
+        /// gateway.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// virtual network gateway IP configuration resource. Possible values
         /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -49,12 +51,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string privateIPAddress = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets private IP Address for this gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        public string PrivateIPAddress { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the virtual network gateway IP

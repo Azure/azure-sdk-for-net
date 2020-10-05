@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Text;
-
     internal static class StringUtility
     {
 

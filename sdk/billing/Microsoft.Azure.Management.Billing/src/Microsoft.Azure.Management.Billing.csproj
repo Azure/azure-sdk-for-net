@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Billing Management Library</Description>
-		<Version>3.0.0-preview</Version>
+		<Version>4.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Billing</PackageId>
 		<PackageTags>Microsoft Azure Billing management;Billing;Billing management;</PackageTags>
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>This is the newest major version of the Azure Billing .NET SDK, based on version 2020-05-01 of the Azure Billing REST APIs. New in this GA version are billing periods and enrollment account support for backward compatibility.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

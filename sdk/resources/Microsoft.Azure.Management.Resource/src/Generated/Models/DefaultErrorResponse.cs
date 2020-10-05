@@ -11,12 +11,10 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The details of the error.
+    /// Template Specs error response.
     /// </summary>
     public partial class DefaultErrorResponse
     {
@@ -31,18 +29,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DefaultErrorResponse class.
         /// </summary>
-        /// <param name="code">One of a server-defined set of error
-        /// codes.</param>
-        /// <param name="message">A human-readable representation of the
-        /// error.</param>
-        /// <param name="target">The target of the particular error.</param>
-        /// <param name="details">Detailed errors.</param>
-        public DefaultErrorResponse(string code = default(string), string message = default(string), string target = default(string), IList<DefaultErrorResponse> details = default(IList<DefaultErrorResponse>))
+        public DefaultErrorResponse(ErrorResponse error = default(ErrorResponse))
         {
-            Code = code;
-            Message = message;
-            Target = target;
-            Details = details;
+            Error = error;
             CustomInit();
         }
 
@@ -52,28 +41,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets one of a server-defined set of error codes.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets a human-readable representation of the error.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Gets or sets the target of the particular error.
-        /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
-
-        /// <summary>
-        /// Gets or sets detailed errors.
-        /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<DefaultErrorResponse> Details { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; set; }
 
     }
 }

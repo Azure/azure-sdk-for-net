@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Management.Media
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=D:\\GitHub\\giakasRepros\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=D:\\GitHub\\giakasRepros\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "85d6e58c37868ca84f8f6eec5650dc4ab2d9a19a";
+      public static readonly String GithubCommidId = "48960215c4923808168e134563f726851b0f5128";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -40,12 +40,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="failoverDeploymentModel">The failover deployment
         /// model. Possible values include: 'NotApplicable', 'Classic',
         /// 'ResourceManager'</param>
-        public CreateRecoveryPlanInputProperties(string primaryFabricId, string recoveryFabricId, IList<RecoveryPlanGroup> groups, string failoverDeploymentModel = default(string))
+        /// <param name="providerSpecificInput">The provider specific
+        /// input.</param>
+        public CreateRecoveryPlanInputProperties(string primaryFabricId, string recoveryFabricId, IList<RecoveryPlanGroup> groups, string failoverDeploymentModel = default(string), IList<RecoveryPlanProviderSpecificInput> providerSpecificInput = default(IList<RecoveryPlanProviderSpecificInput>))
         {
             PrimaryFabricId = primaryFabricId;
             RecoveryFabricId = recoveryFabricId;
             FailoverDeploymentModel = failoverDeploymentModel;
             Groups = groups;
+            ProviderSpecificInput = providerSpecificInput;
             CustomInit();
         }
 
@@ -78,6 +81,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "groups")]
         public IList<RecoveryPlanGroup> Groups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider specific input.
+        /// </summary>
+        [JsonProperty(PropertyName = "providerSpecificInput")]
+        public IList<RecoveryPlanProviderSpecificInput> ProviderSpecificInput { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,0 +1,45 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hubname": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2019-11-04",
+            "type": "Microsoft.Devices/IotHubs",
+            "name": "[parameters('hubname')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "eventHubEndpoints": {
+                    "events": {
+                        "retentionTimeInDays": 1,
+                        "partitionCount": "4"
+                    }
+                },
+                "features": "None"
+            },
+            "sku": {
+                "name": "B1",
+                "capacity": "5"
+            }
+        }
+    ],
+    "outputs": {
+        "IoTHubConnectionString": {
+            "type": "string",
+            "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', parameters('hubname')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', parameters('hubname')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).value[0].primaryKey)]"
+        },
+        "IoTHubName": {
+            "type": "string",
+            "value": "[parameters('hubname')]"
+        }
+    }
+}

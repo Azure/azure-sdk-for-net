@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fsubscriptions%2Fafe8f803-7190-48e3-b41a-bc454e8aad1a%2Fresourcegroups%2FTagsApiSDK%2Fproviders%2FMicrosoft.Compute%2FvirtualMachines%2FTagTestVM/providers/Microsoft.Resources/tags/default?api-version=2019-10-01",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkZhZmU4ZjgwMy03MTkwLTQ4ZTMtYjQxYS1iYzQ1NGU4YWFkMWElMkZyZXNvdXJjZWdyb3VwcyUyRlRhZ3NBcGlTREslMkZwcm92aWRlcnMlMkZNaWNyb3NvZnQuQ29tcHV0ZSUyRnZpcnR1YWxNYWNoaW5lcyUyRlRhZ1Rlc3RWTS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90YWdzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
+      "RequestUri": "//subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default?api-version=2020-06-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ExYmZhNjM1LWYyYmYtNDJmMS04NmI1LTg0OGM2NzRmYzMyMS9yZXNvdXJjZWdyb3Vwcy9UYWdzQXBpU0RLL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvVGFnVGVzdFZNL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL3RhZ3MvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "26c79ab6-09b9-444a-8cb9-a43b430be871"
+          "e113599c-b73d-48f6-bec2-ecac3354c531"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "64b8d3ce-51bb-4cf1-86ff-4581951e6a96"
+          "d1c547ed-362b-479e-bba3-9963b8d8234e"
         ],
         "x-ms-correlation-request-id": [
-          "64b8d3ce-51bb-4cf1-86ff-4581951e6a96"
+          "d1c547ed-362b-479e-bba3-9963b8d8234e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200228T174457Z:64b8d3ce-51bb-4cf1-86ff-4581951e6a96"
+          "NORTHCENTRALUS:20200622T201549Z:d1c547ed-362b-479e-bba3-9963b8d8234e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 28 Feb 2020 17:44:57 GMT"
+          "Mon, 22 Jun 2020 20:15:49 GMT"
         ],
         "Content-Length": [
           "302"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Resources/tags\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Resources/tags\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fsubscriptions%2Fafe8f803-7190-48e3-b41a-bc454e8aad1a%2Fresourcegroups%2FTagsApiSDK%2Fproviders%2FMicrosoft.Compute%2FvirtualMachines%2FTagTestVM/providers/Microsoft.Resources/tags/default?api-version=2019-10-01",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkZhZmU4ZjgwMy03MTkwLTQ4ZTMtYjQxYS1iYzQ1NGU4YWFkMWElMkZyZXNvdXJjZWdyb3VwcyUyRlRhZ3NBcGlTREslMkZwcm92aWRlcnMlMkZNaWNyb3NvZnQuQ29tcHV0ZSUyRnZpcnR1YWxNYWNoaW5lcyUyRlRhZ1Rlc3RWTS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90YWdzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
+      "RequestUri": "//subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default?api-version=2020-06-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ExYmZhNjM1LWYyYmYtNDJmMS04NmI1LTg0OGM2NzRmYzMyMS9yZXNvdXJjZWdyb3Vwcy9UYWdzQXBpU0RLL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvVGFnVGVzdFZNL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL3RhZ3MvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09bbf8fc-d26b-4515-a696-682cd781a6ad"
+          "d791bb3b-0b1e-4607-b0c0-deef8977edf3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -96,13 +96,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "86c99b71-7e3e-4601-98cd-0676314af5ac"
+          "af019fd6-3857-4236-80c8-1ef192b26f1d"
         ],
         "x-ms-correlation-request-id": [
-          "86c99b71-7e3e-4601-98cd-0676314af5ac"
+          "af019fd6-3857-4236-80c8-1ef192b26f1d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200228T174501Z:86c99b71-7e3e-4601-98cd-0676314af5ac"
+          "NORTHCENTRALUS:20200622T201553Z:af019fd6-3857-4236-80c8-1ef192b26f1d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 28 Feb 2020 17:45:01 GMT"
+          "Mon, 22 Jun 2020 20:15:52 GMT"
         ],
         "Expires": [
           "-1"
@@ -124,22 +124,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fsubscriptions%2Fafe8f803-7190-48e3-b41a-bc454e8aad1a%2Fresourcegroups%2FTagsApiSDK%2Fproviders%2FMicrosoft.Compute%2FvirtualMachines%2FTagTestVM/providers/Microsoft.Resources/tags/default?api-version=2019-10-01",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkZhZmU4ZjgwMy03MTkwLTQ4ZTMtYjQxYS1iYzQ1NGU4YWFkMWElMkZyZXNvdXJjZWdyb3VwcyUyRlRhZ3NBcGlTREslMkZwcm92aWRlcnMlMkZNaWNyb3NvZnQuQ29tcHV0ZSUyRnZpcnR1YWxNYWNoaW5lcyUyRlRhZ1Rlc3RWTS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90YWdzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
+      "RequestUri": "//subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default?api-version=2020-06-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ExYmZhNjM1LWYyYmYtNDJmMS04NmI1LTg0OGM2NzRmYzMyMS9yZXNvdXJjZWdyb3Vwcy9UYWdzQXBpU0RLL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvVGFnVGVzdFZNL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL3RhZ3MvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e457e616-d986-471f-bdbc-d2748af99304"
+          "b2af3fb8-a8b0-4b61-a5a2-b14513633c74"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -153,13 +153,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "3cad5058-77d0-4e7c-8bd8-7b2e16a636b5"
+          "a28976e4-e9ee-4c5a-a027-0fcecf07a2b5"
         ],
         "x-ms-correlation-request-id": [
-          "3cad5058-77d0-4e7c-8bd8-7b2e16a636b5"
+          "a28976e4-e9ee-4c5a-a027-0fcecf07a2b5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200228T174504Z:3cad5058-77d0-4e7c-8bd8-7b2e16a636b5"
+          "NORTHCENTRALUS:20200622T201556Z:a28976e4-e9ee-4c5a-a027-0fcecf07a2b5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -168,7 +168,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 28 Feb 2020 17:45:04 GMT"
+          "Mon, 22 Jun 2020 20:15:55 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -180,12 +180,12 @@
           "259"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Resources/tags\",\r\n  \"properties\": {\r\n    \"tags\": {}\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Resources/tags\",\r\n  \"properties\": {\r\n    \"tags\": {}\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "afe8f803-7190-48e3-b41a-bc454e8aad1a"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }

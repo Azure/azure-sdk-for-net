@@ -19,24 +19,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImage", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrl", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrlWithNoStore", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageWithNoStore", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImage", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrl", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrlWithNoStore", "3.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageWithNoStore", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImage", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrl", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrlWithNoStore", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageWithNoStore", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImage", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrl", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrlWithNoStore", "3.1"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageWithNoStore", "3.1"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestVersion = "2.0.4413";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=2.0.4413 --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "f9374a2a47f9a88f2ae53ecb2fb4ecea65ff348f";
+      public static readonly String GithubCommidId = "783ed6e4298b198acbce4c4a1f1ae2a5b5bd39c6";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

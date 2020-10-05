@@ -29,7 +29,8 @@ namespace Azure.Storage.Files.Shares
                 {
                     ETag = response.Value.ETag,
                     LastModified = response.Value.LastModified,
-                    LeaseId = response.Value.LeaseId
+                    LeaseId = response.Value.LeaseId,
+                    LeaseTime = response.Value.LeaseTime
                 }, response.GetRawResponse());
 
         internal static string ToFileDateTimeString(this DateTimeOffset? dateTimeOffset)
@@ -37,6 +38,5 @@ namespace Azure.Storage.Files.Shares
 
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
-
     }
 }

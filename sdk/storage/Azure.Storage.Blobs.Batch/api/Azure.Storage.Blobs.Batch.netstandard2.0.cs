@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Specialized
     {
         protected BlobBatchClient() { }
         public BlobBatchClient(Azure.Storage.Blobs.BlobServiceClient client) { }
-        public virtual System.Uri Uri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Storage.Blobs.Specialized.BlobBatch CreateBatch() { throw null; }
         public virtual Azure.Response[] DeleteBlobs(System.Collections.Generic.IEnumerable<System.Uri> blobUris, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response[]> DeleteBlobsAsync(System.Collections.Generic.IEnumerable<System.Uri> blobUris, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

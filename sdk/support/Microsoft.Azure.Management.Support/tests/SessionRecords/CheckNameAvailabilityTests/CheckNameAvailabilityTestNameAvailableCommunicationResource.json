@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/testticket/checkNameAvailability?api-version=2019-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cy90ZXN0dGlja2V0L2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE5LTA1LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/testticket/checkNameAvailability?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cy90ZXN0dGlja2V0L2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"testcommunication123\",\r\n  \"type\": \"Microsoft.Support/supportTickets\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testcommunication4927\",\r\n  \"type\": \"Microsoft.Support/supportTickets\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bff5b289-eca1-475a-8113-fe1f60885905"
+          "517a482e-814f-44f8-b07e-288e586d49d9"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "85"
+          "86"
         ]
       },
       "ResponseHeaders": {
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 29 Jan 2020 06:41:27 GMT"
+          "Thu, 12 Mar 2020 01:56:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,13 +45,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bd1d14d4-af32-432f-a750-f6c02cc98991"
+          "c4510b7c-31f0-442c-95cc-d833f2d2508a"
         ],
         "x-ms-correlation-request-id": [
-          "bd1d14d4-af32-432f-a750-f6c02cc98991"
+          "c4510b7c-31f0-442c-95cc-d833f2d2508a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20200129T064127Z:bd1d14d4-af32-432f-a750-f6c02cc98991"
+          "CENTRALUSEUAP:20200312T015640Z:c4510b7c-31f0-442c-95cc-d833f2d2508a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -72,7 +72,7 @@
   ],
   "Names": {
     "CheckNameAvailabilityTestNameAvailableCommunicationResource": [
-      "testcommunication123"
+      "testcommunication4927"
     ]
   },
   "Variables": {

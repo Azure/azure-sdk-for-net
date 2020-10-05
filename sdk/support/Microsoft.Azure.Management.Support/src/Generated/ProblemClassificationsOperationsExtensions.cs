@@ -25,15 +25,15 @@ namespace Microsoft.Azure.Management.Support
     {
             /// <summary>
             /// Lists all the problem classifications (categories) available for a specific
-            /// Azure service.&lt;br/&gt;&lt;br/&gt; Always use the service and problem
-            /// classifications obtained programmatically. This practice ensures that you
-            /// always have the most recent set of service and problem classification Ids.
+            /// Azure service. Always use the service and problem classifications obtained
+            /// programmatically. This practice ensures that you always have the most
+            /// recent set of service and problem classification Ids.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='serviceName'>
-            /// Name of Azure service for which the problem classifications need to be
+            /// Name of the Azure service for which the problem classifications need to be
             /// retrieved.
             /// </param>
             public static IEnumerable<ProblemClassification> List(this IProblemClassificationsOperations operations, string serviceName)
@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Management.Support
 
             /// <summary>
             /// Lists all the problem classifications (categories) available for a specific
-            /// Azure service.&lt;br/&gt;&lt;br/&gt; Always use the service and problem
-            /// classifications obtained programmatically. This practice ensures that you
-            /// always have the most recent set of service and problem classification Ids.
+            /// Azure service. Always use the service and problem classifications obtained
+            /// programmatically. This practice ensures that you always have the most
+            /// recent set of service and problem classification Ids.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='serviceName'>
-            /// Name of Azure service for which the problem classifications need to be
+            /// Name of the Azure service for which the problem classifications need to be
             /// retrieved.
             /// </param>
             /// <param name='cancellationToken'>
@@ -66,14 +66,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Gets the details of a specific problem classification for a specific Azure
-            /// service.
+            /// Get problem classification details for a specific Azure service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='serviceName'>
-            /// Name of Azure service available for support.
+            /// Name of the Azure service available for support.
             /// </param>
             /// <param name='problemClassificationName'>
             /// Name of problem classification.
@@ -84,14 +83,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Gets the details of a specific problem classification for a specific Azure
-            /// service.
+            /// Get problem classification details for a specific Azure service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='serviceName'>
-            /// Name of Azure service available for support.
+            /// Name of the Azure service available for support.
             /// </param>
             /// <param name='problemClassificationName'>
             /// Name of problem classification.

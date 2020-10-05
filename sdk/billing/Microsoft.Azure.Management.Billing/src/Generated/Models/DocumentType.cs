@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     {
         public const string Invoice = "Invoice";
         public const string VoidNote = "VoidNote";
-        public const string Receipt = "Receipt";
+        public const string TaxReceipt = "TaxReceipt";
         public const string CreditNote = "CreditNote";
     }
 }

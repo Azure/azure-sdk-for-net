@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.SecurityCenter</PackageId>
     <Description>Provides developers with libraries for the updated Azure Security Center platform under Azure Resource manager to view and manage security posture in and outside Azure.</Description>
-    <Version>1.1.1</Version>
+    <Version>2.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.SecurityCenter</AssemblyName>
     <PackageTags>management;security center;security;IoT security;</PackageTags>
-    <PackageReleaseNotes>Use Microsoft.Security/advancedThreatProtectionSettings version 2019-01-01 (supersedes 2017-08-01-preview).</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated Information Protection SDK clients</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

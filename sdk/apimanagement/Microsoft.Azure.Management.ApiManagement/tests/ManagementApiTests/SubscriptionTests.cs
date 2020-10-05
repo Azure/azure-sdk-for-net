@@ -158,10 +158,17 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponse);
                     Assert.Equal(newSubscriptionId, getResponse.Name);
                     Assert.Equal(patchedName, getResponse.DisplayName);
-                    Assert.Equal(patchedPk, getResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, getResponse.SecondaryKey);
+                    Assert.Null(getResponse.PrimaryKey);
+                    Assert.Null(getResponse.SecondaryKey);
                     Assert.Equal(newSubscriptionState, getResponse.State);
                     Assert.Equal(patchedExpirationDate, getResponse.ExpirationDate);
+
+                    var secretsResponse = testBase.client.Subscription.ListSecrets(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newSubscriptionId);
+                    Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
+                    Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
                     // regenerate primary key
                     testBase.client.Subscription.RegeneratePrimaryKey(
@@ -170,20 +177,30 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newSubscriptionId);
 
                     // get the subscription to check the key
-                    getResponse = testBase.client.Subscription.Get(
+                    var keysResponse = testBase.client.Subscription.ListSecrets(
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
 
-                    Assert.NotNull(getResponse);
-                    Assert.NotEqual(patchedPk, getResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, getResponse.SecondaryKey);
+                    Assert.NotNull(keysResponse);
+                    Assert.NotEqual(patchedPk, keysResponse.PrimaryKey);
+                    Assert.Equal(patchedSk, keysResponse.SecondaryKey);
 
                     // regenerate secondary key
                     testBase.client.Subscription.RegenerateSecondaryKey(
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
+
+                    // get the subscription to check the key
+                    var keysHttpResponse = await testBase.client.Subscription.ListSecretsWithHttpMessagesAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newSubscriptionId);
+
+                    Assert.NotNull(keysHttpResponse);
+                    Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
+                    Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
 
                     // get the subscription to check the key
                     subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -193,9 +210,9 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(subscriptionResponse);
                     Assert.NotNull(subscriptionResponse.Headers.ETag);
-                    Assert.NotEqual(patchedPk, subscriptionResponse.Body.PrimaryKey);
-                    Assert.NotEqual(patchedSk, subscriptionResponse.Body.SecondaryKey);
-                    
+                    Assert.Null(subscriptionResponse.Body.PrimaryKey);
+                    Assert.Null(subscriptionResponse.Body.SecondaryKey);
+
                     // delete the subscription
                     testBase.client.Subscription.Delete(
                         testBase.rgName,

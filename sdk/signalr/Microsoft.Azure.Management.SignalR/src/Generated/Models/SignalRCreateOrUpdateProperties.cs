@@ -50,11 +50,16 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// in terms of different FeatureFlags.</param>
         /// <param name="cors">Cross-Origin Resource Sharing (CORS)
         /// settings.</param>
-        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings))
+        /// <param name="upstream">Upstream settings when the Azure SignalR is
+        /// in server-less mode.</param>
+        /// <param name="networkACLs">Network ACLs</param>
+        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs))
         {
             HostNamePrefix = hostNamePrefix;
             Features = features;
             Cors = cors;
+            Upstream = upstream;
+            NetworkACLs = networkACLs;
             CustomInit();
         }
 
@@ -92,6 +97,19 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "cors")]
         public SignalRCorsSettings Cors { get; set; }
+
+        /// <summary>
+        /// Gets or sets upstream settings when the Azure SignalR is in
+        /// server-less mode.
+        /// </summary>
+        [JsonProperty(PropertyName = "upstream")]
+        public ServerlessUpstreamSettings Upstream { get; set; }
+
+        /// <summary>
+        /// Gets or sets network ACLs
+        /// </summary>
+        [JsonProperty(PropertyName = "networkACLs")]
+        public SignalRNetworkACLs NetworkACLs { get; set; }
 
     }
 }

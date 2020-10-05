@@ -68,7 +68,13 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// container group.</param>
         /// <param name="dnsConfig">The DNS config information for a container
         /// group.</param>
-        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), ContainerGroupNetworkProfile networkProfile = default(ContainerGroupNetworkProfile), DnsConfiguration dnsConfig = default(DnsConfiguration))
+        /// <param name="sku">The SKU for a container group. Possible values
+        /// include: 'Standard', 'Dedicated'</param>
+        /// <param name="encryptionProperties">The encryption properties for a
+        /// container group.</param>
+        /// <param name="initContainers">The init containers for a container
+        /// group.</param>
+        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), ContainerGroupNetworkProfile networkProfile = default(ContainerGroupNetworkProfile), DnsConfiguration dnsConfig = default(DnsConfiguration), string sku = default(string), EncryptionProperties encryptionProperties = default(EncryptionProperties), IList<InitContainerDefinition> initContainers = default(IList<InitContainerDefinition>))
             : base(id, name, type, location, tags)
         {
             Identity = identity;
@@ -83,6 +89,9 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             Diagnostics = diagnostics;
             NetworkProfile = networkProfile;
             DnsConfig = dnsConfig;
+            Sku = sku;
+            EncryptionProperties = encryptionProperties;
+            InitContainers = initContainers;
             CustomInit();
         }
 
@@ -174,6 +183,25 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public DnsConfiguration DnsConfig { get; set; }
 
         /// <summary>
+        /// Gets or sets the SKU for a container group. Possible values
+        /// include: 'Standard', 'Dedicated'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption properties for a container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionProperties")]
+        public EncryptionProperties EncryptionProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the init containers for a container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initContainers")]
+        public IList<InitContainerDefinition> InitContainers { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -234,6 +262,20 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             if (DnsConfig != null)
             {
                 DnsConfig.Validate();
+            }
+            if (EncryptionProperties != null)
+            {
+                EncryptionProperties.Validate();
+            }
+            if (InitContainers != null)
+            {
+                foreach (var element3 in InitContainers)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractEntityLinkingBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
@@ -30,14 +30,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents);
             #endregion
 
-            Debug.WriteLine($"Linked entities for each input are:\n");
+            Debug.WriteLine($"Linked entities for each document are:\n");
             int i = 0;
             foreach (RecognizeLinkedEntitiesResult result in results)
             {
-                Debug.Write($"For input: \"{inputs[i++]}\", ");
+                Debug.Write($"For document: \"{documents[i++]}\", ");
                 Debug.WriteLine($"extracted {result.Entities.Count()} linked entit{(result.Entities.Count() > 1 ? "ies" : "y")}:");
 
                 foreach (LinkedEntity linkedEntity in result.Entities)
@@ -45,7 +45,8 @@ namespace Azure.AI.TextAnalytics.Samples
                     Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: \"{linkedEntity.DataSourceEntityId}\"");
                     foreach (LinkedEntityMatch match in linkedEntity.Matches)
                     {
-                        Debug.WriteLine($"        Match Text: \"{match.Text}\", Confidence score: {match.ConfidenceScore}");
+                        Debug.WriteLine($"        Match Text: \"{match.Text}\", Offset (in UTF-16 code units): {match.Offset}");
+                        Debug.WriteLine($"        Confidence score: {match.ConfidenceScore}");
                     }
                 }
 

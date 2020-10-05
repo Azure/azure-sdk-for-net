@@ -3,7 +3,7 @@
 
 using System;
 using System.Globalization;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -70,24 +72,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionState">Backup state of this backup item.
         /// Possible values include: 'Invalid', 'IRPending', 'Protected',
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
-        /// <param name="healthStatus">backups running status for this backup
-        /// item. Possible values include: 'Passed', 'ActionRequired',
-        /// 'ActionSuggested', 'Invalid'</param>
         /// <param name="lastBackupStatus">Last backup operation status.
         /// Possible values: Healthy, Unhealthy.</param>
         /// <param name="lastBackupTime">Timestamp of the last backup operation
         /// on this backup item.</param>
+        /// <param name="kpisHealths">Health details of different KPIs</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
+        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;
             ProtectionState = protectionState;
-            HealthStatus = healthStatus;
             LastBackupStatus = lastBackupStatus;
             LastBackupTime = lastBackupTime;
+            KpisHealths = kpisHealths;
             ExtendedInfo = extendedInfo;
             CustomInit();
         }
@@ -119,14 +119,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string ProtectionState { get; set; }
 
         /// <summary>
-        /// Gets or sets backups running status for this backup item. Possible
-        /// values include: 'Passed', 'ActionRequired', 'ActionSuggested',
-        /// 'Invalid'
-        /// </summary>
-        [JsonProperty(PropertyName = "healthStatus")]
-        public string HealthStatus { get; set; }
-
-        /// <summary>
         /// Gets or sets last backup operation status. Possible values:
         /// Healthy, Unhealthy.
         /// </summary>
@@ -139,6 +131,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastBackupTime")]
         public System.DateTime? LastBackupTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets health details of different KPIs
+        /// </summary>
+        [JsonProperty(PropertyName = "kpisHealths")]
+        public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; set; }
 
         /// <summary>
         /// Gets or sets additional information with this backup item.

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// A custom alert rule that checks if a value (depends on the custom alert
     /// type) is denied.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DenylistCustomAlertRule")]
     public partial class DenylistCustomAlertRule : ListCustomAlertRule
     {
         /// <summary>
@@ -34,7 +35,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the DenylistCustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="denylistValues">The values to deny. The format of the
         /// values depends on the rule type.</param>
         /// <param name="displayName">The display name of the custom
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alert.</param>
         /// <param name="valueType">The value type of the items in the list.
         /// Possible values include: 'IpCidr', 'String'</param>
-        public DenylistCustomAlertRule(bool isEnabled, string ruleType, IList<string> denylistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
-            : base(isEnabled, ruleType, displayName, description, valueType)
+        public DenylistCustomAlertRule(bool isEnabled, IList<string> denylistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
+            : base(isEnabled, displayName, description, valueType)
         {
             DenylistValues = denylistValues;
             CustomInit();

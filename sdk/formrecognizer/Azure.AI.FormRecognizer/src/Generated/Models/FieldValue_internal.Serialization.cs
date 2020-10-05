@@ -5,252 +5,131 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class FieldValue_internal : IUtf8JsonSerializable
+    internal partial class FieldValue_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
-            if (ValueString != null)
-            {
-                writer.WritePropertyName("valueString");
-                writer.WriteStringValue(ValueString);
-            }
-            if (ValueDate != null)
-            {
-                writer.WritePropertyName("valueDate");
-                writer.WriteStringValue(ValueDate);
-            }
-            if (ValueTime != null)
-            {
-                writer.WritePropertyName("valueTime");
-                writer.WriteStringValue(ValueTime);
-            }
-            if (ValuePhoneNumber != null)
-            {
-                writer.WritePropertyName("valuePhoneNumber");
-                writer.WriteStringValue(ValuePhoneNumber);
-            }
-            if (ValueNumber != null)
-            {
-                writer.WritePropertyName("valueNumber");
-                writer.WriteNumberValue(ValueNumber.Value);
-            }
-            if (ValueInteger != null)
-            {
-                writer.WritePropertyName("valueInteger");
-                writer.WriteNumberValue(ValueInteger.Value);
-            }
-            if (ValueArray != null)
-            {
-                writer.WritePropertyName("valueArray");
-                writer.WriteStartArray();
-                foreach (var item in ValueArray)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ValueObject != null)
-            {
-                writer.WritePropertyName("valueObject");
-                writer.WriteStartObject();
-                foreach (var item in ValueObject)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Text != null)
-            {
-                writer.WritePropertyName("text");
-                writer.WriteStringValue(Text);
-            }
-            if (BoundingBox != null)
-            {
-                writer.WritePropertyName("boundingBox");
-                writer.WriteStartArray();
-                foreach (var item in BoundingBox)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Confidence != null)
-            {
-                writer.WritePropertyName("confidence");
-                writer.WriteNumberValue(Confidence.Value);
-            }
-            if (Elements != null)
-            {
-                writer.WritePropertyName("elements");
-                writer.WriteStartArray();
-                foreach (var item in Elements)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Page != null)
-            {
-                writer.WritePropertyName("page");
-                writer.WriteNumberValue(Page.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
         {
-            FieldValue_internal result = new FieldValue_internal();
+            FieldValueType type = default;
+            Optional<string> valueString = default;
+            Optional<DateTimeOffset> valueDate = default;
+            Optional<TimeSpan> valueTime = default;
+            Optional<string> valuePhoneNumber = default;
+            Optional<float> valueNumber = default;
+            Optional<long> valueInteger = default;
+            Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
+            Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
+            Optional<FieldValueSelectionMark> valueSelectionMark = default;
+            Optional<string> text = default;
+            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<float> confidence = default;
+            Optional<IReadOnlyList<string>> elements = default;
+            Optional<int> page = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    result.Type = property.Value.GetString().ToFieldValueType();
+                    type = property.Value.GetString().ToFieldValueType();
                     continue;
                 }
                 if (property.NameEquals("valueString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueString = property.Value.GetString();
+                    valueString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("valueDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueDate = property.Value.GetString();
+                    valueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("valueTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueTime = property.Value.GetString();
+                    valueTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("valuePhoneNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValuePhoneNumber = property.Value.GetString();
+                    valuePhoneNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("valueNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueNumber = property.Value.GetSingle();
+                    valueNumber = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("valueInteger"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueInteger = property.Value.GetInt32();
+                    valueInteger = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("valueArray"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueArray = new List<FieldValue_internal>();
+                    List<FieldValue_internal> array = new List<FieldValue_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ValueArray.Add(DeserializeFieldValue_internal(item));
+                        array.Add(DeserializeFieldValue_internal(item));
                     }
+                    valueArray = array;
                     continue;
                 }
                 if (property.NameEquals("valueObject"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ValueObject = new Dictionary<string, FieldValue_internal>();
+                    Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.ValueObject.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
                     }
+                    valueObject = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("valueSelectionMark"))
+                {
+                    valueSelectionMark = new FieldValueSelectionMark(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("text"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boundingBox"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.BoundingBox = new List<float>();
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BoundingBox.Add(item.GetSingle());
+                        array.Add(item.GetSingle());
                     }
+                    boundingBox = array;
                     continue;
                 }
                 if (property.NameEquals("confidence"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Confidence = property.Value.GetSingle();
+                    confidence = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("elements"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Elements = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Elements.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    elements = array;
                     continue;
                 }
                 if (property.NameEquals("page"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Page = property.Value.GetInt32();
+                    page = property.Value.GetInt32();
                     continue;
                 }
             }
-            return result;
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
         }
     }
 }

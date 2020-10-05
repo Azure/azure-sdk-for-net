@@ -13,7 +13,7 @@ computation and filtering. Processing may also involve distribution or storage o
 Event Hub consumers are often robust and high-scale platform infrastructure parts with built-in analytics capabilities, like Azure 
 Stream Analytics, Apache Spark, or Apache Storm.  
 
-This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
+This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/develop/net/).
 
 Use the client library for Event Hubs to:
 
@@ -25,13 +25,13 @@ Use the client library for Event Hubs to:
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Microsoft.Azure.EventHubs) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Microsoft.Azure.EventHubs) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
 
 ## Getting started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-If you are not already familiar with Azure Event Hubs, please review: [What is Event Hubs?](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about).
+If you are not already familiar with Azure Event Hubs, please review: [What is Event Hubs?](https://docs.microsoft.com/azure/event-hubs/event-hubs-about).
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
@@ -45,8 +45,8 @@ For the best development experience, developers should use the official Microsof
 
 Code samples for the Azure Event Hubs client library that detail how to get started and how to implement common scenarios can be found in the following locations:
 
-- [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=event-hubs&platform=dotnet)
-- [Azure Event Hubs Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+- [Azure Code Samples](https://azure.microsoft.com/resources/samples/?sort=0&service=event-hubs&platform=dotnet)
+- [Azure Event Hubs Documentation](https://docs.microsoft.com/azure/event-hubs/)
 - [Azure Event Hubs Sample Repository](https://github.com/Azure/azure-event-hubs/tree/master/samples)
 - [Azure Event Hubs Notification Sample](https://github.com/Azure-Samples/event-hubs-dotnet-user-notifications)
 - [Azure Event Hubs Publishing Sample](https://github.com/Azure-Samples/event-hubs-dotnet-ingest)
@@ -67,19 +67,19 @@ Tests in the Event Hubs client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`EVENT_HUBS_RESOURCEGROUP`  
+`EVENTHUB_RESOURCE_GROUP`  
  The name of the Azure resource group that contains the Event Hubs namespace
    
-`EVENT_HUBS_SUBSCRIPTION`  
+`EVENTHUB_SUBSCRIPTION_ID`  
  The identifier (GUID) of the Azure subscription to which the service principal belongs
     
-`EVENT_HUBS_TENANT`  
+`EVENTHUB_TENANT_ID`  
  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`EVENT_HUBS_CLIENT`  
+`EVENTHUB_CLIENT_ID`  
  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
    
-`EVENT_HUBS_SECRET`  
+`EVENTHUB_CLIENT_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
  
 To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
@@ -114,8 +114,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Additional documentation
 
-- [Azure Event Hubs General Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
-- [Azure Event Hubs REST API Reference](https://docs.microsoft.com/en-us/rest/api/eventhub/)
-- [Azure Event Hubs SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
+- [Azure Event Hubs General Documentation](https://docs.microsoft.com/azure/event-hubs/)
+- [Azure Event Hubs REST API Reference](https://docs.microsoft.com/rest/api/eventhub/)
+- [Azure Event Hubs SDK for .NET Documentation](https://docs.microsoft.com/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2FREADME.png)

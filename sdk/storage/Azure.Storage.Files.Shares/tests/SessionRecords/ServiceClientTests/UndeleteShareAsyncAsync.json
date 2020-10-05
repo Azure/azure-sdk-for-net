@@ -1,0 +1,202 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-c827b544-e694-af58-49f2-1b7dbb8f1087?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b75e89f6854a2a4c87caa5a06dedf35b-7d10bb4e2b693644-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "2de84f2b-66a6-a08c-d555-9a299e40c932",
+        "x-ms-date": "Thu, 06 Aug 2020 21:05:56 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 06 Aug 2020 21:05:55 GMT",
+        "ETag": "\u00220x8D83A4C8306D651\u0022",
+        "Last-Modified": "Thu, 06 Aug 2020 21:05:56 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "2de84f2b-66a6-a08c-d555-9a299e40c932",
+        "x-ms-request-id": "d14e2563-e01a-00ea-7135-6cd10f000000",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-c827b544-e694-af58-49f2-1b7dbb8f1087?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-66e5b1ec9b4af542b04518babd285822-7fccd29ee4cbb94f-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "6b527fd6-e3a7-d4e1-9bd2-411e6410822b",
+        "x-ms-date": "Thu, 06 Aug 2020 21:05:56 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 06 Aug 2020 21:05:55 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "6b527fd6-e3a7-d4e1-9bd2-411e6410822b",
+        "x-ms-request-id": "d14e2565-e01a-00ea-7235-6cd10f000000",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/?comp=list\u0026include=deleted",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "1e53338f-5ded-a28b-469c-d74237b6e169",
+        "x-ms-date": "Thu, 06 Aug 2020 21:05:56 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "10319",
+        "Content-Type": "application/xml",
+        "Date": "Thu, 06 Aug 2020 21:05:56 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "1e53338f-5ded-a28b-469c-d74237b6e169",
+        "x-ms-request-id": "d14e2566-e01a-00ea-7335-6cd10f000000",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seansoftdeletecanary.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Eexisting647b1102\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EMon, 11 May 2020 18:54:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F5DCBE38249A\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/11/2020 6:54:32 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Eshare647b1102\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 12 May 2020 19:18:57 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F6A9516B1701\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/12/2020 7:18:57 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Eshared365137f\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 12 May 2020 20:31:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F6B37DDB00D5\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/12/2020 8:31:46 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Esharerestore12700ec5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 12 May 2020 20:36:16 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F6B41ECF17FA\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/12/2020 7:41:52 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Esharerestorebed60c48\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 13 May 2020 17:46:48 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F7659CAE040B\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/12/2020 1:26:19 AM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-04423526-abc3-44c9-aa2e-540f6eecac0d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:42:18 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF113AB0D452\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-3754bd7d-b2e4-4079-a97e-a3b9afc1648c\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:58:03 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41E1D75DB4\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-5c88da48-37e8-f77b-7865-5d1e71ea0702\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D66C356061977D\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 06 Aug 2020 21:05:56 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D83A4C82D854D3\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E8/6/2020 9:05:25 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CDeletedTime\u003EThu, 06 Aug 2020 21:05:56 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E1\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-6214a335-a4b0-498c-9995-1e50b6bb50a2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:57:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41D5B0D211\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-659cd252-38f3-43aa-8092-750973358be5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:14:14 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF0D4EBB62F2\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-6d528e3f-219f-44f9-b80b-3d2248cce9f3\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:58:24 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41EDFB7785\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-6fe76ac5-709b-4678-b55e-47e717c1d943\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:24:45 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF0EC69BCDD4\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-745c2b22-c95a-4019-a1cf-df95f0cb7db9\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:42:49 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF114CDCA126\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-7a7f655c-24ec-4b65-8f20-9be860699e8a\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D66C34D9CED2DB\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 06 Aug 2020 21:02:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D83A4BFC3EC317\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E8/6/2020 9:02:10 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CDeletedTime\u003EThu, 06 Aug 2020 21:02:10 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E1\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-7e386df5-7d6b-4fcf-b23d-9e7dd2c13a2b\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:23:37 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF0E9E44C712\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-93210600-6d3f-49e4-8e87-7e6947c23b8b\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:57:33 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41CF6BC1E8\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-9ab2bb2a-f026-45c4-84ad-478d79acdcf0\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D66C350E23BDFE\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 06 Aug 2020 21:03:38 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D83A4C309A5D9B\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E8/6/2020 9:03:07 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CDeletedTime\u003EThu, 06 Aug 2020 21:03:38 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E1\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-ba5d06e0-c1d4-41b7-8876-7aef01d366a7\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:57:53 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41DBC30637\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-bed60c48\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EMon, 11 May 2020 19:38:41 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7F5E2E8A4F4E3\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E5/11/2020 7:30:04 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-bffb30c0-47cc-4cd0-b3b4-6c560832c136\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:44:28 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF11881FBCE1\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-c827b544-e694-af58-49f2-1b7dbb8f1087\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D66C356090C936\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 06 Aug 2020 21:05:56 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D83A4C8306D651\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003E8/6/2020 9:05:56 PM\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CDeletedTime\u003EThu, 06 Aug 2020 21:05:56 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E1\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-ce14a14c-6463-4bad-bedc-bedf7388d692\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESat, 11 Apr 2020 17:58:14 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DE41E7E8F550\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-e21b1b2a-eaa6-4f88-928f-449387ef5cb9\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ESun, 12 Apr 2020 18:13:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7DF0D3C81621C\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-c827b544-e694-af58-49f2-1b7dbb8f1087?restype=share\u0026comp=undelete",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-aae1b616aefc294da81abad700c18d22-5cfb5f32faf3eb46-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "308e40e4-64bd-043d-775b-7bd5d1447bc4",
+        "x-ms-date": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "x-ms-deleted-share-name": "test-share-c827b544-e694-af58-49f2-1b7dbb8f1087",
+        "x-ms-deleted-share-version": "01D66C356090C936",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "ETag": "\u00220x8D83A4C95262F5B\u0022",
+        "Last-Modified": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "308e40e4-64bd-043d-775b-7bd5d1447bc4",
+        "x-ms-request-id": "d14e2595-e01a-00ea-7e35-6cd10f000000",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-c827b544-e694-af58-49f2-1b7dbb8f1087?restype=share",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "f65d5ed0-b027-1fac-f403-3979871e5bb3",
+        "x-ms-date": "Thu, 06 Aug 2020 21:06:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "ETag": "\u00220x8D83A4C95262F5B\u0022",
+        "Last-Modified": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-access-tier": "TransactionOptimized",
+        "x-ms-access-tier-change-time": "8/6/2020 9:05:56 PM",
+        "x-ms-client-request-id": "f65d5ed0-b027-1fac-f403-3979871e5bb3",
+        "x-ms-has-immutability-policy": "false",
+        "x-ms-has-legal-hold": "false",
+        "x-ms-request-id": "d14e2598-e01a-00ea-7f35-6cd10f000000",
+        "x-ms-share-quota": "5120",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-c827b544-e694-af58-49f2-1b7dbb8f1087?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-563f3abba626ae498a6b0b365a9da21e-7d9ab8ddfe7f3c4b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "730576e9-84e6-109c-9cfb-e11804b1041f",
+        "x-ms-date": "Thu, 06 Aug 2020 21:06:27 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-02-10"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 06 Aug 2020 21:06:26 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "730576e9-84e6-109c-9cfb-e11804b1041f",
+        "x-ms-request-id": "d14e2599-e01a-00ea-8035-6cd10f000000",
+        "x-ms-version": "2020-02-10"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "156658200",
+    "Storage_TestConfigSoftDelete": "SoftDeleteTenant\nseansoftdeletecanary\nU2FuaXRpemVk\nhttp://seansoftdeletecanary.blob.core.windows.net\nhttp://seansoftdeletecanary.file.core.windows.net\nhttp://seansoftdeletecanary.queue.core.windows.net\nhttp://seansoftdeletecanary.table.core.windows.net\n\n\n\n\nhttp://seansoftdeletecanary-secondary.blob.core.windows.net\nhttp://seansoftdeletecanary-secondary.file.core.windows.net\nhttp://seansoftdeletecanary-secondary.queue.core.windows.net\nhttp://seansoftdeletecanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seansoftdeletecanary.blob.core.windows.net/;QueueEndpoint=http://seansoftdeletecanary.queue.core.windows.net/;FileEndpoint=http://seansoftdeletecanary.file.core.windows.net/;BlobSecondaryEndpoint=http://seansoftdeletecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seansoftdeletecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seansoftdeletecanary-secondary.file.core.windows.net/;AccountName=seansoftdeletecanary;AccountKey=Sanitized\n"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview",
+    "id": "mySourceTwin"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "$sourceId": "mySourceTwin",
+            "$relationshipId": "firstRelationshipId",
+            "$relationshipName": "myRelationship",
+            "$relationshipLink": "/digitaltwins/mySourceTwin/relationships/myRelationship/firstRelationshipId"
+          },
+          {
+            "$sourceId": "mySourceTwin",
+            "$relationshipId": "secondRelationshipId",
+            "$relationshipName": "myRelationship",
+            "$relationshipLink": "/digitaltwins/mySourceTwin/relationships/myRelationship/secondRelationshipId"
+          }
+        ],
+        "nextLink": "url-to-next-page"
+      }
+    }
+  }
+}

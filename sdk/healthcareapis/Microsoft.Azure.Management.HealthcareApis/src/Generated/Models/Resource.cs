@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="etag">An etag associated with the resource, used for
         /// optimistic concurrency when editing it.</param>
-        public Resource(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
+        /// <param name="identity">Setting indicating whether the service has a
+        /// managed identity associated with it.</param>
+        public Resource(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity))
         {
             Id = id;
             Name = name;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
             Location = location;
             Tags = tags;
             Etag = etag;
+            Identity = identity;
             CustomInit();
         }
 
@@ -102,6 +105,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets setting indicating whether the service has a managed
+        /// identity associated with it.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

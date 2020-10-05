@@ -51,7 +51,7 @@
     },
     "variables": {
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
     },
     "resources": [
         {
@@ -69,18 +69,6 @@
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "AZURE_CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "TEXT_ANALYTICS_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"

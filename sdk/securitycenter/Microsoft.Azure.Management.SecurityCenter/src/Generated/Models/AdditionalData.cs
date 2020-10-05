@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Details of the sub-assessment
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AdditionalData")]
     public partial class AdditionalData
     {
         /// <summary>

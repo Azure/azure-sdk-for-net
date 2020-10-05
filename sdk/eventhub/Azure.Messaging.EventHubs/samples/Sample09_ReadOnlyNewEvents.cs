@@ -75,11 +75,11 @@ namespace Azure.Messaging.EventHubs.Samples
                     MaximumWaitTime = TimeSpan.FromMilliseconds(150)
                 };
 
-                // As a preventative measure, we'll also specify that cancellation should occur after 30 seconds, so that we don't iterate indefinitely
+                // As a preventative measure, we'll also specify that cancellation should occur after 2 minutes, so that we don't iterate indefinitely
                 // in the event of a service error where the events we've published cannot be read.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
 
                 // The reading of all events will default to the earliest events available in each partition; in order to begin reading at the
                 // latest event, we'll need to specify that reading should not start at earliest.

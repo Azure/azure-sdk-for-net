@@ -19,7 +19,7 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
         <PackageReference Include="xUnit" Version="2.3.1" />
         <PackageReference Include="xUnit.Runner.VisualStudio" Version="2.3.1" />
-        	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
+        	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Net.Http" />

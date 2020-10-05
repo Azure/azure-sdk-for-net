@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// include: 'Shared', 'Dedicated', 'Dynamic'</param>
         /// <param name="workerSize">Size of the machines. Possible values
         /// include: 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3',
-        /// 'Default'</param>
+        /// 'NestedSmall', 'Default'</param>
         /// <param name="workerSizeId">Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
@@ -109,7 +109,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets size of the machines. Possible values include:
-        /// 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3', 'Default'
+        /// 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3', 'NestedSmall',
+        /// 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "workerSize")]
         public WorkerSizeOptions? WorkerSize { get; set; }

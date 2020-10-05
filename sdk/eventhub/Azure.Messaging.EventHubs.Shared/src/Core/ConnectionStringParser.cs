@@ -12,15 +12,6 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal static class ConnectionStringParser
     {
-        /// <summary>The character used to separate a token and its value in the connection string.</summary>
-        private const char TokenValueSeparator = '=';
-
-        /// <summary>The character used to mark the beginning of a new token/value pair in the connection string.</summary>
-        private const char TokenValuePairDelimiter = ';';
-
-        /// <summary>The formatted protocol used by an Event Hubs endpoint. </summary>
-        private const string EventHubsEndpointScheme = "sb://";
-
         /// <summary>The token that identifies the endpoint address for the Event Hubs namespace.</summary>
         private const string EndpointToken = "Endpoint";
 
@@ -32,6 +23,21 @@ namespace Azure.Messaging.EventHubs.Core
 
         /// <summary>The token that identifies the value of a shared access key.</summary>
         private const string SharedAccessKeyValueToken = "SharedAccessKey";
+
+        /// <summary>The token that identifies the value of a shared access signature.</summary>
+        private const string SharedAccessSignatureToken = "SharedAccessSignature";
+
+        /// <summary>The character used to separate a token and its value in the connection string.</summary>
+        private const char TokenValueSeparator = '=';
+
+        /// <summary>The character used to mark the beginning of a new token/value pair in the connection string.</summary>
+        private const char TokenValuePairDelimiter = ';';
+
+        /// <summary>The name of the protocol used by an Event Hubs endpoint. </summary>
+        private const string EventHubsEndpointSchemeName = "sb";
+
+        /// <summary>The formatted protocol used by an Event Hubs endpoint. </summary>
+        private static readonly string EventHubsEndpointScheme = $"{ EventHubsEndpointSchemeName }{ Uri.SchemeDelimiter }";
 
         /// <summary>
         ///   Parses the specified Event Hubs connection string into its component properties.
@@ -61,7 +67,8 @@ namespace Azure.Messaging.EventHubs.Core
                 EndpointToken: default(UriBuilder),
                 EventHubNameToken: default(string),
                 SharedAccessKeyNameToken: default(string),
-                SharedAccessKeyValueToken: default(string)
+                SharedAccessKeyValueToken: default(string),
+                SharedAccessSignatureToken: default(string)
             );
 
             while (currentPosition != -1)
@@ -115,8 +122,15 @@ namespace Azure.Messaging.EventHubs.Core
                     {
                         parsedValues.EndpointToken = new UriBuilder(value)
                         {
-                            Scheme = EventHubsEndpointScheme
+                            Scheme = EventHubsEndpointScheme,
+                            Port = -1
                         };
+
+                        if ((string.Compare(parsedValues.EndpointToken.Scheme, EventHubsEndpointSchemeName, StringComparison.OrdinalIgnoreCase) != 0)
+                            || (Uri.CheckHostName(parsedValues.EndpointToken.Host) == UriHostNameType.Unknown))
+                        {
+                            throw new FormatException(Resources.InvalidConnectionString);
+                        }
                     }
                     else if (string.Compare(EventHubNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
@@ -129,6 +143,10 @@ namespace Azure.Messaging.EventHubs.Core
                     else if (string.Compare(SharedAccessKeyValueToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.SharedAccessKeyValueToken = value;
+                    }
+                    else if (string.Compare(SharedAccessSignatureToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        parsedValues.SharedAccessSignatureToken = value;
                     }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
@@ -148,7 +166,8 @@ namespace Azure.Messaging.EventHubs.Core
                 parsedValues.EndpointToken?.Uri,
                 parsedValues.EventHubNameToken,
                 parsedValues.SharedAccessKeyNameToken,
-                parsedValues.SharedAccessKeyValueToken
+                parsedValues.SharedAccessKeyValueToken,
+                parsedValues.SharedAccessSignatureToken
             );
         }
     }

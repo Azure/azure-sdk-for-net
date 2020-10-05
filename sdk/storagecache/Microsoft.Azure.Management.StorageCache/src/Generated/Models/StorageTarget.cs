@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// A storage system being cached by a Cache.
+    /// Type of the Storage Target.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageTarget
+    public partial class StorageTarget : StorageTargetResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageTarget class.
@@ -36,8 +36,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Microsoft.StorageCache/Cache/StorageTarget</param>
         /// <param name="junctions">List of Cache namespace junctions to target
         /// for namespace associations.</param>
-        /// <param name="targetType">Type of the Storage Target. Possible
-        /// values include: 'nfs3', 'clfs', 'unknown'</param>
+        /// <param name="targetType">Type of the Storage Target.</param>
         /// <param name="provisioningState">ARM provisioning state, see
         /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
         /// Possible values include: 'Succeeded', 'Failed', 'Cancelled',
@@ -47,10 +46,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="unknown">Properties when targetType is
         /// unknown.</param>
         public StorageTarget(string name = default(string), string id = default(string), string type = default(string), IList<NamespaceJunction> junctions = default(IList<NamespaceJunction>), string targetType = default(string), string provisioningState = default(string), Nfs3Target nfs3 = default(Nfs3Target), ClfsTarget clfs = default(ClfsTarget), UnknownTarget unknown = default(UnknownTarget))
+            : base(name, id, type)
         {
-            Name = name;
-            Id = id;
-            Type = type;
             Junctions = junctions;
             TargetType = targetType;
             ProvisioningState = provisioningState;
@@ -66,25 +63,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the Storage Target.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource ID of the Storage Target.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets type of the Storage Target;
-        /// Microsoft.StorageCache/Cache/StorageTarget
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
         /// Gets or sets list of Cache namespace junctions to target for
         /// namespace associations.
         /// </summary>
@@ -92,8 +70,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public IList<NamespaceJunction> Junctions { get; set; }
 
         /// <summary>
-        /// Gets or sets type of the Storage Target. Possible values include:
-        /// 'nfs3', 'clfs', 'unknown'
+        /// Gets or sets type of the Storage Target.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetType")]
         public string TargetType { get; set; }

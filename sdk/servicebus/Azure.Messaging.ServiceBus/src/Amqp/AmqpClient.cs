@@ -2,18 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -73,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -84,79 +78,57 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpClient(string host,
-                          ServiceBusTokenCredential credential,
-                          ServiceBusClientOptions clientOptions) : this(host, credential, clientOptions, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
-        /// <param name="connectionScope">The optional scope to use for AMQP connection management.  If <c>null</c>, a new scope will be created.</param>
-        ///
-        /// <remarks>
-        ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
-        ///   is assumed that callers are trusted and have performed deep validation.
-        ///
-        ///   Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
-        ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the
-        ///   caller.
-        /// </remarks>
-        ///
-        protected AmqpClient(
+        internal AmqpClient(
             string host,
             ServiceBusTokenCredential credential,
-            ServiceBusClientOptions clientOptions,
-            AmqpConnectionScope connectionScope)
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
-            try
+            ServiceEndpoint = new UriBuilder
             {
-                //TODO add event ServiceBusEventSource.Log.ClientCreateStart(host, entityName);
+                Scheme = options.TransportType.GetUriScheme(),
+                Host = host
 
-                ServiceEndpoint = new UriBuilder
-                {
-                    Scheme = clientOptions.TransportType.GetUriScheme(),
-                    Host = host
+            }.Uri;
 
-                }.Uri;
+            Credential = credential;
+            ConnectionScope = new AmqpConnectionScope(
+                ServiceEndpoint,
+                credential,
+                options.TransportType,
+                options.WebProxy);
 
-                Credential = credential;
-                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, credential, clientOptions.TransportType, clientOptions.Proxy);
-            }
-            finally
-            {
-                // TODO add event  ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
-            }
         }
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
         ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
         ///
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
-        ///
-        public override TransportSender CreateSender(string entityName, ServiceBusRetryPolicy retryPolicy)
+        public override TransportSender CreateSender(
+            string entityPath,
+            string viaEntityPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
-                entityName,
+                entityPath,
+                viaEntityPath,
                 ConnectionScope,
-                retryPolicy
+                retryPolicy,
+                identifier
             );
         }
 
@@ -164,35 +136,64 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         ///
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
         public override TransportReceiver CreateReceiver(
-            string entityName,
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
+            string identifier,
             string sessionId,
             bool isSessionReceiver)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpReceiver
             (
-                entityName,
+                entityPath,
                 receiveMode,
                 prefetchCount,
                 ConnectionScope,
                 retryPolicy,
+                identifier,
                 sessionId,
                 isSessionReceiver
+            );
+        }
+
+        /// <summary>
+        ///   Creates a rule manager strongly aligned with the active protocol and transport,
+        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
+        /// </summary>
+        ///
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the rule manager.</param>
+        ///
+        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
+        public override TransportRuleManager CreateRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
+        {
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
+
+            return new AmqpRuleManager
+            (
+                subscriptionPath,
+                ConnectionScope,
+                retryPolicy,
+                identifier
             );
         }
 
@@ -211,12 +212,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
-            var clientType = GetType();
-
             try
             {
-                //ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ConnectionScope?.Dispose();
                 return Task.CompletedTask;
@@ -224,13 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception)
             {
                 _closed = false;
-                //ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
-
                 throw;
-            }
-            finally
-            {
-                //ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
             }
         }
 
@@ -240,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The token to use for service authorization.</returns>
         ///
-        private async Task<string> AquireAccessTokenAsync(CancellationToken cancellationToken)
+        private async Task<string> AcquireAccessTokenAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -257,7 +248,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if ((string.IsNullOrEmpty(activeToken.Token)))
                 {
-                    throw new AuthenticationException(Resources1.CouldNotAcquireAccessToken);
+                    throw new AuthenticationException(Resources.CouldNotAcquireAccessToken);
                 }
 
                 _accessToken = activeToken;

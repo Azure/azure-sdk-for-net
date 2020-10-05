@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage container for use as an Unknown Storage Target.
+    /// Properties pertained to UnknownTarget
     /// </summary>
     public partial class UnknownTarget
     {

@@ -19,10 +19,11 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
+                new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
-                new Tuple<string, string, string>("Security", "AllowedConnections", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "AllowedConnections", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Assessments", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AssessmentsMetadata", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AutoProvisioningSettings", "2017-08-01-preview"),
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionAnalytics", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionsAnalyticsAggregatedAlert", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionsAnalyticsRecommendation", "2019-08-01"),
-                new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Pricings", "2018-06-01"),
@@ -49,18 +50,18 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "Settings", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "SubAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
-                new Tuple<string, string, string>("Security", "Topology", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "Topology", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\vs\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "(empty)";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\GitHub\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b76a3d26f56067bb939f069fd5481580a9504c32";
+      public static readonly String GithubCommidId = "4bfc60521b88d21c9cd4c44cc367e080ecc4af81";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

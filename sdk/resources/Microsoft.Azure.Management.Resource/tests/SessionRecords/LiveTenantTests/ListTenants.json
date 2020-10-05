@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/tenants?api-version=2019-11-01",
-      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxOS0xMS0wMQ==",
+      "RequestUri": "/tenants?api-version=2020-01-01",
+      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8fa9773b-956b-4b28-82ac-89021b510e4e"
+          "87bf7e92-e455-4bd4-ac25-47d341397192"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.3.0.0"
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.7.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "240598cb-8194-4bda-9979-4d7c40323354"
+          "592c9bf5-154d-40a5-859f-73024d62c917"
         ],
         "x-ms-correlation-request-id": [
-          "240598cb-8194-4bda-9979-4d7c40323354"
+          "592c9bf5-154d-40a5-859f-73024d62c917"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200211T184738Z:240598cb-8194-4bda-9979-4d7c40323354"
+          "WESTUS:20200526T214255Z:592c9bf5-154d-40a5-859f-73024d62c917"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Feb 2020 18:47:37 GMT"
+          "Tue, 26 May 2020 21:42:55 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

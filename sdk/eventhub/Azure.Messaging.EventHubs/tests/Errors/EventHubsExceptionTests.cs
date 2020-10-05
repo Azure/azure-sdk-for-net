@@ -157,5 +157,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(knownReasons.OrderBy(item => item.ToString()), Is.EquivalentTo(reasonTestCases), "All failure reasons defined by EventHubsException in the client library should have a matching IsTransient test case.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsException.ToString" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringValueContainsTheTypeNameAndFailureReason()
+        {
+            var message = "Test message!";
+            var namespaceValue = "the-namespace";
+            var reason = EventHubsException.FailureReason.QuotaExceeded;
+            var instance = new EventHubsException(false, namespaceValue, message, reason);
+
+            Assert.That(instance.ToString(), Is.Not.Null.And.Not.Empty, "The ToString value should be populated.");
+            Assert.That(instance.ToString(), Contains.Substring(typeof(EventHubsException).Name), "The ToString value should contain the type name.");
+            Assert.That(instance.ToString(), Contains.Substring(reason.ToString()), "The ToString value should contain the failure reason.");
+        }
     }
 }

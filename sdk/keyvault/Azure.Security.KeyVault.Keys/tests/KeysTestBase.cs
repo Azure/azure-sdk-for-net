@@ -5,8 +5,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.KeyVault.Tests;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
@@ -14,13 +15,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1_Preview)]
+        KeyClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
-    public abstract class KeysTestBase : RecordedTestBase
+    public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : TimeSpan.FromSeconds(2);
 
         public KeyClient Client { get; set; }
 
@@ -30,6 +33,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
+
+        private KeyVaultTestEventListener _listener;
 
         protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
@@ -47,8 +52,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             return InstrumentClient(
                 new KeyClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
                     recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }
@@ -57,8 +62,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             base.StartTestRecording();
 
+            _listener = new KeyVaultTestEventListener();
+
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
+        }
+
+        public override void StopTestRecording()
+        {
+            _listener?.Dispose();
+
+            base.StopTestRecording();
         }
 
         [TearDown]

@@ -31,7 +31,9 @@ namespace Sql.Tests
                     StorageEndpoint = storageAccountInformation.Endpoint,
                     StorageAccountAccessKey = storageAccountInformation.PrimaryKey,
                     RetentionDays = RetentionDays,
-                    IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse
+                    IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse,
+                    IsAzureMonitorTargetEnabled = true,
+                    QueueDelayMs = 1000
                 };
 
                 ExtendedServerBlobAuditingPolicy extendedServerPolicy = new ExtendedServerBlobAuditingPolicy
@@ -41,7 +43,9 @@ namespace Sql.Tests
                     StorageAccountAccessKey = storageAccountInformation.PrimaryKey,
                     RetentionDays = RetentionDays,
                     IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse,
-                    PredicateExpression = PredicateExpression
+                    PredicateExpression = PredicateExpression,
+                    IsAzureMonitorTargetEnabled = true,
+                    QueueDelayMs = 1000
                 };
 
                 ServerBlobAuditingPolicy serverResultPolicy = await client.ServerBlobAuditingPolicies.CreateOrUpdateAsync(resourceGroup.Name, server.Name, serverPolicy);
@@ -82,7 +86,9 @@ namespace Sql.Tests
                     StorageEndpoint = storageAccountInformation.Endpoint,
                     StorageAccountAccessKey = storageAccountInformation.PrimaryKey,
                     RetentionDays = RetentionDays,
-                    IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse
+                    IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse,
+                    IsAzureMonitorTargetEnabled = true,
+                    QueueDelayMs = 1000
                 };
 
                 ExtendedDatabaseBlobAuditingPolicy extendedDatabasePolicy = new ExtendedDatabaseBlobAuditingPolicy
@@ -92,7 +98,9 @@ namespace Sql.Tests
                     StorageAccountAccessKey = storageAccountInformation.PrimaryKey,
                     RetentionDays = RetentionDays,
                     IsStorageSecondaryKeyInUse = IsStorageSecondaryKeyInUse,
-                    PredicateExpression = PredicateExpression
+                    PredicateExpression = PredicateExpression,
+                    IsAzureMonitorTargetEnabled = true,
+                    QueueDelayMs = 1000
                 };
 
                 DatabaseBlobAuditingPolicy databaseResultPolicy = await client.DatabaseBlobAuditingPolicies.CreateOrUpdateAsync(resourceGroup.Name, server.Name, database.Name, databasePolicy);
@@ -119,6 +127,8 @@ namespace Sql.Tests
             Assert.Equal(extendedDatabaseResultPolicy.RetentionDays, extendedDatabasePolicy.RetentionDays);
             Assert.Equal(extendedDatabaseResultPolicy.IsStorageSecondaryKeyInUse, extendedDatabasePolicy.IsStorageSecondaryKeyInUse);
             Assert.Equal(extendedDatabaseResultPolicy.PredicateExpression, extendedDatabasePolicy.PredicateExpression);
+            Assert.Equal(extendedDatabaseResultPolicy.IsAzureMonitorTargetEnabled, extendedDatabasePolicy.IsAzureMonitorTargetEnabled);
+            Assert.Equal(extendedDatabaseResultPolicy.QueueDelayMs, extendedDatabasePolicy.QueueDelayMs);
         }
 
         private static void VerifyExtendedServerBlobAuditingPolicy(ExtendedServerBlobAuditingPolicy extendedServerPolicy, ExtendedServerBlobAuditingPolicy extendedServerResultPolicy)
@@ -129,6 +139,8 @@ namespace Sql.Tests
             Assert.Equal(extendedServerResultPolicy.RetentionDays, extendedServerPolicy.RetentionDays);
             Assert.Equal(extendedServerResultPolicy.IsStorageSecondaryKeyInUse, extendedServerPolicy.IsStorageSecondaryKeyInUse);
             Assert.Equal(extendedServerResultPolicy.PredicateExpression, extendedServerPolicy.PredicateExpression);
+            Assert.Equal(extendedServerResultPolicy.IsAzureMonitorTargetEnabled, extendedServerPolicy.IsAzureMonitorTargetEnabled);
+            Assert.Equal(extendedServerResultPolicy.QueueDelayMs, extendedServerPolicy.QueueDelayMs);
         }
 
         private static void VerifyServerBlobAuditingPolicy(ServerBlobAuditingPolicy serverPolicy, ServerBlobAuditingPolicy serverResultPolicy)
@@ -138,6 +150,8 @@ namespace Sql.Tests
             Assert.Null(serverResultPolicy.StorageAccountAccessKey);
             Assert.Equal(serverResultPolicy.RetentionDays, serverPolicy.RetentionDays);
             Assert.Equal(serverResultPolicy.IsStorageSecondaryKeyInUse, serverPolicy.IsStorageSecondaryKeyInUse);
+            Assert.Equal(serverResultPolicy.IsAzureMonitorTargetEnabled, serverPolicy.IsAzureMonitorTargetEnabled);
+            Assert.Equal(serverResultPolicy.QueueDelayMs, serverPolicy.QueueDelayMs);
         }
 
         private static void VerifyDatabaseBlobAuditingPolicy(DatabaseBlobAuditingPolicy databasePolicy, DatabaseBlobAuditingPolicy databaseResultPolicy)
@@ -147,6 +161,8 @@ namespace Sql.Tests
             Assert.Equal(databaseResultPolicy.StorageAccountAccessKey, string.Empty);
             Assert.Equal(databaseResultPolicy.RetentionDays, databasePolicy.RetentionDays);
             Assert.Equal(databaseResultPolicy.IsStorageSecondaryKeyInUse, databasePolicy.IsStorageSecondaryKeyInUse);
+            Assert.Equal(databaseResultPolicy.IsAzureMonitorTargetEnabled, databasePolicy.IsAzureMonitorTargetEnabled);
+            Assert.Equal(databaseResultPolicy.QueueDelayMs, databasePolicy.QueueDelayMs);
         }
 
         private async Task<StorageAccountInformation> CreateStorageAccountAsync(SqlManagementTestContext context, ResourceGroup resourceGroup)

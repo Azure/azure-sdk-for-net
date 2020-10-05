@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a268af90e264c14db7562b9f2a909c58-019a97974c2cfe44-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "754564d1b2cf23852a8537ce223c28cc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "234",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 23 Sep 2020 16:44:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "173c4032-7351-40d3-9f96-61e6af8bbd20",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "173c4032-7351-40d3-9f96-61e6af8bbd20",
+        "x-ms-routing-request-id": "WESTUS2:20200923T164452Z:173c4032-7351-40d3-9f96-61e6af8bbd20"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Network/dnszones/somegibberish\u0027 under resource group \u0027Default-Dns-Zones-9848\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "960623364",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

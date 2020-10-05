@@ -50,10 +50,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="query">SAP Cloud for Customer OData query. For
         /// example, "$top=1". Type: string (or Expression with resultType
         /// string).</param>
-        public SapCloudForCustomerSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object))
+        /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
+        /// HTTP response. It is the timeout to get a response, not the timeout
+        /// to read response data. Default value: 00:05:00. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        public SapCloudForCustomerSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object httpRequestTimeout = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
+            HttpRequestTimeout = httpRequestTimeout;
             CustomInit();
         }
 
@@ -68,6 +74,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is
+        /// the timeout to get a response, not the timeout to read response
+        /// data. Default value: 00:05:00. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "httpRequestTimeout")]
+        public object HttpRequestTimeout { get; set; }
 
     }
 }

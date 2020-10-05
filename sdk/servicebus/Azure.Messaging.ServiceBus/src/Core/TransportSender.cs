@@ -41,24 +41,27 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public abstract ValueTask<TransportMessageBatch> CreateBatchAsync(
-            CreateBatchOptions options,
-            CancellationToken cancellationToken);
-        /// <summary>
-        ///   Sends a message to the associated Service Bus entity.
-        /// </summary>
-        ///
-        /// <param name="message">A message to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public abstract Task SendAsync(
-            ServiceBusMessage message,
+        public abstract ValueTask<TransportMessageBatch> CreateMessageBatchAsync(
+            CreateMessageBatchOptions options,
             CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Sends a set of messages to the associated Queue/Topic using a batched approach.
+        ///   Sends a list of messages to the associated Service Bus entity using a batched approach.
+        ///   If the size of the messages exceed the maximum size of a single batch,
+        ///   an exception will be triggered and the send will fail. In order to ensure that the messages
+        ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
+        /// </summary>
+        ///
+        /// <param name="messages">The list of messages to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public abstract Task SendAsync(
+            IList<ServiceBusMessage> messages,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Sends a <see cref="ServiceBusMessageBatch"/> to the associated Queue/Topic.
         /// </summary>
         ///
         /// <param name="messageBatch">The set of messages to send.</param>
@@ -73,21 +76,21 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<long> ScheduleMessageAsync(
-            ServiceBusMessage message,
+        public abstract Task<long[]> ScheduleMessagesAsync(
+            IList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumbers"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task CancelScheduledMessageAsync(
-            long sequenceNumber,
+        public abstract Task CancelScheduledMessagesAsync(
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default);
 
         /// <summary>

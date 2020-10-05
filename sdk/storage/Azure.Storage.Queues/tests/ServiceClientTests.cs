@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;

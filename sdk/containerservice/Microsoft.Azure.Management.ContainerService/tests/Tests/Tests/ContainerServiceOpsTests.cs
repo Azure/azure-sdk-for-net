@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace Microsoft.Azure.Management.ContainerService.Tests
+namespace ContainerService.Tests
 {
     public partial class ContainerServiceTests : TestBase
     {

@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the domain
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>

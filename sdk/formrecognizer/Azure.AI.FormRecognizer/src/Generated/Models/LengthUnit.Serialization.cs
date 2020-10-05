@@ -18,11 +18,11 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LengthUnit value.")
         };
 
-        public static LengthUnit ToLengthUnit(this string value) => value switch
+        public static LengthUnit ToLengthUnit(this string value)
         {
-            "pixel" => LengthUnit.Pixel,
-            "inch" => LengthUnit.Inch,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LengthUnit value.")
-        };
+            if (string.Equals(value, "pixel", StringComparison.InvariantCultureIgnoreCase)) return LengthUnit.Pixel;
+            if (string.Equals(value, "inch", StringComparison.InvariantCultureIgnoreCase)) return LengthUnit.Inch;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LengthUnit value.");
+        }
     }
 }

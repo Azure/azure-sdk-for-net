@@ -1,0 +1,360 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/backup?api-version=7.2-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-910d67b4246bc849b2a0b2c098a62fc0-c649e8f89014f94c-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d16ed18d4cbfbcacd158749ab3fc8334",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows-ppe.net/f686d426-8d16-42db-81b7-ab578e110ccd\u0022, resource=\u0022https://managedhsm-int.azure-int.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "1"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/backup?api-version=7.2-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "92",
+        "Content-Type": "application/json",
+        "traceparent": "00-910d67b4246bc849b2a0b2c098a62fc0-c649e8f89014f94c-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d16ed18d4cbfbcacd158749ab3fc8334",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "storageResourceUri": "https://chrissprim.blob.core.windows.net/backup",
+        "token": "Sanitized"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/backup/5858b85f575b45d5b33634ed199636e9/pending",
+        "Cache-Control": "no-cache",
+        "Content-Length": "216",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:00 GMT",
+        "Retry-After": "0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "725"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "statusDetails": null,
+        "error": {
+          "code": null,
+          "message": null,
+          "innererror": null
+        },
+        "startTime": 1599061080,
+        "endTime": null,
+        "jobId": "5858b85f575b45d5b33634ed199636e9",
+        "azureStorageBlobContainerUri": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/backup/5858b85f575b45d5b33634ed199636e9/pending?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "1b12c50177a3e60851b491e811244f78",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "216",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:01 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "1350"
+      },
+      "ResponseBody": {
+        "azureStorageBlobContainerUri": null,
+        "endTime": null,
+        "error": {
+          "code": null,
+          "innererror": null,
+          "message": null
+        },
+        "jobId": "5858b85f575b45d5b33634ed199636e9",
+        "startTime": 1599061080,
+        "status": "InProgress",
+        "statusDetails": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/backup/5858b85f575b45d5b33634ed199636e9/pending?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9d4c38e0cea8740116df9dc41018b481",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "257",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:12 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "518"
+      },
+      "ResponseBody": {
+        "azureStorageBlobContainerUri": "https://chrissprim.blob.core.windows.net/backup/mhsm-chriss-eu2-2020090215380064",
+        "endTime": 1599061091,
+        "error": null,
+        "jobId": "5858b85f575b45d5b33634ed199636e9",
+        "startTime": 1599061080,
+        "status": "Succeeded",
+        "statusDetails": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/rsa-1/restore?api-version=7.2-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "159",
+        "Content-Type": "application/json",
+        "traceparent": "00-7ecffe40cc5a9c47b6f01ca0205cf1d7-f4156c8157ec624c-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "23dbdc074a4d1567c8887f0abbc3aaac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sasTokenParameters": {
+          "storageResourceUri": "https://chrissprim.blob.core.windows.net/backup",
+          "token": "Sanitized"
+        },
+        "folder": "mhsm-chriss-eu2-2020090215380064"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/restore/3224477bcec6418a9cc9b6ccc216f532/pending",
+        "Cache-Control": "no-cache",
+        "Content-Length": "180",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:13 GMT",
+        "Retry-After": "0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "642"
+      },
+      "ResponseBody": {
+        "endTime": null,
+        "error": {
+          "code": null,
+          "innererror": null,
+          "message": null
+        },
+        "jobId": "3224477bcec6418a9cc9b6ccc216f532",
+        "startTime": 1599061093,
+        "status": "InProgress",
+        "statusDetails": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/restore/3224477bcec6418a9cc9b6ccc216f532/pending?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "7bb9fc08e6b0328cc39d05c3da43d538",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "180",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:13 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "428"
+      },
+      "ResponseBody": {
+        "endTime": null,
+        "error": {
+          "code": null,
+          "innererror": null,
+          "message": null
+        },
+        "jobId": "3224477bcec6418a9cc9b6ccc216f532",
+        "startTime": 1599061093,
+        "status": "InProgress",
+        "statusDetails": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/restore/3224477bcec6418a9cc9b6ccc216f532/pending?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "35e10f002b49952ad036d41f4ff7b953",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "180",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:24 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "473"
+      },
+      "ResponseBody": {
+        "endTime": null,
+        "error": {
+          "code": null,
+          "innererror": null,
+          "message": null
+        },
+        "jobId": "3224477bcec6418a9cc9b6ccc216f532",
+        "startTime": 1599061093,
+        "status": "InProgress",
+        "statusDetails": null
+      }
+    },
+    {
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/restore/3224477bcec6418a9cc9b6ccc216f532/pending?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200902.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "13bbf035385f21d14fa960af45a43a85",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "233",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 02 Sep 2020 15:38:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "c8760180-ec6b-11ea-a7a1-0242ac120008",
+        "x-ms-server-latency": "488"
+      },
+      "ResponseBody": {
+        "endTime": 1599061110,
+        "error": null,
+        "jobId": "3224477bcec6418a9cc9b6ccc216f532",
+        "startTime": 1599061093,
+        "status": "Succeeded",
+        "statusDetails": "Number of successful key versions restored: 0, Number of key versions could not overwrite: 4"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-EU2.managedhsm-int.azure-int.net",
+    "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": "Sanitized",
+    "BLOB_STORAGE_ACCOUNT_NAME": "chrissprim",
+    "RandomSeed": "2036776031"
+  }
+}

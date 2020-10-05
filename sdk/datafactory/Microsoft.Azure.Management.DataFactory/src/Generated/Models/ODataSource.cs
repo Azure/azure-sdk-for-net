@@ -43,13 +43,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="query">OData query. For example, "$top=1". Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
+        /// HTTP response. It is the timeout to get a response, not the timeout
+        /// to read response data. Default value: 00:05:00. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
         /// be added to source data. Type: array of objects (or Expression with
         /// resultType array of objects).</param>
-        public ODataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+        public ODataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object httpRequestTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
+            HttpRequestTimeout = httpRequestTimeout;
             AdditionalColumns = additionalColumns;
             CustomInit();
         }
@@ -65,6 +71,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is
+        /// the timeout to get a response, not the timeout to read response
+        /// data. Default value: 00:05:00. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "httpRequestTimeout")]
+        public object HttpRequestTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the additional columns to be added to source

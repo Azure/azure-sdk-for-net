@@ -48,11 +48,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="policy">Activity policy.</param>
         /// <param name="fieldList">Fields of metadata to get from
         /// dataset.</param>
-        public GetMetadataActivity(string name, DatasetReference dataset, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> fieldList = default(IList<object>))
+        /// <param name="storeSettings">GetMetadata activity store
+        /// settings.</param>
+        /// <param name="formatSettings">GetMetadata activity format
+        /// settings.</param>
+        public GetMetadataActivity(string name, DatasetReference dataset, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> fieldList = default(IList<object>), StoreReadSettings storeSettings = default(StoreReadSettings), FormatReadSettings formatSettings = default(FormatReadSettings))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;
+            StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             CustomInit();
         }
 
@@ -72,6 +78,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.fieldList")]
         public IList<object> FieldList { get; set; }
+
+        /// <summary>
+        /// Gets or sets getMetadata activity store settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.storeSettings")]
+        public StoreReadSettings StoreSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets getMetadata activity format settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.formatSettings")]
+        public FormatReadSettings FormatSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

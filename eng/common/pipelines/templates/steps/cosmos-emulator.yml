@@ -1,0 +1,16 @@
+parameters:
+  EmulatorMsiUrl: "https://aka.ms/cosmosdb-emulator"
+  StartParameters: ''
+
+steps:
+  - powershell: |
+      $targetDir = $env:temp
+      Write-Host "Downloading and extracting Cosmos DB Emulator - ${{ parameters.EmulatorMsiUrl }}"
+      Write-Host "Target Dir: $targetDir"
+      msiexec /a ${{ parameters.EmulatorMsiUrl }} TARGETDIR=$targetDir /qn | wait-process
+    displayName: Download and Extract Public Cosmos DB Emulator
+  - powershell: |
+      Write-Host "Launching Cosmos DB Emulator"
+      Import-Module "$env:temp\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
+      Start-CosmosDbEmulator -NoUI ${{ parameters.StartParameters }}
+    displayName: Start Cosmos DB Emulator

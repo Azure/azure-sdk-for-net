@@ -22,18 +22,18 @@ namespace Microsoft.Azure.Management.Support
     public static partial class CommunicationsOperationsExtensions
     {
             /// <summary>
-            /// Check the availability of a resource name. This API should to be used to
-            /// check the uniqueness of the name for adding a new communication to the
-            /// support ticket.
+            /// Check the availability of a resource name. This API should be used to check
+            /// the uniqueness of the name for adding a new communication to the support
+            /// ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='checkNameAvailabilityInput'>
-            /// Input to check
+            /// Input to check.
             /// </param>
             public static CheckNameAvailabilityOutput CheckNameAvailability(this ICommunicationsOperations operations, string supportTicketName, CheckNameAvailabilityInput checkNameAvailabilityInput)
             {
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Check the availability of a resource name. This API should to be used to
-            /// check the uniqueness of the name for adding a new communication to the
-            /// support ticket.
+            /// Check the availability of a resource name. This API should be used to check
+            /// the uniqueness of the name for adding a new communication to the support
+            /// ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='checkNameAvailabilityInput'>
-            /// Input to check
+            /// Input to check.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -68,11 +68,10 @@ namespace Microsoft.Azure.Management.Support
             /// <summary>
             /// Lists all communications (attachments not included) for a support ticket.
             /// &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by
-            /// &lt;i&gt;CreatedDate&lt;/i&gt;�or &lt;i&gt;CommunicationType&lt;/i&gt;
-            /// using the $filter parameter. The only type of communication supported today
-            /// is &lt;i&gt;Web&lt;/i&gt;. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// Communication results. &lt;br/&gt;&lt;br/&gt; Support ticket data is
+            /// _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only
+            /// type of communication supported today is _Web_. Output will be a paged
+            /// result with _nextLink_, using which you can retrieve the next set of
+            /// Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is
             /// available for 12 months after ticket creation. If a ticket was created more
             /// than 12 months ago, a request for data might cause an error.
             /// </summary>
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='top'>
             /// The number of values to return in the collection. Default is 10 and max is
@@ -101,11 +100,10 @@ namespace Microsoft.Azure.Management.Support
             /// <summary>
             /// Lists all communications (attachments not included) for a support ticket.
             /// &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by
-            /// &lt;i&gt;CreatedDate&lt;/i&gt;�or &lt;i&gt;CommunicationType&lt;/i&gt;
-            /// using the $filter parameter. The only type of communication supported today
-            /// is &lt;i&gt;Web&lt;/i&gt;. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// Communication results. &lt;br/&gt;&lt;br/&gt; Support ticket data is
+            /// _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only
+            /// type of communication supported today is _Web_. Output will be a paged
+            /// result with _nextLink_, using which you can retrieve the next set of
+            /// Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is
             /// available for 12 months after ticket creation. If a ticket was created more
             /// than 12 months ago, a request for data might cause an error.
             /// </summary>
@@ -113,7 +111,7 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='top'>
             /// The number of values to return in the collection. Default is 10 and max is
@@ -138,16 +136,16 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Returns details of a specific communication in a support ticket.
+            /// Returns communication details for a support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             public static CommunicationDetails Get(this ICommunicationsOperations operations, string supportTicketName, string communicationName)
             {
@@ -155,16 +153,16 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Returns details of a specific communication in a support ticket.
+            /// Returns communication details for a support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -178,24 +176,19 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Adds a new customer communication to an Azure support ticket. Adding
-            /// attachments are not currently supported via the API. &lt;br/&gt;To add a
-            /// file to a support ticket, visit the &lt;a target='_blank'
-            /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest'&gt;Manage
-            /// support ticket&lt;/a&gt; page in the Azure portal, select the support
-            /// ticket, and use the file upload control to add a new file.
+            /// Adds a new customer communication to an Azure support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             public static CommunicationDetails Create(this ICommunicationsOperations operations, string supportTicketName, string communicationName, CommunicationDetails createCommunicationParameters)
             {
@@ -203,24 +196,19 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Adds a new customer communication to an Azure support ticket. Adding
-            /// attachments are not currently supported via the API. &lt;br/&gt;To add a
-            /// file to a support ticket, visit the &lt;a target='_blank'
-            /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest'&gt;Manage
-            /// support ticket&lt;/a&gt; page in the Azure portal, select the support
-            /// ticket, and use the file upload control to add a new file.
+            /// Adds a new customer communication to an Azure support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -234,24 +222,19 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Adds a new customer communication to an Azure support ticket. Adding
-            /// attachments are not currently supported via the API. &lt;br/&gt;To add a
-            /// file to a support ticket, visit the &lt;a target='_blank'
-            /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest'&gt;Manage
-            /// support ticket&lt;/a&gt; page in the Azure portal, select the support
-            /// ticket, and use the file upload control to add a new file.
+            /// Adds a new customer communication to an Azure support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             public static CommunicationDetails BeginCreate(this ICommunicationsOperations operations, string supportTicketName, string communicationName, CommunicationDetails createCommunicationParameters)
             {
@@ -259,24 +242,19 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Adds a new customer communication to an Azure support ticket. Adding
-            /// attachments are not currently supported via the API. &lt;br/&gt;To add a
-            /// file to a support ticket, visit the &lt;a target='_blank'
-            /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest'&gt;Manage
-            /// support ticket&lt;/a&gt; page in the Azure portal, select the support
-            /// ticket, and use the file upload control to add a new file.
+            /// Adds a new customer communication to an Azure support ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -292,11 +270,10 @@ namespace Microsoft.Azure.Management.Support
             /// <summary>
             /// Lists all communications (attachments not included) for a support ticket.
             /// &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by
-            /// &lt;i&gt;CreatedDate&lt;/i&gt;�or &lt;i&gt;CommunicationType&lt;/i&gt;
-            /// using the $filter parameter. The only type of communication supported today
-            /// is &lt;i&gt;Web&lt;/i&gt;. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// Communication results. &lt;br/&gt;&lt;br/&gt; Support ticket data is
+            /// _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only
+            /// type of communication supported today is _Web_. Output will be a paged
+            /// result with _nextLink_, using which you can retrieve the next set of
+            /// Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is
             /// available for 12 months after ticket creation. If a ticket was created more
             /// than 12 months ago, a request for data might cause an error.
             /// </summary>
@@ -314,11 +291,10 @@ namespace Microsoft.Azure.Management.Support
             /// <summary>
             /// Lists all communications (attachments not included) for a support ticket.
             /// &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by
-            /// &lt;i&gt;CreatedDate&lt;/i&gt;�or &lt;i&gt;CommunicationType&lt;/i&gt;
-            /// using the $filter parameter. The only type of communication supported today
-            /// is &lt;i&gt;Web&lt;/i&gt;. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// Communication results. &lt;br/&gt;&lt;br/&gt; Support ticket data is
+            /// _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only
+            /// type of communication supported today is _Web_. Output will be a paged
+            /// result with _nextLink_, using which you can retrieve the next set of
+            /// Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is
             /// available for 12 months after ticket creation. If a ticket was created more
             /// than 12 months ago, a request for data might cause an error.
             /// </summary>

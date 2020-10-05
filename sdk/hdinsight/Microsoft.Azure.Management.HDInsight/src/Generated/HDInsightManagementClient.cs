@@ -117,6 +117,11 @@ namespace Microsoft.Azure.Management.HDInsight
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the HDInsightManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -365,6 +370,7 @@ namespace Microsoft.Azure.Management.HDInsight
             ScriptActions = new ScriptActionsOperations(this);
             ScriptExecutionHistory = new ScriptExecutionHistoryOperations(this);
             Operations = new Operations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01-preview";
             AcceptLanguage = "en-US";

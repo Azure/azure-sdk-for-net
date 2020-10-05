@@ -1,0 +1,171 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/notebooks?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a353c8c84d48d750254927b42874ee69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "805",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:32 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "a353c8c84d48d750254927b42874ee69",
+        "x-ms-request-id": "f2998dc5-f803-4985-b182-75470e73b39c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/notebooks/Notebook1980347592",
+            "name": "Notebook1980347592",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "91001ef2-0000-0800-0000-5f6c3b5f0000",
+            "properties": {
+              "metadata": {
+                "language_info": {
+                  "name": "Python"
+                }
+              },
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "cells": []
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/notebooks/Notebook1304984445",
+            "name": "Notebook1304984445",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "7700f362-0000-0800-0000-5f6b0deb0000",
+            "properties": {
+              "metadata": {
+                "language_info": {
+                  "name": "Python"
+                }
+              },
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "cells": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/notebooks/Notebook1980347592?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0e7d43acfdeb1546946c47aa62b4e727-4544a805eae0b847-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "4a0bc19ed1af8774eec1dd87ae8fc195",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "396",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4a0bc19ed1af8774eec1dd87ae8fc195",
+        "x-ms-correlation-request-id": "cac9dd7d-5aae-47d4-b230-efeda934e97e",
+        "x-ms-request-id": "f9e19810-4c89-4859-9390-bab3f0deff1a",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/notebooks/Notebook1980347592",
+        "name": "Notebook1980347592",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "metadata": {
+            "language_info": {
+              "name": "Python"
+            }
+          },
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "cells": []
+        },
+        "etag": "91001ef2-0000-0800-0000-5f6c3b5f0000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/notebooks/Notebook1304984445?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8e6defc7d4646044acfacbecba278aaa-3db8883f5e9e1c4f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a5ce45d6e1c2bab2e43cbea51f9fa1ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "396",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 24 Sep 2020 06:23:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a5ce45d6e1c2bab2e43cbea51f9fa1ea",
+        "x-ms-correlation-request-id": "28d86928-a12c-4580-96a2-7e6918757e1e",
+        "x-ms-request-id": "dcd0111b-4173-443a-8c26-d871a97fbdc0",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/notebooks/Notebook1304984445",
+        "name": "Notebook1304984445",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "metadata": {
+            "language_info": {
+              "name": "Python"
+            }
+          },
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "cells": []
+        },
+        "etag": "7700f362-0000-0800-0000-5f6b0deb0000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspaceywlive.dev.azuresynapse.net",
+    "RandomSeed": "1257903385"
+  }
+}

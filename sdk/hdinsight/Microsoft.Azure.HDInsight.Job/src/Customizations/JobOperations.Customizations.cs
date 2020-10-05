@@ -20,7 +20,7 @@ namespace Microsoft.Azure.HDInsight.Job
     /// <summary>
     /// Operations for managing jobs against HDInsight clusters.
     /// </summary>
-    internal partial class JobOperations : IServiceOperations<HDInsightJobManagementClient>, IJobOperations
+    internal partial class JobOperations : IServiceOperations<HDInsightJobClient>, IJobOperations
     {
         private static string jobPrefix = "job_";
         private static string appPrefix = "application_";
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.HDInsight.Job
 
             if (waitInterval == null)
             {
-                waitInterval = HDInsightJobManagementClient.DefaultPollInterval;
+                waitInterval = HDInsightJobClient.DefaultPollInterval;
             }
 
             // We poll Yarn for application status until application run is finished. If the application is

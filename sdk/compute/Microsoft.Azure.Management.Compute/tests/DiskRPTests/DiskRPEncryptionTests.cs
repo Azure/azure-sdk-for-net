@@ -16,7 +16,7 @@ namespace Compute.Tests.DiskRPTests
 {
     public class DiskRPEncryptionTests : DiskRPTestsBase
     {
-        private static string DiskRPLocation = "westcentralus";
+        private static string DiskRPLocation = "centraluseuap";
 
         /// <summary>
         /// positive test for testing disks encryption
@@ -30,9 +30,9 @@ namespace Compute.Tests.DiskRPTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
-                string testVaultId = @"/subscriptions/" + m_CrpClient.SubscriptionId + "/resourceGroups/24/providers/Microsoft.KeyVault/vaults/swaggervault2";
-                string encryptionKeyUri = @"https://swaggervault2.vault.azure.net/keys/swaggerkey/6108e4eb47c14bdf863f1465229f8e66";
-                string secretUri = @"https://swaggervault2.vault.azure.net/secrets/swaggersecret/c464e5083aab4f73968700e8b077c54d";
+                string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.KeyVault/vaults/swaggerKeyVault5";
+                string encryptionKeyUri = @"https://swaggerkeyvault5.vault.azure.net/keys/swaggerKey/52317b056a2c49d0b8673a67d072655e";
+                string secretUri = @"https://swaggerkeyvault5.vault.azure.net/secrets/swaggerSecret/0e01a1ab339e40ff9f01ea98ae8ee6b5";
                 string encryptionSettingsVersion = "1.0";
 
                 var rgName = TestUtilities.GenerateName(TestPrefix);

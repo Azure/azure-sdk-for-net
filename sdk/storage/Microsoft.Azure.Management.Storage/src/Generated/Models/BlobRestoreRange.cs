@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the BlobRestoreRange class.
         /// </summary>
-        /// <param name="startRange">Blob start range. Empty means account
-        /// start.</param>
-        /// <param name="endRange">Blob end range. Empty means account
-        /// end.</param>
+        /// <param name="startRange">Blob start range. This is inclusive. Empty
+        /// means account start.</param>
+        /// <param name="endRange">Blob end range. This is exclusive. Empty
+        /// means account end.</param>
         public BlobRestoreRange(string startRange, string endRange)
         {
             StartRange = startRange;
@@ -47,13 +47,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets blob start range. Empty means account start.
+        /// Gets or sets blob start range. This is inclusive. Empty means
+        /// account start.
         /// </summary>
         [JsonProperty(PropertyName = "startRange")]
         public string StartRange { get; set; }
 
         /// <summary>
-        /// Gets or sets blob end range. Empty means account end.
+        /// Gets or sets blob end range. This is exclusive. Empty means account
+        /// end.
         /// </summary>
         [JsonProperty(PropertyName = "endRange")]
         public string EndRange { get; set; }

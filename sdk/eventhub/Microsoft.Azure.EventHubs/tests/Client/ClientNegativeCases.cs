@@ -275,6 +275,39 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         }
 
         [Fact]
+        [DisplayTestMethodName]
+        public async Task ClosedClientsThrow()
+        {
+            var ehClient = EventHubClient.CreateFromConnectionString(DummyConnectionString);
+            var receiver = ehClient.CreateReceiver("cg", "0", EventPosition.FromStart());
+            var sender = ehClient.CreatePartitionSender("0");
+
+            // Sender closed.
+            await sender.CloseAsync();
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await sender.SendAsync(new EventData(new byte[10]));
+                throw new Exception("SendAsync call was supposed to fail");
+            });
+
+            // Receiver closed.
+            await receiver.CloseAsync();
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await receiver.ReceiveAsync(1);
+                throw new Exception("ReceiveAsync call was supposed to fail");
+            });
+
+            // EventHubClient closed.
+            await ehClient.CloseAsync();
+            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await ehClient.SendAsync(new EventData(new byte[10]));
+                throw new Exception("SendAsync call was supposed to fail");
+            });
+        }
+
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task InvalidPrefetchCount()

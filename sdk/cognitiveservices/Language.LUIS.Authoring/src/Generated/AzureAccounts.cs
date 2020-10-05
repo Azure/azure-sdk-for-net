@@ -59,6 +59,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='appId'>
         /// The application ID.
         /// </param>
+        /// <param name='armToken'>
+        /// The custom arm token header to use; containing the user's ARM token used to
+        /// validate azure accounts information.
+        /// </param>
         /// <param name='azureAccountInfoObject'>
         /// The Azure account information object.
         /// </param>
@@ -83,7 +87,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<OperationStatus>> AssignToAppWithHttpMessagesAsync(System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationStatus>> AssignToAppWithHttpMessagesAsync(System.Guid appId, string armToken = default(string), AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -101,6 +105,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
+                tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("azureAccountInfoObject", azureAccountInfoObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AssignToApp", tracingParameters);
@@ -116,6 +121,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (armToken != null)
+            {
+                if (_httpRequest.Headers.Contains("ArmToken"))
+                {
+                    _httpRequest.Headers.Remove("ArmToken");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ArmToken", armToken);
+            }
 
 
             if (customHeaders != null)
@@ -226,6 +239,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='appId'>
         /// The application ID.
         /// </param>
+        /// <param name='armToken'>
+        /// The custom arm token header to use; containing the user's ARM token used to
+        /// validate azure accounts information.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -247,7 +264,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> GetAssignedWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> GetAssignedWithHttpMessagesAsync(System.Guid appId, string armToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -261,6 +278,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
+                tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAssigned", tracingParameters);
             }
@@ -275,6 +293,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (armToken != null)
+            {
+                if (_httpRequest.Headers.Contains("ArmToken"))
+                {
+                    _httpRequest.Headers.Remove("ArmToken");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ArmToken", armToken);
+            }
 
 
             if (customHeaders != null)
@@ -378,6 +404,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='appId'>
         /// The application ID.
         /// </param>
+        /// <param name='armToken'>
+        /// The custom arm token header to use; containing the user's ARM token used to
+        /// validate azure accounts information.
+        /// </param>
         /// <param name='azureAccountInfoObject'>
         /// The Azure account information object.
         /// </param>
@@ -402,7 +432,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<OperationStatus>> RemoveFromAppWithHttpMessagesAsync(System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationStatus>> RemoveFromAppWithHttpMessagesAsync(System.Guid appId, string armToken = default(string), AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -420,6 +450,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
+                tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("azureAccountInfoObject", azureAccountInfoObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RemoveFromApp", tracingParameters);
@@ -435,6 +466,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (armToken != null)
+            {
+                if (_httpRequest.Headers.Contains("ArmToken"))
+                {
+                    _httpRequest.Headers.Remove("ArmToken");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ArmToken", armToken);
+            }
 
 
             if (customHeaders != null)
@@ -541,6 +580,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <remarks>
         /// Gets the LUIS Azure accounts for the user using his ARM token.
         /// </remarks>
+        /// <param name='armToken'>
+        /// The custom arm token header to use; containing the user's ARM token used to
+        /// validate azure accounts information.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -562,7 +605,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> ListUserLUISAccountsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> ListUserLUISAccountsWithHttpMessagesAsync(string armToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -575,6 +618,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListUserLUISAccounts", tracingParameters);
             }
@@ -588,6 +632,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (armToken != null)
+            {
+                if (_httpRequest.Headers.Contains("ArmToken"))
+                {
+                    _httpRequest.Headers.Remove("ArmToken");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ArmToken", armToken);
+            }
 
 
             if (customHeaders != null)

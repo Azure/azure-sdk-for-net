@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// <summary>
     /// Properties of the Topic update
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class TopicUpdateParameters
     {
         /// <summary>
@@ -32,16 +35,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
         /// <param name="tags">Tags of the resource.</param>
-        /// <param name="allowTrafficFromAllIPs">This determines if IP
-        /// filtering rules ought to be evaluated or not. By default it will
-        /// not evaluate and will allow traffic from all IPs.</param>
-        /// <param name="inboundIpRules">This determines the IP filtering rules
-        /// that ought be applied when events are received on this
-        /// domain.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? allowTrafficFromAllIPs = default(bool?), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules"
+        /// /&gt;. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="inboundIpRules">This can be used to restrict traffic
+        /// from specific IPs instead of all IPs. Note: These are considered
+        /// only if PublicNetworkAccess is enabled.</param>
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
         {
             Tags = tags;
-            AllowTrafficFromAllIPs = allowTrafficFromAllIPs;
+            PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             CustomInit();
         }
@@ -58,18 +63,22 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets this determines if IP filtering rules ought to be
-        /// evaluated or not. By default it will not evaluate and will allow
-        /// traffic from all IPs.
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring
+        /// &amp;lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules"
+        /// /&amp;gt;. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "allowTrafficFromAllIPs")]
-        public bool? AllowTrafficFromAllIPs { get; set; }
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets this determines the IP filtering rules that ought be
-        /// applied when events are received on this domain.
+        /// Gets or sets this can be used to restrict traffic from specific IPs
+        /// instead of all IPs. Note: These are considered only if
+        /// PublicNetworkAccess is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "inboundIpRules")]
+        [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
 
     }

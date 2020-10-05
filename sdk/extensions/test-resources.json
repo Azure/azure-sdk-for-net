@@ -137,23 +137,10 @@
         }
     ],
   "outputs": {
-    "AZURE_TENANT_ID": {
-        "type": "string",
-        "value": "[parameters('tenantId')]"
-    },
-    "AZURE_CLIENT_ID": {
-        "type": "string",
-        "value": "[parameters('testApplicationId')]"
-    },
-    "AZURE_CLIENT_SECRET": {
-        "type": "string",
-        "value": "[parameters('testApplicationSecret')]"
-    },
     "AZURE_KEYVAULT_URL": {
         "type": "string",
         "value": "[variables('azureKeyVaultUrl')]"
     },
-
     "BLOB_STORAGE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('blobAccountName')]"

@@ -1,4 +1,4 @@
-# Contributing (for `Azure.Search`)
+# Contributing (for `Azure.Search.Documents`)
 
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
@@ -16,7 +16,7 @@ and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
 client libraries.  You can learn about these shared features in the
-[Azure.Core README](../core/Azure.Core/README.md).
+[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md).
 
 ## Code Generation
 Please do not edit any of the code in the `/Generated` folders directly.  If
@@ -30,9 +30,9 @@ exercise any new features that you've added.
 ### Frameworks
 We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](../core/Azure.Core/tests/TestFramework) is
+[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
 copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln`
+sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
 if you make any changes here.)_
 
 ### Sync/Async testing
@@ -72,62 +72,15 @@ live tests against a pull request by commenting `/azp run net - search - tests`
 in the PR.
 
 ### Live Test Resources
-You'll need to pass the details for a subscription, service principal, resource
-group, and location via environment variables.  We set this up for live tests
-using the [test-resources.json](./test-resources.json) ARM template, but it's
-equivalent to the following steps if you want to run the live tests locally.
-
-```powershell
-PS C:\src> az ad sp create-for-rbac --sdk-auth
-Creating a role assignment under the scope of "/subscriptions/<subscription_id>"
-{
-  "clientId": "<client_id>",
-  "clientSecret": "<client_secret>",
-  "subscriptionId": "<subscription_id>",
-  "tenantId": "<tenant_id>",
-  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
-  "resourceManagerEndpointUrl": "https://management.azure.com/",
-  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
-  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
-  "galleryEndpointUrl": "https://gallery.azure.com/",
-  "managementEndpointUrl": "https://management.core.windows.net/"
-}
-
-PS C:\src> az group create --location <location> --name <resource_group>
-{
-  "id": "/subscriptions/<subscription_id>/resourceGroups/<resource_group>",
-  "location": <location>,
-  "managedBy": null,
-  "name": "<resource_group>",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null,
-  "type": "Microsoft.Resources/resourceGroups"
-}
-
-PS C:\src> setx AZURE_TENANT_ID <tenant_id>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_CLIENT_ID <client_id>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_CLIENT_SECRET <client_secret>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_SUBSCRIPTION_ID <subscription_id>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_RESOURCE_GROUP <resource_group>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_LOCATION <location>
-SUCCESS: Specified value was saved.
-```
+Before running or recording live tests you need to create
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
+If recording tests, secrets will be sanitized from saved recordings.
+If you will be working on contributions over time, you should consider
+persisting these variables.
 
 ### Samples
 Our samples are structured as unit tests so we can easily verify they're up to
-date and working correctly.  These tests aren't recorded and make minimal use
-of test infrastructure to keep them easy to read.
+date and working correctly.  These tests make minimal use of test infrastructure
+to keep them easy to read.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FCONTRIBUTING.png)

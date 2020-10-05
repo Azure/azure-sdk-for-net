@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Synapse.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// Configuration for metadata sync
     /// </remarks>
     [Rest.Serialization.JsonTransformation]
-    public partial class MetadataSyncConfig : ProxyResource
+    public partial class MetadataSyncConfig : IResource
     {
         /// <summary>
         /// Initializes a new instance of the MetadataSyncConfig class.
@@ -35,16 +36,9 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the MetadataSyncConfig class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="enabled">Indicates whether the metadata sync is
         /// enabled or disabled</param>
-        public MetadataSyncConfig(string id = default(string), string name = default(string), string type = default(string), bool? enabled = default(bool?))
-            : base(id, name, type)
+        public MetadataSyncConfig(bool? enabled = default(bool?))
         {
             Enabled = enabled;
             CustomInit();

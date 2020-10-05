@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
@@ -83,6 +84,7 @@ namespace Azure.Messaging.EventHubs
         ///   attempt or a retry.
         /// </summary>
         ///
+        [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "We believe using the property name instead of 'value' is more intuitive")]
         public TimeSpan TryTimeout
         {
             get => _tryTimeout;

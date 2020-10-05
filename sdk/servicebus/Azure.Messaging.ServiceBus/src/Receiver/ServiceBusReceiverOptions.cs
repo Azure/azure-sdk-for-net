@@ -3,30 +3,18 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver"/> or <see cref="ServiceBusProcessor" />
+    /// The set of options that can be specified when creating a <see cref="ServiceBusReceiver"/>
     /// to configure its behavior.
     /// </summary>
     public class ServiceBusReceiverOptions
     {
         /// <summary>
-        /// The set of options to use for configuring the connection to the Service Bus entities.
-        /// </summary>
-        internal ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();
-
-        /// <summary>
-        /// The set of options to govern retry behavior and try timeouts.
-        /// </summary>
-        internal ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
-
-        /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// Gets or sets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
         public int PrefetchCount
@@ -37,47 +25,21 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
         private int _prefetchCount = 0;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
-        /// Gets or sets the options used for configuring the connection to the Service Bus entities.
+        /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
         /// </summary>
-        internal ServiceBusClientOptions ConnectionOptions
-        {
-            get => _connectionOptions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(ConnectionOptions));
-                _connectionOptions = value;
-            }
-        }
-
-        /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
-        /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
-        /// </summary>
-        public ServiceBusRetryOptions RetryOptions
-        {
-            get => _retryOptions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
-            }
-        }
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -115,9 +77,9 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusReceiverOptions Clone() =>
             new ServiceBusReceiverOptions
             {
-                _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone(),
-                ReceiveMode = ReceiveMode
+                ReceiveMode = ReceiveMode,
+                PrefetchCount = PrefetchCount,
+                SubQueue = SubQueue
             };
     }
 }

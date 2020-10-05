@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/describe?maxCandidates=2",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9Mg==",
+      "RequestUri": "/vision/v3.0/describe?maxCandidates=2",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9Mg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {

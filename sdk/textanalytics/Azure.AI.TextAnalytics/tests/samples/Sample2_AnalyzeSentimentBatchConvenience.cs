@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeSentimentBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "That was the best day of my life!",
                 "This food is very bad.",
@@ -29,14 +29,14 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Pike place market is my favorite Seattle attraction.",
             };
 
-            Debug.WriteLine($"Analyzing sentiment for inputs:");
-            foreach (string input in inputs)
+            Debug.WriteLine($"Analyzing sentiment for documents:");
+            foreach (string document in documents)
             {
-                Debug.WriteLine($"    {input}");
+                Debug.WriteLine($"    {document}");
             }
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents);
             #endregion
 
             Debug.WriteLine($"Predicted sentiments are:");

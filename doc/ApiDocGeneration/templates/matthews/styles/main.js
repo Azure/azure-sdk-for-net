@@ -5,7 +5,7 @@ containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
 SELECTED_LANGUAGE = 'dotnet'
-BLOB_URI_PREFIX = 'https://azuresdkdocs.blob.core.windows.net/$web?restype=container&comp=list&prefix=dotnet/'
+BLOB_URI_PREFIX = 'https://azuresdkdocs.blob.core.windows.net/$web/dotnet/'
 
 ATTR1 = '[<span class="hljs-meta">System.ComponentModel.EditorBrowsable</span>]\n<'
 
@@ -92,27 +92,28 @@ function httpGetAsync(targetUrl, callback) {
 }
 
 function populateOptions(selector, packageName) {
-    var versionRequestUrl = BLOB_URI_PREFIX + packageName + "/versions/"
+    var versionRequestUrl = BLOB_URI_PREFIX + packageName + "/versioning/versions"
 
     httpGetAsync(versionRequestUrl, function (responseText) {
         var versionselector = document.createElement("select")
+        var cv = WINDOW_CONTENTS[6]
+
         versionselector.className = 'navbar-version-select'
         if (responseText) {
-            parser = new DOMParser();
-            xmlDoc = parser.parseFromString(responseText, "text/xml");
-
-            nameElements = Array.from(xmlDoc.getElementsByTagName('Name'))
-            options = []
-
-            for (var i in nameElements) {
-                options.push(nameElements[i].textContent.split('/')[3])
-            }
-
+            options = responseText.match(/[^\r\n]+/g)
             for (var i in options) {
                 $(versionselector).append('<option value="' + options[i] + '">' + options[i] + '</option>')
             }
         }
-        $(versionselector).val(WINDOW_CONTENTS[6]);
+
+        if(cv === 'latest')
+        {
+            $(versionselector).selectedIndex = 0
+        }
+        else {
+            $(versionselector).val(cv);
+        }
+        
         $(selector).append(versionselector)
 
         $(versionselector).change(function () {
@@ -127,21 +128,13 @@ function populateOptions(selector, packageName) {
 
 
 function populateIndexList(selector, packageName) {
-    url = BLOB_URI_PREFIX + packageName + "/versions/"
+    url = BLOB_URI_PREFIX + packageName + "/versioning/versions"
 
     httpGetAsync(url, function (responseText) {
 
         var publishedversions = document.createElement("ul")
         if (responseText) {
-            parser = new DOMParser();
-            xmlDoc = parser.parseFromString(responseText, "text/xml");
-
-            nameElements = Array.from(xmlDoc.getElementsByTagName('Name'))
-            options = []
-
-            for (var i in nameElements) {
-                options.push(nameElements[i].textContent.split('/')[3])
-            }
+            options = responseText.match(/[^\r\n]+/g)
 
             for (var i in options) {
                 $(publishedversions).append('<li><a href="' + getPackageUrl(SELECTED_LANGUAGE, packageName, options[i]) + '" target="_blank">' + options[i] + '</a></li>')

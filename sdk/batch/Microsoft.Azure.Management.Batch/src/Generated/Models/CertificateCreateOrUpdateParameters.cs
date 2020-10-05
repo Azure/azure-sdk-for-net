@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="etag">The ETag of the resource, used for concurrency
         /// statements.</param>
         /// <param name="thumbprintAlgorithm">The algorithm of the certificate
-        /// thumbprint</param>
-        /// <param name="thumbprint">The thumbprint of the certificate</param>
+        /// thumbprint.</param>
+        /// <param name="thumbprint">The thumbprint of the certificate.</param>
         /// <param name="format">The format of the certificate - either Pfx or
         /// Cer. If omitted, the default is Pfx. Possible values include:
         /// 'Pfx', 'Cer'</param>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the algorithm of the certificate thumbprint
+        /// Gets or sets the algorithm of the certificate thumbprint.
         /// </summary>
         /// <remarks>
         /// This must match the first portion of the certificate name.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the thumbprint of the certificate
+        /// Gets or sets the thumbprint of the certificate.
         /// </summary>
         /// <remarks>
         /// This must match the thumbprint from the name.
@@ -104,8 +104,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the password to access the certificate's private key.
         /// </summary>
         /// <remarks>
-        /// This is required if the certificate format is pfx and must be
-        /// omitted if the certificate format is cer.
+        /// This must not be specified if the certificate format is Cer.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.password")]
         public string Password { get; set; }

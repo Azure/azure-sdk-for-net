@@ -126,11 +126,17 @@ namespace Sql.Tests
             Assert.Equal(usageName, actual.Name.Value);
         }
 
-        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location, string instancePoolId = null)
+        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location, string instancePoolId = null, bool shouldCheckState = false)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
             Assert.Equal(login, actual.AdministratorLogin);
+
+            if (shouldCheckState)
+            {
+                Assert.Equal("Succeeded", actual.ProvisioningState);
+            }
+
             SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
 
             if (instancePoolId != null)
@@ -140,6 +146,16 @@ namespace Sql.Tests
 
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
+        }
+
+        public static void ValidateManagedInstanceOperation(ManagedInstanceOperation actual, string operationName, string operationFriendlyName, int percentComplete, string state, bool isCancellable)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(operationName, actual.Name);
+            Assert.Equal(operationFriendlyName, actual.OperationFriendlyName);
+            Assert.Equal(percentComplete, actual.PercentComplete);
+            Assert.Equal(state, actual.State);
+            Assert.Equal(isCancellable, actual.IsCancellable);
         }
 
         public static void ValidateDatabase(dynamic expected, Database actual, string name)
@@ -205,6 +221,11 @@ namespace Sql.Tests
             if (expected.ReadReplicaCount != null)
             {
                 Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
+            }
+
+            if (!string.IsNullOrEmpty(expected.StorageAccountType))
+            {
+                Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
             }
         }
 

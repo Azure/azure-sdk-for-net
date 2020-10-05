@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 StorageTarget storageTarget;
                 var suffix = "cre";
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 StorageTarget storageTarget;
                 try
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 StorageTarget storageTarget;
                 try
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageTarget = this.storageAccountsFixture.AddClfsStorageAccount(context, suffix: "del", waitForPermissions: false, testOutputHelper: this.testOutputHelper);
                 TestUtilities.Wait(new TimeSpan(0, 0, 60));
@@ -184,12 +184,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
                 var blobContainer = this.storageAccountsFixture.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount);
 
-                string invalidSubscription = Guid.NewGuid().ToString();
+                string invalidSubscription = "AAAAAAAA-BBBB-CCCC-DDDD-AAAAAAAAAAAA";
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     storageAccount.Name,
                     blobContainer.Name,
@@ -205,8 +205,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                         this.testOutputHelper,
                         maxRequestTries: 0));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
-                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
-                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
+                Assert.Contains("LinkedAuthorizationFailed", ex.Body.Error.Code);
             }
         }
 
@@ -220,7 +219,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     "invalidsa",
@@ -254,7 +253,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
 
@@ -290,7 +289,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
                 var blobContainer = this.storageAccountsFixture.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount);
@@ -327,7 +326,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
                 var blobContainer = this.storageAccountsFixture.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount, testOutputHelper: this.testOutputHelper);
@@ -337,7 +336,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                     blobContainer.Name,
                     string.Empty);
                 storageTargetParameters.Junctions = new List<NamespaceJunction>() { };
-                var exceptionTarget = "";
+                var exceptionTarget = string.Empty;
                 CloudErrorException ex;
                 DateTimeOffset startTime = DateTimeOffset.Now;
                 do
@@ -352,8 +351,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                         maxRequestTries: 0));
                     exceptionTarget = ex.Body.Error.Target;
                     if (DateTimeOffset.Now.Subtract(startTime).TotalSeconds > 600)
+                    {
                         throw new TimeoutException();
-                } while (exceptionTarget != "storageTarget.junctions");
+                    }
+                }
+                while (exceptionTarget != "storageTarget.junctions");
 
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
@@ -373,7 +375,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
                     "storageAccount",
@@ -406,7 +408,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
                 var blobContainer = this.storageAccountsFixture.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount, testOutputHelper: this.testOutputHelper);
@@ -430,8 +432,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                         maxRequestTries: 0));
                     exceptionTarget = ex.Body.Error.Target;
                     if (DateTimeOffset.Now.Subtract(startTime).TotalSeconds > 600)
+                    {
                         throw new TimeoutException();
-                } while (exceptionTarget != "storageTarget.junctions.namespacePath");
+                    }
+                }
+                while (exceptionTarget != "storageTarget.junctions.namespacePath");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
@@ -450,7 +455,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>

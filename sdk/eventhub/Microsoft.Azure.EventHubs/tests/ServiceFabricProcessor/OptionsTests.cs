@@ -13,7 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class OptionsTests
     {
-        [Fact]
+        [Fact(Skip ="Intermittent failures.  Tracked by #12929")]
         [DisplayTestMethodName]
         public void SimpleOptionsTest()
         {

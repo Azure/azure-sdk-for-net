@@ -48,6 +48,18 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol ArgumentOutOfRangeError { get; } = AmqpConstants.Vendor + ":argument-out-of-range";
 
         /// <summary>
+        ///   Indicates that a sequence number was out of order.
+        /// </summary>
+        ///
+        public static AmqpSymbol SequenceOutOfOrderError { get; } = AmqpConstants.Vendor + ":out-of-order-sequence";
+
+        /// <summary>
+        ///   Indicates that a partition was stolen by another producer with exclusive access.
+        /// </summary>
+        ///
+        public static AmqpSymbol ProducerStolenError { get; } = AmqpConstants.Vendor + ":producer-epoch-stolen";
+
+        /// <summary>
         ///   The expression to test for when the service returns a "Not Found" response to determine the context.
         /// </summary>
         ///
@@ -179,6 +191,20 @@ namespace Azure.Messaging.EventHubs
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ConsumerDisconnected);
             }
 
+            // The producer was superseded by one with a higher owner level.
+
+            if (string.Equals(condition, ProducerStolenError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ProducerDisconnected);
+            }
+
+            // The client-supplied sequence number was not in the expected order.
+
+            if (string.Equals(condition, SequenceOutOfOrderError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.InvalidClientState);
+            }
+
             // Authorization was denied.
 
             if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase))
@@ -191,6 +217,14 @@ namespace Azure.Messaging.EventHubs
             if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.QuotaExceeded);
+            }
+
+            // The link was closed, generally this exception would be thrown for partition specific producers and would be caused by race conditions
+            // between an operation and a request to close a client.
+
+            if (string.Equals(condition, AmqpErrorCode.IllegalState.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ClientClosed);
             }
 
             // The service does not understand how to process the request.

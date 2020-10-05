@@ -82,18 +82,7 @@
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "AZURE_CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
+
         "APPCONFIGURATION_CONNECTION_STRING": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores',variables('uniqueAzConfigName')), '2019-02-01-preview').value[0].connectionString]"
