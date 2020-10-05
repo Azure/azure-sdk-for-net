@@ -24,7 +24,7 @@ namespace Azure.Data.AppConfiguration.Performance
 
         private static readonly ConfigurationClient s_configurationClient = new ConfigurationClient(s_mockConnectionString, new ConfigurationClientOptions()
         {
-            Transport = new HttpClientTransport(new HttpClient(s_getResponseMessage))
+            Transport = new HttpClientTransport(s_getResponseMessage)
         });
 
         private static readonly byte[] s_getResponseBytes = Encoding.UTF8.GetBytes(
