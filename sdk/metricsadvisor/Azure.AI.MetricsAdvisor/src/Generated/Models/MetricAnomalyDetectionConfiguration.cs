@@ -33,7 +33,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesGroupDetectionConditions = seriesGroupDetectionConditions;
             SeriesDetectionConditions = seriesDetectionConditions;
         }
-        /// <summary> anomaly detection configuration description. </summary>
-        public string Description { get; set; }
     }
 }

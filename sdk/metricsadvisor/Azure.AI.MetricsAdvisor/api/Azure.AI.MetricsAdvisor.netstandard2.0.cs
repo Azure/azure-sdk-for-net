@@ -5,8 +5,6 @@ namespace Azure.AI.MetricsAdvisor
         protected MetricsAdvisorClient() { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
-        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> CreateMetricFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> CreateMetricFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AlertResult> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,8 +59,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         protected MetricsAdvisorAdministrationClient() { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
-        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> CreateAnomalyAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> CreateAnomalyAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> CreateDataFeed(string dataFeedName, Azure.AI.MetricsAdvisor.Models.DataFeedSource dataSource, Azure.AI.MetricsAdvisor.Models.DataFeedGranularity dataFeedGranularity, Azure.AI.MetricsAdvisor.Models.DataFeedSchema dataFeedSchema, Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings dataFeedIngestionSettings, Azure.AI.MetricsAdvisor.Models.DataFeedOptions dataFeedOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -101,10 +97,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetDataFeedIngestionStatus(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetDataFeedIngestionStatusAsync(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDataFeed(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDataFeedAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateHook(string hookId, Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateHookAsync(string hookId, Azure.AI.MetricsAdvisor.Models.AlertingHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.MetricAnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.MetricAnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsAdvisorAdministrationClientOptions : Azure.Core.ClientOptions
     {
@@ -422,7 +422,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public int? DataSourceRequestConcurrency { get { throw null; } set { } }
         public System.TimeSpan? IngestionRetryDelay { get { throw null; } set { } }
         public System.TimeSpan? IngestionStartOffset { get { throw null; } set { } }
-        public System.DateTimeOffset IngestionStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset IngestionStartTime { get { throw null; } }
         public System.TimeSpan? StopRetryAfter { get { throw null; } set { } }
     }
     public partial class DataFeedIngestionStatus
@@ -435,8 +435,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class DataFeedMetric
     {
         public DataFeedMetric(string metricName) { }
-        public string MetricDescription { get { throw null; } }
-        public string MetricDisplayName { get { throw null; } }
+        public string MetricDescription { get { throw null; } set { } }
+        public string MetricDisplayName { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
         public string MetricName { get { throw null; } }
     }
@@ -822,7 +822,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class InfluxDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
-        public InfluxDbDataFeedSource(string connectionString, string database, string userName, string password, string query) { }
+        public InfluxDbDataFeedSource(string connectionString, string database, string username, string password, string query) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionStatusType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.IngestionStatusType>
@@ -869,9 +869,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MetricAnomalyAlertConfigurationsOperator(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod And { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod Or { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod Xor { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator And { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator Or { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator Xor { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1135,7 +1135,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string CertificateKey { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }

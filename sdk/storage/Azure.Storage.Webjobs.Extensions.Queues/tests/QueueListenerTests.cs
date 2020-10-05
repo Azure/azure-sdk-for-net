@@ -17,7 +17,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure;
@@ -25,10 +24,11 @@ using Azure.Core.TestFramework;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueListenerTests : IClassFixture<QueueListenerTests.TestFixture>
+    public class QueueListenerTests
     {
         private Mock<QueueClient> _mockQueue;
         private QueueListener _listener;
@@ -38,10 +38,21 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         private ILoggerFactory _loggerFactory;
         private TestLoggerProvider _loggerProvider;
 
-        public QueueListenerTests(TestFixture fixture)
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
-            Fixture = fixture;
+            Fixture = new TestFixture();
+        }
 
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            Fixture.Dispose();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), null);
             _mockQueue.Setup(x => x.Name).Returns("testqueue");
 
@@ -68,13 +79,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
         public TestFixture Fixture { get; set; }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void ScaleMonitor_Id_ReturnsExpectedValue()
         {
-            Assert.Equal("testfunction-queuetrigger-testqueue", _listener.Descriptor.Id);
+            Assert.AreEqual("testfunction-queuetrigger-testqueue", _listener.Descriptor.Id);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
             var queuesOptions = new QueuesOptions();
@@ -85,9 +98,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var metrics = await listener.GetMetricsAsync();
 
-            Assert.Equal(0, metrics.QueueLength);
-            Assert.Equal(TimeSpan.Zero, metrics.QueueTime);
-            Assert.NotEqual(default(DateTime), metrics.Timestamp);
+            Assert.AreEqual(0, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // add some test messages
             for (int i = 0; i < 5; i++)
@@ -99,16 +112,17 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             metrics = await listener.GetMetricsAsync();
 
-            Assert.Equal(5, metrics.QueueLength);
+            Assert.AreEqual(5, metrics.QueueLength);
             Assert.True(metrics.QueueTime.Ticks > 0);
-            Assert.NotEqual(default(DateTime), metrics.Timestamp);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // verify non-generic interface works as expected
             metrics = (QueueTriggerMetrics)(await ((IScaleMonitor)listener).GetMetricsAsync());
-            Assert.Equal(5, metrics.QueueLength);
+            Assert.AreEqual(5, metrics.QueueLength);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task GetMetrics_HandlesStorageExceptions()
         {
             var exception = new RequestFailedException(
@@ -121,15 +135,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var metrics = await _listener.GetMetricsAsync();
 
-            Assert.Equal(0, metrics.QueueLength);
-            Assert.Equal(TimeSpan.Zero, metrics.QueueTime);
-            Assert.NotEqual(default(DateTime), metrics.Timestamp);
+            Assert.AreEqual(0, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
-            Assert.Equal("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+            Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_NoMetrics_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -138,14 +153,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             };
 
             var status = _listener.GetScaleStatus(context);
-            Assert.Equal(ScaleVote.None, status.Vote);
+            Assert.AreEqual(ScaleVote.None, status.Vote);
 
             // verify the non-generic implementation works properly
             status = ((IScaleMonitor)_listener).GetScaleStatus(context);
-            Assert.Equal(ScaleVote.None, status.Vote);
+            Assert.AreEqual(ScaleVote.None, status.Vote);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_MessagesPerWorkerThresholdExceeded_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -166,15 +182,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleOut, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("QueueLength (2900) > workerCount (1) * 1,000", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("QueueLength (2900) > workerCount (1) * 1,000", log.FormattedMessage);
             log = logs[1];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal($"Length of queue (testqueue, 2900) is too high relative to the number of instances (1).", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual($"Length of queue (testqueue, 2900) is too high relative to the number of instances (1).", log.FormattedMessage);
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -183,10 +199,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 Metrics = queueTriggerMetrics
             };
             status = ((IScaleMonitor)_listener).GetScaleStatus(context2);
-            Assert.Equal(ScaleVote.ScaleOut, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueLengthIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -206,15 +223,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleOut, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue length is increasing for 'testqueue'", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue length is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueTimeIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -234,15 +252,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleOut, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue time is increasing for 'testqueue'", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue time is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueLengthDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -262,15 +281,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleIn, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue length is decreasing for 'testqueue'", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue length is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueTimeDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -290,15 +310,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleIn, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue time is decreasing for 'testqueue'", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue time is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueSteady_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -318,15 +339,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.None, status.Vote);
+            Assert.AreEqual(ScaleVote.None, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue 'testqueue' is steady", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue 'testqueue' is steady", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_QueueIdle_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -346,15 +368,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.ScaleIn, status.Vote);
+            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
-            Assert.Equal("Queue 'testqueue' is idle", log.FormattedMessage);
+            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Information, log.Level);
+            Assert.AreEqual("Queue 'testqueue' is idle", log.FormattedMessage);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void GetScaleStatus_UnderSampleCountThreshold_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -369,10 +392,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var status = _listener.GetScaleStatus(context);
 
-            Assert.Equal(ScaleVote.None, status.Vote);
+            Assert.AreEqual(ScaleVote.None, status.Vote);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task UpdatedQueueMessage_RetainsOriginalProperties()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -398,22 +422,24 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             // pull the message and process it again (to have it go through the poison queue flow)
             messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.Equal(2, messageFromCloud.DequeueCount);
+            Assert.AreEqual(2, messageFromCloud.DequeueCount);
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
 
             // Make sure the message was processed and deleted.
             QueueProperties queueProperties = await queue.GetPropertiesAsync();
-            Assert.Equal(0, queueProperties.ApproximateMessagesCount);
+            Assert.AreEqual(0, queueProperties.ApproximateMessagesCount);
 
             // The Listener has inserted a message to the poison queue.
             QueueProperties poisonQueueProperties = await poisonQueue.GetPropertiesAsync();
-            Assert.Equal(1, poisonQueueProperties.ApproximateMessagesCount);
+            Assert.AreEqual(1, poisonQueueProperties.ApproximateMessagesCount);
 
             mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) revisit this test if we put recordings in place, we don't use stateful message in V12")]
+        [Test]
+        [WebJobsLiveOnly]
+        [Ignore("TODO (kasobol-msft) revisit this test if we put recordings in place, we don't use stateful message in V12")]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -445,15 +471,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromSeconds(4), CancellationToken.None);
 
             // Check to make sure the renewal occurred.
-            Assert.NotEqual(messageFromCloud.NextVisibleOn, previousNextVisibleTime);
-            Assert.NotEqual(messageFromCloud.PopReceipt, previousPopReceipt);
+            Assert.AreNotEqual(messageFromCloud.NextVisibleOn, previousNextVisibleTime);
+            Assert.AreNotEqual(messageFromCloud.PopReceipt, previousPopReceipt);
 
             // Make sure the message was processed and deleted.
             QueueProperties queueProperties = await queue.GetPropertiesAsync();
-            Assert.Equal(0, queueProperties.ApproximateMessagesCount);
+            Assert.AreEqual(0, queueProperties.ApproximateMessagesCount);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public void CreateQueueProcessor_CreatesProcessorCorrectly()
         {
             QueueClient poisonQueue = null;
@@ -471,7 +498,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
             QueueProcessor queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.False(processorFactoryInvoked);
-            Assert.NotSame(expectedQueueProcessor, queueProcessor);
+            Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
@@ -481,9 +508,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 {
                     processorFactoryInvoked = true;
 
-                    Assert.Same(queue, mockProcessorContext.Queue);
-                    Assert.Same(poisonQueue, mockProcessorContext.PoisonQueue);
-                    Assert.Equal(queueConfig.MaxDequeueCount, mockProcessorContext.MaxDequeueCount);
+                    Assert.AreSame(queue, mockProcessorContext.Queue);
+                    Assert.AreSame(poisonQueue, mockProcessorContext.PoisonQueue);
+                    Assert.AreEqual(queueConfig.MaxDequeueCount, mockProcessorContext.MaxDequeueCount);
                     Assert.NotNull(mockProcessorContext.Logger);
 
                     processorFactoryContext = mockProcessorContext;
@@ -500,7 +527,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             queue = new QueueClient(new Uri(string.Format("https://localhost/{0}", HostQueueNames.GetHostQueueName("12345"))));
             queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.True(processorFactoryInvoked);
-            Assert.Same(expectedQueueProcessor, queueProcessor);
+            Assert.AreSame(expectedQueueProcessor, queueProcessor);
 
             // create for application queue - expect processor factory to be invoked
             poisonMessageHandlerInvoked = false;
@@ -508,7 +535,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
             queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.True(processorFactoryInvoked);
-            Assert.Same(expectedQueueProcessor, queueProcessor);
+            Assert.AreSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
@@ -517,12 +544,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             processorFactoryInvoked = false;
             queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null);
             Assert.True(processorFactoryInvoked);
-            Assert.Same(expectedQueueProcessor, queueProcessor);
+            Assert.AreSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.False(poisonMessageHandlerInvoked);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task ProcessMessageAsync_Success()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -534,7 +562,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -548,13 +577,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
-#pragma warning disable xUnit2002 // Do not use null check on value type
             Assert.NotNull(result);
-#pragma warning restore xUnit2002 // Do not use null check on value type
             await result.Wait;
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task GetMessages_ChecksQueueExistence_UntilQueueExists()
         {
             var cancellationToken = new CancellationToken();
@@ -583,7 +611,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task GetMessages_ResetsQueueExistenceCheck_OnException()
         {
             var cancellationToken = new CancellationToken();
@@ -605,7 +634,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task ProcessMessageAsync_QueueBeginProcessingMessageReturnsFalse_MessageNotProcessed()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -614,7 +644,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        [LiveFact]
+        [Test]
+        [WebJobsLiveOnly]
         public async Task ProcessMessageAsync_FunctionInvocationFails()
         {
             CancellationToken cancellationToken = new CancellationToken();

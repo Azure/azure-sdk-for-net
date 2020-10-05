@@ -16,6 +16,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
 
+        /// <summary>Form containing selection marks used for model training.</summary>
+        public const string FormSelectionMarks = "selectionmark_form1.pdf";
+
         /// <summary>An itemized en-US receipt.</summary>
         public const string ReceiptJpg = "contoso-receipt.jpg";
 

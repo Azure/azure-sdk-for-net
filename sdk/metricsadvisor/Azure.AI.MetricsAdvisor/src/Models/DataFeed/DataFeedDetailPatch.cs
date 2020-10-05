@@ -2,22 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class DataFeedDetailPatch
     {
-        private IList<string> _rollUpColumns;
-        private IList<string> _admins;
-        private IList<string> _viewers;
-
-        public IList<string> RollUpColumns { get => _rollUpColumns; set => _rollUpColumns = value ?? new ChangeTrackingList<string>(); }
+        public IList<string> RollUpColumns { get; set; }
 
         /// <summary> the identification value for the row of calculated all-up value. </summary>
-        public IList<string> Admins { get => _admins; set => _admins = value ?? new ChangeTrackingList<string>(); }
+        public IList<string> Admins { get; set; }
 
         /// <summary> data feed viewer. </summary>
-        public IList<string> Viewers { get => _viewers; set => _viewers = value ?? new ChangeTrackingList<string>(); }
+        public IList<string> Viewers { get; set; }
     }
 }

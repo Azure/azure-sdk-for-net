@@ -5,7 +5,6 @@ languages:
 products:
 - azure
 - azure-key-vault
-urlFragment: keyvaultproxy
 name: Cache certain responses from Key Vault
 description: Shows how to implement a pipeline policy to cache certain responses from Key Vault to mitigate rate limiting.
 ---
@@ -18,9 +17,9 @@ This is a sample showing how to use an `HttpPipelinePolicy` to cache and proxy s
 
 To use this sample, you will need to install the [Azure.Core](https://nuget.org/packages/Azure.Core) package, which is installed automatically when installing any of the Azure Key Vault packages:
 
-* [Azure.Security.KeyVault.Certificates](https://nuget.org/packages/Azure.Security.KeyVault.Certificates)
-* [Azure.Security.KeyVault.Keys](https://nuget.org/packages/Azure.Security.KeyVault.Keys)
-* [Azure.Security.KeyVault.Secrets](https://nuget.org/packages/Azure.Security.KeyVault.Secrets)
+* [Azure.Security.KeyVault.Certificates](https://nuget.org/packages/Azure.Security.KeyVault.Certificates/)
+* [Azure.Security.KeyVault.Keys](https://nuget.org/packages/Azure.Security.KeyVault.Keys/)
+* [Azure.Security.KeyVault.Secrets](https://nuget.org/packages/Azure.Security.KeyVault.Secrets/)
 
 Once you build this project, you can reference this sample in your own project by either:
 

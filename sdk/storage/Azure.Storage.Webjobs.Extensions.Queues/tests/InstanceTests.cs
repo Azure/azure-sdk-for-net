@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Moq;
-using Xunit;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class InstanceTests
     {
         private const string QueueName = "input-instancetests";
-        private readonly StorageAccount account;
+        private StorageAccount account;
 
-        public InstanceTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
+            account = AzuriteNUnitFixture.Instance.GetAccount();
             account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_CanBeInstanceMethod()
         {
             // Arrange
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.MessageText);
+            Assert.AreEqual(expectedGuid, result.MessageText);
         }
 
         private class InstanceProgram : IProgramWithResult<QueueMessage>
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_CanBeAsyncInstanceMethod()
         {
             // Arrange
@@ -81,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.MessageText);
+            Assert.AreEqual(expectedGuid, result.MessageText);
         }
 
         private class InstanceAsyncProgram : IProgramWithResult<QueueMessage>
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ this test should apply to any trigger and be in the Unit tests.
-        [Fact]
+        [Test]
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
@@ -129,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ Not really a queue test
-        [Fact]
+        [Test]
         public async Task Trigger_IfClassConstructorHasDependencies_CanUseCustomJobActivator()
         {
             // Arrange
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<string>(InstanceCustomActivatorProgram.TaskSource);
 
             // Assert
-            Assert.Same(expectedResult, result);
+            Assert.AreSame(expectedResult, result);
         }
 
         private class InstanceCustomActivatorProgram

@@ -26,15 +26,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string PreviousValueValue = "PreviousValue";
         private const string CustomValueValue = "CustomValue";
         private const string NoFillingValue = "NoFilling";
-
-        /// <summary> SmartFilling. </summary>
-        public static DataFeedMissingDataPointFillType SmartFilling { get; } = new DataFeedMissingDataPointFillType(SmartFillingValue);
-        /// <summary> PreviousValue. </summary>
-        public static DataFeedMissingDataPointFillType PreviousValue { get; } = new DataFeedMissingDataPointFillType(PreviousValueValue);
-        /// <summary> CustomValue. </summary>
-        public static DataFeedMissingDataPointFillType CustomValue { get; } = new DataFeedMissingDataPointFillType(CustomValueValue);
-        /// <summary> NoFilling. </summary>
-        public static DataFeedMissingDataPointFillType NoFilling { get; } = new DataFeedMissingDataPointFillType(NoFillingValue);
         /// <summary> Determines if two <see cref="DataFeedMissingDataPointFillType"/> values are the same. </summary>
         public static bool operator ==(DataFeedMissingDataPointFillType left, DataFeedMissingDataPointFillType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedMissingDataPointFillType"/> values are not the same. </summary>
