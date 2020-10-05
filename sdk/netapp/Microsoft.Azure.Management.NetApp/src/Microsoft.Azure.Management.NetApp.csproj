@@ -20,8 +20,7 @@
 					- Added PoolChange operation to volumes. Moves volume to another pool
 					- Added status enum to ActiveDirectory
 					- Added adName, kdcIP, serverRootCACertificate optional parameters to Activedirectory.
-					- Added totalThroughputMibps, utilizedThroughputMibps, qosType to Pool properties
-					- 
+					- Added totalThroughputMibps, utilizedThroughputMibps, qosType to Pool properties					
 					
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
