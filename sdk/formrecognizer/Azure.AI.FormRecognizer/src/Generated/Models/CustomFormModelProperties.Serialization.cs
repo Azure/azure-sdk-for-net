@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    internal partial class Attributes
+    public partial class CustomFormModelProperties
     {
-        internal static Attributes DeserializeAttributes(JsonElement element)
+        internal static CustomFormModelProperties DeserializeCustomFormModelProperties(JsonElement element)
         {
             Optional<bool> isComposed = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new Attributes(Optional.ToNullable(isComposed));
+            return new CustomFormModelProperties(isComposed);
         }
     }
 }

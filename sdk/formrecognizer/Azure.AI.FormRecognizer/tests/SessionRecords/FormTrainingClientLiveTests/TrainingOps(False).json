@@ -1723,14 +1723,14 @@
         "Content-Length": "334",
         "Content-Type": "application/json",
         "Date": "Wed, 09 Sep 2020 22:22:32 GMT",
-        "Retry-After": "37",
+        "Retry-After": "1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "code": "429",
-          "message": "Requests to the Form - List Custom Models Operation under Form Recognizer API (v2.1-preview.1) have exceeded rate limit of your current FormRecognizer S0 pricing tier. Please retry after 37 seconds. Please contact Azure support service if you would like to further increase the default rate limit."
+          "message": "Requests to the Form - List Custom Models Operation under Form Recognizer API (v2.1-preview.1) have exceeded rate limit of your current FormRecognizer S0 pricing tier. Please retry after 1 seconds. Please contact Azure support service if you would like to further increase the default rate limit."
         }
       }
     },
