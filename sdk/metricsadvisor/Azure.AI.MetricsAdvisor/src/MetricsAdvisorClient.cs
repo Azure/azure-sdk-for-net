@@ -13,6 +13,10 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
+    /// The client to use to connect to the Metrics Advisor Cognitive Service to query information
+    /// about the data being monitored, such as detected anomalies, alerts, incidents, and their
+    /// root causes. It also provides the ability to send feedback to the service to customize the
+    /// behavior of the machine learning models being used.
     /// </summary>
     public class MetricsAdvisorClient
     {
@@ -21,14 +25,23 @@ namespace Azure.AI.MetricsAdvisor
         private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
+        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential)
             : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -43,15 +56,24 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
-        public MetricsAdvisorClient(Uri endpoint, TokenCredential credential)
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
-        public MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -65,6 +87,8 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         protected MetricsAdvisorClient()
         {

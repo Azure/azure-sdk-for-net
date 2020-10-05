@@ -7,18 +7,20 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A Data feed source.
+    /// Describes an Azure Application Insights data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class AzureApplicationInsightsDataFeedSource : DataFeedSource
     {
+        // TODODOCS.
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureApplicationInsightsDataFeedSource"/> class.
         /// </summary>
-        /// <param name="azureCloud"> Azure cloud environment. </param>
-        /// <param name="applicationId"> Azure Application Insights ID. </param>
-        /// <param name="apiKey"> API Key. </param>
-        /// <param name="query"> Query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is null. </exception>
+        /// <param name="azureCloud"></param>
+        /// <param name="applicationId">The Application ID.</param>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="query"></param>
+        /// <exception cref="ArgumentNullException"><paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is empty.</exception>
         public AzureApplicationInsightsDataFeedSource(string azureCloud, string applicationId, string apiKey, string query)
             : base(DataFeedSourceType.AzureApplicationInsights)
         {

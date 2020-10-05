@@ -7,17 +7,18 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A Data feed source.
+    /// Describes a MongoDB data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class MongoDbDataFeedSource : DataFeedSource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MongoDbDataFeedSource"/> class.
         /// </summary>
-        /// <param name="connectionString"> MongoDB connection string. </param>
-        /// <param name="database"> Database name. </param>
-        /// <param name="command"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is null. </exception>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="database">The name of the database.</param>
+        /// <param name="command">The query to retrieve the data to be ingested.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is empty.</exception>
         public MongoDbDataFeedSource(string connectionString, string database, string command)
             : base(DataFeedSourceType.MongoDb)
         {

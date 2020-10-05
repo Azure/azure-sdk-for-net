@@ -35,27 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string MySqlValue = "MySql";
         private const string PostgreSqlValue = "PostgreSql";
         private const string SqlServerValue = "SqlServer";
-
-        /// <summary> AzureApplicationInsights. </summary>
-        public static DataFeedSourceType AzureApplicationInsights { get; } = new DataFeedSourceType(AzureApplicationInsightsValue);
-        /// <summary> AzureBlob. </summary>
-        public static DataFeedSourceType AzureBlob { get; } = new DataFeedSourceType(AzureBlobValue);
-        /// <summary> AzureDataExplorer. </summary>
-        public static DataFeedSourceType AzureDataExplorer { get; } = new DataFeedSourceType(AzureDataExplorerValue);
-        /// <summary> AzureDataLakeStorageGen2. </summary>
-        public static DataFeedSourceType AzureDataLakeStorageGen2 { get; } = new DataFeedSourceType(AzureDataLakeStorageGen2Value);
-        /// <summary> AzureTable. </summary>
-        public static DataFeedSourceType AzureTable { get; } = new DataFeedSourceType(AzureTableValue);
-        /// <summary> Elasticsearch. </summary>
-        public static DataFeedSourceType Elasticsearch { get; } = new DataFeedSourceType(ElasticsearchValue);
-        /// <summary> HttpRequest. </summary>
-        public static DataFeedSourceType HttpRequest { get; } = new DataFeedSourceType(HttpRequestValue);
-        /// <summary> MySql. </summary>
-        public static DataFeedSourceType MySql { get; } = new DataFeedSourceType(MySqlValue);
-        /// <summary> PostgreSql. </summary>
-        public static DataFeedSourceType PostgreSql { get; } = new DataFeedSourceType(PostgreSqlValue);
-        /// <summary> SqlServer. </summary>
-        public static DataFeedSourceType SqlServer { get; } = new DataFeedSourceType(SqlServerValue);
         /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are the same. </summary>
         public static bool operator ==(DataFeedSourceType left, DataFeedSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are not the same. </summary>

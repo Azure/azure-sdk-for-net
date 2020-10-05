@@ -37,15 +37,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             IdsOfHooksToAlert = idsOfHooksToAlert;
             MetricAlertConfigurations = metricAlertConfigurations;
         }
-        /// <summary> anomaly alerting configuration description. </summary>
-        public string Description { get; set; }
-        /// <summary>
-        /// cross metrics operator
-        /// 
-        /// 
-        /// 
-        /// should be specified when setting up multiple metric alerting configurations.
-        /// </summary>
-        public MetricAnomalyAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
     }
 }

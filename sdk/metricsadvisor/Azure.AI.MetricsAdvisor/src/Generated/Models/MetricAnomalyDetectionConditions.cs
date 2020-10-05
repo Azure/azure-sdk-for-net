@@ -10,10 +10,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WholeMetricConfiguration. </summary>
     public partial class MetricAnomalyDetectionConditions
     {
-        /// <summary> Initializes a new instance of MetricAnomalyDetectionConditions. </summary>
-        public MetricAnomalyDetectionConditions()
-        {
-        }
 
         /// <summary> Initializes a new instance of MetricAnomalyDetectionConditions. </summary>
         /// <param name="crossConditionsOperator">

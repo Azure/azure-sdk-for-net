@@ -28,13 +28,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string MinimumValue = "Min";
         private const string AverageValue = "Avg";
         private const string CountValue = "Count";
-
-        /// <summary> None. </summary>
-        public static DataFeedAutoRollupMethod None { get; } = new DataFeedAutoRollupMethod(NoneValue);
-        /// <summary> Sum. </summary>
-        public static DataFeedAutoRollupMethod Sum { get; } = new DataFeedAutoRollupMethod(SumValue);
-        /// <summary> Count. </summary>
-        public static DataFeedAutoRollupMethod Count { get; } = new DataFeedAutoRollupMethod(CountValue);
         /// <summary> Determines if two <see cref="DataFeedAutoRollupMethod"/> values are the same. </summary>
         public static bool operator ==(DataFeedAutoRollupMethod left, DataFeedAutoRollupMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedAutoRollupMethod"/> values are not the same. </summary>

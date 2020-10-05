@@ -10,12 +10,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ValueCondition. </summary>
     public partial class MetricBoundaryCondition
     {
-        /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
-        /// <param name="direction"> value filter direction. </param>
-        public MetricBoundaryCondition(BoundaryDirection direction)
-        {
-            Direction = direction;
-        }
 
         /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
         /// <param name="lowerBound">
@@ -49,13 +43,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             CompanionMetricId = companionMetricId;
             TriggerForMissing = triggerForMissing;
         }
-        /// <summary>
-        /// trigger alert when the corresponding point is missing in the other metric
-        /// 
-        /// 
-        /// 
-        /// should be specified only when using other metric to filter.
-        /// </summary>
-        public bool? TriggerForMissing { get; set; }
     }
 }
