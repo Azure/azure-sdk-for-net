@@ -11,8 +11,8 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public WebJobsTestEnvironment()
         : base("storage") { }
 
-        public string PrimaryStorageAccountConnectionString => GetVariable("AzureWebJobsStorage".ToUpperInvariant());
+        public string PrimaryStorageAccountConnectionString => GetVariable("AZUREWEBJOBSSTORAGE");
 
-        public string SecondaryStorageAccountConnectionString => GetVariable("AzureWebJobsSecondaryStorage".ToUpperInvariant());
+        public string SecondaryStorageAccountConnectionString => GetVariable("AZUREWEBJOBSSECONDARYSTORAGE");
     }
 }

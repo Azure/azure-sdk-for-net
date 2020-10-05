@@ -401,11 +401,11 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
-    "AzureWebJobsStorage": {
+    "AZUREWEBJOBSSTORAGE": {
       "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('webjobsPrimaryAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsPrimaryAccountName')), variables('mgmtApiVersion')).keys[0].value,';EndpointSuffix=core.windows.net')]"
     },
-    "AzureWebJobsSecondaryStorage": {
+    "AZUREWEBJOBSSECONDARYSTORAGE": {
       "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('webjobsSecondaryAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('webjobsSecondaryAccountName')), variables('mgmtApiVersion')).keys[0].value,';EndpointSuffix=core.windows.net')]"
     },
