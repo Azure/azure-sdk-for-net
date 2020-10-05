@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
-    $package
+    [string]$package,
+    [string]$ReleaseDate
 )
 
 function Get-LevenshteinDistance {
@@ -74,8 +75,23 @@ function Get-LevenshteinDistance {
     }
 }
 
+function Get-ReleaseDay($baseDate)
+{
+    # Find first friday
+    while ($baseDate.DayOfWeek -ne 5)
+    {
+        $baseDate = $baseDate.AddDays(1)
+    }
+    
+    # Go to Tuesday
+    $baseDate = $baseDate.AddDays(4)
+
+    return $baseDate;
+}
+
 $ErrorPreference = 'Stop'
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
+$commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
 if (!(Get-Command az)) {
   throw 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
@@ -104,7 +120,41 @@ catch
     $existing = @()
 }
 
-$libraryType = "Preview";
+
+if (!$ReleaseDate)
+{
+    $currentDate = Get-Date
+    $thisMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1));
+    $nextMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1).AddMonths(1));
+    
+    if ($thisMonthReleaseDate -ge $currentDate)
+    {
+        # On track for this month release
+        $ParsedReleaseDate = $thisMonthReleaseDate
+    }
+    elseif ($currentDate.Day -lt 15)
+    {
+        # Catching up to this month release
+        $ParsedReleaseDate = $currentDate
+    }
+    else 
+    {
+        # Next month release
+        $ParsedReleaseDate = $nextMonthReleaseDate
+    }
+}
+else
+{
+    $ParsedReleaseDate = [datetime]::ParseExact($ReleaseDate, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
+}
+
+$releaseDateString = $ParsedReleaseDate.ToString("yyyy-MM-dd")
+$month = $ParsedReleaseDate.ToString("MMMM")
+
+Write-Host
+Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+
+$libraryType = "Beta";
 $latestVersion = $null;
 foreach ($existingVersion in $existing.versions)
 {
@@ -130,57 +180,70 @@ else
     Write-Host "No released version, library type $libraryType" -ForegroundColor Green
 }
 
-$newVersion = Read-Host -Prompt "Input the new version or press Enter to use use current project version '$currentProjectVersion'"
+$newVersion = Read-Host -Prompt "Input the new version, NA if you are not releasing, or press Enter to use use current project version '$currentProjectVersion'"
+$releasing = $true
 
 if (!$newVersion)
 {
     $newVersion = $currentProjectVersion;
 }
 
-if ($latestVersion)
+if ($newVersion -eq "NA")
 {
-    $releaseType = "None";
-    $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
-    if ($parsedNewVersion.Major -ne $parsedVersion.Major)
+    $releasing = $false
+}
+
+if ($releasing)
+{
+    if ($latestVersion)
     {
-        $releaseType = "Major"
+        $releaseType = "None";
+        $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
+        if ($parsedNewVersion.Major -ne $parsedVersion.Major)
+        {
+            $releaseType = "Major"
+        }
+        elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
+        {
+            $releaseType = "Minor"
+        }
+        elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
+        {
+            $releaseType = "Bugfix"
+        }
+        elseif ($parsedNewVersion.IsPrerelease)
+        {
+            $releaseType = "Bugfix"
+        }
     }
-    elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
+    else
     {
-        $releaseType = "Minor"
+        $releaseType = "Major";
     }
-    elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
-    {
-        $releaseType = "Bugfix"
+
+    Write-Host
+    Write-Host "Detected released type $releaseType" -ForegroundColor Green
+
+    Write-Host
+    Write-Host "Updating versions" -ForegroundColor Green
+
+    & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
+
+    $fields = @{
+        "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
+        "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
+        "Library Type"=$libraryType
+        "Release Type"=$releaseType
+        "Version Number"=$newVersion
+        "Planned Release Date"=$releaseDateString
     }
-    elseif ($parsedNewVersion.IsPrerelease)
-    {
-        $releaseType = "Bugfix"
-    }
+    $state = "Active"
 }
 else
 {
-    $releaseType = "Major";
+    $fields = @{}
+    $state = "Not In Release"
 }
-
-Write-Host
-Write-Host "Detected released type $releaseType" -ForegroundColor Green
-
-Write-Host
-Write-Host "Updating versions" -ForegroundColor Green
-
-& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion
-
-$date = Get-Date
-$month = $date.ToString("MMMM")
-if ($date.Day -gt 15)
-{
-    $month = $date.AddMonths(1).ToString("MMMM")
-}
-Write-Host
-Write-Host "Assuming release is in $month" -ForegroundColor Green
-
-$commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
 $workItems = az boards query @commonParameter --project Release --wiql "SELECT [ID], [State], [Iteration Path], [Title] FROM WorkItems WHERE [State] <> 'Closed' AND [Iteration Path] under 'Release\2020\$month' AND [Title] contains '.NET'" | ConvertFrom-Json;
 
@@ -205,25 +268,9 @@ if (!$issueId)
     $issueId = $mostProbable.fields."System.ID"
 }
 
-$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
-
-$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
-
-$notes = "> dotnet add package $package --version $newVersion`n`n";
-$notes += "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
-$changeLogEntry.ReleaseContent | %{ $notes += "$_`n" }
-
-$fields = @{
-    "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
-    "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
-    "Library Type"=$libraryType
-    "Release Type"=$releaseType
-    "Version Number"=$newVersion
-    "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
-}
-
 Write-Host
 Write-Host "Going to set the following fields:" -ForegroundColor Green
+Write-Host "    State = $state"
 
 foreach ($field in $fields.Keys)
 {
@@ -234,13 +281,9 @@ $decision = $Host.UI.PromptForChoice("Updating work item https://dev.azure.com/a
 
 if ($decision -eq 0)
 {
-    az boards work-item update @commonParameter --id $issueId --state Active > $null
+    az boards work-item update @commonParameter --id $issueId --state $state > $null
     foreach ($field in $fields.Keys)
     {
         az boards work-item update @commonParameter --id $issueId -f "$field=$($fields[$field])" > $null
     }
 }
-
-Write-Host
-Write-Host "Snippet for the centralized CHANGELOG:" -ForegroundColor Green
-Write-Host $notes

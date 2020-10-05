@@ -25,6 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<long> valueInteger = default;
             Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
             Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
+            Optional<FormSelectionMarkState> valueSelectionMark = default;
             Optional<string> text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
             Optional<float> confidence = default;
@@ -87,6 +88,11 @@ namespace Azure.AI.FormRecognizer.Models
                     valueObject = dictionary;
                     continue;
                 }
+                if (property.NameEquals("valueSelectionMark"))
+                {
+                    valueSelectionMark = property.Value.GetString().ToFormSelectionMarkState();
+                    continue;
+                }
                 if (property.NameEquals("text"))
                 {
                     text = property.Value.GetString();
@@ -123,7 +129,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
         }
     }
 }

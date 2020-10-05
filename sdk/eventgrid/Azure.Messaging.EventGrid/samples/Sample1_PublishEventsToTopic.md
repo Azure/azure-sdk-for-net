@@ -2,21 +2,21 @@
 
 This sample demonstrates how to publish both Event Grid and CloudEvent 1.0 schema events to the Event Grid service. You can publish events from your own application using the `EventGridPublisherClient`.
 
-To begin, create separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema. See the [Prerequisites](../#prerequisites) section of the README for more instructions on creating custom topics.
+To begin, create separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema. See the [Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/#prerequisites) section of the README for more instructions on creating custom topics.
 
 ## Creating and Authenticating `EventGridPublisherClient`
 Once you have your access key and topic endpoint, you can create the publisher client using the `AzureKeyCredential` class as follows:
-```csharp Snippet:CreateClient
+```C# Snippet:CreateClient
 EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
     new AzureKeyCredential(topicAccessKey));
 ```
 `EventGridPublisherClient` also accepts a set of configuring options through `EventGridPublisherClientOptions`. For example, specifying a custom serializer used to serialize the event data to JSON:
 
-```csharp Snippet:CreateClientWithOptions
+```C# Snippet:CreateClientWithOptions
 EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
 {
-    DataSerializer = myCustomDataSerializer
+    Serializer = myCustomDataSerializer
 };
 
 EventGridPublisherClient client = new EventGridPublisherClient(
@@ -33,7 +33,7 @@ Following that, invoke `SendEvents` or `SendEventsAsync` to publish the events t
 
 Note on `EventGridEvent`: each `EventGridEvent` has a set of required, non-nullable properties, including event data. `EventTime` and `Id` are also required properties that are set by default, but can also be manually set if needed.
 
-```csharp Snippet:SendEGEventsToTopic
+```C# Snippet:SendEGEventsToTopic
 // Add EventGridEvents to a list to publish to the topic
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
@@ -55,7 +55,7 @@ Following that, invoke `SendEvents` or `SendEventsAsync` to publish the events t
 
 Note on `CloudEvent`: each `CloudEvent` has a set of required, non-nullable properties. However, `Data` is *not required*. `Time` and `SpecVersion` are required properties that are set by default, but can also be manually set if needed. `Time` is also set by default, but not required.
 
-```csharp Snippet:SendCloudEventsToTopic
+```C# Snippet:SendCloudEventsToTopic
 // Add CloudEvents to a list to publish to the topic
 List<CloudEvent> eventsList = new List<CloudEvent>
 {
@@ -79,4 +79,4 @@ await client.SendEventsAsync(eventsList);
 ## Source
 
 To view the full example source, see:
-- [Sample1_SendEventsToTopicAndDomain.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)
+- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

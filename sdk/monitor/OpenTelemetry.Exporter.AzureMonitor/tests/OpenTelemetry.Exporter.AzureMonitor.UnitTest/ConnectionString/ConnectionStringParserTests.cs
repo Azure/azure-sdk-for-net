@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
 {
     public class ConnectionStringParserTests
     {
-        [Test]
+        [Fact]
         public void TestInstrumentationKey_IsRequired()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -18,7 +17,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestInstrumentationKey_CannotBeEmpty()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -27,7 +26,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestDefaultEndpoints()
         {
             RunTest(
@@ -36,7 +35,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestEndpointSuffix()
         {
             RunTest(
@@ -45,7 +44,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestEndpointSuffix_WithExplicitOverride()
         {
             RunTest(
@@ -54,7 +53,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestEndpointSuffix_WithLocation()
         {
             RunTest(
@@ -63,7 +62,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestEndpointSuffix_WithLocation_WithExplicitOverride()
         {
             RunTest(
@@ -72,7 +71,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestExpliticOverride_PreservesSchema()
         {
             RunTest(
@@ -81,7 +80,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
-        [Test]
+        [Fact]
         public void TestExpliticOverride_InvalidValue()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -90,7 +89,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestExpliticOverride_InvalidValue2()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -99,7 +98,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestExpliticOverride_InvalidValue3()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -108,7 +107,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestExpliticOverride_InvalidLocation()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -117,7 +116,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestMaliciousConnectionString()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -126,7 +125,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestParseConnectionString_Null()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -135,7 +134,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestParseConnectionString_Empty()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -144,7 +143,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 expectedInstrumentationKey: null));
         }
 
-        [Test]
+        [Fact]
         public void TestEndpointProvider_NoInstrumentationKey()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
@@ -157,8 +156,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         {
             ConnectionStringParser.GetValues(connectionString, out string ikey, out string endpoint);
 
-            Assert.AreEqual(expectedIngestionEndpoint, endpoint);
-            Assert.AreEqual(expectedInstrumentationKey, ikey);
+            Assert.Equal(expectedIngestionEndpoint, endpoint);
+            Assert.Equal(expectedInstrumentationKey, ikey);
         }
     }
 }

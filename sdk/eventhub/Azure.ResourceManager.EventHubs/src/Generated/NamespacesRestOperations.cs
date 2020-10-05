@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/ipfilterrules", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -144,6 +145,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -251,6 +253,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(ipFilterRuleName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -337,6 +340,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(ipFilterRuleName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -426,6 +430,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -483,6 +488,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -556,6 +562,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -645,6 +652,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(namespaceName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -721,6 +729,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(namespaceName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -806,6 +815,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -908,6 +918,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/virtualnetworkrules", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -993,6 +1004,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1100,6 +1112,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(virtualNetworkRuleName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1186,6 +1199,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(virtualNetworkRuleName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1280,6 +1294,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1376,6 +1391,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/networkRuleSets/default", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1459,6 +1475,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/authorizationRules", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1544,6 +1561,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1651,6 +1669,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1737,6 +1756,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1832,6 +1852,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1928,6 +1949,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2031,6 +2053,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -2100,6 +2123,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2186,6 +2210,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2252,6 +2277,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2328,6 +2354,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2414,6 +2441,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -6,19 +6,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        private readonly ServiceRestClient serviceRestClient;
+        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
 
@@ -43,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
@@ -53,13 +56,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return 0;
             }
 
-            List<TelemetryEnvelope> telemetryItems = new List<TelemetryEnvelope>();
-            TelemetryEnvelope telemetryItem;
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            TelemetryItem telemetryItem;
 
             foreach (var activity in batchActivity)
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.IKey = this.instrumentationKey;
+                telemetryItem.InstrumentationKey = this.instrumentationKey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }
@@ -68,75 +71,117 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (async)
             {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                // TODO: RequestFailedException is thrown when http response is not equal to 200 or 206. Implement logic to catch exception.
+                response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
             }
 
             // TODO: Handle exception, check telemetryItems has items
             return response.Value.ItemsAccepted.GetValueOrDefault();
         }
 
-        private static TelemetryEnvelope GeneratePartAEnvelope(Activity activity)
+        private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
-            // TODO: Get TelemetryEnvelope name changed in swagger
-            TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            // TODO: Validate if Azure SDK has common function to generate role instance
-            envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
-
-            envelope.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture));
+            ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
+            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
+            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
+            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             if (activity.Parent != null)
             {
-                envelope.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
+                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
+            }
+            // TODO: Handle exception
+            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+
+            return telemetryItem;
+        }
+
+        internal static void ExtractRoleInfo(Resource resource, out string roleName, out string roleInstance)
+        {
+            if (resource == null)
+            {
+                roleName = null;
+                roleInstance = null;
+                return;
             }
 
-            // TODO: "ai.location.ip"
-            // TODO: Handle exception
-            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            string serviceName = null;
+            string serviceNamespace = null;
+            roleInstance = null;
 
-            return envelope;
+            foreach (var attribute in resource.Attributes)
+            {
+                if (attribute.Key == Resource.ServiceNameKey && attribute.Value is string)
+                {
+                    serviceName = attribute.Value.ToString();
+                }
+                else if (attribute.Key == Resource.ServiceNamespaceKey && attribute.Value is string)
+                {
+                    serviceNamespace = attribute.Value.ToString();
+                }
+                else if (attribute.Key == Resource.ServiceInstanceIdKey && attribute.Value is string)
+                {
+                    roleInstance = attribute.Value.ToString();
+                }
+            }
+
+            if (serviceName != null && serviceNamespace != null)
+            {
+                roleName = string.Concat(serviceNamespace, ".", serviceName);
+            }
+            else
+            {
+                roleName = serviceName;
+            }
         }
 
         private MonitorBase GenerateTelemetryData(Activity activity)
         {
-            MonitorBase telemetry = new MonitorBase();
-
             var telemetryType = activity.GetTelemetryType();
-            telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
-            string url = GetHttpUrl(activity.Tags);
+            var activityType = activity.TagObjects.ToAzureMonitorTags(out var partBTags, out var PartCTags);
+            MonitorBase telemetry = new MonitorBase
+            {
+                BaseType = Telemetry_Base_Type_Mapping[telemetryType]
+            };
 
             if (telemetryType == TelemetryType.Request)
             {
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), activity.GetStatus().IsOk, activity.GetStatusCode())
+                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
+                var statusCode = GetHttpStatusCode(partBTags);
+                var success = GetSuccessFromHttpStatusCode(statusCode);
+                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
                     // TODO: Handle request.source.
                 };
 
-                // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(request.Properties, activity.Tags);
+                // TODO: Handle activity.TagObjects, extract well-known tags
+                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
 
                 telemetry.BaseData = request;
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
+                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
-                    Id = activity.Context.SpanId.ToHexString(),
-                    Success = activity.GetStatus().IsOk
+                    Id = activity.Context.SpanId.ToHexString()
                 };
 
                 // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
+                // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
 
-                if (url != null)
+                if (activityType == PartBType.Http)
                 {
-                    dependency.Data = url;
+                    dependency.Data = UrlHelper.GetUrl(partBTags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    dependency.ResultCode = activity.GetStatusCode();
+                    var statusCode = GetHttpStatusCode(partBTags);
+                    dependency.ResultCode = statusCode;
+                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
                 }
 
                 // TODO: Handle dependency.target.
@@ -146,30 +191,27 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetry;
         }
 
-        private static string GetHttpUrl(IEnumerable<KeyValuePair<string, string>> tags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetHttpStatusCode(Dictionary<string, string> tags)
         {
-            var httpTags = tags.Where(item => item.Key.StartsWith("http.", StringComparison.InvariantCulture))
-                               .ToDictionary(item => item.Key, item => item.Value);
-
-
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url);
-            if (url != null)
+            if (tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
             {
-                return url;
+                return status;
             }
 
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost);
+            return "0";
+        }
 
-            if (httpHost != null)
-            {
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                url = httpScheme + httpHost  + httpTarget;
-                return url;
-            }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool GetSuccessFromHttpStatusCode(string statusCode)
+        {
+            return statusCode == "200" || statusCode == "Ok";
+        }
 
-            // TODO: Follow spec - https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetMessagingUrl(Dictionary<string, string> tags)
+        {
+            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
             return url;
         }
 

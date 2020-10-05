@@ -46,8 +46,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
-            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
+        /// <param name="skipMetricValidation">Allows creating an alert rule on
+        /// a custom metric that isn't yet emitted, by causing the metric
+        /// validation to be skipped.</param>
+        public MetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
+            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions, skipMetricValidation)
         {
             OperatorProperty = operatorProperty;
             Threshold = threshold;

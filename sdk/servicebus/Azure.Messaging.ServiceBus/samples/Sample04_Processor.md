@@ -76,4 +76,4 @@ await processor.StopProcessingAsync();
 
 To see the full example source, see:
 
-* [Sample04_Processor.cs](../tests/Samples/Sample04_Processor.cs)
+* [Sample04_Processor.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample04_Processor.cs)

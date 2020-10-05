@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [EnumMember(Value = "spread")]
         Spread,
         /// <summary>
-        /// As many Tasks as possible (maxTasksPerNode) should be assigned to
+        /// As many Tasks as possible (taskSlotsPerNode) should be assigned to
         /// each Compute Node in the Pool before any Tasks are assigned to the
         /// next Compute Node in the Pool.
         /// </summary>

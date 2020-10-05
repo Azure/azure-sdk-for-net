@@ -975,8 +975,7 @@
 
                     try
                     {
-                        string taskId;
-                        TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out jobId, out taskId, false);
+                        TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out jobId, out string taskId, false);
 
                         CloudJob job = batchCli.JobOperations.GetJob(jobId);
 

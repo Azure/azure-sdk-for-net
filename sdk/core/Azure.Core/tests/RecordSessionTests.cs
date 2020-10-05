@@ -23,6 +23,7 @@ namespace Azure.Core.Tests
         [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
+        [TestCase("\"\"", "application/json")]
         [TestCase("invalid json", "application/json")]
         [TestCase("{ \"json\": \"value\" }", "unknown")]
         [TestCase("multi\rline", "application/xml")]
@@ -407,6 +408,48 @@ namespace Azure.Core.Tests
 
             skipRequestBody = false;
             Assert.Throws<TestRecordingMismatchException>(() => playbackTransport.Process(message));
+        }
+
+        [Test]
+        public void ContentLengthNotChangedOnHeadRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: true);
+        }
+
+        [Test]
+        public void ContentLengthResetToZeroOnGetRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: false);
+        }
+
+        private void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            var entry = new RecordEntry()
+            {
+                RequestUri = "http://localhost/",
+                RequestMethod = isHeadRequest ? RequestMethod.Head : RequestMethod.Get,
+                Response =
+                {
+                    Headers =
+                    {
+                        {"Content-Length", new[] {"41"}},
+                        {"Some-Header", new[] {"Random value"}},
+                        {"Some-Other-Header", new[] {"V"}}
+                    },
+                    Body = new byte[0]
+                }
+            };
+            sanitizer.Sanitize(entry);
+
+            if (isHeadRequest)
+            {
+                Assert.AreEqual(new[] { "41" }, entry.Response.Headers["Content-Length"]);
+            }
+            else
+            {
+                Assert.AreEqual(new[] { "0" }, entry.Response.Headers["Content-Length"]);
+            }
         }
 
         private class TestSanitizer : RecordedTestSanitizer

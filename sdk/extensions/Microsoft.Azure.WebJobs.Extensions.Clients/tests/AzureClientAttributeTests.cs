@@ -3,43 +3,26 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Azure.WebJobs.Tests;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
 {
-    public class AzureClientAttributeTests : RecordedTestBase<WebJobsTestEnvironment>
+    public class AzureClientAttributeTests
     {
-        public AzureClientAttributeTests(bool isAsync) : base(isAsync)
-        {
-            Matcher = new RecordMatcher()
-            {
-                VolatileQueryParameters =
-                {
-                    // Ignore KeyVault client API Version when matching
-                    "api-version"
-                }
-            };
-        }
-
-        [RecordedTest]
-        public async Task CanInjectKeyVaultClient()
+        [TestCase("Connection")]
+        [TestCase("AzureWebJobsConnection")]
+        [TestCase("ConnectionStrings:Connection")]
+        public async Task CreatesClientUsingSectionWithUri(string keyName)
         {
             var host = new HostBuilder()
-                .ConfigureServices(services => services.AddAzureClients(builder => builder
-                    .ConfigureDefaults(options => Recording.InstrumentClientOptions<ClientOptions>(options))
-                    .UseCredential(TestEnvironment.Credential)))
                 .ConfigureAppConfiguration(config =>
                 {
                     config.AddInMemoryCollection(new Dictionary<string, string>
                     {
-                        { "AzureWebJobs:Connection:vaultUri", TestEnvironment.KeyVaultUrl }
+                        { $"{keyName}:endpoint", "http://localhost" }
                     });
                 })
                 .ConfigureDefaultTestHost<FunctionWithAzureClient>(builder =>
@@ -53,10 +36,95 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
 
         public class FunctionWithAzureClient
         {
-            public async Task Run([AzureClient("Connection")] SecretClient keyClient)
+            public void Run([AzureClient("Connection")] TestClient testClient)
             {
-                await keyClient.SetSecretAsync("TestSecret", "Secret value");
+                Assert.NotNull(testClient.Options);
+                Assert.AreEqual(testClient.Uri.AbsoluteUri, "http://localhost/");
             }
         }
+
+        [TestCase("Connection")]
+        [TestCase("AzureWebJobsConnection")]
+        [TestCase("ConnectionStrings:Connection")]
+        public async Task CreatesClientUsingConnectionString(string keyName)
+        {
+            var host = new HostBuilder()
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { $"{keyName}", "Key=Value;Key2=Value2" }
+                    });
+                })
+                .ConfigureDefaultTestHost<FunctionWithAzureClientUsingConnectionString>(builder =>
+                {
+                    builder.AddAzureClients();
+                }).Build();
+
+            var jobHost = host.GetJobHost<FunctionWithAzureClientUsingConnectionString>();
+            await jobHost.CallAsync(nameof(FunctionWithAzureClientUsingConnectionString.Run));
+        }
+
+        [TestCase("Connection")]
+        [TestCase("AzureWebJobsConnection")]
+        [TestCase("ConnectionStrings:Connection")]
+        public async Task CreatesClientUsingExplicitConnectionString(string keyName)
+        {
+            var host = new HostBuilder()
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { $"{keyName}:ConnectionString", "Key=Value;Key2=Value2" }
+                    });
+                })
+                .ConfigureDefaultTestHost<FunctionWithAzureClientUsingConnectionString>(builder =>
+                {
+                    builder.AddAzureClients();
+                }).Build();
+
+            var jobHost = host.GetJobHost<FunctionWithAzureClientUsingConnectionString>();
+            await jobHost.CallAsync(nameof(FunctionWithAzureClientUsingConnectionString.Run));
+        }
+
+        public class FunctionWithAzureClientUsingConnectionString
+        {
+            public void Run([AzureClient("Connection")] TestClient testClient)
+            {
+                Assert.NotNull(testClient.Options);
+                Assert.AreEqual(testClient.ConnectionString, "Key=Value;Key2=Value2");
+            }
+        }
+
+        [Test]
+        public async Task CreatesClientUsingExplicitConnectionString()
+        {
+            var host = new HostBuilder()
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { "ConnectionSettingName", "MyConnection"},
+                        { "MyConnection:ConnectionString", "Key=Value;Key2=Value2" }
+                    });
+                })
+                .ConfigureDefaultTestHost<FunctionWithAzureClientUsingFormattedString>(builder =>
+                {
+                    builder.AddAzureClients();
+                }).Build();
+
+            var jobHost = host.GetJobHost<FunctionWithAzureClientUsingFormattedString>();
+            await jobHost.CallAsync(nameof(FunctionWithAzureClientUsingFormattedString.Run));
+        }
+
+        public class FunctionWithAzureClientUsingFormattedString
+        {
+            public void Run([AzureClient("%ConnectionSettingName%")] TestClient testClient)
+            {
+                Assert.NotNull(testClient.Options);
+                Assert.AreEqual(testClient.ConnectionString, "Key=Value;Key2=Value2");
+            }
+        }
+
     }
 }

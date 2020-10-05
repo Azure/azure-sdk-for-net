@@ -27,6 +27,8 @@ extends:
     ServiceDirectory: extensions
     ArtifactName: packages
     Artifacts:
+    - name: Microsoft.Extensions.Azure
+      safeName: MicrosoftExtensionsAzure
     - name: Azure.Extensions.AspNetCore.DataProtection.Blobs
       safeName: AzureExtensionsAspNetCoreDataProtectionBlobs
     - name: Azure.Extensions.AspNetCore.DataProtection.Keys

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Azure;
@@ -15,10 +16,12 @@ namespace Microsoft.Extensions.Hosting
     internal class AzureClientsExtensionConfigProvider : IExtensionConfigProvider
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly INameResolver _nameResolver;
 
-        public AzureClientsExtensionConfigProvider(IServiceProvider serviceProvider)
+        public AzureClientsExtensionConfigProvider(IServiceProvider serviceProvider, INameResolver nameResolver)
         {
             _serviceProvider = serviceProvider;
+            _nameResolver = nameResolver;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -29,7 +32,10 @@ namespace Microsoft.Extensions.Hosting
 
         private IValueBinder CreateValueBinder(Type type, AzureClientAttribute attribute)
         {
-            return (IValueBinder)Activator.CreateInstance(typeof(AzureClientValueProvider<>).MakeGenericType(type), _serviceProvider, attribute.Connection);
+            return (IValueBinder)Activator.CreateInstance(
+                typeof(AzureClientValueProvider<>).MakeGenericType(type),
+                _serviceProvider,
+                _nameResolver.ResolveWholeString(attribute.Connection));
         }
 
         private class AzureClientValueProvider<TClient> : IValueBinder
