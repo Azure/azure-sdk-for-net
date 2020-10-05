@@ -88,7 +88,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeedOptions Options { get; }
 
-
         /// <summary> Converts a data source specific <see cref="DataFeed"/> into its equivalent data source specific <see cref="DataFeedDetailPatch"/>. </summary>
         internal DataFeedDetailPatch GetPatchModel()
         {

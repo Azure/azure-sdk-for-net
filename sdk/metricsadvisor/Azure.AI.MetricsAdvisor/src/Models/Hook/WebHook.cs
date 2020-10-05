@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
 
             HookParameter = new WebhookHookParameter(endpoint, default, default, new ChangeTrackingDictionary<string, string>(), default, default);
-            ;
+
             HookType = HookType.Webhook;
         }
 

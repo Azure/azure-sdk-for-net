@@ -366,7 +366,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
             }
 
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
@@ -382,7 +381,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        ///
+        /// ///
         /// </summary>
         /// <param name="dataFeedId"></param>
         /// <param name="dataFeed"></param>
@@ -396,7 +395,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
             }
-
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
@@ -623,7 +621,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(options, nameof(options));
 
-
             IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
             int? skip = options.SkipCount;
             int? top = options.TopCount;
@@ -819,7 +816,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
             }
 
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
             scope.Start();
 
@@ -852,7 +848,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
             }
-
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
             scope.Start();
@@ -1072,7 +1067,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
             }
 
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
             scope.Start();
 
@@ -1108,7 +1102,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
             }
-
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
             scope.Start();
@@ -1388,6 +1381,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+            Argument.AssertNotNull(hook, nameof(hook));
 
             if (hook is EmailHook emailHook)
             {
