@@ -75,7 +75,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
@@ -110,7 +110,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 

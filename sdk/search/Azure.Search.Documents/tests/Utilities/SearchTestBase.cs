@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Tests
         internal DnsManagementClient GetDnsManagementClient()
         {
             return CreateClient<DnsManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential, Recording.InstrumentClientOptions(new DnsManagementClientOptions()));
+                TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
         }
     }
 }

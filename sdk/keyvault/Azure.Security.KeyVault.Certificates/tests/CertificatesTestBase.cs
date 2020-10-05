@@ -40,10 +40,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             _serviceVersion = serviceVersion;
         }
 
-        internal CertificateClient GetClient(TestRecording recording = null)
+        internal CertificateClient GetClient()
         {
-            recording ??= Recording;
-
             CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
             {
                 Diagnostics =
@@ -56,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 (new CertificateClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(options)));
+                    InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()

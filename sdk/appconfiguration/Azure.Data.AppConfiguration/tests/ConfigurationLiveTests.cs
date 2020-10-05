@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
             }
 
-            var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            var options = InstrumentClientOptions(new ConfigurationClientOptions());
             return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
-            ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions());
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 

@@ -26,19 +26,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyResolver Resolver { get { return GetResolver(); } }
 
-        public KeyResolver GetResolver(TestRecording recording = null)
+        public KeyResolver GetResolver()
         {
-            recording ??= Recording;
-
-            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             return InstrumentClient(new KeyResolver(TestEnvironment.Credential, options));
         }
 
-        public SecretClient GetSecretClient(TestRecording recording = null)
+        public SecretClient GetSecretClient()
         {
-            recording ??= Recording;
-
-            return InstrumentClient(new SecretClient(VaultUri, TestEnvironment.Credential, recording.InstrumentClientOptions(new SecretClientOptions())));
+            return InstrumentClient(new SecretClient(VaultUri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions())));
         }
 
         [Test]

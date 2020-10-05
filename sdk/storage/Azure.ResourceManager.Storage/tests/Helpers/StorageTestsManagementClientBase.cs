@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             return CreateClient<StorageManagementClient>(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
+                 InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
         public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)

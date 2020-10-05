@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             return CreateClient<EventHubsManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new EventHubsManagementClientOptions()));
+                InstrumentClientOptions(new EventHubsManagementClientOptions()));
         }
 
         public async Task<string> GetLocation()

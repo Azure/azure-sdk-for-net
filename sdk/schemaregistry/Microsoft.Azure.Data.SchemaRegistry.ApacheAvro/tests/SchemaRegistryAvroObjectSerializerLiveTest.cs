@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryUri,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
         [Test]

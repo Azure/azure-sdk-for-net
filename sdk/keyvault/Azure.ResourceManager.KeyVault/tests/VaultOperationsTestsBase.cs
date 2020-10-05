@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+                InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
     }
 }

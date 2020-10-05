@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingShare> GetTestShareAsync(ShareServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)

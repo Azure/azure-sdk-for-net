@@ -52,7 +52,7 @@ namespace Azure.Storage.Queues.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)

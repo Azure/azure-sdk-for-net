@@ -78,7 +78,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public DataLakeClientOptions GetFaultyDataLakeConnectionOptions(

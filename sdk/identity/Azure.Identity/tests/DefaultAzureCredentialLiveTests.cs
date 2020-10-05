@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task DefaultAzureCredential_UseVisualStudioCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -104,7 +104,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -139,7 +139,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -175,7 +175,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -209,7 +209,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -239,7 +239,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -266,7 +266,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,

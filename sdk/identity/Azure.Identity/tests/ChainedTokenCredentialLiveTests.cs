@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService(new TestProcess { Error = "Error" });
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
@@ -96,7 +96,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);

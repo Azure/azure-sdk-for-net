@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         public MetricsAdvisorClient GetMetricsAdvisorClient()
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         internal static async Task<DataFeed> GetFirstDataFeed(MetricsAdvisorAdministrationClient adminClient)

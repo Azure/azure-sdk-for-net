@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         {
             return CreateClient<DigitalTwinsManagementClient>(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new DigitalTwinsManagementClientOptions()));
+                 InstrumentClientOptions(new DigitalTwinsManagementClientOptions()));
         }
 
     }

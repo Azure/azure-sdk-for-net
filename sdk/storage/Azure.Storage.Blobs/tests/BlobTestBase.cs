@@ -70,7 +70,7 @@ namespace Azure.Storage.Test.Shared
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
