@@ -1070,15 +1070,13 @@ namespace Azure.AI.FormRecognizer.Tests
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
-
-                var sampleField = recognizedForm.Fields["field-1"];
                 var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
                 var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
 
-                Assert.IsNotNull(sampleField.LabelData);
-                Assert.AreEqual(expectedLabelData, sampleField.LabelData.Text);
-                Assert.IsNotNull(sampleField.ValueData);
-                Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
+                FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains(expectedLabelData)).FirstOrDefault();
+                Assert.IsNotNull(fieldInPage);
+                Assert.IsNotNull(fieldInPage.ValueData);
+                Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
             }
         }
 
@@ -1153,13 +1151,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (formIndex == 0 || formIndex == 2)
                 {
-                    var sampleField = recognizedForm.Fields["field-0"];
                     var expectedValueData = formIndex == 0 ? "300.00" : "3000.00";
 
-                    Assert.IsNotNull(sampleField.LabelData);
-                    Assert.AreEqual("Subtotal:", sampleField.LabelData.Text);
-                    Assert.IsNotNull(sampleField.ValueData);
-                    Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
+                    FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains("Subtotal:")).FirstOrDefault();
+                    Assert.IsNotNull(fieldInPage);
+                    Assert.IsNotNull(fieldInPage.ValueData);
+                    Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
                 }
             }
 
