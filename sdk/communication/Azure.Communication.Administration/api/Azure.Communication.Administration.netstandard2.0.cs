@@ -100,10 +100,10 @@ namespace Azure.Communication.Administration.Models
     public partial class AcquiredPhoneNumber
     {
         internal AcquiredPhoneNumber() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.Capability> AcquiredCapabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCapability> AcquiredCapabilities { get { throw null; } }
         public Azure.Communication.Administration.Models.ActivationState? ActivationState { get { throw null; } }
         public Azure.Communication.Administration.Models.AssignmentStatus? AssignmentStatus { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.Capability> AvailableCapabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCapability> AvailableCapabilities { get { throw null; } }
         public string PhoneNumber { get { throw null; } }
         public string PlaceName { get { throw null; } }
     }
@@ -181,46 +181,6 @@ namespace Azure.Communication.Administration.Models
         public static bool operator ==(Azure.Communication.Administration.Models.CapabilitiesUpdateStatus left, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus right) { throw null; }
         public static implicit operator Azure.Communication.Administration.Models.CapabilitiesUpdateStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Administration.Models.CapabilitiesUpdateStatus left, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Capability : System.IEquatable<Azure.Communication.Administration.Models.Capability>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Capability(string value) { throw null; }
-        public static Azure.Communication.Administration.Models.Capability A2PSmsCapable { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability A2PSmsEnabled { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability Azure { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability Calling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability ConferenceAssignment { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability FirstPartyAppAssignment { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability FirstPartyVoiceAppAssignment { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability Geographic { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability InboundA2PSms { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability InboundCalling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability InboundP2PSms { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability NonGeographic { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability Office365 { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability OutboundA2PSms { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability OutboundCalling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability OutboundP2PSms { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability P2PSmsCapable { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability P2PSmsEnabled { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability Premium { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability ThirdPartyAppAssignment { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability TollCalling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability TollFree { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability TollFreeCalling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.Capability UserAssignment { get { throw null; } }
-        public bool Equals(Azure.Communication.Administration.Models.Capability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.Administration.Models.Capability left, Azure.Communication.Administration.Models.Capability right) { throw null; }
-        public static implicit operator Azure.Communication.Administration.Models.Capability (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.Administration.Models.Capability left, Azure.Communication.Administration.Models.Capability right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CarrierDetails
@@ -320,8 +280,48 @@ namespace Azure.Communication.Administration.Models
     public partial class NumberUpdateCapabilities
     {
         public NumberUpdateCapabilities() { }
-        public System.Collections.Generic.IList<Azure.Communication.Administration.Models.Capability> Add { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Communication.Administration.Models.Capability> Remove { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> Add { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> Remove { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PhoneNumberCapability : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberCapability>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PhoneNumberCapability(string value) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability A2PSmsCapable { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability A2PSmsEnabled { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability Azure { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability Calling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability ConferenceAssignment { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability FirstPartyAppAssignment { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability FirstPartyVoiceAppAssignment { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability Geographic { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability InboundA2PSms { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability InboundCalling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability InboundP2PSms { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability NonGeographic { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability Office365 { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability OutboundA2PSms { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability OutboundCalling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability OutboundP2PSms { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability P2PSmsCapable { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability P2PSmsEnabled { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability Premium { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability ThirdPartyAppAssignment { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability TollCalling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability TollFree { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability TollFreeCalling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapability UserAssignment { get { throw null; } }
+        public bool Equals(Azure.Communication.Administration.Models.PhoneNumberCapability other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.Administration.Models.PhoneNumberCapability left, Azure.Communication.Administration.Models.PhoneNumberCapability right) { throw null; }
+        public static implicit operator Azure.Communication.Administration.Models.PhoneNumberCapability (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberCapability left, Azure.Communication.Administration.Models.PhoneNumberCapability right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PhoneNumberCountries
     {
@@ -427,7 +427,7 @@ namespace Azure.Communication.Administration.Models
     {
         internal PhonePlan() { }
         public System.Collections.Generic.IReadOnlyList<string> AreaCodes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.Capability> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCapability> Capabilities { get { throw null; } }
         public string LocalizedName { get { throw null; } }
         public Azure.Communication.Administration.Models.LocationType LocationType { get { throw null; } }
         public int? MaximumSearchSize { get { throw null; } }

@@ -16,8 +16,8 @@ namespace Azure.Communication.Administration.Models
         internal static AcquiredPhoneNumber DeserializeAcquiredPhoneNumber(JsonElement element)
         {
             string phoneNumber = default;
-            IReadOnlyList<Capability> acquiredCapabilities = default;
-            IReadOnlyList<Capability> availableCapabilities = default;
+            IReadOnlyList<PhoneNumberCapability> acquiredCapabilities = default;
+            IReadOnlyList<PhoneNumberCapability> availableCapabilities = default;
             Optional<AssignmentStatus> assignmentStatus = default;
             Optional<string> placeName = default;
             Optional<ActivationState> activationState = default;
@@ -30,20 +30,20 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("acquiredCapabilities"))
                 {
-                    List<Capability> array = new List<Capability>();
+                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Capability(item.GetString()));
+                        array.Add(new PhoneNumberCapability(item.GetString()));
                     }
                     acquiredCapabilities = array;
                     continue;
                 }
                 if (property.NameEquals("availableCapabilities"))
                 {
-                    List<Capability> array = new List<Capability>();
+                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Capability(item.GetString()));
+                        array.Add(new PhoneNumberCapability(item.GetString()));
                     }
                     availableCapabilities = array;
                     continue;

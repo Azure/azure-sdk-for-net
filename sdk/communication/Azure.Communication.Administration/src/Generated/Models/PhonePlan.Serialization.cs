@@ -19,7 +19,7 @@ namespace Azure.Communication.Administration.Models
             string localizedName = default;
             LocationType locationType = default;
             Optional<IReadOnlyList<string>> areaCodes = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            Optional<IReadOnlyList<PhoneNumberCapability>> capabilities = default;
             Optional<int> maximumSearchSize = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,10 +50,10 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    List<Capability> array = new List<Capability>();
+                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Capability(item.GetString()));
+                        array.Add(new PhoneNumberCapability(item.GetString()));
                     }
                     capabilities = array;
                     continue;

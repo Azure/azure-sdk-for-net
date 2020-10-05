@@ -41,26 +41,26 @@ namespace Azure.Communication.Administration.Models
 
         internal static NumberUpdateCapabilities DeserializeNumberUpdateCapabilities(JsonElement element)
         {
-            Optional<IList<Capability>> @add = default;
-            Optional<IList<Capability>> @remove = default;
+            Optional<IList<PhoneNumberCapability>> @add = default;
+            Optional<IList<PhoneNumberCapability>> @remove = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("add"))
                 {
-                    List<Capability> array = new List<Capability>();
+                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Capability(item.GetString()));
+                        array.Add(new PhoneNumberCapability(item.GetString()));
                     }
                     @add = array;
                     continue;
                 }
                 if (property.NameEquals("remove"))
                 {
-                    List<Capability> array = new List<Capability>();
+                    List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Capability(item.GetString()));
+                        array.Add(new PhoneNumberCapability(item.GetString()));
                     }
                     @remove = array;
                     continue;

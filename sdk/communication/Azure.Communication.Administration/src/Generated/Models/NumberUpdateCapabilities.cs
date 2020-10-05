@@ -16,22 +16,22 @@ namespace Azure.Communication.Administration.Models
         /// <summary> Initializes a new instance of NumberUpdateCapabilities. </summary>
         public NumberUpdateCapabilities()
         {
-            Add = new ChangeTrackingList<Capability>();
-            Remove = new ChangeTrackingList<Capability>();
+            Add = new ChangeTrackingList<PhoneNumberCapability>();
+            Remove = new ChangeTrackingList<PhoneNumberCapability>();
         }
 
         /// <summary> Initializes a new instance of NumberUpdateCapabilities. </summary>
         /// <param name="add"> Capabilities to be added to a phone number. </param>
         /// <param name="remove"> Capabilities to be removed from a phone number. </param>
-        internal NumberUpdateCapabilities(IList<Capability> @add, IList<Capability> @remove)
+        internal NumberUpdateCapabilities(IList<PhoneNumberCapability> @add, IList<PhoneNumberCapability> @remove)
         {
             Add = @add;
             Remove = @remove;
         }
 
         /// <summary> Capabilities to be added to a phone number. </summary>
-        public IList<Capability> Add { get; }
+        public IList<PhoneNumberCapability> Add { get; }
         /// <summary> Capabilities to be removed from a phone number. </summary>
-        public IList<Capability> Remove { get; }
+        public IList<PhoneNumberCapability> Remove { get; }
     }
 }

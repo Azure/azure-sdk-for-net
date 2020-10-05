@@ -19,7 +19,7 @@ namespace Azure.Communication.Administration.Models
         /// <param name="acquiredCapabilities"> The set of all acquired capabilities of the phone number. </param>
         /// <param name="availableCapabilities"> The set of all available capabilities that can be acquired for this phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/>, <paramref name="acquiredCapabilities"/>, or <paramref name="availableCapabilities"/> is null. </exception>
-        internal AcquiredPhoneNumber(string phoneNumber, IEnumerable<Capability> acquiredCapabilities, IEnumerable<Capability> availableCapabilities)
+        internal AcquiredPhoneNumber(string phoneNumber, IEnumerable<PhoneNumberCapability> acquiredCapabilities, IEnumerable<PhoneNumberCapability> availableCapabilities)
         {
             if (phoneNumber == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Communication.Administration.Models
         /// <param name="assignmentStatus"> The assignment status of the phone number. Conveys what type of entity the number is assigned to. </param>
         /// <param name="placeName"> The name of the place of the phone number. </param>
         /// <param name="activationState"> The activation state of the phone number. Can be &quot;Activated&quot;, &quot;AssignmentPending&quot;, &quot;AssignmentFailed&quot;, &quot;UpdatePending&quot;, &quot;UpdateFailed&quot;. </param>
-        internal AcquiredPhoneNumber(string phoneNumber, IReadOnlyList<Capability> acquiredCapabilities, IReadOnlyList<Capability> availableCapabilities, AssignmentStatus? assignmentStatus, string placeName, ActivationState? activationState)
+        internal AcquiredPhoneNumber(string phoneNumber, IReadOnlyList<PhoneNumberCapability> acquiredCapabilities, IReadOnlyList<PhoneNumberCapability> availableCapabilities, AssignmentStatus? assignmentStatus, string placeName, ActivationState? activationState)
         {
             PhoneNumber = phoneNumber;
             AcquiredCapabilities = acquiredCapabilities;
@@ -59,9 +59,9 @@ namespace Azure.Communication.Administration.Models
         /// <summary> String of the E.164 format of the phone number. </summary>
         public string PhoneNumber { get; }
         /// <summary> The set of all acquired capabilities of the phone number. </summary>
-        public IReadOnlyList<Capability> AcquiredCapabilities { get; }
+        public IReadOnlyList<PhoneNumberCapability> AcquiredCapabilities { get; }
         /// <summary> The set of all available capabilities that can be acquired for this phone number. </summary>
-        public IReadOnlyList<Capability> AvailableCapabilities { get; }
+        public IReadOnlyList<PhoneNumberCapability> AvailableCapabilities { get; }
         /// <summary> The assignment status of the phone number. Conveys what type of entity the number is assigned to. </summary>
         public AssignmentStatus? AssignmentStatus { get; }
         /// <summary> The name of the place of the phone number. </summary>

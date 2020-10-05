@@ -34,7 +34,7 @@ namespace Azure.Communication.Administration.Models
             LocalizedName = localizedName;
             LocationType = locationType;
             AreaCodes = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Capabilities = new ChangeTrackingList<PhoneNumberCapability>();
         }
 
         /// <summary> Initializes a new instance of PhonePlan. </summary>
@@ -44,7 +44,7 @@ namespace Azure.Communication.Administration.Models
         /// <param name="areaCodes"> The list of available area codes in the phone plan. </param>
         /// <param name="capabilities"> Capabilities of the phone plan. </param>
         /// <param name="maximumSearchSize"> The maximum number of phone numbers one can acquire in a search in this phone plan. </param>
-        internal PhonePlan(string phonePlanId, string localizedName, LocationType locationType, IReadOnlyList<string> areaCodes, IReadOnlyList<Capability> capabilities, int? maximumSearchSize)
+        internal PhonePlan(string phonePlanId, string localizedName, LocationType locationType, IReadOnlyList<string> areaCodes, IReadOnlyList<PhoneNumberCapability> capabilities, int? maximumSearchSize)
         {
             PhonePlanId = phonePlanId;
             LocalizedName = localizedName;
@@ -63,7 +63,7 @@ namespace Azure.Communication.Administration.Models
         /// <summary> The list of available area codes in the phone plan. </summary>
         public IReadOnlyList<string> AreaCodes { get; }
         /// <summary> Capabilities of the phone plan. </summary>
-        public IReadOnlyList<Capability> Capabilities { get; }
+        public IReadOnlyList<PhoneNumberCapability> Capabilities { get; }
         /// <summary> The maximum number of phone numbers one can acquire in a search in this phone plan. </summary>
         public int? MaximumSearchSize { get; }
     }
