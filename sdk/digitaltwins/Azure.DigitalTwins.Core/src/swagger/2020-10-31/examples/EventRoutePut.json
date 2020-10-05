@@ -1,0 +1,13 @@
+{
+  "parameters": {
+    "id": "eventroute-001",
+    "eventRoute": {
+      "endpointName": "endpoint-001",
+      "filter": "true"
+    },
+    "api-version": "2020-10-31"
+  },
+  "responses": {
+    "204": {}
+  }
+}

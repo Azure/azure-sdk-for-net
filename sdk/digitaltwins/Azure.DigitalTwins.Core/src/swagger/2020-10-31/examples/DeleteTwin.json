@@ -1,0 +1,9 @@
+{
+  "parameters": {
+    "api-version": "2020-10-31",
+    "id": "myTwinId"
+  },
+  "responses": {
+    "204": {}
+  }
+}

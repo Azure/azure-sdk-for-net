@@ -1,0 +1,22 @@
+{
+  "parameters": {
+    "api-version": "2020-10-31",
+    "id": "myNewTwinId",
+    "twin": {
+      "$metadata": {
+        "$model": "dtmi:com:example:interfaces:interfaceName;1"
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "$dtId": "myNewTwinId",
+        "$metadata": {
+          "$model": "dtmi:com:example:interfaces:interfaceName;1"
+        }
+      }
+    },
+    "202": {}
+  }
+}

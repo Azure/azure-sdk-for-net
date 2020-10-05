@@ -1,0 +1,27 @@
+{
+  "parameters": {
+    "api-version": "2020-10-31",
+    "id": "myTwinId",
+    "componentPath": "myComponent",
+    "patchDocument": [
+      {
+        "op": "add",
+        "path": "/property1",
+        "value": 1
+      },
+      {
+        "op": "remove",
+        "path": "/property2"
+      },
+      {
+        "op": "replace",
+        "path": "/property3/subProperty1",
+        "value": "new value"
+      }
+    ]
+  },
+  "responses": {
+    "202": {},
+    "204": {}
+  }
+}

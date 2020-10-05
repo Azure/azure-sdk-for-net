@@ -1,0 +1,24 @@
+{
+  "parameters": {
+    "api-version": "2020-10-31"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "eventroute-001",
+            "endpointName": "endpoint-001",
+            "filter": "type = 'Microsoft.DigitalTwins.Twin.Create'"
+          },
+          {
+            "id": "eventroute-002",
+            "endpointName": "endpoint-002",
+            "filter": "type = 'Microsoft.DigitalTwins.Twin.Create' OR type = 'microsoft.iot.telemetry'"
+          }
+        ],
+        "nextLink": "url-to-next-page"
+      }
+    }
+  }
+}
