@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201001.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201002.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
@@ -87,6 +87,10 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="nunit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Update="OpenTelemetry" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.6.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />

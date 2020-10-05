@@ -359,20 +359,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
             }
-
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
-                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
                 return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -383,7 +381,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        ///
+        /// ///
         /// </summary>
         /// <param name="dataFeedId"></param>
         /// <param name="dataFeed"></param>
@@ -391,20 +389,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
             }
-
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
-                DataFeedDetailPatch patchModel = DataFeedDetail.GetPatchModel(dataFeed);
+                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
                 return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
             }
             catch (Exception ex)
@@ -426,8 +422,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> DeleteDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataFeed)}");
@@ -455,8 +449,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response DeleteDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataFeed)}");
@@ -480,7 +472,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual async Task<Response<DataFeedIngestionProgress>> GetDataFeedIngestionProgressAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeedIngestionProgress)}");
@@ -504,7 +495,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual Response<DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeedIngestionProgress)}");
@@ -530,7 +520,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual async Task<Response> ResetDataFeedIngestionStatusAsync(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(ResetDataFeedIngestionStatus)}");
@@ -558,7 +547,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns></returns>
         public virtual Response ResetDataFeedIngestionStatus(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(ResetDataFeedIngestionStatus)}");
@@ -581,10 +569,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual AsyncPageable<DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-            Argument.AssertNotNull(options, nameof(options));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(options, nameof(options));
 
             IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
             int? skip = options.SkipCount;
@@ -632,10 +618,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual Pageable<DataFeedIngestionStatus> GetDataFeedIngestionStatuses(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-            Argument.AssertNotNull(options, nameof(options));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNull(options, nameof(options));
 
             IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
             int? skip = options.SkipCount;
@@ -769,8 +753,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfiguration)}");
@@ -800,8 +782,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response<MetricAnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfiguration)}");
@@ -810,6 +790,72 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 return _serviceRestClient.GetAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
+        /// </summary>
+        /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+            Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
+            if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyDetectionConfigurationPatch patch = detectionConfiguration.GetPatchModel();
+                return await _serviceRestClient.UpdateAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
+        /// </summary>
+        /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        {
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+            Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
+            if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyDetectionConfigurationPatch patch = detectionConfiguration.GetPatchModel();
+                return _serviceRestClient.UpdateAnomalyDetectionConfiguration(detectionConfigurationGuid, patch, cancellationToken);
             }
             catch (Exception e)
             {
@@ -829,8 +875,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
@@ -859,8 +903,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
@@ -890,8 +932,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteMetricAnomalyDetectionConfiguration)}");
@@ -920,8 +960,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response DeleteMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteMetricAnomalyDetectionConfiguration)}");
@@ -1009,6 +1047,78 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// </summary>
+        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
+        /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        {
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
+            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyAlertingConfigurationPatch patch = alertConfiguration.GetPatchModel();
+                return await _serviceRestClient.UpdateAnomalyAlertingConfigurationAsync(alertConfigurationGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// </summary>
+        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
+        /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        {
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
+            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            scope.Start();
+
+            try
+            {
+                AnomalyAlertingConfigurationPatch patch = alertConfiguration.GetPatchModel();
+                return _serviceRestClient.UpdateAnomalyAlertingConfiguration(alertConfigurationGuid, patch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retrieves information about an existing <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
@@ -1021,8 +1131,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
-
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfiguration)}");
@@ -1052,8 +1160,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response<AnomalyAlertConfiguration> GetAnomalyAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
-
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfiguration)}");
@@ -1081,8 +1187,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
@@ -1111,8 +1215,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response<IReadOnlyList<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
@@ -1142,8 +1244,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> DeleteAnomalyAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
-
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAnomalyAlertConfiguration)}");
@@ -1172,8 +1272,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response DeleteAnomalyAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
-
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAnomalyAlertConfiguration)}");
@@ -1254,9 +1352,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual async Task<Response> UpdateHookAsync(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hook, nameof(hook));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+            Argument.AssertNotNull(hook, nameof(hook));
 
             if (hook is EmailHook emailHook)
             {
@@ -1283,9 +1380,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hook, nameof(hook));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
+            Argument.AssertNotNull(hook, nameof(hook));
 
             if (hook is EmailHook emailHook)
             {
@@ -1312,8 +1408,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual async Task<Response<AlertingHook>> GetHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHook)}");
@@ -1334,8 +1428,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual Response<AlertingHook> GetHook(string hookId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHook)}");
@@ -1356,8 +1448,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual async Task<Response> DeleteHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteHook)}");
@@ -1378,8 +1468,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         public virtual Response DeleteHook(string hookId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hookId, nameof(hookId));
-
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteHook)}");

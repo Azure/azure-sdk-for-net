@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<long> valueInteger = default;
             Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
             Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
-            Optional<FieldValueSelectionMark> valueSelectionMark = default;
+            Optional<FormSelectionMarkState> valueSelectionMark = default;
             Optional<string> text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
             Optional<float> confidence = default;
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("valueSelectionMark"))
                 {
-                    valueSelectionMark = new FieldValueSelectionMark(property.Value.GetString());
+                    valueSelectionMark = property.Value.GetString().ToFormSelectionMarkState();
                     continue;
                 }
                 if (property.NameEquals("text"))
