@@ -2,7 +2,7 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
-- Recognize Form Content - Recognize and extract tables, lines and words in forms documents, without the need to train a model.
+- Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
 - Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
@@ -101,7 +101,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 `FormRecognizerClient` provides operations for:
 
  - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
- - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
+ - Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
  - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
 
 ### FormTrainingClient
@@ -137,7 +137,7 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Custom Models Synchronously](#manage-custom-models-synchronously)
 
 ### Recognize Content
-Recognize text and table data, along with their bounding box coordinates, from documents.
+Recognize text, tables, and selection marks like radio buttons and check boxes data, along with their bounding box coordinates, from documents.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
 FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
@@ -159,6 +159,17 @@ foreach (FormPage page in formPages)
         {
             Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
         }
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        FormSelectionMark selectionMark = page.SelectionMarks[i];
+        Console.WriteLine($"Selection Mark {i} is {selectionMark.State.ToString()}.");
+        Console.WriteLine("        Its bounding box is:");
+        Console.WriteLine($"        Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"        Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"        Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"        Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 ```
