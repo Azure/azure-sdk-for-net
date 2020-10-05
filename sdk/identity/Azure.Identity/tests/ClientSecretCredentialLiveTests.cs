@@ -35,7 +35,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = TestEnvironment.ServicePrincipalClientSecret;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
 
@@ -69,7 +69,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = "badsecret";
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
 

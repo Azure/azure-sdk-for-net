@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 new DigitalTwinsManagementClient(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording?.InstrumentClientOptions(new DigitalTwinsManagementClientOptions())));
+                InstrumentClientOptions(new DigitalTwinsManagementClientOptions())));
 
             return Client;
         }
