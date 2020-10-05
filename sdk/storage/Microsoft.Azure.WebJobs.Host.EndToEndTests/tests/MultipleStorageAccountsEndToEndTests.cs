@@ -17,6 +17,7 @@ using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task BlobToBlob_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task BlobToBlob_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -92,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task QueueToQueue_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             QueueMessage resultMessage = null;
@@ -106,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.AreEqual(TestData, resultMessage.MessageText);
         }
 
-        [WebJobsLiveOnly]
+        [LiveOnly]
         [TestCase("QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver")]
         [TestCase("QueueToBlob_DifferentAccounts_PrimaryToSecondary_FullSettingName")]
         public async Task QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver_Succeeds(string methodName)
@@ -137,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task QueueToQueue_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             QueueMessage resultMessage = null;

@@ -9,16 +9,16 @@ using Microsoft.Extensions.Hosting;
 using Azure.Storage.Queues;
 using System.Linq;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
 {
     public class StorageAccountTests
     {
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task CloudQueueCreate_IfNotExist_CreatesQueue()
         {
             // Arrange
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
+        [LiveOnly]
         public async Task CloudQueueAddMessage_AddsMessage()
         {
             // Arrange
