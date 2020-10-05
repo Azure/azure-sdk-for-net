@@ -3,7 +3,6 @@
 
 namespace BatchClientIntegrationTests
 {
-    using Microsoft.Azure.Batch.Integration.Tests.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,13 +14,8 @@ namespace BatchClientIntegrationTests
     using IntegrationTestUtilities;
     using Xunit;
     using Xunit.Abstractions;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
     using Azure.Storage.Blobs;
-    using Azure.Storage.Sas;
-    using Azure.Storage;
     using Azure.Storage.Blobs.Models;
     using System.Threading.Tasks;
 
@@ -83,7 +77,7 @@ namespace BatchClientIntegrationTests
                         monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
 
                         // Ensure that the correct files got uploaded
-                        var blobs = containerClient.GetBlobs(BlobTraits.None | BlobTraits.Metadata).ToList();
+                        var blobs = containerClient.GetAllBlobs();
                         Assert.Equal(4, blobs.Count()); //There are 4 .txt files created, stdout, stderr, fileuploadout, and fileuploaderr
                         foreach (var blob in blobs)
                         {

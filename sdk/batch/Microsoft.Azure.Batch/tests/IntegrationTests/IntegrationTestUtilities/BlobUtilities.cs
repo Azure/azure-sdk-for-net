@@ -5,13 +5,12 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using BatchClientIntegrationTests.IntegrationTestUtilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities
 {
-    internal static class BlobUtilities
+    public static class BlobUtilities
     {
         private static StagingStorageAccount GetStorageAccount()
         {
@@ -62,6 +61,30 @@ namespace Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities
             builder.Sas = sasBuilder.ToSasQueryParameters(credentials);
             string fullSas = builder.ToString();
             return fullSas;
+        }
+
+        public static List<BlobItem> GetAllBlobs(this BlobContainerClient containerClient, BlobTraits traits = BlobTraits.None | BlobTraits.Metadata)
+        {
+            List<BlobItem> blobs = new List<BlobItem>();
+
+            string continuationToken = null;
+
+            while (continuationToken != string.Empty)
+            {
+                var resultSegment = containerClient.GetBlobs(traits).AsPages(continuationToken);
+
+                foreach (Page<BlobItem> blobPage in resultSegment)
+                {
+                    foreach (var blob in blobPage.Values)
+                    {
+                        blobs.Add(blob);
+                    }
+
+                    continuationToken = blobPage.ContinuationToken;
+                }
+            }
+
+            return blobs;
         }
     }
 }
