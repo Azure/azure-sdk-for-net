@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="shiftPoint">When set to N, sets as reference the data point that's N positions before the current point. Value must be at least 1.</param>
         /// <param name="isWithinRange"></param>
         /// <param name="anomalyDetectorDirection"></param>
-        /// <param name="suppressCondition">Used to avoid outright labeling every single unexpected data point as an anomaly.</param>
+        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
         public ChangeThresholdCondition(double changePercentage, int shiftPoint, bool isWithinRange, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyDetectorDirection AnomalyDetectorDirection { get; }
 
         /// <summary>
-        /// Used to avoid outright labeling every single unexpected data point as an anomaly.
+        /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
         public SuppressCondition SuppressCondition { get; }
     }

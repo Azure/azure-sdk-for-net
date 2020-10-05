@@ -29,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static MetricAnomalyAlertConfigurationsOperator Or { get; } = new MetricAnomalyAlertConfigurationsOperator(OrValue);
 
         /// <summary>
-        /// A XOR operation is applied across <see cref="MetricAnomalyAlertConfiguration"/>s defined in
-        /// <see cref="AnomalyAlertConfiguration"/>. In simple terms, an alert will be triggered if an
-        /// odd number of <see cref="MetricAnomalyAlertConfiguration"/>s are satisfied.
+        /// It can be used only when there are up to two <see cref="MetricAnomalyAlertConfiguration"/>s defined
+        /// in <see cref="AnomalyAlertConfiguration"/>. The data point will trigger an alert if exactly one of the
+        /// configurations is satisfied.
         /// </summary>
         [CodeGenMember("XOR")]
         public static MetricAnomalyAlertConfigurationsOperator Xor { get; } = new MetricAnomalyAlertConfigurationsOperator(XorValue);

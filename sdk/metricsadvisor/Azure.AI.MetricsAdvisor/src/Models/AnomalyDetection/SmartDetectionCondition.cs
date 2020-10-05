@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="sensitivity"> sensitivity, value range : (0, 100]. </param>
         /// <param name="anomalyDetectorDirection"> detection direction. </param>
-        /// <param name="suppressCondition">Used to avoid outright labeling every single unexpected data point as an anomaly.</param>
+        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
         public SmartDetectionCondition(double sensitivity, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyDetectorDirection AnomalyDetectorDirection { get; }
 
         /// <summary>
-        /// Used to avoid outright labeling every single unexpected data point as an anomaly.
+        /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
         public SuppressCondition SuppressCondition { get; }
     }

@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Used to avoid outright labeling every single unexpected data point as an anomaly. An
-    /// anomaly will be detected only when the latest ingested points contain a minimum
-    /// threshold of unexpected values, indicating that there's, in fact, something wrong with
-    /// the data.
+    /// Every time a time series ingests a new data point, the service takes a look at the latest
+    /// points for that series. If the amount of unexpected points exceeds a specified threshold,
+    /// then the latest point that caused this will be labeled as an anomaly. A <see cref="SuppressCondition"/>
+    /// instance is used to configure this behavior.
     /// </summary>
     public partial class SuppressCondition
     {

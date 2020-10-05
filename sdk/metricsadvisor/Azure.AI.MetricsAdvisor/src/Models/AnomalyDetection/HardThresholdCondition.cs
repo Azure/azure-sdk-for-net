@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Creates a new instance of the <see cref="HardThresholdCondition"/> class.
         /// </summary>
         /// <param name="anomalyDetectorDirection">The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/> and/or <see cref="UpperBound"/> may be required.</param>
-        /// <param name="suppressCondition">Used to avoid outright labeling every single unexpected data point as an anomaly.</param>
+        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
         public HardThresholdCondition(AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyDetectorDirection AnomalyDetectorDirection { get; }
 
         /// <summary>
-        /// Used to avoid outright labeling every single unexpected data point as an anomaly.
+        /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
         public SuppressCondition SuppressCondition { get; }
 
