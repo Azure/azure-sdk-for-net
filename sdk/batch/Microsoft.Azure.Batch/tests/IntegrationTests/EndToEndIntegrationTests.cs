@@ -184,33 +184,11 @@
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    string job;
-                    string task;
-
-                    TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out job, out task);
+                    TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out string job, out string task);
                 }
             };
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
-        }
-
-        private static void GA_TestListPoolUsageMetricsDetailLevel()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void GA_TestListJobPrepReleaseExeInfo(BatchClient batchCli)
-        {
-            var listAsyncTask = batchCli.JobOperations.ListJobPreparationAndReleaseTaskStatus("0").ToListAsync();
-
-            listAsyncTask.Wait();
-
-            List<JobPreparationAndReleaseTaskExecutionInformation> list = listAsyncTask.Result;
-
-            // yep not done yet
-            // somehow missed getting the task scheduling error collection when it was null
-            // be sure to track that down (jobrel... see old code)
-            throw new NotImplementedException();
         }
 
         #region Test helpers

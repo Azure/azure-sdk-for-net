@@ -3,15 +3,16 @@
 
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Microsoft.Azure.Batch;
 using Microsoft.Azure.Batch.FileStaging;
 using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -244,71 +245,59 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// create a container if doesn't exist, setting permission with policy, and return assosciated SAS signature
+        /// Create a container if doesn't exist, setting permission with policy, and return assosciated SAS signature
         /// </summary>
-        /// <param name="account">storage account</param>
-        /// <param name="key">storage key</param>
-        /// <param name="container">container to be created</param>
-        /// <param name="policy">name for the policy</param>
-        /// <param name="start">start time of the policy</param>
-        /// <param name="end">expire time of the policy</param>
-        /// <param name="permissions">permission on the name</param>
-        /// <param name="blobUri">blob URI</param>
-        /// <returns>the SAS for the container, in full URI format.</returns>
-        private static async Task<string> CreateContainerWithPolicySASIfNotExistAsync(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, SharedAccessBlobPermissions permissions)
+        /// <param name="account">Storage account</param>
+        /// <param name="Key">Storage account key</param>
+        /// <param name="blobUri">Blob endpoint URI</param>
+        /// <param name="containerName">Name of the container to be created</param>
+        /// <param name="policy">Name for the policy</param>
+        /// <param name="start">Start time of the policy</param>
+        /// <param name="end">Expire time of the policy</param>
+        /// <param name="permissions">Blob access permissions</param>
+        /// <returns>the SAS for the container, in full URI format.</returns>.
+        private static async Task<string> CreateContainerWithPolicySASIfNotExistAsync(string account, string key, Uri blobUri, string containerName, string policy, DateTime start, DateTime end, string permissions)
         {
             // 1. form the credentail and initial client
-            CloudStorageAccount storageaccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(account, key),
-                                                                         blobEndpoint: blobUri,
-                                                                         queueEndpoint: null,
-                                                                         tableEndpoint: null,
-                                                                         fileEndpoint: null);
-
-            CloudBlobClient client = storageaccount.CreateCloudBlobClient();
-
+            StagingStorageAccount stagingCredentials = new StagingStorageAccount(account, key, blobUri.ToString());
+            StorageSharedKeyCredential shardKeyCredentials = new StorageSharedKeyCredential(account, key);
+            BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, stagingCredentials);
             // 2. create container if it doesn't exist
-            CloudBlobContainer storagecontainer = client.GetContainerReference(container);
-            await storagecontainer.CreateIfNotExistsAsync();
+            await containerClient.CreateIfNotExistsAsync();
 
             // 3. validate policy, create/overwrite if doesn't match
-            bool policyFound = false;
-
-            SharedAccessBlobPolicy accesspolicy = new SharedAccessBlobPolicy()
+            BlobSignedIdentifier identifier = new BlobSignedIdentifier
             {
-                SharedAccessExpiryTime = end,
-                SharedAccessStartTime = start,
-                Permissions = permissions
+                Id = policy,
+                AccessPolicy = new BlobAccessPolicy
+                {
+                    Permissions = permissions,
+                    StartsOn = start,
+                    ExpiresOn = end,
+                    
+                },
             };
 
-            BlobContainerPermissions blobPermissions = await storagecontainer.GetPermissionsAsync();
+            var accessPolicy = (await containerClient.GetAccessPolicyAsync()).Value;
+            bool policyFound = accessPolicy.SignedIdentifiers.Any(i => i == identifier);
 
-            if (blobPermissions.SharedAccessPolicies.ContainsKey(policy))
+            if (policyFound == false)
             {
-                SharedAccessBlobPolicy containerpolicy = blobPermissions.SharedAccessPolicies[policy];
-                if (!(permissions == (containerpolicy.Permissions & permissions) && start <= containerpolicy.SharedAccessStartTime && end >= containerpolicy.SharedAccessExpiryTime))
-                {
-                    blobPermissions.SharedAccessPolicies[policy] = accesspolicy;
-                }
-                else
-                {
-                    policyFound = true;
-                }
-            }
-            else
-            {
-                blobPermissions.SharedAccessPolicies.Add(policy, accesspolicy);
+                await containerClient.SetAccessPolicyAsync(PublicAccessType.Blob, permissions: new List<BlobSignedIdentifier> { identifier });
             }
 
-            if (!policyFound)
+            BlobSasBuilder sasBuilder = new BlobSasBuilder
             {
-                await storagecontainer.SetPermissionsAsync(blobPermissions);
-            }
+                BlobContainerName = containerName,
+                StartsOn = start,
+                ExpiresOn = end,
+            };
 
-            // 4. genereate SAS and return
-            string container_sas = storagecontainer.GetSharedAccessSignature(new SharedAccessBlobPolicy(), policy);
-            string container_url = storagecontainer.Uri.AbsoluteUri + container_sas;
-
-            return container_url;
+            sasBuilder.SetPermissions(permissions);
+            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri);
+            builder.Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials);
+            string fullSas = builder.ToString();
+            return fullSas;
         }
 
         private static async Task CreateDefaultBlobContainerAndSASIfNeededReturnAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifact)
@@ -336,7 +325,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                                                             policyName,
                                                             startTime,
                                                             expiredAtTime,
-                                                            SharedAccessBlobPermissions.Read);
+                                                            "r");
 
                     return;  // done
                 }
@@ -351,13 +340,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <returns>Null means there was not even one.</returns>
         private static FileToStage FindAtLeastOne(List<IFileStagingProvider> filesToStage)
         {
-            if ((null != filesToStage) && (filesToStage.Count > 0))
+            if (null != filesToStage && filesToStage.Count > 0)
             {
                 foreach (IFileStagingProvider curProvider in filesToStage)
                 {
-                    FileToStage thisIsReal = curProvider as FileToStage;
-
-                    if (null != thisIsReal)
+                    if (curProvider is FileToStage thisIsReal)
                     {
                         return thisIsReal;
                     }
@@ -370,7 +357,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <summary>
         /// Starts an asynchronous call to stage the given files.
         /// </summary>
-        private static async System.Threading.Tasks.Task StageFilesInternalAsync(List<IFileStagingProvider> filesToStage, IFileStagingArtifact fileStagingArtifact)
+        private static async Task StageFilesInternalAsync(List<IFileStagingProvider> filesToStage, IFileStagingArtifact fileStagingArtifact)
         {
             if (null == filesToStage)
             {
@@ -397,13 +384,13 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             }
 
             // create a Run task to create the blob containers if needed
-            System.Threading.Tasks.Task createContainerTask = System.Threading.Tasks.Task.Run(async () => { await CreateDefaultBlobContainerAndSASIfNeededReturnAsync(filesToStage, seqArtifact); });
+            Task createContainerTask = Task.Run(async () => { await CreateDefaultBlobContainerAndSASIfNeededReturnAsync(filesToStage, seqArtifact); });
 
             // wait for container to be created
             await createContainerTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // begin staging the files
-            System.Threading.Tasks.Task stageTask = StageFilesAsync(filesToStage, seqArtifact);
+            Task stageTask = StageFilesAsync(filesToStage, seqArtifact);
 
             // wait for files to be staged
             await stageTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -412,18 +399,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <summary>
         /// Stages all files in the queue 
         /// </summary>
-        private async static System.Threading.Tasks.Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
+        private async static Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
         {
             foreach (IFileStagingProvider currentFile in filesToStage)
             {
                 // for "retry" and/or "double calls" we ignore files that have already been staged
                 if (null == currentFile.StagedFiles)
                 {
-                    FileToStage fts = currentFile as FileToStage;
-
-                    if (null != fts)
+                    if (currentFile is FileToStage fts)
                     {
-                        System.Threading.Tasks.Task stageTask = StageOneFileAsync(fts, seqArtifacts);
+                        Task stageTask = StageOneFileAsync(fts, seqArtifacts);
 
                         await stageTask.ConfigureAwait(continueOnCapturedContext: false);
                     }
@@ -528,7 +513,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         // lock used to ensure only one name is created at a time.
-        private static object _lockForContainerNaming = new object();
+        private static readonly object _lockForContainerNaming = new object();
 
         internal static string ConstructDefaultName(string namingFragment)
         {
