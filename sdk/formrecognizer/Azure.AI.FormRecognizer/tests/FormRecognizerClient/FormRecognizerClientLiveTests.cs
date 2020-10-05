@@ -63,6 +63,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("Contoso", formPage.Lines[0].Text);
         }
 
+        #region StartRecognizeContent
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
@@ -310,6 +312,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(0, blankPage.Lines.Count);
             Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
         [Test]
@@ -378,6 +381,50 @@ namespace Azure.AI.FormRecognizer.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
+
+        [Test]
+        [Ignore("Need to get an approved file to test")]
+        public async Task StartRecognizeContentWithSelectionMarks()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            var formPage = operation.Value.Single();
+
+            Assert.AreEqual(5, formPage.SelectionMarks.Count);
+
+            var selectionMarks = formPage.SelectionMarks.ToList();
+
+            var expectedState = new string[5]
+            {
+                "Selected",
+                "Selected",
+                "Unselected",
+                "Unselected",
+                "Unselected",
+            };
+
+            for (var i = 0; i < selectionMarks.Count; i++)
+            {
+                Assert.AreEqual(expectedState[i], selectionMarks[i].State.ToString());
+                Assert.AreEqual(expectedState[i], selectionMarks[i].Text);
+            }
+
+            ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
+        }
+
+        #endregion
+
+        #region StartRecognizeReceipts
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
@@ -755,6 +802,10 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
+        #endregion
+
+        #region StartRecognizeCustomForms
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
@@ -815,13 +866,50 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("Need to get an approved file to test")]
+        public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeCustomFormsOptions { IncludeFieldElements = includeFieldElements };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.SelectionMarks);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+            RecognizedForm form = operation.Value.Single();
+
+            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            // Testing that we shuffle things around correctly so checking only once per property.
+            Assert.IsNotEmpty(form.FormType);
+            Assert.IsNotNull(form.Fields);
+            var name = "Checkbox_Paramedic Subscription_Amount Enclosed";
+            Assert.IsNotNull(form.Fields[name]);
+            Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
+            Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, useMultipageFiles: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -1041,7 +1129,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, useMultipageFiles: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -1216,6 +1304,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.False(operation.HasValue);
         }
 
+        #endregion
+
         private void ValidateFormPage(FormPage formPage, bool includeFieldElements, int expectedPageNumber)
         {
             Assert.AreEqual(expectedPageNumber, formPage.PageNumber);
@@ -1297,6 +1387,20 @@ namespace Azure.AI.FormRecognizer.Tests
                         Assert.True(element is FormWord || element is FormLine);
                     }
                 }
+            }
+
+            Assert.NotNull(formPage.SelectionMarks);
+
+            foreach (var selectionMark in formPage.SelectionMarks)
+            {
+                Assert.AreEqual(expectedPageNumber, selectionMark.PageNumber);
+                Assert.NotNull(selectionMark.BoundingBox.Points);
+                Assert.AreEqual(4, selectionMark.BoundingBox.Points.Length);
+                Assert.NotNull(selectionMark.Text);
+                Assert.That(selectionMark.Text, Is.EqualTo("Selected").Or.EqualTo("Unselected"));
+                Assert.NotNull(selectionMark.State);
+                Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
         }
 

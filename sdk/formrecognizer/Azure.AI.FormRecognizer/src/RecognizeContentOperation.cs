@@ -181,7 +181,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                     if (update.Value.Status == OperationStatus.Succeeded)
                     {
-                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
+                        // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                         _hasCompleted = true;
                     }

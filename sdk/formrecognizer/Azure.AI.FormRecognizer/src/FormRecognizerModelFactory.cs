@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using Azure.AI.FormRecognizer.Training;
@@ -174,6 +175,14 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithSelectionMarkValueType(FormSelectionMarkState value) =>
+            new FieldValue(value);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormField"/> class.
         /// </summary>
         /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
@@ -211,12 +220,34 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
         {
             lines = lines?.ToList();
             tables = tables?.ToList();
 
-            return new FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
+            return new FormPage(pageNumber, width, height, textAngle, unit, lines, tables, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPage"/> class.
+        /// </summary>
+        /// <param name="pageNumber">The 1-based page number in the input document.</param>
+        /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
+        /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
+        /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
+        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
+        /// <param name="lines">A list of recognized lines of text.</param>
+        /// <param name="tables">A list of recognized tables contained in this page.</param>
+        /// <param name="selectionMarks">A list of recognized selection marks contained in this page.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
+        public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables, IReadOnlyList<FormSelectionMark> selectionMarks)
+        {
+            lines = lines?.ToList();
+            tables = tables?.ToList();
+            selectionMarks = selectionMarks?.ToList();
+
+            return new FormPage(pageNumber, width, height, textAngle, unit, lines, tables, selectionMarks);
         }
 
         /// <summary>
@@ -320,6 +351,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static RecognizedFormCollection RecognizedFormCollection(IList<RecognizedForm> list) =>
             new RecognizedFormCollection(list);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormSelectionMark"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of selection mark value.</param>
+        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
+        /// <param name="state">Selection mark state value.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormSelectionMark"/> instance for mocking.</returns>
+        public static FormSelectionMark FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, FormSelectionMarkState state) =>
+            new FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.

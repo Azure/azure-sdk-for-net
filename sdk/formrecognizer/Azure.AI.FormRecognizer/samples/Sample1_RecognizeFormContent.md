@@ -1,6 +1,6 @@
 # Recognize form content
 
-This sample demonstrates how to recognize tables, lines, and words in documents, without the need to train a model.
+This sample demonstrates how to recognize tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -41,6 +41,17 @@ foreach (FormPage page in formPages)
         {
             Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
         }
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        FormSelectionMark selectionMark = page.SelectionMarks[i];
+        Console.WriteLine($"Selection Mark {i} is {selectionMark.State.ToString()}.");
+        Console.WriteLine("        Its bounding box is:");
+        Console.WriteLine($"        Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"        Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"        Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"        Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 ```

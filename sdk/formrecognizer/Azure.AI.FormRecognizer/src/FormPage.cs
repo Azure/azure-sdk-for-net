@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
             Tables = pageResult?.Tables != null
                 ? ConvertTables(pageResult, readResults, pageIndex)
                 : new List<FormTable>();
+            SelectionMarks = readResult.SelectionMarks != null
+                ? ConvertSelectionMarks(readResult.SelectionMarks, readResult.Page)
+                : new List<FormSelectionMark>();
         }
 
         /// <summary>
@@ -41,7 +44,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
-        internal FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
+        /// <param name="selectionMarks">A list of recognized selection marks contained in this page.</param>
+        internal FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables, IReadOnlyList<FormSelectionMark> selectionMarks)
         {
             PageNumber = pageNumber;
             Width = width;
@@ -50,6 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
             Unit = unit;
             Lines = lines;
             Tables = tables;
+            SelectionMarks = selectionMarks;
         }
 
         /// <summary>
@@ -92,6 +97,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
 
+        /// <summary>
+        /// A list of recognized selection marks contained in this page.
+        /// </summary>
+        public IReadOnlyList<FormSelectionMark> SelectionMarks { get; }
+
         private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine> textLines, int pageNumber)
         {
             List<FormLine> rawLines = new List<FormLine>();
@@ -114,6 +124,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return tables;
+        }
+
+        private static IReadOnlyList<FormSelectionMark> ConvertSelectionMarks(IReadOnlyList<SelectionMark> selectionMarksInternal, int pageNumber)
+        {
+            List<FormSelectionMark> selectionMarks = new List<FormSelectionMark>();
+
+            foreach (var selectionMark in selectionMarksInternal)
+            {
+                selectionMarks.Add(new FormSelectionMark(selectionMark, pageNumber));
+            }
+
+            return selectionMarks;
         }
     }
 }
