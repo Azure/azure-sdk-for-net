@@ -20,7 +20,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class BlobTriggerEndToEndTests : WebJobsTestBase, IDisposable
+    public class BlobTriggerEndToEndTests : LiveTestBase<WebJobsTestEnvironment>, IDisposable
     {
         private const string TestArtifactPrefix = "e2etests";
 
@@ -167,12 +167,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [LiveOnly]
-        [TestCase("AzureWebJobsSecondaryStorage")]
-        [TestCase("AzureWebJobsStorage")]
-        public async Task PoisonMessage_CreatedInCorrectStorageAccount(string storageAccountSetting)
+        [Test]
+        public async Task PoisonMessage_CreatedInPrimaryStorageAccount()
         {
-            var storageAccount = StorageAccount.NewFromConnectionString(GetVariable(storageAccountSetting.ToUpperInvariant()));
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString);
+        }
+
+        [Test]
+        public async Task PoisonMessage_CreatedInSecondaryStorageAccount()
+        {
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString);
+        }
+
+        private async Task PoisonMessage_CreatedInCorrectStorageAccount(string connectionString)
+        {
+            var storageAccount = StorageAccount.NewFromConnectionString(connectionString);
             var blobClient = storageAccount.CreateBlobServiceClient();
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
             var container = blobClient.GetBlobContainerClient(containerName);
@@ -198,7 +207,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -245,7 +253,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         } // host
 
         [Test]
-        [LiveOnly]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
@@ -267,7 +274,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer

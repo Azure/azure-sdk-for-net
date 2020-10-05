@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     /// <summary>
     /// Various E2E tests that use only the public surface and the real Azure storage
     /// </summary>
-    public class AzureStorageEndToEndTests
+    public class AzureStorageEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private const string TestArtifactsPrefix = "e2etest";
         private const string ContainerName = TestArtifactsPrefix + "container%rnd%";
@@ -171,7 +171,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
@@ -222,7 +221,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [LiveOnly]
         [Ignore("TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
         public async Task BadQueueMessageE2ETests()
         {

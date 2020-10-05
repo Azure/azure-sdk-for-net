@@ -22,7 +22,7 @@ using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueProcessorTests
+    public class QueueProcessorTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private QueueServiceClient _queueServiceClient;
         private QueueClient _queue;
@@ -56,7 +56,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public void Constructor_DefaultsValues()
         {
             var options = new QueuesOptions
@@ -78,7 +77,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task CompleteProcessingMessageAsync_Success_DeletesMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -93,7 +91,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task CompleteProcessingMessageAsync_FailureWithoutPoisonQueue_DoesNotDeleteMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -113,7 +110,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
@@ -149,7 +145,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task CompleteProcessingMessageAsync_Failure_AppliesVisibilityTimeout()
         {
             var queuesOptions = new QueuesOptions
@@ -181,7 +176,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [LiveOnly]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
