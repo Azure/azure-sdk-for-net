@@ -41,15 +41,47 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
         /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
         /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
-        /// <param name="errors">A list of errors ocurred during the training operation.</param>
+        /// <param name="errors">A list of errors occurred during the training operation.</param>
         /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors)
         {
             submodels = submodels?.ToList();
             trainingDocuments = trainingDocuments?.ToList();
             errors = errors?.ToList();
 
-            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors);
+            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, default, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.CustomFormModel"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of this model.</param>
+        /// <param name="status">A status indicating this model's readiness for use.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
+        /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
+        /// <param name="errors">A list of errors occurred during the training operation.</param>
+        /// <param name="displayName">User defined displayed model name</param>
+        /// <param name="properties">Model properties, like for example, if a model is composed.</param>
+        /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
+        public static CustomFormModel CustomFormModel(
+            string modelId,
+            CustomFormModelStatus status,
+            DateTimeOffset trainingStartedOn,
+            DateTimeOffset trainingCompletedOn,
+            IReadOnlyList<CustomFormSubmodel> submodels,
+            IReadOnlyList<TrainingDocumentInfo> trainingDocuments,
+            IReadOnlyList<FormRecognizerError> errors,
+            string displayName,
+            CustomFormModelProperties properties)
+        {
+            submodels = submodels?.ToList();
+            trainingDocuments = trainingDocuments?.ToList();
+            errors = errors?.ToList();
+
+            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, displayName, properties);
         }
 
         /// <summary>
@@ -70,8 +102,31 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
         /// <param name="status">The status of the model.</param>
         /// <returns>A new <see cref="Training.CustomFormModelInfo"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomFormModelInfo CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status) =>
-            new CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status);
+            new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, default, default);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.CustomFormModelInfo"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of the model.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="status">The status of the model.</param>
+        /// <param name="displayName">The display name of the model.</param>
+        /// <param name="properties">Model properties, like for example, if a model is composed.</param>
+        /// <returns>A new <see cref="Training.CustomFormModelInfo"/> instance for mocking.</returns>
+        public static CustomFormModelInfo CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status, string displayName, CustomFormModelProperties properties) =>
+            new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, displayName, properties);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.CustomFormModelProperties"/> class.
+        /// </summary>
+        /// <param name="isComposedModel">Indicates if the model is a composed model.</param>
+        /// <returns>A new <see cref="Training.CustomFormModelProperties"/> instance for mocking.</returns>
+        public static CustomFormModelProperties CustomFormModelProperties(bool isComposedModel) =>
+            new CustomFormModelProperties(isComposedModel);
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormSubmodel"/> class.
@@ -80,11 +135,27 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="accuracy">The mean of the accuracies of this model's <see cref="Training.CustomFormModelField"/> instances.</param>
         /// <param name="fields">A dictionary of the fields that this submodel will recognize from the input document.</param>
         /// <returns>A new <see cref="Training.CustomFormSubmodel"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
         {
             fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            return new CustomFormSubmodel(formType, accuracy, fields);
+            return new CustomFormSubmodel(formType, accuracy, fields, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.CustomFormSubmodel"/> class.
+        /// </summary>
+        /// <param name="formType">The type of form this submodel recognizes.</param>
+        /// <param name="accuracy">The mean of the accuracies of this model's <see cref="Training.CustomFormModelField"/> instances.</param>
+        /// <param name="fields">A dictionary of the fields that this submodel will recognize from the input document.</param>
+        /// <param name="modelId">he unique identifier of the submodel.</param>
+        /// <returns>A new <see cref="Training.CustomFormSubmodel"/> instance for mocking.</returns>
+        public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields, string modelId)
+        {
+            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            return new CustomFormSubmodel(formType, accuracy, fields, modelId);
         }
 
         /// <summary>
@@ -334,12 +405,31 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
         /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.RecognizedForm"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages)
         {
             fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             pages = pages?.ToList();
 
-            return new RecognizedForm(formType, pageRange, fields, pages);
+            return new RecognizedForm(formType, pageRange, fields, pages, default, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.RecognizedForm"/> class.
+        /// </summary>
+        /// <param name="formType">The type of form the model identified the submitted form to be.</param>
+        /// <param name="pageRange">The range of pages this form spans.</param>
+        /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
+        /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
+        /// <param name="modelId">Model identifier of model used to analyze form if not using a prebuilt model.</param>
+        /// <param name="formTypeConfidence">Confidence on the type of form the labeled model identified the submitted form to be.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.RecognizedForm"/> instance for mocking.</returns>
+        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages, string modelId, float? formTypeConfidence)
+        {
+            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            pages = pages?.ToList();
+
+            return new RecognizedForm(formType, pageRange, fields, pages, modelId, formTypeConfidence);
         }
 
         /// <summary>
@@ -372,11 +462,24 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="errors">List of errors.</param>
         /// <param name="status">Status of the training operation.</param>
         /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
         {
-            errors = errors?.ToList();
+            return new TrainingDocumentInfo(name, pageCount, errors?.ToList(), status, default);
+        }
 
-            return new TrainingDocumentInfo(name, pageCount, errors, status);
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.
+        /// </summary>
+        /// <param name="name">Training document name.</param>
+        /// <param name="pageCount">Total number of pages trained.</param>
+        /// <param name="errors">List of errors.</param>
+        /// <param name="status">Status of the training operation.</param>
+        /// <param name="modelId">The unique identifier of the model.</param>
+        /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
+        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status, string modelId)
+        {
+            return new TrainingDocumentInfo(name, pageCount, errors?.ToList(), status, modelId);
         }
     }
 }
