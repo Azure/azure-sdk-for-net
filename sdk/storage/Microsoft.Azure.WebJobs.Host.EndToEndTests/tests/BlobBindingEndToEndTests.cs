@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
-            string connectionString = GetVariable("AzureWebJobsStorage");
+            string connectionString = GetVariable("AzureWebJobsStorage".ToUpperInvariant());
             Assert.IsNotEmpty(connectionString);
             _fixture = new TestFixture();
             await _fixture.InitializeAsync();
