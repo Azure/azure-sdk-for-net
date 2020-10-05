@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.5.0-preview.2 (Unreleased)
-
+- Fixed bug where ShareDirectoryClient.Exists() and ShareFileClient.Exists() would thrown an exception when the directory or file's parent directory didn't exist.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.
