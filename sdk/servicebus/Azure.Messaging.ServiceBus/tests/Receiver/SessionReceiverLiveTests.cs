@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sentMessageIdToMsg.Add(message.MessageId, message);
                 }
 
-                var receiver = await client.AcceptNextSessionAsync(
+                var receiver = await client.AcceptSessionAsync(
                     scope.QueueName,
                     sessionId);
 
@@ -591,7 +591,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendMessageAsync(GetMessage("sessionId2"));
                 await sender.SendMessageAsync(message);
 
-                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(
+                ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
                     scope.QueueName,
                     isSessionSpecified ? sessionId1 : null);
                 if (isSessionSpecified)
