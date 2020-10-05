@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ExcludeMgmtLib Include="..\sdk\*\Microsoft.*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
-    <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
+    <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\Azure.WebJobs.Host.EndToEnd.Tests.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
