@@ -27,9 +27,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get; set; }
         /// <summary> cross metrics operator. </summary>
         public AnomalyAlertingConfigurationPatchCrossMetricsOperator? CrossMetricsOperator { get; set; }
-        /// <summary> hook unique ids. </summary>
-        public IList<Guid> HookIds { get; }
-        /// <summary> Anomaly alerting configurations. </summary>
-        public IList<MetricAnomalyAlertConfiguration> MetricAlertingConfigurations { get; }
     }
 }

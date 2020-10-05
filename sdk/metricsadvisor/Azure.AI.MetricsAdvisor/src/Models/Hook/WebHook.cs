@@ -19,7 +19,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
 
-            HookParameter = new WebhookHookParameter(endpoint, default, default, new ChangeTrackingDictionary<string, string>(), default, default);;
+            HookParameter = new WebhookHookParameter(endpoint, default, default, new ChangeTrackingDictionary<string, string>(), default, default);
+
             HookType = HookType.Webhook;
         }
 
@@ -32,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// </summary>
-        public string Endpoint { get => HookParameter.Endpoint; private set => HookParameter.Endpoint = value; }
+        public string Endpoint { get => HookParameter.Endpoint; }
 
         /// <summary>
         /// </summary>
@@ -52,7 +53,15 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// </summary>
-        public IDictionary<string, string> Headers => HookParameter.Headers;
+        public IDictionary<string, string> Headers
+        {
+            get => HookParameter.Headers;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(Headers));
+                HookParameter.Headers = value;
+            }
+        }
 
         /// <summary>
         /// Used by CodeGen during serialization.

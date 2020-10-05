@@ -37,6 +37,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal EmailHookParameter HookParameter { get; private set; }
+        internal EmailHookParameter HookParameter { get; }
     }
 }
