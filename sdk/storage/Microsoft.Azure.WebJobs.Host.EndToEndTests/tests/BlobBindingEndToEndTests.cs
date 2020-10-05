@@ -23,7 +23,7 @@ using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class BlobBindingEndToEndTests
+    public class BlobBindingEndToEndTests : WebJobsTestBase
     {
         private const string TestArtifactPrefix = "e2etestbindings";
         private const string ContainerName = TestArtifactPrefix + "-%rnd%";
@@ -38,6 +38,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
+            string connectionString = GetVariable("AzureWebJobsStorage");
+            Assert.IsNotEmpty(connectionString);
             _fixture = new TestFixture();
             await _fixture.InitializeAsync();
         }
@@ -701,93 +703,88 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public async Task InitializeAsync()
             {
-                // TODO (kasobol-msft) find better way
-                string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-                if (!string.IsNullOrWhiteSpace(connectionString))
-                {
-                    RandomNameResolver nameResolver = new RandomNameResolver();
+                RandomNameResolver nameResolver = new RandomNameResolver();
 
-                    Host = new HostBuilder()
-                        .ConfigureDefaultTestHost<BlobBindingEndToEndTests>(b =>
-                        {
-                            b.AddAzureStorageBlobs().AddAzureStorageQueues();
-                            b.AddAzureStorageCoreServices();
-                        })
-                        .ConfigureServices(services =>
-                         {
-                             services.AddSingleton<INameResolver>(nameResolver);
-                         })
-                        .Build();
-
-
-                    JobHost = Host.GetJobHost();
-
-                    var provider = Host.Services.GetService<StorageAccountProvider>();
-                    StorageAccount = provider.GetHost();
-                    var blobClient = StorageAccount.CreateBlobServiceClient();
-
-                    BlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(ContainerName));
-                    Assert.False(await BlobContainer.ExistsAsync());
-                    await BlobContainer.CreateAsync();
-
-                    OutputBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(OutputContainerName));
-
-                    var pageBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(PageBlobContainerName));
-                    Assert.False(await pageBlobContainer.ExistsAsync());
-                    await pageBlobContainer.CreateAsync();
-
-                    var hierarchicalBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(HierarchicalBlobContainerName));
-                    Assert.False(await hierarchicalBlobContainer.ExistsAsync());
-                    await hierarchicalBlobContainer.CreateAsync();
-
-                    var appendBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(AppendBlobContainerName));
-                    Assert.False(await appendBlobContainer.ExistsAsync());
-                    await appendBlobContainer.CreateAsync();
-
-                    await Host.StartAsync();
-
-                    // upload some test blobs
-                    BlockBlobClient blob = BlobContainer.GetBlockBlobClient("blob1");
-                    await blob.UploadTextAsync(TestData);
-                    blob = BlobContainer.GetBlockBlobClient("blob2");
-                    await blob.UploadTextAsync(TestData);
-                    blob = BlobContainer.GetBlockBlobClient("blob3");
-                    await blob.UploadTextAsync(TestData);
-                    blob = BlobContainer.GetBlockBlobClient("file1");
-                    await blob.UploadTextAsync(TestData);
-                    blob = BlobContainer.GetBlockBlobClient("file2");
-                    await blob.UploadTextAsync(TestData);
-                    blob = BlobContainer.GetBlockBlobClient("overwrite");
-                    await blob.UploadTextAsync(TestData);
-
-                    // add a couple hierarchical blob paths
-                    blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/blob1");
-                    await blob.UploadTextAsync(TestData);
-                    blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/blob2");
-                    await blob.UploadTextAsync(TestData);
-                    blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/sub/blob3");
-                    await blob.UploadTextAsync(TestData);
-                    blob = hierarchicalBlobContainer.GetBlockBlobClient("blob4");
-                    await blob.UploadTextAsync(TestData);
-
-                    byte[] bytes = new byte[512];
-                    byte[] testBytes = Encoding.UTF8.GetBytes(TestData);
-                    for (int i = 0; i < testBytes.Length; i++)
+                Host = new HostBuilder()
+                    .ConfigureDefaultTestHost<BlobBindingEndToEndTests>(b =>
                     {
-                        bytes[i] = testBytes[i];
-                    }
-                    PageBlobClient pageBlob = pageBlobContainer.GetPageBlobClient("blob1");
-                    await pageBlob.UploadFromByteArrayAsync(bytes, 0);
-                    pageBlob = pageBlobContainer.GetPageBlobClient("blob2");
-                    await pageBlob.UploadFromByteArrayAsync(bytes, 0);
+                        b.AddAzureStorageBlobs().AddAzureStorageQueues();
+                        b.AddAzureStorageCoreServices();
+                    })
+                    .ConfigureServices(services =>
+                    {
+                        services.AddSingleton<INameResolver>(nameResolver);
+                    })
+                    .Build();
 
-                    AppendBlobClient appendBlob = appendBlobContainer.GetAppendBlobClient("blob1");
-                    await appendBlob.UploadTextAsync(TestData);
-                    appendBlob = appendBlobContainer.GetAppendBlobClient("blob2");
-                    await appendBlob.UploadTextAsync(TestData);
-                    appendBlob = appendBlobContainer.GetAppendBlobClient("blob3");
-                    await appendBlob.UploadTextAsync(TestData);
+
+                JobHost = Host.GetJobHost();
+
+                var provider = Host.Services.GetService<StorageAccountProvider>();
+                StorageAccount = provider.GetHost();
+                var blobClient = StorageAccount.CreateBlobServiceClient();
+
+                BlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(ContainerName));
+                Assert.False(await BlobContainer.ExistsAsync());
+                await BlobContainer.CreateAsync();
+
+                OutputBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(OutputContainerName));
+
+                var pageBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(PageBlobContainerName));
+                Assert.False(await pageBlobContainer.ExistsAsync());
+                await pageBlobContainer.CreateAsync();
+
+                var hierarchicalBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(HierarchicalBlobContainerName));
+                Assert.False(await hierarchicalBlobContainer.ExistsAsync());
+                await hierarchicalBlobContainer.CreateAsync();
+
+                var appendBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(AppendBlobContainerName));
+                Assert.False(await appendBlobContainer.ExistsAsync());
+                await appendBlobContainer.CreateAsync();
+
+                await Host.StartAsync();
+
+                // upload some test blobs
+                BlockBlobClient blob = BlobContainer.GetBlockBlobClient("blob1");
+                await blob.UploadTextAsync(TestData);
+                blob = BlobContainer.GetBlockBlobClient("blob2");
+                await blob.UploadTextAsync(TestData);
+                blob = BlobContainer.GetBlockBlobClient("blob3");
+                await blob.UploadTextAsync(TestData);
+                blob = BlobContainer.GetBlockBlobClient("file1");
+                await blob.UploadTextAsync(TestData);
+                blob = BlobContainer.GetBlockBlobClient("file2");
+                await blob.UploadTextAsync(TestData);
+                blob = BlobContainer.GetBlockBlobClient("overwrite");
+                await blob.UploadTextAsync(TestData);
+
+                // add a couple hierarchical blob paths
+                blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/blob1");
+                await blob.UploadTextAsync(TestData);
+                blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/blob2");
+                await blob.UploadTextAsync(TestData);
+                blob = hierarchicalBlobContainer.GetBlockBlobClient("sub/sub/blob3");
+                await blob.UploadTextAsync(TestData);
+                blob = hierarchicalBlobContainer.GetBlockBlobClient("blob4");
+                await blob.UploadTextAsync(TestData);
+
+                byte[] bytes = new byte[512];
+                byte[] testBytes = Encoding.UTF8.GetBytes(TestData);
+                for (int i = 0; i < testBytes.Length; i++)
+                {
+                    bytes[i] = testBytes[i];
                 }
+                PageBlobClient pageBlob = pageBlobContainer.GetPageBlobClient("blob1");
+                await pageBlob.UploadFromByteArrayAsync(bytes, 0);
+                pageBlob = pageBlobContainer.GetPageBlobClient("blob2");
+                await pageBlob.UploadFromByteArrayAsync(bytes, 0);
+
+                AppendBlobClient appendBlob = appendBlobContainer.GetAppendBlobClient("blob1");
+                await appendBlob.UploadTextAsync(TestData);
+                appendBlob = appendBlobContainer.GetAppendBlobClient("blob2");
+                await appendBlob.UploadTextAsync(TestData);
+                appendBlob = appendBlobContainer.GetAppendBlobClient("blob3");
+                await appendBlob.UploadTextAsync(TestData);
             }
 
             public IHost Host
