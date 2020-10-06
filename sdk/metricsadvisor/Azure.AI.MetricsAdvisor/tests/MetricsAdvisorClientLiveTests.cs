@@ -283,7 +283,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var status in client.GetEnrichmentStatusesAsync(MetricId, new GetEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
+            await foreach (var status in client.GetMetricEnrichmentStatusesAsync(MetricId, new GetMetricEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
             {
                 Assert.That(status, Is.Not.Null);
 

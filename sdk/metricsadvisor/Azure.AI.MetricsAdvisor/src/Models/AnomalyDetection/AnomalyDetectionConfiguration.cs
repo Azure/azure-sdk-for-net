@@ -8,12 +8,12 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Defines which data points of a metric should be considered an anomaly. A <see cref="MetricAnomalyDetectionConfiguration"/>
+    /// Defines which data points of a metric should be considered an anomaly. A <see cref="AnomalyDetectionConfiguration"/>
     /// can only be applied to a single metric within a data feed, but it can have multiple conditions applied to different time
     /// series within the same metric.
     /// </summary>
     [CodeGenModel("AnomalyDetectionConfiguration")]
-    public partial class MetricAnomalyDetectionConfiguration
+    public partial class AnomalyDetectionConfiguration
     {
         private string _name;
 
@@ -24,14 +24,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<MetricSeriesGroupAnomalyDetectionConditions> _seriesGroupDetectionConditions;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyDetectionConfiguration"/> class.
+        /// Creates a new instance of the <see cref="AnomalyDetectionConfiguration"/> class.
         /// </summary>
         /// <param name="metricId">The identifier of the metric to which this configuration applies.</param>
-        /// <param name="name">A custom name for this <see cref="MetricAnomalyDetectionConfiguration"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom name for this <see cref="AnomalyDetectionConfiguration"/> to be displayed on the web portal.</param>
         /// <param name="wholeSeriesDetectionConditions">The default anomaly detection conditions to be applied to all series associated with this configuration's <paramref name="metricId"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/>, <paramref name="name"/>, or <paramref name="wholeSeriesDetectionConditions"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="name"/> is empty.</exception>
-        public MetricAnomalyDetectionConfiguration(string metricId, string name, MetricAnomalyDetectionConditions wholeSeriesDetectionConditions)
+        public AnomalyDetectionConfiguration(string metricId, string name, MetricAnomalyDetectionConditions wholeSeriesDetectionConditions)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="MetricAnomalyDetectionConfiguration"/>. Set by the service.
+        /// The unique identifier of this <see cref="AnomalyDetectionConfiguration"/>. Set by the service.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]
         public string Id { get; internal set; }
@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string MetricId { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="MetricAnomalyDetectionConfiguration"/> to be displayed on the web portal.
+        /// A custom name for this <see cref="AnomalyDetectionConfiguration"/> to be displayed on the web portal.
         /// </summary>
         public string Name
         {
@@ -117,12 +117,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// A description about the <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// A description about the <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="AnomalyDetectionConfigurationPatch"/> model from an existing <see cref="MetricAnomalyDetectionConfiguration"/> instance.
+        /// Creates a <see cref="AnomalyDetectionConfigurationPatch"/> model from an existing <see cref="AnomalyDetectionConfiguration"/> instance.
         /// </summary>
         /// <returns></returns>
         internal AnomalyDetectionConfigurationPatch GetPatchModel()

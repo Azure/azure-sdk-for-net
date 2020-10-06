@@ -11,14 +11,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class GetMetricSeriesDefinitionsOptions
     {
-        private IDictionary<string, IList<string>> _dimensionToFilter;
+        private IDictionary<string, IList<string>> _dimensionCombinationsToFilter;
 
         /// <summary>
         /// </summary>
         public GetMetricSeriesDefinitionsOptions(DateTimeOffset activeSince)
         {
             ActiveSince = activeSince;
-            DimensionToFilter = new ChangeTrackingDictionary<string, IList<string>>();
+            DimensionCombinationsToFilter = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary>
@@ -27,13 +27,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// </summary>
-        public IDictionary<string, IList<string>> DimensionToFilter
+        public IDictionary<string, IList<string>> DimensionCombinationsToFilter
         {
-            get => _dimensionToFilter;
+            get => _dimensionCombinationsToFilter;
             set
             {
-                Argument.AssertNotNull(value, nameof(DimensionToFilter));
-                _dimensionToFilter = value;
+                Argument.AssertNotNull(value, nameof(DimensionCombinationsToFilter));
+                _dimensionCombinationsToFilter = value;
             }
         }
 

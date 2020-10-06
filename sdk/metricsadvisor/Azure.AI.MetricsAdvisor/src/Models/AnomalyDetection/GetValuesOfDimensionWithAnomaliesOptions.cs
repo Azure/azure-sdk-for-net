@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// </summary>
-        public DimensionKey DimensionFilter { get; set; }
+        public DimensionKey DimensionToFilter { get; set; }
 
         /// <summary>
         /// </summary>
