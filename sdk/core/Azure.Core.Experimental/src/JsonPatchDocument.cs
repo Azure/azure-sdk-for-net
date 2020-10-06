@@ -58,13 +58,6 @@ namespace Azure.Core
             Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, Serialize(value, cancellationToken)));
         }
 
-        private string Serialize<T>(T value, CancellationToken cancellationToken)
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            _serializer.Serialize(memoryStream, value, typeof(T), cancellationToken);
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
-        }
-
         /// <summary>
         /// Appends a "replace" operation to this <see cref="JsonPatchDocument"/>.
         /// </summary>
@@ -170,6 +163,13 @@ namespace Azure.Core
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
+        }
+
+        private string Serialize<T>(T value, CancellationToken cancellationToken)
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            _serializer.Serialize(memoryStream, value, typeof(T), cancellationToken);
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
     }
 }
