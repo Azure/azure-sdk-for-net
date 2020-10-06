@@ -10,7 +10,7 @@
 - Renamed `ViaPartitionKey` to `TransactionPartitionKey`.
 - Renamed `ViaEntityPath` to `TransactionEntityPath`.
 - Renamed `Proxy` to `WebProxy`.
-- Made `MaxReceiveWaitTime` in `ServiceBusMessageBatch` and `ServiceBusSenderOptions` internal.
+- Made `MaxReceiveWaitTime` in `ServiceBusProcessorOptions` and `ServiceBusSenderOptions` internal.
 - Renamed `CreateSessionReceiverAsync` to `AcceptNextSessionAsync`.
 - Removed `SessionId` from `ServiceBusClientOptions` in favor of `AcceptSessionAsync`.
 
