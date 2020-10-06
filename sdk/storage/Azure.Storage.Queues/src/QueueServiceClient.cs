@@ -475,6 +475,7 @@ namespace Azure.Storage.Queues
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
+                        operationName: $"{nameof(QueueServiceClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -581,6 +582,7 @@ namespace Azure.Storage.Queues
                         properties: properties,
                         version: Version.ToVersionString(),
                         async: async,
+                        operationName: $"{nameof(QueueServiceClient)}.{nameof(SetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
