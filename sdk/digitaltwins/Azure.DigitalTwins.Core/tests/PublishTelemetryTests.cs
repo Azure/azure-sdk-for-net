@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     TimeStamp = default
                 };
-                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, "{\"Telemetry1\": 5}", Recording.Random.NewGuid().ToString(), telemetryOptions).ConfigureAwait(false);
+                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, Recording.Random.NewGuid().ToString(), "{\"Telemetry1\": 5}", telemetryOptions).ConfigureAwait(false);
 
                 // Assert
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     { "ComponentTelemetry1", 9}
                 };
                 Response publishComponentTelemetryResponse = await client
-                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, JsonSerializer.Serialize(telemetryPayload), Recording.Random.NewGuid().ToString(), componentTelemetryOptions)
+                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, Recording.Random.NewGuid().ToString(), JsonSerializer.Serialize(telemetryPayload), componentTelemetryOptions)
                     .ConfigureAwait(false);
 
                 // Assert
