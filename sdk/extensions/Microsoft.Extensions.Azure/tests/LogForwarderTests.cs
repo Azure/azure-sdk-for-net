@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.Azure.Tests
         public void MapsLevelsCorrectly(EventLevel eventLevel, LogLevel logLevel)
         {
             var loggerFactory = new MockLoggerFactory();
-            using (var forwarder = new EventSourceLogForwarder(loggerFactory))
+            using (var forwarder = new AzureEventSourceLogForwarder(loggerFactory))
             {
                 forwarder.Start();
                 typeof(TestSource).GetMethod(eventLevel.ToString(), BindingFlags.Instance | BindingFlags.Public).Invoke(TestSource.Log, Array.Empty<object>());
@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.Azure.Tests
         [Test]
         public void WorksWithNullLoggerFactory()
         {
-            using var forwarder = new EventSourceLogForwarder( null);
+            using var forwarder = new AzureEventSourceLogForwarder( null);
             forwarder.Start();
             TestSource.Log.Informational();
         }
