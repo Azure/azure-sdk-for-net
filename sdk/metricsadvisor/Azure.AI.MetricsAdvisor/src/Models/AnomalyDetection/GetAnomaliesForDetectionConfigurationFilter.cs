@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Filters the result by series. Only anomalies detected in the time series groups specified will
         /// be returned.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="SeriesGroupKeys"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">The value assigned to <see cref="SeriesGroupKeys"/> is null.</exception>
         public IList<DimensionKey> SeriesGroupKeys
         {
             get => _seriesGroupKeys;
