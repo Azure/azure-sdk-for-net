@@ -164,7 +164,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DataFeed"/> items.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
@@ -218,7 +218,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DataFeed"/> items.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
@@ -353,7 +353,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
+        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -387,7 +387,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
+        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -809,7 +809,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfigurationId">The ID of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -844,7 +844,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfigurationId">The ID of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -1379,7 +1379,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="AlertingHook"/>.
         /// </summary>
-        /// <param name="hookId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="hookId">The ID of the existing <see cref="AlertingHook"/> to update.</param>
         /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -1416,7 +1416,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="AlertingHook"/>.
         /// </summary>
-        /// <param name="hookId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="hookId">The ID of the existing <see cref="AlertingHook"/> to update.</param>
         /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -1569,7 +1569,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AlertingHook"/>s.</returns>
         public virtual AsyncPageable<AlertingHook> GetHooksAsync(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<AlertingHook>> FirstPageFunc(int? pageSizeHint)
@@ -1614,7 +1614,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AlertingHook"/>s.</returns>
         public virtual Pageable<AlertingHook> GetHooks(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
             Page<AlertingHook> FirstPageFunc(int? pageSizeHint)
