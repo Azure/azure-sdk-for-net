@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AnomalyAlertConfiguration
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="AnomalyAlertConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="AnomalyAlertConfiguration"/> class.
         /// </summary>
         /// <param name="name">A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.</param>
         /// <param name="idsOfHooksToAlert">The unique identifiers of the <see cref="AlertingHook"/>s that must be notified when an alert is detected by this configuration.</param>
