@@ -1,7 +1,7 @@
 # Azure KeyVault Administration client library for .NET
 
-Azure Key Vault Managed HSM is a fully managed, highly available, single-tenant, standards-compliant cloud service that enables you to safeguards 
-cryptographic keys for your cloud applications, using FIPS 140-2 Level 3 validated HSMs.
+Azure Key Vault Managed HSM is a fully-managed, highly-available, single-tenant, standards-compliant cloud service that enables you to safeguard
+cryptographic keys for your cloud applications using FIPS 140-2 Level 3 validated HSMs.
 
 The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
@@ -81,14 +81,14 @@ environment variables. The following example shows a way to do this in Powershel
 
 #### Activate your managed HSM
 All data plane commands are disabled until the HSM is activated. You will not be able to create keys or assign roles. 
-Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the Security Domain.
+Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the security domain.
 
 To activate your HSM you need:
 - Minimum 3 RSA key-pairs (maximum 10)
 - Specify minimum number of keys required to decrypt the security domain (quorum)
 
 To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back. 
-Once this security domain download is successfully completed, your HSM is ready to use. 
+Once this security domain is successfully downloaded, your HSM is ready to use. 
 You also need to specify quorum, which is the minimum number of private keys required to decrypt the security domain.
 
 The example below shows how to use openssl to generate 3 self signed certificate.

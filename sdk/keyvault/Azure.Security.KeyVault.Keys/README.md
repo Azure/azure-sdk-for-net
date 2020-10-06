@@ -3,8 +3,8 @@ Azure Key Vault is a cloud service that provides secure storage of keys for encr
 Multiple keys, and multiple versions of the same key, can be kept in the Azure Key Vault. 
 Cryptographic keys in Azure Key Vault are represented as [JSON Web Key (JWK)][JWK] objects.
 
-Azure Key Vault Managed HSM is a fully managed, highly available, single-tenant, standards-compliant cloud service that enables 
-you to safeguards cryptographic keys for your cloud applications, using FIPS 140-2 Level 3 validated HSMs.
+Azure Key Vault Managed HSM is a fully-managed, highly-available, single-tenant, standards-compliant cloud service that enables 
+you to safeguard cryptographic keys for your cloud applications using FIPS 140-2 Level 3 validated HSMs.
 
 The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC) keys, each with corresponding support in hardware security modules (HSM). It offers operations to create, retrieve, update, delete, purge, backup, restore, and list the keys and its versions.
 
@@ -81,28 +81,28 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```
 
 * Create the Azure Key Vault or Managed HSM and grant the above mentioned application authorization to perform administrative operations on the Managed HSM 
-(replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
+(replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own unique names and `<your-service-principal-object-id>` with the value from above):
 
-If you are creating a standard Key Vault resource, use the following CLI command. 
+If you are creating a standard Key Vault resource, use the following CLI command:
 ```PowerShell
 az keyvault create --resource-group <your-resource-group-name> --name <your-key-vault-name>
 ```
 
-If you are creating a Managed HSM resource, use the following CLI command. 
+If you are creating a Managed HSM resource, use the following CLI command: 
 ```PowerShell
     az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
 ```
 
 #### Activate your managed HSM
 This section only applies if you are creating a Managed HSM. All data plane commands are disabled until the HSM is activated. You will not be able to create keys or assign roles. 
-Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the Security Domain.
+Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the security domain.
 
 To activate your HSM you need:
 - Minimum 3 RSA key-pairs (maximum 10)
 - Specify minimum number of keys required to decrypt the security domain (quorum)
 
 To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back. 
-Once this security domain download is successfully completed, your HSM is ready to use. 
+Once this security domain is successfully downloaded, your HSM is ready to use. 
 You also need to specify quorum, which is the minimum number of private keys required to decrypt the security domain.
 
 The example below shows how to use openssl to generate 3 self signed certificate.
@@ -114,7 +114,7 @@ openssl req -newkey rsa:2048 -nodes -keyout cert_2.key -x509 -days 365 -out cert
 ```
 
 Use the `az keyvault security-domain download` command to download the security domain and activate your managed HSM. 
-The example below, uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
+The example below uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
 
 ```PowerShell
 az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
