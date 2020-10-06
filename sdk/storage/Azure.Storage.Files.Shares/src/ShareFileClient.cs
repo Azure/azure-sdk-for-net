@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.Shares
@@ -137,6 +138,17 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         //const string fileType = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.
@@ -214,6 +226,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
         }
 
         /// <summary>
@@ -230,7 +243,7 @@ namespace Azure.Storage.Files.Shares
         /// applied to every request.
         /// </param>
         public ShareFileClient(Uri fileUri, ShareClientOptions options = default)
-            : this(fileUri, (HttpPipelinePolicy)null, options)
+            : this(fileUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -251,7 +264,7 @@ namespace Azure.Storage.Files.Shares
         /// applied to every request.
         /// </param>
         public ShareFileClient(Uri fileUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy(), options)
+            : this(fileUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -272,13 +285,21 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareFileClient(Uri fileUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new ShareClientOptions();
             _uri = fileUri;
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
 
         /// <summary>
@@ -5182,5 +5203,92 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion OpenWrite
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/> returns a <see cref="ShareSasBuilder"/> that
+        /// sets the respective properties in the ShareSasBuilder from the client.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="ShareFileSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public ShareSasBuilder GetSasBuilder(
+            ShareFileSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                Version = Version.ToString(),
+                ShareName = ShareName,
+                FilePath = Path,
+                ExpiresOn = expiresOn,
+                Resource = "f"
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            ShareSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.ShareName = string.IsNullOrEmpty(builder.ShareName) ? ShareName : builder.ShareName;
+            builder.FilePath = string.IsNullOrEmpty(builder.FilePath) ? Name : builder.FilePath;
+            if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.ShareName),
+                    nameof(ShareSasBuilder),
+                    nameof(ShareName));
+            }
+            if (!builder.FilePath.Equals(Path, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FilePath),
+                    nameof(ShareSasBuilder),
+                    nameof(Path));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }

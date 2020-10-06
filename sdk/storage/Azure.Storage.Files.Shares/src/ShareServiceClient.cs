@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -84,6 +85,17 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareServiceClient"/>
@@ -137,6 +149,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
         }
 
         /// <summary>
@@ -152,7 +165,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareServiceClient(Uri serviceUri, ShareClientOptions options = default)
-            : this(serviceUri, (HttpPipelinePolicy)null, options)
+            : this(serviceUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -172,7 +185,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options)
+            : this(serviceUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -191,13 +204,21 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new ShareClientOptions();
             _uri = serviceUri;
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
         #endregion ctors
 
@@ -1057,6 +1078,151 @@ namespace Azure.Storage.Files.Shares
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
                 }
             }
+        }
+        #endregion
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/>
+        /// returns a <see cref="ShareSasBuilder"/> that
+        /// sets the respective properties in the ShareSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the FilePath
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the returned SasBuilder
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the returned Sas builder.
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public ShareSasBuilder GetSasBuilder(
+            ShareSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                Version = Version.ToString(),
+                ExpiresOn = expiresOn
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GetAccountSasBuilder"/> returns a <see cref="AccountSasBuilder"/> that
+        /// sets the respective properties in the ShareSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the FilePath.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AccountSasBuilder"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public AccountSasBuilder GetAccountSasBuilder(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes)
+        {
+            AccountSasBuilder sasBuilder = new AccountSasBuilder
+            {
+                Services = AccountSasServices.Files,
+                Version = Version.ToString(),
+                ExpiresOn = expiresOn,
+                ResourceTypes = resourceTypes
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            ShareSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            UriBuilder sasUri = new UriBuilder(Uri);
+            if (!string.IsNullOrEmpty(builder.ShareName))
+            {
+                sasUri.Path += "/" + builder.ShareName;
+                if (!string.IsNullOrEmpty(builder.FilePath))
+                {
+                    sasUri.Path += "/" + builder.FilePath;
+                }
+            }
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.Services.HasFlag(AccountSasServices.Files))
+            {
+                throw Errors.SasServiceNotMatching(
+                    nameof(builder.Services),
+                    nameof(builder),
+                    nameof(AccountSasServices.Files));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
         }
         #endregion
     }

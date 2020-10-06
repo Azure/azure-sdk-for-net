@@ -11,7 +11,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Linq;
 
 namespace Azure.Storage.Blobs
 {
@@ -125,6 +127,17 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
@@ -180,6 +193,7 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -219,7 +233,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions(), credential)
         {
         }
 
@@ -261,7 +275,14 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// Optional storage shared key credential used to sign requests and generate sas.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential = default)
             : this(
                   serviceUri,
                   authentication,
@@ -270,9 +291,9 @@ namespace Azure.Storage.Blobs
                   options?.CustomerProvidedKey,
                   options?._clientSideEncryptionOptions?.Clone(),
                   options?.EncryptionScope,
-                  options.Build(authentication))
+                  options.Build(authentication),
+                  storageSharedKeyCredential)
         {
-
         }
 
         /// <summary>
@@ -299,6 +320,7 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">Storage Shared Key Credential</param>
         internal BlobServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
@@ -307,7 +329,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential = default)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
@@ -317,6 +340,7 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = customerProvidedKey;
             _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
@@ -1749,5 +1773,189 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion FilterBlobs
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/> returns a <see cref="BlobSasBuilder"/> that
+        /// sets the respective properties in the BlobSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the BlobName
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the returned SasBuilder
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the returned Sas builder.
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public BlobSasBuilder GetSasBuilder(
+            BlobSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            BlobSasBuilder sasBuilder = new BlobSasBuilder
+            {
+                Version = Version.ToString(),
+                ExpiresOn = expiresOn
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+
+        /// <summary>
+        /// The <see cref="GetAccountSasBuilder"/> returns a <see cref="AccountSasBuilder"/> that
+        /// sets the respective properties in the BlobSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the BlobName.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AccountSasBuilder"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public AccountSasBuilder GetAccountSasBuilder(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes)
+        {
+            AccountSasBuilder sasBuilder = new AccountSasBuilder
+            {
+                Services = AccountSasServices.Blobs,
+                Version = Version.ToString(),
+                ExpiresOn = expiresOn,
+                ResourceTypes = resourceTypes
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            BlobSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            UriBuilder sasUri = new UriBuilder(Uri);
+            if (!string.IsNullOrEmpty(builder.BlobContainerName))
+            {
+                sasUri.Path += "/" + builder.BlobContainerName;
+                if (!string.IsNullOrEmpty(builder.BlobName))
+                {
+                    sasUri.Path += "/" + builder.BlobName;
+                }
+            }
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.Services.HasFlag(AccountSasServices.Blobs))
+            {
+                throw Errors.SasServiceNotMatching(
+                    nameof(builder.Services),
+                    nameof(builder),
+                    nameof(AccountSasServices.Blobs));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri"/> returns a Uri that
+        /// generates a User Delegation SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Constructing a User Delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="delegationKey">
+        /// User Delegation Key used to generate the User Delegation SAS
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateUserDelegationSasUri(
+            BlobSasBuilder builder,
+            UserDelegationKey delegationKey)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            UriBuilder sasUri = new UriBuilder(Uri);
+            if (!string.IsNullOrEmpty(builder.BlobContainerName))
+            {
+                sasUri.Path += "/" + builder.BlobContainerName;
+                if (!string.IsNullOrEmpty(builder.BlobName))
+                {
+                    sasUri.Path += "/" + builder.BlobName;
+                }
+            }
+            sasUri.Query = builder.ToSasQueryParameters(delegationKey, AccountName).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }

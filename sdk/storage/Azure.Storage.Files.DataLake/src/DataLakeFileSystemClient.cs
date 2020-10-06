@@ -14,6 +14,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Text.Json;
 using System.Collections.Generic;
 using Azure.Storage.Shared;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -121,6 +122,17 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
@@ -139,7 +151,7 @@ namespace Azure.Storage.Files.DataLake
         /// name of the account and the name of the file system.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri)
-            : this(fileSystemUri, (HttpPipelinePolicy)null, null)
+            : this(fileSystemUri, (HttpPipelinePolicy)null, null, null)
         {
         }
 
@@ -157,7 +169,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options)
-            : this(fileSystemUri, (HttpPipelinePolicy)null, options)
+            : this(fileSystemUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -173,7 +185,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(), null)
+            : this(fileSystemUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -194,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(), options)
+            : this(fileSystemUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -210,7 +222,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(), null)
+            : this(fileSystemUri, credential.AsPolicy(), null, null)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -232,7 +244,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(), options)
+            : this(fileSystemUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -253,7 +265,14 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeFileSystemClient(
+            Uri fileSystemUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             options ??= new DataLakeClientOptions();
@@ -263,6 +282,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
@@ -2265,5 +2285,128 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion SetAccessPolicy
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/> returns a <see cref="DataLakeSasBuilder"/> that
+        /// sets the respective properties in the DataLakeSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the BlobName
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="DataLakeFileSystemSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder
+        /// </param>
+        /// <returns>
+        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public DataLakeSasBuilder GetSasBuilder(
+            DataLakeFileSystemSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
+            {
+                Version = Version.ToString(),
+                FileSystemName = Name,
+                ExpiresOn = expiresOn,
+                Resource = "c"
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            DataLakeSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.FileSystemName = string.IsNullOrEmpty(builder.FileSystemName) ? Name : builder.FileSystemName;
+            if (!builder.FileSystemName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FileSystemName),
+                    nameof(DataLakeSasBuilder),
+                    nameof(Name));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri"/> returns a Uri that
+        /// generates a User Delegation SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Constructing a User Delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="delegationKey">
+        /// User Delegation Key used to generate the User Delegation SAS
+        /// </param>
+        /// <returns>
+        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateUserDelegationSasUri(
+            DataLakeSasBuilder builder,
+            Models.UserDelegationKey delegationKey)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.FileSystemName = string.IsNullOrEmpty(builder.FileSystemName) ? Name : builder.FileSystemName;
+            if (!builder.FileSystemName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FileSystemName),
+                    nameof(DataLakeSasBuilder),
+                    nameof(Name));
+            }
+            if (string.IsNullOrEmpty(AccountName))
+            {
+                throw Errors.SasEmptyParam(nameof(AccountName));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(delegationKey, AccountName).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }

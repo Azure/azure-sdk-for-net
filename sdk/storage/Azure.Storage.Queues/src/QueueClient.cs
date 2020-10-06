@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -132,6 +133,17 @@ namespace Azure.Storage.Queues
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>
@@ -198,6 +210,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
         }
 
         /// <summary>
@@ -215,7 +228,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
-            : this(queueUri, (HttpPipelinePolicy)null, options)
+            : this(queueUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -237,7 +250,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -259,7 +272,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -281,7 +294,14 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal QueueClient(
+            Uri queueUri,
+            HttpPipelinePolicy authentication,
+            QueueClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -290,6 +310,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
 
         /// <summary>
@@ -2422,6 +2443,79 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/> returns a <see cref="QueueSasBuilder"/> that
+        /// sets the respective properties in the QueueSasBuilder from the client.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="QueueSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public QueueSasBuilder GetSasBuilder(
+            QueueSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            QueueSasBuilder sasBuilder = new QueueSasBuilder
+            {
+                Version = Version.ToString(),
+                QueueName = Name,
+                ExpiresOn = expiresOn
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            QueueSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.QueueName = string.IsNullOrEmpty(builder.QueueName) ? Name : builder.QueueName;
+            if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.QueueName),
+                    nameof(QueueSasBuilder),
+                    nameof(Name));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }
 

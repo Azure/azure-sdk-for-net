@@ -25,6 +25,7 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -449,10 +450,7 @@ namespace Azure.Storage.Sas
                     Resource = Constants.Sas.Resource.BlobVersion;
                 }
             }
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParameters.DefaultSasVersion;
         }
 
         /// <summary>

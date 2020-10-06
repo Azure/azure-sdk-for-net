@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -1935,6 +1936,278 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileName, dataLakeUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakeFileSystemClient container3 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakeFileSystemClient container4 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(container4.CanGenerateSasUri);
+
+            // Act - DataLakeFileSystemClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakeFileSystemClient container5 = new DataLakeFileSystemClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GetSasBuilder()
+        {
+            //Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read | DataLakeFileSystemSasPermissions.Write;
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            // Act
+            DataLakeSasBuilder sasBuilder = fileSystemClient.GetSasBuilder(
+                permissions: permissions,
+                expiresOn: expiresOn);
+
+            // Assert
+            Assert.AreEqual(sasBuilder.FileSystemName, fileSystemName);
+            Assert.IsNull(sasBuilder.Path);
+            Assert.AreEqual(sasBuilder.Permissions, permissions.ToPermissionsString());
+            Assert.AreEqual(sasBuilder.ExpiresOn, expiresOn);
+            Assert.AreEqual("c", sasBuilder.Resource);
+        }
+
+        [Test]
+        public void GenerateSas_GeneratedBuilder()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder =
+                fileSystemClient.GetSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(+1));
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_CustomerProvidedBuilder()
+        {
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder()
+            {
+                FileSystemName = fileSystemClient.Name,
+                Resource = "c",
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+            };
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder =
+                fileSystemClient.GetSasBuilder(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(+1));
+            sasBuilder.FileSystemName = GetNewFileSystemName();
+
+            // Act
+            try
+            {
+                fileSystemClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileSystemClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_GeneratedBuilder()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient =
+                new DataLakeFileSystemClient(new Uri(blobEndpoint + "/" + fileSystemName));
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
+
+            DataLakeSasBuilder sasBuilder =
+                fileSystemClient.GetSasBuilder(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(+1));
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Path += "/" + fileSystemName;
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_CustomerProvidedBuilder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient =
+                new DataLakeFileSystemClient(new Uri(blobEndpoint + "/" + fileSystemName));
+
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder()
+            {
+                FileSystemName = fileSystemClient.Name,
+                Resource = "c",
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+
+            };
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            Uri sasUri = fileSystemClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Path += "/" + fileSystemName;
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_BuilderWrongName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient =
+                new DataLakeFileSystemClient(new Uri(blobEndpoint + fileSystemName));
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
+
+            DataLakeSasBuilder sasBuilder =
+                fileSystemClient.GetSasBuilder(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(+1));
+            // Add more properties on the builder
+            sasBuilder.FileSystemName = GetNewFileSystemName();
+
+            // Act
+            try
+            {
+                fileSystemClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+
+                Assert.Fail("DataLakeFileSystemClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
 
         private IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]

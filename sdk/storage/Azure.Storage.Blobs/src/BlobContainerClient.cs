@@ -148,6 +148,17 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
@@ -210,6 +221,7 @@ namespace Azure.Storage.Blobs
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -229,7 +241,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
-            : this(blobContainerUri, (HttpPipelinePolicy)null,  options)
+            : this(blobContainerUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -253,6 +265,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobContainerUri, credential.AsPolicy(), options)
         {
+            _storageSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -2875,5 +2888,128 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
         #endregion DeleteBlob
+
+        #region GenerateSAS
+        /// <summary>
+        /// The <see cref="GetSasBuilder"/> returns a <see cref="BlobSasBuilder"/> that
+        /// sets the respective properties in the BlobSasBuilder from the client.
+        ///
+        /// Note that properties in the returned builder will not set the BlobName
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="BlobContainerSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public BlobSasBuilder GetSasBuilder(
+            BlobContainerSasPermissions permissions,
+            DateTimeOffset expiresOn)
+        {
+            BlobSasBuilder sasBuilder = new BlobSasBuilder
+            {
+                Version = Version.ToString(),
+                BlobContainerName = Name,
+                ExpiresOn = expiresOn,
+                Resource = "c"
+            };
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Consturcting a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateSasUri(
+            BlobSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.BlobContainerName = string.IsNullOrEmpty(builder.BlobContainerName) ? Name : builder.BlobContainerName;
+            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri"/> returns a Uri that
+        /// generates a User Delegation SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Constructing a User Delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="delegationKey">
+        /// User Delegation Key used to generate the User Delegation SAS
+        /// </param>
+        /// <returns>
+        /// A <see cref="BlobSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateUserDelegationSasUri(
+            BlobSasBuilder builder,
+            UserDelegationKey delegationKey)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            builder.BlobContainerName = string.IsNullOrEmpty(builder.BlobContainerName) ? Name : builder.BlobContainerName;
+            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (string.IsNullOrEmpty(AccountName))
+            {
+                throw Errors.SasEmptyParam(nameof(AccountName));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(delegationKey, AccountName).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }

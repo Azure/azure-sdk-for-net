@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -74,5 +77,51 @@ namespace Azure.Storage
         /// <returns>The signed message.</returns>
         protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message) =>
             credential.ComputeHMACSHA256(message);
+
+        /// <summary>
+        /// Parses a connection string for the storage account name and key
+        /// returns a <see cref="StorageSharedKeyCredential"/> created
+        /// from the connection string.
+        /// </summary>
+        /// <param name="connectionString">A valid connection string.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="connectionString"/> is null or empty.</exception>
+        /// <exception cref="FormatException">Thrown if <paramref name="connectionString"/> is not a valid connection string.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="connectionString"/> cannot be parsed.</exception>
+        /// <returns>A <see cref="StorageConnectionString"/> object constructed from the values provided in the connection string.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageSharedKeyCredential ParseConnectionString(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw Errors.ArgumentNull(nameof(connectionString));
+            }
+
+            IDictionary<string, string> settings = new Dictionary<string, string>();
+            var splitted = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var nameValue in splitted)
+            {
+                var splittedNameValue = nameValue.Split(new char[] { '=' }, 2);
+
+                if (splittedNameValue.Length != 2)
+                {
+                    throw new ArgumentException("Settings must be of the form \"name=value\".");
+                }
+
+                if (settings.ContainsKey(splittedNameValue[0]))
+                {
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
+                }
+
+                settings.Add(splittedNameValue[0], splittedNameValue[1]);
+            }
+
+            settings.TryGetValue(Constants.ConnectionStrings.AccountNameSetting, out var accountName);
+            settings.TryGetValue(Constants.ConnectionStrings.AccountKeySetting, out var accountKey);
+
+            return accountName != null && accountKey != null
+                ? new StorageSharedKeyCredential(accountName, accountKey)
+                : null;
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -683,5 +684,326 @@ namespace Azure.Storage.Blobs.Test
                 service.UndeleteBlobContainerAsync(GetNewBlobName(), "01D60F8BB59A4652"),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobServiceClient(string connectionString)
+            BlobServiceClient container = new BlobServiceClient(
+                connectionString);
+            Assert.IsTrue(container.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            BlobServiceClient container2 = new BlobServiceClient(
+                connectionString,
+                GetOptions());
+            Assert.IsTrue(container2.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobServiceClient container3 = new BlobServiceClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobServiceClient container4 = new BlobServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(container4.CanGenerateSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobServiceClient container5 = new BlobServiceClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            Assert.IsFalse(container5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GetSasBuilder()
+        {
+            //Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobSasPermissions permissions = BlobSasPermissions.Read | BlobSasPermissions.Write;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            // Act
+            BlobSasBuilder sasBuilder = serviceClient.GetSasBuilder(
+                permissions: permissions,
+                expiresOn: expiresOn);
+
+            // Assert
+            Assert.IsNull(sasBuilder.BlobContainerName);
+            Assert.IsNull(sasBuilder.BlobName);
+            Assert.AreEqual(sasBuilder.Permissions, permissions.ToPermissionsString());
+            Assert.AreEqual(sasBuilder.ExpiresOn, expiresOn);
+        }
+
+        [Test]
+        public void GetAccountSasBuilder()
+        {
+            //Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            // Act
+            AccountSasBuilder sasBuilder = serviceClient.GetAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: expiresOn,
+                resourceTypes: resourceTypes);
+
+            // Assert
+            Assert.AreEqual(sasBuilder.Permissions, AccountSasPermissionsToPermissionsString(permissions));
+            Assert.AreEqual(sasBuilder.ExpiresOn, expiresOn);
+            Assert.AreEqual(AccountSasServices.Blobs, sasBuilder.Services);
+            Assert.AreEqual(resourceTypes, sasBuilder.ResourceTypes);
+        }
+
+        [Test]
+        public void GenerateSas_GeneratedBuilder_Container()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            BlobSasBuilder sasBuilder = serviceClient.GetSasBuilder(
+                permissions,
+                expiresOn);
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            Uri sasUri = serviceClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_GeneratedBuilder()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = serviceClient.GetAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: expiresOn,
+                resourceTypes: resourceTypes);
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_CustomerProvidedBuilder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            BlobSasPermissions permissions = BlobSasPermissions.Read |BlobSasPermissions.Write;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+            };
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.ExpiresOn = Recording.UtcNow.AddHours(+1);
+            sasBuilder.SetPermissions(permissions);
+
+            // Act
+            Uri sasUri = serviceClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_CustomerProvidedBuilder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder()
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.All,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1)
+            };
+            // Add more properties on the builder
+            sasBuilder.SetPermissions(permissions);
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_WrongService_Service()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder()
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.All,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1)
+            };
+            // Add more properties on the builder
+            sasBuilder.SetPermissions(permissions);
+
+            // Act
+            try
+            {
+                Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+                Assert.Fail("BlobContainerClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                // the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_GeneratedBuilder_Container()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            BlobServiceClient serviceClient =  new BlobServiceClient(blobEndpoint);
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
+
+            Uri sasUri;
+
+            BlobSasBuilder sasBuilder = serviceClient.GetSasBuilder(
+                BlobSasPermissions.All,
+                Recording.UtcNow.AddHours(+1));
+            // Add more properties on the builder
+            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
+            sasBuilder.Identifier = GetNewString();
+
+            // Act
+            sasUri = serviceClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateUserDelegationSas_CustomerProvidedBuilder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            BlobServiceClient serviceClient = new BlobServiceClient(blobEndpoint);
+
+            UserDelegationKey userDelegationKey = new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                Identifier = GetNewString()
+            };
+
+            // Act
+            Uri sasUri = serviceClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+        #endregion
     }
 }
