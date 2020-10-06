@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return 0;
             }
 
-            Azure.Response<TrackResponse> response;
+            Azure.Response<TrackResponse> response = null;
 
             try
             {
