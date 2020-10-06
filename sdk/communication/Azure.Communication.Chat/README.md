@@ -91,12 +91,14 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 ### Update a thread
 
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
-chatThreadClient.UpdateThread("Updated topic - C# sdk");
+string updatedTopic = "Updated topic - C# sdk";
+chatThreadClient.UpdateThread(updatedTopic);
 ```
 
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
-SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("This is message 1 content", ChatMessagePriority.High, displayNameMessage);
+string messageContent = "Content for message 1";
+SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage(messageContent, ChatMessagePriority.High, displayNameMessage);
 ```
 ### Get messages
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
@@ -107,7 +109,8 @@ Pageable<ChatMessage> messages = chatThreadClient.GetMessages();
 ```
 ### Update a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
-chatThreadClient.UpdateMessage(messageId, "This is message 1 content updated");
+string updatedMessageContent = "This is message 1 content updated";
+chatThreadClient.UpdateMessage(messageId, updatedMessageContent);
 ```
 ### Delete a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_DeleteMessage
