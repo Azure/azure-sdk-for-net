@@ -10,10 +10,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenModel("CommentFeedback")]
     public partial class MetricCommentFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of CommentFeedbackInternal. </summary>
+        /// <summary> Initializes a new <see cref="MetricCommentFeedback"/> instance. </summary>
         /// <param name="metricId"> The metric unique id. </param>
-        /// <param name="dimensionFilter"> The dimension filter. </param>
-        /// <param name="comment"> The comment for the feedback. </param>
+        /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter"/> to apply to the feedback. </param>
+        /// <param name="comment"> The comment content for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         public MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, string comment) : base(metricId, dimensionFilter)
         {
@@ -23,10 +23,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Type = FeedbackType.Comment;
         }
 
-        /// <summary> Initializes a new instance of CommentFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="comment"> The comment for the feedback. </param>
+        /// <summary> Initializes a new <see cref="MetricCommentFeedback"/> instance. </summary>
+        /// <param name="metricId"> The metric unique id. </param>
+        /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter"/> to apply to the feedback. </param>
+        /// <param name="comment"> The comment content for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         internal MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, CommentFeedbackValue comment) : base(metricId, dimensionFilter)
         {
@@ -37,7 +37,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The comment.
+        /// The start timestamp of feedback time range.
+        /// </summary>
+        public DateTimeOffset? StartTime { get; set; }
+
+        /// <summary>
+        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
+        /// </summary>
+        public DateTimeOffset? EndTime { get; set; }
+
+        /// <summary>
+        /// The comment content for the feedback.
         /// </summary>
         public string Comment { get => ValueInternal.CommentValue; }
 

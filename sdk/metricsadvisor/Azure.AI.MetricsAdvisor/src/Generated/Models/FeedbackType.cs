@@ -26,15 +26,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string ChangePointValue = "ChangePoint";
         private const string PeriodValue = "Period";
         private const string CommentValue = "Comment";
-
-        /// <summary> Anomaly. </summary>
-        public static FeedbackType Anomaly { get; } = new FeedbackType(AnomalyValue);
-        /// <summary> ChangePoint. </summary>
-        public static FeedbackType ChangePoint { get; } = new FeedbackType(ChangePointValue);
-        /// <summary> Period. </summary>
-        public static FeedbackType Period { get; } = new FeedbackType(PeriodValue);
-        /// <summary> Comment. </summary>
-        public static FeedbackType Comment { get; } = new FeedbackType(CommentValue);
         /// <summary> Determines if two <see cref="FeedbackType"/> values are the same. </summary>
         public static bool operator ==(FeedbackType left, FeedbackType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeedbackType"/> values are not the same. </summary>

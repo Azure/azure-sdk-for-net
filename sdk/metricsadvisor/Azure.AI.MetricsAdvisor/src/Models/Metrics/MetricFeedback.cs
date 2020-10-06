@@ -6,12 +6,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The MetricFeedback. </summary>
+    /// <summary> <see cref="MetricFeedback"/>s are used to describe feedback on unsatisfactory anomaly detection results.
+    /// When feedback is created for a given metric, it is applied to future anomaly detection processing of the same series.
+    /// The processed points will not be re-calculated. </summary>
     public partial class MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
+        /// <summary> Initializes a new instance of the <see cref="MetricFeedback"/> class. </summary>
+        /// <param name="metricId"> The metric unique Id. </param>
+        /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter" /> to apply to the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> is null. </exception>
         internal MetricFeedback(string metricId, FeedbackDimensionFilter dimensionFilter)
         {
@@ -22,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionFilter = dimensionFilter;
         }
 
-        /// <summary> feedback type. </summary>
+        /// <summary> The <see cref="FeedbackType"/> of this feedback.</summary>
         [CodeGenMember("FeedbackType")]
         public FeedbackType Type { get; internal set; }
 

@@ -940,7 +940,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
         public MetricAnomalyFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.AnomalyValue value) { }
-        public System.Guid? AnomalyDetectionConfigurationId { get { throw null; } set { } }
+        public string AnomalyDetectionConfigurationId { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalyValue AnomalyValue { get { throw null; } }
         public System.DateTimeOffset EndTime { get { throw null; } set { } }
@@ -999,7 +999,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class MetricPeriodFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
-        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodFeedbackValue valueInternal) { }
+        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodFeedbackValue value) { }
         public Azure.AI.MetricsAdvisor.Models.PeriodType PeriodType { get { throw null; } }
         public int PeriodValue { get { throw null; } }
     }

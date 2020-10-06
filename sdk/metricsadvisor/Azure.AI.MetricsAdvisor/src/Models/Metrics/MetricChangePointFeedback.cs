@@ -6,16 +6,18 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The <see cref="MetricChangePointFeedback"/>. </summary>
+    /// <summary>
+    /// Feedback indicating that this is the start of a trend change.
+    /// </summary>
     [CodeGenModel("ChangePointFeedback")]
     public partial class MetricChangePointFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of <see cref="MetricChangePointFeedback"/>. </summary>
+        /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
         /// <param name="startTime"> The start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> The end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="value"> The value for the feedback. </param>
+        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="value"> The <see cref="Models.ChangePointValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         public MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointValue value) : base(metricId, dimensionFilter)
         {
@@ -30,13 +32,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Type = FeedbackType.ChangePoint;
         }
 
-        /// <summary> Initializes a new instance of ChangePointFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
+        /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>
+        /// <param name="metricId"> The metric unique id. </param>
+        /// <param name="dimensionFilter"> The dimension filter. </param>
+        /// <param name="startTime"> The start timestamp of feedback timerange. </param>
+        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="value"> The <see cref="Models.ChangePointFeedbackValue"/> for the feedback. </param>
         internal MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value) : base(metricId, dimensionFilter)
         {
             Argument.AssertNotNull(value, nameof(value));
@@ -48,7 +49,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The changepoint value.
+        /// The start timestamp of feedback time range.
+        /// </summary>
+        public DateTimeOffset StartTime { get; set; }
+
+        /// <summary>
+        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
+        /// </summary>
+        public DateTimeOffset EndTime { get; set; }
+
+        /// <summary>
+        /// The <see cref="Models.ChangePointValue"/> for the feedback.
         /// </summary>
         public ChangePointValue ChangePointValue { get => ValueInternal.ChangePointValue; }
 

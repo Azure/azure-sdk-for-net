@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 if (AnomalyDetectionConfigurationId != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationId");
-                    writer.WriteStringValue(AnomalyDetectionConfigurationId.Value);
+                    writer.WriteStringValue(AnomalyDetectionConfigurationId);
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
-            Optional<Guid?> anomalyDetectionConfigurationId = default;
+            Optional<string> anomalyDetectionConfigurationId = default;
             Optional<MetricAnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
             FeedbackType feedbackType = default;
             Optional<string> feedbackId = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         anomalyDetectionConfigurationId = null;
                         continue;
                     }
-                    anomalyDetectionConfigurationId = property.Value.GetGuid();
+                    anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("anomalyDetectionConfigurationSnapshot"))
@@ -136,7 +136,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, Optional.ToNullable(anomalyDetectionConfigurationId), anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
         }
     }
 }
