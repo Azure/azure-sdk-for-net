@@ -26,7 +26,4 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Castle.Core" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 </Project>
