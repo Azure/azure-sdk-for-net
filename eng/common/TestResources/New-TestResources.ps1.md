@@ -14,16 +14,16 @@ Deploys live test resources defined for a service directory to Azure.
 
 ### Default (Default)
 ```
-New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
- -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+New-TestResources.ps1 [[-BaseName] <String>] [-ResourceGroupName <String>] -ServiceDirectory <String>
+ [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
  [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>]
  [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
 ```
-New-TestResources.ps1 [-BaseName] <String> [-ResourceGroupName <String>] -ServiceDirectory <String>
- -TestApplicationId <String> [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
+New-TestResources.ps1 [[-BaseName] <String>] [-ResourceGroupName <String>] -ServiceDirectory <String>
+ [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
  -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm]
@@ -106,7 +106,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -159,7 +159,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -197,7 +197,7 @@ It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
 
 ```yaml
 Type: String
@@ -458,3 +458,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[Remove-TestResources.ps1]()
+
