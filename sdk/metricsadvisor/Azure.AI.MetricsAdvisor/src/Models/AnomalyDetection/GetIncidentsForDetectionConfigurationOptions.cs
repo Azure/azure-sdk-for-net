@@ -59,8 +59,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal int? SkipCount { get; set; }
 
         /// <summary>
-        /// If set, specifies the maximum limit of items returned by each service call. Note: all items will
-        /// returned, even if more service calls are required.
+        /// If set, specifies the maximum limit of items returned in each page of results. Note:
+        /// unless the number of pages enumerated from the service is limited, the service will
+        /// return an unlimited number of total items.
         /// </summary>
         public int? TopCount { get; set; }
 
