@@ -80,8 +80,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -128,8 +128,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 

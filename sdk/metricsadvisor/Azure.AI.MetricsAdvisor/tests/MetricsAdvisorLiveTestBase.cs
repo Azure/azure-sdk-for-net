@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         public MetricsAdvisorClient GetMetricsAdvisorClient()
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                Recording.InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
         }
 
         internal static async Task<DataFeed> GetFirstDataFeed(MetricsAdvisorAdministrationClient adminClient)
@@ -81,17 +81,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal async Task<MetricAnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
         {
             DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
+            MetricAnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());
 
-            var config = new MetricAnomalyDetectionConfiguration(
-                feed.MetricIds.First(),
+            return await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
+        }
+
+        public MetricAnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
+        {
+            return new MetricAnomalyDetectionConfiguration(
+                metricId,
                 Recording.GenerateAlphaNumericId("Name"),
                 new MetricAnomalyDetectionConditions(
                     DetectionConditionsOperator.And,
                     new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
                     new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
                     new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
-
-            return await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
         }
 
         internal string _blobFeedName;
