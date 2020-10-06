@@ -36,11 +36,6 @@ namespace Microsoft.Extensions.Hosting
             DiagnosticsOptions.DefaultApplicationId = "AzureWebJobs";
 
             builder.Services.AddAzureClients(_ => { });
-            // $$$ Move to Host.Storage?
-#pragma warning disable CS0618 // Type or member is obsolete
-            // TODO (kasobol-msft) figure out if this is needed in extension and if so if it's needed in both blobs and queues?
-            builder.Services.TryAddSingleton<ILoadBalancerQueue, StorageLoadBalancerQueue>();
-#pragma warning restore CS0618 // Type or member is obsolete
 
             builder.Services.TryAddSingleton<SharedQueueWatcher>();
 
