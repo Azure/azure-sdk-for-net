@@ -11,6 +11,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceProgram>(prog, builder =>
                {
-                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
+                   builder.AddAzureStorageQueues()
                    .UseQueueService(queueServiceClient);
                })
                .Build();
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceAsyncProgram>(prog, builder =>
                {
-                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
+                   builder.AddAzureStorageQueues()
                    .UseQueueService(queueServiceClient);
                })
                .Build();
@@ -106,6 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<DisposeInstanceProgram>(builder =>
                {
+                   builder.AddAzureStorageQueues();
                    builder.UseQueueService(queueServiceClient);
                })
                .Build();
@@ -150,6 +152,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
               .ConfigureDefaultTestHost<InstanceCustomActivatorProgram>(builder =>
               {
+                  builder.AddAzureStorageQueues();
                   builder.UseQueueService(queueServiceClient);
               }, null, activator)
               .Build();

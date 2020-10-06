@@ -10,6 +10,7 @@ using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {

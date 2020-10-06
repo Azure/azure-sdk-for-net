@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,12 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
         public static IWebJobsBuilder UseBlobService(this IWebJobsBuilder builder, BlobServiceClient blobServiceClient)
         {
             builder.Services.Add(ServiceDescriptor.Singleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient)));
+            return builder;
+        }
+
+        public static IWebJobsBuilder UseQueueServiceInBlobExtension(this IWebJobsBuilder builder, QueueServiceClient queueServiceClient)
+        {
+            builder.Services.Add(ServiceDescriptor.Singleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient)));
             return builder;
         }
     }

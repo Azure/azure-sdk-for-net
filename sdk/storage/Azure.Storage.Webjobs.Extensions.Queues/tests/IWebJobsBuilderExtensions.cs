@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Azure.WebJobs.Extensions.Storage.Queues.Tests
 {
     internal static class IWebJobsBuilderExtensions
     {

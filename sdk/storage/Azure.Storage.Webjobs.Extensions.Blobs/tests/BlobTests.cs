@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task RunTrigger(Type programType)
         {
-            await FunctionalTest.RunTriggerAsync(b => b.UseBlobService(blobServiceClient).UseQueueService(queueServiceClient), programType);
+            await FunctionalTest.RunTriggerAsync(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType);
         }
 
         private class BindToCloudBlockBlobProgram

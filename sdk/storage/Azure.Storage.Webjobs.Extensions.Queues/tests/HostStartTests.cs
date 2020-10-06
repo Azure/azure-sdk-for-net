@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Azure.Storage.Queues;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
+                    b.AddAzureStorageQueues()
                     .UseQueueService(queueServiceClient);
                 })
                 .Build();

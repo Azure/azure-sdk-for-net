@@ -14,6 +14,7 @@ using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -47,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<ICollector<string>>>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();
@@ -79,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithStaticBadName>(builder =>
                {
-                   builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                   builder.AddAzureStorageQueues();
                })
                .Build();
 
@@ -113,6 +115,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                {
+                   builder.AddAzureStorageQueues();
                    builder.UseQueueService(queueServiceClient);
                })
                .ConfigureServices(services =>
@@ -146,6 +149,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                 {
+                    builder.AddAzureStorageQueues();
                     builder.UseQueueService(queueServiceClient);
                 })
                 .ConfigureServices(services =>
@@ -193,6 +197,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndBindingData>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();
@@ -253,6 +258,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithTriggerAndCompoundBindingData>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();
@@ -365,6 +371,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramBadContract>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();
@@ -389,6 +396,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramCantBindToObject>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();
@@ -420,6 +428,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<T>>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 })
                 .Build();

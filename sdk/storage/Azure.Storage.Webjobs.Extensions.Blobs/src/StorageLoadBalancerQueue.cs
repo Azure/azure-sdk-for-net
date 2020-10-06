@@ -18,9 +18,10 @@ using Newtonsoft.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
-using Azure.WebJobs.Extensions.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Blobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     // $$$ Review APIs
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private readonly IQueueProcessorFactory _queueProcessorFactory;
 
         public StorageLoadBalancerQueue(
-            QueueServiceClientProvider queueServiceClientProvider,
+               QueueServiceClientProvider queueServiceClientProvider,
                IOptions<QueuesOptions> queueOptions,
                IWebJobsExceptionHandler exceptionHandler,
                SharedQueueWatcher sharedWatcher,

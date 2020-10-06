@@ -4,8 +4,8 @@
 using System;
 using Azure.Core;
 using Azure.WebJobs.Extensions.Storage.Blobs;
-using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
@@ -32,6 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
+                    b.AddAzureStorageQueues();
                     b.UseQueueService(queueServiceClient);
                 });
 
