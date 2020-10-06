@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The corresponding anomaly detection configuration of this feedback.
         /// </summary>
-        public Guid? AnomalyDetectionConfigurationId { get; set; }
+        public string AnomalyDetectionConfigurationId { get; set; }
 
         /// <summary>
         /// The <see cref="Models.AnomalyValue"/> for the feedback.

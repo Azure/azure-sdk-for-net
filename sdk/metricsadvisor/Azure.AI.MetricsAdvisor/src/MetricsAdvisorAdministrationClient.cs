@@ -353,7 +353,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -387,7 +387,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
