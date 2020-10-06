@@ -95,7 +95,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region DataFeed
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="DataFeed"/>.
+        /// Gets an existing <see cref="DataFeed"/>.
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -127,7 +127,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="DataFeed"/>.
+        /// Gets an existing <see cref="DataFeed"/>.
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -741,7 +741,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -770,7 +770,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -799,7 +799,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
+        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
         /// </summary>
         /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
@@ -832,7 +832,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
+        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
         /// </summary>
         /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
@@ -1119,7 +1119,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// Gets an existing <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1148,7 +1148,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// Gets an existing <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1423,7 +1423,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="AlertingHook"/>.
+        /// Gets an existing <see cref="AlertingHook"/>.
         /// </summary>
         /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1452,7 +1452,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Retrieves information about an existing <see cref="AlertingHook"/>.
+        /// Gets an existing <see cref="AlertingHook"/>.
         /// </summary>
         /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1537,8 +1537,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this Metrics Advisor
-        /// resource.
+        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
         /// </summary>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1583,8 +1582,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this Metrics Advisor
-        /// resource.
+        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
         /// </summary>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
