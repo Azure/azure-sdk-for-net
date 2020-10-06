@@ -19,8 +19,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string MetricId { get; }
 
         /// <summary>
-        /// The key that, within a metric, uniquely identifies a time series. All possible
-        /// dimensions of the associated <see cref="DataFeed"/> are set.
+        /// The key that, within a metric, uniquely identifies a time series. Every dimension
+        /// contained in the associated <see cref="DataFeed"/> has been assigned a value.
         /// </summary>
         public DimensionKey SeriesKey { get; private set; }
 
