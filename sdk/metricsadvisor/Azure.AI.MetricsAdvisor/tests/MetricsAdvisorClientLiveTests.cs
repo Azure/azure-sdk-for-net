@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -35,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         metricId,
                         new GetMetricSeriesDefinitionsOptions(Recording.UtcNow.AddYears(-5)) { TopCount = 2 }))
                     {
-                        Assert.That(metricDef.Dimension.Count, Is.Not.Zero);
+                        Assert.That(metricDef.SeriesKey.Dimension.Count, Is.Not.Zero);
 
                         // stop when we find at least one definition
                         if (++totalcount >= 1)
