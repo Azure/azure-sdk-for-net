@@ -76,9 +76,9 @@ namespace Azure.Communication.Chat.Tests
             ChatThreadClient chatThreadClient2 = CreateInstrumentedChatThreadClient(chatClient, topic, members);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
+            string updatedTopic = "Launch meeting";
             #region Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
-            string updatedTopic = "Updated topic - C# sdk";
-            chatThreadClient.UpdateThread(updatedTopic);
+            chatThreadClient.UpdateThread(topic: "Launch meeting");
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThread
@@ -90,9 +90,9 @@ namespace Azure.Communication.Chat.Tests
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_GetChatThreadsInfo
             var threadsCount = threads.Count();
 
+            string messageContent = "Let's meet at 11am";
             #region Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
-            string messageContent = "Content for message 1";
-            SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage(messageContent, ChatMessagePriority.High, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
             var messageContent2 = "Content for message 2";
             SendChatMessageResult sendChatMessageResult2 = chatThreadClient2.SendMessage(messageContent2, ChatMessagePriority.High, displayNameMessage);
@@ -156,9 +156,9 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(8, messagesCounterTotal);
             #endregion
 
+            string updatedMessageContent = "Instead of 11am, let's meet at 2pm";
             #region Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
-            string updatedMessageContent = "This is message 1 content updated";
-            chatThreadClient.UpdateMessage(messageId, updatedMessageContent);
+            chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
             Response<ChatMessage> actualUpdateMessage = chatThreadClient.GetMessage(messageId);
 
@@ -200,11 +200,11 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(updatedTopic, chatThread.Topic);
             Assert.AreEqual(3, chatThread.Members.Count);
             Assert.AreEqual(messageContent, message.Content);
-            Assert.AreEqual(displayNameMessage, message.SenderDisplayName);
             Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content);
-            Assert.AreEqual(ChatMessagePriority.High, message.Priority);
+            Assert.AreEqual(ChatMessagePriority.Normal, message.Priority);
 
             Assert.AreEqual(messageContent2, message2.Content);
+            Assert.AreEqual(displayNameMessage, message2.SenderDisplayName);
             Assert.AreEqual(messageContent3, message3.Content);
             Assert.AreEqual(messageContent4, message4.Content);
             Assert.AreEqual(messageContent5, message5.Content);

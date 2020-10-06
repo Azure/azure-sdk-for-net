@@ -91,26 +91,24 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 ### Update a thread
 
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
-string updatedTopic = "Updated topic - C# sdk";
-chatThreadClient.UpdateThread(updatedTopic);
+chatThreadClient.UpdateThread(topic: "Launch meeting");
 ```
 
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
-string messageContent = "Content for message 1";
-SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage(messageContent, ChatMessagePriority.High, displayNameMessage);
+SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
 ```
+### Update a message
+```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
+chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
+```
+
 ### Get messages
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
 ChatMessage message = chatThreadClient.GetMessage(messageId);
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_GetMessages
 Pageable<ChatMessage> messages = chatThreadClient.GetMessages();
-```
-### Update a message
-```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
-string updatedMessageContent = "This is message 1 content updated";
-chatThreadClient.UpdateMessage(messageId, updatedMessageContent);
 ```
 ### Delete a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_DeleteMessage
