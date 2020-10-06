@@ -67,20 +67,26 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 telemetryItems.Add(telemetryItem);
             }
 
-            Azure.Response<TrackResponse> response;
+            Azure.Response<TrackResponse> response = null;
 
-            if (async)
+            try
             {
-                // TODO: RequestFailedException is thrown when http response is not equal to 200 or 206. Implement logic to catch exception.
-                response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    response = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    response = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                // TODO: Log the exception to new event source. If we get a common logger we could just log exception to it.
+                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
             }
 
-            // TODO: Handle exception, check telemetryItems has items
-            return response.Value.ItemsAccepted.GetValueOrDefault();
+            return response == null ? 0 : response.Value.ItemsAccepted.GetValueOrDefault();
         }
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
