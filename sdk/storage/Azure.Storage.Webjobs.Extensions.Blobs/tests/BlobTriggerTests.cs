@@ -10,8 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
+using Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -20,28 +21,28 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string ContainerName = "container-blobtriggertests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
-        private StorageAccount account;
+        private BlobServiceClient blobServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
             // make sure our system containers are present
-            CreateContainer(account, "azure-webjobs-hosts");
+            CreateContainer(blobServiceClient, "azure-webjobs-hosts");
         }
 
         [Test]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
         {
             // Arrange
-            var container = CreateContainer(account, ContainerName);
+            var container = CreateContainer(blobServiceClient, ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
 
             await blob.UploadTextAsync("ignore");
 
             // Act
-            BlobBaseClient result = await RunTriggerAsync<BlobBaseClient>(account, typeof(BindToCloudBlobProgram),
+            BlobBaseClient result = await RunTriggerAsync<BlobBaseClient>(typeof(BindToCloudBlobProgram),
                 (s) => BindToCloudBlobProgram.TaskSource = s);
 
             // Assert
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             var app = new BindToCloudBlob2Program();
             var activator = new FakeActivator(app);
-            var provider = new FakeStorageAccountProvider(account);
+            var provider = new FakeBlobServiceClientProvider(blobServiceClient);
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
                 {
@@ -72,12 +73,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IJobActivator>(activator);
-                    services.AddSingleton<StorageAccountProvider>(provider);
+                    services.AddSingleton<BlobServiceClientProvider>(provider);
                 })
                 .Build();
 
             // Set the binding data, and verify it's accessible in the function.
-            var container = CreateContainer(account, ContainerName);
+            var container = CreateContainer(blobServiceClient, ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
             await blob.UploadTextAsync(string.Empty);
             await blob.SetMetadataAsync(new Dictionary<string, string> { { "m1", "v1" } });
@@ -100,18 +101,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        private static BlobContainerClient CreateContainer(StorageAccount account, string containerName)
+        private static BlobContainerClient CreateContainer(BlobServiceClient blobServiceClient, string containerName)
         {
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(containerName);
+            var container = blobServiceClient.GetBlobContainerClient(containerName);
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
             return container;
         }
 
-        private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseBlobService(blobServiceClient), programType, setTaskSource);
         }
     }
 }

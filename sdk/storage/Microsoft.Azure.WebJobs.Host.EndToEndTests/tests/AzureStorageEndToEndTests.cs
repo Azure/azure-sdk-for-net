@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [OneTimeSetUp]
         public void SetUp()
         {
-            _fixture = new AzureStorageEndToEndTests.TestFixture();
+            _fixture = new AzureStorageEndToEndTests.TestFixture(TestEnvironment);
             _queueServiceClient = _fixture.QueueServiceClient;
             _blobServiceClient = _fixture.BlobServiceClient;
         }
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestFixture : IDisposable
         {
-            public TestFixture()
+            public TestFixture(WebJobsTestEnvironment testEnvironment)
             {
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost<TestFixture>(b =>
@@ -375,10 +375,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })
                     .Build();
 
-                var provider = host.Services.GetService<StorageAccountProvider>();
-                var storageAccount = provider.GetHost();
-                this.QueueServiceClient = storageAccount.CreateQueueServiceClient();
-                this.BlobServiceClient = storageAccount.CreateBlobServiceClient();
+                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
+                this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 
             public QueueServiceClient QueueServiceClient

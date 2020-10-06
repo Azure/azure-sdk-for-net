@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private const string BlobChainOutputBlobPath = BlobChainContainerName + "/" + BlobChainOutputBlobName;
 
         private readonly BlobContainerClient _testContainer;
-        private readonly StorageAccount _storageAccount;
+        private readonly BlobServiceClient _blobServiceClient;
         private readonly RandomNameResolver _nameResolver;
 
         private static object _syncLock = new object();
@@ -53,10 +53,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     b.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .Build();
-            var provider = host.Services.GetService<StorageAccountProvider>();
-            _storageAccount = provider.GetHost();
-            var blobClient = _storageAccount.CreateBlobServiceClient();
-            _testContainer = blobClient.GetBlobContainerClient(_nameResolver.ResolveInString(SingleTriggerContainerName));
+            _blobServiceClient = new BlobServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString);
+            _testContainer = _blobServiceClient.GetBlobContainerClient(_nameResolver.ResolveInString(SingleTriggerContainerName));
             Assert.False(_testContainer.ExistsAsync().Result);
             _testContainer.CreateAsync().Wait();
         }
@@ -181,8 +179,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task PoisonMessage_CreatedInCorrectStorageAccount(string connectionString)
         {
-            var storageAccount = StorageAccount.NewFromConnectionString(connectionString);
-            var blobClient = storageAccount.CreateBlobServiceClient();
+            var blobClient = new BlobServiceClient(connectionString);
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
             var container = blobClient.GetBlobContainerClient(containerName);
             await container.CreateAsync();
@@ -256,8 +253,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
-            var blobClient = _storageAccount.CreateBlobServiceClient();
-            var container = blobClient.GetBlobContainerClient(_nameResolver.ResolveInString(BlobChainContainerName));
+            var container = _blobServiceClient.GetBlobContainerClient(_nameResolver.ResolveInString(BlobChainContainerName));
             await container.CreateIfNotExistsAsync();
             var blob = container.GetBlockBlobClient(BlobChainTriggerBlobName);
             await blob.UploadTextAsync("0");
@@ -304,10 +300,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public void Dispose()
         {
-            var blobClient = _storageAccount.CreateBlobServiceClient();
-            foreach (var testContainer in blobClient.GetBlobContainers(prefix: TestArtifactPrefix))
+            foreach (var testContainer in _blobServiceClient.GetBlobContainers(prefix: TestArtifactPrefix))
             {
-                blobClient.GetBlobContainerClient(testContainer.Name).Delete();
+                _blobServiceClient.GetBlobContainerClient(testContainer.Name).Delete();
             }
         }
     }

@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Remove="$(AzureStorageWebjobsExtensionSharedTestSources)\FakeQueueServiceClientProvider.cs" />
+    <Compile Remove="$(AzureStorageWebjobsExtensionSharedTestSources)\IWebJobsBuilderExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

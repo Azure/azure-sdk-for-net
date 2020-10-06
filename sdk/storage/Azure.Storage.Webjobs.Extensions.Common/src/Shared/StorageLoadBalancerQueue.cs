@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Azure.WebJobs.Extensions.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
@@ -34,18 +35,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private readonly ILoggerFactory _loggerFactory;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _sharedWatcher;
-        private readonly StorageAccountProvider _storageAccountProvider;
+        private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
 
         public StorageLoadBalancerQueue(
-            StorageAccountProvider storageAccountProvider,
+            QueueServiceClientProvider queueServiceClientProvider,
                IOptions<QueuesOptions> queueOptions,
                IWebJobsExceptionHandler exceptionHandler,
                SharedQueueWatcher sharedWatcher,
                ILoggerFactory loggerFactory,
                IQueueProcessorFactory queueProcessorFactory)
         {
-            _storageAccountProvider = storageAccountProvider;
+            _queueServiceClientProvider = queueServiceClientProvider;
             _queueOptions = queueOptions.Value;
             _exceptionHandler = exceptionHandler;
             _sharedWatcher = sharedWatcher;
@@ -90,8 +91,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private QueueClient Convert(string queueMoniker)
         {
             // $$$ Review
-            var account = _storageAccountProvider.Get(ConnectionStringNames.Dashboard);
-            var queue = account.CreateQueueServiceClient().GetQueueClient(queueMoniker);
+            var queueServiceClient = _queueServiceClientProvider.Get(ConnectionStringNames.Dashboard);
+            var queue = queueServiceClient.GetQueueClient(queueMoniker);
             return queue;
         }
 

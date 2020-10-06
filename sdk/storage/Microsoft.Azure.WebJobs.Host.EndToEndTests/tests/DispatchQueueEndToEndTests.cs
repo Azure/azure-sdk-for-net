@@ -6,7 +6,9 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +18,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class DispatchQueueEndToEndTests : IDisposable
+    public class DispatchQueueEndToEndTests : LiveTestBase<WebJobsTestEnvironment>, IDisposable
     {
         // tells you how many function with different arguments have been ran
         private static ConcurrentStringSet _funcInvocation;
@@ -130,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // and therefore a different sharedQueue and poisonQueue
             if (_host != null)
             {
-                var client = _host.GetStorageAccount().CreateQueueServiceClient();
+                var client = new QueueServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString);
                 _sharedQueue = client.GetQueueClient("azure-webjobs-shared-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
                 _poisonQueue = client.GetQueueClient("azure-webjobs-poison-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
                 _sharedQueue.DeleteIfExistsAsync().Wait();

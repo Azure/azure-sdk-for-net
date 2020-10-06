@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <param name="name"></param>
         /// <param name="resolver"></param>
         /// <returns></returns>
-        public TClient Get(string name, INameResolver resolver)
+        public virtual TClient Get(string name, INameResolver resolver)
         {
             var resolvedName = resolver.ResolveWholeString(name);
             return this.Get(resolvedName);

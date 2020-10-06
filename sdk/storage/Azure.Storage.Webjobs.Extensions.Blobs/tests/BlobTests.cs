@@ -9,8 +9,9 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -21,14 +22,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
 
-        private StorageAccount account;
+        private BlobServiceClient blobServiceClient;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
-            account.CreateQueueServiceClient().GetQueueClient(TriggerQueueName).DeleteIfExists();
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
+            queueServiceClient.GetQueueClient(TriggerQueueName).DeleteIfExists();
         }
 
         [Test]
@@ -40,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
                 {
                     builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(account);
+                    .UseBlobService(blobServiceClient);
                 })
                 .Build();
 
@@ -54,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(BlobName, result.Name);
             Assert.NotNull(result.BlobContainerName);
             Assert.AreEqual(ContainerName, result.BlobContainerName);
-            var container = GetContainerReference(account, ContainerName);
+            var container = GetContainerReference(blobServiceClient, ContainerName);
             Assert.True(await container.ExistsAsync());
             var blob = container.GetBlockBlobClient(BlobName);
             Assert.False(await blob.ExistsAsync());
@@ -65,14 +68,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContent = "message";
-            QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
+            QueueClient triggerQueue = CreateQueue(queueServiceClient, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
 
             // Act
-            await RunTrigger(account, typeof(BindToTextWriterProgram));
+            await RunTrigger(typeof(BindToTextWriterProgram));
 
             // Assert
-            var container = GetContainerReference(account, ContainerName);
+            var container = GetContainerReference(blobServiceClient, ContainerName);
             Assert.True(await container.ExistsAsync());
             var blob = container.GetBlockBlobClient(BlobName);
             Assert.True(await blob.ExistsAsync());
@@ -80,23 +83,21 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(expectedContent, content);
         }
 
-        private static QueueClient CreateQueue(StorageAccount account, string queueName)
+        private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             queue.CreateIfNotExists();
             return queue;
         }
 
-        private static BlobContainerClient GetContainerReference(StorageAccount account, string containerName)
+        private static BlobContainerClient GetContainerReference(BlobServiceClient blobServiceClient, string containerName)
         {
-            var client = account.CreateBlobServiceClient();
-            return client.GetBlobContainerClient(ContainerName);
+            return blobServiceClient.GetBlobContainerClient(ContainerName);
         }
 
-        private static async Task RunTrigger(StorageAccount account, Type programType)
+        private async Task RunTrigger(Type programType)
         {
-            await FunctionalTest.RunTriggerAsync(account, programType);
+            await FunctionalTest.RunTriggerAsync(b => b.UseBlobService(blobServiceClient).UseQueueService(queueServiceClient), programType);
         }
 
         private class BindToCloudBlockBlobProgram
