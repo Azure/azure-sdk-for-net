@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Moq;
-using OpenTelemetry.Trace;
 using System;
-using System.Diagnostics;
 using System.Reflection;
 
 using Xunit;
@@ -58,14 +55,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             // instrumentationKey: AzureMonitorTraceExporter.AzureMonitorTransmitter.instrumentationKey
             // endpoint: AzureMonitorTraceExporter.AzureMonitorTransmitter.ServiceRestClient.endpoint
 
+            ikey = typeof(AzureMonitorTraceExporter)
+                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(exporter)
+                .ToString();
+
             var transmitter = typeof(AzureMonitorTraceExporter)
                 .GetField("AzureMonitorTransmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
-
-            ikey = typeof(AzureMonitorTransmitter)
-                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(transmitter)
-                .ToString();
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)
                 .GetField("applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
