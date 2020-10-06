@@ -1293,7 +1293,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Hook
 
         /// <summary>
-        /// Creates an <see cref="AlertingHook"/> and attributes it a unique ID.
+        /// Creates an <see cref="AlertingHook"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
