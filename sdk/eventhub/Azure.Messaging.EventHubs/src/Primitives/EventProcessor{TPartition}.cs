@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventBatchMaximumCount = eventBatchMaximumCount;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventBatchMaximumCount = eventBatchMaximumCount;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -475,14 +475,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace that the processor is associated with.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
+        /// <param name="loadBalancingInterval">The minimum amount of time to be elapsed between two load balancing verifications.</param>
         ///
         internal virtual PartitionLoadBalancer CreatePartitionLoadBalancer(StorageManager storageManager,
                                                                            string identifier,
                                                                            string consumerGroup,
                                                                            string fullyQualifiedNamespace,
                                                                            string eventHubName,
-                                                                           TimeSpan ownershipExpiration) =>
-            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
+                                                                           TimeSpan ownershipExpiration,
+                                                                           TimeSpan loadBalancingInterval) =>
+            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration, loadBalancingInterval);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
