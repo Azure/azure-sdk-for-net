@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 await foreach (PartitionEvent partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
                 {
-                    BinaryData binaryData = partitionEvent.Data.BodyAsBinaryData;
+                    BinaryData binaryData = partitionEvent.Data.EventBody;
                     GenericRecord eventRecord = binaryData.ToObject<GenericRecord>(avroSerializer);
                     string messageText = (string)eventRecord["Message"];
                     Console.WriteLine($"Event Read: { messageText }");
