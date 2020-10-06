@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
@@ -42,9 +43,8 @@ namespace Microsoft.Extensions.Hosting
             // $$$ Remove this, should be done via DI // TODO (kasobol-msft) check this
             builder.Services.TryAddSingleton<ISharedContextProvider, SharedContextProvider>();
 
+            builder.Services.TryAddSingleton<QueueServiceClientProvider>();
             builder.Services.TryAddSingleton<StorageAccountProvider>();
-            // TODO (kasobol-msft) find replacement, related to connection pool
-            //builder.Services.TryAddSingleton<IDelegatingHandlerProvider, DefaultDelegatingHandlerProvider>();
 
             builder.Services.TryAddSingleton<IContextSetter<IMessageEnqueuedWatcher>>((p) => new ContextAccessor<IMessageEnqueuedWatcher>());
             builder.Services.TryAddSingleton((p) => p.GetService<IContextSetter<IMessageEnqueuedWatcher>>() as IContextGetter<IMessageEnqueuedWatcher>);
