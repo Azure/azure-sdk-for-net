@@ -142,6 +142,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete virtual machines.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -154,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves information about the model view or the instance view of
         /// a virtual machine.
@@ -733,6 +736,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete virtual machines.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -745,7 +751,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Converts virtual machine disks from blob-based to managed disks.
         /// Virtual machine must be stop-deallocated before invoking this
