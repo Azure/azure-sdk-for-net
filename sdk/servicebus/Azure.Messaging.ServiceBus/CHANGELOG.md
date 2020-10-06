@@ -2,11 +2,6 @@
 
 ## 7.0.0-preview.8 (2020-10-06)
 
-### Fixed
-- Fixed URL issue when requesting management tokens.
-- Fixed URLs in documentation to have appropriate absolute links.
-- Fixed clearing all properties when creating `ServiceBusMessage` based on a `ServiceBusReceivedMessage`.
-
 ### Added
 - Added `AcceptSessionAsync` that accepts a specific session based on session ID.
 
