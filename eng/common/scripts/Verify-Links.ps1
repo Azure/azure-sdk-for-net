@@ -191,7 +191,7 @@ function CheckLink ([System.Uri]$linkUri)
         if ($null -ne $statusCode) {
           Write-Host "[$statusCode] while requesting $linkUri"
         }
-        else {
+        elseif (!$linkUri.ToString().StartsWith("#")){
           Write-Host "Exception while requesting $linkUri"
           Write-Host $_.Exception.ToString()
         }
@@ -200,9 +200,15 @@ function CheckLink ([System.Uri]$linkUri)
   }
   
   if ($checkLinkGuidance) {
+    $link = $linkUri.ToString()
     # Check if the url is relative links, suppress the archor link validation.
-    if (!$linkUri.IsAbsoluteUri -and !$linkUri.ToString().StartsWith("#")) {
+    if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
       LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+    # Check if the url is anchor link has any uppercase.
+    if ($link.Contains("#") -and ($link -cmatch '#.*[A-Z][^?]')) {
+      LogWarning "Please lower case your anchor links. $linkUri"
       $linkValid = $false
     }
      # Check if link uri includes locale info.
