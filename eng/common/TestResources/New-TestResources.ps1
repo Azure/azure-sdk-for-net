@@ -151,7 +151,7 @@ if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows)
     if (Test-Path "$repositoryRoot/eng/service.proj")
     {
         $OutFile = $true
-        Log "Detected .NET repository, defaulting OutFile to true. Test environment settings would be stored into the file, you don't need to set environment variables manually."
+        Log "Detected .NET repository. Defaulting OutFile to true. Test environment settings would be stored into the file so you don't need to set environment variables manually."
     }
 }
 
