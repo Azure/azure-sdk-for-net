@@ -267,7 +267,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataFeed"/> and attributes it a unique ID.
+        /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
         /// <param name="dataSource">The source from which data will be consumed.</param>
@@ -309,7 +309,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataFeed"/> and attributes it a unique ID.
+        /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
         /// <param name="dataSource">The source from which data will be consumed.</param>
@@ -687,7 +687,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region AnomalyDetectionConfiguration
 
         /// <summary>
-        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and attributes it a unique ID.
+        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="detectionConfiguration">Specifies how the created <see cref="MetricAnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -718,7 +718,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and attributes it a unique ID.
+        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="detectionConfiguration">Specifies how the created <see cref="MetricAnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -993,7 +993,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region AnomalyAlertingConfiguration
 
         /// <summary>
-        /// Creates an <see cref="AnomalyAlertConfiguration"/> and attributes it a unique ID.
+        /// Creates an <see cref="AnomalyAlertConfiguration"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1026,7 +1026,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates an <see cref="AnomalyAlertConfiguration"/> and attributes it a unique ID.
+        /// Creates an <see cref="AnomalyAlertConfiguration"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1340,7 +1340,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates an <see cref="AlertingHook"/> and attributes it a unique ID.
+        /// Creates an <see cref="AlertingHook"/> and assigns it a unique ID.
         /// </summary>
         /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
