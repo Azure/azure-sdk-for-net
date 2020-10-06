@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class DataFeedMetric
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedMetric"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedMetric"/> class.
         /// </summary>
         /// <param name="metricName">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricName"/> is null.</exception>

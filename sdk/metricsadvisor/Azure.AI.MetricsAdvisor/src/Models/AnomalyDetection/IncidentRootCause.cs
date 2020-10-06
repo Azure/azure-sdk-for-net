@@ -20,5 +20,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("Path")]
         public IReadOnlyList<string> Paths { get; }
+
+        /// <summary>
+        /// </summary>
+        public double Score { get; }
+
+        /// <summary>
+        /// </summary>
+        public string Description { get; }
     }
 }
