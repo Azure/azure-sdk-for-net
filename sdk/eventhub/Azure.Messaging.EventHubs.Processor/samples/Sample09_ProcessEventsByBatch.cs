@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             foreach (EventData data in eventBatch)
             {
-                batchMessage.AppendLine($"\tEvent: { Encoding.UTF8.GetString(data.Body.ToArray()) }");
+                batchMessage.AppendLine($"\tEvent: { Encoding.UTF8.GetString(data.EventBody.ToBytes().ToArray()) }");
                 ++eventCount;
             }
 

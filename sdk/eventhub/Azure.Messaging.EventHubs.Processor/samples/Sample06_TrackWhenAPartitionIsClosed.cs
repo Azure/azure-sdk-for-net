@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                     ownedPartitions[eventArgs.Partition.PartitionId] = eventArgs;
 
                     ++eventsProcessed;
-                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
                 }
                 catch (Exception ex)
                 {
