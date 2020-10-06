@@ -52,11 +52,13 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateCustomFormModel()
         {
-            var customFormSubmodel = new CustomFormSubmodel(default, default, default);
-            var trainingDocumentInfo = new TrainingDocumentInfo(default, default, default, default);
+            var customFormSubmodel = new CustomFormSubmodel(default, default, default, default);
+            var trainingDocumentInfo = new TrainingDocumentInfo(default, default, default, default, default);
             var formRecognizerError = new FormRecognizerError("", "");
 
             var modelId = "18910691-1896-0619-1896-091118961109";
+            var displayName = "My model";
+            var properties = new CustomFormModelProperties();
             var status = CustomFormModelStatus.Ready;
             var trainingStartedOn = DateTimeOffset.Parse("1723-07-31T23:29:31Z");
             var trainingCompletedOn = DateTimeOffset.Parse("1933-09-11T19:13:43Z");
@@ -64,12 +66,14 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingDocuments = new List<TrainingDocumentInfo>() { trainingDocumentInfo };
             var errors = new List<FormRecognizerError>() { formRecognizerError };
 
-            var customFormModel = FormRecognizerModelFactory.CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors);
+            var customFormModel = FormRecognizerModelFactory.CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, displayName, properties);
 
             Assert.AreEqual(modelId, customFormModel.ModelId);
+            Assert.AreEqual(displayName, customFormModel.DisplayName);
             Assert.AreEqual(status, customFormModel.Status);
             Assert.AreEqual(trainingStartedOn, customFormModel.TrainingStartedOn);
             Assert.AreEqual(trainingCompletedOn, customFormModel.TrainingCompletedOn);
+            Assert.AreEqual(properties, customFormModel.Properties);
             Assert.AreNotSame(submodels, customFormModel.Submodels);
             Assert.AreEqual(submodels, customFormModel.Submodels);
             Assert.AreNotSame(trainingDocuments, customFormModel.TrainingDocuments);
@@ -96,16 +100,30 @@ namespace Azure.AI.FormRecognizer.Tests
         public void FormRecognizerModelFactoryCanInstantiateCustomFormModelInfo()
         {
             var modelId = "10001112-2233-3444-5556-667778889991";
+            var displayName = "My model";
+            var properties = new CustomFormModelProperties();
             var trainingStartedOn = DateTimeOffset.Parse("1933-05-17T11:59:02Z");
             var trainingCompletedOn = DateTimeOffset.Parse("1949-03-19T07:41:47Z");
             var status = CustomFormModelStatus.Ready;
 
-            var customFormModelInfo = FormRecognizerModelFactory.CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status);
+            var customFormModelInfo = FormRecognizerModelFactory.CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status, displayName, properties);
 
             Assert.AreEqual(modelId, customFormModelInfo.ModelId);
+            Assert.AreEqual(displayName, customFormModelInfo.DisplayName);
+            Assert.AreEqual(properties, customFormModelInfo.Properties);
             Assert.AreEqual(trainingStartedOn, customFormModelInfo.TrainingStartedOn);
             Assert.AreEqual(trainingCompletedOn, customFormModelInfo.TrainingCompletedOn);
             Assert.AreEqual(status, customFormModelInfo.Status);
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateCustomFormModelProperties()
+        {
+            var isComposedModel = true;
+
+            var customFormModelProperties = FormRecognizerModelFactory.CustomFormModelProperties(isComposedModel);
+
+            Assert.AreEqual(isComposedModel, customFormModelProperties.IsComposedModel);
         }
 
         [Test]
@@ -113,12 +131,14 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var customFormModelField = new CustomFormModelField("", default);
 
+            var modelId = "10001112-2233-3444-5556-667778889991";
             var formType = "Pythagoras";
             var accuracy = 0.1414f;
             var fields = new Dictionary<string, CustomFormModelField>() { { "", customFormModelField } };
 
-            var customFormSubmodel = FormRecognizerModelFactory.CustomFormSubmodel(formType, accuracy, fields);
+            var customFormSubmodel = FormRecognizerModelFactory.CustomFormSubmodel(formType, accuracy, fields, modelId);
 
+            Assert.AreEqual(modelId, customFormSubmodel.ModelId);
             Assert.AreEqual(formType, customFormSubmodel.FormType);
             Assert.AreEqual(accuracy, customFormSubmodel.Accuracy);
             Assert.AreNotSame(fields, customFormSubmodel.Fields);
@@ -509,13 +529,17 @@ namespace Azure.AI.FormRecognizer.Tests
             var formPage = new FormPage(default, default, default, default, default, default, default, default);
 
             var formType = "Turing";
+            var modelId = "10001112-2233-3444-5556-667778889991";
+            float confidence = 0.94f;
             var pageRange = new FormPageRange(281, 349);
             var fields = new Dictionary<string, FormField>() { { "", formField } };
             var pages = new List<FormPage>() { formPage };
 
-            var recognizedForm = FormRecognizerModelFactory.RecognizedForm(formType, pageRange, fields, pages);
+            var recognizedForm = FormRecognizerModelFactory.RecognizedForm(formType, pageRange, fields, pages, modelId, confidence);
 
             Assert.AreEqual(formType, recognizedForm.FormType);
+            Assert.AreEqual(modelId, recognizedForm.ModelId);
+            Assert.AreEqual(confidence, recognizedForm.FormTypeConfidence.Value);
             Assert.AreEqual(pageRange, recognizedForm.PageRange);
             Assert.AreNotSame(fields, recognizedForm.Fields);
             Assert.AreEqual(fields, recognizedForm.Fields);
@@ -526,7 +550,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateRecognizedFormCollection()
         {
-            var recognizedForm = new RecognizedForm(default, default, default, default);
+            var recognizedForm = new RecognizedForm(default, default, default, default, default, default);
 
             var list = new List<RecognizedForm>() { recognizedForm };
 

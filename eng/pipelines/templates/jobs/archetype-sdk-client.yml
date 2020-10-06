@@ -34,6 +34,7 @@ jobs:
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:ServiceDirectory=${{parameters.ServiceToBuild}}
+          /p:IncludeTests=false
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)

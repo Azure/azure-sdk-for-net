@@ -184,6 +184,7 @@ RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAs
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
+    Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
         Console.WriteLine($"Field '{field.Name}: ");
@@ -297,11 +298,13 @@ Train a machine-learned model on your own form types. The resulting model will b
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My Model" }).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
+Console.WriteLine($"    Model display name: {model.DisplayName}");
 Console.WriteLine($"    Model Status: {model.Status}");
+Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
 Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
 Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
@@ -338,18 +341,20 @@ await foreach (CustomFormModelInfo modelInfo in models)
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
     Console.WriteLine($"    Training model completed on: : {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
 
-Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
@@ -387,18 +392,20 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
     Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
-Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
