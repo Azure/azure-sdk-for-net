@@ -263,7 +263,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             StorageSharedKeyCredential shardKeyCredentials = new StorageSharedKeyCredential(account, key);
             BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, stagingCredentials);
             // 2. create container if it doesn't exist
-            await containerClient.CreateIfNotExistsAsync();
+            containerClient.CreateIfNotExists();
 
             // 3. validate policy, create/overwrite if doesn't match
             BlobSignedIdentifier identifier = new BlobSignedIdentifier
@@ -283,7 +283,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (policyFound == false)
             {
-                await containerClient.SetAccessPolicyAsync(PublicAccessType.Blob, permissions: new List<BlobSignedIdentifier> { identifier });
+                await containerClient.SetAccessPolicyAsync(PublicAccessType.BlobContainer, permissions: new List<BlobSignedIdentifier> { identifier });
             }
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder

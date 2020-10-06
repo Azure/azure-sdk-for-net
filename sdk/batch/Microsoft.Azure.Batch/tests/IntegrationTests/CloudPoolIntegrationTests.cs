@@ -1091,7 +1091,7 @@ namespace BatchClientIntegrationTests
 
                     StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
                     BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, storageAccount);
-                    await containerClient.CreateIfNotExistsAsync();
+                    containerClient.CreateIfNotExists();
 
                     try
                     {

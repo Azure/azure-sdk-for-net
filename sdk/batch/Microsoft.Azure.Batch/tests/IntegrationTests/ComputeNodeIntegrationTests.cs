@@ -839,7 +839,7 @@ namespace BatchClientIntegrationTests
                     }
                     finally
                     {
-                        await containerClient.DeleteIfExistsAsync();
+                        containerClient.DeleteIfExists();
                     }
                 }
             };
