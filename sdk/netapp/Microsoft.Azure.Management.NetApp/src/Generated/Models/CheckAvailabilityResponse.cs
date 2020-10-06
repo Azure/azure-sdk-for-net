@@ -14,20 +14,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using System.Linq;
 
     /// <summary>
-    /// Information regarding availability of a resource name.
+    /// Information regarding availability of a resource.
     /// </summary>
-    public partial class ResourceNameAvailability
+    public partial class CheckAvailabilityResponse
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceNameAvailability class.
+        /// Initializes a new instance of the CheckAvailabilityResponse class.
         /// </summary>
-        public ResourceNameAvailability()
+        public CheckAvailabilityResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceNameAvailability class.
+        /// Initializes a new instance of the CheckAvailabilityResponse class.
         /// </summary>
         /// <param name="isAvailable">&lt;code&gt;true&lt;/code&gt; indicates
         /// name is valid and available. &lt;code&gt;false&lt;/code&gt;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// naming requirements so that the user can select a valid name. If
         /// reason == AlreadyExists, explain that resource name is already in
         /// use, and direct them to select a different name.</param>
-        public ResourceNameAvailability(bool? isAvailable = default(bool?), string reason = default(string), string message = default(string))
+        public CheckAvailabilityResponse(bool? isAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
             IsAvailable = isAvailable;
             Reason = reason;

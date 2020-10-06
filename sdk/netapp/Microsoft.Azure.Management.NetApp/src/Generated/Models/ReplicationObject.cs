@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the ReplicationObject class.
         /// </summary>
         /// <param name="replicationSchedule">Schedule. Possible values
-        /// include: '_10minutely', 'hourly', 'daily', 'weekly',
-        /// 'monthly'</param>
+        /// include: '_10minutely', 'hourly', 'daily'</param>
         /// <param name="remoteVolumeResourceId">The resource ID of the remote
         /// volume.</param>
         /// <param name="replicationId">Id</param>
@@ -72,7 +71,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets schedule. Possible values include: '_10minutely',
-        /// 'hourly', 'daily', 'weekly', 'monthly'
+        /// 'hourly', 'daily'
         /// </summary>
         [JsonProperty(PropertyName = "replicationSchedule")]
         public string ReplicationSchedule { get; set; }
