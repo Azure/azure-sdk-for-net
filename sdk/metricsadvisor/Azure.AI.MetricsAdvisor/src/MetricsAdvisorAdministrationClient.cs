@@ -1584,7 +1584,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
         /// </summary>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
         public virtual Pageable<AlertingHook> GetHooks(GetHooksOptions options = default, CancellationToken cancellationToken = default)
