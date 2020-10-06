@@ -14,43 +14,37 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// NetApp account resource
+    /// Vault information
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NetAppAccount : IResource
+    public partial class Vault : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetAppAccount class.
+        /// Initializes a new instance of the Vault class.
         /// </summary>
-        public NetAppAccount()
+        public Vault()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetAppAccount class.
+        /// Initializes a new instance of the Vault class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">Azure lifecycle management</param>
-        /// <param name="activeDirectories">Active Directories</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
+        /// <param name="vaultName">Vault Name</param>
+        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string vaultName = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
-            Tags = tags;
-            ProvisioningState = provisioningState;
-            ActiveDirectories = activeDirectories;
+            VaultName = vaultName;
             CustomInit();
         }
 
@@ -84,22 +78,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets vault Name
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets azure lifecycle management
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets active Directories
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.activeDirectories")]
-        public IList<ActiveDirectory> ActiveDirectories { get; set; }
+        [JsonProperty(PropertyName = "properties.vaultName")]
+        public string VaultName { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -112,16 +94,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (ActiveDirectories != null)
-            {
-                foreach (var element in ActiveDirectories)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
