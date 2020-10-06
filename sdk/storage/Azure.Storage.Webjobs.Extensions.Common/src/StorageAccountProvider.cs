@@ -120,10 +120,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
         private HttpPipelineTransport CreateTransportForDynamicSku()
         {
-            return new HttpClientTransport(new HttpClientHandler()
+            return new HttpClientTransport(new HttpClient(new HttpClientHandler()
             {
                 MaxConnectionsPerServer = 50
-            });
+            }));
         }
     }
 }
