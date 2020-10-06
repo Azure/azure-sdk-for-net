@@ -20,7 +20,7 @@
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
-  </ItemGroup>CanUprotectExistingKeys 
+  </ItemGroup> 
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
