@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AnomalyAlertConfiguration
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="AnomalyAlertConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="AnomalyAlertConfiguration"/> class.
         /// </summary>
         /// <param name="name">A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.</param>
         /// <param name="idsOfHooksToAlert">The unique identifiers of the <see cref="AlertingHook"/>s that must be notified when an alert is detected by this configuration.</param>
@@ -68,5 +69,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// A description of the <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
+        /// </summary>
+        /// <returns>An <see cref="AnomalyAlertConfiguration"/> instance.</returns>
+        internal AnomalyAlertingConfigurationPatch GetPatchModel()
+        {
+            return new AnomalyAlertingConfigurationPatch()
+            {
+                CrossMetricsOperator = CrossMetricsOperator.HasValue ? new AnomalyAlertingConfigurationPatchCrossMetricsOperator(CrossMetricsOperator.Value.ToString()) : default,
+                Description = Description,
+                Name = Name,
+                HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),
+                MetricAlertingConfigurations = MetricAlertConfigurations
+            };
+        }
     }
 }

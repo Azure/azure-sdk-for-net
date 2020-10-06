@@ -1052,7 +1052,9 @@ namespace Azure.Messaging.EventHubs
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties,
                 LoadBalancingStrategy = clientOptions.LoadBalancingStrategy,
                 PrefetchCount = clientOptions.PrefetchCount,
-                PrefetchSizeInBytes = clientOptions.PrefetchSizeInBytes
+                PrefetchSizeInBytes = clientOptions.PrefetchSizeInBytes,
+                LoadBalancingUpdateInterval = clientOptions.LoadBalancingUpdateInterval,
+                PartitionOwnershipExpirationInterval = clientOptions.PartitionOwnershipExpirationInterval
             };
         }
 
