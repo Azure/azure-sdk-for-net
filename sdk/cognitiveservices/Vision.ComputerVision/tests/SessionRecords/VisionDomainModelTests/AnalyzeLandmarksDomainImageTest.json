@@ -1,48 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/models/landmarks/analyze?language=pt",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
+      "RequestUri": "/vision/v3.1/models/landmarks/analyze?language=pt",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/spaceneedle.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/6.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "192"
+          "158"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.Landmarks=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "466"
+        ],
         "apim-request-id": [
-          "5dd56480-bdb5-4b76-91b1-7cf695a4253f"
+          "51ce2be1-bc76-4d60-933c-cd66970c0539"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:37 GMT"
+          "Wed, 30 Sep 2020 21:51:10 GMT"
         ],
         "Content-Length": [
-          "193"
+          "192"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991393089294434\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"5dd56480-bdb5-4b76-91b1-7cf695a4253f\",\r\n  \"metadata\": {\r\n    \"width\": 243,\r\n    \"height\": 479,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991011619567871\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"51ce2be1-bc76-4d60-933c-cd66970c0539\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

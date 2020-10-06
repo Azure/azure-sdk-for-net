@@ -638,7 +638,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The BCP-47 language code of the text in the document. Currently,
         /// only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’),
         /// Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported.
-        /// Read supports auto language identification and multilanguage
+        /// Read supports auto language identification and multi-language
         /// documents, so only provide a language code if you would like to
         /// force the documented to be processed as that specific language.
         /// Possible values include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The BCP-47 language code of the text in the document. Currently,
         /// only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’),
         /// Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported.
-        /// Read supports auto language identification and multilanguage
+        /// Read supports auto language identification and multi-language
         /// documents, so only provide a language code if you would like to
         /// force the documented to be processed as that specific language.
         /// Possible values include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'

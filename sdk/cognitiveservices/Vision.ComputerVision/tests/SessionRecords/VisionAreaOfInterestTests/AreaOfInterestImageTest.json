@@ -1,39 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/areaOfInterest",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2FyZWFPZkludGVyZXN0",
+      "RequestUri": "/vision/v3.1/areaOfInterest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2FyZWFPZkludGVyZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/6.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.AreaOfInterest=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "496"
+        ],
         "apim-request-id": [
-          "04fc2f4a-b58e-448c-9449-6a251d68179e"
+          "9e3e1dff-690d-4463-a48f-2573b34a1ebb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:33 GMT"
+          "Wed, 30 Sep 2020 21:51:09 GMT"
         ],
         "Content-Length": [
           "155"
@@ -42,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"04fc2f4a-b58e-448c-9449-6a251d68179e\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"9e3e1dff-690d-4463-a48f-2573b34a1ebb\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
