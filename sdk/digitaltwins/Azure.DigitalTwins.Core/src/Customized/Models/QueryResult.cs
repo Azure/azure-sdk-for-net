@@ -13,6 +13,6 @@ namespace Azure.DigitalTwins.Core
         // makes the class internal,  and changes the namespace; do not remove.
 
         /// <summary> The query results. </summary>
-        internal IReadOnlyList<string> Items { get; }
+        internal IReadOnlyList<string> Value { get; }
     }
 }
