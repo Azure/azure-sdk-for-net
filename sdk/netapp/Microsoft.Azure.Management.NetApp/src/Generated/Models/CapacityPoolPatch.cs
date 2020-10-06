@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="size">size</param>
-        /// <param name="serviceLevel">serviceLevel</param>
-        public CapacityPoolPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? size = default(long?), string serviceLevel = default(string))
+        /// <param name="qosType">qosType</param>
+        public CapacityPoolPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? size = default(long?), string qosType = default(string))
         {
             Location = location;
             Id = id;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Type = type;
             Tags = tags;
             Size = size;
-            ServiceLevel = serviceLevel;
+            QosType = qosType;
             CustomInit();
         }
 
@@ -100,14 +100,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public long? Size { get; set; }
 
         /// <summary>
-        /// Gets or sets serviceLevel
+        /// Gets or sets qosType
         /// </summary>
         /// <remarks>
-        /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Ultra'
+        /// The qos type of the pool. Possible values include: 'Auto', 'Manual'
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.serviceLevel")]
-        public string ServiceLevel { get; set; }
+        [JsonProperty(PropertyName = "properties.qosType")]
+        public string QosType { get; set; }
 
         /// <summary>
         /// Validate the object.

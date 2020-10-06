@@ -2,6 +2,8 @@
 
 ## 1.6.0-beta.1 (Unreleased)
 
+### Added
+- The `HttpClientTransport(HttpMessageHandler)` constructor overload.
 
 ## 1.5.1 (2020-10-01)
 
