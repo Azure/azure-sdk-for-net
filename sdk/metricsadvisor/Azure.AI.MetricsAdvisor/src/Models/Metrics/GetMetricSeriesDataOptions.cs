@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetMetricSeriesDataOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetMetricSeriesDataOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetMetricSeriesDataOptions"/> class.
         /// </summary>
         /// <param name="seriesToFilter">Only time series with the specified series keys will be returned. These keys uniquely identify a time series within a metric. Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.</param>
         /// <param name="startTime">Filters the result. Only data points ingested after this point in time, in UTC, will be returned.</param>

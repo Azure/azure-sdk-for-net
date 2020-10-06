@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetAlertsOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetAlertsOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetAlertsOptions"/> class.
         /// </summary>
         /// <param name="startTime">Filters the result. Only alerts triggered after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only alerts triggered before this point in time, in UTC, will be returned.</param>

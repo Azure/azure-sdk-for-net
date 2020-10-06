@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<DimensionKey> _seriesGroupKeys;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
         /// </summary>
         /// <param name="startTime">Filters the result. Only incidents detected after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only incidents detected before this point in time, in UTC, will be returned.</param>

@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<DimensionKey> _seriesGroupKeys;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
+        /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
         /// </summary>
         public GetAnomaliesForDetectionConfigurationFilter()
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
+        /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
         /// </summary>
         /// <param name="minimumSeverity">The minimum severity level an anomaly must have to be returned.</param>
         /// <param name="maximumSeverity">The maximum severity level an anomaly must have to be returned.</param>

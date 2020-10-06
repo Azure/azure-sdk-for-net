@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetMetricDimensionValuesOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetMetricDimensionValuesOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetMetricDimensionValuesOptions"/> class.
         /// </summary>
         public GetMetricDimensionValuesOptions()
         {

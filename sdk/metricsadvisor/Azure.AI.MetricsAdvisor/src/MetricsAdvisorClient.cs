@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor
         private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>
@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>
@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>
@@ -87,7 +87,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorClient"/> class. This constructor
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
         protected MetricsAdvisorClient()

@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetIncidentsForAlertOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetIncidentsForAlertOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetIncidentsForAlertOptions"/> class.
         /// </summary>
         public GetIncidentsForAlertOptions()
         {

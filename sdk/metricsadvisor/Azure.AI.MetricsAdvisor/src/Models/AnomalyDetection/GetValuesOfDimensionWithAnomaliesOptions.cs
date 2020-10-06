@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetValuesOfDimensionWithAnomaliesOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetValuesOfDimensionWithAnomaliesOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetValuesOfDimensionWithAnomaliesOptions"/> class.
         /// </summary>
         /// <param name="startTime">Filters the result. Only dimension values for anomalies created after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only dimension values for anomalies created before this point in time, in UTC, will be returned.</param>

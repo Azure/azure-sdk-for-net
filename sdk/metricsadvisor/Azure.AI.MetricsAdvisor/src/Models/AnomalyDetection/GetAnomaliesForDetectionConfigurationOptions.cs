@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class GetAnomaliesForDetectionConfigurationOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="GetAnomaliesForDetectionConfigurationOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationOptions"/> class.
         /// </summary>
         /// <param name="startTime">Filters the result. Only anomalies created after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only anomalies created before this point in time, in UTC, will be returned.</param>

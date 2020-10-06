@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IDictionary<string, IList<string>> _dimensionToFilter;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GetMetricSeriesDefinitionsOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetMetricSeriesDefinitionsOptions"/> class.
         /// </summary>
         /// <param name="activeSince">Filters the result. Time series that haven't been active since this point in time, in UTC, won't be listed.</param>
         public GetMetricSeriesDefinitionsOptions(DateTimeOffset activeSince)

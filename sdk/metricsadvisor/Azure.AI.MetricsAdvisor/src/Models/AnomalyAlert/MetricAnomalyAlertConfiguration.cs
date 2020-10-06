@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyAlertConfiguration
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyAlertConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MetricAnomalyAlertConfiguration"/> class.
         /// </summary>
         /// <param name="detectionConfigurationId">The identifier of the anomaly detection configuration to which this configuration applies.</param>
         /// <param name="alertScope">Selects which set of time series should trigger alerts.</param>
