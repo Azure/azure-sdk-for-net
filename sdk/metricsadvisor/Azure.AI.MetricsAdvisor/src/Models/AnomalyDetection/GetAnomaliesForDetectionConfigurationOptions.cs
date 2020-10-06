@@ -14,8 +14,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only anomalies created after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only anomalies created before this point in time, in UTC, will be returned.</param>
+        /// <param name="startTime">Filters the result. Only anomalies created from this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only anomalies created up to this point in time, in UTC, will be returned.</param>
         public GetAnomaliesForDetectionConfigurationOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
@@ -23,12 +23,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Filters the result. Only anomalies created after this point in time, in UTC, will be returned.
+        /// Filters the result. Only anomalies created from this point in time, in UTC, will be returned.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// Filters the result. Only anomalies created before this point in time, in UTC, will be returned.
+        /// Filters the result. Only anomalies created up to this point in time, in UTC, will be returned.
         /// </summary>
         public DateTimeOffset EndTime { get; }
 

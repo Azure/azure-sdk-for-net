@@ -18,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only incidents detected after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only incidents detected before this point in time, in UTC, will be returned.</param>
+        /// <param name="startTime">Filters the result. Only incidents detected from this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.</param>
         public GetIncidentsForDetectionConfigurationOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
@@ -28,12 +28,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Filters the result. Only incidents detected after this point in time, in UTC, will be returned.
+        /// Filters the result. Only incidents detected from this point in time, in UTC, will be returned.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// Filters the result. Only incidents detected before this point in time, in UTC, will be returned.
+        /// Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.
         /// </summary>
         public DateTimeOffset EndTime { get; }
 
