@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> All available types of copy behavior. </summary>
-    internal readonly partial struct CopyBehaviorType : IEquatable<CopyBehaviorType>
+    public readonly partial struct CopyBehaviorType : IEquatable<CopyBehaviorType>
     {
         private readonly string _value;
 
