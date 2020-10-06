@@ -85,14 +85,12 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
         public static T AssertThrows<T>(Action codeUnderTest) where T : Exception
         {
-            using (Task<T> t = AssertThrowsAsync<T>(() =>
+            using Task<T> t = AssertThrowsAsync<T>(() =>
                 {
                     codeUnderTest();
                     return Task.Delay(0);
-                }))
-            {
-                return t.Result;
-            }
+                });
+            return t.Result;
         }
 
         public static async Task<T> AssertThrowsAsync<T>(Func<Task> codeUnderTest) where T : Exception

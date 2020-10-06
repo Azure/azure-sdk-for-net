@@ -37,56 +37,54 @@ namespace BatchClientIntegrationTests
         {
             Func<Task> test = async () =>
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobId = "RunTaskAndUploadFiles-" + TestUtilities.GetMyName();
+                string containerName = "runtaskanduploadfiles";
+                StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                BlobServiceClient blobClient = BlobUtilities.GetBlobServiceClient(storageAccount);
+                BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, blobClient, storageAccount);
+
+                try
                 {
-                    string jobId = "RunTaskAndUploadFiles-" + TestUtilities.GetMyName();
-                    string containerName = "runtaskanduploadfiles";
-                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    BlobServiceClient blobClient = BlobUtilities.GetBlobServiceClient(storageAccount);
-                    BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, blobClient, storageAccount);
+                    // Create container and writeable SAS
+                    containerClient.CreateIfNotExists();
+                    string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
 
-                    try
+                    CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
+                    createJob.Commit();
+
+                    const string blobPrefix = "foo/bar";
+                    const string taskId = "simpletask";
+
+                    OutputFileDestination destination = new OutputFileDestination(new OutputFileBlobContainerDestination(sasUri, blobPrefix));
+                    OutputFileUploadOptions uploadOptions = new OutputFileUploadOptions(uploadCondition: OutputFileUploadCondition.TaskCompletion);
+                    CloudTask unboundTask = new CloudTask(taskId, "echo test")
                     {
-                        // Create container and writeable SAS
-                        containerClient.CreateIfNotExists();
-                        string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
-
-                        CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
-                        createJob.Commit();
-
-                        const string blobPrefix = "foo/bar";
-                        const string taskId = "simpletask";
-
-                        OutputFileDestination destination = new OutputFileDestination(new OutputFileBlobContainerDestination(sasUri, blobPrefix));
-                        OutputFileUploadOptions uploadOptions = new OutputFileUploadOptions(uploadCondition: OutputFileUploadCondition.TaskCompletion);
-                        CloudTask unboundTask = new CloudTask(taskId, "echo test")
-                        {
-                            OutputFiles = new List<OutputFile>
+                        OutputFiles = new List<OutputFile>
                             {
                                 new OutputFile(@"../*.txt", destination, uploadOptions)
                             }
-                        };
+                    };
 
-                        batchCli.JobOperations.AddTask(jobId, unboundTask);
+                    batchCli.JobOperations.AddTask(jobId, unboundTask);
 
-                        var tasks = batchCli.JobOperations.ListTasks(jobId);
+                    var tasks = batchCli.JobOperations.ListTasks(jobId);
 
-                        var monitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
+                    var monitor = batchCli.Utilities.CreateTaskStateMonitor();
+                    monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
 
-                        // Ensure that the correct files got uploaded
-                        var blobs = containerClient.GetAllBlobs();
-                        Assert.Equal(4, blobs.Count()); //There are 4 .txt files created, stdout, stderr, fileuploadout, and fileuploaderr
-                        foreach (var blob in blobs)
-                        {
-                            Assert.StartsWith(blobPrefix, blob.Name);
-                        }
-                    }
-                    finally
+                    // Ensure that the correct files got uploaded
+                    var blobs = containerClient.GetAllBlobs();
+                    Assert.Equal(4, blobs.Count()); //There are 4 .txt files created, stdout, stderr, fileuploadout, and fileuploaderr
+                    foreach (var blob in blobs)
                     {
-                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
-                        containerClient.DeleteIfExists();
+                        Assert.StartsWith(blobPrefix, blob.Name);
                     }
+                }
+                finally
+                {
+                    await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
+                    containerClient.DeleteIfExists();
                 }
             };
 
@@ -100,38 +98,36 @@ namespace BatchClientIntegrationTests
         {
             Action test = () =>
             {
-                using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobId = "ContainerJob" + TestUtilities.GetMyName();
+
+                try
                 {
-                    string jobId = "ContainerJob" + TestUtilities.GetMyName();
-
-                    try
+                    var job = client.JobOperations.CreateJob(jobId, new PoolInformation()
                     {
-                        var job = client.JobOperations.CreateJob(jobId, new PoolInformation()
-                        {
-                            PoolId = poolFixture.PoolId
-                        });
-                        job.Commit();
+                        PoolId = poolFixture.PoolId
+                    });
+                    job.Commit();
 
-                        var newTask = new CloudTask("a", "cat /etc/centos-release")
-                        {
-                            ContainerSettings = new TaskContainerSettings("centos")
-                        };
-                        client.JobOperations.AddTask(jobId, newTask);
-
-                        var tasks = client.JobOperations.ListTasks(jobId);
-
-                        var monitor = client.Utilities.CreateTaskStateMonitor();
-                        monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(7));
-
-                        var task = tasks.Single();
-                        task.Refresh();
-
-                        Assert.Equal("ContainerPoolNotSupported", task.ExecutionInformation.FailureInformation.Code);
-                    }
-                    finally
+                    var newTask = new CloudTask("a", "cat /etc/centos-release")
                     {
-                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                    }
+                        ContainerSettings = new TaskContainerSettings("centos")
+                    };
+                    client.JobOperations.AddTask(jobId, newTask);
+
+                    var tasks = client.JobOperations.ListTasks(jobId);
+
+                    var monitor = client.Utilities.CreateTaskStateMonitor();
+                    monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(7));
+
+                    var task = tasks.Single();
+                    task.Refresh();
+
+                    Assert.Equal("ContainerPoolNotSupported", task.ExecutionInformation.FailureInformation.Code);
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
             };
 

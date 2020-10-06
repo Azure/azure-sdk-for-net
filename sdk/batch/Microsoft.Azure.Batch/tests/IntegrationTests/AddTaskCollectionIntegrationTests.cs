@@ -44,10 +44,8 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
                 {
-                    using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                    {
-                        await AddTasksSimpleTestAsync(batchCli, testName, 50, useJobOperations: useJobOperations).ConfigureAwait(false);
-                    }
+                    using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                    await AddTasksSimpleTestAsync(batchCli, testName, 50, useJobOperations: useJobOperations).ConfigureAwait(false);
                 },
                 TestTimeout);
         }
@@ -61,10 +59,8 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
                 {
-                    using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                    {
-                        await AddTasksSimpleTestAsync(batchCli, testName, 550, useJobOperations: useJobOperations).ConfigureAwait(false);
-                    }
+                    using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                    await AddTasksSimpleTestAsync(batchCli, testName, 550, useJobOperations: useJobOperations).ConfigureAwait(false);
                 },
                 TestTimeout);
         }
@@ -78,15 +74,13 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                                                                 {
-                                                                     MaxDegreeOfParallelism = 25
-                                                                 };
+                    MaxDegreeOfParallelism = 25
+                };
 
-                    await AddTasksSimpleTestAsync(batchCli, testName, 5025, parallelOptions).ConfigureAwait(false);
-                }
+                await AddTasksSimpleTestAsync(batchCli, testName, 5025, parallelOptions).ConfigureAwait(false);
             },
             LongTestTimeout);
         }
@@ -131,23 +125,21 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = 2
-                    };
+                    MaxDegreeOfParallelism = 2
+                };
 
-                    var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
-                        async () => await AddTasksSimpleTestAsync(
-                            batchCli,
-                            testName,
-                            taskCount,
-                            parallelOptions,
-                            resultHandlerFunc,
-                            useJobOperations: useJobOperations).ConfigureAwait(false)).ConfigureAwait(false);
-                    Assert.IsType<HttpRequestException>(exception.InnerException);
-                }
+                var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
+                    async () => await AddTasksSimpleTestAsync(
+                        batchCli,
+                        testName,
+                        taskCount,
+                        parallelOptions,
+                        resultHandlerFunc,
+                        useJobOperations: useJobOperations).ConfigureAwait(false)).ConfigureAwait(false);
+                Assert.IsType<HttpRequestException>(exception.InnerException);
             },
             TestTimeout);
         }
@@ -199,23 +191,21 @@
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
                 StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = 2
-                    };
+                    MaxDegreeOfParallelism = 2
+                };
 
-                    await AddTasksSimpleTestAsync(
-                        batchCli,
-                        testName,
-                        1281,
-                        parallelOptions,
-                        resultHandlerFunc,
-                        storageCredentials,
-                        new List<string> { "TestResources\\Data.txt" },
-                        useJobOperations: useJobOperations).ConfigureAwait(false);
-                }
+                await AddTasksSimpleTestAsync(
+                    batchCli,
+                    testName,
+                    1281,
+                    parallelOptions,
+                    resultHandlerFunc,
+                    storageCredentials,
+                    new List<string> { "TestResources\\Data.txt" },
+                    useJobOperations: useJobOperations).ConfigureAwait(false);
             },
             LongTestTimeout);
 
@@ -262,21 +252,19 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
+                batchCli.JobOperations.CustomBehaviors.Add(customBehavior);
+
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    batchCli.JobOperations.CustomBehaviors.Add(customBehavior);
+                    MaxDegreeOfParallelism = 2
+                };
 
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = 2
-                    };
+                var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(async () =>
+                    await AddTasksSimpleTestAsync(batchCli, testName, 397, parallelOptions, useJobOperations: useJobOperations).ConfigureAwait(false)
+                    ).ConfigureAwait(false);
 
-                    var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(async () => 
-                        await AddTasksSimpleTestAsync(batchCli, testName, 397, parallelOptions, useJobOperations: useJobOperations).ConfigureAwait(false)
-                        ).ConfigureAwait(false);
-
-                    Assert.IsType<HttpRequestException>(exception.InnerException);
-                }
+                Assert.IsType<HttpRequestException>(exception.InnerException);
             },
             TestTimeout);
         }
@@ -292,40 +280,35 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
                 {
-                    using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                    using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                    using CancellationTokenSource source = new CancellationTokenSource();
+                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                     {
-                        using (CancellationTokenSource source = new CancellationTokenSource())
+                        MaxDegreeOfParallelism = 2,
+                        CancellationToken = source.Token
+                    };
+
+                    Task t = AddTasksSimpleTestAsync(
+                        batchCli,
+                        testName,
+                        taskCount,
+                        parallelOptions,
+                        useJobOperations: useJobOperations);
+                    Thread.Sleep(TimeSpan.FromSeconds(.3)); //Wait till we get into the workflow
+                    testOutputHelper.WriteLine("Canceling the work flow");
+
+                    source.Cancel();
+
+                    try
+                    {
+                        await t.ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        //This is expected to throw one of two possible exception types...
+                        if (!(e is TaskCanceledException) && !(e is OperationCanceledException))
                         {
-                            BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                                {
-                                    MaxDegreeOfParallelism = 2,
-                                    CancellationToken = source.Token
-                                };
-
-                            Task t = AddTasksSimpleTestAsync(
-                                batchCli,
-                                testName,
-                                taskCount,
-                                parallelOptions,
-                                useJobOperations: useJobOperations);
-                            Thread.Sleep(TimeSpan.FromSeconds(.3)); //Wait till we get into the workflow
-                            testOutputHelper.WriteLine("Canceling the work flow");
-
-                            source.Cancel();
-
-                            try
-                            {
-                                await t.ConfigureAwait(false);
-                            }
-                            catch (Exception e)
-                            {
-                                //This is expected to throw one of two possible exception types...
-                                if (!(e is TaskCanceledException) && !(e is OperationCanceledException))
-                                {
-                                    throw new ThrowsException(typeof (TaskCanceledException), e);
-                                }
-                            }
-
+                            throw new ThrowsException(typeof(TaskCanceledException), e);
                         }
                     }
                 },
@@ -344,53 +327,49 @@
             ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>> artifacts = new ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>>();
 
             List<int> legArtifactsCountList = new List<int>();
-            using(CancellationTokenSource cts = new CancellationTokenSource())
+            using CancellationTokenSource cts = new CancellationTokenSource();
+            //Spawn a thread to monitor the files to stage as we go - we should observe that
+            Task t = Task.Factory.StartNew(() =>
             {
-                //Spawn a thread to monitor the files to stage as we go - we should observe that
-                Task t = Task.Factory.StartNew(() =>
+                while (!cts.Token.IsCancellationRequested)
                 {
-                    while (!cts.Token.IsCancellationRequested)
-                    {
-                        legArtifactsCountList.Add(artifacts.Count);
-                        Thread.Sleep(TimeSpan.FromSeconds(1));
-                    }
-                });
+                    legArtifactsCountList.Add(artifacts.Count);
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+            });
 
-                await SynchronizationContextHelper.RunTestAsync(async () =>
+            await SynchronizationContextHelper.RunTestAsync(async () =>
+            {
+                StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                await AddTasksSimpleTestAsync(
+                        batchCli,
+                        testName,
+                        taskCount,
+                        parallelOptions: new BatchClientParallelOptions() { MaxDegreeOfParallelism = 2 },
+                        storageCredentials: storageCredentials,
+                        localFilesToStage: localFilesToStage,
+                        fileStagingArtifacts: artifacts,
+                        useJobOperations: useJobOperations).ConfigureAwait(false);
+
+                cts.Cancel();
+
+                await t.ConfigureAwait(false); //Wait for the spawned thread to exit
+
+                    testOutputHelper.WriteLine("File staging leg count: [");
+                foreach (int fileStagingArtifactsCount in legArtifactsCountList)
                 {
-                    StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                    {
-                        await AddTasksSimpleTestAsync(
-                            batchCli,
-                            testName,
-                            taskCount,
-                            parallelOptions: new BatchClientParallelOptions() { MaxDegreeOfParallelism = 2 },
-                            storageCredentials: storageCredentials,
-                            localFilesToStage: localFilesToStage,
-                            fileStagingArtifacts: artifacts,
-                            useJobOperations: useJobOperations).ConfigureAwait(false);
+                    testOutputHelper.WriteLine(fileStagingArtifactsCount + ", ");
+                }
+                testOutputHelper.WriteLine("]");
 
-                        cts.Cancel();
+                const int expectedFinalFileStagingArtifactsCount = taskCount / 100 + 1;
+                const int expectedInitialFileStagingArtifactsCount = 0;
 
-                        await t.ConfigureAwait(false); //Wait for the spawned thread to exit
-
-                        testOutputHelper.WriteLine("File staging leg count: [");
-                        foreach (int fileStagingArtifactsCount in legArtifactsCountList)
-                        {
-                            testOutputHelper.WriteLine(fileStagingArtifactsCount + ", ");
-                        }
-                        testOutputHelper.WriteLine("]");
-
-                        const int expectedFinalFileStagingArtifactsCount = taskCount / 100 + 1;
-                        const int expectedInitialFileStagingArtifactsCount = 0;
-
-                        Assert.Equal(expectedInitialFileStagingArtifactsCount, legArtifactsCountList.First());
-                        Assert.Equal(expectedFinalFileStagingArtifactsCount, legArtifactsCountList.Last());
-                    }
-                },
-                TestTimeout);
-            }
+                Assert.Equal(expectedInitialFileStagingArtifactsCount, legArtifactsCountList.First());
+                Assert.Equal(expectedFinalFileStagingArtifactsCount, legArtifactsCountList.Last());
+            },
+            TestTimeout);
         }
 
         [Fact]
@@ -429,20 +408,18 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = 2
-                    };
+                    MaxDegreeOfParallelism = 2
+                };
 
-                    await AddTasksSimpleTestAsync(
-                        batchCli,
-                        testName,
-                        55,
-                        parallelOptions,
-                        resultHandlerFunc).ConfigureAwait(false);
-                }
+                await AddTasksSimpleTestAsync(
+                    batchCli,
+                    testName,
+                    55,
+                    parallelOptions,
+                    resultHandlerFunc).ConfigureAwait(false);
             },
             TestTimeout);
 
@@ -457,18 +434,16 @@
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                {
-                    var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
-                        async () => await AddTasksSimpleTestAsync(
-                            batchCli,
-                            testName,
-                            311,
-                            timeout: TimeSpan.FromSeconds(-1),
-                            useJobOperations: useJobOperations).ConfigureAwait(false)).ConfigureAwait(false);
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
+                    async () => await AddTasksSimpleTestAsync(
+                        batchCli,
+                        testName,
+                        311,
+                        timeout: TimeSpan.FromSeconds(-1),
+                        useJobOperations: useJobOperations).ConfigureAwait(false)).ConfigureAwait(false);
 
-                    Assert.IsType<TimeoutException>(exception.InnerException);
-                }
+                Assert.IsType<TimeoutException>(exception.InnerException);
             },
             TestTimeout);
         }
@@ -489,14 +464,12 @@
             }
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                {
-                    var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
-                        async () => await AddTasksSimpleTestAsync(batchCli, testName, 1, resourceFiles:resourceFiles).ConfigureAwait(false)).ConfigureAwait(false);
-                    var innerException = exception.InnerException;
-                    Assert.IsType<BatchException>(innerException);
-                    Assert.Equal(((BatchException) innerException).RequestInformation.BatchError.Code, BatchErrorCodeStrings.RequestBodyTooLarge);
-                }
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
+                    async () => await AddTasksSimpleTestAsync(batchCli, testName, 1, resourceFiles: resourceFiles).ConfigureAwait(false)).ConfigureAwait(false);
+                var innerException = exception.InnerException;
+                Assert.IsType<BatchException>(innerException);
+                Assert.Equal(((BatchException)innerException).RequestInformation.BatchError.Code, BatchErrorCodeStrings.RequestBodyTooLarge);
             },
             TestTimeout);
         }
@@ -531,15 +504,13 @@
             }
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
+                batchCli.JobOperations.CustomBehaviors.Add(customBehavior);
+                BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
                 {
-                    batchCli.JobOperations.CustomBehaviors.Add(customBehavior);
-                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = degreesOfParallelism
-                    };
-                    await AddTasksSimpleTestAsync(batchCli, testName, numTasks, parallelOptions, resourceFiles: resourceFiles).ConfigureAwait(false);
-                }
+                    MaxDegreeOfParallelism = degreesOfParallelism
+                };
+                await AddTasksSimpleTestAsync(batchCli, testName, numTasks, parallelOptions, resourceFiles: resourceFiles).ConfigureAwait(false);
             },
             TestTimeout);
             Assert.True(countChunksOf100 <= Math.Min(Math.Ceiling(numTasks/100.0), degreesOfParallelism));

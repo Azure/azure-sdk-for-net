@@ -31,51 +31,49 @@
 
             Func<Task> test = async () =>
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                var poolInfo = new PoolInformation
                 {
-                    var poolInfo = new PoolInformation
+                    AutoPoolSpecification = new AutoPoolSpecification
                     {
-                        AutoPoolSpecification = new AutoPoolSpecification
+                        PoolSpecification = new PoolSpecification
                         {
-                            PoolSpecification = new PoolSpecification
-                            {
-                                CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                VirtualMachineSize = PoolFixture.VMSize,
-                            },
-                            PoolLifetimeOption = PoolLifetimeOption.Job
-                        }
-                    };
+                            CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            VirtualMachineSize = PoolFixture.VMSize,
+                        },
+                        PoolLifetimeOption = PoolLifetimeOption.Job
+                    }
+                };
 
-                    try
+                try
+                {
+                    CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
+                    await job.CommitAsync().ConfigureAwait(false);
+
+                    var boundJob = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
+
+                    CloudTask cloudTask = new CloudTask(taskId, "cmd /c ping 127.0.0.1")
                     {
-                        CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
-                        await job.CommitAsync().ConfigureAwait(false);
-
-                        var boundJob = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
-
-                        CloudTask cloudTask = new CloudTask(taskId, "cmd /c ping 127.0.0.1")
+                        ApplicationPackageReferences = new[]
                         {
-                            ApplicationPackageReferences = new[]
-                            {
                                 new ApplicationPackageReference
                                 {
                                     ApplicationId = applicationId,
                                     Version = applicationVerson
                                 }
                             }
-                        };
+                    };
 
-                        await boundJob.AddTaskAsync(cloudTask).ConfigureAwait(false);
+                    await boundJob.AddTaskAsync(cloudTask).ConfigureAwait(false);
 
-                        CloudTask boundCloudTask = await boundJob.GetTaskAsync(taskId).ConfigureAwait(false);
-                        Assert.Equal(applicationId, boundCloudTask.ApplicationPackageReferences.Single().ApplicationId);
-                        Assert.Equal(applicationVerson, boundCloudTask.ApplicationPackageReferences.Single().Version);
+                    CloudTask boundCloudTask = await boundJob.GetTaskAsync(taskId).ConfigureAwait(false);
+                    Assert.Equal(applicationId, boundCloudTask.ApplicationPackageReferences.Single().ApplicationId);
+                    Assert.Equal(applicationVerson, boundCloudTask.ApplicationPackageReferences.Single().Version);
 
-                    }
-                    finally
-                    {
-                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                    }
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
             };
 
@@ -93,47 +91,45 @@
 
             Func<Task> test = async () =>
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                var poolInfo = new PoolInformation
                 {
-                    var poolInfo = new PoolInformation
+                    AutoPoolSpecification = new AutoPoolSpecification
                     {
-                        AutoPoolSpecification = new AutoPoolSpecification
+                        PoolSpecification = new PoolSpecification
                         {
-                            PoolSpecification = new PoolSpecification
-                            {
-                                CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                VirtualMachineSize = PoolFixture.VMSize,
-                            },
-                            PoolLifetimeOption = PoolLifetimeOption.Job
-                        }
-                    };
+                            CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            VirtualMachineSize = PoolFixture.VMSize,
+                        },
+                        PoolLifetimeOption = PoolLifetimeOption.Job
+                    }
+                };
 
-                    try
+                try
+                {
+                    CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
+                    job.JobManagerTask = new JobManagerTask
                     {
-                        CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
-                        job.JobManagerTask = new JobManagerTask
-                        {
-                            Id = jobId,
-                            CommandLine = "cmd /c ping 127.0.0.1",
-                            ApplicationPackageReferences = new[]{ new ApplicationPackageReference
+                        Id = jobId,
+                        CommandLine = "cmd /c ping 127.0.0.1",
+                        ApplicationPackageReferences = new[]{ new ApplicationPackageReference
                             {
                                 ApplicationId = applicationId,
                                 Version = applicationVersion
                             }}
-                        };
+                    };
 
-                        await job.CommitAsync().ConfigureAwait(false);
+                    await job.CommitAsync().ConfigureAwait(false);
 
-                        var boundJob = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
+                    var boundJob = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
 
-                        Assert.Equal(applicationId, boundJob.JobManagerTask.ApplicationPackageReferences.Single().ApplicationId);
-                        Assert.Equal(applicationVersion, boundJob.JobManagerTask.ApplicationPackageReferences.Single().Version);
+                    Assert.Equal(applicationId, boundJob.JobManagerTask.ApplicationPackageReferences.Single().ApplicationId);
+                    Assert.Equal(applicationVersion, boundJob.JobManagerTask.ApplicationPackageReferences.Single().Version);
 
-                    }
-                    finally
-                    {
-                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                    }
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
             };
 
