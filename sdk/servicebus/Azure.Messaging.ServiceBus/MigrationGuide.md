@@ -248,14 +248,10 @@ The below code snippet shows you the session variation of the receiver. Please n
 
 ```cs
 // create a receiver to receive events from the next available session
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
 // create a receiver to receive events from the given session
-var options = new ServiceBusSessionReceiverOptions
-{
-    SessionId = "my-session"
-};
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName, options);
+ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "my-session");
 ```
 
 ## Additional samples
