@@ -1211,6 +1211,47 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task SetAccessPolicyAsync_InvalidPermissionOrder()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
+            BlobSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy = new BlobAccessPolicy()
+                    {
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "wrld"
+                    }
+                }
+            };
+
+            // Act
+            await test.Container.SetAccessPolicyAsync(
+                accessType: publicAccessType,
+                permissions: signedIdentifiers
+            );
+
+            // Assert
+            Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
+            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
+
+            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
+            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+
+            BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+        }
+
+        [Test]
         public async Task AcquireLeaseAsync()
         {
             // Arrange

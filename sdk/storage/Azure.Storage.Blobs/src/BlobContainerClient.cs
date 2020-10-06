@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -2139,12 +2140,27 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
                     }
 
+                    List<BlobSignedIdentifier> sanitizedPermissions = null;
+                    if (permissions != null)
+                    {
+                        sanitizedPermissions = new List<BlobSignedIdentifier>();
+
+                        foreach (BlobSignedIdentifier signedIdentifier in permissions)
+                        {
+                            signedIdentifier.AccessPolicy.Permissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                                signedIdentifier.AccessPolicy.Permissions,
+                                Constants.Sas.ValidPermissionsInOrder);
+
+                            sanitizedPermissions.Add(signedIdentifier);
+                        }
+                    }
+
                     return await BlobRestClient.Container.SetAccessPolicyAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         version: Version.ToVersionString(),
-                        permissions: permissions,
+                        permissions: sanitizedPermissions,
                         leaseId: conditions?.LeaseId,
                         access: accessType,
                         ifModifiedSince: conditions?.IfModifiedSince,

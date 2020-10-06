@@ -508,6 +508,21 @@ namespace Azure.Storage
                 public const char Container = 'c';
                 public const char Object = 'o';
             }
+
+            public static readonly List<char> ValidPermissionsInOrder = new List<char>
+            {
+                Sas.Permissions.Read,
+                Sas.Permissions.Add,
+                Sas.Permissions.Create,
+                Sas.Permissions.Write,
+                Sas.Permissions.Delete,
+                Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.List,
+                Sas.Permissions.Tag,
+                Sas.Permissions.Update,
+                Sas.Permissions.Process,
+                Sas.Permissions.FilterByTags,
+            };
         }
 
         internal static class ClientSideEncryption

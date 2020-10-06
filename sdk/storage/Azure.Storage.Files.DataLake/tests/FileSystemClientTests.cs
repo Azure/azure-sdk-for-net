@@ -1808,6 +1808,47 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task SetAccessPolicyAsync_InvalidPermissionOrder()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
+            DataLakeSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new DataLakeSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy = new DataLakeAccessPolicy()
+                    {
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "wrld"
+                    }
+                }
+            };
+
+            // Act
+            await test.FileSystem.SetAccessPolicyAsync(
+                accessType: publicAccessType,
+                permissions: signedIdentifiers
+            );
+
+            // Assert
+            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
+            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
+
+            Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
+            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+
+            DataLakeSignedIdentifier acl = response.Value.SignedIdentifiers.First();
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual("rwdl", acl.AccessPolicy.Permissions);
+        }
+
+        [Test]
         public void DataLakeAccessPolicyNullStartsOnExpiresOnTest()
         {
             DataLakeAccessPolicy accessPolicy = new DataLakeAccessPolicy()
