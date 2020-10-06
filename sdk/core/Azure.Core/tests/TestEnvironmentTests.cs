@@ -43,6 +43,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", test.Value);
         }
 
+        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorWorksForSamples(RecordedTestMode mode)
+        {
+            var test = new SampleTestClass();
+            Assert.AreEqual("1", test.Value);
+        }
+
+        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorWorksForLiveTests(RecordedTestMode mode)
+        {
+            var test = new LiveTestClass();
+            Assert.AreEqual("1", test.Value);
+        }
+
         [Test]
         public void ReadingRecordedValueOutsideRecordedTestWorks()
         {
@@ -113,6 +135,26 @@ namespace Azure.Core.Tests
                 {
                     Value = TestEnvironment.NotRecordedValue;
                 }
+            }
+
+            public string Value { get; }
+        }
+
+        private class LiveTestClass: LiveTestBase<MockTestEnvironment>
+        {
+            public LiveTestClass()
+            {
+                Value = TestEnvironment.RecordedValue;
+            }
+
+            public string Value { get; }
+        }
+
+        private class SampleTestClass: SamplesBase<MockTestEnvironment>
+        {
+            public SampleTestClass()
+            {
+                Value = TestEnvironment.RecordedValue;
             }
 
             public string Value { get; }
