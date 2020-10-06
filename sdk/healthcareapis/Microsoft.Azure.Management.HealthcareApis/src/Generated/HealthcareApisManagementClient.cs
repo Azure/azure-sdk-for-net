@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             Operations = new Operations(this);
             OperationResults = new OperationResultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-16";
+            ApiVersion = "2020-03-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
