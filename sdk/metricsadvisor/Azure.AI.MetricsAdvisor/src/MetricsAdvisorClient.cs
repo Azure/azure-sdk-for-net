@@ -97,7 +97,15 @@ namespace Azure.AI.MetricsAdvisor
         #region Metrics
 
         /// <summary>
+        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -149,7 +157,15 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -201,7 +217,14 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Gets a collection of items describing the time series of a specified <see cref="DataFeedMetric"/>.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricSeriesDefinition"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricSeriesDefinition> GetMetricSeriesDefinitionsAsync(string metricId, GetMetricSeriesDefinitionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -258,7 +281,14 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Gets a collection of items describing the time series of a specified <see cref="DataFeedMetric"/>.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricSeriesDefinition"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricSeriesDefinition> GetMetricSeriesDefinitions(string metricId, GetMetricSeriesDefinitionsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -315,7 +345,15 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Gets a collection of items describing the time series of a specified <see cref="DataFeedMetric"/> and
+        /// details about their ingested data points.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricSeriesData"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<MetricSeriesData>>> GetMetricSeriesDataAsync(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -341,7 +379,15 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
+        /// Gets a collection of items describing the time series of a specified <see cref="DataFeedMetric"/> and
+        /// details about their ingested data points.
         /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="MetricSeriesData"/> items.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Response<IReadOnlyList<MetricSeriesData>> GetMetricSeriesData(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -1119,7 +1165,17 @@ namespace Azure.AI.MetricsAdvisor
 
         // TODODOCS.
         /// <summary>
+        /// Gets data about the data points present in the specified set of time series.
+        /// <see cref="MetricAnomalyAlertConfiguration"/>.
         /// </summary>
+        /// <param name="seriesKeys">The name of the dimension.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="startTime">Filters the result. Only data points ingested after this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only data points ingested after this point in time, in UTC, will be returned.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection containing the values the specified dimension assumed for anomalous data points. Items are unique.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(IEnumerable<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?

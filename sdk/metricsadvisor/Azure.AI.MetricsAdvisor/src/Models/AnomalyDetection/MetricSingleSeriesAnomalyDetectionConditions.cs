@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that uniquely identifies the time series to which these conditions apply within a metric.
-        /// All possible dimensions for the associated data feed must be set.
+        /// All possible dimensions of the associated data feed must be set.
         /// </summary>
         public DimensionKey SeriesKey { get; }
 
