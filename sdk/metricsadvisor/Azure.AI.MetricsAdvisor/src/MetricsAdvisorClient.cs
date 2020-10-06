@@ -238,7 +238,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -302,7 +302,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -419,7 +419,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
@@ -431,7 +431,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -448,7 +448,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<EnrichmentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -473,7 +473,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
@@ -485,7 +485,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -502,7 +502,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<EnrichmentStatus> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -658,6 +658,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
+<<<<<<< HEAD
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -665,19 +666,25 @@ namespace Azure.AI.MetricsAdvisor
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+=======
+        /// <param name="metricFeedback"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback metricFeedback, CancellationToken cancellationToken = default)
+>>>>>>> ee9c2ad07f... Renames - batch 1
         {
-            Argument.AssertNotNull(feedback, nameof(feedback));
+            Argument.AssertNotNull(metricFeedback, nameof(metricFeedback));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(metricFeedback, cancellationToken).ConfigureAwait(false);
 
-                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
+                metricFeedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedback, response.GetRawResponse());
+                return Response.FromValue(metricFeedback, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -689,6 +696,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
+<<<<<<< HEAD
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -696,19 +704,25 @@ namespace Azure.AI.MetricsAdvisor
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+=======
+        /// <param name="metricFeedback"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback metricFeedback, CancellationToken cancellationToken = default)
+>>>>>>> ee9c2ad07f... Renames - batch 1
         {
-            Argument.AssertNotNull(feedback, nameof(feedback));
+            Argument.AssertNotNull(metricFeedback, nameof(metricFeedback));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(metricFeedback, cancellationToken);
 
-                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
+                metricFeedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedback, response.GetRawResponse());
+                return Response.FromValue(metricFeedback, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1082,7 +1096,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionFilter?.Clone()
+                DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
             int? top = options.TopCount;
@@ -1144,7 +1158,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionFilter?.Clone()
+                DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
             int? top = options.TopCount;
@@ -1191,6 +1205,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Gets data about the data points present in the specified set of time series.
         /// <see cref="MetricAnomalyAlertConfiguration"/>.
         /// </summary>
+<<<<<<< HEAD
         /// <param name="seriesKeys">The name of the dimension.</param>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="startTime">Filters the result. Only data points ingested after this point in time, in UTC, will be returned.</param>
@@ -1200,6 +1215,9 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentNullException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(IEnumerable<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+=======
+        public virtual async Task<Response<IReadOnlyList<MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(IList<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+>>>>>>> ee9c2ad07f... Renames - batch 1
         {
             Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1225,7 +1243,7 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// </summary>
-        public virtual Response<IReadOnlyList<MetricEnrichedSeriesData>> GetMetricEnrichedSeriesData(IEnumerable<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MetricEnrichedSeriesData>> GetMetricEnrichedSeriesData(IList<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));

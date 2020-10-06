@@ -177,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> allUpIdentification = default;
             Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
             Optional<double> fillMissingPointValue = default;
-            Optional<AccessMode> viewMode = default;
+            Optional<DataFeedAccessMode> viewMode = default;
             Optional<IList<string>> admins = default;
             Optional<IList<string>> viewers = default;
             Optional<bool> isAdmin = default;
@@ -314,7 +314,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("viewMode"))
                 {
-                    viewMode = new AccessMode(property.Value.GetString());
+                    viewMode = new DataFeedAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("admins"))
