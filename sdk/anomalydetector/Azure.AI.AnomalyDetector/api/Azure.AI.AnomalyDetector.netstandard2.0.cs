@@ -26,31 +26,6 @@ namespace Azure.AI.AnomalyDetector
 }
 namespace Azure.AI.AnomalyDetector.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AnomalyDetectorErrorCodes : System.IEquatable<Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AnomalyDetectorErrorCodes(string value) { throw null; }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes BadArgument { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidCustomInterval { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidGranularity { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidJsonFormat { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidModelArgument { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidPeriod { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes InvalidSeries { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes RequiredGranularity { get { throw null; } }
-        public static Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes RequiredSeries { get { throw null; } }
-        public bool Equals(Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes left, Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes right) { throw null; }
-        public static implicit operator Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes (string value) { throw null; }
-        public static bool operator !=(Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes left, Azure.AI.AnomalyDetector.Models.AnomalyDetectorErrorCodes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ChangePointDetectRequest
     {
         public ChangePointDetectRequest(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.Models.TimeSeriesPoint> series, Azure.AI.AnomalyDetector.Models.TimeGranularity granularity) { }

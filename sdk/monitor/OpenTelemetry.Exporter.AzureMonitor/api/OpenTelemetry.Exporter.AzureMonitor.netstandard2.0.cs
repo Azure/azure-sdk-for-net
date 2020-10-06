@@ -32,50 +32,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public bool Success { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContextTagKeys : System.IEquatable<OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContextTagKeys(string value) { throw null; }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiApplicationVer { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiCloudLocation { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiCloudRole { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiCloudRoleInstance { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiCloudRoleVer { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceLocale { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceModel { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceOemName { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceOsVersion { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiDeviceType { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiInternalAgentVersion { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiInternalNodeName { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiInternalSdkVersion { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiLocationCity { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiLocationCountry { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiLocationIp { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiLocationProvince { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiOperationCorrelationVector { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiOperationId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiOperationName { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiOperationParentId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiOperationSyntheticSource { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiSessionId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiSessionIsFirst { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiUserAccountId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiUserAuthUserId { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys AiUserId { get { throw null; } }
-        public bool Equals(OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys left, OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys right) { throw null; }
-        public static implicit operator OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys (string value) { throw null; }
-        public static bool operator !=(OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys left, OpenTelemetry.Exporter.AzureMonitor.Models.ContextTagKeys right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataPointType : System.IEquatable<OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType>
     {
         private readonly object _dummy;

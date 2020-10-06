@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> The context tag keys. </summary>
-    public readonly partial struct ContextTagKeys : IEquatable<ContextTagKeys>
+    internal readonly partial struct ContextTagKeys : IEquatable<ContextTagKeys>
     {
         private readonly string _value;
 
