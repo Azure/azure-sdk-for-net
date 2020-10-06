@@ -206,7 +206,7 @@ namespace Azure.Storage.Queues.Test
         }
         #endregion
 
-        #region
+        #region GetProperties
         [Test]
         public async Task GetPropertiesAsync()
         {
