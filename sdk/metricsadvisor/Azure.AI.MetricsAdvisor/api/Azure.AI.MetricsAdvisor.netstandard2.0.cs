@@ -673,7 +673,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public GetAnomaliesForDetectionConfigurationFilter(Azure.AI.MetricsAdvisor.Models.AnomalySeverity minimumSeverity, Azure.AI.MetricsAdvisor.Models.AnomalySeverity maximumSeverity) { }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MaximumSeverity { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MinimumSeverity { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesKeys { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesGroupKeys { get { throw null; } set { } }
     }
     public partial class GetAnomaliesForDetectionConfigurationOptions
     {
@@ -732,9 +732,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class GetIncidentsForDetectionConfigurationOptions
     {
         public GetIncidentsForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionToFilter { get { throw null; } set { } }
         public System.DateTimeOffset EndTime { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesGroupKeys { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
         public int? TopCount { get { throw null; } set { } }
     }
@@ -1013,8 +1012,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSeriesDefinition
     {
         internal MetricSeriesDefinition() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Dimension { get { throw null; } }
         public string MetricId { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
     }
     public partial class MetricSeriesGroupAnomalyDetectionConditions : Azure.AI.MetricsAdvisor.Models.MetricAnomalyDetectionConditions
     {
