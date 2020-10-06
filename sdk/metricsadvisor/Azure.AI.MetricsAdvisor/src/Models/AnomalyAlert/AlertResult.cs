@@ -28,9 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset CreatedTime { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this alert entry has been modified for the last time. For the
-        /// time being, an <see cref="AlertResult"/> is immutable and this property should be the same as
-        /// <see cref="CreatedTime"/>.
+        /// The date and time, in UTC, in which this alert entry has been modified for the last time.
         /// </summary>
         public DateTimeOffset ModifiedTime { get; }
     }

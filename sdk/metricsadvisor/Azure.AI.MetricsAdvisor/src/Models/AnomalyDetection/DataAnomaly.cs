@@ -76,9 +76,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset? CreatedTime { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this anomaly entry has been modified for the last time. For the time
-        /// being, a <see cref="DataAnomaly"/> is immutable and this property should be the same as <see cref="CreatedTime"/>.
-        /// This property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/>
+        /// The date and time, in UTC, in which this anomaly entry has been modified for the last time. This
+        /// property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/>
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync"/>.
         /// </summary>
         public DateTimeOffset? ModifiedTime { get; }
