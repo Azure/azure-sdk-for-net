@@ -50,7 +50,7 @@ namespace BatchClientIntegrationTests
                             CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                             cloudJob.PoolInformation = new PoolInformation()
                             {
-                                PoolId = this.poolFixture.PoolId
+                                PoolId = poolFixture.PoolId
                             };
                             cloudJob.Commit();
 
@@ -83,7 +83,7 @@ namespace BatchClientIntegrationTests
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                         cloudJob.PoolInformation = new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         };
                         cloudJob.UsesTaskDependencies = true;
                         cloudJob.Commit();
@@ -115,7 +115,7 @@ namespace BatchClientIntegrationTests
                     CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                     unboundJob.PoolInformation = new PoolInformation()
                     {
-                        PoolId = this.poolFixture.PoolId
+                        PoolId = poolFixture.PoolId
                     };
 
                     unboundJob.UsesTaskDependencies = true;

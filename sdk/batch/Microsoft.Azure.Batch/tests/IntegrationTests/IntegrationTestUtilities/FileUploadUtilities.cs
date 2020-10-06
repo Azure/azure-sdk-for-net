@@ -75,15 +75,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <param name="blobEndpoint">A string specifying the primary Blob service endpoint.</param>
         public StagingStorageAccount(string storageAccount, string storageAccountKey, string blobEndpoint)
         {
-            this.StorageAccount = storageAccount;
-            this.StorageAccountKey = storageAccountKey;
+            StorageAccount = storageAccount;
+            StorageAccountKey = storageAccountKey;
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccount))
+            if (string.IsNullOrWhiteSpace(StorageAccount))
             {
                 throw new ArgumentOutOfRangeException("storageAccount");
             }
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccountKey))
+            if (string.IsNullOrWhiteSpace(StorageAccountKey))
             {
                 throw new ArgumentOutOfRangeException("storageAccountKey");
             }
@@ -94,7 +94,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             }
 
             // Constructed here to give immediate validation/failure experience.
-            this.BlobUri = new Uri(blobEndpoint);
+            BlobUri = new Uri(blobEndpoint);
         }
     }
 
@@ -157,10 +157,10 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// the name on the compute node will be set to the value of localFileToStage stripped of all path information.</param>
         public FileToStage(string localFileToStage, StagingStorageAccount storageCredentials, string nodeFileName = null)
         {
-            this.LocalFileToStage = localFileToStage;
-            this.StagingStorageAccount = storageCredentials;
+            LocalFileToStage = localFileToStage;
+            StagingStorageAccount = storageCredentials;
 
-            if (string.IsNullOrWhiteSpace(this.LocalFileToStage))
+            if (string.IsNullOrWhiteSpace(LocalFileToStage))
             {
                 throw new ArgumentOutOfRangeException("localFileToStage");
             }
@@ -168,11 +168,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             // map null to base name of local file
             if (string.IsNullOrWhiteSpace(nodeFileName))
             {
-                this.NodeFileName = Path.GetFileName(this.LocalFileToStage);
+                NodeFileName = Path.GetFileName(LocalFileToStage);
             }
             else
             {
-                this.NodeFileName = nodeFileName;
+                NodeFileName = nodeFileName;
             }
         }
 
@@ -209,9 +209,9 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// </summary>
         public void Validate()
         {
-            if (!File.Exists(this.LocalFileToStage))
+            if (!File.Exists(LocalFileToStage))
             {
-                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {this.LocalFileToStage}");
+                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {LocalFileToStage}");
             }
         }
 

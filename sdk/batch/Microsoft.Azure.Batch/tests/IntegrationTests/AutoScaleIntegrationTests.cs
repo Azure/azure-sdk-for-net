@@ -22,7 +22,6 @@
     public class AutoScaleIntegrationTests
     {
         private readonly ITestOutputHelper testOutputHelper;
-        private static readonly TimeSpan LongTestTimeout = TimeSpan.FromMinutes(5);
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(1);
 
         public AutoScaleIntegrationTests(ITestOutputHelper testOutputHelper)
@@ -98,7 +97,7 @@
                             }
                             catch (Exception ex)
                             {
-                                TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(ex, Microsoft.Azure.Batch.Common.BatchErrorCodeStrings.AutoScaleTooManyRequestsToEnable, this.testOutputHelper);
+                                TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(ex, Microsoft.Azure.Batch.Common.BatchErrorCodeStrings.AutoScaleTooManyRequestsToEnable, testOutputHelper);
 
                                 // if we get here the exception passed.
 

@@ -93,7 +93,7 @@
         public IntegrationMultiInstanceCloudTaskTests(ITestOutputHelper testOutputHelper)
         {
             this.testOutputHelper = testOutputHelper;
-            this.poolId = TestUtilities.GetMyName() + "-poolmulti";
+            poolId = TestUtilities.GetMyName() + "-poolmulti";
             using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
             {
                 CreatePool(batchCli, poolId); //TODO: If this is failed to construct then the dispose is not called
@@ -126,7 +126,7 @@
                     {
                         // here we show how to use an unbound Job + Commit() to run a simple "Hello World" task
                         // get an empty unbound Job
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolId });
                         unboundJob.Commit();
 
                         // Open the new Job as bound.
@@ -160,14 +160,14 @@
                             string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                             string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                            this.testOutputHelper.WriteLine("StdOut: ");
-                            this.testOutputHelper.WriteLine("");
-                            this.testOutputHelper.WriteLine(stdOut);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdOut: ");
+                            testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine(stdOut);
+                            testOutputHelper.WriteLine("");
 
-                            this.testOutputHelper.WriteLine("StdErr: ");
-                            this.testOutputHelper.WriteLine(stdErr);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdErr: ");
+                            testOutputHelper.WriteLine(stdErr);
+                            testOutputHelper.WriteLine("");
 
 
                             List<SubtaskInformation> subtasks;
@@ -194,7 +194,7 @@
                             // Shouldnot assume the subtasks have order.
                             Assert.True((subtasks[0].Id == 1 && subtasks[1].Id == 2) || (subtasks[0].Id == 2 && subtasks[1].Id == 1));
 
-                            this.testOutputHelper.WriteLine("Multi-instance test complete");
+                            testOutputHelper.WriteLine("Multi-instance test complete");
                         }
                     }
                     finally
@@ -224,7 +224,7 @@
                     {
                         // here we show how to use an unbound Job + Commit() to run a simple "Hello World" task
                         // get an empty unbound Job
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolId });
                         unboundJob.Commit();
 
                         // Open the new Job as bound.
@@ -233,8 +233,10 @@
                         // get an empty unbound Task
                         CloudTask hwTask = new CloudTask(id: "mpi", commandline: @"cmd /c ""%MSMPI_BIN%\mpiexec.exe"" -p 6050 -wdir %AZ_BATCH_TASK_SHARED_DIR%\ Sieve.exe 1000");
                         hwTask.MultiInstanceSettings = new MultiInstanceSettings(@"cmd /c start cmd /c ""%MSMPI_BIN%\smpd.exe"" -d 3 -p 6050", 3);
-                        hwTask.MultiInstanceSettings.CommonResourceFiles = new List<ResourceFile>();
-                        hwTask.MultiInstanceSettings.CommonResourceFiles.Add(ResourceFile.FromUrl("https://manoj123.blob.core.windows.net/mpi/Sieve.exe", "Sieve.exe"));
+                        hwTask.MultiInstanceSettings.CommonResourceFiles = new List<ResourceFile>
+                        {
+                            ResourceFile.FromUrl("https://manoj123.blob.core.windows.net/mpi/Sieve.exe", "Sieve.exe")
+                        };
 
                         // add Task to Job
                         boundJob.AddTask(hwTask);
@@ -254,14 +256,14 @@
                             string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                             string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                            this.testOutputHelper.WriteLine("StdOut: ");
-                            this.testOutputHelper.WriteLine("");
-                            this.testOutputHelper.WriteLine(stdOut);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdOut: ");
+                            testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine(stdOut);
+                            testOutputHelper.WriteLine("");
 
-                            this.testOutputHelper.WriteLine("StdErr: ");
-                            this.testOutputHelper.WriteLine(stdErr);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdErr: ");
+                            testOutputHelper.WriteLine(stdErr);
+                            testOutputHelper.WriteLine("");
 
                             Assert.Contains("There are 168 primes less than or equal to 1000", stdOut);
 
@@ -282,7 +284,7 @@
 
                             Assert.True(sw.Elapsed <= checkSubtasksStateTimeout, string.Format("The subtasks state is not set to Complete after {0} seconds", checkSubtasksStateTimeout.TotalSeconds));
 
-                            this.testOutputHelper.WriteLine("MPI test complete");
+                            testOutputHelper.WriteLine("MPI test complete");
                         }
                     }
                     finally
@@ -327,7 +329,7 @@
 
                         // here we show how to use an unbound Job + Commit() to run a simple "Hello World" task
                         // get an empty unbound Job
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         unboundJob.Commit();
 
                         // Open the new Job as bound.
@@ -372,14 +374,14 @@
                             string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                             string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                            this.testOutputHelper.WriteLine("StdOut: ");
-                            this.testOutputHelper.WriteLine("");
-                            this.testOutputHelper.WriteLine(stdOut);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdOut: ");
+                            testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine(stdOut);
+                            testOutputHelper.WriteLine("");
 
-                            this.testOutputHelper.WriteLine("StdErr: ");
-                            this.testOutputHelper.WriteLine(stdErr);
-                            this.testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("StdErr: ");
+                            testOutputHelper.WriteLine(stdErr);
+                            testOutputHelper.WriteLine("");
 
                             // get env settings
                             IEnumerable<EnvironmentSetting> boundSettings = myCompletedTask.EnvironmentSettings;
@@ -392,14 +394,14 @@
                             // confirm #
                             Assert.Equal(numEnvSettings, compEnvSettings.Count);
 
-                            this.testOutputHelper.WriteLine("Environement Settings: ");
+                            testOutputHelper.WriteLine("Environement Settings: ");
 
                             foreach (EnvironmentSetting curEnvSetting in boundSettings)
                             {
-                                this.testOutputHelper.WriteLine("    Name: " + curEnvSetting.Name + ", Value: " + curEnvSetting.Value);
+                                testOutputHelper.WriteLine("    Name: " + curEnvSetting.Name + ", Value: " + curEnvSetting.Value);
                             }
 
-                            this.testOutputHelper.WriteLine("Env Setting test complete");
+                            testOutputHelper.WriteLine("Env Setting test complete");
                         }
                     }
                     finally
@@ -425,7 +427,7 @@
 
                     try
                     {
-                        CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         createJob.CommitAsync().Wait();
 
                         const string unboundTaskId = "bug1432973AffinityInfo";
@@ -467,7 +469,7 @@
 
                     try
                     {
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         unboundJob.Commit();
 
                         // Open the new Job as bound.
@@ -496,16 +498,16 @@
                         string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                         string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                        this.testOutputHelper.WriteLine("TaskId: " + myCompletedTask.Id);
-                        this.testOutputHelper.WriteLine("StdOut: ");
-                        this.testOutputHelper.WriteLine(stdOut);
-                        this.testOutputHelper.WriteLine("");
+                        testOutputHelper.WriteLine("TaskId: " + myCompletedTask.Id);
+                        testOutputHelper.WriteLine("StdOut: ");
+                        testOutputHelper.WriteLine(stdOut);
+                        testOutputHelper.WriteLine("");
 
-                        this.testOutputHelper.WriteLine("StdErr: ");
-                        this.testOutputHelper.WriteLine(stdErr);
-                        this.testOutputHelper.WriteLine("");
+                        testOutputHelper.WriteLine("StdErr: ");
+                        testOutputHelper.WriteLine(stdErr);
+                        testOutputHelper.WriteLine("");
 
-                        this.testOutputHelper.WriteLine("TaskConstraints:");
+                        testOutputHelper.WriteLine("TaskConstraints:");
 
                         TaskConstraints compTC = myCompletedTask.Constraints;
 
@@ -513,20 +515,20 @@
 
                         if (null == compTC)
                         {
-                            this.testOutputHelper.WriteLine("<null>");
+                            testOutputHelper.WriteLine("<null>");
                         }
                         else
                         {
-                            this.testOutputHelper.WriteLine("");
-                            this.testOutputHelper.WriteLine("    maxWallClockTime: " + (compTC.MaxWallClockTime.HasValue ? compTC.MaxWallClockTime.ToString() : "<null>"));
-                            this.testOutputHelper.WriteLine("    retentionTime: " + (compTC.RetentionTime.HasValue ? compTC.RetentionTime.Value.ToString() : "<null>"));
-                            this.testOutputHelper.WriteLine("    maxTaskRetryCount: " + (compTC.MaxTaskRetryCount.HasValue ? compTC.MaxTaskRetryCount.Value.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("    maxWallClockTime: " + (compTC.MaxWallClockTime.HasValue ? compTC.MaxWallClockTime.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("    retentionTime: " + (compTC.RetentionTime.HasValue ? compTC.RetentionTime.Value.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("    maxTaskRetryCount: " + (compTC.MaxTaskRetryCount.HasValue ? compTC.MaxTaskRetryCount.Value.ToString() : "<null>"));
 
                             Assert.True(compTC.MaxTaskRetryCount.HasValue);
                             Assert.Equal(99, compTC.MaxTaskRetryCount.Value);
                         }
 
-                        this.testOutputHelper.WriteLine("TaskExecutionInfo: ");
+                        testOutputHelper.WriteLine("TaskExecutionInfo: ");
 
                         TaskExecutionInformation tei = myCompletedTask.ExecutionInformation;
 
@@ -534,27 +536,27 @@
 
                         if (null == tei)
                         {
-                            this.testOutputHelper.WriteLine("<null>");
+                            testOutputHelper.WriteLine("<null>");
                         }
                         else
                         {
-                            this.testOutputHelper.WriteLine("");
-                            this.testOutputHelper.WriteLine("    StartTime: " + (tei.StartTime.HasValue ? tei.StartTime.Value.ToString() : "<null>"));
-                            this.testOutputHelper.WriteLine("    LastUpdateTime:   " + (tei.EndTime.HasValue ? tei.EndTime.Value.ToString() : "<null>"));
-                            this.testOutputHelper.WriteLine("    ExitCode:  " + (tei.ExitCode.HasValue ? tei.ExitCode.Value.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("");
+                            testOutputHelper.WriteLine("    StartTime: " + (tei.StartTime.HasValue ? tei.StartTime.Value.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("    LastUpdateTime:   " + (tei.EndTime.HasValue ? tei.EndTime.Value.ToString() : "<null>"));
+                            testOutputHelper.WriteLine("    ExitCode:  " + (tei.ExitCode.HasValue ? tei.ExitCode.Value.ToString() : "<null>"));
                         }
 
-                        this.testOutputHelper.WriteLine("Stats: ");
+                        testOutputHelper.WriteLine("Stats: ");
 
                         TaskStatistics compTS = myCompletedTask.Statistics;
 
                         if (null == compTS)
                         {
-                            this.testOutputHelper.WriteLine("<null>");
+                            testOutputHelper.WriteLine("<null>");
                         }
                         else
                         {
-                            this.testOutputHelper.WriteLine("Url: " + compTS.Url);
+                            testOutputHelper.WriteLine("Url: " + compTS.Url);
                         }
                     }
                     finally
@@ -582,7 +584,7 @@
 
                     try
                     {
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         unboundJob.Commit();
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -596,9 +598,7 @@
                         // add some files to confirm file staging is working
                         FileToStage wordsDotText = new FileToStage(Resources.LocalWordsDotText, stagingStorageAccount);
 
-                        newTaskToAdd.FilesToStage = new List<IFileStagingProvider>();
-
-                        newTaskToAdd.FilesToStage.Add(wordsDotText);
+                        newTaskToAdd.FilesToStage = new List<IFileStagingProvider> { wordsDotText };
 
                         batchCli.JobOperations.AddTask(jobId, newTaskToAdd);
 
@@ -614,11 +614,11 @@
 
                         foreach (CloudTask curTask in boundJob.ListTasks())
                         {
-                            this.testOutputHelper.WriteLine("TaskId: " + curTask.Id);
+                            testOutputHelper.WriteLine("TaskId: " + curTask.Id);
 
                             foreach (NodeFile curFile in curTask.ListNodeFiles(recursive: true))
                             {
-                                this.testOutputHelper.WriteLine("    filename: " + curFile.Path);
+                                testOutputHelper.WriteLine("    filename: " + curFile.Path);
 
                                 if (curFile.Path.IndexOf("localWords.txt", StringComparison.InvariantCultureIgnoreCase) >= 0)
                                 {
@@ -653,7 +653,7 @@
                     string jobId = "Bug1611592Job-" + TestUtilities.GetMyName();
                     try
                     {
-                        CloudJob unJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob unJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         unJob.Commit();
 
                         CloudTask unTask = new CloudTask("Bug1611592", "hostname");
@@ -677,11 +677,11 @@
 
                             Assert.NotNull(computeNodeInfo);
 
-                            this.testOutputHelper.WriteLine("Task: " + curTask.Id);
-                            this.testOutputHelper.WriteLine("ComputeNodeInfo:");
+                            testOutputHelper.WriteLine("Task: " + curTask.Id);
+                            testOutputHelper.WriteLine("ComputeNodeInfo:");
 
-                            this.testOutputHelper.WriteLine("    PoolId: " + computeNodeInfo.PoolId);
-                            this.testOutputHelper.WriteLine("    ComputeNodeId: " + computeNodeInfo.ComputeNodeId);
+                            testOutputHelper.WriteLine("    PoolId: " + computeNodeInfo.PoolId);
+                            testOutputHelper.WriteLine("    ComputeNodeId: " + computeNodeInfo.ComputeNodeId);
                         }
                     }
                     finally
@@ -711,9 +711,9 @@
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                         cloudJob.PoolInformation = new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         };
-                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        testOutputHelper.WriteLine("Creating job: {0}", jobId);
                         cloudJob.Commit();
 
                         {
@@ -722,7 +722,7 @@
                             CloudTask taskToAdd = new CloudTask(taskId, "ping 127.0.0.1 -n 60"); //Task which runs for 60s
 
                             //Add the task
-                            this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                            testOutputHelper.WriteLine("Adding task: {0}", taskId);
                             batchCli.JobOperations.AddTask(jobId, taskToAdd);
 
                             //Wait for the task to go to running state
@@ -741,7 +741,7 @@
                                 new ODATAMonitorControl {DelayBetweenDataFetch = TimeSpan.FromSeconds(5)});
 
                             //Terminate the running task
-                            this.testOutputHelper.WriteLine("Terminating task {0}", taskId);
+                            testOutputHelper.WriteLine("Terminating task {0}", taskId);
                             CloudTask runningTask = batchCli.JobOperations.GetTask(jobId, taskId);
                             runningTask.Terminate();
 
@@ -753,7 +753,7 @@
                             runningTask.Refresh();
 
                             //Delete the task
-                            this.testOutputHelper.WriteLine("Deleting task {0}", taskId);
+                            testOutputHelper.WriteLine("Deleting task {0}", taskId);
                             runningTask.Delete();
 
                             List<CloudTask> taskListAfterDelete = batchCli.JobOperations.ListTasks(jobId).ToList();
@@ -767,7 +767,7 @@
                             CloudTask taskToAdd = new CloudTask(taskId, "ping 127.0.0.1 -n 60"); //Task which runs for 60s
 
                             //Add the task
-                            this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                            testOutputHelper.WriteLine("Adding task: {0}", taskId);
                             batchCli.JobOperations.AddTask(jobId, taskToAdd);
 
                             //Wait for the task to go to running state
@@ -787,7 +787,7 @@
                                 new ODATAMonitorControl { DelayBetweenDataFetch = TimeSpan.FromSeconds(5) });
                             
                             //Terminate the running task
-                            this.testOutputHelper.WriteLine("Terminating task {0}", taskId);
+                            testOutputHelper.WriteLine("Terminating task {0}", taskId);
                             CloudTask runningTask = batchCli.JobOperations.GetTask(jobId, taskId);
                             batchCli.JobOperations.TerminateTask(jobId, taskId);
 
@@ -799,7 +799,7 @@
                             runningTask.Refresh();
 
                             //Delete the task
-                            this.testOutputHelper.WriteLine("Deleting task {0}", taskId);
+                            testOutputHelper.WriteLine("Deleting task {0}", taskId);
                             runningTask.Delete();
 
                             List<CloudTask> taskListAfterDelete = batchCli.JobOperations.ListTasks(jobId).ToList();
@@ -832,8 +832,8 @@
                     {
                         //Create the job
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        cloudJob.PoolInformation = new PoolInformation() { PoolId = this.poolFixture.PoolId };
-                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        cloudJob.PoolInformation = new PoolInformation() { PoolId = poolFixture.PoolId };
+                        testOutputHelper.WriteLine("Creating job: {0}", jobId);
                         cloudJob.Commit();
                         
                         //Create a task
@@ -841,7 +841,7 @@
                         CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"ping 127.0.0.1 -n 20 > nul && exit /b 3\"");
 
                         //Add the task
-                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        testOutputHelper.WriteLine("Adding task: {0}", taskId);
                         batchCli.JobOperations.AddTask(jobId, taskToAdd);
 
                         CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
@@ -886,7 +886,7 @@
                     try
                     {
                         //Create the job
-                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         cloudJob.OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction;
 
                         cloudJob.UsesTaskDependencies = true;
@@ -897,7 +897,7 @@
                         CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"ping 127.0.0.1 \"");
                         
                         //Add the task
-                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        testOutputHelper.WriteLine("Adding task: {0}", taskId);
                         taskToAdd.ExitConditions = new ExitConditions { Default = new ExitOptions {JobAction = JobAction.Terminate, DependencyAction = DependencyAction.Satisfy} };
                         batchCli.JobOperations.AddTask(jobId, taskToAdd);
 
@@ -933,8 +933,8 @@
                     {
                         //Create the job
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        cloudJob.PoolInformation = new PoolInformation { PoolId = this.poolFixture.PoolId };
-                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        cloudJob.PoolInformation = new PoolInformation { PoolId = poolFixture.PoolId };
+                        testOutputHelper.WriteLine("Creating job: {0}", jobId);
                         cloudJob.Commit();
 
                         //Create a task
@@ -975,7 +975,7 @@
 
                     try
                     {
-                        TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out jobId, out string taskId, false);
+                        TestUtilities.HelloWorld(batchCli, testOutputHelper, poolFixture.Pool, out jobId, out string taskId, false);
 
                         CloudJob job = batchCli.JobOperations.GetJob(jobId);
 
@@ -1008,7 +1008,7 @@
                     const string nonAdminTaskId = "nonAdminTask";
                     try
                     {
-                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId });
+                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = poolFixture.PoolId });
                         job.Commit();
 
                         Func<string, string, CloudTask> createTask = (taskId, userName) =>
@@ -1081,7 +1081,7 @@
                             PoolId = "PoolWhoDoesntExist"
                         };
 
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
+                        testOutputHelper.WriteLine("Initial job schedule commit()");
                         jobSchedule.Commit();
 
                         //Get the job
@@ -1089,7 +1089,7 @@
                         CloudTask myTask = new CloudTask(taskId, "cmd /c echo hello world");
 
                         //Add the task
-                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        testOutputHelper.WriteLine("Adding task: {0}", taskId);
                         boundJob.AddTask(myTask);
 
                         //Get the task and check the constraints
@@ -1104,7 +1104,7 @@
                         const int maxRetryCount = 1;
                         boundTask.Constraints = new TaskConstraints(maxWallClockTime, dataRetentionTime, maxRetryCount);
 
-                        this.testOutputHelper.WriteLine("Updating task constraints");
+                        testOutputHelper.WriteLine("Updating task constraints");
 
                         boundTask.Commit();
 
@@ -1197,7 +1197,7 @@
 
                         //Terminate bound task with if-match header, it should fail
                         Exception e = TestUtilities.AssertThrows<BatchException>(() => boundTask.Terminate(additionalBehaviors: new[] { interceptor }));
-                        TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(e, BatchErrorCodeStrings.ConditionNotMet, this.testOutputHelper);
+                        TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(e, BatchErrorCodeStrings.ConditionNotMet, testOutputHelper);
                     }
                     finally
                     {

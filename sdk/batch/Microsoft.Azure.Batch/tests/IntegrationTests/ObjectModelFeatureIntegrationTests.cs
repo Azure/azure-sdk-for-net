@@ -48,7 +48,7 @@
 
                     try
                     {
-                        CloudJob jobCreate = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob jobCreate = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         jobCreate.Commit();
 
                         CloudJob theJob = batchCli.JobOperations.GetJob(jobId);
@@ -65,14 +65,14 @@
                         int numTasksSeen = 0;
 
                         // test replacement interceptor and forces MaxResults to a low #
-                        Bug957878ReplacementInterceptorBox box0 = new Bug957878ReplacementInterceptorBox(this.testOutputHelper);
+                        Bug957878ReplacementInterceptorBox box0 = new Bug957878ReplacementInterceptorBox(testOutputHelper);
 
                         foreach (CloudTask curTask in theJob.ListTasks(additionalBehaviors: new[] {
                             new Protocol.RequestReplacementInterceptor(box0.Bug957878RequestReplacementInterceptorOpContextFactory)}))
                         {
                             numTasksSeen++;
 
-                            this.testOutputHelper.WriteLine("    Task_Id: " + curTask.Id);
+                            testOutputHelper.WriteLine("    Task_Id: " + curTask.Id);
                         }
 
                         // confirm we'v seen the correct # of tasks during enumeration
@@ -83,8 +83,8 @@
 
                         // >= because the server might hickup too and put in extra empty skiptokens
 
-                        this.testOutputHelper.WriteLine("total tasks created: " + numTasksCreated.ToString());
-                        this.testOutputHelper.WriteLine("total tasks enumerated: " + numTasksSeen.ToString());
+                        testOutputHelper.WriteLine("total tasks created: " + numTasksCreated.ToString());
+                        testOutputHelper.WriteLine("total tasks enumerated: " + numTasksSeen.ToString());
 
                         Assert.Equal(numTasksCreated, numTasksSeen);
 
@@ -114,7 +114,7 @@
                     string jobId = "Bug1568799Job-" + TestUtilities.GetMyName();
                     try
                     {
-                        CloudJob newJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob newJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         newJob.Commit();
 
                         // now we have at least one JS (and pool).  double-enumerate them
@@ -152,7 +152,7 @@
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
                     // pools tested in Bug1770942ExposeBatchRequestProperties
-                    this.testOutputHelper.WriteLine("job schedule tests");
+                    testOutputHelper.WriteLine("job schedule tests");
 
                     // create a bunch of job schedules
                     {
@@ -185,7 +185,7 @@
                                 CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
                                 PoolInformation poolInformation = new PoolInformation();
 
-                                poolInformation.PoolId = this.poolFixture.PoolId;
+                                poolInformation.PoolId = poolFixture.PoolId;
 
                                 unboundJobSchedule.JobSpecification = new JobSpecification(poolInformation);
 
@@ -255,7 +255,7 @@
                         }
                     }
 
-                    this.testOutputHelper.WriteLine("job tests");
+                    testOutputHelper.WriteLine("job tests");
 
                     // jobs
                     string jobId = "Bug1770942Job-" + TestUtilities.GetMyName();
@@ -265,7 +265,7 @@
                         {
                             // create a job
                             CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                            unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                            unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
                             unboundJob.Commit();
                             CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
 
@@ -313,7 +313,7 @@
                             Assert.NotEqual(listAllProps[0].CreationTime, lowDetailLevel.CreationTime);
                         }
 
-                        this.testOutputHelper.WriteLine("task tests");
+                        testOutputHelper.WriteLine("task tests");
 
                         // tasks
                         {
@@ -394,7 +394,7 @@
                         }
 
                         // task files
-                        this.testOutputHelper.WriteLine("task file tests");
+                        testOutputHelper.WriteLine("task file tests");
 
                         {
                             List<CloudTask> tasks = new List<CloudTask>(batchCli.JobOperations.GetJob(jobId).ListTasks());
@@ -486,11 +486,11 @@
                         CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
                         jobSchedule.JobSpecification = new JobSpecification(new PoolInformation()
                             {
-                                PoolId = this.poolFixture.PoolId
+                                PoolId = poolFixture.PoolId
                             });
                         jobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(1) };
 
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
+                        testOutputHelper.WriteLine("Initial job schedule commit()");
                         jobSchedule.Commit();
 
                         //Get the bound job schedule
@@ -503,7 +503,7 @@
                         CloudTask myTask = new CloudTask(taskId, "cmd /c echo hello world");
 
                         //Add the task
-                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        testOutputHelper.WriteLine("Adding task: {0}", taskId);
                         boundJob.AddTask(myTask);
 
                         //Get the task
@@ -515,44 +515,44 @@
                         stateMonitor.WaitAll(new List<CloudTask> { boundTask }, TaskState.Completed, TimeSpan.FromMinutes(2));
                         
                         //Try to refresh the job schedule multiple times
-                        this.testOutputHelper.WriteLine("Refreshing job schedule");
+                        testOutputHelper.WriteLine("Refreshing job schedule");
                         boundJobSchedule.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing job schedule");
+                        testOutputHelper.WriteLine("Refreshing job schedule");
                         boundJobSchedule.Refresh();
 
                         //Try to refresh the job multiple times
-                        this.testOutputHelper.WriteLine("Refreshing job");
+                        testOutputHelper.WriteLine("Refreshing job");
                         boundJob.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing job");
+                        testOutputHelper.WriteLine("Refreshing job");
                         boundJob.Refresh();
 
                         //Try to refresh the task multiple times
-                        this.testOutputHelper.WriteLine("Refreshing task");
+                        testOutputHelper.WriteLine("Refreshing task");
                         boundTask.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing task");
+                        testOutputHelper.WriteLine("Refreshing task");
                         boundTask.Refresh();
 
                         //Try to refresh a file multiple times
                         NodeFile nodeFile = boundTask.GetNodeFile("stdout.txt");
 
-                        this.testOutputHelper.WriteLine("Refreshing task file");
+                        testOutputHelper.WriteLine("Refreshing task file");
                         nodeFile.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing task file");
+                        testOutputHelper.WriteLine("Refreshing task file");
                         nodeFile.Refresh();
 
                         //Try to refresh the pool multiple times
-                        CloudPool boundPool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                        CloudPool boundPool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
-                        this.testOutputHelper.WriteLine("Refreshing pool");
+                        testOutputHelper.WriteLine("Refreshing pool");
                         boundPool.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing pool");
+                        testOutputHelper.WriteLine("Refreshing pool");
                         boundPool.Refresh();
                         //Try to refresh a compute node multiple times
                         ComputeNode computeNode = boundPool.ListComputeNodes().First();
 
-                        this.testOutputHelper.WriteLine("Refreshing compute node");
+                        testOutputHelper.WriteLine("Refreshing compute node");
                         computeNode.Refresh();
-                        this.testOutputHelper.WriteLine("Refreshing compute node");
+                        testOutputHelper.WriteLine("Refreshing compute node");
                         computeNode.Refresh();
 
                         //Try to refresh a node file multiple times
@@ -597,7 +597,7 @@
                     {
                         CloudJobSchedule unboundJobSchedule = jobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
                         PoolInformation poolInformation = new PoolInformation();
-                        poolInformation.PoolId = this.poolFixture.PoolId;
+                        poolInformation.PoolId = poolFixture.PoolId;
                         unboundJobSchedule.JobSpecification = new JobSpecification(poolInformation);
                         unboundJobSchedule.Schedule = new Schedule() { DoNotRunAfter = DateTime.UtcNow.AddDays(1) };
                         unboundJobSchedule.Commit();
@@ -641,7 +641,7 @@
                         // 2015.jul: in GA there is no SetOpCon interceptor and YieldInjector was removed and "the func" exposed
                         //batchClient.CustomBehaviors.Add(new SetOperationContext(Bug1959324SetOperationContext));  // this does not exist in GA
                         //batchClient.CustomBehaviors.Add(new YieldInjectionInterceptor(Bug1959324YieldInjectionInterceptor));  // this is now done by func replacement. see below
-                        batchCli.CustomBehaviors.Add(new Protocol.RequestInterceptor((o) => { interceptorCount++; this.testOutputHelper.WriteLine("Test: random interceptor"); }));
+                        batchCli.CustomBehaviors.Add(new Protocol.RequestInterceptor((o) => { interceptorCount++; testOutputHelper.WriteLine("Test: random interceptor"); }));
 
                         string taskIdHello;
 
@@ -649,16 +649,16 @@
                         {
                             int preSetupCount = interceptorCount;
 
-                            CloudPool sharedPool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                            CloudPool sharedPool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
-                            TestUtilities.HelloWorld(batchCli, this.testOutputHelper, sharedPool, out bug1959324JobId, out taskIdHello, deleteJob: false);
+                            TestUtilities.HelloWorld(batchCli, testOutputHelper, sharedPool, out bug1959324JobId, out taskIdHello, deleteJob: false);
 
                             // confirm interceptor was executed
                             Assert.True(interceptorCount > preSetupCount);
                         }
 
                         // test jobOps.ListNodeFiles
-                        this.testOutputHelper.WriteLine("ListNodeFiles");
+                        testOutputHelper.WriteLine("ListNodeFiles");
                         int preListNodeFilesCount = interceptorCount;
                         var files = batchCli.JobOperations.ListNodeFiles(bug1959324JobId, taskIdHello, recursive: true).ToList();
 
@@ -666,7 +666,7 @@
                         Assert.True(interceptorCount > preListNodeFilesCount);
 
                         // test jobOps.ListJobs
-                        this.testOutputHelper.WriteLine("ListJobs");
+                        testOutputHelper.WriteLine("ListJobs");
                         int preListJobsCount = interceptorCount;
                         var jobs = batchCli.JobOperations.ListJobs().ToList();
 
@@ -674,21 +674,21 @@
                         Assert.True(interceptorCount > preListJobsCount);
 
                         // test poolOps.ListPools
-                        this.testOutputHelper.WriteLine("ListPools");
+                        testOutputHelper.WriteLine("ListPools");
                         int preListPoolsCount = interceptorCount;
                         var pools = batchCli.PoolOperations.ListPools().ToList();
 
                         // assert the interceptor was honored in the list... lists can get skiptokens so there migth be more than one call
                         Assert.True(interceptorCount > preListPoolsCount);
 
-                        this.testOutputHelper.WriteLine("GetJob Yield Injector test");
+                        testOutputHelper.WriteLine("GetJob Yield Injector test");
 
                         // this yield injector will mung the func to make a get job call
                         // with real arguments.  the call made in the test has arguments that
                         // would fail/throw.
                         Protocol.BatchRequestModificationInterceptHandler yieldInjectionInterceptor = baseRequest =>
                         {
-                            this.testOutputHelper.WriteLine("Yield Injector!");
+                            testOutputHelper.WriteLine("Yield Injector!");
 
                             var request =
                                 (JobGetBatchRequest)baseRequest;
@@ -697,14 +697,14 @@
                             request.ServiceRequestFunc = (token) => { return request.RestClient.Job.GetWithHttpMessagesAsync(bug1959324JobId, request.Options, cancellationToken: token); };
 
                             // the func has been replaced with one that will work.. and the caller will get a real job
-                            this.testOutputHelper.WriteLine("Leaving Yield Injector!");
+                            testOutputHelper.WriteLine("Leaving Yield Injector!");
                         };
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(
                                             "test value that can't possibly be found as a job id",
                                             additionalBehaviors: new[] { new Protocol.RequestInterceptor(yieldInjectionInterceptor) });
 
-                        this.testOutputHelper.WriteLine("Done. got job.");
+                        testOutputHelper.WriteLine("Done. got job.");
 
                         // confirm the job has a real id from HelloWorld not the bad one passed in
 
@@ -745,22 +745,21 @@
                             //
                             //Test bound pool properties
                             //
-                            CloudPool pool = poolOperations.GetPool(this.poolFixture.PoolId);
-                            pool.Metadata = new List<MetadataItem>();
-                            pool.Metadata.Add(new MetadataItem("test", "test"));
+                            CloudPool pool = poolOperations.GetPool(poolFixture.PoolId);
+                            pool.Metadata = new List<MetadataItem> { new MetadataItem("test", "test") };
 
                             //Note: We rely on the certificate specific tests to validate certificate references work for us
 
                             pool.Commit();
 
-                            pool = poolOperations.GetPool(this.poolFixture.PoolId);
+                            pool = poolOperations.GetPool(poolFixture.PoolId);
 
                             Assert.Equal(1, pool.Metadata.Count);
 
                             //
                             //Unbound job schedule properties
                             //
-                            this.testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
+                            testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
                             CloudJobSchedule unboundJobSchedule = jobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
 
                             Assert.Null(unboundJobSchedule.Metadata);
@@ -818,7 +817,7 @@
 
                             unboundJobSchedule.Commit();
 
-                            this.testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were set correctly on server");
+                            testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were set correctly on server");
                             boundJobSchedule = jobScheduleOperations.GetJobSchedule(jobScheduleId);
 
                             Assert.Equal(1, boundJobSchedule.Metadata.Count);
@@ -840,10 +839,10 @@
                             boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.StartTask.EnvironmentSettings.Add(new EnvironmentSetting("abc", "abc"));
                             boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.StartTask.ResourceFiles.Add(ResourceFile.FromUrl("http://abc", "abc"));
 
-                            this.testOutputHelper.WriteLine("Commiting updated Job Schedule with more IList stuff added");
+                            testOutputHelper.WriteLine("Commiting updated Job Schedule with more IList stuff added");
                             boundJobSchedule.Commit();
 
-                            this.testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were set correctly on server");
+                            testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were set correctly on server");
                             boundJobSchedule = jobScheduleOperations.GetJobSchedule(jobScheduleId);
 
 
@@ -860,10 +859,10 @@
                             boundJobSchedule.JobSpecification.JobManagerTask.ResourceFiles = null;
                             boundJobSchedule.JobSpecification.JobManagerTask.EnvironmentSettings = null;
 
-                            this.testOutputHelper.WriteLine("Commiting updated Job Schedule with some IList stuff removed");
+                            testOutputHelper.WriteLine("Commiting updated Job Schedule with some IList stuff removed");
                             boundJobSchedule.Commit();
 
-                            this.testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were removed correctly on server");
+                            testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were removed correctly on server");
                             boundJobSchedule = jobScheduleOperations.GetJobSchedule(jobScheduleId);
 
                             Assert.Null(boundJobSchedule.Metadata);
@@ -879,7 +878,7 @@
 
                             boundJobSchedule.Commit();
 
-                            this.testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were removed correctly on server");
+                            testOutputHelper.WriteLine("Getting job schedule to ensure that IList properties were removed correctly on server");
                             boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(jobScheduleOperations, jobScheduleId);
 
                             Assert.Null(boundJobSchedule.Metadata);
@@ -918,18 +917,15 @@
                             //
                             // Get the job and add a task
                             //
-                            const string taskId = "test";
+                            CloudTask unboundTask = new CloudTask("test", "cmd /c dir");
+                            unboundTask.EnvironmentSettings = new List<EnvironmentSetting> { new EnvironmentSetting("foo", "baz") };
+
+                            unboundTask.ResourceFiles = new List<ResourceFile> { ResourceFile.FromUrl("http://foo", "baz") };
 
                             CloudJob job = jobOperations.GetJob(boundJobSchedule.ExecutionInformation.RecentJob.Id);
-
-                            CloudTask unboundTask = new CloudTask("test", "cmd /c dir");
-                            unboundTask.EnvironmentSettings = new List<EnvironmentSetting>();
-                            unboundTask.EnvironmentSettings.Add(new EnvironmentSetting("foo", "baz"));
-
-                            unboundTask.ResourceFiles = new List<ResourceFile>();
-                            unboundTask.ResourceFiles.Add(ResourceFile.FromUrl("http://foo", "baz"));
-
                             job.AddTask(unboundTask);
+
+                            const string taskId = "test";
 
                             //Get the bound task
                             CloudTask boundTask = job.GetTask(taskId);
@@ -1015,7 +1011,7 @@
                     schedule.DoNotRunUntil = DateTime.Now.AddYears(1);
                     unboundJobSchedule.Schedule = schedule;
 
-                    this.testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
+                    testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
                     unboundJobSchedule.Commit();
 
                     try
@@ -1029,7 +1025,7 @@
                         Assert.Equal(originalDisplayName, boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.DisplayName);
 
                         // Verify that job schedule display name cannot be set on bound, but sub property display names can
-                        this.testOutputHelper.WriteLine("Attempting to set display names on job schedule, job specification, pool specification, and job manager task");
+                        testOutputHelper.WriteLine("Attempting to set display names on job schedule, job specification, pool specification, and job manager task");
 
                         TestUtilities.AssertThrows<InvalidOperationException>(() => boundJobSchedule.DisplayName = updatedDisplayName);
 
@@ -1043,7 +1039,7 @@
                     }
                     finally
                     {
-                        this.testOutputHelper.WriteLine("Deleting job schedule {0}", jobScheduleId);
+                        testOutputHelper.WriteLine("Deleting job schedule {0}", jobScheduleId);
                         batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
                     }
 
@@ -1055,9 +1051,9 @@
 
                     Assert.Equal(originalDisplayName, unboundJob.DisplayName);
 
-                    unboundJob.PoolInformation = new PoolInformation() { PoolId = this.poolFixture.PoolId };
+                    unboundJob.PoolInformation = new PoolInformation() { PoolId = poolFixture.PoolId };
 
-                    this.testOutputHelper.WriteLine("Creating job {0}", jobId);
+                    testOutputHelper.WriteLine("Creating job {0}", jobId);
                     unboundJob.Commit();
 
                     try
@@ -1068,7 +1064,7 @@
                         Assert.Equal(originalDisplayName, boundJob.DisplayName);
 
                         // Verify that display name can not be set when bound
-                        this.testOutputHelper.WriteLine("Attempting to set display name on job");
+                        testOutputHelper.WriteLine("Attempting to set display name on job");
                         TestUtilities.AssertThrows<InvalidOperationException>(() => boundJob.DisplayName = updatedDisplayName);
 
                         // Create an unbound task and verify that display name can be set
@@ -1078,7 +1074,7 @@
 
                         Assert.Equal(originalDisplayName, unboundTask.DisplayName);
 
-                        this.testOutputHelper.WriteLine("Adding task {0} to job {1}", taskId, jobId);
+                        testOutputHelper.WriteLine("Adding task {0} to job {1}", taskId, jobId);
                         boundJob.AddTask(unboundTask);
 
                         try
@@ -1089,18 +1085,18 @@
                             Assert.Equal(originalDisplayName, boundTask.DisplayName);
 
                             // Verify that display name can not be set when bound
-                            this.testOutputHelper.WriteLine("Attempting to set display name on task");
+                            testOutputHelper.WriteLine("Attempting to set display name on task");
                             TestUtilities.AssertThrows<InvalidOperationException>(() => boundTask.DisplayName = updatedDisplayName);
                         }
                         finally
                         {
-                            this.testOutputHelper.WriteLine("Deleting task {0}", taskId);
+                            testOutputHelper.WriteLine("Deleting task {0}", taskId);
                             batchCli.JobOperations.DeleteTask(jobId, taskId);
                         }
                     }
                     finally
                     {
-                        this.testOutputHelper.WriteLine("Deleting job {0}", jobId);
+                        testOutputHelper.WriteLine("Deleting job {0}", jobId);
                         batchCli.JobOperations.DeleteJob(jobId);
                     }
 
@@ -1111,7 +1107,7 @@
                     unboundPool.DisplayName = originalDisplayName;
 
                     Assert.Equal(originalDisplayName, unboundPool.DisplayName);
-                    this.testOutputHelper.WriteLine("Creating pool {0}", poolId);
+                    testOutputHelper.WriteLine("Creating pool {0}", poolId);
                     unboundPool.Commit();
 
                     try
@@ -1122,13 +1118,13 @@
                         Assert.Equal(originalDisplayName, boundPool.DisplayName);
 
                         // Verify that display name can not be set when bound
-                        this.testOutputHelper.WriteLine("Attempting to set display name on pool");
+                        testOutputHelper.WriteLine("Attempting to set display name on pool");
 
                         TestUtilities.AssertThrows<InvalidOperationException>(() => boundPool.DisplayName = updatedDisplayName);
                     }
                     finally
                     {
-                        this.testOutputHelper.WriteLine("Deleting pool {0}", poolId);
+                        testOutputHelper.WriteLine("Deleting pool {0}", poolId);
                         batchCli.PoolOperations.DeletePool(poolId);
                     }
                 }
@@ -1170,9 +1166,9 @@
             internal void Bug957878RequestReplacementInterceptorOpContextFactory(ref Protocol.IBatchRequest batchRequest)
             {
                 // been called again
-                this.NumTimesCalled++;
+                NumTimesCalled++;
 
-                this.testOutputHelper.WriteLine("     _movenextAsync_call_to_server_");
+                testOutputHelper.WriteLine("     _movenextAsync_call_to_server_");
 
                 if (batchRequest is TaskListBatchRequest)
                 {
@@ -1240,7 +1236,7 @@
                                 PoolFixture.VMSize,
                                 new CloudServiceConfiguration(PoolFixture.OSFamily),
                                 targetDedicatedComputeNodes: 0);
-                            Bug1770942RetryPolicy retryPolicy = new Bug1770942RetryPolicy(this.testOutputHelper);
+                            Bug1770942RetryPolicy retryPolicy = new Bug1770942RetryPolicy(testOutputHelper);
 
                             // confirm there is a default retry policy
                             // EnforceThereIsOnlyOneRetry(unboundPool.CustomBehaviors);
@@ -1267,11 +1263,11 @@
                                 unboundPool.Commit();
                             }
 
-                            this.testOutputHelper.WriteLine("All pools: ");
+                            testOutputHelper.WriteLine("All pools: ");
 
                             var allPools = batchCli.PoolOperations.ListPools();
 
-                            TestUtilities.DisplayPools(this.testOutputHelper, allPools);
+                            TestUtilities.DisplayPools(testOutputHelper, allPools);
 
                             // get odd list, also test select
                             var oddIEnum =
@@ -1282,9 +1278,9 @@
                                 });
                             List<CloudPool> oddList = new List<CloudPool>(oddIEnum);
 
-                            this.testOutputHelper.WriteLine("Odd Pools:");
+                            testOutputHelper.WriteLine("Odd Pools:");
 
-                            TestUtilities.DisplayPools(this.testOutputHelper, oddIEnum);
+                            TestUtilities.DisplayPools(testOutputHelper, oddIEnum);
 
                             // get even list, also test select
                             var evenIEnum =
@@ -1295,9 +1291,9 @@
                                 });
                             List<CloudPool> evenList = new List<CloudPool>(evenIEnum);
 
-                            this.testOutputHelper.WriteLine("Even Pools:");
+                            testOutputHelper.WriteLine("Even Pools:");
 
-                            TestUtilities.DisplayPools(this.testOutputHelper, evenIEnum);
+                            TestUtilities.DisplayPools(testOutputHelper, evenIEnum);
 
                             Assert.Equal(numPoolsToCreate, (oddList.Count + evenList.Count));
 
@@ -1407,10 +1403,10 @@
                 TimeSpan retryInterval = TimeSpan.Zero;
 
                 // count up retries to prove test works
-                this.NumTimesCalled++;
+                NumTimesCalled++;
 
-                this.testOutputHelper.WriteLine("Bug1770942RetryPolicy exception:");
-                this.testOutputHelper.WriteLine(exception.ToString());
+                testOutputHelper.WriteLine("Bug1770942RetryPolicy exception:");
+                testOutputHelper.WriteLine(exception.ToString());
 
                 RetryDecision result;
                 if (operationContext.RequestResults.Count < 3)

@@ -22,13 +22,11 @@ namespace BatchClientIntegrationTests
     [Collection("SharedLinuxPoolCollection")]
     public class CloudTaskLinuxIntegrationTests
     {
-        private readonly ITestOutputHelper testOutputHelper;
         private readonly PoolFixture poolFixture;
         private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(3);
 
-        public CloudTaskLinuxIntegrationTests(ITestOutputHelper testOutputHelper, IaasLinuxPoolFixture poolFixture)
+        public CloudTaskLinuxIntegrationTests(IaasLinuxPoolFixture poolFixture)
         {
-            this.testOutputHelper = testOutputHelper;
             this.poolFixture = poolFixture;
         }
 
@@ -53,7 +51,7 @@ namespace BatchClientIntegrationTests
                         containerClient.CreateIfNotExists();
                         string sasUri = BlobUtilities.GetWriteableSasUri(containerClient, storageAccount);
 
-                        CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob createJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         createJob.Commit();
 
                         const string blobPrefix = "foo/bar";
@@ -110,7 +108,7 @@ namespace BatchClientIntegrationTests
                     {
                         var job = client.JobOperations.CreateJob(jobId, new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         });
                         job.Commit();
 

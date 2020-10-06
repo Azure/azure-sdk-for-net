@@ -54,7 +54,7 @@
                         jobSchedule.Schedule = new Schedule() { RecurrenceInterval = firstRecurrenceInterval };
                         PoolInformation poolInfo = new PoolInformation()
                             {
-                                PoolId = this.poolFixture.PoolId
+                                PoolId = poolFixture.PoolId
                             };
 
                         jobSchedule.JobSpecification = new JobSpecification(poolInfo)
@@ -65,14 +65,14 @@
 
                         jobSchedule.Metadata = metadata;
 
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
+                        testOutputHelper.WriteLine("Initial job schedule commit()");
                         jobSchedule.Commit();
 
                         //Get the bound job schedule
                         CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
 
                         //Ensure the job schedule is structured as expected
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
+                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
 
                         //Update the bound job schedule schedule
                         TimeSpan recurrenceInterval = TimeSpan.FromMinutes(5);
@@ -81,38 +81,38 @@
                             RecurrenceInterval = recurrenceInterval
                         };
 
-                        this.testOutputHelper.WriteLine("Updating JobSchedule Schedule");
+                        testOutputHelper.WriteLine("Updating JobSchedule Schedule");
                         boundJobSchedule.Commit();
 
                         //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
 
                         //Update the bound job schedule priority
                         const int newJobSchedulePriority = 1;
                         boundJobSchedule.JobSpecification.Priority = newJobSchedulePriority;
 
-                        this.testOutputHelper.WriteLine("Updating JobSpecification.Priority");
+                        testOutputHelper.WriteLine("Updating JobSpecification.Priority");
                         boundJobSchedule.Commit();
 
                         //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
 
                         //Update the bound job schedule job manager commandline
                         const string newJobManagerCommandLine = "ping 127.0.0.1 -n 150";
                         boundJobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
 
-                        this.testOutputHelper.WriteLine("Updating JobSpecification.JobManagerTask.CommandLine");
+                        testOutputHelper.WriteLine("Updating JobSpecification.JobManagerTask.CommandLine");
                         boundJobSchedule.Commit();
 
                         //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
+                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
 
                         //Update the bound job schedule PoolInformation
                         const string newPoolId = "TestPool";
 
                         boundJobSchedule.JobSpecification.PoolInformation = new PoolInformation() { PoolId = newPoolId };
 
-                        this.testOutputHelper.WriteLine("Updating PoolInformation");
+                        testOutputHelper.WriteLine("Updating PoolInformation");
                         boundJobSchedule.Commit();
 
                         //Ensure the job schedule is correct after commit
@@ -130,7 +130,7 @@
                         IList<MetadataItem> newMetadata = new List<MetadataItem> { new MetadataItem("Object", "Model") };
                         boundJobSchedule.Metadata = newMetadata;
 
-                        this.testOutputHelper.WriteLine("Updating Metadata");
+                        testOutputHelper.WriteLine("Updating Metadata");
                         boundJobSchedule.Commit();
 
                         //Ensure the job schedule is correct after commit
@@ -323,7 +323,7 @@
 
                         CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
                         {
-                            TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
+                            TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
 
                             List<MetadataItem> mdi = new List<MetadataItem>(jobSchedule.Metadata);
 
@@ -357,7 +357,7 @@
 
                             jobSchedule.Refresh();
 
-                            TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
+                            TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
                         }
                     }
                     finally
@@ -417,7 +417,7 @@
                         CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
 
                         // confirm that the original value(s) are set
-                        TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
+                        TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
 
                         Assert.Equal(unboundDNRU, jobSchedule.Schedule.DoNotRunUntil);
 
@@ -432,7 +432,7 @@
                         jobSchedule.Refresh();
 
                         // confirm that the new value(s) are set
-                        TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
+                        TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
 
                         Assert.Equal(boundDNRU, jobSchedule.Schedule.DoNotRunUntil);
                     }

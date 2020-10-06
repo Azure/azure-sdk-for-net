@@ -57,7 +57,7 @@
                     {
                         CloudJob quickJob = batchCli.JobOperations.CreateJob();
                         quickJob.Id = jobId;
-                        quickJob.PoolInformation = new PoolInformation() { PoolId = this.poolFixture.PoolId };
+                        quickJob.PoolInformation = new PoolInformation() { PoolId = poolFixture.PoolId };
                         quickJob.Commit();
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
 
@@ -66,9 +66,7 @@
                         // first we have local files that we want pushed to the compute node before the commandline is invoked
                         FileToStage wordsDotText = new FileToStage(Resources.LocalWordsDotText, storageCreds);                // use "default" mapping to base name of local file
 
-                        myTask.FilesToStage = new List<IFileStagingProvider>();
-
-                        myTask.FilesToStage.Add(wordsDotText);
+                        myTask.FilesToStage = new List<IFileStagingProvider> { wordsDotText };
 
                         // add the task to the job
                         var artifacts = boundJob.AddTask(myTask);
@@ -81,7 +79,7 @@
 
                         // test to ensure the task is read only
                         TestUtilities.AssertThrows<InvalidOperationException>(() => myTask.FilesToStage = new List<IFileStagingProvider>());
-                        
+
                         // Open the new Job as bound.
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(boundJob.ExecutionInformation.PoolId);
 
@@ -100,19 +98,19 @@
                             // spam/logging interceptor
                             new RequestInterceptor((x) =>
                             {
-                                this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+                                testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
                                 try
                                 {
                                     // print out the compute node states... we are actually waiting on the compute nodes
                                     List<ComputeNode> allComputeNodes = boundPool.ListComputeNodes().ToList();
 
-                                    this.testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
+                                    testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
 
                                     allComputeNodes.ForEach(
                                         (icn) =>
                                         {
-                                            this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
+                                            testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
                                         });
                                 }
                                 catch (Exception ex)
@@ -122,33 +120,33 @@
                                 }
                             })
                         });
-                        
+
                         List<CloudTask> tasks = boundJob.ListTasks(null).ToList();
                         CloudTask myCompletedTask = tasks[0];
 
                         foreach (CloudTask curTask in tasks)
                         {
-                            this.testOutputHelper.WriteLine("Task Id: " + curTask.Id + ", state: " + curTask.State);
+                            testOutputHelper.WriteLine("Task Id: " + curTask.Id + ", state: " + curTask.State);
                         }
 
                         boundPool.Refresh();
 
-                        this.testOutputHelper.WriteLine("Pool Id: " + boundPool.Id + ", state: " + boundPool.State);
+                        testOutputHelper.WriteLine("Pool Id: " + boundPool.Id + ", state: " + boundPool.State);
 
                         string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                         string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                        this.testOutputHelper.WriteLine("StdOut: ");
-                        this.testOutputHelper.WriteLine(stdOut);
+                        testOutputHelper.WriteLine("StdOut: ");
+                        testOutputHelper.WriteLine(stdOut);
 
-                        this.testOutputHelper.WriteLine("StdErr: ");
-                        this.testOutputHelper.WriteLine(stdErr);
+                        testOutputHelper.WriteLine("StdErr: ");
+                        testOutputHelper.WriteLine(stdErr);
 
-                        this.testOutputHelper.WriteLine("Task Files:");
+                        testOutputHelper.WriteLine("Task Files:");
 
                         foreach (NodeFile curFile in myCompletedTask.ListNodeFiles(recursive: true))
                         {
-                            this.testOutputHelper.WriteLine("    FilePath: " + curFile.Path);
+                            testOutputHelper.WriteLine("    FilePath: " + curFile.Path);
                         }
 
                         // confirm the files are there
@@ -184,7 +182,7 @@
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    TestUtilities.HelloWorld(batchCli, this.testOutputHelper, this.poolFixture.Pool, out string job, out string task);
+                    TestUtilities.HelloWorld(batchCli, testOutputHelper, poolFixture.Pool, out string job, out string task);
                 }
             };
 
@@ -233,7 +231,7 @@
                     PoolOperations poolOperations = batchCli.PoolOperations;
                     try
                     {
-                        this.testOutputHelper.WriteLine("Listing OS Versions:");
+                        testOutputHelper.WriteLine("Listing OS Versions:");
 
                         // create pool tests
 
@@ -295,15 +293,15 @@
                     //Since we cannot really validate that the stats returned by the service are correct, the best we can do is make sure we get some
 
                     //Dump a few properties from each stats bag to make sure they are populated
-                    this.testOutputHelper.WriteLine("JobScheduleStatistics.StartTime: {0}", jobStatistics.StartTime);
-                    this.testOutputHelper.WriteLine("JobScheduleStatistics.LastUpdateTime: {0}", jobStatistics.LastUpdateTime);
-                    this.testOutputHelper.WriteLine("JobScheduleStatistics.NumSucceededTasks: {0}", jobStatistics.SucceededTaskCount);
-                    this.testOutputHelper.WriteLine("JobScheduleStatistics.UserCpuTime: {0}", jobStatistics.UserCpuTime);
+                    testOutputHelper.WriteLine("JobScheduleStatistics.StartTime: {0}", jobStatistics.StartTime);
+                    testOutputHelper.WriteLine("JobScheduleStatistics.LastUpdateTime: {0}", jobStatistics.LastUpdateTime);
+                    testOutputHelper.WriteLine("JobScheduleStatistics.NumSucceededTasks: {0}", jobStatistics.SucceededTaskCount);
+                    testOutputHelper.WriteLine("JobScheduleStatistics.UserCpuTime: {0}", jobStatistics.UserCpuTime);
 
-                    this.testOutputHelper.WriteLine("PoolStatistics.StartTime: {0}", poolStatistics.StartTime);
-                    this.testOutputHelper.WriteLine("PoolStatistics.LastUpdateTime: {0}", poolStatistics.LastUpdateTime);
-                    this.testOutputHelper.WriteLine("PoolStatistics.ResourceStatistics.AvgMemory: {0}", poolStatistics.ResourceStatistics.AverageMemoryGiB);
-                    this.testOutputHelper.WriteLine("PoolStatistics.UsageStatistics.DedicatedCoreTime: {0}", poolStatistics.UsageStatistics.DedicatedCoreTime);
+                    testOutputHelper.WriteLine("PoolStatistics.StartTime: {0}", poolStatistics.StartTime);
+                    testOutputHelper.WriteLine("PoolStatistics.LastUpdateTime: {0}", poolStatistics.LastUpdateTime);
+                    testOutputHelper.WriteLine("PoolStatistics.ResourceStatistics.AvgMemory: {0}", poolStatistics.ResourceStatistics.AverageMemoryGiB);
+                    testOutputHelper.WriteLine("PoolStatistics.UsageStatistics.DedicatedCoreTime: {0}", poolStatistics.UsageStatistics.DedicatedCoreTime);
                 }
             };
 

@@ -77,7 +77,7 @@
                         Protocol.RequestInterceptor increaseTimeoutInterceptor =
                             new Protocol.RequestInterceptor((x) =>
                             {
-                                this.testOutputHelper.WriteLine("TestOMJobSpecAndRelease: setting request timeout.  Request type: " + x.GetType().ToString() + ", ClientRequestID: " + x.Options.ClientRequestId);
+                                testOutputHelper.WriteLine("TestOMJobSpecAndRelease: setting request timeout.  Request type: " + x.GetType().ToString() + ", ClientRequestID: " + x.Options.ClientRequestId);
                                 var timeoutOptions = x.Options as Protocol.Models.ITimeoutOptions;
                                 timeoutOptions.Timeout = 5 * 60;
                             });
@@ -97,7 +97,7 @@
                         {
                             CloudJobSchedule unboundJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
                             unboundJobSchedule.JobSpecification = new JobSpecification(new PoolInformation());
-                            unboundJobSchedule.JobSpecification.PoolInformation.PoolId = this.poolFixture.PoolId;
+                            unboundJobSchedule.JobSpecification.PoolInformation.PoolId = poolFixture.PoolId;
                             unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(3) };
 
                             // add the jobPrep task to the job schedule
@@ -228,7 +228,7 @@
                             Assert.Equal(JobPrepWaitForSuccessUpdate, updatedJobSchedule.JobSpecification.JobPreparationTask.WaitForSuccess);
                         }
 
-                        TestGetPrepReleaseStatusCalls(client, updatedJobSchedule, this.poolFixture.PoolId, resFiles);
+                        TestGetPrepReleaseStatusCalls(client, updatedJobSchedule, poolFixture.PoolId, resFiles);
                     }
                     finally
                     {
@@ -261,7 +261,7 @@
                         {
                             CloudJob unboundJob = client.JobOperations.CreateJob(jobId, null);
                             unboundJob.PoolInformation = new PoolInformation();
-                            unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                            unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
 
                             // add the jobPrep task to the job
                             {
@@ -283,7 +283,7 @@
                         }
 
                         // the victim nodes.  pool should have size 1.
-                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
                         Assert.Single(computeNodes);
                         // now we have a job with zero tasks... lets call get-status methods
@@ -322,7 +322,7 @@
                     {
                         // create job with prep that triggers prep scheduling error
                         {
-                            CloudJob unboundJob = client.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId});
+                            CloudJob unboundJob = client.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = poolFixture.PoolId});
                             // add the jobPrep task to the job
                             {
                                 JobPreparationTask prep = new JobPreparationTask("cmd /c JobPrep Task");
@@ -345,7 +345,7 @@
                         client.JobOperations.AddTask(boundJob.Id, new CloudTask("ForceJobPrep", "cmd /c echo TestOMJobPrepSchedulingError"));
 
                         // the victim compute node.  pool should have size 1.
-                        List<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                        List<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
                         Assert.Single(nodes);
 
@@ -374,10 +374,10 @@
                                     Assert.Equal(TaskExecutionResult.Failure, jpStatus.JobPreparationTaskExecutionInformation.Result);
 
                                     // spew the failure
-                                    this.OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
+                                    OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
                                 }
 
-                                this.testOutputHelper.WriteLine("Job Prep is running (waiting for blob dl to timeout)");
+                                testOutputHelper.WriteLine("Job Prep is running (waiting for blob dl to timeout)");
                             }
                         }
                     }
@@ -406,7 +406,7 @@
                     {
                         // create job schedule with prep that succeeds and release the triggers scheduling error
                         {
-                            PoolInformation poolInfo = new PoolInformation() {PoolId = this.poolFixture.PoolId};
+                            PoolInformation poolInfo = new PoolInformation() {PoolId = poolFixture.PoolId};
                             CloudJob unboundJob = client.JobOperations.CreateJob(jobId, poolInfo);
 
                             // add the jobPrep task to the job
@@ -450,18 +450,18 @@
                                     // spam/logging interceptor
                                     new Protocol.RequestInterceptor((x) =>
                                         {
-                                            this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+                                            testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
                                             // print out the compute node states... we are actually waiting on the compute nodes
-                                            List<ComputeNode> allComputeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                                            List<ComputeNode> allComputeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
-                                            this.testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
+                                            testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
 
                                             allComputeNodes.ForEach((icn) =>
                                                 {
-                                                    this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
+                                                    testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
                                                 });
-                                            this.testOutputHelper.WriteLine("");
+                                            testOutputHelper.WriteLine("");
                                         })
                                 }
                             );
@@ -470,7 +470,7 @@
                         client.JobOperations.TerminateJob(jobId, "BUG: Server will throw 500 if I don't provide reason");
 
                         // the victim compute node.  pool should have size 1.
-                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
                         Assert.Single(computeNodes);
 
@@ -498,11 +498,11 @@
                                     Assert.Equal(TaskExecutionResult.Failure, prepAndReleaseStatus.JobReleaseTaskExecutionInformation.Result);
 
                                     // spew the failure info
-                                    this.OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
+                                    OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
                                 }
                             }
                             Thread.Sleep(2000);
-                            this.testOutputHelper.WriteLine("Job Release tasks still running (waiting for blob dl to timeout).");
+                            testOutputHelper.WriteLine("Job Release tasks still running (waiting for blob dl to timeout).");
                         }
                     }
                     finally
@@ -550,7 +550,7 @@
 
                 while (keepLooking)
                 {
-                    this.testOutputHelper.WriteLine("Waiting for task to be scheduled.");
+                    testOutputHelper.WriteLine("Waiting for task to be scheduled.");
 
                     foreach (CloudTask curTask in batchCli.JobOperations.GetJob(jobId).ListTasks())
                     {
@@ -581,8 +581,8 @@
                     Assert.True(beforeJobPrepRuns < jptei.JobPreparationTaskExecutionInformation.StartTime + TimeSpan.FromSeconds(10));  // test that the start time is rational -- 10s of wiggle room
                     Assert.Null(jptei.JobPreparationTaskExecutionInformation.FailureInformation);
 
-                    this.testOutputHelper.WriteLine("");
-                    this.testOutputHelper.WriteLine("listing files for compute node: " + victimComputeNodeRunningPrepAndRelease.Id);
+                    testOutputHelper.WriteLine("");
+                    testOutputHelper.WriteLine("listing files for compute node: " + victimComputeNodeRunningPrepAndRelease.Id);
 
                     // fiter the list so reduce noise
                     List<NodeFile> filteredListJobPrep = new List<NodeFile>();
@@ -592,7 +592,7 @@
                         // filter on the jsId since we only run one job per job in this test.
                         if (curTF.Path.IndexOf(boundJobSchedule.Id, StringComparison.InvariantCultureIgnoreCase) >= 0)
                         {
-                            this.testOutputHelper.WriteLine("    name:" + curTF.Path + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
+                            testOutputHelper.WriteLine("    name:" + curTF.Path + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
 
                             filteredListJobPrep.Add(curTF);
                         }
@@ -614,7 +614,7 @@
                     // poll for completion
                     while (JobPreparationTaskState.Completed != jptei.JobPreparationTaskExecutionInformation.State)
                     {
-                        this.testOutputHelper.WriteLine("waiting for jopPrep to complete");
+                        testOutputHelper.WriteLine("waiting for jopPrep to complete");
                         Thread.Sleep(2000);
 
                         // refresh the state info
@@ -646,8 +646,8 @@
                         //Swallow any exceptions here since stderr may not exist
                     }
 
-                    this.testOutputHelper.WriteLine(stdOut);
-                    this.testOutputHelper.WriteLine(stdErr);
+                    testOutputHelper.WriteLine(stdOut);
+                    testOutputHelper.WriteLine(stdErr);
 
                     Assert.True(!string.IsNullOrWhiteSpace(stdOut));
                     Assert.Contains("jobpreparation", stdOut.ToLower());
@@ -661,16 +661,16 @@
                 Protocol.RequestInterceptor consoleSpammer =
                                                 new Protocol.RequestInterceptor((x) =>
                                                 {
-                                                    this.testOutputHelper.WriteLine("TestGetPrepReleaseStatusCalls: waiting for JobPrep and task to complete");
+                                                    testOutputHelper.WriteLine("TestGetPrepReleaseStatusCalls: waiting for JobPrep and task to complete");
 
                                                     ODATADetailLevel detailLevel = new ODATADetailLevel() { FilterClause = string.Format("nodeId eq '{0}'", victimComputeNodeRunningPrepAndRelease.Id) };
                                                     jobPrepStatusList = batchCli.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId, detailLevel: detailLevel).ToList();
                                                     JobPreparationAndReleaseTaskExecutionInformation jpteiInterceptor =
                                                         jobPrepStatusList.First();
 
-                                                    this.testOutputHelper.WriteLine("    JobPrep.State: " + jpteiInterceptor.JobPreparationTaskExecutionInformation.State);
+                                                    testOutputHelper.WriteLine("    JobPrep.State: " + jpteiInterceptor.JobPreparationTaskExecutionInformation.State);
 
-                                                    this.testOutputHelper.WriteLine("");
+                                                    testOutputHelper.WriteLine("");
                                                 });
 
                 // waiting for the task to complete means so JobRelease is run.
@@ -699,13 +699,13 @@
                         Assert.NotNull(jrtei);
                         if (jrtei.JobReleaseTaskExecutionInformation.State != JobReleaseTaskState.Completed)
                         {
-                            this.testOutputHelper.WriteLine("JobReleaseTask state is: " + jrtei.JobReleaseTaskExecutionInformation.State);
+                            testOutputHelper.WriteLine("JobReleaseTask state is: " + jrtei.JobReleaseTaskExecutionInformation.State);
 
                             Thread.Sleep(5000);
                         }
                         else
                         {
-                            this.testOutputHelper.WriteLine("JobRelease commpleted!");
+                            testOutputHelper.WriteLine("JobRelease commpleted!");
 
                             // we are done
                             break;
@@ -798,21 +798,21 @@
 
             private void RequestInterceptHandler(Protocol.IBatchRequest request)
             {
-                this.stopwatch.Reset();
-                this.stopwatch.Start();
+                stopwatch.Reset();
+                stopwatch.Start();
             }
 
             private Task<IAzureOperationResponse> ResponseInterceptHandler(IAzureOperationResponse response, Protocol.IBatchRequest request)
             {
-                this.stopwatch.Stop();
+                stopwatch.Stop();
 
                 return Task.FromResult(response);
             }
 
             internal CallTimerViaInterceptors()
             {
-                this.ReqInterceptor = new Protocol.RequestInterceptor(this.RequestInterceptHandler);
-                this.ResInterceptor = new Protocol.ResponseInterceptor(this.ResponseInterceptHandler);
+                ReqInterceptor = new Protocol.RequestInterceptor(RequestInterceptHandler);
+                ResInterceptor = new Protocol.ResponseInterceptor(ResponseInterceptHandler);
             }
         }
 
@@ -837,20 +837,20 @@
 
         private void OutputFailureInfo(TaskFailureInformation failureInfo)
         {
-            this.testOutputHelper.WriteLine("JP Failure Info:");
-            this.testOutputHelper.WriteLine("    category: " + failureInfo.Category);
-            this.testOutputHelper.WriteLine("    code: " + failureInfo.Code);
-            this.testOutputHelper.WriteLine("    details:" + (null == failureInfo.Details ? " <null>" : string.Empty));
+            testOutputHelper.WriteLine("JP Failure Info:");
+            testOutputHelper.WriteLine("    category: " + failureInfo.Category);
+            testOutputHelper.WriteLine("    code: " + failureInfo.Code);
+            testOutputHelper.WriteLine("    details:" + (null == failureInfo.Details ? " <null>" : string.Empty));
 
             if (null != failureInfo.Details)
             {
                 foreach (NameValuePair curDetail in failureInfo.Details)
                 {
-                    this.testOutputHelper.WriteLine("        name: " + curDetail.Name + ", value: " + curDetail.Value);
+                    testOutputHelper.WriteLine("        name: " + curDetail.Name + ", value: " + curDetail.Value);
                 }
             }
 
-            this.testOutputHelper.WriteLine("    message: " + failureInfo.Message);
+            testOutputHelper.WriteLine("    message: " + failureInfo.Message);
         }
 
         #endregion

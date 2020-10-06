@@ -48,7 +48,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    CloudPool pool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                    CloudPool pool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
                     // confirm start task info exists and has rational values
 
@@ -77,7 +77,7 @@ namespace BatchClientIntegrationTests
                 {
                     PoolOperations poolOperations = batchCli.PoolOperations;
 
-                    List<ComputeNode> computeNodeList = poolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                    List<ComputeNode> computeNodeList = poolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
                     ComputeNode computeNodeToGet = computeNodeList.First();
                     string computeNodeId = computeNodeToGet.Id;
@@ -85,13 +85,13 @@ namespace BatchClientIntegrationTests
                     // Get compute node via the manager
                     //
 
-                    ComputeNode computeNodeFromManager = poolOperations.GetComputeNode(this.poolFixture.PoolId, computeNodeId);
+                    ComputeNode computeNodeFromManager = poolOperations.GetComputeNode(poolFixture.PoolId, computeNodeId);
                     CompareComputeNodeObjects(computeNodeToGet, computeNodeFromManager);
 
                     //
                     // Get compute node via the pool
                     //
-                    CloudPool pool = poolOperations.GetPool(this.poolFixture.PoolId);
+                    CloudPool pool = poolOperations.GetPool(poolFixture.PoolId);
 
                     ComputeNode computeNodeFromPool = pool.GetComputeNode(computeNodeId);
                     CompareComputeNodeObjects(computeNodeToGet, computeNodeFromPool);
@@ -130,7 +130,7 @@ namespace BatchClientIntegrationTests
                     Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor();
                     batchCli.PoolOperations.CustomBehaviors.Add(interceptor);
 
-                    List<ComputeNode> computeNodeList = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                    List<ComputeNode> computeNodeList = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
                     ComputeNode computeNode = computeNodeList.First();
 
@@ -162,7 +162,7 @@ namespace BatchClientIntegrationTests
                         // Create the job
                         //
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
 
                         unboundJob.Commit();
 
@@ -171,7 +171,7 @@ namespace BatchClientIntegrationTests
 
                         boundJob.AddTask(myTask);
 
-                        this.testOutputHelper.WriteLine("Initial job commit()");
+                        testOutputHelper.WriteLine("Initial job commit()");
 
                         //
                         // Wait for task to go to completion
@@ -192,13 +192,13 @@ namespace BatchClientIntegrationTests
                         //
                         // Check recent tasks
                         //
-                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(this.poolFixture.PoolId, computeNodeId);
+                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(poolFixture.PoolId, computeNodeId);
 
-                        this.testOutputHelper.WriteLine("Recent tasks:");
+                        testOutputHelper.WriteLine("Recent tasks:");
 
                         foreach (TaskInformation recentTask in computeNode.RecentTasks)
                         {
-                            this.testOutputHelper.WriteLine("Compute node has recent task Job: {0}, Task: {1}, State: {2}, Subtask: {3}",
+                            testOutputHelper.WriteLine("Compute node has recent task Job: {0}, Task: {1}, State: {2}, Subtask: {3}",
                                 recentTask.JobId,
                                 recentTask.TaskId,
                                 recentTask.TaskState,
@@ -235,9 +235,10 @@ namespace BatchClientIntegrationTests
                                         new List<Protocol.Models.ComputeNodeError>();
 
                                     //Generate first Compute Node Error
-                                    List<Protocol.Models.NameValuePair> nvps =
-                                        new List<Protocol.Models.NameValuePair>();
-                                    nvps.Add(new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue });
+                                    List<Protocol.Models.NameValuePair> nvps = new List<Protocol.Models.NameValuePair>
+                                    {
+                                        new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue }
+                                    };
 
                                     Protocol.Models.ComputeNodeError error1 = new Protocol.Models.ComputeNodeError();
                                     error1.Code = expectedErrorCode;
@@ -247,8 +248,10 @@ namespace BatchClientIntegrationTests
                                     errors.Add(error1);
 
                                     //Generate second Compute Node Error
-                                    nvps = new List<Protocol.Models.NameValuePair>();
-                                    nvps.Add(new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue });
+                                    nvps = new List<Protocol.Models.NameValuePair>
+                                    {
+                                        new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue }
+                                    };
 
                                     Protocol.Models.ComputeNodeError error2 = new Protocol.Models.ComputeNodeError();
                                     error2.Code = expectedErrorCode;
@@ -271,7 +274,7 @@ namespace BatchClientIntegrationTests
 
                         batchCli.PoolOperations.CustomBehaviors.Add(interceptor);
 
-                        computeNode = batchCli.PoolOperations.GetComputeNode(this.poolFixture.PoolId, computeNodeId);
+                        computeNode = batchCli.PoolOperations.GetComputeNode(poolFixture.PoolId, computeNodeId);
 
                         Assert.Equal(computeNodeId, computeNode.Id);
                         Assert.NotNull(computeNode.Errors);
@@ -309,7 +312,7 @@ namespace BatchClientIntegrationTests
                     List<string> names = new List<string>() { TestUtilities.GetMyName(), TestUtilities.GetMyName() + "1", TestUtilities.GetMyName() + "2", TestUtilities.GetMyName() + "3", TestUtilities.GetMyName() + "4" };
 
                     // pick a compute node to victimize with user accounts
-                    IEnumerable<ComputeNode> ienmComputeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);
+                    IEnumerable<ComputeNode> ienmComputeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId);
                     List<ComputeNode> computeNodeList = new List<ComputeNode>(ienmComputeNodes);
                     ComputeNode computeNode = computeNodeList[0];
 
@@ -319,7 +322,7 @@ namespace BatchClientIntegrationTests
 
                         // test user public constructor and IPoolMgr verbs
                         {
-                            ComputeNodeUser newUser = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                            ComputeNodeUser newUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
 
                             newUser.Name = names[0];
                             newUser.IsAdmin = true;
@@ -342,7 +345,7 @@ namespace BatchClientIntegrationTests
                             }
 
                             // pull the rdp file
-                            batchCli.PoolOperations.GetRDPFile(this.poolFixture.PoolId, computeNode.Id, rdpFileName);
+                            batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpFileName);
 
                             // simple validation tests on the rdp file
                             TestFileExistsAndHasLength(rdpFileName);
@@ -352,12 +355,12 @@ namespace BatchClientIntegrationTests
 
                             // "test" delete user from IPoolMgr
                             // TODO: when GET/LIST User is available we should close the loop and confirm the user is gone.
-                            batchCli.PoolOperations.DeleteComputeNodeUser(this.poolFixture.PoolId, computeNode.Id, newUser.Name);
+                            batchCli.PoolOperations.DeleteComputeNodeUser(poolFixture.PoolId, computeNode.Id, newUser.Name);
                         }
 
                         // test IPoolMgr CreateUser
                         {
-                            ComputeNodeUser pmcUser = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                            ComputeNodeUser pmcUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
 
                             pmcUser.Name = names[1];
                             pmcUser.IsAdmin = true;
@@ -368,7 +371,7 @@ namespace BatchClientIntegrationTests
                             pmcUser.Commit(ComputeNodeUserCommitSemantics.AddUser);
 
                             // pull rdp file
-                            batchCli.PoolOperations.GetRDPFile(this.poolFixture.PoolId, computeNode.Id, rdpFileName);
+                            batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpFileName);
 
                             // simple validation on rdp file
                             TestFileExistsAndHasLength(rdpFileName);
@@ -377,12 +380,12 @@ namespace BatchClientIntegrationTests
                             File.Delete(rdpFileName);
 
                             // delete user
-                            batchCli.PoolOperations.DeleteComputeNodeUser(this.poolFixture.PoolId, computeNode.Id, pmcUser.Name);
+                            batchCli.PoolOperations.DeleteComputeNodeUser(poolFixture.PoolId, computeNode.Id, pmcUser.Name);
                         }
 
                         // test IComputeNode verbs
                         {
-                            ComputeNodeUser poolMgrUser = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                            ComputeNodeUser poolMgrUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
 
                             poolMgrUser.Name = names[2];
                             poolMgrUser.IsAdmin = true;
@@ -406,7 +409,7 @@ namespace BatchClientIntegrationTests
 
                         // test ComputeNodeUser.Delete
                         {
-                            ComputeNodeUser usrDelete = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                            ComputeNodeUser usrDelete = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
 
                             usrDelete.Name = names[3];
                             usrDelete.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
@@ -420,7 +423,7 @@ namespace BatchClientIntegrationTests
                         // test rdp-by-stream IPoolMgr and IComputeNode
                         // the by-stream paths do not converge with the by-filename paths until IProtocol so we test them seperately
                         {
-                            ComputeNodeUser byStreamUser = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                            ComputeNodeUser byStreamUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
 
                             byStreamUser.Name = names[4];
                             byStreamUser.IsAdmin = true;
@@ -432,7 +435,7 @@ namespace BatchClientIntegrationTests
                             // IPoolMgr
                             using (Stream rdpStreamPoolMgr = File.Create(rdpFileName))
                             {
-                                batchCli.PoolOperations.GetRDPFile(this.poolFixture.PoolId, computeNode.Id, rdpStreamPoolMgr);
+                                batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpStreamPoolMgr);
 
                                 rdpStreamPoolMgr.Flush();
                                 rdpStreamPoolMgr.Close();
@@ -468,7 +471,7 @@ namespace BatchClientIntegrationTests
 
                             try
                             {
-                                ComputeNodeUser deleteThis = batchCli.PoolOperations.CreateComputeNodeUser(this.poolFixture.PoolId, computeNode.Id);
+                                ComputeNodeUser deleteThis = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
                                 deleteThis.Name = curName;
                                 deleteThis.Delete();
                             }
@@ -497,9 +500,9 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    CloudPool pool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                    CloudPool pool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
-                    this.testOutputHelper.WriteLine("Getting pool");
+                    testOutputHelper.WriteLine("Getting pool");
                     StartTask poolStartTask = pool.StartTask;
 
                     Assert.NotNull(poolStartTask);
@@ -509,10 +512,10 @@ namespace BatchClientIntegrationTests
 
                     Assert.True(computeNodes.Any());
 
-                    this.testOutputHelper.WriteLine("Checking every compute nodes start task in the pool matches the pools start task");
+                    testOutputHelper.WriteLine("Checking every compute nodes start task in the pool matches the pools start task");
                     foreach (ComputeNode computeNode in computeNodes)
                     {
-                        this.testOutputHelper.WriteLine("Checking start task of compute node: {0}", computeNode.Id);
+                        testOutputHelper.WriteLine("Checking start task of compute node: {0}", computeNode.Id);
 
                         //Check that the property is correctly set on each compute node
                         Assert.NotNull(computeNode.StartTask);
@@ -584,7 +587,7 @@ namespace BatchClientIntegrationTests
                     using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
                     {
                         TimeSpan refreshPollingTimeout = TimeSpan.FromMinutes(3);
-                        CloudPool pool = this.poolFixture.Pool;
+                        CloudPool pool = poolFixture.Pool;
 
                         List<ComputeNode> nodes = pool.ListComputeNodes().ToList();
 
@@ -656,7 +659,7 @@ namespace BatchClientIntegrationTests
                                 }
                                 catch (Exception ex)
                                 {
-                                    TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(ex, Microsoft.Azure.Batch.Common.BatchErrorCodeStrings.NodeAlreadyInTargetSchedulingState, this.testOutputHelper);
+                                    TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(ex, Microsoft.Azure.Batch.Common.BatchErrorCodeStrings.NodeAlreadyInTargetSchedulingState, testOutputHelper);
 
                                     gotCorrectException = true;
                                 }
@@ -679,7 +682,7 @@ namespace BatchClientIntegrationTests
                             }
                             catch (Exception ex)
                             {
-                                this.testOutputHelper.WriteLine(string.Format("OnlineOfflineTest: exception during exit trying to restore scheduling state: {0}", ex.ToString()));
+                                testOutputHelper.WriteLine(string.Format("OnlineOfflineTest: exception during exit trying to restore scheduling state: {0}", ex.ToString()));
                             }
                         }
                     }
@@ -734,7 +737,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    CloudPool sharedPool = this.poolFixture.Pool;
+                    CloudPool sharedPool = poolFixture.Pool;
                     List<string> cnuNamesToDelete = new List<string>();
 
                     // pick a compute node to victimize with user accounts
@@ -770,13 +773,13 @@ namespace BatchClientIntegrationTests
                         {
                             foreach (string curCNUName in cnuNamesToDelete)
                             {
-                                this.testOutputHelper.WriteLine("TestComputeNodeUserIAAS attempting to delete the following <nodeid,user>: <{0},{1}>", cn.Id, curCNUName);
+                                testOutputHelper.WriteLine("TestComputeNodeUserIAAS attempting to delete the following <nodeid,user>: <{0},{1}>", cn.Id, curCNUName);
                                 cn.DeleteComputeNodeUser(curCNUName);
                             }
                         }
                         catch (Exception ex)
                         {
-                            this.testOutputHelper.WriteLine("TestComputeNodeUserIAAS: exception deleting user account.  ex: " + ex.ToString());
+                            testOutputHelper.WriteLine("TestComputeNodeUserIAAS: exception deleting user account.  ex: " + ex.ToString());
                         }
                     }
                 }
@@ -814,9 +817,9 @@ namespace BatchClientIntegrationTests
 
                         var startTime = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(5));
 
-                        var node = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).First();
+                        var node = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId).First();
                         var result = batchCli.PoolOperations.UploadComputeNodeBatchServiceLogs(
-                            this.poolFixture.PoolId,
+                            poolFixture.PoolId,
                             node.Id,
                             sasUri,
                             startTime);
@@ -856,7 +859,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
-                    CloudPool sharedPool = this.poolFixture.Pool;
+                    CloudPool sharedPool = poolFixture.Pool;
 
                     try
                     {

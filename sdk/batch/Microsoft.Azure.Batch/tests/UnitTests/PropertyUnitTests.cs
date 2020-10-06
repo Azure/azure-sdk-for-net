@@ -524,8 +524,7 @@ namespace Azure.Batch.Unit.Tests
                         }
                         catch (TargetInvocationException e)
                         {
-                            var inner = e.InnerException as InvalidOperationException;
-                            if (inner != null)
+                            if (e.InnerException is InvalidOperationException inner)
                             {
                                 if (!inner.Message.Contains("while the object is in the Unbound state"))
                                 {

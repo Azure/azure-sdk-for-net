@@ -49,7 +49,7 @@
                     {
                         foreach (Certificate certificate in certificates)
                         {
-                            this.testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
+                            testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
                             await certificate.CommitAsync().ConfigureAwait(false);
 
                             Certificate boundCert = await batchCli.CertificateOperations.GetCertificateAsync(
@@ -98,7 +98,7 @@
 
                         foreach (Certificate certificate in certificates)
                         {
-                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, this.testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
+                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                         }
                     }
                 }
@@ -128,7 +128,7 @@
                     {
                         foreach (Certificate certificate in certificates)
                         {
-                            this.testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
+                            testOutputHelper.WriteLine("Adding certificate with thumbprint: {0}", certificate.Thumbprint);
                             await certificate.CommitAsync().ConfigureAwait(false);
                         }
 
@@ -154,7 +154,7 @@
 
                         foreach (Certificate certificate in certificates)
                         {
-                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, this.testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
+                            TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                         }
                     }
                 }

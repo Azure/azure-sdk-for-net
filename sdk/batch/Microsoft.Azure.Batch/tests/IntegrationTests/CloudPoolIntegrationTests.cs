@@ -617,7 +617,7 @@ namespace BatchClientIntegrationTests
 
                         TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
 
-                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
+                        testOutputHelper.WriteLine($"Created pool {poolId}");
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
@@ -631,7 +631,7 @@ namespace BatchClientIntegrationTests
                         boundPool.Refresh();
 
                         //The pool could be in stopping or steady state
-                        this.testOutputHelper.WriteLine($"Pool allocation state: {boundPool.AllocationState}");
+                        testOutputHelper.WriteLine($"Pool allocation state: {boundPool.AllocationState}");
                         Assert.True(boundPool.AllocationState == AllocationState.Steady || boundPool.AllocationState == AllocationState.Stopping);
                     }
                     finally
@@ -679,7 +679,7 @@ namespace BatchClientIntegrationTests
                         boundPool.Refresh();
                         Assert.True(boundPool.AutoScaleEnabled);
                         Assert.Equal(autoscaleFormula1, boundPool.AutoScaleFormula);
-                        this.testOutputHelper.WriteLine($"Got the pool");
+                        testOutputHelper.WriteLine($"Got the pool");
 
                         Assert.NotNull(boundPool.AutoScaleRun);
                         Assert.NotNull(boundPool.AutoScaleRun.Results);
@@ -688,7 +688,7 @@ namespace BatchClientIntegrationTests
                         //Evaluate a different formula
                         AutoScaleRun evaluation = boundPool.EvaluateAutoScale(evaluateAutoscaleFormula);
 
-                        this.testOutputHelper.WriteLine("Autoscale evaluate results: {0}", evaluation.Results);
+                        testOutputHelper.WriteLine("Autoscale evaluate results: {0}", evaluation.Results);
 
                         Assert.NotNull(evaluation.Results);
                         Assert.Contains("myActiveSamples", evaluation.Results);
@@ -722,7 +722,7 @@ namespace BatchClientIntegrationTests
 
                         evaluation = batchCli.PoolOperations.EvaluateAutoScale(poolId, evaluateAutoscaleFormula);
 
-                        this.testOutputHelper.WriteLine("Autoscale evaluate results: {0}", evaluation.Results);
+                        testOutputHelper.WriteLine("Autoscale evaluate results: {0}", evaluation.Results);
 
                         Assert.NotNull(evaluation);
                         Assert.Contains("myActiveSamples", evaluation.Results);
@@ -1062,13 +1062,13 @@ namespace BatchClientIntegrationTests
 
                     foreach (ImageInformation imageInfo in supportedImages)
                     {
-                        this.testOutputHelper.WriteLine("ImageInformation:");
-                        this.testOutputHelper.WriteLine("   skuid: " + imageInfo.NodeAgentSkuId);
-                        this.testOutputHelper.WriteLine("   OSType: " + imageInfo.OSType);
-                        this.testOutputHelper.WriteLine("   publisher: " + imageInfo.ImageReference.Publisher);
-                        this.testOutputHelper.WriteLine("   offer: " + imageInfo.ImageReference.Offer);
-                        this.testOutputHelper.WriteLine("   sku: " + imageInfo.ImageReference.Sku);
-                        this.testOutputHelper.WriteLine("   version: " + imageInfo.ImageReference.Version);
+                        testOutputHelper.WriteLine("ImageInformation:");
+                        testOutputHelper.WriteLine("   skuid: " + imageInfo.NodeAgentSkuId);
+                        testOutputHelper.WriteLine("   OSType: " + imageInfo.OSType);
+                        testOutputHelper.WriteLine("   publisher: " + imageInfo.ImageReference.Publisher);
+                        testOutputHelper.WriteLine("   offer: " + imageInfo.ImageReference.Offer);
+                        testOutputHelper.WriteLine("   sku: " + imageInfo.ImageReference.Sku);
+                        testOutputHelper.WriteLine("   version: " + imageInfo.ImageReference.Version);
                     }
                 }
             };
@@ -1209,10 +1209,10 @@ namespace BatchClientIntegrationTests
             internal TestListPoolUsageMetricsFakesYieldInjector(IList<Protocol.Models.PoolUsageMetrics> poolUsageMetricsList)
             {
                 // here is our interceptor
-                base.ModificationInterceptHandler = this.RequestInterceptor;
+                base.ModificationInterceptHandler = RequestInterceptor;
 
                 // remember our fake data
-                this._poolUsageMetricsList = poolUsageMetricsList;
+                _poolUsageMetricsList = poolUsageMetricsList;
             }
         }
 
@@ -1308,7 +1308,7 @@ namespace BatchClientIntegrationTests
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
-                        this.testOutputHelper.WriteLine("Created pool {0}", poolId);
+                        testOutputHelper.WriteLine("Created pool {0}", poolId);
 
                         CloudPool refreshablePool = batchCli.PoolOperations.GetPool(poolId);
                         //Wait for compute node allocation
@@ -1363,7 +1363,7 @@ namespace BatchClientIntegrationTests
                         var resizeError = refreshablePool.ResizeErrors.Single();
                         Assert.Equal(PoolResizeErrorCodes.AllocationTimedOut, resizeError.Code);
 
-                        this.testOutputHelper.WriteLine("Resize error: {0}", resizeError.Message);
+                        testOutputHelper.WriteLine("Resize error: {0}", resizeError.Message);
                     }
                     finally
                     {
@@ -1413,7 +1413,7 @@ namespace BatchClientIntegrationTests
 
                         pool.Commit();
 
-                        this.testOutputHelper.WriteLine("Created pool {0}", poolId);
+                        testOutputHelper.WriteLine("Created pool {0}", poolId);
 
                         CloudPool refreshablePool = batchCli.PoolOperations.GetPool(poolId);
                         //Wait for compute node allocation
@@ -1433,7 +1433,7 @@ namespace BatchClientIntegrationTests
                         //For Bug234298 ensure start task property doesn't throw
                         Assert.Null(computeNodeToRemove.StartTask);
 
-                        this.testOutputHelper.WriteLine("Will remove compute node: {0}", computeNodeToRemove.Id);
+                        testOutputHelper.WriteLine("Will remove compute node: {0}", computeNodeToRemove.Id);
 
                         //Remove the compute node from the pool by instance
                         refreshablePool.RemoveFromPool(computeNodeToRemove);
@@ -1453,7 +1453,7 @@ namespace BatchClientIntegrationTests
                             Assert.Contains(originalComputeNode.Id, remainingComputeNodeIds);
                         }
 
-                        this.testOutputHelper.WriteLine("Verified that the compute node was removed correctly");
+                        testOutputHelper.WriteLine("Verified that the compute node was removed correctly");
 
                         //
                         //Remove a second compute node from the pool
@@ -1474,7 +1474,7 @@ namespace BatchClientIntegrationTests
 
                         Assert.Single(computeNodesAfterRemove);
 
-                        this.testOutputHelper.WriteLine("Verified that the compute node was removed correctly");
+                        testOutputHelper.WriteLine("Verified that the compute node was removed correctly");
 
                         //
                         //Remove a 3rd compute node from pool
@@ -1482,7 +1482,7 @@ namespace BatchClientIntegrationTests
 
                         ComputeNode thirdComputeNodeToRemove = computeNodesAfterRemove.First();
                         string thirdComputeNodeToRemoveId = thirdComputeNodeToRemove.Id;
-                        this.testOutputHelper.WriteLine("Will remove compute node: {0}", thirdComputeNodeToRemoveId);
+                        testOutputHelper.WriteLine("Will remove compute node: {0}", thirdComputeNodeToRemoveId);
 
                         //Remove the IComputeNode from the pool using the ComputeNode object
                         thirdComputeNodeToRemove.RemoveFromPool();
@@ -1494,7 +1494,7 @@ namespace BatchClientIntegrationTests
                         computeNodesAfterRemove = refreshablePool.ListComputeNodes().ToList();
                         Assert.Empty(computeNodesAfterRemove);
 
-                        this.testOutputHelper.WriteLine("Verified that the ComputeNode was removed correctly");
+                        testOutputHelper.WriteLine("Verified that the ComputeNode was removed correctly");
                     }
                     finally
                     {
@@ -1545,7 +1545,7 @@ namespace BatchClientIntegrationTests
 
                         await pool.CommitAsync().ConfigureAwait(false);
 
-                        this.testOutputHelper.WriteLine("Created pool {0}", poolId);
+                        testOutputHelper.WriteLine("Created pool {0}", poolId);
                         await pool.RefreshAsync().ConfigureAwait(false);
 
                         //Wait for compute node allocation
@@ -1577,13 +1577,11 @@ namespace BatchClientIntegrationTests
     [Collection("SharedPoolCollection")]
     public class IntegrationCloudPoolTestsWithSharedPool
     {
-        private readonly ITestOutputHelper testOutputHelper;
         private readonly PoolFixture poolFixture;
         private static readonly TimeSpan LongTestTimeout = TimeSpan.FromMinutes(20);
 
-        public IntegrationCloudPoolTestsWithSharedPool(ITestOutputHelper testOutputHelper, PaasWindowsPoolFixture poolFixture)
+        public IntegrationCloudPoolTestsWithSharedPool(PaasWindowsPoolFixture poolFixture)
         {
-            this.testOutputHelper = testOutputHelper;
             this.poolFixture = poolFixture;
         }
 
@@ -1603,14 +1601,14 @@ namespace BatchClientIntegrationTests
                         //
                         // Get the pool and check its targets
                         //
-                        CloudPool pool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                        CloudPool pool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
                         //
                         //Create a job on this pool with targetDedicated tasks which run for 2m each
                         //
                         const int taskDurationSeconds = 600;
 
-                        CloudJob workflowJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob workflowJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         workflowJob.Commit();
 
                         CloudJob boundWorkflowJob = batchCli.JobOperations.GetJob(jobId);
@@ -1651,7 +1649,7 @@ namespace BatchClientIntegrationTests
                             TimeSpan.FromMinutes(1));
 
                         //Ensure each compute node goes to rebooting state
-                        IEnumerable<ComputeNode> rebootingComputeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);
+                        IEnumerable<ComputeNode> rebootingComputeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId);
                         foreach (ComputeNode computeNode in rebootingComputeNodes)
                         {
                             Assert.Equal(ComputeNodeState.Rebooting, computeNode.State);
@@ -1681,7 +1679,7 @@ namespace BatchClientIntegrationTests
                             TimeSpan.FromMinutes(1));
 
                         //Ensure each compute node goes to reimaging state
-                        IEnumerable<ComputeNode> reimagingComputeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);
+                        IEnumerable<ComputeNode> reimagingComputeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId);
                         foreach (ComputeNode computeNode in reimagingComputeNodes)
                         {
                             Assert.Equal(ComputeNodeState.Reimaging, computeNode.State);
@@ -1698,12 +1696,12 @@ namespace BatchClientIntegrationTests
                         DateTime allocationWaitStartTime = DateTime.UtcNow;
                         DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(computeNodeSteadyTimeout);
 
-                        IEnumerable<ComputeNode> computeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);
+                        IEnumerable<ComputeNode> computeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId);
 
                         while (computeNodes.Any(computeNode => computeNode.State != ComputeNodeState.Idle))
                         {
                             Thread.Sleep(TimeSpan.FromSeconds(10));
-                            computeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                            computeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
                             Assert.False(DateTime.UtcNow > timeoutAfterThisTimeUtc, "Timed out waiting for compute nodes in pool to reach idle state");
                         }
                     }

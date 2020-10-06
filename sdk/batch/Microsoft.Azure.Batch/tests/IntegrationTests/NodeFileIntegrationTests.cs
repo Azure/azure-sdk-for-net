@@ -44,7 +44,7 @@
                     try
                     {
                         // here we show how to use an unbound Job + Commit() to run millions of Tasks
-                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                         unboundJob.Commit();
 
                         // Open the new Job as bound.
@@ -69,21 +69,21 @@
                         string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
                         string stdErr = myCompletedTask.GetNodeFile(Constants.StandardErrorFileName).ReadAsString();
 
-                        this.testOutputHelper.WriteLine("TaskId: " + myCompletedTask.Id);
-                        this.testOutputHelper.WriteLine("StdOut: ");
-                        this.testOutputHelper.WriteLine(stdOut);
+                        testOutputHelper.WriteLine("TaskId: " + myCompletedTask.Id);
+                        testOutputHelper.WriteLine("StdOut: ");
+                        testOutputHelper.WriteLine(stdOut);
 
-                        this.testOutputHelper.WriteLine("StdErr: ");
-                        this.testOutputHelper.WriteLine(stdErr);
+                        testOutputHelper.WriteLine("StdErr: ");
+                        testOutputHelper.WriteLine(stdErr);
 
-                        this.testOutputHelper.WriteLine("Task Files:");
+                        testOutputHelper.WriteLine("Task Files:");
 
                         bool foundAtLeastOneDir = false;
 
                         foreach (NodeFile curFile in myCompletedTask.ListNodeFiles())
                         {
-                            this.testOutputHelper.WriteLine("    Filepath: " + curFile.Path);
-                            this.testOutputHelper.WriteLine("       IsDirectory: " + curFile.IsDirectory.ToString());
+                            testOutputHelper.WriteLine("    Filepath: " + curFile.Path);
+                            testOutputHelper.WriteLine("       IsDirectory: " + curFile.IsDirectory.ToString());
 
                             // turns out wd is created for each task so use it as sentinal
                             if (curFile.Path.Equals("wd") && curFile.IsDirectory.HasValue && curFile.IsDirectory.Value)
@@ -130,7 +130,7 @@
                         // Create the job
                         //
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
                         unboundJob.Commit();
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -142,7 +142,7 @@
                         boundJob.AddTask(directoryCreationTask1);
                         boundJob.AddTask(directoryCreationTask2);
 
-                        this.testOutputHelper.WriteLine("Initial job commit()");
+                        testOutputHelper.WriteLine("Initial job commit()");
 
                         //
                         // Wait for task to go to completion
@@ -227,7 +227,7 @@
                         // Create the job
                         //
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
                         unboundJob.Commit();
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -239,7 +239,7 @@
                         boundJob.AddTask(directoryCreationTask1);
                         boundJob.AddTask(directoryCreationTask2);
 
-                        this.testOutputHelper.WriteLine("Initial job commit()");
+                        testOutputHelper.WriteLine("Initial job commit()");
 
                         //
                         // Wait for task to go to completion
@@ -256,18 +256,18 @@
                         //Since the compute node name comes back as "Node:<computeNodeId>" we need to split on : to get the actual compute node name
                         string computeNodeId = boundTask.ComputeNodeInformation.AffinityId.Split(':')[1];
 
-                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(this.poolFixture.PoolId, computeNodeId);
+                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(poolFixture.PoolId, computeNodeId);
 
-                        this.testOutputHelper.WriteLine("Task ran on compute node: {0}", computeNodeId);
+                        testOutputHelper.WriteLine("Task ran on compute node: {0}", computeNodeId);
 
                         //Ensure that ListFiles done without a recursive option, or with recursive false return the same values
                         {
                             List<NodeFile> filesByComputeNodeRecursiveOmitted = batchCli.PoolOperations.ListNodeFiles(
-                                this.poolFixture.PoolId, 
+                                poolFixture.PoolId, 
                                 computeNodeId).ToList();
 
                             List<NodeFile> filesByComputeNodeRecursiveFalse = batchCli.PoolOperations.ListNodeFiles(
-                                this.poolFixture.PoolId, 
+                                poolFixture.PoolId, 
                                 computeNodeId, 
                                 recursive: false).ToList();
 
@@ -291,11 +291,11 @@
                         // List all node files from operations -- recursive true
                         //
                         //TODO: Detail level?
-                        List<NodeFile> fileListFromComputeNodeOperations = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).ToList();
+                        List<NodeFile> fileListFromComputeNodeOperations = batchCli.PoolOperations.ListNodeFiles(poolFixture.PoolId, computeNodeId, recursive: true).ToList();
 
                         foreach (NodeFile f in fileListFromComputeNodeOperations)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", f.Path);
+                            testOutputHelper.WriteLine("Found file: {0}", f.Path);
                         }
                         //Check to make sure the expected folder named "Shared" exists
                         Assert.Contains("shared", fileListFromComputeNodeOperations.Select(f => f.Path));
@@ -306,7 +306,7 @@
                         List<NodeFile> fileListFromComputeNode = computeNode.ListNodeFiles(recursive: true).ToList();
                         foreach (NodeFile f in fileListFromComputeNodeOperations)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", f.Path);
+                            testOutputHelper.WriteLine("Found file: {0}", f.Path);
                         }
                         //Check to make sure the expected folder named "Shared" exists
                         Assert.Contains("shared", fileListFromComputeNode.Select(f => f.Path));
@@ -315,46 +315,46 @@
                         // Get file from operations
                         //
                         string filePathToGet = fileListFromComputeNode.First(f => !f.IsDirectory.Value && f.Properties.ContentLength > 0).Path;
-                        this.testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
-                        NodeFile computeNodeFileFromManager = batchCli.PoolOperations.GetNodeFile(this.poolFixture.PoolId, computeNodeId, filePathToGet);
-                        this.testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
-                        this.testOutputHelper.WriteLine("---- File data: ----");
+                        testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
+                        NodeFile computeNodeFileFromManager = batchCli.PoolOperations.GetNodeFile(poolFixture.PoolId, computeNodeId, filePathToGet);
+                        testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
+                        testOutputHelper.WriteLine("---- File data: ----");
                         var computeNodeFileContentFromManager = computeNodeFileFromManager.ReadAsString();
-                        this.testOutputHelper.WriteLine(computeNodeFileContentFromManager);
+                        testOutputHelper.WriteLine(computeNodeFileContentFromManager);
                         Assert.NotEmpty(computeNodeFileContentFromManager);
 
                         //
                         // Get file directly from operations (bypassing the properties call)
                         //
-                        var computeNodeFileContentDirect = batchCli.PoolOperations.CopyNodeFileContentToString(this.poolFixture.PoolId, computeNodeId, filePathToGet);
-                        this.testOutputHelper.WriteLine("---- File data: ----");
-                        this.testOutputHelper.WriteLine(computeNodeFileContentDirect);
+                        var computeNodeFileContentDirect = batchCli.PoolOperations.CopyNodeFileContentToString(poolFixture.PoolId, computeNodeId, filePathToGet);
+                        testOutputHelper.WriteLine("---- File data: ----");
+                        testOutputHelper.WriteLine(computeNodeFileContentDirect);
                         Assert.NotEmpty(computeNodeFileContentDirect);
 
                         //
                         // Get file from compute node
                         //
-                        this.testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
+                        testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
                         NodeFile fileFromComputeNode = computeNode.GetNodeFile(filePathToGet);
-                        this.testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
-                        this.testOutputHelper.WriteLine("---- File data: ----");
+                        testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
+                        testOutputHelper.WriteLine("---- File data: ----");
                         var computeNodeFileContentFromNode = fileFromComputeNode.ReadAsString();
-                        this.testOutputHelper.WriteLine(computeNodeFileContentFromNode);
+                        testOutputHelper.WriteLine(computeNodeFileContentFromNode);
                         Assert.NotEmpty(computeNodeFileContentFromNode);
 
                         //
                         // Get file from compute node (bypassing the properties call)
                         //
                         computeNodeFileContentDirect = computeNode.CopyNodeFileContentToString(filePathToGet);
-                        this.testOutputHelper.WriteLine("---- File data: ----");
-                        this.testOutputHelper.WriteLine(computeNodeFileContentDirect);
+                        testOutputHelper.WriteLine("---- File data: ----");
+                        testOutputHelper.WriteLine(computeNodeFileContentDirect);
                         Assert.NotEmpty(computeNodeFileContentDirect);
 
                         //
                         // NodeFile delete
                         //
                         string filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, Constants.StandardOutFileName);
-                        NodeFile nodeFile = batchCli.PoolOperations.GetNodeFile(this.poolFixture.PoolId, computeNodeId, filePath);
+                        NodeFile nodeFile = batchCli.PoolOperations.GetNodeFile(poolFixture.PoolId, computeNodeId, filePath);
 
                         nodeFile.Delete();
 
@@ -364,12 +364,12 @@
 
                         //Delete directory
 
-                        NodeFile directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameOne));
+                        NodeFile directory = batchCli.PoolOperations.ListNodeFiles(poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameOne));
                         Assert.True(directory.IsDirectory);
                         TestUtilities.AssertThrows<BatchException>(() => directory.Delete(recursive: false));
                         directory.Delete(recursive: true);
 
-                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameOne)));
+                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameOne)));
 
                         //
                         // PoolManager delete node file
@@ -377,18 +377,18 @@
                         filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, Constants.StandardErrorFileName);
 
                         NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName);
-                        batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, filePath);
+                        batchCli.PoolOperations.DeleteNodeFile(poolFixture.PoolId, computeNodeId, filePath);
 
                         //Ensure delete succeeded
                         TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName));
 
                         //Delete directory
-                        directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
+                        directory = batchCli.PoolOperations.ListNodeFiles(poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
                         Assert.True(directory.IsDirectory);
-                        TestUtilities.AssertThrows<BatchException>(() => batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Path, recursive: false));
-                        batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Path, recursive: true);
+                        TestUtilities.AssertThrows<BatchException>(() => batchCli.PoolOperations.DeleteNodeFile(poolFixture.PoolId, computeNodeId, directory.Path, recursive: false));
+                        batchCli.PoolOperations.DeleteNodeFile(poolFixture.PoolId, computeNodeId, directory.Path, recursive: true);
 
-                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameTwo)));
+                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameTwo)));
                     }
                     finally
                     {
@@ -421,7 +421,7 @@
                             //
                             // Create the job
                             //
-                            CloudJob unboundJob = jobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                            CloudJob unboundJob = jobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                             unboundJob.Commit();
 
                             CloudJob boundJob = jobOperations.GetJob(jobId);
@@ -429,7 +429,7 @@
 
                             boundJob.AddTask(myTask);
 
-                            this.testOutputHelper.WriteLine("Initial job commit()");
+                            testOutputHelper.WriteLine("Initial job commit()");
 
                             //
                             // Wait for task to go to completion
@@ -481,7 +481,7 @@
                         // Create the job
                         //
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
                         unboundJob.Commit();
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -489,7 +489,7 @@
 
                         boundJob.AddTask(myTask);
 
-                        this.testOutputHelper.WriteLine("Initial job commit()");
+                        testOutputHelper.WriteLine("Initial job commit()");
 
                         //
                         // Wait for task to go to completion
@@ -509,11 +509,11 @@
                         //
                         NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName);
 
-                        this.testOutputHelper.WriteLine("File {0} has content length: {1}", Constants.StandardOutFileName, file.Properties.ContentLength);
-                        this.testOutputHelper.WriteLine("File {0} has content type: {1}", Constants.StandardOutFileName, file.Properties.ContentType);
+                        testOutputHelper.WriteLine("File {0} has content length: {1}", Constants.StandardOutFileName, file.Properties.ContentLength);
+                        testOutputHelper.WriteLine("File {0} has content type: {1}", Constants.StandardOutFileName, file.Properties.ContentType);
 
-                        this.testOutputHelper.WriteLine("File {0} has creation time: {1}", Constants.StandardOutFileName, file.Properties.CreationTime);
-                        this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", Constants.StandardOutFileName, file.Properties.LastModified);
+                        testOutputHelper.WriteLine("File {0} has creation time: {1}", Constants.StandardOutFileName, file.Properties.CreationTime);
+                        testOutputHelper.WriteLine("File {0} has last modified time: {1}", Constants.StandardOutFileName, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
                         Assert.Equal("text/plain", file.Properties.ContentType);
@@ -524,24 +524,24 @@
                         CloudTask boundTask = boundJob.GetTask(taskId);
                         string computeNodeId = boundTask.ComputeNodeInformation.AffinityId.Split(':')[1];
 
-                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(this.poolFixture.PoolId, computeNodeId);
+                        ComputeNode computeNode = batchCli.PoolOperations.GetComputeNode(poolFixture.PoolId, computeNodeId);
 
-                        this.testOutputHelper.WriteLine("Task ran on compute node: {0}", computeNodeId);
+                        testOutputHelper.WriteLine("Task ran on compute node: {0}", computeNodeId);
 
                         List<NodeFile> files = computeNode.ListNodeFiles(recursive: true).ToList();
                         foreach (NodeFile nodeFile in files)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", nodeFile.Path);
+                            testOutputHelper.WriteLine("Found file: {0}", nodeFile.Path);
                         }
 
                         string filePathToGet = string.Format("workitems/{0}/{1}/{2}/{3}", jobId, "job-1", taskId, Constants.StandardOutFileName);
                         file = computeNode.GetNodeFile(filePathToGet);
 
-                        this.testOutputHelper.WriteLine("File {0} has content length: {1}", filePathToGet, file.Properties.ContentLength);
-                        this.testOutputHelper.WriteLine("File {0} has content type: {1}", filePathToGet, file.Properties.ContentType);
+                        testOutputHelper.WriteLine("File {0} has content length: {1}", filePathToGet, file.Properties.ContentLength);
+                        testOutputHelper.WriteLine("File {0} has content type: {1}", filePathToGet, file.Properties.ContentType);
 
-                        this.testOutputHelper.WriteLine("File {0} has creation time: {1}", filePathToGet, file.Properties.CreationTime);
-                        this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", filePathToGet, file.Properties.LastModified);
+                        testOutputHelper.WriteLine("File {0} has creation time: {1}", filePathToGet, file.Properties.CreationTime);
+                        testOutputHelper.WriteLine("File {0} has last modified time: {1}", filePathToGet, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
                         Assert.Equal("text/plain", file.Properties.ContentType);
@@ -576,17 +576,17 @@
                         CloudJob job = jobOperations.CreateJob(jobId, new PoolInformation());
                         job.PoolInformation = new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         };
 
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
+                        testOutputHelper.WriteLine("Initial job schedule commit()");
 
                         job.Commit();
 
                         //
                         // Wait for the job
                         //
-                        this.testOutputHelper.WriteLine("Waiting for job");
+                        testOutputHelper.WriteLine("Waiting for job");
                         CloudJob boundJob = jobOperations.GetJob(jobId);
 
                         //
@@ -595,14 +595,14 @@
                         const string taskId = "T1";
                         const string taskMessage = "This is a test";
 
-                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        testOutputHelper.WriteLine("Adding task: {0}", taskId);
                         CloudTask task = new CloudTask(taskId, string.Format("cmd /c echo {0}", taskMessage));
                         boundJob.AddTask(task);
 
                         //
                         // Wait for the task to complete
                         //
-                        this.testOutputHelper.WriteLine("Waiting for the task to complete");
+                        testOutputHelper.WriteLine("Waiting for the task to complete");
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
@@ -613,15 +613,15 @@
                             TimeSpan.FromSeconds(30));
 
                         //Download the data
-                        this.testOutputHelper.WriteLine("Downloading the stdout for the file");
+                        testOutputHelper.WriteLine("Downloading the stdout for the file");
                         NodeFile file = jobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName);
                         string data = file.ReadAsString();
-                        this.testOutputHelper.WriteLine("Data: {0}", data);
+                        testOutputHelper.WriteLine("Data: {0}", data);
                         Assert.Contains(taskMessage, data);
 
                         // Download the data again using the JobOperations read file content helper
                         data = batchCli.JobOperations.CopyNodeFileContentToString(jobId, taskId, Constants.StandardOutFileName);
-                        this.testOutputHelper.WriteLine("Data: {0}", data);
+                        testOutputHelper.WriteLine("Data: {0}", data);
                         Assert.Contains(taskMessage, data);
                     }
                     finally
@@ -694,14 +694,14 @@
                         // create some files on the node
                         TestUtilities.HelloWorld(
                             batchCli,
-                            this.testOutputHelper,
-                            this.poolFixture.Pool,
+                            testOutputHelper,
+                            poolFixture.Pool,
                             out jobId,
                             out taskId,
                             deleteJob: false,
                             isLinux: true);
 
-                        var nodes = this.poolFixture.Pool.ListComputeNodes().ToList();
+                        var nodes = poolFixture.Pool.ListComputeNodes().ToList();
                         ComputeNode cn = nodes[0]; // get the node that has files on it
 
                         List<NodeFile> files = cn.ListNodeFiles(recursive: true).ToList();

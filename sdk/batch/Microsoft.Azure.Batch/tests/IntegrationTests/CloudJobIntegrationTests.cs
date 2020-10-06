@@ -45,7 +45,7 @@
                     try
                     {
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                        unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
                         unboundJob.Commit();
 
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -66,7 +66,7 @@
 
                             while (repeat)
                             {
-                                CloudPool boundPool = batchCli.PoolOperations.GetPool(this.poolFixture.PoolId);
+                                CloudPool boundPool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
 
                                 repeat = false;
 
@@ -76,13 +76,13 @@
                                     {
                                         repeat = true;
 
-                                        this.testOutputHelper.WriteLine("Manual Wait Task Id: " + curTask.Id + ", state = " + curTask.State);
-                                        this.testOutputHelper.WriteLine("   poolstate: " + boundPool.State + ", currentdedicated: " + boundPool.CurrentDedicatedComputeNodes);
-                                        this.testOutputHelper.WriteLine("      compute nodes:");
+                                        testOutputHelper.WriteLine("Manual Wait Task Id: " + curTask.Id + ", state = " + curTask.State);
+                                        testOutputHelper.WriteLine("   poolstate: " + boundPool.State + ", currentdedicated: " + boundPool.CurrentDedicatedComputeNodes);
+                                        testOutputHelper.WriteLine("      compute nodes:");
 
                                         foreach (ComputeNode curComputeNode in boundPool.ListComputeNodes())
                                         {
-                                            this.testOutputHelper.WriteLine("           computeNode.Id: " + curComputeNode.Id + ", state: " + curComputeNode.State);
+                                            testOutputHelper.WriteLine("           computeNode.Id: " + curComputeNode.Id + ", state: " + curComputeNode.State);
                                         }
                                     }
                                 }
@@ -91,7 +91,7 @@
 
                         // add some longer running tasks
 
-                        this.testOutputHelper.WriteLine("Adding longer running tasks");
+                        testOutputHelper.WriteLine("Adding longer running tasks");
 
                         for (int i = 0; i < 15; i++)
                         {
@@ -111,7 +111,7 @@
                         // confirm the floor is enforced
                         Assert.Equal(500, odmc.DelayBetweenDataFetch.Milliseconds);
 
-                        this.testOutputHelper.WriteLine("Calling TaskStateMonitor.WaitAll().  This will take a while.");
+                        testOutputHelper.WriteLine("Calling TaskStateMonitor.WaitAll().  This will take a while.");
 
                         TimeSpan timeToWait = TimeSpan.FromMinutes(5);
                         Task whenAll = tsm.WhenAll(taskList, Microsoft.Azure.Batch.Common.TaskState.Completed, timeToWait, controlParams: odmc);
@@ -153,7 +153,7 @@
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                         cloudJob.PoolInformation = new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         };
                         cloudJob.Commit();
 
@@ -166,7 +166,7 @@
                         //Check the job state
 
                         CloudJob disabledJob = batchCli.JobOperations.GetJob(jobId);
-                        this.testOutputHelper.WriteLine("DisabledJob State: {0}", disabledJob.State);
+                        testOutputHelper.WriteLine("DisabledJob State: {0}", disabledJob.State);
                         Assert.True(disabledJob.State == JobState.Disabled || disabledJob.State == JobState.Disabling);
 
                         //Enable the job (via instance)
@@ -174,14 +174,14 @@
 
                         //Check the job state
                         CloudJob enabledJob = batchCli.JobOperations.GetJob(jobId);
-                        this.testOutputHelper.WriteLine("EnabledJob state: {0}", enabledJob.State);
+                        testOutputHelper.WriteLine("EnabledJob state: {0}", enabledJob.State);
                         Assert.Equal(JobState.Active, JobState.Active);
 
                         //Disable the job (via operations)
                         batchCli.JobOperations.DisableJob(jobId, DisableJobOption.Terminate);
 
                         disabledJob = batchCli.JobOperations.GetJob(jobId);
-                        this.testOutputHelper.WriteLine("DisabledJob State: {0}", disabledJob.State);
+                        testOutputHelper.WriteLine("DisabledJob State: {0}", disabledJob.State);
                         Assert.True(disabledJob.State == JobState.Disabled || disabledJob.State == JobState.Disabling);
 
                         //Enable the job (via operations)
@@ -189,7 +189,7 @@
 
                         //Check the job state
                         enabledJob = batchCli.JobOperations.GetJob(jobId);
-                        this.testOutputHelper.WriteLine("EnabledJob state: {0}", enabledJob.State);
+                        testOutputHelper.WriteLine("EnabledJob state: {0}", enabledJob.State);
                         Assert.Equal(JobState.Active, JobState.Active);
 
                         //Terminate the job
@@ -197,7 +197,7 @@
 
                         //Check the job state
                         CloudJob terminatedJob = batchCli.JobOperations.GetJob(jobId);
-                        this.testOutputHelper.WriteLine("TerminatedJob state: {0}", terminatedJob.State);
+                        testOutputHelper.WriteLine("TerminatedJob state: {0}", terminatedJob.State);
                         Assert.True(terminatedJob.State == JobState.Terminating || terminatedJob.State == JobState.Completed);
 
                         if (terminatedJob.State == JobState.Terminating)
@@ -212,7 +212,7 @@
 
                         try
                         {
-                            this.testOutputHelper.WriteLine("Expected Exception: testing that job does NOT exist.");
+                            testOutputHelper.WriteLine("Expected Exception: testing that job does NOT exist.");
 
                             CloudJob deletedJob = batchCli.JobOperations.GetJob(jobId);
                             Assert.Equal(JobState.Deleting, deletedJob.State);
@@ -225,7 +225,7 @@
                             Assert.NotNull(be.RequestInformation.BatchError);
                             Assert.Equal(BatchErrorCodeStrings.JobNotFound, be.RequestInformation.BatchError.Code);
 
-                            this.testOutputHelper.WriteLine("Job was deleted successfully");
+                            testOutputHelper.WriteLine("Job was deleted successfully");
                         }
                     }
                     finally
@@ -256,10 +256,10 @@
                         CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
                         cloudJob.PoolInformation = new PoolInformation()
                         {
-                            PoolId = this.poolFixture.PoolId
+                            PoolId = poolFixture.PoolId
                         };
 
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
+                        testOutputHelper.WriteLine("Initial job schedule commit()");
                         cloudJob.Commit();
 
                         //Get the job
@@ -269,12 +269,12 @@
                         const int newJobPriority = 5;
                         OnAllTasksComplete newOnAllTasksComplete = OnAllTasksComplete.NoAction;
 
-                        this.testOutputHelper.WriteLine("Job priority is: {0}", refreshableJob.Priority);
+                        testOutputHelper.WriteLine("Job priority is: {0}", refreshableJob.Priority);
                         refreshableJob.Priority = newJobPriority;
                         refreshableJob.OnAllTasksComplete = newOnAllTasksComplete;
                         refreshableJob.Commit();
 
-                        AssertJobCorrectness(batchCli.JobOperations, jobId, ref refreshableJob, this.poolFixture.PoolId, newJobPriority, null);
+                        AssertJobCorrectness(batchCli.JobOperations, jobId, ref refreshableJob, poolFixture.PoolId, newJobPriority, null);
 
                         //Update the bound job pool name
                         //Must disable the job first before updating its pool
@@ -286,7 +286,7 @@
                         TimeSpan jobDisabledTimeout = TimeSpan.FromSeconds(120);
                         while (refreshableJob.State != JobState.Disabled)
                         {
-                            this.testOutputHelper.WriteLine("Bug1433069TestBoundJobCommit: sleeping for (refreshableJob.State != JobState.Disabled)");
+                            testOutputHelper.WriteLine("Bug1433069TestBoundJobCommit: sleeping for (refreshableJob.State != JobState.Disabled)");
                             Thread.Sleep(TimeSpan.FromSeconds(10));
                             refreshableJob = batchCli.JobOperations.GetJob(jobId);
 
@@ -340,7 +340,7 @@
                         {
                             // need a bound job/task for the tests so set one up
                             CloudJob tsh = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                            tsh.PoolInformation.PoolId = this.poolFixture.PoolId;
+                            tsh.PoolInformation.PoolId = poolFixture.PoolId;
                             tsh.Commit();
 
                             boundJob = batchCli.JobOperations.GetJob(jobId);
@@ -579,7 +579,7 @@
         private CloudJob CreateBoundJob(BatchClient client, string jobId, Action<CloudJob> jobSetup = null)
         {
             CloudJob cloudJob = client.JobOperations.CreateJob(jobId, new PoolInformation());
-            cloudJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+            cloudJob.PoolInformation.PoolId = poolFixture.PoolId;
             jobSetup?.Invoke(cloudJob);
             cloudJob.Commit();
 
@@ -655,12 +655,14 @@
 
                     const int originalPriority = 0;
                     unboundJob.Priority = originalPriority;
-                    List<MetadataItem> originalMetadata = new List<MetadataItem>();
-                    originalMetadata.Add(new MetadataItem("meta1", "value1"));
-                    originalMetadata.Add(new MetadataItem("meta2", "value2"));
+                    List<MetadataItem> originalMetadata = new List<MetadataItem>
+                    {
+                        new MetadataItem("meta1", "value1"),
+                        new MetadataItem("meta2", "value2")
+                    };
                     unboundJob.Metadata = originalMetadata;
 
-                    this.testOutputHelper.WriteLine("Creating job {0}", jobId);
+                    testOutputHelper.WriteLine("Creating job {0}", jobId);
                     unboundJob.Commit();
 
                     try
@@ -672,12 +674,11 @@
                         Assert.NotEqual(JobState.Disabled, createdJob.State);
 
                         int updatedPriority = originalPriority + 1;
-                        List<MetadataItem> updatedMetadata = new List<MetadataItem>();
-                        updatedMetadata.Add(new MetadataItem("updatedMeta1", "value1"));
+                        List<MetadataItem> updatedMetadata = new List<MetadataItem> { new MetadataItem("updatedMeta1", "value1") };
                         createdJob.Priority = updatedPriority;
                         createdJob.Metadata = updatedMetadata;
 
-                        this.testOutputHelper.WriteLine("Updating job {0} without altering PoolInformation", jobId);
+                        testOutputHelper.WriteLine("Updating job {0} without altering PoolInformation", jobId);
 
                         createdJob.Commit();
 
@@ -691,7 +692,7 @@
 
                         // Verify that updating the PoolInformation works.
                         // PoolInformation can only be changed in the Disabled state.
-                        this.testOutputHelper.WriteLine("Disabling job {0}", jobId);
+                        testOutputHelper.WriteLine("Disabling job {0}", jobId);
                         updatedJob.Disable(DisableJobOption.Terminate);
                         while (updatedJob.State != JobState.Disabled)
                         {
@@ -705,7 +706,7 @@
                         updatedJob.PoolInformation.AutoPoolSpecification.KeepAlive = updatedKeepAlive;
                         int updatedAgainPriority = updatedPriority + 1;
                         updatedJob.Priority = updatedAgainPriority;
-                        this.testOutputHelper.WriteLine("Updating job {0} properties, including PoolInformation", jobId);
+                        testOutputHelper.WriteLine("Updating job {0} properties, including PoolInformation", jobId);
                         updatedJob.Commit();
 
                         CloudJob updatedPoolInfoJob = batchCli.JobOperations.GetJob(jobId);
@@ -715,13 +716,13 @@
                     }
                     finally
                     {
-                        this.testOutputHelper.WriteLine("Deleting job {0}", jobId);
+                        testOutputHelper.WriteLine("Deleting job {0}", jobId);
                         TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
 
                         // Explicitly delete auto pool
                         foreach (CloudPool pool in batchCli.PoolOperations.ListPools(new ODATADetailLevel(filterClause: string.Format("startswith(id,'{0}')", autoPoolPrefix))))
                         {
-                            this.testOutputHelper.WriteLine("Deleting pool {0}", pool.Id);
+                            testOutputHelper.WriteLine("Deleting pool {0}", pool.Id);
                             TestUtilities.DeletePoolIfExistsAsync(batchCli, pool.Id).Wait();
                         }
                     }
@@ -760,14 +761,14 @@
 
                         CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, poolInfo);
 
-                        this.testOutputHelper.WriteLine("Commiting quickjob");
+                        testOutputHelper.WriteLine("Commiting quickjob");
                         unboundJob.Commit();
 
                         CloudTask task = new CloudTask("Bug1965363Wat7OSVersionFeaturesQuickJobWithAutoPoolTask", "cmd /c echo Bug1965363");
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
                         boundJob.AddTask(task);
 
-                        this.testOutputHelper.WriteLine("Getting pool name: {0}", boundJob.ExecutionInformation.PoolId);
+                        testOutputHelper.WriteLine("Getting pool name: {0}", boundJob.ExecutionInformation.PoolId);
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(boundJob.ExecutionInformation.PoolId);
                         TaskStateMonitor tsm = batchCli.Utilities.CreateTaskStateMonitor();
@@ -776,7 +777,7 @@
                         // we know that the autopool compute nodes will take a long time to become scheduleable so we slow down polling/spam
                         odControl.DelayBetweenDataFetch = TimeSpan.FromSeconds(5);
 
-                        this.testOutputHelper.WriteLine("Invoking TaskStateMonitor");
+                        testOutputHelper.WriteLine("Invoking TaskStateMonitor");
 
                         tsm.WaitAll(
                             boundJob.ListTasks(),
@@ -787,14 +788,14 @@
                                 // spam/logging interceptor
                                 new Protocol.RequestInterceptor((x) =>
                                 {
-                                    this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+                                    testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
                                     // print out the compute node states... we are actually waiting on the compute nodes
                                     List<ComputeNode> allComputeNodes = boundPool.ListComputeNodes().ToList();
-                                    this.testOutputHelper.WriteLine("    #comnpute nodes: " + allComputeNodes.Count);
+                                    testOutputHelper.WriteLine("    #comnpute nodes: " + allComputeNodes.Count);
 
-                                    allComputeNodes.ForEach((icn) => { this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State); });
-                                    this.testOutputHelper.WriteLine("");
+                                    allComputeNodes.ForEach((icn) => { testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State); });
+                                    testOutputHelper.WriteLine("");
                                 })
                             });
 
@@ -836,20 +837,18 @@
                         CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
 
                         string capturedEtag1 = boundJob.ETag;
-                        this.testOutputHelper.WriteLine("Etag is: {0}", capturedEtag1);
+                        testOutputHelper.WriteLine("Etag is: {0}", capturedEtag1);
                         Assert.NotNull(capturedEtag1);
 
                         boundJob.Constraints = new JobConstraints(TimeSpan.FromMinutes(60), 0);
 
-                        BatchClientBehavior updateInterceptor = new Protocol.RequestInterceptor(
-                            (req) =>
-                                {
-                                    var typedParams = req.Options as Protocol.Models.JobUpdateOptions;
-                                    if (typedParams != null)
-                                    {
-                                        typedParams.IfMatch = capturedEtag1;
-                                    }
-                                });
+                        BatchClientBehavior updateInterceptor = new Protocol.RequestInterceptor(req =>
+                        {
+                            if (req.Options is Protocol.Models.JobUpdateOptions typedParams)
+                            {
+                                typedParams.IfMatch = capturedEtag1;
+                            }
+                        });
 
                         //Update bound job with if-match header, it should succeed
                         boundJob.Commit(additionalBehaviors: new[] { updateInterceptor });
@@ -860,7 +859,7 @@
 
                         //Update bound job with if-match header, it should fail
                         Exception e = TestUtilities.AssertThrows<BatchException>(() => boundJob.Commit(additionalBehaviors: new[] { updateInterceptor }));
-                        TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(e, BatchErrorCodeStrings.ConditionNotMet, this.testOutputHelper);
+                        TestUtilities.AssertIsBatchExceptionAndHasCorrectAzureErrorCode(e, BatchErrorCodeStrings.ConditionNotMet, testOutputHelper);
                     }
                     finally
                     {
