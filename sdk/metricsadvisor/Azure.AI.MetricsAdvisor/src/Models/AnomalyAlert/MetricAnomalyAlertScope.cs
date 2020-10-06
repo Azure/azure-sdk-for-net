@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that identifies the group of fixed time series that constitutes this scope. A subset of the possible
-        /// dimensions for the associated data feed must be set. This property is set when <see cref="ScopeType"/>
+        /// dimensions of the associated data feed must be set. This property is set when <see cref="ScopeType"/>
         /// is <see cref="MetricAnomalyAlertScopeType.SeriesGroup"/>.
         /// </summary>
         public DimensionKey SeriesGroupInScope { get; }
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Creates a <see cref="MetricAnomalyAlertScope"/> instance that has a fixed group of time series as the scope.
         /// </summary>
-        /// <param name="seriesGroupKey">The key that identifies the group of fixed time series that constitutes the scope. A subset of the possible dimensions for the associated data feed must be set.</param>
+        /// <param name="seriesGroupKey">The key that identifies the group of fixed time series that constitutes the scope. A subset of the possible dimensions of the associated data feed must be set.</param>
         /// <returns>A new <see cref="MetricAnomalyAlertScope"/> instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="seriesGroupKey"/> is null.</exception>
         public static MetricAnomalyAlertScope GetScopeForSeriesGroup(DimensionKey seriesGroupKey)

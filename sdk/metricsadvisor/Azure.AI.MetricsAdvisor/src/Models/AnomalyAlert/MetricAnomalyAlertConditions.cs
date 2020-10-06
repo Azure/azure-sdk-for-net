@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class MetricAnomalyAlertConditions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyAlertConditions"/> class.
+        /// Initializes a new instance of the <see cref="MetricAnomalyAlertConditions"/> class.
         /// </summary>
         public MetricAnomalyAlertConditions()
         {

@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class DataFeedIngestionSettings
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedIngestionSettings"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedIngestionSettings"/> class.
         /// </summary>
         /// <param name="ingestionStartTime">The starting point in time from which data will be ingested from the data source. Subsequent ingestions happen periodically according to the specified <see cref="DataFeedGranularity"/>.</param>
         public DataFeedIngestionSettings(DateTimeOffset ingestionStartTime)

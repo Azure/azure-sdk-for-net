@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SmartDetectionCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="HardThresholdCondition"/> class.
+        /// Initializes a new instance of the <see cref="HardThresholdCondition"/> class.
         /// </summary>
         /// <param name="sensitivity"> sensitivity, value range : (0, 100]. </param>
         /// <param name="anomalyDetectorDirection"> detection direction. </param>

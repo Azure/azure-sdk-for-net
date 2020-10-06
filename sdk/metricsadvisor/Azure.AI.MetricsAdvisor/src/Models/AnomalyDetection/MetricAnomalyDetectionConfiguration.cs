@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<MetricSeriesGroupAnomalyDetectionConditions> _seriesGroupDetectionConditions;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyDetectionConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MetricAnomalyDetectionConfiguration"/> class.
         /// </summary>
         /// <param name="metricId">The identifier of the metric to which this configuration applies.</param>
         /// <param name="name">A custom name for this <see cref="MetricAnomalyDetectionConfiguration"/> to be displayed on the web portal.</param>

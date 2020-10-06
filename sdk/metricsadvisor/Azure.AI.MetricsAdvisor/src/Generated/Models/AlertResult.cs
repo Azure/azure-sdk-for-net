@@ -35,14 +35,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             CreatedTime = createdTime;
             ModifiedTime = modifiedTime;
         }
-
-        /// <summary> alert id. </summary>
-        public string AlertId { get; }
-        /// <summary> anomaly time. </summary>
-        public DateTimeOffset Timestamp { get; }
-        /// <summary> created time. </summary>
-        public DateTimeOffset CreatedTime { get; }
-        /// <summary> modified time. </summary>
-        public DateTimeOffset ModifiedTime { get; }
     }
 }

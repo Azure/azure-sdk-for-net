@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyAlertSnoozeCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyAlertSnoozeCondition"/> class.
+        /// Initializes a new instance of the <see cref="MetricAnomalyAlertSnoozeCondition"/> class.
         /// </summary>
         /// <param name="autoSnooze">The number of data points to be ingested before alerts are enabled again.</param>
         /// <param name="snoozeScope">Defines the set of time series to which this <see cref="MetricAnomalyAlertSnoozeCondition"/> applies.</param>

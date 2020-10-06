@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<MetricDimension> _dimensionColumns;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedSchema"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedSchema"/> class.
         /// </summary>
         /// <param name="metricColumns">The metrics ingested from the data feed. The values of these metrics are monitored in search of anomalies. Cannot be empty.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricColumns"/> is null.</exception>

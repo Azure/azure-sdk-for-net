@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SeverityCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="SeverityCondition"/> class.
+        /// Initializes a new instance of the <see cref="SeverityCondition"/> class.
         /// </summary>
         /// <param name="minimumAlertSeverity">The minimum severity an anomaly must have to trigger alerts.</param>
         /// <param name="maximumAlertSeverity">The maximum severity an anomaly must have to trigger alerts.</param>

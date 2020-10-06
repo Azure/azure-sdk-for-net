@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class ChangeThresholdCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="ChangeThresholdCondition"/> class.
+        /// Initializes a new instance of the <see cref="ChangeThresholdCondition"/> class.
         /// </summary>
         /// <param name="changePercentage">The relative change. </param>
         /// <param name="shiftPoint">When set to N, sets as reference the data point that's N positions before the current point. Value must be at least 1.</param>

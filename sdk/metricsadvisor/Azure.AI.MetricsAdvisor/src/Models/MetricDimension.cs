@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricDimension
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricDimension"/> class.
+        /// Initializes a new instance of the <see cref="MetricDimension"/> class.
         /// </summary>
         /// <param name="dimensionName">The name of the data source's column to be used as a dimension. Values of this dimension will be read only from the specified column.</param>
         /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is null.</exception>

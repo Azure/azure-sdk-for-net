@@ -15,9 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSingleSeriesAnomalyDetectionConditions : MetricAnomalyDetectionConditions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricSingleSeriesAnomalyDetectionConditions"/> class.
+        /// Initializes a new instance of the <see cref="MetricSingleSeriesAnomalyDetectionConditions"/> class.
         /// </summary>
-        /// <param name="seriesKey">The key that uniquely identifies the time series to which these conditions apply within a metric. All possible dimension values for the associated data feed must be set.</param>
+        /// <param name="seriesKey">The key that uniquely identifies the time series to which these conditions apply within a metric. Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="seriesKey"/> is null.</exception>
         public MetricSingleSeriesAnomalyDetectionConditions(DimensionKey seriesKey)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that uniquely identifies the time series to which these conditions apply within a metric.
-        /// All possible dimensions for the associated data feed must be set.
+        /// Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.
         /// </summary>
         public DimensionKey SeriesKey { get; }
 
