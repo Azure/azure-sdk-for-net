@@ -19,7 +19,5 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public const string _10minutely = "_10minutely";
         public const string Hourly = "hourly";
         public const string Daily = "daily";
-        public const string Weekly = "weekly";
-        public const string Monthly = "monthly";
     }
 }
