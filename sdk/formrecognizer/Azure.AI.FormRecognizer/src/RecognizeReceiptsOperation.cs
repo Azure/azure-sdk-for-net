@@ -208,7 +208,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<RecognizedForm> receipts = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                receipts.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
+                receipts.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
             }
             return new RecognizedFormCollection(receipts);
         }

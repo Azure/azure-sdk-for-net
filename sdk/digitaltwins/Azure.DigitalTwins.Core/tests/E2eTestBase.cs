@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
         }
 
         protected DigitalTwinsClient GetFakeClient()
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     new FakeTokenCredential(),
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
         }
 
         public async Task<string> GetUniqueModelIdAsync(DigitalTwinsClient dtClient, string baseName)

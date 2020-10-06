@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Core.TestFramework;
 using Azure.Extensions.AspNetCore.DataProtection.Keys.Tests;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys;
@@ -16,17 +17,16 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
-    public class DataProtectionKeysFunctionalTests
+    public class DataProtectionKeysFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
-        [Category("Live")]
         public async Task ProtectsKeysWithKeyVaultKey()
         {
             var credential = new ClientSecretCredential(
-                DataProtectionTestEnvironment.Instance.TenantId,
-                DataProtectionTestEnvironment.Instance.ClientId,
-                DataProtectionTestEnvironment.Instance.ClientSecret);
-            var client = new KeyClient(new Uri(DataProtectionTestEnvironment.Instance.KeyVaultUrl), credential);
+                TestEnvironment.TenantId,
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret);
+            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey", KeyType.Rsa);
 
             var serviceCollection = new ServiceCollection();
@@ -60,14 +60,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        [Category("Live")]
         public async Task CanUprotectExistingKeys()
         {
             var credential = new ClientSecretCredential(
-                DataProtectionTestEnvironment.Instance.TenantId,
-                DataProtectionTestEnvironment.Instance.ClientId,
-                DataProtectionTestEnvironment.Instance.ClientSecret);
-            var client = new KeyClient(new Uri(DataProtectionTestEnvironment.Instance.KeyVaultUrl), credential);
+                TestEnvironment.TenantId,
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret);
+            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey2", KeyType.Rsa);
 
             var serviceCollection = new ServiceCollection();
@@ -77,8 +76,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             AzureDataProtectionBuilderExtensions.ProtectKeysWithAzureKeyVault(
                 serviceCollection.AddDataProtection(),
                 key.Value.Id.AbsoluteUri,
-                DataProtectionTestEnvironment.Instance.ClientId,
-                DataProtectionTestEnvironment.Instance.ClientSecret);
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret);
 
             serviceCollection.Configure<KeyManagementOptions>(options =>
             {
