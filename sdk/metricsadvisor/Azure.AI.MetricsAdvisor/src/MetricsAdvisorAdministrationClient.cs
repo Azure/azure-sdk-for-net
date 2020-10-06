@@ -351,12 +351,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        ///
+        /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="dataFeed"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
+        /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -381,12 +385,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// ///
+        /// Updates an existing <see cref="DataFeed"/>.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="dataFeed"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The Id of the existing <see cref="DataFeed"/> to update.</param>
+        /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -804,7 +812,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
@@ -837,7 +847,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfigurationId">The Id of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
@@ -1053,8 +1065,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
-        /// instance containing the requested information.
+        /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
@@ -1089,8 +1100,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
-        /// instance containing the requested information.
+        /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
@@ -1349,7 +1359,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Updates an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateHookAsync(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
@@ -1377,7 +1396,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Updates an existing <see cref="AlertingHook"/>.
         /// </summary>
+        /// <param name="hookId">The Id of the existing <see cref="AlertingHook"/> to update.</param>
+        /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
