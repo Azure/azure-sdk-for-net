@@ -100,9 +100,7 @@ Summary:
 
 #### Connection string
 
-The following code assumes you have acquired your connection string (you can do so from the Access Keys tab under Settings in your Portal Storage Account blade). It is recommended to store it in an environment variable.
-
-Parsing the connection string in v11 vs v12.....
+The following code assumes you have acquired your connection string (you can do so from the Access Keys tab under Settings in your Portal Storage Account blade). It is recommended to store it in an environment variable. Below demonstrates how to parse the connection string in v11 vs v12.
 
 Legacy (v11)
 ```csharp
