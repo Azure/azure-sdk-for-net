@@ -2433,6 +2433,33 @@ namespace Azure.Storage.Files.Shares.Test
             TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
 
+        [Test]
+        public async Task UploadAsync_MaximumTransferSize()
+        {
+            const int size = 4 * Constants.KB;
+            var data = GetRandomBuffer(size);
+
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareFileClient file = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            await file.CreateAsync(size);
+            using Stream stream = new MemoryStream(data);
+            ShareFileUploadOptions options = new ShareFileUploadOptions
+            {
+                TransferOptions = new StorageTransferOptions
+                {
+                    MaximumTransferSize = Constants.KB
+                }
+            };
+
+            await file.UploadAsync(stream, options);
+
+            using MemoryStream bufferedContent = new MemoryStream();
+            Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync();
+            await downloadResponse.Value.Content.CopyToAsync(bufferedContent);
+            TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
+        }
+
         public async Task ClearRangeAsync()
         {
             await using DisposingFile test = await GetTestFileAsync();
