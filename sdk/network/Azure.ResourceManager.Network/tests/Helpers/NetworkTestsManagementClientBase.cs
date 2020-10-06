@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions())));
+                 InstrumentClientOptions(new StorageManagementClientOptions())));
         }
 
         private ComputeManagementClient GetComputeManagementClient()
         {
             return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new ComputeManagementClientOptions())));
+                 InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
         private NetworkManagementClient GetNetworkManagementClient()
         {
             return InstrumentClient(new NetworkManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new NetworkManagementClientOptions())));
+                 InstrumentClientOptions(new NetworkManagementClientOptions())));
         }
 
         public async Task CreateVm(

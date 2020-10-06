@@ -25,9 +25,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> anomaly detection configuration description. </summary>
         public string Description { get; set; }
         public MetricAnomalyDetectionConditions WholeMetricConfiguration { get; set; }
-        /// <summary> detection configuration for series group. </summary>
-        public IList<MetricSeriesGroupAnomalyDetectionConditions> DimensionGroupOverrideConfigurations { get; }
-        /// <summary> detection configuration for specific series. </summary>
-        public IList<MetricSingleSeriesAnomalyDetectionConditions> SeriesOverrideConfigurations { get; }
     }
 }

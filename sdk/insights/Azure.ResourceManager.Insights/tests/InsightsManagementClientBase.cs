@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Insights.Tests
 
         protected InsightsManagementClient GetInsightsManagementClient()
         {
-            var options = Recording.InstrumentClientOptions(new InsightsManagementClientOptions());
+            var options = InstrumentClientOptions(new InsightsManagementClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 

@@ -1630,7 +1630,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Partition.PartitionId == partitions[0])
                     {
-                        receivedEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
+                        receivedEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToBytes().ToArray()));
                     }
 
                     ++actualCount;
@@ -1646,7 +1646,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualCount, Is.EqualTo(expectedEventCount), "The received event count should match the published events.");
 
             var expectedEvents = events
-              .Select(item => Encoding.UTF8.GetString(item.Body.ToArray()))
+              .Select(item => Encoding.UTF8.GetString(item.EventBody.ToBytes().ToArray()))
               .OrderBy(item => item);
 
             Assert.That(receivedEvents.OrderBy(item => item), Is.EquivalentTo(expectedEvents), "The received events should match the published events.");
@@ -1687,7 +1687,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (partitionEvent.Partition.PartitionId == partitions[0])
                         {
-                            firstSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
+                            firstSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToBytes().ToArray()));
                         }
 
                         ++firstSubscriberCount;
@@ -1711,7 +1711,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (partitionEvent.Partition.PartitionId == partitions[0])
                         {
-                            secondSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
+                            secondSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToBytes().ToArray()));
                         }
 
                         ++secondSubcriberCount;
@@ -1741,7 +1741,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ToList();
 
             var expectedEvents = events
-              .Select(item => Encoding.UTF8.GetString(item.Body.ToArray()))
+              .Select(item => Encoding.UTF8.GetString(item.EventBody.ToBytes().ToArray()))
               .OrderBy(item => item)
               .ToList();
 
@@ -1799,12 +1799,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var receivedEventMessages = new HashSet<string>();
 
-            foreach (var message in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var message in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.EventBody.ToBytes().ToArray())))
             {
                 receivedEventMessages.Add(message);
             }
 
-            foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.EventBody.ToBytes().ToArray())))
             {
                 Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: { sourceMessage } was not received.");
             }
@@ -2153,7 +2153,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < events.Count; ++index)
             {
-                Assert.That(events[index].Body.ToArray().Single(), Is.EqualTo(publishedEvents[index].Body.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+                Assert.That(events[index].EventBody.ToBytes().ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToBytes().ToArray().Single()), $"The payload for index: { index } should match the event source.");
             }
         }
 
@@ -2233,7 +2233,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < forceErrorAt; ++index)
             {
-                Assert.That(events[index].Body.ToArray().Single(), Is.EqualTo(publishedEvents[index].Body.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+                Assert.That(events[index].EventBody.ToBytes().ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToBytes().ToArray().Single()), $"The payload for index: { index } should match the event source.");
             }
         }
 

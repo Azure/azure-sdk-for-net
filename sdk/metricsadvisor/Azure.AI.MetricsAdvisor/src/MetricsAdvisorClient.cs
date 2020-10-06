@@ -371,7 +371,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="metricId"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
@@ -425,7 +425,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="metricId"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
@@ -475,12 +475,16 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets a collection of <see cref="MetricFeedback"/>s related to the given metric.
         /// </summary>
-        /// <param name="metricId"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="metricId">The Id of the metric.</param>
+        /// <param name="options">The optional <see cref="GetMetricFeedbacksOptions"/> containing the options to apply to the request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksAsync(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
@@ -536,11 +540,16 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets a collection of <see cref="MetricFeedback"/>s related to the given metric.
         /// </summary>
-        /// <param name="metricId"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="metricId">The Id of the metric.</param>
+        /// <param name="options">The optional <see cref="GetMetricFeedbacksOptions"/> containing the options to apply to the request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Pageable{T}"/> containing the collection of <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         /// <returns></returns>
         public virtual Pageable<MetricFeedback> GetMetricFeedbacks(string metricId, GetMetricFeedbacksOptions options = default, CancellationToken cancellationToken = default)
         {
@@ -597,11 +606,14 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
-        /// <param name="feedback"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
@@ -625,11 +637,14 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
-        /// <param name="feedback"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
@@ -653,15 +668,17 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="MetricFeedback"/>.
         /// </summary>
-        /// <param name="feedbackId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="feedbackId">The Id of the <see cref="MetricFeedback"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(string feedbackId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
-
             Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
@@ -679,15 +696,17 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="MetricFeedback"/>.
         /// </summary>
-        /// <param name="feedbackId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="feedbackId">The Id of the <see cref="MetricFeedback"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
         public virtual Response<MetricFeedback> GetMetricFeedback(string feedbackId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
-
             Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricFeedback)}");
