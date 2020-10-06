@@ -785,7 +785,7 @@
                             odControl,
                             new[] {
                                 // spam/logging interceptor
-                                new Microsoft.Azure.Batch.Protocol.RequestInterceptor((x) =>
+                                new Protocol.RequestInterceptor((x) =>
                                 {
                                     this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 

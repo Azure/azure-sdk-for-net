@@ -68,7 +68,7 @@
                         Bug957878ReplacementInterceptorBox box0 = new Bug957878ReplacementInterceptorBox(this.testOutputHelper);
 
                         foreach (CloudTask curTask in theJob.ListTasks(additionalBehaviors: new[] {
-                            new Microsoft.Azure.Batch.Protocol.RequestReplacementInterceptor(box0.Bug957878RequestReplacementInterceptorOpContextFactory)}))
+                            new Protocol.RequestReplacementInterceptor(box0.Bug957878RequestReplacementInterceptorOpContextFactory)}))
                         {
                             numTasksSeen++;
 

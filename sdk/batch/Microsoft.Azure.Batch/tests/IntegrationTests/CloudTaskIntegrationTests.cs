@@ -151,7 +151,7 @@
 
                             CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks())[0];
 
-                            Assert.Equal<TaskState?>(TaskState.Completed, myCompletedTask.State);
+                            Assert.Equal(TaskState.Completed, myCompletedTask.State);
 
                             Assert.NotNull(myCompletedTask.MultiInstanceSettings);
                             Assert.Equal(3, myCompletedTask.MultiInstanceSettings.NumberOfInstances);
@@ -1175,8 +1175,7 @@
                         BatchClientBehavior interceptor = new Protocol.RequestInterceptor(
                             (req) =>
                             {
-                                var typedParams = req.Options as Protocol.Models.TaskUpdateOptions;
-                                if (typedParams != null)
+                                if (req.Options is Protocol.Models.TaskUpdateOptions typedParams)
                                 {
                                     typedParams.IfMatch = capturedEtag1;
                                 }
@@ -1190,8 +1189,7 @@
                         interceptor = new Protocol.RequestInterceptor(
                             (req) =>
                             {
-                                var typedParams = req.Options as Protocol.Models.TaskTerminateOptions;
-                                if (typedParams != null)
+                                if (req.Options is Protocol.Models.TaskTerminateOptions typedParams)
                                 {
                                     typedParams.IfMatch = capturedEtag1;
                                 }

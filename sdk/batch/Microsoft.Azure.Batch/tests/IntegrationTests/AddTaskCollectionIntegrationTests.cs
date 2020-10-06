@@ -21,6 +21,7 @@
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;
+    using Microsoft.Azure.Batch.Protocol.BatchRequests;
 
     public class AddTaskCollectionIntegrationTests
     {
@@ -237,7 +238,7 @@
 
             BatchClientBehavior customBehavior = new Protocol.RequestInterceptor(request =>
             {
-                var typedRequest = request as Protocol.BatchRequests.TaskAddCollectionBatchRequest;
+                TaskAddCollectionBatchRequest typedRequest = request as TaskAddCollectionBatchRequest;
 
                 if (typedRequest != null)
                 {
@@ -303,7 +304,7 @@
                                     CancellationToken = source.Token
                                 };
 
-                            System.Threading.Tasks.Task t = this.AddTasksSimpleTestAsync(
+                            Task t = this.AddTasksSimpleTestAsync(
                                 batchCli,
                                 testName,
                                 taskCount,
@@ -517,7 +518,7 @@
             int degreesOfParallelism = 2;
             BatchClientBehavior customBehavior = new Protocol.RequestInterceptor(request =>
             {
-                var typedRequest = request as Protocol.BatchRequests.TaskAddCollectionBatchRequest;
+                var typedRequest = request as TaskAddCollectionBatchRequest;
                 if (typedRequest != null)
                 {
                     if(typedRequest.Parameters.Count > 50)
@@ -595,7 +596,7 @@
         /// Performs a simple AddTask test, adding the specified task count using the specified parallelOptions and resultHandlerFunc
         /// </summary>
         /// <returns></returns>
-        private async System.Threading.Tasks.Task AddTasksSimpleTestAsync(
+        private async Task AddTasksSimpleTestAsync(
             BatchClient batchCli,
             string testName,
             int taskCount,

@@ -77,7 +77,7 @@
                             req.Timeout = TimeSpan.FromMilliseconds(25);
 
                             var castRequest = (JobGetBatchRequest)req;
-                            Func<CancellationToken, Task<AzureOperationResponse<Microsoft.Azure.Batch.Protocol.Models.CloudJob, Microsoft.Azure.Batch.Protocol.Models.JobGetHeaders>>> oldFunc = castRequest.ServiceRequestFunc;
+                            Func<CancellationToken, Task<AzureOperationResponse<Microsoft.Azure.Batch.Protocol.Models.CloudJob, JobGetHeaders>>> oldFunc = castRequest.ServiceRequestFunc;
                             castRequest.ServiceRequestFunc = async (token) =>
                                                                    {
                                                                        actualRequestCount++; //Count the number of calls to the func

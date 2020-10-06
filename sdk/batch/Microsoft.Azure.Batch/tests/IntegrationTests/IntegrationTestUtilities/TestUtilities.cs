@@ -170,15 +170,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                 theOneInner = ae.InnerExceptions[0];
             }
 
-            if (!(theOneInner is Microsoft.Azure.Batch.Common.BatchException))
+            if (!(theOneInner is BatchException))
             {
                  outputHelper.WriteLine(string.Format("AssertIsBatchExceptionAndHasCorrectAzureErrorCode: incorrect exception: {0}", ex.ToString()));
             }
 
             // it must have the correct type
-            Assert.IsAssignableFrom<Microsoft.Azure.Batch.Common.BatchException>(theOneInner);
+            Assert.IsAssignableFrom<BatchException>(theOneInner);
 
-            Microsoft.Azure.Batch.Common.BatchException be = (Microsoft.Azure.Batch.Common.BatchException)theOneInner;
+            BatchException be = (BatchException)theOneInner;
 
             // whew we got it!  check the message
             Assert.Equal(expected: correctCode, actual: be.RequestInformation.BatchError.Code);

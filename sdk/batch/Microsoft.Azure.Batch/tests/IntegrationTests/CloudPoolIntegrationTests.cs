@@ -576,7 +576,7 @@ namespace BatchClientIntegrationTests
                     TestListPoolUsageMetricsFakesYieldInjector injectsTheFakeData = new TestListPoolUsageMetricsFakesYieldInjector(pums);
 
                     // trigger the call and get our own data back to be tested
-                    List<Microsoft.Azure.Batch.PoolUsageMetrics> clList = batchCli.PoolOperations.ListPoolUsageMetrics(additionalBehaviors: new[] { injectsTheFakeData }).ToList();
+                    List<PoolUsageMetrics> clList = batchCli.PoolOperations.ListPoolUsageMetrics(additionalBehaviors: new[] { injectsTheFakeData }).ToList();
 
                     // test that our data are honored
 

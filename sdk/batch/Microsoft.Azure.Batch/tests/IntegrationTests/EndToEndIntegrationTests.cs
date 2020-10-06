@@ -98,7 +98,7 @@
                                 new[]
                         {
                             // spam/logging interceptor
-                            new Microsoft.Azure.Batch.Protocol.RequestInterceptor((x) =>
+                            new RequestInterceptor((x) =>
                             {
                                 this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
@@ -321,7 +321,7 @@
                     {
                         string requestId = null;
                         //Set up an interceptor to read RequestId from all responses
-                        Microsoft.Azure.Batch.Protocol.ResponseInterceptor responseInterceptor = new ResponseInterceptor(
+                        ResponseInterceptor responseInterceptor = new ResponseInterceptor(
                             (response, request) =>
                                 {
                                     requestId = response.RequestId;
@@ -348,10 +348,10 @@
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
                     Guid myClientRequestid = Guid.NewGuid();
-                    Microsoft.Azure.Batch.Protocol.RequestInterceptor clientRequestIdGenerator = new ClientRequestIdProvider(
+                    RequestInterceptor clientRequestIdGenerator = new ClientRequestIdProvider(
                         request => myClientRequestid);
 
-                    Microsoft.Azure.Batch.Protocol.RequestInterceptor setReturnClientRequestId = new RequestInterceptor(
+                    RequestInterceptor setReturnClientRequestId = new RequestInterceptor(
                         request =>
                             {
                                 request.Options.ReturnClientRequestId = true;

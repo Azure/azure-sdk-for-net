@@ -127,7 +127,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
                 {
-                    Microsoft.Azure.Batch.Protocol.RequestInterceptor interceptor = new Microsoft.Azure.Batch.Protocol.RequestInterceptor();
+                    Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor();
                     batchCli.PoolOperations.CustomBehaviors.Add(interceptor);
 
                     List<ComputeNode> computeNodeList = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
@@ -610,7 +610,7 @@ namespace BatchClientIntegrationTests
                                         condition: () => Task.FromResult(victim.SchedulingState.HasValue && (SchedulingState.Disabled == victim.SchedulingState)),
                                         timeout: refreshPollingTimeout).ConfigureAwait(false);
 
-                                Assert.Equal<SchedulingState?>(SchedulingState.Disabled, victim.SchedulingState);
+                                Assert.Equal(SchedulingState.Disabled, victim.SchedulingState);
 
                                 // enable task scheduling
                                 batchCli.PoolOperations.EnableComputeNodeScheduling(pool.Id, victim.Id);
@@ -620,7 +620,7 @@ namespace BatchClientIntegrationTests
                                         condition: () => Task.FromResult(victim.SchedulingState.HasValue && (SchedulingState.Enabled == victim.SchedulingState)),
                                         timeout: refreshPollingTimeout);
 
-                                Assert.Equal<SchedulingState?>(SchedulingState.Enabled, victim.SchedulingState);
+                                Assert.Equal(SchedulingState.Enabled, victim.SchedulingState);
                             }
 
                             // ComputeNode methods
@@ -634,7 +634,7 @@ namespace BatchClientIntegrationTests
                                         condition: () => Task.FromResult(victim.SchedulingState.HasValue && (SchedulingState.Disabled == victim.SchedulingState)),
                                         timeout: refreshPollingTimeout).ConfigureAwait(false);
 
-                                Assert.Equal<SchedulingState?>(SchedulingState.Disabled, victim.SchedulingState);
+                                Assert.Equal(SchedulingState.Disabled, victim.SchedulingState);
 
                                 // enable task scheduling
 
@@ -645,7 +645,7 @@ namespace BatchClientIntegrationTests
                                         condition: () => Task.FromResult(victim.SchedulingState.HasValue && (SchedulingState.Enabled == victim.SchedulingState)),
                                         timeout: refreshPollingTimeout).ConfigureAwait(false);
 
-                                Assert.Equal<SchedulingState?>(SchedulingState.Enabled, victim.SchedulingState);
+                                Assert.Equal(SchedulingState.Enabled, victim.SchedulingState);
 
                                 // now test azureerror code for: NodeAlreadyInTargetSchedulingState
                                 bool gotCorrectException = false;
