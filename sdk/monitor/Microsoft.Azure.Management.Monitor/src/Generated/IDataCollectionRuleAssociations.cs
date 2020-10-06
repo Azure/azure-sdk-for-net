@@ -16,15 +16,15 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DataCollectionRules operations.
+    /// DataCollectionRuleAssociations operations.
     /// </summary>
-    public partial interface IDataCollectionRules
+    public partial interface IDataCollectionRuleAssociations
     {
         /// <summary>
-        /// Lists all data collection rules in the specified resource group.
+        /// Lists associations for the specified resource.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,28 +41,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleResourceListResult>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all data collection rules in the specified subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleResourceListResult>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns the specified data collection rule.
+        /// Lists associations for the specified data collection rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -85,15 +66,40 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleResource>> GetWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a data collection rule.
+        /// Returns the specified association.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='dataCollectionRuleName'>
-        /// The name of the data collection rule. The name is case insensitive.
+        /// <param name='associationName'>
+        /// The name of the association.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResource>> GetWithHttpMessagesAsync(string resourceUri, string associationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates an association.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='associationName'>
+        /// The name of the association.
         /// </param>
         /// <param name='body'>
         /// The payload
@@ -113,43 +119,15 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, DataCollectionRuleResource body = default(DataCollectionRuleResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResource>> CreateWithHttpMessagesAsync(string resourceUri, string associationName, DataCollectionRuleAssociationProxyOnlyResource body = default(DataCollectionRuleAssociationProxyOnlyResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates part of a data collection rule.
+        /// Deletes an association.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='dataCollectionRuleName'>
-        /// The name of the data collection rule. The name is case insensitive.
-        /// </param>
-        /// <param name='body'>
-        /// The payload
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, ResourceForUpdate body = default(ResourceForUpdate), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a data collection rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='dataCollectionRuleName'>
-        /// The name of the data collection rule. The name is case insensitive.
+        /// <param name='associationName'>
+        /// The name of the association.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -163,6 +141,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceUri, string associationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

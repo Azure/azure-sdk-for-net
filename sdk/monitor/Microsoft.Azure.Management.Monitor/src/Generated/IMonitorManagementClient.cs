@@ -198,5 +198,10 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets the IDataCollectionRules.
         /// </summary>
         IDataCollectionRules DataCollectionRules { get; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRuleAssociations.
+        /// </summary>
+        IDataCollectionRuleAssociations DataCollectionRuleAssociations { get; }
     }
 }

@@ -105,36 +105,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (ExtensionName != null)
-            {
-                if (ExtensionName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ExtensionName", 64);
-                }
-                if (ExtensionName.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ExtensionName", 0);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(ExtensionName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "ExtensionName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            if (Name != null)
-            {
-                if (Name.Length > 32)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 32);
-                }
-                if (Name.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Name", 0);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
         }
     }
 }

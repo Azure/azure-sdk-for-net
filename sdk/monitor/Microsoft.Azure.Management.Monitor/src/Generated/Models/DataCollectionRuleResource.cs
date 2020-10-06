@@ -158,13 +158,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
-            if (Description != null)
-            {
-                if (Description.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
-                }
-            }
             if (DataFlows != null)
             {
                 foreach (var element in DataFlows)
