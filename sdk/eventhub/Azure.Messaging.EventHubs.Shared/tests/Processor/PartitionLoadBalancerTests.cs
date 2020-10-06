@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const string ConsumerGroup = "consumerGroup";
 
         /// <summary>
-        ///   Verifies that partitions owned by a <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another loadbalancer
+        ///   Verifies that partitions owned by a <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another load balancer
         ///   after StopAsync is called.
         /// </summary>
         ///
@@ -36,10 +36,8 @@ namespace Azure.Messaging.EventHubs.Tests
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadbalancer1 = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
-            var loadbalancer2 = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadbalancer1 = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
+            var loadbalancer2 = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -94,8 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadbalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -127,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -168,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
             var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
 
             // Create partitions owned by a different load balancer.
@@ -227,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
             var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
 
             // Create partitions owned by a different load balancer.
@@ -287,7 +284,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create partitions owned by this load balancer.
 
@@ -352,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create partitions owned by this load balancer.
 
@@ -391,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByloadbalancer3.Count(), Is.GreaterThan(MaximumpartitionCount));
 
-            // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
+            // Start the load balancer to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a load balancer owns > MaximumPartitionCount.
 
             await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
 
@@ -424,7 +421,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create more partitions owned by this load balancer.
 
@@ -494,7 +491,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -551,7 +548,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var mockStorageManager = new Mock<InMemoryStorageManager>() { CallBase = true };
-            var loadBalancer = new PartitionLoadBalancer(mockStorageManager.Object, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(mockStorageManager.Object, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -619,7 +616,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var otherLoadBalancerIdentifier = Guid.NewGuid().ToString();
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Ownership should start empty.
 
@@ -683,7 +680,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
-                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+                storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(10));
 
             // Create more partitions owned by a different load balancer.
 
