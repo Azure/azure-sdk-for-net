@@ -162,7 +162,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="DataFeed"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DataFeed"/> items.</returns>
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
@@ -216,7 +216,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="DataFeed"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DataFeed"/> items.</returns>
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
@@ -274,7 +274,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
         /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
         /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">A set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
@@ -316,7 +316,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
         /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
         /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">A set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
@@ -1539,7 +1539,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
         /// </summary>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AlertingHook"/> items.</returns>
         public virtual AsyncPageable<AlertingHook> GetHooksAsync(GetHooksOptions options = default, CancellationToken cancellationToken = default)

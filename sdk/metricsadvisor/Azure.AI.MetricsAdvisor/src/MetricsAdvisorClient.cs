@@ -101,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
         /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
@@ -161,7 +161,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
         /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
@@ -1348,7 +1348,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertId">The unique identifier of the alert.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DataAnomaly"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
@@ -1405,7 +1405,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertId">The unique identifier of the alert.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DataAnomaly"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
@@ -1463,7 +1463,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertId">The unique identifier of the alert.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AnomalyIncident"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
@@ -1520,7 +1520,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertId">The unique identifier of the alert.</param>
-        /// <param name="options">The set of options used to configure the request's behavior.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AnomalyIncident"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
