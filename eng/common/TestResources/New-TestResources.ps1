@@ -145,7 +145,7 @@ if (!$BaseName) {
 }
 
 # Try detecting repos that support OutFile and defaulting to it
-if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile'))
+if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows)
 {
     # TODO: find a better way to detect the language
     if (Test-Path "$repositoryRoot/eng/service.proj")
