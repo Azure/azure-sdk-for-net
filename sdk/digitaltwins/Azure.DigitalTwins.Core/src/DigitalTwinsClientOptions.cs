@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Used to serialize the payloads of given events to UTF-8 encoded JSON.
+        /// Used to serialize and deserialize the payloads of user-provided types to/from UTF-8 encoded JSON.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
 
