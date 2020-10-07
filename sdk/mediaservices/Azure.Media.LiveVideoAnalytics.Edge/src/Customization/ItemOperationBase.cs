@@ -1,0 +1,34 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using Azure.Core;
+
+namespace Azure.Media.LiveVideoAnalytics.Edge.Models
+{
+    public partial class ItemOperationBase
+    {
+        /// <summary>
+        ///  Serialize .
+        /// </summary>
+        /// <returns></returns>
+        public string Serialize()
+        {
+            return SerializeItemRequestInternal(this);
+        }
+
+        internal static string SerializeItemRequestInternal(IUtf8JsonSerializable serializable)
+        {
+            using var memoryStream = new MemoryStream();
+
+            using (var writer = new Utf8JsonWriter(memoryStream))
+            {
+                serializable.Write(writer);
+            }
+
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
+        }
+    }
+}
