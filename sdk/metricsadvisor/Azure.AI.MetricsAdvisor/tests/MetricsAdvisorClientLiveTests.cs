@@ -177,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 AlertConfigurationId,
                 new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
             {
-                Assert.That(alert.AlertId, Is.Not.Null);
+                Assert.That(alert.Id, Is.Not.Null);
 
                 // Just fetch 2 pages
                 if (++pages > 2)
