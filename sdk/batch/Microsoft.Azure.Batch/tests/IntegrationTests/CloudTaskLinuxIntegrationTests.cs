@@ -83,8 +83,15 @@ namespace BatchClientIntegrationTests
                 }
                 finally
                 {
-                    await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
-                    containerClient.DeleteIfExists();
+                    try
+                    {
+                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).ConfigureAwait(false);
+                        containerClient.DeleteIfExists();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
                 }
             };
 
