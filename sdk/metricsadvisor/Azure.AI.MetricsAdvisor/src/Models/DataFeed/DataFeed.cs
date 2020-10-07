@@ -19,6 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
             CreatedTime = dataFeedDetail.CreatedTime;
+            Creator = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.Select(metric => metric.MetricId).ToList();
             Name = dataFeedDetail.DataFeedName;
@@ -43,6 +44,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
         public DateTimeOffset? CreatedTime { get; }
+
+        // TODODOCS.
+        /// <summary>
+        /// </summary>
+        public string Creator { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
