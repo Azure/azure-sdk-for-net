@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Newtonsoft.Json.Linq;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners

@@ -4,12 +4,11 @@
 using System;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     // TODO (kasobol-msft) this duplicates "Utility". find way to share code.
-    internal static class SharedUtility
+    internal static class BlobContainerClientExtensions
     {
         // CloudBlobDirectory has a private ctor, so we can't actually override it.
         // This overload is unit-testable
@@ -21,17 +20,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             }
             var blob = container.GetBlockBlobClient(dir + blobName);
             return blob;
-        }
-
-        internal static int GetProcessorCount()
-        {
-            int processorCount = 1;
-            var skuValue = Environment.GetEnvironmentVariable(Constants.AzureWebsiteSku);
-            if (!string.Equals(skuValue, Constants.DynamicSku, StringComparison.OrdinalIgnoreCase))
-            {
-                processorCount = Environment.ProcessorCount;
-            }
-            return processorCount;
         }
     }
 }

@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {

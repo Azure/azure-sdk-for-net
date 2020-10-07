@@ -16,7 +16,6 @@ using System.Linq;
 using Moq;
 using Azure;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.WebJobs.Extensions.Storage.Queues;
