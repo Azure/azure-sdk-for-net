@@ -20,7 +20,6 @@
     <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
-    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Common\src\Azure.WebJobs.Extensions.Storage.Common.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Queues\src\Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>
 </Project>
