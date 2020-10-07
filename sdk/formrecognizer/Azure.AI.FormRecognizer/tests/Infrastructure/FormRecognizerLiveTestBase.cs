@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormRecognizerClient CreateFormRecognizerClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
             FormRecognizerClient client;
 
             if (useTokenCredential)
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormTrainingClient CreateFormTrainingClient(bool useTokenCredential = false, string apiKey = default, bool skipInstrumenting = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
             FormTrainingClient client;
 
             if (useTokenCredential)

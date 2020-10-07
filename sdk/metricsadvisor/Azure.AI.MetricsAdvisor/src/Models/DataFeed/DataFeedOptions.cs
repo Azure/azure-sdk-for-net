@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<string> _viewers;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedOptions"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedOptions"/> class.
         /// </summary>
         public DataFeedOptions()
         {

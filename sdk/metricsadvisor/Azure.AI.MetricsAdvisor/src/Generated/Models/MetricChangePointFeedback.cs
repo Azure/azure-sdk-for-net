@@ -30,10 +30,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             ValueInternal = valueInternal;
             Type = type;
         }
-
-        /// <summary> the start timestamp of feedback timerange. </summary>
-        public DateTimeOffset StartTime { get; set; }
-        /// <summary> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </summary>
-        public DateTimeOffset EndTime { get; set; }
     }
 }
