@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core.JsonPatch;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -14,14 +17,24 @@ namespace Azure.Core
     /// </summary>
     public class JsonPatchDocument
     {
-        internal Collection<JsonPatchOperation> Operations { get; }
+        private ObjectSerializer _serializer;
+        private Collection<JsonPatchOperation> Operations { get; }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="JsonPatchDocument"/> that uses <see cref="JsonObjectSerializer"/> as the default serializer.
+        /// </summary>
+        public JsonPatchDocument() : this(new JsonObjectSerializer())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonPatchDocument"/>
         /// </summary>
-        public JsonPatchDocument()
+        /// <param name="serializer">The <see cref="ObjectSerializer"/> instance to use for value serialization.</param>
+        public JsonPatchDocument(ObjectSerializer serializer)
         {
             Operations = new Collection<JsonPatchOperation>();
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
         /// <summary>
@@ -29,9 +42,20 @@ namespace Azure.Core
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>
-        public void AppendAdd(string path, string rawJsonValue)
+        public void AppendAddRaw(string path, string rawJsonValue)
         {
             Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, rawJsonValue));
+        }
+
+        /// <summary>
+        /// Appends an "add" operation to this <see cref="JsonPatchDocument"/>.
+        /// </summary>
+        /// <param name="path">The path to apply the addition to.</param>
+        /// <param name="value">The value to add to the path.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        public void AppendAdd<T>(string path, T value, CancellationToken cancellationToken = default)
+        {
+            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, Serialize(value, cancellationToken)));
         }
 
         /// <summary>
@@ -39,9 +63,19 @@ namespace Azure.Core
         /// </summary>
         /// <param name="path">The path to replace.</param>
         /// <param name="rawJsonValue">The raw JSON value to replace with.</param>
-        public void AppendReplace(string path, string rawJsonValue)
+        public void AppendReplaceRaw(string path, string rawJsonValue)
         {
             Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, rawJsonValue));
+        }
+        /// <summary>
+        /// Appends a "replace" operation to this <see cref="JsonPatchDocument"/>.
+        /// </summary>
+        /// <param name="path">The path to replace.</param>
+        /// <param name="value">The value to replace with.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        public void AppendReplace<T>(string path, T value, CancellationToken cancellationToken = default)
+        {
+            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, Serialize(value, cancellationToken)));
         }
 
         /// <summary>
@@ -78,9 +112,20 @@ namespace Azure.Core
         /// </summary>
         /// <param name="path">The path to test.</param>
         /// <param name="rawJsonValue">The raw JSON value to test against.</param>
-        public void AppendTest(string path, string rawJsonValue)
+        public void AppendTestRaw(string path, string rawJsonValue)
         {
             Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, rawJsonValue));
+        }
+
+        /// <summary>
+        /// Appends a "test" operation to this <see cref="JsonPatchDocument"/>.
+        /// </summary>
+        /// <param name="path">The path to test.</param>
+        /// <param name="value">The value to replace with.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        public void AppendTest<T>(string path, T value, CancellationToken cancellationToken = default)
+        {
+            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, Serialize(value, cancellationToken)));
         }
 
         /// <summary>
@@ -118,6 +163,13 @@ namespace Azure.Core
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
+        }
+
+        private string Serialize<T>(T value, CancellationToken cancellationToken)
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            _serializer.Serialize(memoryStream, value, typeof(T), cancellationToken);
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
     }
 }
