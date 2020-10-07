@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Azure.Storage.Queues;
@@ -11,17 +12,16 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class BlobTests
     {
+        private const string TriggerQueueName = "input-blobtests";
         private const string ContainerName = "container-blobtests";
-        private const string TriggerContainerName = "container-blobtests-trigger";
         private const string BlobName = "blob";
-        private const string TriggerBlobName = "triggerblob";
         private const string BlobPath = ContainerName + "/" + BlobName;
-        private const string TriggerBlobPath = TriggerContainerName + "/" + TriggerBlobName;
 
         private BlobServiceClient blobServiceClient;
         private QueueServiceClient queueServiceClient;
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
             queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
             blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
-            blobServiceClient.GetBlobContainerClient(TriggerContainerName).DeleteIfExists();
+            queueServiceClient.GetQueueClient(TriggerQueueName).DeleteIfExists();
         }
 
         [Test]
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
                 {
-                    builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseBlobService(blobServiceClient);
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
                 })
                 .Build();
 
@@ -69,9 +69,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContent = "message";
-            var triggerContainer = GetContainerReference(blobServiceClient, TriggerContainerName);
-            await triggerContainer.CreateIfNotExistsAsync();
-            await triggerContainer.GetBlockBlobClient(TriggerBlobName).UploadTextAsync(expectedContent);
+            QueueClient triggerQueue = CreateQueue(TriggerQueueName);
+            await triggerQueue.SendMessageAsync(expectedContent);
 
             // Act
             await RunTrigger(typeof(BindToTextWriterProgram));
@@ -85,6 +84,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(expectedContent, content);
         }
 
+        private QueueClient CreateQueue(string queueName)
+        {
+            var queue = queueServiceClient.GetQueueClient(queueName);
+            queue.CreateIfNotExists();
+            return queue;
+        }
+
         private static BlobContainerClient GetContainerReference(BlobServiceClient blobServiceClient, string containerName)
         {
             return blobServiceClient.GetBlobContainerClient(containerName);
@@ -92,7 +98,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task RunTrigger(Type programType)
         {
-            await FunctionalTest.RunTriggerAsync(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType);
+            await FunctionalTest.RunTriggerAsync(b => {
+                b.Services.AddAzureClients(builder =>
+                {
+                    builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport());
+                });
+            }, programType,
+            settings: new Dictionary<string, string>() {
+                // This takes precedence over env variables.
+                { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+            });
         }
 
         private class BindToCloudBlockBlobProgram
@@ -108,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToTextWriterProgram
         {
-            public static void Run([BlobTrigger(TriggerBlobPath)] string message,
+            public static void Run([QueueTrigger(TriggerQueueName)] string message,
                 [Blob(BlobPath)] TextWriter blob)
             {
                 blob.Write(message);

@@ -70,9 +70,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseBlobService(blobServiceClient)
-                    .UseQueueServiceInBlobExtension(queueServiceClient);
+                    b.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
                 })
                 .ConfigureServices(services =>
                 {
@@ -114,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, setTaskSource);
         }
     }
 }

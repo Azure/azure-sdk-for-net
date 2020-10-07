@@ -81,14 +81,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         // Runs the first triggered function and then returns.
         // Expected that this instance provided some side-effect (ie, wrote to storage)
         // that the caller can monitor.
-        internal static async Task RunTriggerAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType)
+        internal static async Task RunTriggerAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Dictionary<string, string> settings = default)
         {
             TaskCompletionSource<bool> src = new TaskCompletionSource<bool>();
             await RunTriggerAsync<bool>(
                 configureWebJobsBuilderAction,
                 programType,
                 (x) => x = src,
-                signalOnFirst: true);
+                signalOnFirst: true,
+                settings: settings);
         }
 
         internal static async Task<Exception> RunTriggerFailureAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
