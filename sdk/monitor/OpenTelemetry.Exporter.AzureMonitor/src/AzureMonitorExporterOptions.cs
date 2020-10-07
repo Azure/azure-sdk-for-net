@@ -15,7 +15,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public long MaxTransmissionStorageCapacity { get; set; } = StorageCapacity;
 
         public string StorageFolder { get; set; }
-
-        internal IServiceRestClient ServiceRestClient { get; set; } = null;
     }
 }

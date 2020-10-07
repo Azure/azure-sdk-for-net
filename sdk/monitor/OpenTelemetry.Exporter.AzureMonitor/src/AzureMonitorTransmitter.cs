@@ -16,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
     /// </summary>
-    internal class AzureMonitorTransmitter
+    internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
@@ -45,11 +45,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 if (async)
                 {
-                    response = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                    response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                    response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
                 }
             }
             catch (Exception ex)

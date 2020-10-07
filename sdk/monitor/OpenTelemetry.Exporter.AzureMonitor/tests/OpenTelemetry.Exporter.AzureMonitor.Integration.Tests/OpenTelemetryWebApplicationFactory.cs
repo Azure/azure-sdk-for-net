@@ -2,16 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-
-using Moq;
 
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
@@ -32,50 +26,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
     {
         public const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
-        public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
-        public ActivityProcessor ActivityProcessor;
+        public ConcurrentBag<TelemetryItem> TelemetryItems => this.Transmitter.TelemetryItems;
+        private ActivityProcessor ActivityProcessor;
+        private MockTransmitter Transmitter = new MockTransmitter();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions
-            {
-                ConnectionString = EmptyConnectionString,
-                ServiceRestClient = this.GetMockServiceRestClient(),
-            }));
+            this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(
+                options: new AzureMonitorExporterOptions
+                {
+                    ConnectionString = EmptyConnectionString,
+                },
+                transmitter: this.Transmitter));
 
-            builder.ConfigureServices(services =>
-                services.AddOpenTelemetryTracing((builder) => builder
+            builder.ConfigureServices(services => services.AddOpenTelemetryTracing((builder) => builder
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
                         .AddProcessor(this.ActivityProcessor)));
         }
 
         public void ForceFlush() => this.ActivityProcessor.ForceFlush();
-
-        private IServiceRestClient GetMockServiceRestClient()
-        {
-            var mockServiceRestClient = new Mock<IServiceRestClient>();
-            mockServiceRestClient
-                .Setup(x => x.TrackAsync(It.IsAny<IEnumerable<TelemetryItem>>(), It.IsAny<CancellationToken>()))
-                .Returns((IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken) =>
-                {
-                    foreach (var telemetryItem in telemetryItems)
-                    {
-                        this.TelemetryItems.Add(telemetryItem);
-                    }
-
-                    return Task.FromResult(GetMockResponse(itemsReceived: telemetryItems.Count(), itemsAccepted: telemetryItems.Count(), errors: new List<TelemetryErrorDetails>()));
-                });
-
-            return mockServiceRestClient.Object;
-        }
-
-        private Azure.Response<TrackResponse> GetMockResponse(int itemsReceived, int itemsAccepted, List<TelemetryErrorDetails> errors)
-        {
-            var trackResponse = new TrackResponse(itemsReceived, itemsAccepted, errors);
-            var mockAzureResponse = new Mock<Azure.Response<TrackResponse>>();
-            mockAzureResponse.Setup(x => x.Value).Returns(trackResponse);
-            return mockAzureResponse.Object;
-        }
     }
 }

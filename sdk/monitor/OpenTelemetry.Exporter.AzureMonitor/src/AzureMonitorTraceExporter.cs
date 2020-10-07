@@ -13,16 +13,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorTraceExporter : ActivityExporter
     {
-        private readonly AzureMonitorTransmitter AzureMonitorTransmitter;
+        private readonly ITransmitter Transmitter;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options)
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
+        {
+        }
+
+        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
             ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
 
-            this.AzureMonitorTransmitter = new AzureMonitorTransmitter(options);
+            this.Transmitter = transmitter;
         }
 
         /// <inheritdoc/>
@@ -34,7 +38,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
-                this.AzureMonitorTransmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                this.Transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 return ExportResult.Success;
             }
             catch (Exception ex)
