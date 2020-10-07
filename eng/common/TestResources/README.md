@@ -26,6 +26,7 @@ Note that `-Subscription` is an optional parameter but recommended if your accou
 is a member of multiple subscriptions.
 
 ```powershell
+Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
 eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
 ```
 
