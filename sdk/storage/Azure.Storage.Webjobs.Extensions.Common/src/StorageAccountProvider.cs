@@ -22,16 +22,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="componentFactory"></param>
-        public StorageAccountProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
+        public StorageAccountProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
+            _logForwarder = logForwarder;
         }
 
         /// <summary>
@@ -82,6 +84,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
             var credential = _componentFactory.CreateCredential(connectionSection);
             var endpointUri = new Uri(endpoint);
+
+            _logForwarder.Start();
+
             return new StorageAccount(
                 new BlobServiceClient(endpointUri, credential, CreateBlobClientOptions(connectionSection)),
                 new QueueServiceClient(endpointUri, credential, CreateQueueClientOptions(connectionSection)));
