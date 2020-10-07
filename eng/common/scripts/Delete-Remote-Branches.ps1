@@ -1,23 +1,26 @@
 param(
-  $RepoOwner = "Azure",
+  $RepoOwner,
   $RepoName,
-  $BranchPrefix = "sync-eng/common",
+  $BranchPrefix,
+  $WorkingDirectory,
   $AuthToken
 )
 
 . "${PSScriptRoot}\logging.ps1"
-. "${PSScriptRoot}\Invoke-GitHub-API.ps1"
+. "${PSScriptRoot}\Invoke-GitHub-API.ps1" -AuthToken $AuthToken
 
-git clone "https://github.com/$RepoOwner/$RepoName"
+pushd $WorkingDirectory
+git clone https://github.com/$RepoOwner/$RepoName.git
 pushd $RepoName
-$syncBranches = (git branch --remote).where{$_ -like "*origin/$BranchPrefix*"}
+$syncBranches = (git branch --remote).where{ $_ -like "*origin/$BranchPrefix*" }
 
-Write-Host "Repo Name $RepoName"
+LogDebug "Operating on Repo [ $RepoName ]"
 foreach ($branch in $syncBranches)
 {
   try {
-    $branchName = $branch.Trim()
+    $branchName = ($branch.Trim()).Replace("origin/","")
     $head = "${RepoOwner}/${RepoName}:${branchName}"
+    LogDebug "Operating on branch [ $branchName ]"
     $response = ListPullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
   }
   catch
@@ -25,14 +28,17 @@ foreach ($branch in $syncBranches)
     LogError "ListPullRequests failed with exception:`n$_"
     exit 1
   }
-  Write-Host "Response Count $($Response.Count)"
-  if ($Response.Count -eq 0)
+
+  if ($response.Count -eq 0)
   {
-    # Delete branch here
-    #git push origin --delete "sync-${{ parameters.DirectoryToSync }}-$(System.PullRequest.SourceBranch)-$(System.PullRequest.PullRequestNumber)"
-    #if ($lastExitCode -ne 0) {
-    #  Write-Host "Failed to delete [sync-${{ parameters.DirectoryToSync }}-$(System.PullRequest.SourceBranch)-$(System.PullRequest.PullRequestNumber)] branch in ${{ repo }}"
-    #  exit 1
-    #}
+    LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated Pull Request. Deleting Branch"
+    git push origin --delete $branchName
+    if ($lastExitCode -ne 0) {
+      Write-Host "Failed to delete branch [ $branchName ] in repo [ $RepoName ]"
+      exit 1
+    }
   }
 }
+
+popd
+popd
