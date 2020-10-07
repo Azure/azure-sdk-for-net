@@ -8,4 +8,7 @@ Invoke-WebRequest -Uri $ModulesUrl -OutFile $ZipFile
 Expand-Archive $ZipFile -DestinationPath $TempPath -Force
 
 $p = [Environment]::GetEnvironmentVariable("PSModulePath")
-[Environment]::SetEnvironmentVariable("PSModulePath", "$p;$TempPath", "User")
+$p = "$p;$TempPath";
+[Environment]::SetEnvironmentVariable("PSModulePath", $p, "User")
+Write-Host "Updating PSModulePath to $p"
+Write-Host "##vso[task.setvariable variable=PSModulePath]$p"
