@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
@@ -15,16 +17,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     {
         /// <summary> Initializes a new instance of TelemetryExceptionData. </summary>
         /// <param name="version"> Schema version. </param>
-        public TelemetryExceptionData(int version)
+        /// <param name="exceptions"> Exception chain - list of inner exceptions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptions"/> is null. </exception>
+        public TelemetryExceptionData(int version, IEnumerable<TelemetryExceptionDetails> exceptions) : base(version)
         {
-            Version = version;
-            Exceptions = new ChangeTrackingList<TelemetryExceptionDetails>();
+            if (exceptions == null)
+            {
+                throw new ArgumentNullException(nameof(exceptions));
+            }
+
+            Exceptions = exceptions.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> Exception chain - list of inner exceptions. </summary>
         public IList<TelemetryExceptionDetails> Exceptions { get; }
         /// <summary> Severity level. Mostly used to indicate exception severity level when it is reported by logging library. </summary>

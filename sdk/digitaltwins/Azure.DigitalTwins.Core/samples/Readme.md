@@ -62,11 +62,11 @@ Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.")
 
 ### List models
 
-Using `GetModelsAsync`, all created models are returned as `AsyncPageable<ModelData>`.
+Using `GetModelsAsync`, all created models are returned as `AsyncPageable<DigitalTwinsModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<ModelData> allModels = client.GetModelsAsync();
-await foreach (ModelData model in allModels)
+AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
@@ -78,7 +78,7 @@ await foreach (ModelData model in allModels)
 Use `GetModelAsync` with model's unique identifier to get a specific model.
 
 ```C# Snippet:DigitalTwinsSampleGetModel
-Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 ```
 
@@ -419,10 +419,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(eventhubEndpointName)
-{
-    Filter = eventFilter
-};
+var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
 
 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
@@ -457,7 +454,7 @@ To publish a telemetry message for a digital twin, you need to provide the digit
 
 ```C# Snippet:DigitalTwinsSamplePublishTelemetry
 // construct your json telemetry payload by hand.
-await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+await client.PublishTelemetryAsync(twinId, Guid.NewGuid().ToString(), "{\"Telemetry1\": 5}");
 Console.WriteLine($"Published telemetry message to twin '{twinId}'.");
 ```
 
@@ -472,6 +469,7 @@ var telemetryPayload = new Dictionary<string, int>
 await client.PublishComponentTelemetryAsync(
     twinId,
     "Component1",
+    Guid.NewGuid().ToString(),
     JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 ```

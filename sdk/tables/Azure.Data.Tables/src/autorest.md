@@ -3,7 +3,7 @@
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: Azure.Data.Tables

@@ -4,6 +4,11 @@
 ###  Feature Additions
 - Added logLevel/enableReliableLogging to LogStorageSettings
 - Support Tar GZip compression type in Data Factory
+- Added maxRowPerFile/fileNamePrefix to tabular format settings
+- Added support for AzureDatabricks delta lake
+- Update Rest Sink properties
+- Added support lzo in orc format
+- Added MongoDbAtlas Source Connector in DataFactory
 
 ## Version 4.11.0
 ###  Feature Additions

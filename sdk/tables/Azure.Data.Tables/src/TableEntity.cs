@@ -44,7 +44,7 @@ namespace Azure.Data.Tables
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
         public DateTimeOffset? Timestamp
         {
-            get { return GetValue(TableConstants.PropertyNames.TimeStamp) as DateTimeOffset?; }
+            get { return GetValue<DateTimeOffset?>(TableConstants.PropertyNames.TimeStamp); }
             set { _properties[TableConstants.PropertyNames.TimeStamp] = value; }
         }
 

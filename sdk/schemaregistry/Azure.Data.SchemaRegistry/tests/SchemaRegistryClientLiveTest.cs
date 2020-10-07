@@ -19,12 +19,13 @@ namespace Azure.Data.SchemaRegistry.Tests
             InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryUri,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
         private const string SchemaContent = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanRegisterSchema()
         {
             var client = CreateClient();
@@ -40,6 +41,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchemaId()
         {
             var client = CreateClient();
@@ -56,6 +58,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanGetSchema()
         {
             var client = CreateClient();
@@ -71,7 +74,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(schemaProperties.Value);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-            Assert.AreEqual(SchemaContent.Replace(" ", ""), schemaProperties.Value.Content);
+            Assert.AreEqual(SchemaContent, schemaProperties.Value.Content);
         }
     }
 }

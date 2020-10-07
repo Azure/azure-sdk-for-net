@@ -1,6 +1,27 @@
 # Release History
-## 4.0.0-beta.2 (Unreleased)
+## 4.0.0-beta.4 (Unreleased)
 
+
+## 4.0.0-beta.3 (2020-10-06)
+
+### Fixed
+- Fix bug where we were not parsing the Topic when parsing into EventGridEvents.
+
+### Added
+
+- Added TraceParent/TraceState into CloudEvent extension attributes.
+- Added KeyVaultAccessPolicyChangedEventData system event.
+
+### Breaking Changes
+
+- Renamed Azure Communication Services system events.
+- Renamed EventGridPublisherClientOptions DataSerializer property to Serializer.
+
+## 4.0.0-beta.2 (2020-09-24)
+
+### Added
+
+- Added support for system events sent by the Azure Communication Services.
 
 ## 4.0.0-beta.1 (2020-09-08)
 This is the first preview of the Azure Event Grid client library that follows the [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). This library is not a drop-in replacement for `Microsoft.Azure.EventGrid`, as code changes would be required to use the new library.

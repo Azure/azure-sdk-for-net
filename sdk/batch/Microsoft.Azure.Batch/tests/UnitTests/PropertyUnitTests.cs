@@ -660,10 +660,10 @@ namespace Azure.Batch.Unit.Tests
             AutoPoolSpecification autoPoolSpecification = new AutoPoolSpecification();
 
             //Properties should start out as their defaults
-            Assert.Equal(default(string), autoPoolSpecification.AutoPoolIdPrefix);
-            Assert.Equal(default(bool?), autoPoolSpecification.KeepAlive);
-            Assert.Equal(default(PoolLifetimeOption), autoPoolSpecification.PoolLifetimeOption);
-            Assert.Equal(default(PoolSpecification), autoPoolSpecification.PoolSpecification);
+            Assert.Equal(default, autoPoolSpecification.AutoPoolIdPrefix);
+            Assert.Equal(default, autoPoolSpecification.KeepAlive);
+            Assert.Equal(default, autoPoolSpecification.PoolLifetimeOption);
+            Assert.Equal(default, autoPoolSpecification.PoolSpecification);
 
             Assert.False(((IModifiable)autoPoolSpecification).HasBeenModified);
 
@@ -687,7 +687,7 @@ namespace Azure.Batch.Unit.Tests
             this.testOutputHelper.WriteLine(e.ToString());
 
             //After GetProtocolObject, the child objects should be unreadable too
-            Assert.Throws<InvalidOperationException>(() => poolSpecification.MaxTasksPerComputeNode = 4);
+            Assert.Throws<InvalidOperationException>(() => poolSpecification.TaskSlotsPerNode = 4);
 
             //The original data should be on the protocol specification
             Assert.Equal(idPrefix, protoAutoPoolSpecification.AutoPoolIdPrefix);

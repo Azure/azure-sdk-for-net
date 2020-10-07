@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-
 namespace BatchClientIntegrationTests
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Azure.Storage.Blobs;
     using BatchTestCommon;
     using Fixtures;
     using Microsoft.Azure.Batch;
@@ -23,9 +22,9 @@ namespace BatchClientIntegrationTests
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Blob;
+    using Azure.Storage;
+    using Azure.Storage.Blobs.Models;
+    using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
 
     public class CloudPoolIntegrationTests
     {
@@ -103,7 +102,7 @@ namespace BatchClientIntegrationTests
                     {
                         CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
-                        newPool.MaxTasksPerComputeNode = 3;
+                        newPool.TaskSlotsPerNode = 3;
 
                         newPool.TaskSchedulingPolicy =
                             new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
@@ -112,7 +111,7 @@ namespace BatchClientIntegrationTests
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
-                        Assert.Equal(3, boundPool.MaxTasksPerComputeNode);
+                        Assert.Equal(3, boundPool.TaskSlotsPerNode);
                         Assert.Equal(ComputeNodeFillType.Pack, boundPool.TaskSchedulingPolicy.ComputeNodeFillType);
                     }
                     finally
@@ -131,7 +130,7 @@ namespace BatchClientIntegrationTests
                             unboundJob.PoolInformation.AutoPoolSpecification = unboundAPS;
                             unboundAPS.PoolSpecification = unboundPS;
 
-                            unboundPS.MaxTasksPerComputeNode = 3;
+                            unboundPS.TaskSlotsPerNode = 3;
                             unboundAPS.PoolSpecification.TargetDedicatedComputeNodes = 0; // don't use up compute nodes for this test
                             unboundPS.TaskSchedulingPolicy = new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
 
@@ -152,7 +151,7 @@ namespace BatchClientIntegrationTests
                         AutoPoolSpecification boundAPS = poolInformation.AutoPoolSpecification;
                         PoolSpecification boundPUS = boundAPS.PoolSpecification;
 
-                        Assert.Equal(3, boundPUS.MaxTasksPerComputeNode);
+                        Assert.Equal(3, boundPUS.TaskSlotsPerNode);
                         Assert.Equal(ComputeNodeFillType.Pack, boundPUS.TaskSchedulingPolicy.ComputeNodeFillType);
 
                         // change the props
@@ -1089,17 +1088,10 @@ namespace BatchClientIntegrationTests
                     string poolId = TestUtilities.GenerateResourceId();
 
                     const string containerName = "blobfusecontainer";
-                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
-                    CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
-                        new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
-                        blobEndpoint: storageAccount.BlobUri,
-                        queueEndpoint: null,
-                        tableEndpoint: null,
-                        fileEndpoint: null);
-                    CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
 
-                    var container = blobClient.GetContainerReference(containerName);
-                    await container.CreateIfNotExistsAsync();
+                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                    BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, storageAccount);
+                    await containerClient.CreateIfNotExistsAsync();
 
                     try
                     {

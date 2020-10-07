@@ -54,6 +54,13 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
+                    - task: PowerShell@2
+                      displayName: Prep template pipeline for release
+                      condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
+                      inputs:
+                        pwsh: true
+                        workingDirectory: $(Build.SourcesDirectory)
+                        filePath: eng/scripts/SetTestPipelineVersion.ps1
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -236,9 +243,10 @@ stages:
           echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
           echo "Using DevopsFeedId = $devopsFeedId"
         displayName: Setup DevOpsFeedId
-      - task: NuGetCommand@2
-        displayName: 'Publish to DevOps Feed'
-        inputs:
-          command: push
-          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
-          publishVstsFeed: $(DevOpsFeedID)
+      - ${{ each artifact in parameters.Artifacts }}:
+        - task: NuGetCommand@2
+          displayName: 'Publish to DevOps Feed'
+          inputs:
+            command: push
+            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+            publishVstsFeed: $(DevOpsFeedID)
