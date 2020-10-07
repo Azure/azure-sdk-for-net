@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,7 +22,7 @@ namespace Azure.Search.Documents
         /// index.
         /// </summary>
         /// <param name="indexer">The sender.</param>
-        /// <param name="key">The name of the key field.</param>
+        /// <param name="keyFieldName">The name of the key field.</param>
         /// <param name="documentKeys">
         /// The keys of the documents to delete.
         /// </param>
@@ -31,12 +32,12 @@ namespace Azure.Search.Documents
         /// </param>
         public static void DeleteDocuments(
             this SearchIndexingBufferedSender<SearchDocument> indexer,
-            string key,
+            string keyFieldName,
             IEnumerable<string> documentKeys,
             CancellationToken cancellationToken = default) =>
             DeleteDocumentsInternal(
                 indexer,
-                key,
+                keyFieldName,
                 documentKeys,
                 async: false,
                 cancellationToken)
@@ -47,7 +48,7 @@ namespace Azure.Search.Documents
         /// index.
         /// </summary>
         /// <param name="indexer">The sender.</param>
-        /// <param name="key">The name of the key field.</param>
+        /// <param name="keyFieldName">The name of the key field.</param>
         /// <param name="documentKeys">
         /// The keys of the documents to delete.
         /// </param>
@@ -61,12 +62,12 @@ namespace Azure.Search.Documents
         /// </returns>
         public static async Task DeleteDocumentsAsync(
             this SearchIndexingBufferedSender<SearchDocument> indexer,
-            string key,
+            string keyFieldName,
             IEnumerable<string> documentKeys,
             CancellationToken cancellationToken = default) =>
             await DeleteDocumentsInternal(
                 indexer,
-                key,
+                keyFieldName,
                 documentKeys,
                 async: true,
                 cancellationToken)
@@ -74,17 +75,17 @@ namespace Azure.Search.Documents
 
         private static async Task DeleteDocumentsInternal(
             SearchIndexingBufferedSender<SearchDocument> indexer,
-            string key,
+            string keyFieldName,
             IEnumerable<string> documentKeys,
             bool async,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(keyFieldName, nameof(keyFieldName));
             Argument.AssertNotNull(documentKeys, nameof(documentKeys));
 
             var batch = IndexDocumentsBatch.Delete<SearchDocument>(
-                documentKeys.Select(k => new SearchDocument { [key] = k }));
+                documentKeys.Select(k => new SearchDocument { [keyFieldName] = k }));
             if (async)
             {
                 await indexer.IndexDocumentsAsync(batch, cancellationToken).ConfigureAwait(false);

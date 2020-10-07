@@ -35,7 +35,8 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// "Blocking" semaphore used to wait for flushing to complete.
         /// </summary>
-        private ProducerBarrierSlim _flushBarrier = new ProducerBarrierSlim();
+        private TaskCompletionSource<object> _flushCompletionSource =
+            new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         /// <summary>
         /// Task that's acting as our channel's event loop to read publishing
@@ -96,18 +97,18 @@ namespace Azure.Search.Documents.Batching
         /// Gets a value indicating the number of actions to group into a batch
         /// when tuning the behavior of the publisher.
         /// </summary>
-        protected int BatchActionSize { get; }  // Note: Not automatically tuning yet
+        protected int BatchActionSize { get; }  // TODO: Not automatically tuning yet
 
         /// <summary>
         /// Gets a value indicating the number of bytes to use when tuning the
         /// behavior of the publisher.
         /// </summary>
-        protected int BatchPayloadSize { get; }  // Note: Not used yet
+        protected int BatchPayloadSize { get; }  // TODO: Not used yet
 
         /// <summary>
         /// Gets the number of times to retry a failed document.
         /// </summary>
-        protected int RetryCount { get; }  // Note: Not configurable yet
+        protected int RetryCount { get; }  // TODO: Not configurable yet
 
         /// <summary>
         /// Creates a new Publisher which immediately starts listening to
@@ -141,7 +142,7 @@ namespace Azure.Search.Documents.Batching
             CancellationToken publisherCancellationToken)
         {
             AutoFlush = autoFlush;
-            AutoFlushInterval = autoFlushInterval;
+            AutoFlushInterval = autoFlushInterval <= TimeSpan.Zero ? null : autoFlushInterval;
             PublisherCancellationToken = publisherCancellationToken;
             BatchActionSize = batchActionSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultBatchActionSize;
             BatchPayloadSize = batchPayloadSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultBatchPayloadSize;
@@ -157,49 +158,55 @@ namespace Azure.Search.Documents.Batching
         /// of the Publisher itself.
         /// </summary>
         /// <param name="documents">The documents to publish.</param>
-        /// <param name="async">Whether to call sync or async.</param>
+        /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task for adding the documents.</returns>
         public async Task AddDocumentsAsync(IEnumerable<T> documents, bool async, CancellationToken cancellationToken = default)
         {
             EnsureNotDisposed();
-            await SendMessageInternal(Message.Publish(documents), async, cancellationToken).ConfigureAwait(false);
+            await _channel.Writer.WriteInternal(
+                Message.Publish(documents),
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
         /// Flush any pending documents.  This should only be called outside of
         /// the Publisher itself.
         /// </summary>
-        /// <param name="async">Whether to call sync or async.</param>
+        /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task for adding the documents.</returns>
         public async Task FlushAsync(bool async, CancellationToken cancellationToken = default)
         {
-            await SendMessageInternal(Message.Flush(), async, cancellationToken).ConfigureAwait(false);
-            await _flushBarrier.WaitAsync(async, cancellationToken).ConfigureAwait(false);
+            EnsureNotDisposed();
+            await FlushInternal(async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Send a message from a producer to the channel.
+        /// Flush any pending documents.  This will not check for disposal.
         /// </summary>
-        /// <param name="message">The message to send.</param>
-        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Task for the sending the message.</returns>
-        private async Task SendMessageInternal(
-            Message message,
-            bool async,
-            CancellationToken cancellationToken = default)
+        /// <returns>Task for adding the documents.</returns>
+        private async Task FlushInternal(bool async, CancellationToken cancellationToken = default)
         {
-            // Send the message
+            Task flushCompletionTask = _flushCompletionSource.Task;
+            await _channel.Writer.WriteInternal(
+                Message.Flush(),
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
             if (async)
             {
-                await _channel.Writer.WriteAsync(message, cancellationToken).ConfigureAwait(false);
+                await flushCompletionTask.ConfigureAwait(false);
             }
             else
             {
-                // It's an unbounded channel so spinning should be fine
-                while (!_channel.Writer.TryWrite(message)) { /* spin */ }
+                #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                flushCompletionTask.EnsureCompleted();
+                #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
             }
         }
         #endregion
@@ -281,7 +288,9 @@ namespace Azure.Search.Documents.Batching
             await PublishAsync(cancellationToken).ConfigureAwait(false);
 
             // Wake up anyone who was blocked on a flush finishing
-            _flushBarrier.Release();
+            TaskCompletionSource<object> previous = _flushCompletionSource;
+            _flushCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            previous.SetResult(null);
         }
         #endregion Message Consumer
 
@@ -310,7 +319,7 @@ namespace Azure.Search.Documents.Batching
             if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
                 StopTimer();
-                await FlushAsync(async, PublisherCancellationToken).ConfigureAwait(false);
+                await FlushInternal(async, PublisherCancellationToken).ConfigureAwait(false);
                 _channel?.Writer.TryComplete();
                 if (async)
                 {
@@ -322,7 +331,7 @@ namespace Azure.Search.Documents.Batching
                     _readerLoop.EnsureCompleted();
                     #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                 }
-                _flushBarrier.Dispose();
+                _flushCompletionSource.SetCanceled();
             }
         }
 
@@ -359,7 +368,8 @@ namespace Azure.Search.Documents.Batching
             do
             {
                 // Prefer pulling from the _retry queue first
-                List<PublisherAction<T>> batch = new List<PublisherAction<T>>();
+                List<PublisherAction<T>> batch = new List<PublisherAction<T>>(
+                    capacity: Math.Min(BatchActionSize, IndexingActionsCount));
                 _ = FillBatchFromQueue(batch, _retry) && FillBatchFromQueue(batch, _pending);
 
                 // Submit the batch
@@ -485,8 +495,10 @@ namespace Azure.Search.Documents.Batching
         {
             // We'll do this synchronously since it's an unbounded channel and
             // we can just spin if we need to.
-            Message message = Message.Flush();
-            while (!_channel.Writer.TryWrite(message)) { /* spin */ }
+            _channel.Writer.WriteInternal(
+                Message.Flush(),
+                async: false)
+                .EnsureCompleted();
         }
         #endregion Timer
     }

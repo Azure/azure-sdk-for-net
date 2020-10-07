@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Batching
 {
@@ -13,7 +12,7 @@ namespace Azure.Search.Documents.Batching
     /// The .NET type that maps to the index schema.  Instances of this
     /// type can be retrieved as documents from the index.
     /// </typeparam>
-    internal class PublisherAction<T>
+    internal struct PublisherAction<T>
     {
         /// <summary>
         /// Gets the action to submit.
@@ -43,6 +42,7 @@ namespace Azure.Search.Documents.Batching
             Debug.Assert(key != null);
             Document = document;
             Key = key;
+            RetryAttempts = 0;
         }
     }
 }

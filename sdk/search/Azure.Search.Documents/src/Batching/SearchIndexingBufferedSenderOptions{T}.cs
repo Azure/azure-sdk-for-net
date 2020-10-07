@@ -31,19 +31,7 @@ namespace Azure.Search.Documents
         /// automatically flushing any remaining indexing actions.  The default
         /// value is 60 seconds.
         /// </summary>
-        public TimeSpan? AutoFlushInterval
-        {
-            get => _autoFlushInterval;
-            set
-            {
-                // Treat any non-positive values as null.
-                _autoFlushInterval =
-                    value.HasValue && value.Value <= TimeSpan.Zero ?
-                        null :
-                        value;
-            }
-        }
-        private TimeSpan? _autoFlushInterval = TimeSpan.FromSeconds(60);
+        public TimeSpan? AutoFlushInterval { get; set; } = TimeSpan.FromSeconds(60);
 
         /// <summary>
         /// Gets or sets a <see cref="CancellationToken"/> to use when

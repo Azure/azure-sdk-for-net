@@ -22,26 +22,25 @@ namespace Azure.Search.Documents.Batching
         /// <returns>A Task representing completion of all handlers.</returns>
         private static async Task JoinAsync(IEnumerable<Task> tasks)
         {
-            if (tasks != null)
+            if (tasks == null) { return; }
+
+            Task joined = Task.WhenAll(tasks);
+            try
             {
-                Task joined = Task.WhenAll(tasks);
-                try
+                await joined.ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                // awaiting will unwrap the AggregateException which we
+                // don't want if there were multiple failures that should
+                // be surfaced
+                if (joined.Exception?.InnerExceptions?.Count > 1)
                 {
-                    await joined.ConfigureAwait(false);
+                    throw joined.Exception;
                 }
-                catch (Exception)
+                else
                 {
-                    // awaiting will unwrap the AggregateException which we
-                    // don't want if there were multiple failures that should
-                    // be surfaced
-                    if (joined.Exception?.InnerExceptions?.Count > 1)
-                    {
-                        throw joined.Exception;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
         }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -71,10 +70,10 @@ namespace Azure.Search.Documents
         internal virtual Func<T, string> KeyFieldAccessor { get; private set; }
 
         /// <summary>
-        /// Ensure we only lookup the key field accessor once, but that
-        /// everyone waits until we have one.
+        /// Task used to minimize simultaneous requests for the key field
+        /// accessor.
         /// </summary>
-        private InitializationBarrierSlim _keyFieldBarrier = new InitializationBarrierSlim();
+        private Task _getKeyFieldAccessorTask = null;
 
         /// <summary>
         /// Async event raised whenever an indexing action is added to the
@@ -102,6 +101,11 @@ namespace Azure.Search.Documents
         public event Func<IndexDocumentsAction<T>, IndexingResult, Exception, CancellationToken, Task> ActionFailedAsync;
 
         /// <summary>
+        /// Protected constructor for mocking.
+        /// </summary>
+        protected SearchIndexingBufferedSender() { }
+
+        /// <summary>
         /// Creates a new instance of the SearchIndexingBufferedSender.
         /// </summary>
         /// <param name="searchClient">
@@ -110,7 +114,7 @@ namespace Azure.Search.Documents
         /// <param name="options">
         /// Provides the configuration options for the sender.
         /// </param>
-        protected internal SearchIndexingBufferedSender(
+        internal SearchIndexingBufferedSender(
             SearchClient searchClient,
             SearchIndexingBufferedSenderOptions<T> options = null)
         {
@@ -159,7 +163,6 @@ namespace Azure.Search.Documents
             if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
                 await _publisher.DisposeAsync(async).ConfigureAwait(false);
-                _keyFieldBarrier.Dispose();
             }
         }
 
@@ -208,82 +211,97 @@ namespace Azure.Search.Documents
             // Skip initialization if we already have one
             if (KeyFieldAccessor != null) { return; }
 
-            // Make sure we only run the initialization code once
-            if (await _keyFieldBarrier.TryEnterAsync(async, cancellationToken).ConfigureAwait(false))
+            // If we have multiple threads attempting to verify we have a key
+            // field we want to minimize possible requests to the service for
+            // its index.  We'll only assign the task if it's not null and
+            // anyone who gets year later can wait on it with us.
+            _getKeyFieldAccessorTask ??= GetKeyFieldAccessorAsync(async, cancellationToken);
+            if (async)
             {
-                // Release no matter what
-                try
+                await _getKeyFieldAccessorTask.ConfigureAwait(false);
+            }
+            else
+            {
+                #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                _getKeyFieldAccessorTask.EnsureCompleted();
+                #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+            }
+        }
+
+        /// <summary>
+        /// Get a function to access the key field of a search document.
+        /// </summary>
+        /// <param name="async">Whether to run sync or async.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A Task representing the operation.</returns>
+        private async Task GetKeyFieldAccessorAsync(bool async, CancellationToken cancellationToken)
+        {
+            // Case 1: The user provided an explicit accessor and we're done
+            if (KeyFieldAccessor != null) { return; }
+
+            // Case 2: Infer the accessor from FieldBuilder
+            try
+            {
+                FieldBuilder builder = new FieldBuilder { Serializer = SearchClient.Serializer };
+                IDictionary<string, SearchField> fields = builder.BuildMapping(typeof(T));
+                KeyValuePair<string, SearchField> keyField = fields.FirstOrDefault(pair => pair.Value.IsKey == true);
+                if (!keyField.Equals(default(KeyValuePair<string, SearchField>)))
                 {
-                    // Case 1: The user provided an explicit accessor and we're done
-                    if (KeyFieldAccessor != null) { return; }
-
-                    // Case 2: Infer the accessor from FieldBuilder
-                    try
-                    {
-                        FieldBuilder builder = new FieldBuilder { Serializer = SearchClient.Serializer };
-                        IDictionary<string, SearchField> fields = builder.BuildMapping(typeof(T));
-                        KeyValuePair<string, SearchField> keyField = fields.First(pair => pair.Value.IsKey == true);
-                        KeyFieldAccessor = CompileAccessor(keyField.Key);
-                        return;
-                    }
-                    catch
-                    {
-                        // Ignore any errors because this type might not have been
-                        // designed with FieldBuilder in mind
-                    }
-
-                    // Case 3: Fetch the index to find the key
-                    Exception failure = null;
-                    try
-                    {
-                        // Call the service to find the name of the key
-                        SearchIndexClient indexClient = SearchClient.GetSearchIndexClient();
-                        SearchIndex index = async ?
-                            await indexClient.GetIndexAsync(IndexName, cancellationToken).ConfigureAwait(false) :
-                            indexClient.GetIndex(IndexName, cancellationToken);
-                        SearchField keyField = index.Fields.Single(f => f.IsKey == true);
-                        string key = keyField.Name;
-
-                        if (typeof(T).IsAssignableFrom(typeof(SearchDocument)))
-                        {
-                            // Case 3a: If it's a dynamic SearchDocument, lookup
-                            // the name of the key in the dictionary
-                            KeyFieldAccessor = (T doc) => (doc as SearchDocument)?.GetString(key);
-                            return;
-                        }
-                        else
-                        {
-                            // Case 3b: We'll see if there's a property with the
-                            // same name and use that as the accessor
-                            if (typeof(T).GetProperty(key) != null ||
-                                typeof(T).GetField(key) != null)
-                            {
-                                KeyFieldAccessor = CompileAccessor(key);
-                                return;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // We'll provide any exceptions as a hint because it could
-                        // be something like using the wrong API Key type when
-                        // moving from SearchClient up to SearchIndexClient that
-                        // potentially could be addressed if the user really wanted
-                        failure = ex;
-                    }
-
-                    // Case 4: Throw and tell the user to provide an explicit accessor.
-                    throw new InvalidOperationException(
-                        $"Failed to discover the Key field of document type {typeof(T).Name} for Azure Cognitive Search index {IndexName}.  " +
-                        $"Please set {typeof(SearchIndexingBufferedSenderOptions<T>).Name}.{nameof(SearchIndexingBufferedSenderOptions<T>.KeyFieldAccessor)} explicitly.",
-                        failure);
-                }
-                finally
-                {
-                    // Unblock anyone else who called this at the same time
-                    _keyFieldBarrier.Release();
+                    KeyFieldAccessor = CompileAccessor(keyField.Key);
+                    return;
                 }
             }
+            catch
+            {
+                // Ignore any errors because this type might not have been
+                // designed with FieldBuilder in mind
+            }
+
+            // Case 3: Fetch the index to find the key
+            Exception failure = null;
+            try
+            {
+                // Call the service to find the name of the key
+                SearchIndexClient indexClient = SearchClient.GetSearchIndexClient();
+                SearchIndex index = async ?
+                    await indexClient.GetIndexAsync(IndexName, cancellationToken).ConfigureAwait(false) :
+                    indexClient.GetIndex(IndexName, cancellationToken);
+                SearchField keyField = index.Fields.Single(f => f.IsKey == true);
+                string key = keyField.Name;
+
+                if (typeof(T).IsAssignableFrom(typeof(SearchDocument)))
+                {
+                    // Case 3a: If it's a dynamic SearchDocument, lookup
+                    // the name of the key in the dictionary
+                    KeyFieldAccessor = (T doc) => (doc as SearchDocument)?.GetString(key);
+                    return;
+                }
+                else
+                {
+                    // Case 3b: We'll see if there's a property with the
+                    // same name and use that as the accessor
+                    if (typeof(T).GetProperty(key) != null ||
+                        typeof(T).GetField(key) != null)
+                    {
+                        KeyFieldAccessor = CompileAccessor(key);
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // We'll provide any exceptions as a hint because it could
+                // be something like using the wrong API Key type when
+                // moving from SearchClient up to SearchIndexClient that
+                // potentially could be addressed if the user really wanted
+                failure = ex;
+            }
+
+            // Case 4: Throw and tell the user to provide an explicit accessor.
+            throw new InvalidOperationException(
+                $"Failed to discover the Key field of document type {typeof(T).Name} for Azure Cognitive Search index {IndexName}.  " +
+                $"Please set {typeof(SearchIndexingBufferedSenderOptions<T>).Name}.{nameof(SearchIndexingBufferedSenderOptions<T>.KeyFieldAccessor)} explicitly.",
+                failure);
 
             // Build an accessor for a property named key on type T.  Compiling
             // is kind of heavyweight, but we'll be calling this so many times
@@ -301,7 +319,7 @@ namespace Azure.Search.Documents
 
         #region Notifications
         /// <summary>
-        /// Raise the ActionAddedAsync event.
+        /// Raise the <see cref="ActionAddedAsync"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -316,7 +334,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Raise the ActionSentAsync event.
+        /// Raise the <see cref="ActionSentAsync"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -331,7 +349,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Raise the ActionCompletedAsync event.
+        /// Raise the <see cref="ActionCompletedAsync"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="result">The result of indexing.</param>
@@ -348,7 +366,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Raise the ActionFailedAsync event.
+        /// Raise the <see cref="ActionFailedAsync"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="result">The result of indexing.</param>
@@ -373,7 +391,7 @@ namespace Azure.Search.Documents
         /// this method.
         /// </summary>
         /// <param name="batch">The batch to send.</param>
-        /// <param name="async">Whether to call sync or async.</param>
+        /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -387,8 +405,9 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken)
         {
             EnsureNotDisposed();
-            if (batch != null)
+            if (batch?.Actions != null)
             {
+                await EnsureKeyFieldAccessorAsync(async, cancellationToken).ConfigureAwait(false);
                 await _publisher.AddDocumentsAsync(
                     batch.Actions,
                     async,
