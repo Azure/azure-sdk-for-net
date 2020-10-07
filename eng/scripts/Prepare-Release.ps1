@@ -1,3 +1,5 @@
+#Requires -Version 6.0
+
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
@@ -168,6 +170,7 @@ foreach ($existingVersion in $existing.versions)
 }
 
 $currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
+$currentProjectVersion = "$currentProjectVersion".Trim()
 
 if ($latestVersion)
 {
@@ -225,7 +228,7 @@ if ($releasing)
     Write-Host "Detected released type $releaseType" -ForegroundColor Green
 
     Write-Host
-    Write-Host "Updating versions" -ForegroundColor Green
+    Write-Host "Updating versions to $newVersion with date $releaseDateString" -ForegroundColor Green
 
     & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
 
