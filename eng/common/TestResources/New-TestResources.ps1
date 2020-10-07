@@ -511,7 +511,7 @@ test resources (e.g. Role Assignments on resources). It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified. The same
