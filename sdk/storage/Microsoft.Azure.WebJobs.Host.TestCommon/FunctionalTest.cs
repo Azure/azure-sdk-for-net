@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -24,12 +25,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource,
             IEnumerable<string> ignoreFailureFunctions = null,
-            bool signalOnFirst = false)
+            bool signalOnFirst = false,
+            Dictionary<string, string> settings = default)
         {
             TaskCompletionSource<TResult> src = new TaskCompletionSource<TResult>();
             setTaskSource(src);
 
             var host = new HostBuilder()
+              .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(settings))
               .ConfigureDefaultTestHost(builder =>
               {
                   builder.AddAzureStorageBlobs().AddAzureStorageQueues();

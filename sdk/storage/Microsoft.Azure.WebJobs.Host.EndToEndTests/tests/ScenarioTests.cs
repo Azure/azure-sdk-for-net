@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -67,10 +68,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             {
                 b.Services.AddAzureClients(builder =>
                 {
-                    builder.UseCredential(AzuriteNUnitFixture.Instance.GetCredential());
                     builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport());
                 });
-            }, programType, setTaskSource);
+            }, programType, setTaskSource,
+            settings: new Dictionary<string, string>() {
+                // This takes precedence over env variables.
+                { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+            });
         }
 
         private class BlobTriggerToQueueTriggerToBlobProgram
