@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using SharedTaskExtensions = Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.Search.Documents.Batching
 {
@@ -49,6 +50,12 @@ namespace Azure.Search.Documents.Batching
         /// inactivity.
         /// </summary>
         private Timer _timer;
+
+        /// <summary>
+        /// Gets a value indicating whether the timer is currently paused (i.e.
+        /// has an infinite dueTime).
+        /// </summary>
+        private bool _timerPaused;
 
         /// <summary>
         /// Queue of pending actions.
@@ -192,21 +199,29 @@ namespace Azure.Search.Documents.Batching
         /// <returns>Task for adding the documents.</returns>
         private async Task FlushInternal(bool async, CancellationToken cancellationToken = default)
         {
-            Task flushCompletionTask = _flushCompletionSource.Task;
+            // Get an awaitable that will let us wait until flushing has been
+            // completed
+            SharedTaskExtensions.WithCancellationTaskAwaitable<object> flushCompletion =
+                _flushCompletionSource.Task.AwaitWithCancellation(cancellationToken);
+
+            // Send a message to flush
             await _channel.Writer.WriteInternal(
                 Message.Flush(),
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
+
+            // Wait for the flushing to complete
             if (async)
             {
-                await flushCompletionTask.ConfigureAwait(false);
+                // AwaitWithCancellation calls ConfigureAwait(false) already
+                await flushCompletion;
             }
             else
             {
-                #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                flushCompletionTask.EnsureCompleted();
-                #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                flushCompletion.GetAwaiter().GetResult();
+                #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
         }
         #endregion
@@ -262,18 +277,21 @@ namespace Azure.Search.Documents.Batching
                 _pending.Enqueue(action);
             }
 
-            // Determine whether or not that crossed the threshold and we need
-            // to automatically submit the next batch
-            if (AutoFlush && HasFullBatch())
+            // Automatically trigger a submission if enabled
+            if (AutoFlush)
             {
-                await PublishAsync(cancellationToken).ConfigureAwait(false);
-            }
-
-            // If there's anything left unsent, start a timer to call to flush
-            // after the it elapses.
-            if (IndexingActionsCount > 0)
-            {
-                StartTimer();
+                // Determine whether or not we crossed the threshold and we need
+                // to automatically submit the next batch.
+                if (HasFullBatch())
+                {
+                    await PublishAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    // Otherwise try starting a timer to flush whatever's ready
+                    // when it fires
+                    StartTimer();
+                }
             }
         }
 
@@ -318,8 +336,8 @@ namespace Azure.Search.Documents.Batching
         {
             if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
-                StopTimer();
                 await FlushInternal(async, PublisherCancellationToken).ConfigureAwait(false);
+                _timer?.Dispose();
                 _channel?.Writer.TryComplete();
                 if (async)
                 {
@@ -367,10 +385,14 @@ namespace Azure.Search.Documents.Batching
 
             do
             {
-                // Prefer pulling from the _retry queue first
                 List<PublisherAction<T>> batch = new List<PublisherAction<T>>(
                     capacity: Math.Min(BatchActionSize, IndexingActionsCount));
-                _ = FillBatchFromQueue(batch, _retry) && FillBatchFromQueue(batch, _pending);
+
+                // Prefer pulling from the _retry queue first
+                if (!FillBatchFromQueue(batch, _retry))
+                {
+                    FillBatchFromQueue(batch, _pending);
+                }
 
                 // Submit the batch
                 await SubmitBatchAsync(
@@ -396,10 +418,10 @@ namespace Azure.Search.Documents.Batching
                     }
                     else
                     {
-                        return false;
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
         }
 
@@ -461,7 +483,7 @@ namespace Azure.Search.Documents.Batching
         /// </summary>
         private void StartTimer()
         {
-            if (AutoFlushInterval != null)
+            if (AutoFlush && AutoFlushInterval != null)
             {
                 int intervalInMs = (int)AutoFlushInterval.Value.TotalMilliseconds;
                 if (_timer == null)
@@ -471,6 +493,14 @@ namespace Azure.Search.Documents.Batching
                         state: null,
                         dueTime: intervalInMs,
                         period: Timeout.Infinite);
+                    _timerPaused = false;
+                }
+                else if (_timerPaused)
+                {
+                    _timer.Change(
+                        dueTime: intervalInMs,
+                        period: Timeout.Infinite);
+                    _timerPaused = false;
                 }
             }
         }
@@ -480,10 +510,12 @@ namespace Azure.Search.Documents.Batching
         /// </summary>
         private void StopTimer()
         {
-            if (_timer != null)
+            if (_timer != null && !_timerPaused)
             {
-                _timer.Dispose();
-                _timer = null;
+                _timer.Change(
+                    dueTime: Timeout.Infinite,
+                    period: Timeout.Infinite);
+                _timerPaused = true;
             }
         }
 
@@ -493,12 +525,18 @@ namespace Azure.Search.Documents.Batching
         /// <param name="timerState"></param>
         private void OnTimerElapsed(object timerState)
         {
-            // We'll do this synchronously since it's an unbounded channel and
-            // we can just spin if we need to.
-            _channel.Writer.WriteInternal(
-                Message.Flush(),
-                async: false)
-                .EnsureCompleted();
+            try
+            {
+                _channel.Writer.WriteInternal(
+                    Message.Flush(),
+                    async: false)
+                    .EnsureCompleted();
+            }
+            catch
+            {
+                // We'd rather not have the timer flush than tear down the
+                // process because of an unhandled exception
+            }
         }
         #endregion Timer
     }

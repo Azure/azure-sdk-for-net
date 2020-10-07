@@ -222,9 +222,12 @@ namespace Azure.Search.Documents
             }
             else
             {
-                #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                _getKeyFieldAccessorTask.EnsureCompleted();
-                #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                // We're potentially doing sync-over-async if somebody enters
+                // on an async code path first and follows up from a sync code
+                // path.
+                _getKeyFieldAccessorTask.GetAwaiter().GetResult();
+                #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
         }
 

@@ -71,8 +71,8 @@ namespace Azure.Search.Documents
     }
     public static partial class SearchIndexingBufferedSenderExtensions
     {
-        public static void DeleteDocuments(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string key, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public static System.Threading.Tasks.Task DeleteDocumentsAsync(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string key, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static void DeleteDocuments(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string keyFieldName, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task DeleteDocumentsAsync(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string keyFieldName, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SearchIndexingBufferedSenderOptions<T>
     {
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents
     }
     public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
     {
-        protected internal SearchIndexingBufferedSender(Azure.Search.Documents.SearchClient searchClient, Azure.Search.Documents.SearchIndexingBufferedSenderOptions<T> options = null) { }
+        protected SearchIndexingBufferedSender() { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
