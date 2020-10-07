@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyDetectionConfiguration. </summary>
-    public partial class MetricAnomalyDetectionConfiguration
+    public partial class AnomalyDetectionConfiguration
     {
 
-        /// <summary> Initializes a new instance of MetricAnomalyDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectionConfiguration. </summary>
         /// <param name="id"> anomaly detection configuration unique id. </param>
         /// <param name="name"> anomaly detection configuration name. </param>
         /// <param name="description"> anomaly detection configuration description. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="wholeSeriesDetectionConditions"> . </param>
         /// <param name="seriesGroupDetectionConditions"> detection configuration for series group. </param>
         /// <param name="seriesDetectionConditions"> detection configuration for specific series. </param>
-        internal MetricAnomalyDetectionConfiguration(string id, string name, string description, string metricId, MetricAnomalyDetectionConditions wholeSeriesDetectionConditions, IList<MetricSeriesGroupAnomalyDetectionConditions> seriesGroupDetectionConditions, IList<MetricSingleSeriesAnomalyDetectionConditions> seriesDetectionConditions)
+        internal AnomalyDetectionConfiguration(string id, string name, string description, string metricId, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions, IList<MetricSeriesGroupDetectionCondition> seriesGroupDetectionConditions, IList<MetricSingleSeriesDetectionCondition> seriesDetectionConditions)
         {
             Id = id;
             Name = name;

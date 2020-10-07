@@ -10,10 +10,10 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DimensionGroupConfiguration. </summary>
-    public partial class MetricSeriesGroupAnomalyDetectionConditions : MetricAnomalyDetectionConditions
+    public partial class MetricSeriesGroupDetectionCondition : MetricWholeSeriesDetectionCondition
     {
 
-        /// <summary> Initializes a new instance of MetricSeriesGroupAnomalyDetectionConditions. </summary>
+        /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
         /// <param name="crossConditionsOperator">
         /// condition operator
         /// 
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="hardThresholdCondition"> . </param>
         /// <param name="changeThresholdCondition"> . </param>
         /// <param name="seriesGroupKey"> . </param>
-        internal MetricSeriesGroupAnomalyDetectionConditions(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
+        internal MetricSeriesGroupDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesGroupKey = seriesGroupKey;
         }

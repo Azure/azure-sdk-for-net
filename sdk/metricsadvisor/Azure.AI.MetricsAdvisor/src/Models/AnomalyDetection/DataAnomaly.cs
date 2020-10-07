@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// The properties of a detected <see cref="DataAnomaly"/>. A <see cref="DataAnomaly"/> is detected according to
-    /// the rules set by a <see cref="MetricAnomalyDetectionConfiguration"/>.
+    /// the rules set by a <see cref="AnomalyDetectionConfiguration"/>.
     /// </summary>
     [CodeGenModel("AnomalyResult")]
     [CodeGenSuppress(nameof(DataAnomaly), typeof(DateTimeOffset), typeof(IReadOnlyDictionary<string, string>), typeof(AnomalyProperty))]
@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/> that detected
+        /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
         /// this anomaly. This property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/>
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync"/>.
         /// </summary>

@@ -30,22 +30,27 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Administrators = dataFeedDetail.Admins;
             Viewers = dataFeedDetail.Viewers;
-            FeedDescription = dataFeedDetail.DataFeedDescription;
+            Description = dataFeedDetail.DataFeedDescription;
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            Creator = dataFeedDetail.Creator;
+            ActionLinkTemplate = dataFeedDetail.ActionLinkTemplate;
         }
 
         /// <summary>
         /// A description of the <see cref="DataFeed"/>.
         /// </summary>
-        public string FeedDescription { get; set; }
+        public string Description { get; set; }
 
         // TODODOCS.
         /// <summary>
         /// </summary>
-        public AccessMode? AccessMode { get; set; }
+        public string ActionLinkTemplate { get; set; }
+
+        // TODODOCS.
+        /// <summary>
+        /// </summary>
+        public DataFeedAccessMode? AccessMode { get; set; }
 
         /// <summary>
         /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
@@ -58,11 +63,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// in the data ingested from the data source.
         /// </summary>
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
-
-        // TODODOCS.
-        /// <summary>
-        /// </summary>
-        public string Creator { get; }
 
         /// <summary>
         /// The emails of this data feed's administrators. Administrators have total control over a

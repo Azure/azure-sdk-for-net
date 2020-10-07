@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricAnomalyDetectionConfiguration : IUtf8JsonSerializable
+    public partial class AnomalyDetectionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,15 +50,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricAnomalyDetectionConfiguration DeserializeMetricAnomalyDetectionConfiguration(JsonElement element)
+        internal static AnomalyDetectionConfiguration DeserializeAnomalyDetectionConfiguration(JsonElement element)
         {
             Optional<string> anomalyDetectionConfigurationId = default;
             string name = default;
             Optional<string> description = default;
             string metricId = default;
-            MetricAnomalyDetectionConditions wholeMetricConfiguration = default;
-            Optional<IList<MetricSeriesGroupAnomalyDetectionConditions>> dimensionGroupOverrideConfigurations = default;
-            Optional<IList<MetricSingleSeriesAnomalyDetectionConditions>> seriesOverrideConfigurations = default;
+            MetricWholeSeriesDetectionCondition wholeMetricConfiguration = default;
+            Optional<IList<MetricSeriesGroupDetectionCondition>> dimensionGroupOverrideConfigurations = default;
+            Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"))
@@ -83,31 +83,31 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("wholeMetricConfiguration"))
                 {
-                    wholeMetricConfiguration = MetricAnomalyDetectionConditions.DeserializeMetricAnomalyDetectionConditions(property.Value);
+                    wholeMetricConfiguration = MetricWholeSeriesDetectionCondition.DeserializeMetricWholeSeriesDetectionCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dimensionGroupOverrideConfigurations"))
                 {
-                    List<MetricSeriesGroupAnomalyDetectionConditions> array = new List<MetricSeriesGroupAnomalyDetectionConditions>();
+                    List<MetricSeriesGroupDetectionCondition> array = new List<MetricSeriesGroupDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSeriesGroupAnomalyDetectionConditions.DeserializeMetricSeriesGroupAnomalyDetectionConditions(item));
+                        array.Add(MetricSeriesGroupDetectionCondition.DeserializeMetricSeriesGroupDetectionCondition(item));
                     }
                     dimensionGroupOverrideConfigurations = array;
                     continue;
                 }
                 if (property.NameEquals("seriesOverrideConfigurations"))
                 {
-                    List<MetricSingleSeriesAnomalyDetectionConditions> array = new List<MetricSingleSeriesAnomalyDetectionConditions>();
+                    List<MetricSingleSeriesDetectionCondition> array = new List<MetricSingleSeriesDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSingleSeriesAnomalyDetectionConditions.DeserializeMetricSingleSeriesAnomalyDetectionConditions(item));
+                        array.Add(MetricSingleSeriesDetectionCondition.DeserializeMetricSingleSeriesDetectionCondition(item));
                     }
                     seriesOverrideConfigurations = array;
                     continue;
                 }
             }
-            return new MetricAnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, Optional.ToList(dimensionGroupOverrideConfigurations), Optional.ToList(seriesOverrideConfigurations));
+            return new AnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, Optional.ToList(dimensionGroupOverrideConfigurations), Optional.ToList(seriesOverrideConfigurations));
         }
     }
 }

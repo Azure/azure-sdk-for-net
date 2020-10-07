@@ -15,13 +15,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureApplicationInsightsDataFeedSource"/> class.
         /// </summary>
-        /// <param name="azureCloud"></param>
         /// <param name="applicationId">The Application ID.</param>
         /// <param name="apiKey">The API key.</param>
+        /// <param name="azureCloud"></param>
         /// <param name="query"></param>
-        /// <exception cref="ArgumentNullException"><paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is empty.</exception>
-        public AzureApplicationInsightsDataFeedSource(string azureCloud, string applicationId, string apiKey, string query)
+        /// <exception cref="ArgumentNullException"><paramref name="applicationId"/>, <paramref name="apiKey"/>, <paramref name="azureCloud"/>, or <paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="applicationId"/>, <paramref name="apiKey"/>, <paramref name="azureCloud"/>, or <paramref name="query"/> is empty.</exception>
+        public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query)
             : base(DataFeedSourceType.AzureApplicationInsights)
         {
             Argument.AssertNotNullOrEmpty(azureCloud, nameof(azureCloud));

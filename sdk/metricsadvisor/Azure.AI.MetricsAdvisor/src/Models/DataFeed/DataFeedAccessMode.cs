@@ -9,14 +9,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// </summary>
     [CodeGenModel("ViewMode")]
-    public readonly partial struct AccessMode
+    public readonly partial struct DataFeedAccessMode
     {
         /// <summary>
         /// </summary>
-        public static AccessMode Private { get; } = new AccessMode(PrivateValue);
+        public static DataFeedAccessMode Private { get; } = new DataFeedAccessMode(PrivateValue);
 
         /// <summary>
         /// </summary>
-        public static AccessMode Public { get; } = new AccessMode(PublicValue);
+        public static DataFeedAccessMode Public { get; } = new DataFeedAccessMode(PublicValue);
     }
 }

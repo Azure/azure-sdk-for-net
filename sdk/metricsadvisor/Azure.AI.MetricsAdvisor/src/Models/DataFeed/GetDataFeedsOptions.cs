@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary>
         /// </summary>
-        public GetDataFeedsFilter Filter { get; set; }
+        public GetDataFeedsFilter GetDataFeedsFilter { get; set; }
 
         /// <summary>
         /// </summary>

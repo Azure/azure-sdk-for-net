@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary>
         /// </summary>
-        public string HookName { get; set; }
+        public string HookNameFilter { get; set; }
 
         /// <summary>
         /// </summary>

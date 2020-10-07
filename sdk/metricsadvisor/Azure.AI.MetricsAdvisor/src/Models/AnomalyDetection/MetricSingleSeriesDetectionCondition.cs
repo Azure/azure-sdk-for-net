@@ -11,22 +11,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// time series.
     /// </summary>
     [CodeGenModel("SeriesConfiguration")]
-    [CodeGenSuppress(nameof(MetricSingleSeriesAnomalyDetectionConditions), typeof(SeriesIdentity))]
-    public partial class MetricSingleSeriesAnomalyDetectionConditions : MetricAnomalyDetectionConditions
+    [CodeGenSuppress(nameof(MetricSingleSeriesDetectionCondition), typeof(SeriesIdentity))]
+    public partial class MetricSingleSeriesDetectionCondition : MetricWholeSeriesDetectionCondition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricSingleSeriesAnomalyDetectionConditions"/> class.
+        /// Initializes a new instance of the <see cref="MetricSingleSeriesDetectionCondition"/> class.
         /// </summary>
         /// <param name="seriesKey">The key that uniquely identifies the time series to which these conditions apply within a metric. Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="seriesKey"/> is null.</exception>
-        public MetricSingleSeriesAnomalyDetectionConditions(DimensionKey seriesKey)
+        public MetricSingleSeriesDetectionCondition(DimensionKey seriesKey)
         {
             Argument.AssertNotNull(seriesKey, nameof(seriesKey));
 
             SeriesKey = seriesKey;
         }
 
-        internal MetricSingleSeriesAnomalyDetectionConditions(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
+        internal MetricSingleSeriesDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
             : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesKey = new DimensionKey(series.Dimension);

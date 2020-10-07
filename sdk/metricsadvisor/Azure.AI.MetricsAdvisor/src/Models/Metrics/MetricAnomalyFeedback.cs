@@ -80,6 +80,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The anomaly detection configuration snapshot.
         /// </summary>
-        public MetricAnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
+        public AnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
     }
 }

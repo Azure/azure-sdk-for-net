@@ -6,12 +6,12 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The GetEnrichmentStatusesOptions. </summary>
-    public class GetEnrichmentStatusesOptions
+    public class GetMetricEnrichmentStatusesOptions
     {
-        /// <summary> Initializes a new instance of <see cref="GetEnrichmentStatusesOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetMetricEnrichmentStatusesOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to query anomaly detection status. </param>
         /// <param name="endTime"> the end point of time range to query anomaly detection status. </param>
-        public GetEnrichmentStatusesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        public GetMetricEnrichmentStatusesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;

@@ -24,13 +24,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of AlertResult. </summary>
-        /// <param name="alertId"> alert id. </param>
+        /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdTime"> created time. </param>
         /// <param name="modifiedTime"> modified time. </param>
-        internal AlertResult(string alertId, DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
+        internal AlertResult(string id, DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
         {
-            AlertId = alertId;
+            Id = id;
             Timestamp = timestamp;
             CreatedTime = createdTime;
             ModifiedTime = modifiedTime;

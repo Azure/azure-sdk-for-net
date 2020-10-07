@@ -238,7 +238,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -302,7 +302,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -419,7 +419,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<EnrichmentStatus> GetEnrichmentStatusesAsync(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
@@ -431,7 +431,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -448,7 +448,7 @@ namespace Azure.AI.MetricsAdvisor
 
             async Task<Page<EnrichmentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -473,7 +473,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="options"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<EnrichmentStatus> GetEnrichmentStatuses(string metricId, GetEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
@@ -485,7 +485,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -502,7 +502,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Page<EnrichmentStatus> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetEnrichmentStatuses)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricEnrichmentStatuses)}");
                 scope.Start();
 
                 try
@@ -683,7 +683,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 scope.Failed(e);
                 throw;
-            }
+        }
         }
 
         /// <summary>
@@ -778,7 +778,7 @@ namespace Azure.AI.MetricsAdvisor
         #region AnomalyDetection
 
         /// <summary>
-        /// Gets a collection of items describing the anomalies detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -837,7 +837,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the anomalies detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -896,7 +896,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the incidents detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -955,7 +955,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the incidents detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -1082,7 +1082,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionFilter?.Clone()
+                DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
             int? top = options.TopCount;
@@ -1144,7 +1144,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionFilter?.Clone()
+                DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
             int? top = options.TopCount;
@@ -1186,7 +1186,6 @@ namespace Azure.AI.MetricsAdvisor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        // TODODOCS.
         /// <summary>
         /// Gets data about the data points present in the specified set of time series.
         /// <see cref="MetricAnomalyAlertConfiguration"/>.

@@ -19,6 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
             CreatedTime = dataFeedDetail.CreatedTime;
+            Creator = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.Select(metric => metric.MetricId).ToList();
             Name = dataFeedDetail.DataFeedName;
@@ -43,6 +44,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
         public DateTimeOffset? CreatedTime { get; }
+
+        // TODODOCS.
+        /// <summary>
+        /// </summary>
+        public string Creator { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
@@ -96,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureApplicationInsights => new AzureApplicationInsightsDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -112,12 +118,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureBlob => new AzureBlobDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -133,12 +140,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureCosmosDb => new AzureCosmosDBDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -154,12 +162,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureDataLakeStorageGen2 => new AzureDataLakeStorageGen2DataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -175,12 +184,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureTable => new AzureTableDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -196,12 +206,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.Elasticsearch => new ElasticsearchDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -217,12 +228,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.HttpRequest => new HttpRequestDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -238,12 +250,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.InfluxDb => new InfluxDBDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -259,12 +272,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -280,12 +294,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.MySql => new MySqlDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -301,12 +316,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -322,12 +338,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -343,12 +360,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 DataFeed p when p.SourceType == DataFeedSourceType.MongoDb => new MongoDBDataFeedPatch()
                 {
                     DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
+                    DataFeedDescription = p.Options?.Description,
                     TimestampColumn = p.Schema.TimestampColumn,
                     DataStartFrom = p.IngestionSettings.IngestionStartTime,
                     StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
@@ -364,6 +382,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
                     Admins = p.Options?.Administrators,
                     Viewers = p.Options?.Viewers,
+                    ActionLinkTemplate = p.Options?.ActionLinkTemplate,
                     Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
                 },
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")

@@ -9,17 +9,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Defines which conditions a data point must satisfy to be considered an anomaly.
     /// </summary>
     [CodeGenModel("WholeMetricConfiguration")]
-    public partial class MetricAnomalyDetectionConditions
+    public partial class MetricWholeSeriesDetectionCondition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricAnomalyDetectionConditions"/> class.
+        /// Initializes a new instance of the <see cref="MetricWholeSeriesDetectionCondition"/> class.
         /// </summary>
-        public MetricAnomalyDetectionConditions()
+        public MetricWholeSeriesDetectionCondition()
         {
         }
 
         /// <summary>
-        /// The operator to be applied between conditions in this <see cref="MetricAnomalyDetectionConditions"/>
+        /// The operator to be applied between conditions in this <see cref="MetricWholeSeriesDetectionCondition"/>
         /// instance. This property must be set if at least two conditions properties in this instance are defined.
         /// </summary>
         [CodeGenMember("ConditionOperator")]

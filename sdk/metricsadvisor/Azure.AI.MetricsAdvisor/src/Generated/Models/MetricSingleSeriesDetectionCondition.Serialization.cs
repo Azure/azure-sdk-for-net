@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricAnomalyDetectionConditions : IUtf8JsonSerializable
+    public partial class MetricSingleSeriesDetectionCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("series");
+            writer.WriteObjectValue(Series);
             if (Optional.IsDefined(CrossConditionsOperator))
             {
                 writer.WritePropertyName("conditionOperator");
@@ -38,14 +40,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricAnomalyDetectionConditions DeserializeMetricAnomalyDetectionConditions(JsonElement element)
+        internal static MetricSingleSeriesDetectionCondition DeserializeMetricSingleSeriesDetectionCondition(JsonElement element)
         {
+            SeriesIdentity series = default;
             Optional<DetectionConditionsOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("series"))
+                {
+                    series = SeriesIdentity.DeserializeSeriesIdentity(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("conditionOperator"))
                 {
                     conditionOperator = new DetectionConditionsOperator(property.Value.GetString());
@@ -67,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAnomalyDetectionConditions(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value);
+            return new MetricSingleSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, series);
         }
     }
 }
