@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get; }
 
         /// <summary>
-        /// The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/> that detected
+        /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
         /// this <see cref="AnomalyIncident"/>. This property is only populated when calling
         /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert"/> or
         /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync"/>.
