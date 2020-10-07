@@ -104,6 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private BlobClientOptions CreateBlobClientOptions(IConfiguration configuration)
         {
             var blobClientOptions = (BlobClientOptions) _componentFactory.CreateClientOptions(typeof(BlobClientOptions), null, configuration);
+            blobClientOptions.Diagnostics.ApplicationId ??= "AzureWebJobs";
             if (SkuUtility.IsDynamicSku)
             {
                 blobClientOptions.Transport = CreateTransportForDynamicSku();
@@ -115,6 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private QueueClientOptions CreateQueueClientOptions(IConfiguration configuration)
         {
             var queueClientOptions = (QueueClientOptions) _componentFactory.CreateClientOptions(typeof(QueueClientOptions), null, configuration);
+            queueClientOptions.Diagnostics.ApplicationId ??= "AzureWebJobs";
             if (SkuUtility.IsDynamicSku)
             {
                 queueClientOptions.Transport = CreateTransportForDynamicSku();
