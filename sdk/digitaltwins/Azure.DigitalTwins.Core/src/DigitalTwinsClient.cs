@@ -117,7 +117,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <exception cref="RequestFailedException">
@@ -160,7 +160,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -178,7 +178,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -220,7 +220,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -241,7 +241,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -271,7 +271,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -298,7 +298,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -320,7 +320,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -345,7 +345,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentPath">The component being retrieved.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -373,7 +373,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentPath">The component being retrieved.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -399,7 +399,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentPath">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -433,7 +433,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentPath">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -458,7 +458,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <remarks>
@@ -537,7 +537,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <remarks>
@@ -598,7 +598,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets all the relationships referencing a digital twin as a target by iterating through a collection asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships directed towards the specified digital twin and the http response.</returns>
         /// <remarks>
@@ -661,7 +661,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets all the relationships referencing a digital twin as a target by iterating through a collection synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships directed towards the specified digital twin and the http response.</returns>
         /// <remarks>
@@ -718,7 +718,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -752,7 +752,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -777,7 +777,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -799,7 +799,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -825,7 +825,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship which is being created.</param>
         /// <param name="relationship">The application/json relationship to be created.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -870,7 +870,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
         /// <param name="relationship">The application/json relationship to be created.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -901,7 +901,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -924,7 +924,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="options">The optional settings for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -947,7 +947,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Gets the list of models by iterating through a collection asynchronously.
         /// </summary>
-        /// <param name="options">The options to follow when listing the models. For example, the page size hint can be specified.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json models and the http response.</returns>
         /// <remarks>
@@ -976,7 +976,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListAsync(options?.dependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
+                    Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListAsync(options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -992,7 +992,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListNextPageAsync(nextLink, options?.dependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
+                    Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListNextPageAsync(nextLink, options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1008,7 +1008,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Gets the list of models by iterating through a collection synchronously.
         /// </summary>
-        /// <param name="options">The options to follow when listing the models. For example, the page size hint can be specified.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json models and the http response.</returns>
         /// <remarks>
@@ -1028,7 +1028,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    Response<PagedDigitalTwinsModelDataCollection> response = _dtModelsRestClient.List(options?.dependenciesFor, options?.IncludeModelDefinition, options, cancellationToken);
+                    Response<PagedDigitalTwinsModelDataCollection> response = _dtModelsRestClient.List(options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1044,7 +1044,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    Response<PagedDigitalTwinsModelDataCollection> response = _dtModelsRestClient.ListNextPage(nextLink, options?.dependenciesFor, options?.IncludeModelDefinition, options, cancellationToken);
+                    Response<PagedDigitalTwinsModelDataCollection> response = _dtModelsRestClient.ListNextPage(nextLink, options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1061,7 +1061,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets a model, including the model metadata and the model definition asynchronously.
         /// </summary>
         /// <param name="modelId">The Id of the model.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json model and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -1089,7 +1089,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets a model, including the model metadata and the model definition synchronously.
         /// </summary>
         /// <param name="modelId">The Id of the model.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json model and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -1114,7 +1114,7 @@ namespace Azure.DigitalTwins.Core
         /// Decommissions a model asynchronously.
         /// </summary>
         /// <param name="modelId">The Id of the model to decommission.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1155,7 +1155,7 @@ namespace Azure.DigitalTwins.Core
         /// Decommissions a model synchronously.
         /// </summary>
         /// <param name="modelId">The Id of the model to decommission.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1186,7 +1186,7 @@ namespace Azure.DigitalTwins.Core
         /// Creates one or many models asynchronously.
         /// </summary>
         /// <param name="models">The set of models to create. Each string corresponds to exactly one model.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
         /// <exception cref="RequestFailedException">
@@ -1219,7 +1219,7 @@ namespace Azure.DigitalTwins.Core
         /// Creates one or many models synchronously.
         /// </summary>
         /// <param name="models">The set of models to create. Each string corresponds to exactly one model.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -1249,7 +1249,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a model asynchronously.
         /// </summary>
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1293,7 +1293,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a model synchronously.
         /// </summary>
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1327,7 +1327,7 @@ namespace Azure.DigitalTwins.Core
         /// Queries for digital twins by iterating through a collection asynchronously.
         /// </summary>
         /// <param name="query">The query string, in SQL-like syntax.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
         /// <remarks>
@@ -1403,7 +1403,7 @@ namespace Azure.DigitalTwins.Core
         /// Queries for digital twins by iterating through a collection synchronously.
         /// </summary>
         /// <param name="query">The query string, in SQL-like syntax.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
         /// <remarks>
@@ -1468,7 +1468,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>.
         /// Lists the event routes in a digital twins instance by iterating through a collection asynchronously.
         /// </summary>
-        /// <param name="options">The options to use when listing the event routes. One can set the maximum number of items to retrieve per request, however the service may return less than requested.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json event routes and the http response.</returns>
         /// <remarks>
@@ -1526,7 +1526,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>.
         /// Lists the event routes in a digital twins instance by iterating through a collection synchronously.
         /// </summary>
-        /// <param name="options">The options to use when listing the event routes. One can set the maximum number of items to retrieve per request, however the service may return less than requested.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json event routes and the http response.</returns>
         /// <remarks>
@@ -1579,7 +1579,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets an event route by Id asynchronously.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json event routes and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -1600,7 +1600,7 @@ namespace Azure.DigitalTwins.Core
         /// Gets an event route by Id synchronously.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json event routes and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -1625,7 +1625,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1656,7 +1656,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1680,7 +1680,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes an event route asynchronously.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1707,7 +1707,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes an event route synchronously.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
-        /// <param name="options">The optional parameters for this request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1735,7 +1735,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The additional information to be used when processing a telemetry request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1774,7 +1774,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The additional information to be used when processing a telemetry request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1809,7 +1809,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The additional information to be used when processing a telemetry request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1857,7 +1857,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The additional information to be used when processing a telemetry request.</param>
+        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>

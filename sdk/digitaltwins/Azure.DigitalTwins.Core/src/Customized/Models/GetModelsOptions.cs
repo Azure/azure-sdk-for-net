@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// The set of model Ids to have their dependencies retrieved.
         /// </summary>
-        public IEnumerable<string> dependenciesFor { get; set; }
+        public IEnumerable<string> DependenciesFor { get; set; }
 
         /// <summary>
         /// Whether to include the model definition in the result. If false, only the model metadata will be returned.
