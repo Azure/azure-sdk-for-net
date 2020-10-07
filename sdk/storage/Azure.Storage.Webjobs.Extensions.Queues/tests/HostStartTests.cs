@@ -6,30 +6,29 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStartTests : IClassFixture<AzuriteFixture>
+    public class HostStartTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private readonly StorageAccount account;
 
-        public HostStartTests(AzuriteFixture azuriteFixture)
+        public HostStartTests()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfNameIsInvalid_ThrowsDuringIndexing()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
                     b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(azuriteFixture.GetAccount());
+                    .UseStorage(account);
                 })
                 .Build();
 

@@ -134,7 +134,9 @@ namespace Azure.Messaging.EventHubs.Tests
                MaximumWaitTime = TimeSpan.FromDays(54),
                TrackLastEnqueuedEventProperties = true,
                PrefetchCount = 5,
-               PrefetchSizeInBytes = 500
+               PrefetchSizeInBytes = 500,
+               LoadBalancingUpdateInterval = TimeSpan.FromDays(65),
+               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(65)
             };
 
             var expectedOptions = InvokeCreateOptions(clientOptions);
@@ -1412,7 +1414,9 @@ namespace Azure.Messaging.EventHubs.Tests
                TrackLastEnqueuedEventProperties = true,
                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                PrefetchCount = 9990,
-               PrefetchSizeInBytes = 400
+               PrefetchSizeInBytes = 400,
+               LoadBalancingUpdateInterval = TimeSpan.FromSeconds(45),
+               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(44)
             };
 
             var defaultOptions = new EventProcessorOptions();
@@ -1429,10 +1433,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
             Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
             Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
+            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(clientOptions.LoadBalancingUpdateInterval), "The load balancing interval should have been set.");
+            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(clientOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should have been set.");
 
             Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
-            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(defaultOptions.LoadBalancingUpdateInterval), "The load balancing interval should not have been set.");
-            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(defaultOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should not have been set.");
         }
 
         /// <summary>

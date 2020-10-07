@@ -32,7 +32,7 @@
             //Since the user did not give us an async test, we must fabricate one
             Task t = Task.Factory.StartNew(test);
 
-            SynchronizationContextHelper.RunTestAsync(() => t, timeout).Wait();
+            RunTestAsync(() => t, timeout).Wait();
         }
 
         public async static Task RunTestAsync(Func<Task> test, TimeSpan timeout)

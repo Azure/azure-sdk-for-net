@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
@@ -15,11 +16,11 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class BlobTriggerEndToEndTests : IDisposable
+    public class BlobTriggerEndToEndTests : LiveTestBase<WebJobsTestEnvironment>, IDisposable
     {
         private const string TestArtifactPrefix = "e2etests";
 
@@ -166,12 +167,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [LiveTheory]
-        [InlineData("AzureWebJobsSecondaryStorage")]
-        [InlineData("AzureWebJobsStorage")]
-        public async Task PoisonMessage_CreatedInCorrectStorageAccount(string storageAccountSetting)
+        [Test]
+        public async Task PoisonMessage_CreatedInPrimaryStorageAccount()
         {
-            var storageAccount = StorageAccount.NewFromConnectionString(Environment.GetEnvironmentVariable(storageAccountSetting));
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString);
+        }
+
+        [Test]
+        public async Task PoisonMessage_CreatedInSecondaryStorageAccount()
+        {
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString);
+        }
+
+        private async Task PoisonMessage_CreatedInCorrectStorageAccount(string connectionString)
+        {
+            var storageAccount = StorageAccount.NewFromConnectionString(connectionString);
             var blobClient = storageAccount.CreateBlobServiceClient();
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
             var container = blobClient.GetBlobContainerClient(containerName);
@@ -196,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [LiveFact]
+        [Test]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -221,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 timeToProcess = (int)(DateTime.Now - startTime).TotalMilliseconds;
 
-                Assert.Equal(1, prog._timesProcessed);
+                Assert.AreEqual(1, prog._timesProcessed);
 
                 string[] loggerOutputLines = host.GetTestLoggerProvider().GetAllLogMessages()
                     .Where(p => p.FormattedMessage != null)
@@ -229,8 +239,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     .ToArray();
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
-                Assert.Single(executions);
-                Assert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected: {0}/{1}', Id=", blob.BlobContainerName, blob.Name), executions.Single());
+                Assert.AreEqual(1, executions.Count());
+                StringAssert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected: {0}/{1}', Id=", blob.BlobContainerName, blob.Name), executions.Single());
 
                 await host.StopAsync();
 
@@ -239,10 +249,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.Throws<InvalidOperationException>(() => host.Start());
             }
 
-            Assert.Equal(1, prog._timesProcessed);
+            Assert.AreEqual(1, prog._timesProcessed);
         } // host
 
-        [LiveFact]
+        [Test]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
@@ -263,7 +273,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [LiveFact]
+        [Test]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer
@@ -289,7 +299,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
             }
 
-            Assert.Equal(1, prog._timesProcessed);
+            Assert.AreEqual(1, prog._timesProcessed);
         }
 
         public void Dispose()

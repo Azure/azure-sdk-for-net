@@ -7,29 +7,31 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Xunit;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
-    public class DataBindingFunctionalTests : IClassFixture<AzuriteFixture>
+    public class DataBindingFunctionalTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "queue-databindingfunctionaltests";
+        private StorageAccount account;
 
-        public DataBindingFunctionalTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task BindStringableParameter_CanInvoke()
         {
             // Arrange
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseStorage(azuriteFixture.GetAccount());
+                    b.UseStorage(account);
                 });
 
 
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
                 await host.CallAsync(method, new { message = message });
 
                 // Assert
-                Assert.Equal(expectedGuidValue, TestFunctions.Result);
+                Assert.AreEqual(expectedGuidValue, TestFunctions.Result);
             }
             finally
             {
@@ -64,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
         {
             public static string Result { get; set; }
 
-            public static void BindStringableParameter([QueueTrigger("ignore")] MessageWithStringableProperty message,
+            public static void BindStringableParameter([QueueTrigger(QueueName)] MessageWithStringableProperty message,
                 string guidValue)
             {
                 Result = guidValue;

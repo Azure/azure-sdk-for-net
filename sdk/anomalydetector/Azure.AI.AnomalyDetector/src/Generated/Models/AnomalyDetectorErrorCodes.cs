@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> The error code. </summary>
-    public readonly partial struct AnomalyDetectorErrorCodes : IEquatable<AnomalyDetectorErrorCodes>
+    internal readonly partial struct AnomalyDetectorErrorCodes : IEquatable<AnomalyDetectorErrorCodes>
     {
         private readonly string _value;
 

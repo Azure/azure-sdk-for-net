@@ -6,35 +6,35 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTests : IClassFixture<AzuriteFixture>
+    public class BlobTests
     {
-        private const string TriggerQueueName = "input";
-        private const string ContainerName = "container";
+        private const string TriggerQueueName = "input-blobtests";
+        private const string ContainerName = "container-blobtests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
 
-        private readonly AzuriteFixture azuriteFixture;
+        private StorageAccount account;
 
-        public BlobTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            account.CreateQueueServiceClient().GetQueueClient(TriggerQueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
-            var account = azuriteFixture.GetAccount();
-
             var prog = new BindToCloudBlockBlobProgram();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
@@ -51,21 +51,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(BlobName, result.Name);
+            Assert.AreEqual(BlobName, result.Name);
             Assert.NotNull(result.BlobContainerName);
-            Assert.Equal(ContainerName, result.BlobContainerName);
+            Assert.AreEqual(ContainerName, result.BlobContainerName);
             var container = GetContainerReference(account, ContainerName);
             Assert.True(await container.ExistsAsync());
             var blob = container.GetBlockBlobClient(BlobName);
             Assert.False(await blob.ExistsAsync());
         }
 
-        [Fact]
+        [Test]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange
             const string expectedContent = "message";
-            var account = azuriteFixture.GetAccount();
             QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
 
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var blob = container.GetBlockBlobClient(BlobName);
             Assert.True(await blob.ExistsAsync());
             string content = await blob.DownloadTextAsync();
-            Assert.Equal(expectedContent, content);
+            Assert.AreEqual(expectedContent, content);
         }
 
         private static QueueClient CreateQueue(StorageAccount account, string queueName)

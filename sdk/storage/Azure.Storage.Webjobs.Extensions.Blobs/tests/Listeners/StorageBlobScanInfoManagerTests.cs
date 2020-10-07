@@ -6,31 +6,29 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Newtonsoft.Json.Linq;
-using Xunit;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
-    public class StorageBlobScanInfoManagerTests : IClassFixture<AzuriteFixture>
+    public class StorageBlobScanInfoManagerTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private StorageAccount account;
 
-        public StorageBlobScanInfoManagerTests(AzuriteFixture azuriteFixture)
+        public StorageBlobScanInfoManagerTests()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
         }
 
-        [Fact]
+        [Test]
         public async Task LoadLatestScan_NoContainer_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
 
             // by default there is no table in this client
@@ -41,14 +39,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [Test]
         public async Task LoadLatestScan_NoBlob_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -60,14 +57,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [Test]
         public async Task LoadLatestScan_Returns_Timestamp()
         {
             string hostId = "host-" + Guid.NewGuid().ToString();
             string storageAccountName = "account=" + Guid.NewGuid().ToString();
             string containerName = "container-" + Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -79,17 +75,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
-            Assert.Equal(now, result);
+            Assert.AreEqual(now, result);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateLatestScan_Inserts()
         {
             string hostId = Guid.NewGuid().ToString();
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -103,18 +98,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)(scanInfoJson["LatestScan"]);
 
-            Assert.Equal(now, storedTime);
-            Assert.Equal(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
+            Assert.AreEqual(now, storedTime);
+            Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateLatestScan_Updates()
         {
             string hostId = Guid.NewGuid().ToString();
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = azuriteFixture.GetAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -133,8 +127,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)scanInfoJson["LatestScan"];
 
-            Assert.Equal(now, storedTime);
-            Assert.Equal(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
+            Assert.AreEqual(now, storedTime);
+            Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
         }
 
         private BlockBlobClient GetBlockBlobReference(BlobServiceClient blobClient, string hostId, string storageAccountName, string containerName)

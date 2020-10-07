@@ -7,31 +7,34 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTriggerTests : IClassFixture<AzuriteFixture>
+    public class BlobTriggerTests
     {
-        private const string ContainerName = "container";
+        private const string ContainerName = "container-blobtriggertests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
-        private readonly AzuriteFixture azuriteFixture;
+        private StorageAccount account;
 
-        public BlobTriggerTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
+            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            // make sure our system containers are present
+            CreateContainer(account, "azure-webjobs-hosts");
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             var container = CreateContainer(account, ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
 
@@ -42,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToCloudBlobProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(blob.Uri, result.Uri);
+            Assert.AreEqual(blob.Uri, result.Uri);
         }
 
         private class BindToCloudBlobProgram
@@ -55,12 +58,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_Binding_Metadata()
         {
             var app = new BindToCloudBlob2Program();
             var activator = new FakeActivator(app);
-            var account = CreateFakeStorageAccount();
             var provider = new FakeStorageAccountProvider(account);
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 [Blob("container/{metadata.m1}")] BlobBaseClient blob1
                 )
             {
-                Assert.Equal("v1", blob1.Name);
+                Assert.AreEqual("v1", blob1.Name);
                 this.Success = true;
             }
         }
@@ -104,16 +106,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var container = client.GetBlobContainerClient(containerName);
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
             return container;
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            var account = azuriteFixture.GetAccount();
-
-            // make sure our system containers are present
-            var container = CreateContainer(account, "azure-webjobs-hosts");
-
-            return account;
         }
 
         private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,

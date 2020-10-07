@@ -6,30 +6,31 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStopTests : IClassFixture<AzuriteFixture>
+    public class HostStopTests
     {
-        private const string QueueName = "input";
+        private const string QueueName = "input-hoststoptests";
         private static readonly TaskCompletionSource<object> _functionStarted = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<object> _stopHostCalled = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<bool> _testTaskSource = new TaskCompletionSource<bool>();
-        private readonly AzuriteFixture azuriteFixture;
+        private StorageAccount account;
 
-        public HostStopTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Stop_TriggersCancellationToken()
         {
-            StorageAccount account = azuriteFixture.GetAccount();
             QueueClient queue = await CreateQueueAsync(account, QueueName);
             await queue.SendMessageAsync("ignore");
 
@@ -63,10 +64,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     await _testTaskSource.Task;
                 }
 
-                Assert.Equal(TaskStatus.RanToCompletion, _testTaskSource.Task.Status);
+                Assert.AreEqual(TaskStatus.RanToCompletion, _testTaskSource.Task.Status);
 
                 stopTask.WaitUntilCompleted(3 * 1000);
-                Assert.Equal(TaskStatus.RanToCompletion, stopTask.Status);
+                Assert.AreEqual(TaskStatus.RanToCompletion, stopTask.Status);
             }
         }
 

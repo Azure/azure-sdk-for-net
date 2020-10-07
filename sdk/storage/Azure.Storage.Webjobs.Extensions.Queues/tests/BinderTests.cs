@@ -5,28 +5,28 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BinderTests : IClassFixture<AzuriteFixture>
+    public class BinderTests
     {
-        private const string QueueName = "input";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "input-bindertests";
+        private StorageAccount account;
 
-        public BinderTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            account = AzuriteNUnitFixture.Instance.GetAccount();
+            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange
             const string expectedContents = "abc";
-            var account = CreateFakeStorageAccount();
             QueueClient queue = CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedContents);
 
@@ -35,12 +35,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return azuriteFixture.GetAccount();
+            Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
         }
 
         private static QueueClient CreateQueue(StorageAccount account, string queueName)
