@@ -22,10 +22,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             DetectionConfigurationId = detectionConfigurationId;
             Id = id;
             StartTime = startTime;
-            EndTime = endTime;
+            LastTime = endTime;
             DimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
-            IncidentStatus = property.IncidentStatus;
+            Status = property.IncidentStatus;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get; }
 
         /// <summary>
-        /// The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/> that detected
+        /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
         /// this <see cref="AnomalyIncident"/>. This property is only populated when calling
         /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert"/> or
         /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync"/>.
@@ -65,11 +65,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> ended. Corresponds to the
-        /// time when the last associated <see cref="DataAnomaly"/> occurred.
+        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> last occurred. Corresponds
+        /// to the time when the last associated <see cref="DataAnomaly"/> occurred.
         /// </summary>
-        [CodeGenMember("LastTime")]
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset LastTime { get; }
 
         /// <summary>
         /// The severity of the detected <see cref="AnomalyIncident"/>, as evaluated by the service.
@@ -79,6 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The current status of this <see cref="AnomalyIncident"/>.
         /// </summary>
-        public IncidentStatus? IncidentStatus { get; }
+        [CodeGenMember("IncidentStatus")]
+        public IncidentStatus? Status { get; }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -14,7 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of this alert.
         /// </summary>
-        public string AlertId { get; }
+        [CodeGenMember("AlertId")]
+        public string Id { get; }
 
         /// <summary>
         /// The timestamp, in UTC, of the data points that triggered this alert, as described by

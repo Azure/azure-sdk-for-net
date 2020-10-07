@@ -167,11 +167,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.Filter?.Name;
-            DataFeedSourceType? sourceType = options?.Filter?.SourceType;
-            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
-            EntityStatus? status = options?.Filter?.Status?.ConvertToEntityStatus();
-            string creator = options?.Filter?.Creator;
+            string name = options?.GetDataFeedsFilter?.Name;
+            DataFeedSourceType? sourceType = options?.GetDataFeedsFilter?.SourceType;
+            DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
+            EntityStatus? status = options?.GetDataFeedsFilter?.Status?.ConvertToEntityStatus();
+            string creator = options?.GetDataFeedsFilter?.Creator;
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
 
@@ -221,11 +221,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.Filter?.Name;
-            DataFeedSourceType? sourceType = options?.Filter?.SourceType;
-            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
-            EntityStatus? status = options?.Filter?.Status?.ConvertToEntityStatus();
-            string creator = options?.Filter?.Creator;
+            string name = options?.GetDataFeedsFilter?.Name;
+            DataFeedSourceType? sourceType = options?.GetDataFeedsFilter?.SourceType;
+            DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
+            EntityStatus? status = options?.GetDataFeedsFilter?.Status?.ConvertToEntityStatus();
+            string creator = options?.GetDataFeedsFilter?.Creator;
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
 
@@ -324,7 +324,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public virtual Response<DataFeed> CreateDataFeed(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions, CancellationToken cancellationToken = default)
+        public virtual Response<DataFeed> CreateDataFeed(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
             Argument.AssertNotNull(dataSource, nameof(dataSource));
@@ -526,11 +526,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="endTime"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> ResetDataFeedIngestionStatusAsync(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RefreshDataFeedIngestionAsync(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(ResetDataFeedIngestionStatus)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(RefreshDataFeedIngestion)}");
             scope.Start();
             try
             {
@@ -553,11 +553,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="endTime"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response ResetDataFeedIngestionStatus(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual Response RefreshDataFeedIngestion(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(ResetDataFeedIngestionStatus)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(RefreshDataFeedIngestion)}");
             scope.Start();
             try
             {
@@ -687,16 +687,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region AnomalyDetectionConfiguration
 
         /// <summary>
-        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and assigns it a unique ID.
+        /// Creates a <see cref="AnomalyDetectionConfiguration"/> and attributes it a unique ID.
         /// </summary>
-        /// <param name="detectionConfiguration">Specifies how the created <see cref="MetricAnomalyDetectionConfiguration"/> should be configured.</param>
+        /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricAnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="AnomalyDetectionConfiguration"/> instance
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual async Task<Response<MetricAnomalyDetectionConfiguration>> CreateMetricAnomalyDetectionConfigurationAsync(MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> CreateMetricAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -718,16 +718,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="MetricAnomalyDetectionConfiguration"/> and assigns it a unique ID.
+        /// Creates a <see cref="AnomalyDetectionConfiguration"/> and attributes it a unique ID.
         /// </summary>
-        /// <param name="detectionConfiguration">Specifies how the created <see cref="MetricAnomalyDetectionConfiguration"/> should be configured.</param>
+        /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricAnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="AnomalyDetectionConfiguration"/> instance
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual Response<MetricAnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -749,17 +749,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Retrieves information about an existing <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyDetectionConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricAnomalyDetectionConfiguration"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="AnomalyDetectionConfiguration"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
@@ -778,17 +778,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Retrieves information about an existing <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyDetectionConfiguration"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricAnomalyDetectionConfiguration"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="AnomalyDetectionConfiguration"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<MetricAnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
@@ -807,17 +807,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
+        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">The ID of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
-        /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
+        /// <param name="detectionConfigurationId">The Id of the existing <see cref="AnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
-        /// </returns>
+        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
@@ -842,17 +840,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="MetricAnomalyDetectionConfiguration"/> in this resource.
+        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/> in this Metrics Advisor resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">The ID of the existing <see cref="MetricAnomalyDetectionConfiguration"/> to update.</param>
-        /// <param name="detectionConfiguration">The <see cref="MetricAnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
+        /// <param name="detectionConfigurationId">The Id of the existing <see cref="AnomalyDetectionConfiguration"/> to update.</param>
+        /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
-        /// </returns>
+        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, MetricAnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
@@ -877,15 +873,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="MetricAnomalyDetectionConfiguration"/>s in this Metrics
+        /// Gets a collection of items describing the existing <see cref="AnomalyDetectionConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="MetricAnomalyDetectionConfiguration"/>s apply.</param>
+        /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<AnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
@@ -905,15 +901,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="MetricAnomalyDetectionConfiguration"/>s in this Metrics
+        /// Gets a collection of items describing the existing <see cref="AnomalyDetectionConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="MetricAnomalyDetectionConfiguration"/>s apply.</param>
+        /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="MetricAnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<MetricAnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
@@ -933,9 +929,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Deletes an existing <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/> to be deleted.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -961,9 +957,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Deletes an existing <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyDetectionConfiguration"/> to be deleted.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -1190,14 +1186,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response<IReadOnlyList<AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
             scope.Start();
@@ -1218,14 +1214,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual Response<IReadOnlyList<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
             scope.Start();
@@ -1579,7 +1575,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = await _serviceRestClient.ListHooksAsync(options?.HookName, options?.SkipCount, options?.TopCount, cancellationToken).ConfigureAwait(false);
+                    Response<HookList> response = await _serviceRestClient.ListHooksAsync(options?.HookNameFilter, options?.SkipCount, options?.TopCount, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1596,7 +1592,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = await _serviceRestClient.ListHooksNextPageAsync(nextLink, options?.HookName, options?.SkipCount, options?.TopCount, cancellationToken).ConfigureAwait(false);
+                    Response<HookList> response = await _serviceRestClient.ListHooksNextPageAsync(nextLink, options?.HookNameFilter, options?.SkipCount, options?.TopCount, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1624,7 +1620,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = _serviceRestClient.ListHooks(options?.HookName, options?.SkipCount, options?.TopCount, cancellationToken);
+                    Response<HookList> response = _serviceRestClient.ListHooks(options?.HookNameFilter, options?.SkipCount, options?.TopCount, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1641,7 +1637,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = _serviceRestClient.ListHooksNextPage(nextLink, options?.HookName, options?.SkipCount, options?.TopCount, cancellationToken);
+                    Response<HookList> response = _serviceRestClient.ListHooksNextPage(nextLink, options?.HookNameFilter, options?.SkipCount, options?.TopCount, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

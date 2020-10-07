@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class GetIncidentsForDetectionConfigurationOptions
     {
-        private IList<DimensionKey> _seriesGroupKeys;
+        private IList<DimensionKey> _dimensionsToFilter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             StartTime = startTime;
             EndTime = endTime;
-            SeriesGroupKeys = new ChangeTrackingList<DimensionKey>();
+            DimensionsToFilter = new ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary>
@@ -41,14 +41,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Filters the result by series. Only incidents detected in the time series groups specified will
         /// be returned.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="SeriesGroupKeys"/> is null.</exception>
-        public IList<DimensionKey> SeriesGroupKeys
+        public IList<DimensionKey> DimensionsToFilter
         {
-            get => _seriesGroupKeys;
+            get => _dimensionsToFilter;
             set
             {
-                Argument.AssertNotNull(value, nameof(SeriesGroupKeys));
-                _seriesGroupKeys = value;
+                Argument.AssertNotNull(value, nameof(DimensionsToFilter));
+                _dimensionsToFilter = value;
             }
         }
 
@@ -69,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             DetectionIncidentFilterCondition filterCondition = new DetectionIncidentFilterCondition();
 
-            foreach (DimensionKey dimensionKey in SeriesGroupKeys)
+            foreach (DimensionKey dimensionKey in DimensionsToFilter)
             {
                 filterCondition.DimensionFilter.Add(dimensionKey.Clone());
             }
