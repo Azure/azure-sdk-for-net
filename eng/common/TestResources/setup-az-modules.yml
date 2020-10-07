@@ -33,4 +33,5 @@ steps:
         $environmentSpec = @"
           $(env-config-dogfood)
         "@ | ConvertFrom-Json -AsHashtable;
+        Import-Module Az.Accounts
         Add-AzEnvironment @environmentSpec
