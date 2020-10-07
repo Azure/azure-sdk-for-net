@@ -8,18 +8,18 @@ using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Newtonsoft.Json.Linq;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
     public class StorageBlobScanInfoManagerTests
     {
-        private StorageAccount account;
+        private BlobServiceClient blobServiceClient;
 
         public StorageBlobScanInfoManagerTests()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
         }
 
         [Test]
@@ -29,10 +29,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var client = account.CreateBlobServiceClient();
-
             // by default there is no table in this client
-            var manager = new StorageBlobScanInfoManager(hostId, client);
+            var manager = new StorageBlobScanInfoManager(hostId, blobServiceClient);
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
@@ -46,11 +44,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
+            var container = blobServiceClient.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
 
-            var manager = new StorageBlobScanInfoManager(hostId, client);
+            var manager = new StorageBlobScanInfoManager(hostId, blobServiceClient);
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
@@ -64,14 +61,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = "account=" + Guid.NewGuid().ToString();
             string containerName = "container-" + Guid.NewGuid().ToString();
 
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
+            var container = blobServiceClient.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
             DateTime now = DateTime.UtcNow;
-            var blob = GetBlockBlobReference(client, hostId, storageAccountName, containerName);
+            var blob = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName);
             await blob.UploadTextAsync(string.Format("{{ \"LatestScan\" : \"{0}\" }}", now.ToString("o")));
 
-            var manager = new StorageBlobScanInfoManager(hostId, client);
+            var manager = new StorageBlobScanInfoManager(hostId, blobServiceClient);
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
@@ -85,16 +81,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
+            var container = blobServiceClient.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
             DateTime now = DateTime.UtcNow;
 
-            var manager = new StorageBlobScanInfoManager(hostId, client);
+            var manager = new StorageBlobScanInfoManager(hostId, blobServiceClient);
 
             await manager.UpdateLatestScanAsync(storageAccountName, containerName, now);
 
-            var scanInfo = GetBlockBlobReference(client, hostId, storageAccountName, containerName).DownloadText();
+            var scanInfo = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName).DownloadText();
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)(scanInfoJson["LatestScan"]);
 
@@ -109,21 +104,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
+            var container = blobServiceClient.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
 
             DateTime now = DateTime.UtcNow;
             DateTime past = now.AddMinutes(-1);
 
-            var blob = GetBlockBlobReference(client, hostId, storageAccountName, containerName);
+            var blob = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName);
             await blob.UploadTextAsync(string.Format("{{ 'LatestScan' : '{0}' }}", past.ToString("o")));
 
-            var manager = new StorageBlobScanInfoManager(hostId, client);
+            var manager = new StorageBlobScanInfoManager(hostId, blobServiceClient);
 
             await manager.UpdateLatestScanAsync(storageAccountName, containerName, now);
 
-            var scanInfo = GetBlockBlobReference(client, hostId, storageAccountName, containerName).DownloadText();
+            var scanInfo = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName).DownloadText();
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)scanInfoJson["LatestScan"];
 

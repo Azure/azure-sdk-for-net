@@ -7,21 +7,23 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
     public class DataBindingFunctionalTests
     {
         private const string QueueName = "queue-databindingfunctionaltests";
-        private StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
         [Test]
@@ -31,7 +33,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseStorage(account);
+                    b.AddAzureStorageQueues();
+                    b.UseQueueService(queueServiceClient);
                 });
 
 

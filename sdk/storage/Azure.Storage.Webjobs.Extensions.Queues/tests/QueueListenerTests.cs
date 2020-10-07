@@ -25,6 +25,8 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Queues;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -649,8 +651,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                     })
                     .Build();
 
-                var storageAccount = host.GetStorageAccount();
-                QueueClient = storageAccount.CreateQueueServiceClient();
+                var queueServiceClientProvider = host.Services.GetRequiredService<QueueServiceClientProvider>();
+                QueueClient = queueServiceClientProvider.GetHost();
 
                 string queueName = string.Format("{0}-{1}", TestQueuePrefix, Guid.NewGuid());
                 Queue = QueueClient.GetQueueClient(queueName);

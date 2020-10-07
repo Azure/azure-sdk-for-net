@@ -5,7 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -13,13 +14,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
     public class BinderTests
     {
         private const string QueueName = "input-bindertests";
-        private StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
         [Test]
@@ -27,29 +28,28 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContents = "abc";
-            QueueClient queue = CreateQueue(account, QueueName);
+            QueueClient queue = CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedContents);
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerViaIBinderProgram),
+            Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerViaIBinderProgram),
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
             Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
         }
 
-        private static QueueClient CreateQueue(StorageAccount account, string queueName)
+        private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             queue.CreateIfNotExists();
             return queue;
         }
 
-        private static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
         }
 
         private class BindToQueueTriggerViaIBinderProgram

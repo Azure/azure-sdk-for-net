@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             string connectionString = TestEnvironment.PrimaryStorageAccountConnectionString;
             Assert.IsNotEmpty(connectionString);
             _fixture = new TestFixture();
-            await _fixture.InitializeAsync();
+            await _fixture.InitializeAsync(TestEnvironment);
         }
 
         [OneTimeTearDown]
@@ -675,7 +675,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestFixture
         {
-            public async Task InitializeAsync()
+            public async Task InitializeAsync(WebJobsTestEnvironment testEnvironment)
             {
                 RandomNameResolver nameResolver = new RandomNameResolver();
 
@@ -694,25 +694,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 JobHost = Host.GetJobHost();
 
-                var provider = Host.Services.GetService<StorageAccountProvider>();
-                StorageAccount = provider.GetHost();
-                var blobClient = StorageAccount.CreateBlobServiceClient();
+                BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
 
-                BlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(ContainerName));
+                BlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(ContainerName));
                 Assert.False(await BlobContainer.ExistsAsync());
                 await BlobContainer.CreateAsync();
 
-                OutputBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(OutputContainerName));
+                OutputBlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(OutputContainerName));
 
-                var pageBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(PageBlobContainerName));
+                var pageBlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(PageBlobContainerName));
                 Assert.False(await pageBlobContainer.ExistsAsync());
                 await pageBlobContainer.CreateAsync();
 
-                var hierarchicalBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(HierarchicalBlobContainerName));
+                var hierarchicalBlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(HierarchicalBlobContainerName));
                 Assert.False(await hierarchicalBlobContainer.ExistsAsync());
                 await hierarchicalBlobContainer.CreateAsync();
 
-                var appendBlobContainer = blobClient.GetBlobContainerClient(nameResolver.ResolveInString(AppendBlobContainerName));
+                var appendBlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(AppendBlobContainerName));
                 Assert.False(await appendBlobContainer.ExistsAsync());
                 await appendBlobContainer.CreateAsync();
 
@@ -777,7 +775,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public string HostId => Host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result;
 
-            public StorageAccount StorageAccount
+            public BlobServiceClient BlobServiceClient
             {
                 get;
                 private set;
@@ -797,8 +795,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public async Task VerifyLockState(string lockId, LeaseState state, LeaseStatus status)
             {
-                var blobClient = StorageAccount.CreateBlobServiceClient();
-                var container = blobClient.GetBlobContainerClient("azure-webjobs-hosts");
+                var container = BlobServiceClient.GetBlobContainerClient("azure-webjobs-hosts");
                 string blobName = string.Format("locks/{0}/{1}", HostId, lockId);
                 var lockBlob = container.GetBlockBlobClient(blobName);
 
@@ -818,10 +815,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     // $$$ reenalbe this
                     VerifyLockState("WebJobs.Internal.Blobs.Listener", LeaseState.Available, LeaseStatus.Unlocked).Wait();
 
-                    var blobClient = StorageAccount.CreateBlobServiceClient();
-                    await foreach (var testContainer in blobClient.GetBlobContainersAsync(prefix: TestArtifactPrefix))
+                    await foreach (var testContainer in BlobServiceClient.GetBlobContainersAsync(prefix: TestArtifactPrefix))
                     {
-                        await blobClient.GetBlobContainerClient(testContainer.Name).DeleteAsync();
+                        await BlobServiceClient.GetBlobContainerClient(testContainer.Name).DeleteAsync();
                     }
                 }
             }

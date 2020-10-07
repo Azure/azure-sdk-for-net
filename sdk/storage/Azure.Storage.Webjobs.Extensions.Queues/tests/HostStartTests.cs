@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class HostStartTests
     {
-        private readonly StorageAccount account;
+        private readonly QueueServiceClient queueServiceClient;
 
         public HostStartTests()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
         }
 
         [Test]
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(account);
+                    b.AddAzureStorageQueues()
+                    .UseQueueService(queueServiceClient);
                 })
                 .Build();
 

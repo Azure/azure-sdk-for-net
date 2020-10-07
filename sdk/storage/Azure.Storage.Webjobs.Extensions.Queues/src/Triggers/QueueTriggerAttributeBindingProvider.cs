@@ -13,6 +13,7 @@ using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
+using Azure.WebJobs.Extensions.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 new UserTypeArgumentBindingProvider()); // Must come last, because it will attempt to bind all types.
 
         private readonly INameResolver _nameResolver;
-        private readonly StorageAccountProvider _accountProvider;
+        private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueuesOptions _queueOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
@@ -34,14 +35,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         private readonly IQueueProcessorFactory _queueProcessorFactory;
 
         public QueueTriggerAttributeBindingProvider(INameResolver nameResolver,
-            StorageAccountProvider accountProvider,
+            QueueServiceClientProvider queueServiceClientProvider,
             IOptions<QueuesOptions> queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
             ILoggerFactory loggerFactory,
             IQueueProcessorFactory queueProcessorFactory)
         {
-            _accountProvider = accountProvider ?? throw new ArgumentNullException(nameof(accountProvider));
+            _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
             _queueOptions = (queueOptions ?? throw new ArgumentNullException(nameof(queueOptions))).Value;
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
@@ -72,11 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                     "Can't bind QueueTrigger to type '" + parameter.ParameterType + "'.");
             }
 
-            var account = _accountProvider.Get(queueTrigger.Connection, _nameResolver);
-            // requires storage account with queue support
-            //account.AssertTypeOneOf(StorageAccountType.GeneralPurpose); $$$
-
-            QueueServiceClient client = account.CreateQueueServiceClient();
+            QueueServiceClient client = _queueServiceClientProvider.Get(queueTrigger.Connection, _nameResolver);
             var queue = client.GetQueueClient(queueName);
 
             ITriggerBinding binding = new QueueTriggerBinding(parameter.Name, client, queue, argumentBinding,

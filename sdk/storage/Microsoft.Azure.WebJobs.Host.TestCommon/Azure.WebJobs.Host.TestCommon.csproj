@@ -19,7 +19,6 @@
     <ProjectReference Include="..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="..\Azure.Storage.Webjobs.Extensions.Blobs\src\Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
-    <ProjectReference Include="..\Azure.Storage.Webjobs.Extensions.Common\src\Azure.WebJobs.Extensions.Storage.Common.csproj" />
     <ProjectReference Include="..\Azure.Storage.Webjobs.Extensions.Common\tests\Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\Azure.Storage.Webjobs.Extensions.Queues\src\Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>

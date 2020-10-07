@@ -8,8 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -19,26 +20,26 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private static readonly TaskCompletionSource<object> _functionStarted = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<object> _stopHostCalled = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<bool> _testTaskSource = new TaskCompletionSource<bool>();
-        private StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
         [Test]
         public async Task Stop_TriggersCancellationToken()
         {
-            QueueClient queue = await CreateQueueAsync(account, QueueName);
+            QueueClient queue = await CreateQueueAsync(queueServiceClient, QueueName);
             await queue.SendMessageAsync("ignore");
 
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<CallbackCancellationTokenProgram>(c =>
                 {
                     c.AddAzureStorageBlobs().AddAzureStorageQueues();
-                    c.Services.AddSingleton<StorageAccountProvider>(_ => new FakeStorageAccountProvider(account));
+                    c.Services.AddSingleton<QueueServiceClientProvider>(_ => new FakeQueueServiceClientProvider(queueServiceClient));
                 })
                 .Build();
 
@@ -71,10 +72,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        private static async Task<QueueClient> CreateQueueAsync(StorageAccount account, string queueName)
+        private static async Task<QueueClient> CreateQueueAsync(QueueServiceClient queueServiceClient, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }

@@ -4,6 +4,8 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.WebJobs.Extensions.Storage.Blobs;
+using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
@@ -22,7 +24,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
     internal class BlobTriggerAttributeBindingProvider : ITriggerBindingProvider
     {
         private readonly INameResolver _nameResolver;
-        private readonly StorageAccountProvider _accountProvider;
+        private readonly BlobServiceClientProvider _blobServiceClientProvider;
+        private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly IHostIdProvider _hostIdProvider;
         private readonly QueuesOptions _queueOptions;
         private readonly BlobsOptions _blobsOptions;
@@ -33,8 +36,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         private readonly IHostSingletonManager _singletonManager;
         private readonly ILoggerFactory _loggerFactory;
 
-        public BlobTriggerAttributeBindingProvider(INameResolver nameResolver,
-            StorageAccountProvider accountProvider,
+        public BlobTriggerAttributeBindingProvider(
+            INameResolver nameResolver,
+            BlobServiceClientProvider blobServiceClientProvider,
+            QueueServiceClientProvider queueServiceClientProvider,
             IHostIdProvider hostIdProvider,
             IOptions<QueuesOptions> queueOptions,
             IOptions<BlobsOptions> blobsOptions,
@@ -45,7 +50,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             IHostSingletonManager singletonManager,
             ILoggerFactory loggerFactory)
         {
-            _accountProvider = accountProvider ?? throw new ArgumentNullException(nameof(accountProvider));
+            _blobServiceClientProvider = blobServiceClientProvider ?? throw new ArgumentNullException(nameof(blobServiceClientProvider));
+            _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
             _queueOptions = (queueOptions ?? throw new ArgumentNullException(nameof(queueOptions))).Value;
             _blobsOptions = (blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions))).Value;
@@ -72,14 +78,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             string resolvedCombinedPath = Resolve(blobTriggerAttribute.BlobPath);
             IBlobPathSource path = BlobPathSource.Create(resolvedCombinedPath);
 
-            var hostAccount = _accountProvider.GetHost();
-            var dataAccount = _accountProvider.Get(blobTriggerAttribute.Connection, _nameResolver);
+            var hostBlobServiceClient = _blobServiceClientProvider.GetHost();
+            var dataBlobServiceClient = _blobServiceClientProvider.Get(blobTriggerAttribute.Connection, _nameResolver);
+            var hostQueueServiceClient = _queueServiceClientProvider.GetHost();
+            var dataQueueServiceClient = _queueServiceClientProvider.Get(blobTriggerAttribute.Connection, _nameResolver);
 
             // premium does not support blob logs, so disallow for blob triggers
             // $$$
             // dataAccount.AssertTypeOneOf(StorageAccountType.GeneralPurpose, StorageAccountType.BlobOnly);
 
-            ITriggerBinding binding = new BlobTriggerBinding(parameter, hostAccount, dataAccount, path,
+            ITriggerBinding binding = new BlobTriggerBinding(parameter, hostBlobServiceClient, hostQueueServiceClient,
+                dataBlobServiceClient, dataQueueServiceClient, path,
                 _hostIdProvider, _queueOptions, _blobsOptions, _exceptionHandler, _blobWrittenWatcherSetter,
                 _messageEnqueuedWatcherSetter, _sharedContextProvider, _singletonManager, _loggerFactory);
 

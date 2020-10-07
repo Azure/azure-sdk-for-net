@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
@@ -132,19 +131,22 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 $"- {AzuriteLocationKey} envorinment is set and pointing to location of directory that has 'azurite' command (i.e. run 'where azurite' in Windows CMD)\n";
         }
 
-        public StorageAccount GetAccount()
+        public BlobServiceClient GetBlobServiceClient()
         {
             var transport = GetTransport();
+            return new BlobServiceClient(account.ConnectionString, new BlobClientOptions()
+            {
+                Transport = transport
+            });
+        }
 
-            return new StorageAccount(
-                new BlobServiceClient(account.ConnectionString, new BlobClientOptions()
-                {
-                    Transport = transport
-                }),
-                new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
-                {
-                    Transport = transport
-                }));
+        public QueueServiceClient GetQueueServiceClient()
+        {
+            var transport = GetTransport();
+            return new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
+            {
+                Transport = transport
+            });
         }
 
         public HttpClientTransport GetTransport()

@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -21,21 +21,23 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         // $$$ Reconcile with TestJobHost.
 
         internal static async Task<TResult> RunTriggerAsync<TResult>(
-            StorageAccount account,
+            Action<IWebJobsBuilder> configureWebJobsBuilderAction,
             Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource,
             IEnumerable<string> ignoreFailureFunctions = null,
-            bool signalOnFirst = false)
+            bool signalOnFirst = false,
+            Dictionary<string, string> settings = default)
         {
             TaskCompletionSource<TResult> src = new TaskCompletionSource<TResult>();
             setTaskSource(src);
 
             var host = new HostBuilder()
+              .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(settings))
               .ConfigureDefaultTestHost(builder =>
               {
-                  builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                      .UseStorage(account)
-                      .ConfigureCatchFailures(src, signalOnFirst, ignoreFailureFunctions);
+                  builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                  configureWebJobsBuilderAction.Invoke(builder);
+                  builder.ConfigureCatchFailures(src, signalOnFirst, ignoreFailureFunctions);
 
                   builder.Services.AddSingleton<IConfigureOptions<QueuesOptions>, FakeQueuesOptionsSetup>();
               }, programType)
@@ -79,21 +81,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         // Runs the first triggered function and then returns.
         // Expected that this instance provided some side-effect (ie, wrote to storage)
         // that the caller can monitor.
-        internal static async Task RunTriggerAsync(StorageAccount account, Type programType)
+        internal static async Task RunTriggerAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Dictionary<string, string> settings = default)
         {
             TaskCompletionSource<bool> src = new TaskCompletionSource<bool>();
             await RunTriggerAsync<bool>(
-                account,
+                configureWebJobsBuilderAction,
                 programType,
                 (x) => x = src,
-                signalOnFirst: true);
+                signalOnFirst: true,
+                settings: settings);
         }
 
-        internal static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
+        internal static async Task<Exception> RunTriggerFailureAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             try
             {
-                await RunTriggerAsync<TResult>(account, programType, setTaskSource);
+                await RunTriggerAsync<TResult>(configureWebJobsBuilderAction, programType, setTaskSource);
             }
             catch (Exception e)
             {
@@ -104,13 +107,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // Call the method, and expect a failure. Return the exception.
-        internal static async Task<Exception> CallFailureAsync(StorageAccount account, Type programType, MethodInfo methodInfo, object arguments)
+        internal static async Task<Exception> CallFailureAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments)
         {
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(account);
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    configureWebJobsBuilderAction.Invoke(b);
                 }, programType)
                 .Build();
 
@@ -128,13 +131,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return null;
         }
 
-        internal static async Task CallAsync(StorageAccount account, Type programType, MethodInfo methodInfo, object arguments, params Type[] customExtensions)
+        internal static async Task CallAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments, params Type[] customExtensions)
         {
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(account);
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    configureWebJobsBuilderAction.Invoke(b);
 
                     foreach (var extension in customExtensions)
                     {
@@ -147,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await jobHost.CallAsync(methodInfo, arguments);
         }
 
-        internal static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, MethodInfo methodInfo, IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
+        internal static async Task<TResult> CallAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             TaskCompletionSource<TResult> src = new TaskCompletionSource<TResult>();
             setTaskSource(src);
@@ -155,8 +158,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
               .ConfigureDefaultTestHost(builder =>
               {
-                  builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                  .UseStorage(account);
+                  builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                  configureWebJobsBuilderAction.Invoke(builder);
               }, programType)
               .Build();
 

@@ -28,8 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
-            var fakeAccount = AzuriteNUnitFixture.Instance.GetAccount();
-            QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
+            QueueServiceClient queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
             QueueClient queue = queueServiceClient.GetQueueClient("queueName-queuetriggerbindingintegrationtests");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);

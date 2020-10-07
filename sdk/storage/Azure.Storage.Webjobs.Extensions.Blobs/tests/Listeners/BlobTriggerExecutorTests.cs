@@ -18,6 +18,7 @@ using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
@@ -31,14 +32,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private TestLoggerProvider _loggerProvider;
         private ILogger<BlobListener> _logger;
-        private StorageAccount _account;
+        private BlobServiceClient _blobServiceClient;
 
         [SetUp]
         public void SetUp()
         {
             _loggerProvider = new TestLoggerProvider();
-            _account = AzuriteNUnitFixture.Instance.GetAccount();
-            _account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            _blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            _blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
@@ -48,10 +49,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         public void ExecuteAsync_IfBlobDoesNotMatchPattern_ReturnsSuccessfulResult()
         {
             // Arrange
-            var client = _account.CreateBlobServiceClient();
             string containerName = ContainerName;
-            var container = client.GetBlobContainerClient(containerName);
-            var otherContainer = client.GetBlobContainerClient("other");
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            var otherContainer = _blobServiceClient.GetBlobContainerClient("other");
 
             IBlobPathSource input = BlobPathSource.Create(containerName + "/{name}");
 
@@ -447,8 +447,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private BlobWithContainer<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
         {
-            var client = _account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(containerName);
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
             container.CreateIfNotExists();
             var blobClient = container.GetBlockBlobClient(blobName);
             if (createBlob)
@@ -512,8 +511,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
         {
-            var blobServiceClient = _account.CreateBlobServiceClient();
-            var blobContainerClient = blobServiceClient.GetBlobContainerClient("receipts");
+            var blobContainerClient = _blobServiceClient.GetBlobContainerClient("receipts");
             var receiptBlob = blobContainerClient.GetBlockBlobClient("item");
             Mock<IBlobReceiptManager> mock = new Mock<IBlobReceiptManager>(MockBehavior.Strict);
             mock.Setup(m => m.CreateReference(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),

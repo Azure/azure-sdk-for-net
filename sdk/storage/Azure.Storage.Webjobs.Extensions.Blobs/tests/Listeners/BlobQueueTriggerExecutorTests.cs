@@ -43,8 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            var account = AzuriteNUnitFixture.Instance.GetAccount();
-            _blobServiceClient = account.CreateBlobServiceClient();
+            _blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
             _blobContainer = _blobServiceClient.GetBlobContainerClient(TestContainerName);
             _blobContainer.DeleteIfExists();
             _blobContainer.CreateIfNotExists();

@@ -12,23 +12,25 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class QueueTriggerTests
     {
         private const string QueueName = "input-queuetriggertests";
-        private StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName + "-poison").DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient.GetQueueClient(QueueName + "-poison").DeleteIfExists();
         }
 
-        private async Task SetupAsync(StorageAccount account, object contents)
+        private async Task SetupAsync(QueueServiceClient client, object contents)
         {
             string message;
             if (contents is string str)
@@ -44,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 throw new InvalidOperationException("bad test");
             }
 
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(client, QueueName);
 
             // message.InsertionTime is provided by FakeStorageAccount when the message is inserted.
             await queue.SendMessageAsync(message);
@@ -55,11 +57,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedGuid);
 
             // Act
-            QueueMessage result = await RunTriggerAsync<QueueMessage>(account, typeof(BindToCloudQueueMessageProgram),
+            QueueMessage result = await RunTriggerAsync<QueueMessage>(typeof(BindToCloudQueueMessageProgram),
                 (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
@@ -82,11 +84,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToString(string expectedContent)
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedContent);
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(BindToStringProgram),
+            string result = await RunTriggerAsync<string>(typeof(BindToStringProgram),
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
@@ -99,11 +101,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(content));
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToStringProgram),
+            Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToStringProgram),
                 (s) => BindToStringProgram.TaskSource = s);
 
             // Assert
@@ -141,11 +143,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) Revisit base64 encoding story
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(expectedContent));
 
             // Act
-            byte[] result = await RunTriggerAsync<byte[]>(account, typeof(BindToByteArrayProgram),
+            byte[] result = await RunTriggerAsync<byte[]>(typeof(BindToByteArrayProgram),
                 (s) => BindToByteArrayProgram.TaskSource = s);
 
             // Assert
@@ -169,12 +171,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task TestBindToPoco(Poco expectedContent)
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(Poco), settings: null);
             await queue.SendMessageAsync(content);
 
             // Act
-            Poco result = await RunTriggerAsync<Poco>(account, typeof(BindToPocoProgram), (s) => BindToPocoProgram.TaskSource = s);
+            Poco result = await RunTriggerAsync<Poco>(typeof(BindToPocoProgram), (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
             AssertEqual(expectedContent, result);
@@ -199,11 +201,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string content = "not json"; // Not a valid JSON byte sequence.
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(content);
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<Poco>(account, typeof(BindToPocoProgram),
+            Exception exception = await RunTriggerFailureAsync<Poco>(typeof(BindToPocoProgram),
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
@@ -225,11 +227,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string content = "123"; // A JSON int rather than a JSON object.
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(content);
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<Poco>(account, typeof(BindToPocoProgram),
+            Exception exception = await RunTriggerFailureAsync<Poco>(typeof(BindToPocoProgram),
                 (s) => BindToPocoProgram.TaskSource = s);
 
             // Assert
@@ -251,12 +253,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const int expectedContent = 123;
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(int), settings: null);
             await queue.SendMessageAsync(content);
 
             // Act
-            int result = await RunTriggerAsync<int>(account, typeof(BindToPocoStructProgram),
+            int result = await RunTriggerAsync<int>(typeof(BindToPocoStructProgram),
                 (s) => BindToPocoStructProgram.TaskSource = s);
 
             // Assert
@@ -268,11 +270,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedQueueTrigger = Guid.NewGuid().ToString();
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedQueueTrigger);
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
+            string result = await RunTriggerAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -285,11 +287,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             const string expectedQueueTrigger = "abc";
             byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) Revisit base64 encoding story
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedQueueTrigger);
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
+            string result = await RunTriggerAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -302,11 +304,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(Convert.ToBase64String(content));
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
+            Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
                 (s) => BindToQueueTriggerBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -321,12 +323,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             // message.DequeueCount is provided by FakeStorageAccount when the message is retrieved.
             await queue.SendMessageAsync("ignore");
 
             // Act
-            long result = await RunTriggerAsync<long>(account, typeof(BindToDequeueCountBindingDataProgram),
+            long result = await RunTriggerAsync<long>(typeof(BindToDequeueCountBindingDataProgram),
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -337,12 +339,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             // message.ExpirationTime is provided by FakeStorageAccount when the message is inserted.
             await queue.SendMessageAsync("ignore");
 
             // Act
-            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(account, typeof(BindToExpirationTimeBindingDataProgram),
+            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(typeof(BindToExpirationTimeBindingDataProgram),
                 (s) => BindToExpirationTimeBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -353,12 +355,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
-            var queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(queueServiceClient, QueueName);
             // message.Id is provided by FakeStorageAccount when the message is inserted.
             await queue.SendMessageAsync("ignore");
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(BindToIdBindingDataProgram),
+            string result = await RunTriggerAsync<string>(typeof(BindToIdBindingDataProgram),
                 (s) => BindToIdBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -370,10 +372,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
-            await SetupAsync(account, "ignore");
+            await SetupAsync(queueServiceClient, "ignore");
 
             // Act
-            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(account, typeof(BindToInsertionTimeBindingDataProgram),
+            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(typeof(BindToInsertionTimeBindingDataProgram),
                 (s) => BindToInsertionTimeBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -384,10 +386,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
-            await SetupAsync(account, "ignore");
+            await SetupAsync(queueServiceClient, "ignore");
 
             // Act
-            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(account, typeof(BindToNextVisibleTimeBindingDataProgram),
+            DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(typeof(BindToNextVisibleTimeBindingDataProgram),
                 (s) => BindToNextVisibleTimeBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -398,10 +400,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task QueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
-            await SetupAsync(account, "ignore");
+            await SetupAsync(queueServiceClient, "ignore");
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(BindToPopReceiptBindingDataProgram),
+            string result = await RunTriggerAsync<string>(typeof(BindToPopReceiptBindingDataProgram),
                 (s) => BindToPopReceiptBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -418,10 +420,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Poco value = new Poco { Int32Value = expectedInt32Value };
             string content = JsonConvert.SerializeObject(value, typeof(Poco), settings: null);
 
-            await SetupAsync(account, content);
+            await SetupAsync(queueServiceClient, content);
 
             // Act
-            int result = await RunTriggerAsync<int>(account, typeof(BindToPocoStructPropertyBindingDataProgram),
+            int result = await RunTriggerAsync<int>(typeof(BindToPocoStructPropertyBindingDataProgram),
                 (s) => BindToPocoStructPropertyBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -441,10 +443,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Poco value = new Poco { Child = expectedChild };
             string content = JsonConvert.SerializeObject(value, typeof(Poco), settings: null);
 
-            await SetupAsync(account, content);
+            await SetupAsync(queueServiceClient, content);
 
             // Act
-            Poco result = await RunTriggerAsync<Poco>(account, typeof(BindToPocoComplexPropertyBindingDataProgram),
+            Poco result = await RunTriggerAsync<Poco>(typeof(BindToPocoComplexPropertyBindingDataProgram),
                 (s) => BindToPocoComplexPropertyBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -456,10 +458,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContents = "abc";
-            await SetupAsync(account, expectedContents);
+            await SetupAsync(queueServiceClient, expectedContents);
 
             // Act
-            string result = await RunTriggerAsync<string>(account, typeof(PoisonQueueProgram),
+            string result = await RunTriggerAsync<string>(typeof(PoisonQueueProgram),
                 (s) => PoisonQueueProgram.TaskSource = s,
                 new string[] { typeof(PoisonQueueProgram).FullName + ".PutInPoisonQueue" });
 
@@ -474,10 +476,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             {
                 // Arrange
                 const string expectedContents = "abc";
-                await SetupAsync(account, expectedContents);
+                await SetupAsync(queueServiceClient, expectedContents);
 
                 // Act
-                await RunTriggerAsync<object>(account, typeof(MaxDequeueCountProgram),
+                await RunTriggerAsync<object>(typeof(MaxDequeueCountProgram),
                     (s) => MaxDequeueCountProgram.TaskSource = s,
                     new string[] { typeof(MaxDequeueCountProgram).FullName + ".PutInPoisonQueue" });
 
@@ -679,22 +681,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreSame(expectedPopReceipt, result);
         }
 
-        private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
         }
 
-        private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource, IEnumerable<string> ignoreFailureFunctions)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource, ignoreFailureFunctions);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource, ignoreFailureFunctions);
         }
 
-        private static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
         }
 
         private async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
@@ -703,7 +705,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var method = programType.GetMethod("Run");
             Assert.NotNull(method);
 
-            var result = await FunctionalTest.CallAsync<TResult>(account, programType, method, new Dictionary<string, object>
+            var result = await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, method, new Dictionary<string, object>
             {
                 { "message", message }
             }, setTaskSource);
@@ -711,9 +713,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return result;
         }
 
-        private static async Task<QueueClient> CreateQueue(StorageAccount account, string queueName)
+        private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
             var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;

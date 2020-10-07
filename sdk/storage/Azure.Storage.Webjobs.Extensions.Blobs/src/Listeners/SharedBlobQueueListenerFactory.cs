@@ -29,11 +29,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
         private readonly FunctionDescriptor _functionDescriptor;
-        private readonly StorageAccount _hostAccount;
+        private readonly QueueServiceClient _hostQueueServiceClient;
         private readonly ILoggerFactory _loggerFactory;
 
         public SharedBlobQueueListenerFactory(
-            StorageAccount hostAccount,
+            QueueServiceClient hostQueueServiceClient,
             SharedQueueWatcher sharedQueueWatcher,
             QueueClient hostBlobTriggerQueue,
             QueuesOptions queueOptions,
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             IBlobWrittenWatcher blobWrittenWatcher,
             FunctionDescriptor functionDescriptor)
         {
-            _hostAccount = hostAccount ?? throw new ArgumentNullException(nameof(hostAccount));
+            _hostQueueServiceClient = hostQueueServiceClient ?? throw new ArgumentNullException(nameof(hostQueueServiceClient));
             _sharedQueueWatcher = sharedQueueWatcher ?? throw new ArgumentNullException(nameof(sharedQueueWatcher));
             _hostBlobTriggerQueue = hostBlobTriggerQueue ?? throw new ArgumentNullException(nameof(hostBlobTriggerQueue));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // the triggering blob.
             // However we use a poison queue in the host storage account as a fallback default
             // in case a particular blob lives in a restricted "blob only" storage account (i.e. no queues).
-            var defaultPoisonQueue = _hostAccount.CreateQueueServiceClient().GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
+            var defaultPoisonQueue = _hostQueueServiceClient.GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
 
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
