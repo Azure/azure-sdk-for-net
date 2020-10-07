@@ -16,9 +16,9 @@ using System.Linq;
 using Moq;
 using Azure;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
+using Azure.WebJobs.Extensions.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -223,9 +223,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     })
                     .Build();
 
-                var accountProvider = host.Services.GetService<StorageAccountProvider>();
-                var task = accountProvider.GetHost();
-                QueueServiceClient client = task.CreateQueueServiceClient();
+                var queueServiceClientProvider = host.Services.GetService<QueueServiceClientProvider>();
+                QueueServiceClient client = queueServiceClientProvider.GetHost();
                 QueueClient = client;
 
                 string queueName = string.Format("{0}-{1}", TestQueuePrefix, Guid.NewGuid());
