@@ -220,7 +220,7 @@ namespace Azure.DigitalTwins.Core
     public partial class GetModelsOptions
     {
         public GetModelsOptions() { }
-        public System.Collections.Generic.IEnumerable<string> dependenciesFor { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> DependenciesFor { get { throw null; } set { } }
         public bool IncludeModelDefinition { get { throw null; } set { } }
         public int? MaxItemsPerPage { get { throw null; } set { } }
         public string Traceparent { get { throw null; } set { } }
