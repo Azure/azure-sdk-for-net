@@ -18,6 +18,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
@@ -27,18 +28,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>
     {
         private readonly BlobTriggerAttributeBindingProvider _triggerBinder;
-        private StorageAccountProvider _accountProvider;
+        private BlobServiceClientProvider _blobServiceClientProvider;
         private IContextGetter<IBlobWrittenWatcher> _blobWrittenWatcherGetter;
         private readonly INameResolver _nameResolver;
         private IConverterManager _converterManager;
 
-        public BlobsExtensionConfigProvider(StorageAccountProvider accountProvider,
+        public BlobsExtensionConfigProvider(
+            BlobServiceClientProvider blobServiceClientProvider,
             BlobTriggerAttributeBindingProvider triggerBinder,
             IContextGetter<IBlobWrittenWatcher> contextAccessor,
             INameResolver nameResolver,
             IConverterManager converterManager)
         {
-            _accountProvider = accountProvider;
+            _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
             _nameResolver = nameResolver;
@@ -265,8 +267,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             var attrResolved = (BlobTriggerAttribute)attr;
 
-            var account = _accountProvider.Get(attrResolved.Connection);
-            var client = account.CreateBlobServiceClient();
+            var client = _blobServiceClientProvider.Get(attrResolved.Connection);
             BlobPath path = BlobPath.ParseAndValidate(input.Value);
             var container = client.GetBlobContainerClient(path.ContainerName);
             var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
@@ -300,8 +301,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         private BlobServiceClient GetClient(
          BlobAttribute blobAttribute)
         {
-            var account = _accountProvider.Get(blobAttribute.Connection, _nameResolver);
-            return account.CreateBlobServiceClient();
+            return _blobServiceClientProvider.Get(blobAttribute.Connection, _nameResolver);
         }
 
         private BlobContainerClient GetContainer(

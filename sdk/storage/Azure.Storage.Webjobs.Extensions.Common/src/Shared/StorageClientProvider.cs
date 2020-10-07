@@ -3,9 +3,8 @@
 
 using System;
 using System.Net.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs;
-using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     /// property.
     /// If the connection is not specified on the attribute, it uses a default account.
     /// </summary>
-    public class StorageAccountProvider
+    internal abstract class StorageClientProvider<TClient, TClientOptions> where TClientOptions : ClientOptions
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
@@ -28,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="componentFactory"></param>
-        public StorageAccountProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
+        public StorageClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <param name="name"></param>
         /// <param name="resolver"></param>
         /// <returns></returns>
-        public StorageAccount Get(string name, INameResolver resolver)
+        public virtual TClient Get(string name, INameResolver resolver)
         {
             var resolvedName = resolver.ResolveWholeString(name);
             return this.Get(resolvedName);
@@ -51,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual StorageAccount Get(string name)
+        public virtual TClient Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -68,9 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
             if (!string.IsNullOrWhiteSpace(connectionSection.Value))
             {
-                return new StorageAccount(
-                    new BlobServiceClient(connectionSection.Value, CreateBlobClientOptions(null)),
-                    new QueueServiceClient(connectionSection.Value, CreateQueueClientOptions(null)));
+                return CreateClientFromConnectionString(connectionSection.Value, CreateClientOptions(null));
             }
 
             var endpoint = connectionSection["endpoint"];
@@ -82,40 +79,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
             var credential = _componentFactory.CreateCredential(connectionSection);
             var endpointUri = new Uri(endpoint);
-            return new StorageAccount(
-                new BlobServiceClient(endpointUri, credential, CreateBlobClientOptions(connectionSection)),
-                new QueueServiceClient(endpointUri, credential, CreateQueueClientOptions(connectionSection)));
+            return CreateClientFromTokenCredential(endpointUri, credential, CreateClientOptions(connectionSection));
         }
+
+        protected abstract TClient CreateClientFromConnectionString(string connectionString, TClientOptions options);
+
+        protected abstract TClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, TClientOptions options);
 
         /// <summary>
         /// The host account is for internal storage mechanisms like load balancer queuing.
         /// </summary>
         /// <returns></returns>
-        public virtual StorageAccount GetHost()
+        public virtual TClient GetHost()
         {
             return this.Get(null);
         }
 
-        private BlobClientOptions CreateBlobClientOptions(IConfiguration configuration)
+        private TClientOptions CreateClientOptions(IConfiguration configuration)
         {
-            var blobClientOptions = (BlobClientOptions) _componentFactory.CreateClientOptions(typeof(BlobClientOptions), null, configuration);
+            var clientOptions = (TClientOptions) _componentFactory.CreateClientOptions(typeof(TClientOptions), null, configuration);
             if (SkuUtility.IsDynamicSku)
             {
-                blobClientOptions.Transport = CreateTransportForDynamicSku();
+                clientOptions.Transport = CreateTransportForDynamicSku();
             }
 
-            return blobClientOptions;
-        }
-
-        private QueueClientOptions CreateQueueClientOptions(IConfiguration configuration)
-        {
-            var queueClientOptions = (QueueClientOptions) _componentFactory.CreateClientOptions(typeof(QueueClientOptions), null, configuration);
-            if (SkuUtility.IsDynamicSku)
-            {
-                queueClientOptions.Transport = CreateTransportForDynamicSku();
-            }
-
-            return queueClientOptions;
+            return clientOptions;
         }
 
         private HttpPipelineTransport CreateTransportForDynamicSku()
