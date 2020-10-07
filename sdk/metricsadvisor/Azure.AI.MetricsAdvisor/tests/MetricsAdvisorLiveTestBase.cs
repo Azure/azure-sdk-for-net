@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return new AnomalyDetectionConfiguration(
                 metricId,
                 Recording.GenerateAlphaNumericId("Name"),
-                new MetricAnomalyDetectionConditions(
+                new MetricWholeSeriesDetectionCondition(
                     DetectionConditionsOperator.And,
                     new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
                     new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),

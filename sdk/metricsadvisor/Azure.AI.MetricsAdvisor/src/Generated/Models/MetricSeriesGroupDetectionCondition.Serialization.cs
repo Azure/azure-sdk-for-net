@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricSeriesGroupAnomalyDetectionConditions : IUtf8JsonSerializable
+    public partial class MetricSeriesGroupDetectionCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricSeriesGroupAnomalyDetectionConditions DeserializeMetricSeriesGroupAnomalyDetectionConditions(JsonElement element)
+        internal static MetricSeriesGroupDetectionCondition DeserializeMetricSeriesGroupDetectionCondition(JsonElement element)
         {
             DimensionKey group = default;
             Optional<DetectionConditionsOperator> conditionOperator = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSeriesGroupAnomalyDetectionConditions(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, group);
+            return new MetricSeriesGroupDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, group);
         }
     }
 }

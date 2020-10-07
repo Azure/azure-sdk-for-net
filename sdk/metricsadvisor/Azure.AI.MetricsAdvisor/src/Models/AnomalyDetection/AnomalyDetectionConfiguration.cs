@@ -17,11 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private string _name;
 
-        private MetricAnomalyDetectionConditions _wholeSeriesDetectionConditions;
+        private MetricWholeSeriesDetectionCondition _wholeSeriesDetectionConditions;
 
-        private IList<MetricSingleSeriesAnomalyDetectionConditions> _seriesDetectionConditions;
+        private IList<MetricSingleSeriesDetectionCondition> _seriesDetectionConditions;
 
-        private IList<MetricSeriesGroupAnomalyDetectionConditions> _seriesGroupDetectionConditions;
+        private IList<MetricSeriesGroupDetectionCondition> _seriesGroupDetectionConditions;
 
         /// <summary>
         /// Creates a new instance of the <see cref="AnomalyDetectionConfiguration"/> class.
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="wholeSeriesDetectionConditions">The default anomaly detection conditions to be applied to all series associated with this configuration's <paramref name="metricId"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/>, <paramref name="name"/>, or <paramref name="wholeSeriesDetectionConditions"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="name"/> is empty.</exception>
-        public AnomalyDetectionConfiguration(string metricId, string name, MetricAnomalyDetectionConditions wholeSeriesDetectionConditions)
+        public AnomalyDetectionConfiguration(string metricId, string name, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -40,8 +40,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricId = metricId;
             Name = name;
             WholeSeriesDetectionConditions = wholeSeriesDetectionConditions;
-            SeriesDetectionConditions = new ChangeTrackingList<MetricSingleSeriesAnomalyDetectionConditions>();
-            SeriesGroupDetectionConditions = new ChangeTrackingList<MetricSeriesGroupAnomalyDetectionConditions>();
+            SeriesDetectionConditions = new ChangeTrackingList<MetricSingleSeriesDetectionCondition>();
+            SeriesGroupDetectionConditions = new ChangeTrackingList<MetricSeriesGroupDetectionCondition>();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <see cref="MetricId"/>.
         /// </summary>
         [CodeGenMember("WholeMetricConfiguration")]
-        public MetricAnomalyDetectionConditions WholeSeriesDetectionConditions
+        public MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions
         {
             get => _wholeSeriesDetectionConditions;
             private set
@@ -89,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesGroupDetectionConditions"/> is null.</exception>
         [CodeGenMember("DimensionGroupOverrideConfigurations")]
-        public IList<MetricSeriesGroupAnomalyDetectionConditions> SeriesGroupDetectionConditions
+        public IList<MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions
         {
             get => _seriesGroupDetectionConditions;
             set
@@ -106,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="SeriesDetectionConditions"/> is null.</exception>
         [CodeGenMember("SeriesOverrideConfigurations")]
-        public IList<MetricSingleSeriesAnomalyDetectionConditions> SeriesDetectionConditions
+        public IList<MetricSingleSeriesDetectionCondition> SeriesDetectionConditions
         {
             get => _seriesDetectionConditions;
             set

@@ -658,7 +658,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -666,37 +665,30 @@ namespace Azure.AI.MetricsAdvisor
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
-=======
-        /// <param name="metricFeedback"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback metricFeedback, CancellationToken cancellationToken = default)
->>>>>>> ee9c2ad07f... Renames - batch 1
         {
-            Argument.AssertNotNull(metricFeedback, nameof(metricFeedback));
+            Argument.AssertNotNull(feedback, nameof(feedback));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(metricFeedback, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
 
-                metricFeedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
+                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(metricFeedback, response.GetRawResponse());
+                return Response.FromValue(feedback, response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
-            }
+        }
         }
 
         /// <summary>
         /// Creates a <see cref="MetricFeedback"/>.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
@@ -704,25 +696,19 @@ namespace Azure.AI.MetricsAdvisor
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
-=======
-        /// <param name="metricFeedback"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback metricFeedback, CancellationToken cancellationToken = default)
->>>>>>> ee9c2ad07f... Renames - batch 1
         {
-            Argument.AssertNotNull(metricFeedback, nameof(metricFeedback));
+            Argument.AssertNotNull(feedback, nameof(feedback));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(CreateMetricFeedback)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(metricFeedback, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
 
-                metricFeedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
+                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(metricFeedback, response.GetRawResponse());
+                return Response.FromValue(feedback, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -792,7 +778,7 @@ namespace Azure.AI.MetricsAdvisor
         #region AnomalyDetection
 
         /// <summary>
-        /// Gets a collection of items describing the anomalies detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -851,7 +837,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the anomalies detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -910,7 +896,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the incidents detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -969,7 +955,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets a collection of items describing the incidents detected by a given <see cref="MetricAnomalyDetectionConfiguration"/>.
+        /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
@@ -1200,12 +1186,10 @@ namespace Azure.AI.MetricsAdvisor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        // TODODOCS.
         /// <summary>
         /// Gets data about the data points present in the specified set of time series.
         /// <see cref="MetricAnomalyAlertConfiguration"/>.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="seriesKeys">The name of the dimension.</param>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="startTime">Filters the result. Only data points ingested after this point in time, in UTC, will be returned.</param>
@@ -1215,9 +1199,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentNullException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual async Task<Response<IReadOnlyList<MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(IEnumerable<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
-=======
-        public virtual async Task<Response<IReadOnlyList<MetricEnrichedSeriesData>>> GetMetricEnrichedSeriesDataAsync(IList<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
->>>>>>> ee9c2ad07f... Renames - batch 1
         {
             Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1243,7 +1224,7 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// </summary>
-        public virtual Response<IReadOnlyList<MetricEnrichedSeriesData>> GetMetricEnrichedSeriesData(IList<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MetricEnrichedSeriesData>> GetMetricEnrichedSeriesData(IEnumerable<DimensionKey> seriesKeys, string detectionConfigurationId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
