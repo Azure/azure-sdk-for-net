@@ -36,18 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host
         public QueuesOptions()
         {
             _newBatchThreshold = -1;
-            _processorCount = GetProcessorCount();
-        }
-
-        private static int GetProcessorCount()
-        {
-            int processorCount = 1;
-            var skuValue = Environment.GetEnvironmentVariable(Constants.AzureWebsiteSku);
-            if (!string.Equals(skuValue, Constants.DynamicSku, StringComparison.OrdinalIgnoreCase))
-            {
-                processorCount = Environment.ProcessorCount;
-            }
-            return processorCount;
+            _processorCount = SkuUtility.ProcessorCount;
         }
 
         /// <summary>

@@ -12,8 +12,8 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
     {
         public static IWebJobsBuilder UseStorageServices(this IWebJobsBuilder builder, BlobServiceClient blobServiceClient, QueueServiceClient queueServiceClient)
         {
-            builder.Services.Add(ServiceDescriptor.Singleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient)));
-            builder.Services.Add(ServiceDescriptor.Singleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient)));
+            builder.Services.AddSingleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient));
+            builder.Services.AddSingleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient));
             return builder;
         }
     }
