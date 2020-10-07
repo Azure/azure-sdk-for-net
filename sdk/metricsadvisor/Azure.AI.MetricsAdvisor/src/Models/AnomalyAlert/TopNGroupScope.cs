@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class TopNGroupScope
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="TopNGroupScope"/> class.
+        /// Initializes a new instance of the <see cref="TopNGroupScope"/> class.
         /// </summary>
         /// <param name="top"> top N, value range : [1, +∞). </param>
         /// <param name="period"> point count used to look back, value range : [1, +∞). </param>

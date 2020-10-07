@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             _dailyGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
             _dataFeedSchema = new DataFeedSchema(new List<DataFeedMetric> { new DataFeedMetric("someMetricId", "someMetricName", "someMetricDisplayName", "someDescription") });
             _dataFeedIngestionSettings = new DataFeedIngestionSettings(new DateTimeOffset(Recording.UtcNow.Year, Recording.UtcNow.Month, Recording.UtcNow.Day, 0, 0, 0, TimeSpan.Zero));
-            _dataFeedOptions = new DataFeedOptions() { FeedDescription = "my feed description" };
+            _dataFeedOptions = new DataFeedOptions() { Description = "my feed description" };
         }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClientAad()
@@ -78,20 +78,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return feed;
         }
 
-        internal async Task<MetricAnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
+        internal async Task<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
         {
             DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
-            MetricAnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());
+            AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());
 
             return await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
         }
 
-        public MetricAnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
+        public AnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
         {
-            return new MetricAnomalyDetectionConfiguration(
+            return new AnomalyDetectionConfiguration(
                 metricId,
                 Recording.GenerateAlphaNumericId("Name"),
-                new MetricAnomalyDetectionConditions(
+                new MetricWholeSeriesDetectionCondition(
                     DetectionConditionsOperator.And,
                     new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
                     new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),

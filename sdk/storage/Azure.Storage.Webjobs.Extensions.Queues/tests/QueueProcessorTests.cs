@@ -16,12 +16,13 @@ using System.Linq;
 using Moq;
 using Azure;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.WebJobs.Extensions.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueProcessorTests
+    public class QueueProcessorTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private QueueServiceClient _queueServiceClient;
         private QueueClient _queue;
@@ -55,7 +56,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public void Constructor_DefaultsValues()
         {
             var options = new QueuesOptions
@@ -77,7 +77,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task CompleteProcessingMessageAsync_Success_DeletesMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -92,7 +91,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task CompleteProcessingMessageAsync_FailureWithoutPoisonQueue_DoesNotDeleteMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -112,7 +110,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
@@ -148,7 +145,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task CompleteProcessingMessageAsync_Failure_AppliesVisibilityTimeout()
         {
             var queuesOptions = new QueuesOptions
@@ -180,7 +176,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
@@ -228,9 +223,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     })
                     .Build();
 
-                var accountProvider = host.Services.GetService<StorageAccountProvider>();
-                var task = accountProvider.GetHost();
-                QueueServiceClient client = task.CreateQueueServiceClient();
+                var queueServiceClientProvider = host.Services.GetService<QueueServiceClientProvider>();
+                QueueServiceClient client = queueServiceClientProvider.GetHost();
                 QueueClient = client;
 
                 string queueName = string.Format("{0}-{1}", TestQueuePrefix, Guid.NewGuid());

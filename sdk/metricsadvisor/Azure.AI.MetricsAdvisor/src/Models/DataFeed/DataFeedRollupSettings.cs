@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<string> _autoRollupGroupByColumnNames;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedRollupSettings"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedRollupSettings"/> class.
         /// </summary>
         public DataFeedRollupSettings()
         {

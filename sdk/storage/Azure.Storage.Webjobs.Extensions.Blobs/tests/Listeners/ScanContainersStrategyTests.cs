@@ -7,28 +7,27 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using NUnit.Framework;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
     public class ScanContainersStrategyTests
     {
         private const string ContainerName = "container-scancontainersstrategytests";
-        private StorageAccount account;
+        private BlobServiceClient blobServiceClient;
 
         [SetUp]
         public void SetUp()
         {
-            account = AzuriteNUnitFixture.Instance.GetAccount();
-            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
         }
 
         [Test]
         public async Task TestBlobListener()
         {
-            var blobServiceClient = account.CreateBlobServiceClient();
             var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             IBlobListenerStrategy product = new ScanContainersStrategy();
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();

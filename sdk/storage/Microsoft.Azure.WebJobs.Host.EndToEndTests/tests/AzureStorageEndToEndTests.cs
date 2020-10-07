@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     /// <summary>
     /// Various E2E tests that use only the public surface and the real Azure storage
     /// </summary>
-    public class AzureStorageEndToEndTests
+    public class AzureStorageEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private const string TestArtifactsPrefix = "e2etest";
         private const string ContainerName = TestArtifactsPrefix + "container%rnd%";
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [OneTimeSetUp]
         public void SetUp()
         {
-            _fixture = new AzureStorageEndToEndTests.TestFixture();
+            _fixture = new AzureStorageEndToEndTests.TestFixture(TestEnvironment);
             _queueServiceClient = _fixture.QueueServiceClient;
             _blobServiceClient = _fixture.BlobServiceClient;
         }
@@ -170,7 +171,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
@@ -221,7 +221,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [WebJobsLiveOnly]
         [Ignore("TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
         public async Task BadQueueMessageE2ETests()
         {
@@ -367,7 +366,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestFixture : IDisposable
         {
-            public TestFixture()
+            public TestFixture(WebJobsTestEnvironment testEnvironment)
             {
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost<TestFixture>(b =>
@@ -376,10 +375,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })
                     .Build();
 
-                var provider = host.Services.GetService<StorageAccountProvider>();
-                var storageAccount = provider.GetHost();
-                this.QueueServiceClient = storageAccount.CreateQueueServiceClient();
-                this.BlobServiceClient = storageAccount.CreateBlobServiceClient();
+                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
+                this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 
             public QueueServiceClient QueueServiceClient

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -14,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
         [Test]
         public void Constructor_Defaults()
         {
-            int processorCount = Utility.GetProcessorCount();
+            int processorCount = Environment.ProcessorCount;
             QueuesOptions options = new QueuesOptions();
 
             Assert.AreEqual(16, options.BatchSize);
@@ -25,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
         [Test]
         public void NewBatchThreshold_CanSetAndGetValue()
         {
-            int processorCount = Utility.GetProcessorCount();
+            int processorCount = Environment.ProcessorCount;
 
             QueuesOptions options = new QueuesOptions();
 
