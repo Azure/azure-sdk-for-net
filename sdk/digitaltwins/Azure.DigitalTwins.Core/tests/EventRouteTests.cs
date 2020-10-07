@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -26,16 +27,13 @@ namespace Azure.DigitalTwins.Core.Tests
         public async Task EventRoutes_Lifecycle()
         {
             // arrange
-
             DigitalTwinsClient client = GetClient();
 
-            // Ensure unique eventRouteId and endpointName
+            // Ensure unique eventRouteId
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
+
             string filter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-            var eventRoute = new EventRoute(EndpointName)
-            {
-                Filter = filter
-            };
+            var eventRoute = new EventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
             Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
@@ -102,10 +100,7 @@ namespace Azure.DigitalTwins.Core.Tests
             // Ensure unique eventRouteId and endpointName
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
             string filter = "this is not a valid filter string";
-            var eventRoute = new EventRoute(EndpointName)
-            {
-                Filter = filter
-            };
+            var eventRoute = new EventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
             Func<Task> act = async () => await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);

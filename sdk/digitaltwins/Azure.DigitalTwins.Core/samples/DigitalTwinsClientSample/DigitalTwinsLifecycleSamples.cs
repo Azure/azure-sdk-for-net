@@ -403,10 +403,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 #region Snippet:DigitalTwinsSampleCreateEventRoute
 
                 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-                var eventRoute = new EventRoute(eventhubEndpointName)
-                {
-                    Filter = eventFilter
-                };
+                var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
 
                 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
                 Console.WriteLine($"Created event route '{_eventRouteId}'.");

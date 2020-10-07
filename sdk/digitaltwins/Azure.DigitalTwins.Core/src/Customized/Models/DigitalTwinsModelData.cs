@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    [CodeGenModel("ModelData")]
+    [CodeGenModel("DigitalTwinsModelData")]
     public partial class DigitalTwinsModelData
     {
         // This class declaration makes the generated class of the same name declare Model as a **string** rather than an **object**.
