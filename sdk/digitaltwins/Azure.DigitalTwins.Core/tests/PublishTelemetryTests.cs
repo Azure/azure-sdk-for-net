@@ -47,20 +47,18 @@ namespace Azure.DigitalTwins.Core.Tests
                 await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
 
                 // Act - Test publishing telemetry to a digital twin.
-                var telemetryOptions = new TelemetryOptions()
+                var telemetryOptions = new DigitalTwinsSendTelemetryOptions()
                 {
-                    MessageId = Recording.Random.NewGuid().ToString(),
                     TimeStamp = default
                 };
-                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, "{\"Telemetry1\": 5}", telemetryOptions).ConfigureAwait(false);
+                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, Recording.Random.NewGuid().ToString(), "{\"Telemetry1\": 5}", telemetryOptions).ConfigureAwait(false);
 
                 // Assert
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
                 // Act - Test publishing telemetry to a component in a digital twin.
-                var componentTelemetryOptions = new TelemetryOptions()
+                var componentTelemetryOptions = new DigitalTwinsSendComponentTelemetryOptions()
                 {
-                    MessageId = Recording.Random.NewGuid().ToString(),
                     TimeStamp = default
                 };
                 var telemetryPayload = new Dictionary<string, int>
@@ -68,7 +66,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     { "ComponentTelemetry1", 9}
                 };
                 Response publishComponentTelemetryResponse = await client
-                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, JsonSerializer.Serialize(telemetryPayload), componentTelemetryOptions)
+                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, Recording.Random.NewGuid().ToString(), JsonSerializer.Serialize(telemetryPayload), componentTelemetryOptions)
                     .ConfigureAwait(false);
 
                 // Assert
@@ -128,10 +126,7 @@ namespace Azure.DigitalTwins.Core.Tests
         private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)
         {
             string filter = "type = 'Microsoft.DigitalTwins.Twin.Create' OR type = 'microsoft.iot.telemetry'";
-            var eventRoute = new EventRoute(EndpointName)
-            {
-                Filter = filter
-            };
+            var eventRoute = new EventRoute(EndpointName, filter);
 
             // Create an event route.
             Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
