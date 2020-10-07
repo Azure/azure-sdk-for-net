@@ -1654,7 +1654,7 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where URI parameter finds blobs in the storage account whose tags match a given expression.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
         /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
@@ -1686,7 +1686,7 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where URI parameter finds blobs in the storage account whose tags match a given expression.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
         /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
