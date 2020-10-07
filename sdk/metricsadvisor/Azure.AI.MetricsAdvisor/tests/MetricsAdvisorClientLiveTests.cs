@@ -177,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 AlertConfigurationId,
                 new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
             {
-                Assert.That(alert.AlertId, Is.Not.Null);
+                Assert.That(alert.Id, Is.Not.Null);
 
                 // Just fetch 2 pages
                 if (++pages > 2)
@@ -282,7 +282,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var status in client.GetEnrichmentStatusesAsync(MetricId, new GetEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
+            await foreach (var status in client.GetMetricEnrichmentStatusesAsync(MetricId, new GetMetricEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
             {
                 Assert.That(status, Is.Not.Null);
 

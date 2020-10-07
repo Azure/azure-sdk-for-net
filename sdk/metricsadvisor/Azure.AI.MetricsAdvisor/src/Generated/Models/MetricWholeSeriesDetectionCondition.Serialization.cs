@@ -10,13 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricSingleSeriesAnomalyDetectionConditions : IUtf8JsonSerializable
+    public partial class MetricWholeSeriesDetectionCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("series");
-            writer.WriteObjectValue(Series);
             if (Optional.IsDefined(CrossConditionsOperator))
             {
                 writer.WritePropertyName("conditionOperator");
@@ -40,20 +38,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricSingleSeriesAnomalyDetectionConditions DeserializeMetricSingleSeriesAnomalyDetectionConditions(JsonElement element)
+        internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element)
         {
-            SeriesIdentity series = default;
             Optional<DetectionConditionsOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("series"))
-                {
-                    series = SeriesIdentity.DeserializeSeriesIdentity(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("conditionOperator"))
                 {
                     conditionOperator = new DetectionConditionsOperator(property.Value.GetString());
@@ -75,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSingleSeriesAnomalyDetectionConditions(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, series);
+            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value);
         }
     }
 }

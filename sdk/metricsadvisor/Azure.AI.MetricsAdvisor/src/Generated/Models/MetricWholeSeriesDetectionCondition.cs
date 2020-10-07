@@ -8,10 +8,10 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WholeMetricConfiguration. </summary>
-    public partial class MetricAnomalyDetectionConditions
+    public partial class MetricWholeSeriesDetectionCondition
     {
 
-        /// <summary> Initializes a new instance of MetricAnomalyDetectionConditions. </summary>
+        /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
         /// <param name="crossConditionsOperator">
         /// condition operator
         /// 
@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="smartDetectionCondition"> . </param>
         /// <param name="hardThresholdCondition"> . </param>
         /// <param name="changeThresholdCondition"> . </param>
-        internal MetricAnomalyDetectionConditions(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
+        internal MetricWholeSeriesDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
         {
             CrossConditionsOperator = crossConditionsOperator;
             SmartDetectionCondition = smartDetectionCondition;
