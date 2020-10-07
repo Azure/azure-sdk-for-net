@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     }
     public partial class StorageAccountProvider
     {
-        public StorageAccountProvider(Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.Azure.AzureComponentFactory componentFactory) { }
+        public StorageAccountProvider(Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.Azure.AzureComponentFactory componentFactory, Microsoft.Extensions.Azure.AzureEventSourceLogForwarder logForwarder) { }
         public virtual Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount Get(string name) { throw null; }
         public Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount Get(string name, Microsoft.Azure.WebJobs.INameResolver resolver) { throw null; }
         public virtual Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount GetHost() { throw null; }
