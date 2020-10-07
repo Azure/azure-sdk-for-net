@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
 using Azure.Storage.Blobs;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -28,10 +29,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string OutputBlobPath = ContainerName + "/" + OutputBlobName;
         private const int TestValue = Int32.MinValue;
         private BlobServiceClient blobServiceClient;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
             blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
             blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
         }
@@ -457,24 +460,24 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseBlobService(blobServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
         }
 
         private async Task CallAsync(Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseBlobService(blobServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
 
         private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.CallAsync<TResult>(b => b.UseBlobService(blobServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
         private async Task<Exception> CallFailureAsync(Type programType, string methodName)
         {
-            return await FunctionalTest.CallFailureAsync(b => b.UseBlobService(blobServiceClient), programType, programType.GetMethod(methodName), null);
+            return await FunctionalTest.CallFailureAsync(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, programType.GetMethod(methodName), null);
         }
 
         private struct CustomDataValue

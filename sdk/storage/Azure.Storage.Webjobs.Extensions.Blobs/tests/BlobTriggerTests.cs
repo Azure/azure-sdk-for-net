@@ -13,6 +13,7 @@ using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
 using Azure.WebJobs.Extensions.Storage.Blobs;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -22,10 +23,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
         private BlobServiceClient blobServiceClient;
+        private QueueServiceClient queueServiceClient;
 
         [SetUp]
         public void SetUp()
         {
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
             blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
             blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
             // make sure our system containers are present
@@ -64,16 +67,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             var app = new BindToCloudBlob2Program();
             var activator = new FakeActivator(app);
-            var provider = new FakeBlobServiceClientProvider(blobServiceClient);
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
+                    .UseBlobService(blobServiceClient)
+                    .UseQueueServiceInBlobExtension(queueServiceClient);
                 })
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IJobActivator>(activator);
-                    services.AddSingleton<BlobServiceClientProvider>(provider);
                 })
                 .Build();
 
@@ -111,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseBlobService(blobServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseBlobService(blobServiceClient).UseQueueServiceInBlobExtension(queueServiceClient), programType, setTaskSource);
         }
     }
 }
