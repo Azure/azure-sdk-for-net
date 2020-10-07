@@ -4212,7 +4212,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanBlobLength_AllowBlobModificationsFalse()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task OpenReadAsync_Seek_NewPositionGreaterThanFileLength(bool allowModifications)
         {
             int size = Constants.KB;
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4223,95 +4225,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: allowModifications);
+
             // Act
-            Stream outputStream = await file.OpenReadAsync().ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
-                () => outputStream.Seek(1025, SeekOrigin.Begin),
-                new ArgumentException("You cannot seek past the end of a stream created by OpenReadStream that does not allow modifications to the underlying blob or file."));
-        }
-
-        [Test]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanFileLength_AllowBlobModificationsTrue()
-        {
-            int size = Constants.KB;
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            using Stream stream = new MemoryStream(data);
-            await file.UploadAsync(stream);
-
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
-
-            // Act
-            Stream outputStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
-            outputStream.Seek(size + 10, SeekOrigin.Begin);
-            Assert.AreEqual(size + 10, outputStream.Position);
-        }
-
-        [Test]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanFileLength_AllowBlobModificationsTrue_NoData()
-        {
-            int size = Constants.KB;
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            using Stream stream = new MemoryStream(data);
-            await file.UploadAsync(stream);
-
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
-
-            // Act
-            Stream outputStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
-            outputStream.Seek(size + 10, SeekOrigin.Begin);
-            byte[] outputArray = new byte[1];
-
-            // Assert
-            Assert.Zero(stream.Read(outputArray, 0, 1));
-        }
-
-        [Test]
-        public async Task OpenReadAsync_Seek_NewPositionGreaterThanFileLength_AllowBlobModificationsTrue_Data()
-        {
-            int size = Constants.KB;
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            // Arrange
-            var data = GetRandomBuffer(size);
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            using Stream stream = new MemoryStream(data);
-            await file.UploadAsync(stream);
-
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
-
-            // Act
-            Stream outputStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
-
-            stream.Position = 0;
-            await file.AppendAsync(stream, offset: size);
-            await file.FlushAsync(2 * size);
-
-            outputStream.Seek(size + 10, SeekOrigin.Begin);
-            byte[] outputArray = new byte[size - 10];
-            byte[] expectedOutput = new byte[size - 10];
-            Array.Copy(data, 10, expectedOutput, 0, size - 10);
-
-            int readSoFar = 0;
-            int remaining = size - 10;
-            int read = 0;
-            do
-            {
-                read = await outputStream.ReadAsync(outputArray, readSoFar, remaining);
-                readSoFar += read;
-                remaining -= read;
-            }
-            while (read != 0);
-
-            // Assert
-            TestHelper.AssertSequenceEqual(expectedOutput, outputArray);
+                () => outputStream.Seek(size + 10, SeekOrigin.Begin),
+                new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
         }
 
         [Test]

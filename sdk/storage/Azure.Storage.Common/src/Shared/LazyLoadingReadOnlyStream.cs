@@ -338,17 +338,8 @@ namespace Azure.Storage
             // newPosition > _length
             if (newPosition > _length)
             {
-                if (_allowBlobModifications)
-                {
-                    _position = newPosition;
-                    _bufferInvalidated = true;
-                    return newPosition;
-                }
-                else
-                {
-                    throw new ArgumentException(
-                        "You cannot seek past the end of a stream created by OpenReadStream that does not allow modifications to the underlying blob or file.");
-                }
+                throw new ArgumentException(
+                    "You cannot seek past the last known length of the underlying blob or file.");
             }
 
             // newPosition is less than _position, but within _buffer.
