@@ -315,7 +315,7 @@ await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
 
 ### Send typing notification
 
-Use `SendTypingNotification` to post a typing notification event to a chat thread, on behalf of a chat member.
+Use `SendTypingNotification` to indicate that the user is typing a response in the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification
 await chatThreadClient.SendTypingNotificationAsync();
@@ -323,7 +323,7 @@ await chatThreadClient.SendTypingNotificationAsync();
 
 ### Send read receipt
 
-Use `SendReadReceipt` to post a read receipt event to a chat thread, on behalf of a chat member.
+Use `SendReadReceipt` to notify other members that the message is read by the user.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 await chatThreadClient.SendReadReceiptAsync(messageId);
@@ -331,7 +331,7 @@ await chatThreadClient.SendReadReceiptAsync(messageId);
 
 ### Get read receipts
 
-Use `GetReadReceipts` to retrieve a list of read receipts for a chat thread.
+Use `GetReadReceipts` to check the status of messages to see which ones are read by other members of a chat thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 AsyncPageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
