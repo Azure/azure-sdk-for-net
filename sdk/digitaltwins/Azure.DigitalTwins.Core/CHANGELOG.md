@@ -1,11 +1,12 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0 (Unreleased)
 
-### Breaking changes
-
--Renamed model type "ModelData" to "DigitalTwinsModelData"
--Renamed model type "RequestOptions" to "DigitalTwinsRequestOptions"
+- Regenerate protocol layer from GA service swagger
+- Update service API version to use GA service version
+- Add optional parameters for traceparent and tracestate to all service request APIs
+- Renamed model type "ModelData" to "DigitalTwinsModelData"
+- Renamed model type "RequestOptions" to "DigitalTwinsRequestOptions"
 
 ## 1.0.0-preview.3 (2020-07-13)
 
