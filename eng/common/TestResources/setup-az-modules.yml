@@ -30,6 +30,7 @@ steps:
       targetType: inline
       pwsh: true
       script: |
+        echo $PSModulePath
         $environmentSpec = @"
           $(env-config-dogfood)
         "@ | ConvertFrom-Json -AsHashtable;
