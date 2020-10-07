@@ -76,51 +76,5 @@ namespace Azure.Communication.Chat.Tests.samples
                 Assert.Fail($"Unexpected error: {ex}");
             }
         }
-
-        [Test]
-        public void CreateGetUpdateDeleteThread()
-        {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> threadCreator = communicationIdentityClient.CreateUser();
-            CommunicationUserToken communicationUserToken = communicationIdentityClient.IssueToken(threadCreator.Value, new[] { CommunicationTokenScope.Chat });
-            string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
-            string threadCreatorId = communicationUserToken.User.Id;
-
-            ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
-
-            var chatThreadMember = new ChatThreadMember(threadCreator)
-            {
-                DisplayName = "UserDisplayName"
-            };
-            ChatThreadClient chatThreadClient = chatClient.CreateChatThread(topic: "Hello world!", members: new[] { chatThreadMember });
-            string threadId = chatThreadClient.Id;
-            ChatThread chatThread = chatClient.GetChatThread(threadId);
-
-            Pageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfo();
-            foreach (ChatThreadInfo chatThreadInfo in chatThreadsInfo)
-            {
-                Console.WriteLine($"{ chatThreadInfo.Id}");
-            }
-            var topic = "new topic";
-            chatThreadClient.UpdateThread(topic);
-            chatClient.DeleteChatThread(threadId);
-            try
-            {
-                chatThreadMember = new ChatThreadMember(new CommunicationUser("invalid user"));
-                ChatThreadClient chatThreadClient_ = chatClient.CreateChatThread(topic: "Hello world!", members: new[] { chatThreadMember });
-                Assert.Fail("CreateChatThread did not fail");
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
     }
 }

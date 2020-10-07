@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
 
@@ -11,7 +10,6 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private static Regex azureResourceRegEx = new Regex(@"[a-zA-Z0-9]*-communication", RegexOptions.Compiled);
         /// <summary>
         /// This is a testing/unsigned token required on the sanitized payloads for the playback mode due to format validation on CommunicationUserCredential constructors.
         /// </summary>
@@ -44,21 +42,14 @@ namespace Azure.Communication.Chat.Tests
             };
         }
 
-        private static string SanitizeAzureResource(string uri) => azureResourceRegEx.Replace(uri, $"{SanitizeValue}").ToLower();
-
         private static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
-            const string endpoint = "endpoint";
 
             var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
             parsed.Replace(accessKey, "Kg==;");
 
-            parsed.Replace(endpoint, SanitizeAzureResource(parsed.GetRequired(endpoint)));
-
             return parsed.ToString();
         }
-
-        public override string SanitizeUri(string uri) => SanitizeAzureResource(uri);
     }
 }
