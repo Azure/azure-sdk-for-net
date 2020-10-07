@@ -23,7 +23,7 @@ param(
 )
 
 . "${PSScriptRoot}\logging.ps1"
-. "${PSScriptRoot}\Invoke-GitHub-API.ps1"
+. "${PSScriptRoot}\Invoke-GitHub-API.ps1" -AuthToken $AuthToken
 
 $commentPrefixValue = [System.Environment]::GetEnvironmentVariable($CommentPrefix)
 $commentValue = [System.Environment]::GetEnvironmentVariable($Comment)
@@ -34,7 +34,8 @@ if (!$commentValue) { $commentValue = $Comment }
 if (!$commentPostFixValue) { $commentPostFixValue = $CommentPostFix }
 
 try {
-  $resp = AddIssueComment -IssueNumber $IssueNumber -CommentPrefix $commentPrefixValue `
+  $resp = AddIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+          -IssueNumber $IssueNumber -CommentPrefix $commentPrefixValue `
           -Comment $commentValue -CommentSuffix $commentPostFixValue
 }
 catch {
