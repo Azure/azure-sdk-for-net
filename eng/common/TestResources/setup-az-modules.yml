@@ -21,7 +21,7 @@ steps:
     condition: contains(variables['OSVmImage'], 'mac')
 
   # New-TestResources command requires Az module
-  - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+  - pwsh: eng/common/TestResources/Install-Modules.ps1
     displayName: Install Azure PowerShell module
 
   - task: Powershell@2
