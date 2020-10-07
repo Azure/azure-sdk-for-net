@@ -23,12 +23,7 @@ param(
 )
 
 . "${PSScriptRoot}\logging.ps1"
-
-$headers = @{
-  Authorization = "bearer $AuthToken"
-}
-
-$apiUrl = "https://api.github.com/repos/$RepoOwner/$RepoName/issues/$IssueNumber/comments"
+. "${PSScriptRoot}\Invoke-GitHub-API.ps1"
 
 $commentPrefixValue = [System.Environment]::GetEnvironmentVariable($CommentPrefix)
 $commentValue = [System.Environment]::GetEnvironmentVariable($Comment)
@@ -38,16 +33,11 @@ if (!$commentPrefixValue) { $commentPrefixValue = $CommentPrefix }
 if (!$commentValue) { $commentValue = $Comment }
 if (!$commentPostFixValue) { $commentPostFixValue = $CommentPostFix }
 
-$PRComment = "$commentPrefixValue $commentValue $commentPostFixValue"
-
-$data = @{
-  body = $PRComment
-}
-
 try {
-  $resp = Invoke-RestMethod -Method POST -Headers $headers -Uri $apiUrl -Body ($data | ConvertTo-Json)
+  $resp = AddIssueComment -IssueNumber $IssueNumber -CommentPrefix $commentPrefixValue `
+          -Comment $commentValue -CommentSuffix $commentPostFixValue
 }
 catch {
-  LogError "Invoke-RestMethod [ $apiUrl ] failed with exception:`n$_"
+  LogError "AddIssueComment failed with exception:`n$_"
   exit 1
 }
