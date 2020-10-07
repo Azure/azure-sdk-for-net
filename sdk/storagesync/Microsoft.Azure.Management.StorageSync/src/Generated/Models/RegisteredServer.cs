@@ -41,6 +41,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="serverCertificate">Registered Server
         /// Certificate</param>
         /// <param name="agentVersion">Registered Server Agent Version</param>
+        /// <param name="agentVersionStatus">Registered Server Agent Version
+        /// Status. Possible values include: 'Ok', 'NearExpiry', 'Expired',
+        /// 'Blocked'</param>
+        /// <param name="agentVersionExpirationDate">Registered Server Agent
+        /// Version Expiration Date</param>
         /// <param name="serverOSVersion">Registered Server OS Version</param>
         /// <param name="serverManagementErrorCode">Registered Server
         /// Management Error Code</param>
@@ -67,11 +72,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="monitoringEndpointUri">Telemetry Endpoint Uri</param>
         /// <param name="monitoringConfiguration">Monitoring
         /// Configuration</param>
-        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string))
+        /// <param name="serverName">Server name</param>
+        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string agentVersionStatus = default(string), System.DateTime? agentVersionExpirationDate = default(System.DateTime?), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), System.DateTime? lastHeartBeat = default(System.DateTime?), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string), string serverName = default(string))
             : base(id, name, type)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
+            AgentVersionStatus = agentVersionStatus;
+            AgentVersionExpirationDate = agentVersionExpirationDate;
             ServerOSVersion = serverOSVersion;
             ServerManagementErrorCode = serverManagementErrorCode;
             LastHeartBeat = lastHeartBeat;
@@ -90,6 +98,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             ManagementEndpointUri = managementEndpointUri;
             MonitoringEndpointUri = monitoringEndpointUri;
             MonitoringConfiguration = monitoringConfiguration;
+            ServerName = serverName;
             CustomInit();
         }
 
@@ -111,28 +120,41 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string AgentVersion { get; set; }
 
         /// <summary>
+        /// Gets registered Server Agent Version Status. Possible values
+        /// include: 'Ok', 'NearExpiry', 'Expired', 'Blocked'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentVersionStatus")]
+        public string AgentVersionStatus { get; private set; }
+
+        /// <summary>
+        /// Gets registered Server Agent Version Expiration Date
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentVersionExpirationDate")]
+        public System.DateTime? AgentVersionExpirationDate { get; private set; }
+
+        /// <summary>
         /// Gets or sets registered Server OS Version
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverOSVersion")]
         public string ServerOSVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets registered Server Management Error Code
+        /// Gets registered Server Management Error Code
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverManagementErrorCode")]
-        public int? ServerManagementErrorCode { get; set; }
+        public int? ServerManagementErrorCode { get; private set; }
 
         /// <summary>
-        /// Gets or sets registered Server last heart beat
+        /// Gets registered Server last heart beat
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastHeartBeat")]
-        public string LastHeartBeat { get; set; }
+        public System.DateTime? LastHeartBeat { get; private set; }
 
         /// <summary>
-        /// Gets or sets registered Server Provisioning State
+        /// Gets registered Server Provisioning State
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets registered Server serverRole
@@ -159,40 +181,40 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string ServerId { get; set; }
 
         /// <summary>
-        /// Gets or sets registered Server storageSyncServiceUid
+        /// Gets registered Server storageSyncServiceUid
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageSyncServiceUid")]
-        public string StorageSyncServiceUid { get; set; }
+        public string StorageSyncServiceUid { get; private set; }
 
         /// <summary>
-        /// Gets or sets registered Server lastWorkflowId
+        /// Gets registered Server lastWorkflowId
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastWorkflowId")]
-        public string LastWorkflowId { get; set; }
+        public string LastWorkflowId { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource Last Operation Name
+        /// Gets resource Last Operation Name
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastOperationName")]
-        public string LastOperationName { get; set; }
+        public string LastOperationName { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource discoveryEndpointUri
+        /// Gets resource discoveryEndpointUri
         /// </summary>
         [JsonProperty(PropertyName = "properties.discoveryEndpointUri")]
-        public string DiscoveryEndpointUri { get; set; }
+        public string DiscoveryEndpointUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource Location
+        /// Gets resource Location
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceLocation")]
-        public string ResourceLocation { get; set; }
+        public string ResourceLocation { get; private set; }
 
         /// <summary>
-        /// Gets or sets service Location
+        /// Gets service Location
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceLocation")]
-        public string ServiceLocation { get; set; }
+        public string ServiceLocation { get; private set; }
 
         /// <summary>
         /// Gets or sets friendly Name
@@ -201,22 +223,28 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string FriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets management Endpoint Uri
+        /// Gets management Endpoint Uri
         /// </summary>
         [JsonProperty(PropertyName = "properties.managementEndpointUri")]
-        public string ManagementEndpointUri { get; set; }
+        public string ManagementEndpointUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets telemetry Endpoint Uri
+        /// Gets telemetry Endpoint Uri
         /// </summary>
         [JsonProperty(PropertyName = "properties.monitoringEndpointUri")]
-        public string MonitoringEndpointUri { get; set; }
+        public string MonitoringEndpointUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets monitoring Configuration
+        /// Gets monitoring Configuration
         /// </summary>
         [JsonProperty(PropertyName = "properties.monitoringConfiguration")]
-        public string MonitoringConfiguration { get; set; }
+        public string MonitoringConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets server name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serverName")]
+        public string ServerName { get; private set; }
 
     }
 }
