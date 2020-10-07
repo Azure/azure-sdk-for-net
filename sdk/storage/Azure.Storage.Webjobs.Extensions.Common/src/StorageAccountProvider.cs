@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="componentFactory"></param>
+        /// <param name="logForwarder"></param>
         public StorageAccountProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
