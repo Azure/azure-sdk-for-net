@@ -180,7 +180,6 @@ function Update-Existing-Versions
     & $($AzCopy) cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions$($SASKey)" --cache-control "max-age=300, must-revalidate"
     & $($AzCopy) cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview$($SASKey)" --cache-control "max-age=300, must-revalidate"
     & $($AzCopy) cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga$($SASKey)" --cache-control "max-age=300, must-revalidate"
-
     return $sortedVersionObj
 }
 
