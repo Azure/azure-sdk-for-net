@@ -428,16 +428,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             string blobName = Path.GetFileName(stageThisFile.LocalFileToStage);
 
             BlobContainerClient blobContainerClient = BlobUtilities.GetBlobContainerClient(containerName, storecreds);
-            BlockBlobClient blobClient = blobContainerClient.GetBlockBlobClient(blobName);
+            BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
 
-            bool doesBlobExist = await blobClient.ExistsAsync(); 
+            bool doesBlobExist = await blobClient.ExistsAsync().ConfigureAwait(false);
             bool mustUploadBlob = true;  // we do not re-upload blobs if they have already been uploaded
 
             if (doesBlobExist) // if the blob exists, compare
             {
                 FileInfo fi = new FileInfo(stageThisFile.LocalFileToStage);
 
-                var properties = await blobClient.GetPropertiesAsync();
+                var properties = await blobClient.GetPropertiesAsync().ConfigureAwait(false);
                 var length = properties.Value.ContentLength;
                 // since we don't have a hash of the contents... we check length
                 if (length == fi.Length)
@@ -448,12 +448,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (mustUploadBlob)
             {
-                using FileStream stream = new FileStream(stageThisFile.LocalFileToStage, FileMode.Open);
-                
-                // upload the file
-                Task uploadTask = blobClient.UploadAsync(stream);
-
-                await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
+                await blobClient.UploadAsync(stageThisFile.LocalFileToStage).ConfigureAwait(false);
             }
 
             // get the SAS for the blob
