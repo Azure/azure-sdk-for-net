@@ -11,16 +11,17 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     public class BlobTests
     {
-        private const string TriggerQueueName = "input-blobtests";
         private const string ContainerName = "container-blobtests";
+        private const string TriggerContainerName = "container-blobtests-trigger";
         private const string BlobName = "blob";
+        private const string TriggerBlobName = "triggerblob";
         private const string BlobPath = ContainerName + "/" + BlobName;
+        private const string TriggerBlobPath = TriggerContainerName + "/" + TriggerBlobName;
 
         private BlobServiceClient blobServiceClient;
         private QueueServiceClient queueServiceClient;
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
             queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
             blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
-            queueServiceClient.GetQueueClient(TriggerQueueName).DeleteIfExists();
+            blobServiceClient.GetBlobContainerClient(TriggerContainerName).DeleteIfExists();
         }
 
         [Test]
@@ -68,8 +69,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContent = "message";
-            QueueClient triggerQueue = CreateQueue(queueServiceClient, TriggerQueueName);
-            await triggerQueue.SendMessageAsync(expectedContent);
+            var triggerContainer = GetContainerReference(blobServiceClient, TriggerContainerName);
+            await triggerContainer.CreateIfNotExistsAsync();
+            await triggerContainer.GetBlockBlobClient(TriggerBlobName).UploadTextAsync(expectedContent);
 
             // Act
             await RunTrigger(typeof(BindToTextWriterProgram));
@@ -83,16 +85,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.AreEqual(expectedContent, content);
         }
 
-        private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
-        {
-            var queue = queueServiceClient.GetQueueClient(queueName);
-            queue.CreateIfNotExists();
-            return queue;
-        }
-
         private static BlobContainerClient GetContainerReference(BlobServiceClient blobServiceClient, string containerName)
         {
-            return blobServiceClient.GetBlobContainerClient(ContainerName);
+            return blobServiceClient.GetBlobContainerClient(containerName);
         }
 
         private async Task RunTrigger(Type programType)
@@ -113,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToTextWriterProgram
         {
-            public static void Run([QueueTrigger(TriggerQueueName)] string message,
+            public static void Run([BlobTrigger(TriggerBlobPath)] string message,
                 [Blob(BlobPath)] TextWriter blob)
             {
                 blob.Write(message);
