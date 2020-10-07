@@ -10,5 +10,7 @@ Expand-Archive $ZipFile -DestinationPath $TempPath -Force
 $p = [Environment]::GetEnvironmentVariable("PSModulePath")
 $p = "$p" + $([System.IO.Path]::PathSeparator) + "$TempPath";
 [Environment]::SetEnvironmentVariable("PSModulePath", $p, "User")
+[Environment]::SetEnvironmentVariable("PSMODULEPATH", $p, "User")
 Write-Host "Updating PSModulePath to $p"
 Write-Host "##vso[task.setvariable variable=PSModulePath]$p"
+Write-Host "##vso[task.setvariable variable=PSMODULEPATH]$p"
