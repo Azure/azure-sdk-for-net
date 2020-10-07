@@ -25,13 +25,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AnomalyTimeValue = "AnomalyTime";
         private const string CreatedTimeValue = "CreatedTime";
         private const string ModifiedTimeValue = "ModifiedTime";
-
-        /// <summary> AnomalyTime. </summary>
-        public static TimeMode AnomalyTime { get; } = new TimeMode(AnomalyTimeValue);
-        /// <summary> CreatedTime. </summary>
-        public static TimeMode CreatedTime { get; } = new TimeMode(CreatedTimeValue);
-        /// <summary> ModifiedTime. </summary>
-        public static TimeMode ModifiedTime { get; } = new TimeMode(ModifiedTimeValue);
         /// <summary> Determines if two <see cref="TimeMode"/> values are the same. </summary>
         public static bool operator ==(TimeMode left, TimeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeMode"/> values are not the same. </summary>

@@ -13,23 +13,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataAnomaly
     {
-        /// <summary> anomaly time. </summary>
-        public DateTimeOffset Timestamp { get; }
-        /// <summary>
-        /// created time
-        /// 
-        /// 
-        /// 
-        /// only return for alerting result.
-        /// </summary>
-        public DateTimeOffset? CreatedTime { get; }
-        /// <summary>
-        /// modified time
-        /// 
-        /// 
-        /// 
-        /// only return for alerting result.
-        /// </summary>
-        public DateTimeOffset? ModifiedTime { get; }
     }
 }

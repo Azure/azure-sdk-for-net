@@ -455,6 +455,7 @@ namespace Azure.Core.Pipeline
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
+        public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Process(Azure.Core.HttpMessage message) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

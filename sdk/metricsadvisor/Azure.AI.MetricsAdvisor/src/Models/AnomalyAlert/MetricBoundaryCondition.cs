@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricBoundaryCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricBoundaryCondition"/> class.
+        /// Initializes a new instance of the <see cref="MetricBoundaryCondition"/> class.
         /// </summary>
         /// <param name="direction">The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/> and/or <see cref="UpperBound"/> may be required.</param>
         public MetricBoundaryCondition(BoundaryDirection direction)
