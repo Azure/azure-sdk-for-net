@@ -40,6 +40,13 @@ namespace Microsoft.Extensions.Azure.Tests
             TestSource.Log.Informational();
         }
 
+        [Test]
+        public void CanDisposeNonStarted()
+        {
+            var forwarder = new AzureEventSourceLogForwarder( null);
+            forwarder.Dispose();
+        }
+
 
         public class MockLogger : ILogger
         {

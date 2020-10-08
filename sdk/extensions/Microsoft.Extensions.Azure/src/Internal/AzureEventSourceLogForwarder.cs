@@ -61,7 +61,7 @@ namespace Microsoft.Extensions.Azure
         /// <inheritdoc />
         public void Dispose()
         {
-            _listener.Dispose();
+            _listener?.Dispose();
         }
 
         private static LogLevel MapLevel(EventLevel level)
