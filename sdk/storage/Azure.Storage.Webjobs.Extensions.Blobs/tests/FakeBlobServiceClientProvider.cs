@@ -12,7 +12,7 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
         private readonly BlobServiceClient _blobServiceClient;
 
         public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient)
-            : base(null, null) {
+            : base(null, null, null) {
             _blobServiceClient = blobServiceClient;
         }
 

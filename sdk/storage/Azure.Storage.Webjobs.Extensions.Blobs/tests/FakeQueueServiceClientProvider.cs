@@ -12,7 +12,7 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
         private readonly QueueServiceClient _queueServiceClient;
 
         public FakeQueueServiceClientProvider(QueueServiceClient queueServiceClient)
-            : base(null, null)
+            : base(null, null, null)
         {
             _queueServiceClient = queueServiceClient;
         }

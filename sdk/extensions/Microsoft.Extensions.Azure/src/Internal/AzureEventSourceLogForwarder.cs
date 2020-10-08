@@ -12,7 +12,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal class EventSourceLogForwarder: IDisposable
+    /// <summary>
+    /// A type used to forward log messages from Azure SDK <see cref="EventSource"/> to <see cref="ILoggerFactory"/>.
+    /// </summary>
+    public sealed class AzureEventSourceLogForwarder: IDisposable
     {
         private readonly ILoggerFactory _loggerFactory;
 
@@ -22,11 +25,18 @@ namespace Microsoft.Extensions.Azure
 
         private AzureEventSourceListener _listener;
 
-        public EventSourceLogForwarder(ILoggerFactory loggerFactory = null)
+        /// <summary>
+        /// Initializes a new instance of <see cref="AzureComponentFactory"/> using a provided <see cref="ILoggerFactory"/>.
+        /// </summary>
+        /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to forward messages to.</param>
+        public AzureEventSourceLogForwarder(ILoggerFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
         }
 
+        /// <summary>
+        /// Initiates the log forwarding from the Azure SDK event sources to a provided <see cref="ILoggerFactory"/>, call <see cref="Dispose"/> to stop forwarding.
+        /// </summary>
         public void Start()
         {
             _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
@@ -48,9 +58,10 @@ namespace Microsoft.Extensions.Azure
             return name.Replace('-', '.');
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
-            _listener.Dispose();
+            _listener?.Dispose();
         }
 
         private static LogLevel MapLevel(EventLevel level)
@@ -79,7 +90,7 @@ namespace Microsoft.Extensions.Azure
             return EventSourceEventFormatting.Format(eventSourceEvent.EventData);
         }
 
-        private struct EventSourceEvent: IReadOnlyList<KeyValuePair<string, object>>
+        private readonly struct EventSourceEvent: IReadOnlyList<KeyValuePair<string, object>>
         {
             public EventWrittenEventArgs EventData { get; }
 
