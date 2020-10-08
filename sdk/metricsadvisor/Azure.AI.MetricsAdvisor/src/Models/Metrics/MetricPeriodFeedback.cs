@@ -15,16 +15,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new <see cref="MetricPeriodFeedback"/> instance. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter"/> to apply to the feedback. </param>
-        /// <param name="value"> The <see cref="PeriodFeedbackValue"/> for the feedback. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="dimensionFilter"/>, or <paramref name="value"/> is null. </exception>
+        /// <param name="periodType"> The <see cref="Models.PeriodType"/>. </param>
+        /// <param name="periodValue"> The period value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="metricId"/> is empty. </exception>
-        public MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue value) : base(metricId, dimensionFilter)
+        public MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodType periodType, int periodValue) : base(metricId, dimensionFilter)
         {
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-            Argument.AssertNotNull(value, nameof(value));
 
-            ValueInternal = value;
+            ValueInternal = new PeriodFeedbackValue(periodType, periodValue);
             Type = FeedbackType.Period;
         }
 

@@ -351,7 +351,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricAnomalyFeedback anomalyFeedback = new MetricAnomalyFeedback(MetricId, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
             MetricChangePointFeedback changePointFeedback = new MetricChangePointFeedback(MetricId, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
-            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, new PeriodFeedbackValue(PeriodType.AssignValue, 5));
+            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, PeriodType.AssignValue, 5);
             MetricCommentFeedback commentFeedback = new MetricCommentFeedback(MetricId, dimensionFilter, "my comment");
 
             var feedbacks = new List<MetricFeedback>
