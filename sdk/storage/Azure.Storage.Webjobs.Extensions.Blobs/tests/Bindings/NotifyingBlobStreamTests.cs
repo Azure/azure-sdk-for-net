@@ -3,17 +3,15 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
-    public class WatchableCloudBlobStreamTests
+    public class NotifyingBlobStreamTests
     {
         [TestCase(false)]
         [TestCase(true)]
@@ -1302,187 +1300,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             committedActionMock.Verify();
         }
 
-        [Test]
-        public async Task GetStatus_AfterCommit_ReturnsZeroBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                await product.FlushAsync();
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(0, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterFlush_ReturnsZeroBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.Flush();
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(0, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWrite_ReturnsBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.Write(buffer, 0, buffer.Length);
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWriteTwice_ReturnsTotalBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.Write(buffer, 0, buffer.Length);
-                product.Write(buffer, 0, buffer.Length);
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length * 2, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterBeginEndWrite_ReturnsBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.EndWrite(product.BeginWrite(buffer, 0, buffer.Length, null, null));
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterBeginEndWriteTwice_ReturnsTotalBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.EndWrite(product.BeginWrite(buffer, 0, buffer.Length, null, null));
-                product.EndWrite(product.BeginWrite(buffer, 0, buffer.Length, null, null));
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length * 2, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWriteAsync_ReturnsBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.WriteAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWriteAsyncTwice_ReturnsTotalBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes("abc");
-                product.WriteAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
-                product.WriteAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(buffer.Length * 2, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWriteByte_ReturnsOneByteWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                product.WriteByte(0xff);
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(1, status);
-            }
-        }
-
-        [Test]
-        public void GetStatus_AfterWriteByteTwice_ReturnsTwoBytesWritten()
-        {
-            // Arrange
-            using (Stream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                product.WriteByte(0xff);
-                product.WriteByte(0xff);
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(2, status);
-            }
-        }
-
         private static void AssertEqual(ExpectedAsyncResult expected, IAsyncResult actual,
             bool disposeActual = false)
         {
@@ -1504,30 +1321,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        private static void AssertEqualStatus(int expectedBytesWritted, ParameterLog actual)
-        {
-            Assert.IsInstanceOf<WriteBlobParameterLog>(actual);
-            WriteBlobParameterLog actualBlobLog = (WriteBlobParameterLog)actual;
-            Assert.AreEqual(expectedBytesWritted, actualBlobLog.BytesWritten);
-            Assert.True(actualBlobLog.WasWritten);
-        }
-
-        private static void AssertNotWritten(ParameterLog actual)
-        {
-            Assert.IsInstanceOf<WriteBlobParameterLog>(actual);
-            WriteBlobParameterLog actualBlobLog = (WriteBlobParameterLog)actual;
-            Assert.False(actualBlobLog.WasWritten);
-            Assert.AreEqual(0, actualBlobLog.BytesWritten);
-        }
-
         private static Stream CreateDummyStream()
         {
             return new Mock<Stream>(MockBehavior.Strict).Object;
-        }
-
-        private static Stream CreateInnerStream()
-        {
-            return new MemoryStream();
         }
 
         private static Mock<Stream> CreateMockInnerStream()
@@ -1535,15 +1331,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             return new Mock<Stream>(MockBehavior.Strict);
         }
 
-        private static WatchableCloudBlobStream CreateProductUnderTest(Stream inner)
+        private static NotifyingBlobStream CreateProductUnderTest(Stream inner)
         {
             return CreateProductUnderTest(inner, NullBlobCommittedAction.Instance);
         }
 
-        private static WatchableCloudBlobStream CreateProductUnderTest(Stream inner,
+        private static NotifyingBlobStream CreateProductUnderTest(Stream inner,
             IBlobCommitedAction committedAction)
         {
-            return new WatchableCloudBlobStream(inner, committedAction);
+            return new NotifyingBlobStream(inner, committedAction);
         }
 
         private struct ExpectedAsyncResult
