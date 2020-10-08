@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -23,8 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            DataFeed dataFeed = await CreateSampleDataFeed(adminClient);
-            string metricId = dataFeed.Schema.MetricColumns.First().MetricId;
+            string metricId = MetricId;
 
             #region Snippet:CreateAnomalyDetectionConfiguration
             //@@ string metricId = "<metricId>";
@@ -55,11 +53,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Anomaly detection configuration ID: {detectionConfiguration.Id}");
             #endregion
 
-            // Delete the created data feed and anomaly detection configuration to clean up the Metrics Advisor resource.
-            // Do not perform this step if you intend to keep using them.
+            // Delete the created anomaly detection configuration to clean up the Metrics Advisor resource.
+            // Do not perform this step if you intend to keep using the configuration.
 
             await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(detectionConfiguration.Id);
-            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
     }
 }

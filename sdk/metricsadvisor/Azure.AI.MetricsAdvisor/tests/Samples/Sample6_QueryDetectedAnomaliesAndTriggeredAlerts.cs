@@ -22,17 +22,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string apiKey = MetricsAdvisorApiKey;
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
 
-            var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
-            DataFeed dataFeed = await CreateSampleDataFeed(adminClient);
-            string metricId = dataFeed.Schema.MetricColumns.First().MetricId;
-
-            AlertingHook hook = await CreateSampleHook(adminClient);
-            AnomalyDetectionConfiguration detectionConfiguration = await CreateSampleAnomalyDetectionConfiguration(adminClient, metricId);
-
-            AnomalyAlertConfiguration alertConfiguration = await CreateSampleAnomalyAlertConfiguration(adminClient, hook.Id, detectionConfiguration.Id);
-            string anomalyAlertConfigurationId = alertConfiguration.Id;
+            string anomalyAlertConfigurationId = AlertConfigurationId;
 
             #region Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
             //@@ string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
@@ -64,21 +56,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine();
                 }
 
-                // Print at most 10 alerts.
-                if (++alertCount >= 10)
+                // Print at most 3 alerts.
+                if (++alertCount >= 3)
                 {
                     break;
                 }
             }
             #endregion
-
-            // Delete the created data feed, anomaly detection configuration, hook and anomaly alert configuration
-            // to clean up the Metrics Advisor resource. Do not perform this step if you intend to keep using them.
-
-            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(alertConfiguration.Id);
-            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(detectionConfiguration.Id);
-            await adminClient.DeleteHookAsync(hook.Id);
-            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
     }
 }

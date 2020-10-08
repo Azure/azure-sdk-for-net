@@ -28,5 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         // Samples
         public string DataFeedId => GetRecordedVariable("METRICSADVISOR_DATA_FEED_ID");
+        public string MetricId => GetRecordedVariable("METRICSADVISOR_METRIC_ID");
+        public string HookId => GetRecordedVariable("METRICSADVISOR_HOOK_ID");
+        public string DetectionConfigurationId => GetRecordedVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
+        public string AlertConfigurationId => GetRecordedVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
     }
 }

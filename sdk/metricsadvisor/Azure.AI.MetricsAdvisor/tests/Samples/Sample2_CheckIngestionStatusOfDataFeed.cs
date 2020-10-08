@@ -34,12 +34,20 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine("Ingestion statuses:");
             Console.WriteLine();
 
+            int statusCount = 0;
+
             await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFeedIngestionStatusesAsync(dataFeedId, options))
             {
                 Console.WriteLine($"Timestamp: {ingestionStatus.Timestamp}");
                 Console.WriteLine($"Status: {ingestionStatus.Status.Value}");
                 Console.WriteLine($"Service message: {ingestionStatus.Message}");
                 Console.WriteLine();
+
+                // Print at most 10 statuses.
+                if (++statusCount >= 10)
+                {
+                    break;
+                }
             }
             #endregion
         }

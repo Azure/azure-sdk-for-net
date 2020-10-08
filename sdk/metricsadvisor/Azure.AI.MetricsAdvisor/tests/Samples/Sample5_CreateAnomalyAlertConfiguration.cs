@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -24,14 +23,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            DataFeed dataFeed = await CreateSampleDataFeed(adminClient);
-            string metricId = dataFeed.Schema.MetricColumns.First().MetricId;
-
-            AlertingHook hook = await CreateSampleHook(adminClient);
-            string hookId = hook.Id;
-
-            AnomalyDetectionConfiguration detectionConfiguration = await CreateSampleAnomalyDetectionConfiguration(adminClient, metricId);
-            string anomalyDetectionConfigurationId = detectionConfiguration.Id;
+            string hookId = HookId;
+            string anomalyDetectionConfigurationId = DetectionConfigurationId;
 
             #region Snippet:CreateAnomalyAlertConfiguration
             //@@ string hookId = "<hookId>";
@@ -55,13 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Alert configuration ID: {alertConfiguration.Id}");
             #endregion
 
-            // Delete the created data feed, anomaly detection configuration, hook and anomaly alert configuration
-            // to clean up the Metrics Advisor resource. Do not perform this step if you intend to keep using them.
+            // Delete the anomaly alert configuration to clean up the Metrics Advisor resource. Do not
+            // perform this step if you intend to keep using the configuration.
 
             await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(alertConfiguration.Id);
-            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(detectionConfiguration.Id);
-            await adminClient.DeleteHookAsync(hook.Id);
-            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
     }
 }
