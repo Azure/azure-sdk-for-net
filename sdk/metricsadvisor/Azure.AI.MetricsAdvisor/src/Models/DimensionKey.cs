@@ -89,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode() => Dimension.GetHashCode();
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
         internal DimensionKey Clone() => new DimensionKey(Dimension);

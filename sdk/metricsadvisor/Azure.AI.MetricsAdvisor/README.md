@@ -67,9 +67,11 @@ Alternately, you can use the [Azure CLI][azure_cli] snippet below to get the sub
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Get the API Key (TODO)
+#### Get the API Key
 
-Stuff.
+You can obtain the API key in the [Metrics Advisor Web Portal][metricsadv_web_portal]. You'll be prompted to login for authentication.
+
+Once logged in, fill in your Azure Active Directory, Subscription and Metrics Advisor resource name.
 
 #### Create a MetricsAdvisorClient or a MetricsAdvisorAdministrationClient
 
@@ -113,15 +115,19 @@ Given a metric, the Metrics Advisor service creates one series for every possibl
 
 ### Data Anomaly
 
-A `DataAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with a `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
+A `DataAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
 
 ### Anomaly Incident
 
 Detected [anomalies](#data-anomaly) within the same [time series](#time-series) can be grouped into an `AnomalyIncident`, or simply "incident". The service looks for patterns across anomalies to determine which ones are likely to have the same cause, grouping them together.
 
-### Anomaly Alert (TODO)
+### Anomaly Alert
 
-### Alerting Hook (TODO)
+An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#data-anomaly) meets a specified criteria. For instance, an alert could be triggered every time an anomaly with high severity is detected. You can specify the conditions an anomaly must satisfy to trigger an alert with an `AnomalyAlertConfiguration`, which make use of [hooks](#alerting-hook) to send notifications to the concerned parties every time an alert is triggered. These configurations are not set by default, so you need to create one in order to start triggering and receiving alerts. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
+
+### Alerting Hook
+
+An `AlertingHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
 
 ## Examples
 
@@ -134,34 +140,44 @@ The following section provides several code snippets illustrating common pattern
 * [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration)
 * [Query detected anomalies and triggered alerts](#query-detected-anomalies-and-triggered-alerts)
 
-### Create a data feed from a data source (TODO)
+### Create a data feed from a data source
 
-Info.
+Metrics Advisor supports multiple types of data sources. In this sample we'll illustrate how to create a [`DataFeed`](#data-feed) that extracts data from a SQL server.
 
 ```C# Snippet:CreateDataFeedFromDataSource
 ```
 
-### Check the ingestion status of a data feed (TODO)
+### Check the ingestion status of a data feed
+
+Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 
 ```C# Snippet:CheckIngestionStatusOfDataFeed
 ```
 
-### Create an anomaly detection configuration (TODO)
+### Create an anomaly detection configuration
+
+Create an [`AnomalyDetectionConfiguration`](#data-anomaly) to tell the service which data points should be considered anomalies.
 
 ```C# Snippet:CreateAnomalyDetectionConfiguration
 ```
 
-### Create a hook for receiving anomaly alerts (TODO)
+### Create a hook for receiving anomaly alerts
+
+Metrics Advisor supports the [`EmailHook` and `WebHook`](#alerting-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookForReceivingAnomalyAlerts
 ```
 
-### Create an anomaly alert configuration (TODO)
+### Create an anomaly alert configuration
+
+Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service which anomalies should trigger alerts.
 
 ```C# Snippet:CreateAnomalyAlertConfiguration
 ```
 
-### Query detected anomalies and triggered alerts (TODO)
+### Query detected anomalies and triggered alerts
+
+Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration, and list the [anomalies](#data-anomaly) that triggered these alerts.
 
 ```C# Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
 ```
@@ -238,6 +254,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
 [metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
+[metricsadv_web_portal]: https://metricsadvisor.azurewebsites.net
 
 [metrics_advisor_admin_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs
 [metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
