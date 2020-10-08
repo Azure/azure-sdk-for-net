@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.AI.MetricsAdvisor.Administration;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
 using Azure.Core.TestFramework;
 
@@ -25,6 +28,30 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string apiKey = "<apiKey>";
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task MetricsAdvisorNotFound()
+        {
+            string endpoint = MetricsAdvisorUri;
+            string subscriptionKey = MetricsAdvisorSubscriptionKey;
+            string apiKey = MetricsAdvisorApiKey;
+
+            var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
+            var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
+
+            #region Snippet:MetricsAdvisorBadRequest
+            string dataFeedId = "00000000-0000-0000-0000-000000000000";
+
+            try
+            {
+                Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             #endregion
         }
     }
