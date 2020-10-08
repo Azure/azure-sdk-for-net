@@ -23,15 +23,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            string mySqlConnectionString = "";
-            string mySqlQuery = "";
+            string sqlServerConnectionString = SqlServerConnectionString;
+            string sqlServerQuery = SqlServerQuery;
 
             #region Snippet:CreateDataFeedFromDataSource
-            //@@ string mySqlConnectionString = "<connectionString>";
-            //@@ string mySqlQuery = "<query>";
+            //@@ string sqlServerConnectionString = "<connectionString>";
+            //@@ string sqlServerQuery = "<query>";
 
             var dataFeedName = "Sample data feed";
-            var dataFeedSource = new MySqlDataFeedSource(mySqlConnectionString, mySqlQuery);
+            var dataFeedSource = new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
             var dataFeedMetrics = new List<DataFeedMetric>()

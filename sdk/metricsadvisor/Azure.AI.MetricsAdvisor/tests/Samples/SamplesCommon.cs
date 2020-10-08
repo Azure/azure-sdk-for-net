@@ -14,13 +14,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
     {
         private async Task<DataFeed> CreateSampleDataFeed(MetricsAdvisorAdministrationClient adminClient)
         {
-            string mySqlConnectionString = "";
-            string mySqlQuery = "";
+            string sqlServerConnectionString = SqlServerConnectionString;
+            string sqlServerQuery = SqlServerQuery;
 
             Response<DataFeed> response = await adminClient.CreateDataFeedAsync
             (
                 "Sample data feed",
-                new MySqlDataFeedSource(mySqlConnectionString, mySqlQuery),
+                new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery),
                 new DataFeedGranularity(DataFeedGranularityType.Daily),
                 new DataFeedSchema
                 (
