@@ -151,7 +151,7 @@ A `RestoreOperation` represents a long running operation for both a full key and
 ## Examples
 The Azure.Security.KeyVault.Administration package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the `client` created above for either [access control](#create-keyvaultaccesscontrolclient) or [backup](#create-KeyVaultBackupClient) clients, covering some of the most common Azure Key Vault access control related tasks:
+The following section provides several code snippets using the `client` created above for either [access control](#create-keyvaultaccesscontrolclient) or [backup](#create-keyvaultbackupclient) clients, covering some of the most common Azure Key Vault access control related tasks:
 
 ### Sync examples
 - Access control
