@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1123,7 +1122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
 
-            await receiver.SetSessionStateAsync(null);
+            await receiver.SetSessionStateAsync(default);
 
             mockLogger
                 .Verify(
@@ -1146,7 +1145,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.SetStateAsync(
-                    It.IsAny<byte[]>(),
+                    It.IsAny<BinaryData>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusSessionReceiver(
@@ -1159,7 +1158,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             Assert.That(
-                async () => await receiver.SetSessionStateAsync(null),
+                async () => await receiver.SetSessionStateAsync(default),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
