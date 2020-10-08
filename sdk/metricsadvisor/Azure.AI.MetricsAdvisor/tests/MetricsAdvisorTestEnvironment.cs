@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -27,10 +28,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public string SqlServerQuery => GetRecordedVariable("METRICSADVISOR_SQL_SERVER_QUERY");
 
         // Samples
-        public string DataFeedId => GetRecordedVariable("METRICSADVISOR_DATA_FEED_ID");
-        public string MetricId => GetRecordedVariable("METRICSADVISOR_METRIC_ID");
-        public string HookId => GetRecordedVariable("METRICSADVISOR_HOOK_ID");
-        public string DetectionConfigurationId => GetRecordedVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
-        public string AlertConfigurationId => GetRecordedVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
+        public string DataFeedId => Environment.GetEnvironmentVariable("METRICSADVISOR_DATA_FEED_ID");
+        public string MetricId => Environment.GetEnvironmentVariable("METRICSADVISOR_METRIC_ID");
+        public string HookId => Environment.GetEnvironmentVariable("METRICSADVISOR_HOOK_ID");
+        public string DetectionConfigurationId => Environment.GetEnvironmentVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
+        public string AlertConfigurationId => Environment.GetEnvironmentVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
     }
 }
