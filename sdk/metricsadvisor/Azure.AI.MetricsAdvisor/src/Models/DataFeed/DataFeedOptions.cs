@@ -42,13 +42,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public string Description { get; set; }
 
-        // TODODOCS.
         /// <summary>
+        /// Defines actionable HTTP URLs, which consist of the placeholders %datafeed, %metric, %timestamp, %detect_config, and %tagset.
+        /// You can use the template to redirect from an anomaly or an incident to a specific URL to drill down.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/manage-data-feeds#action-link-template">documentation</see> for details.
         /// </summary>
         public string ActionLinkTemplate { get; set; }
 
-        // TODODOCS.
         /// <summary>
+        /// The access mode for the <see cref="DataFeed"/>.
         /// </summary>
         public DataFeedAccessMode? AccessMode { get; set; }
 

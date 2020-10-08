@@ -45,8 +45,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DateTimeOffset? CreatedTime { get; }
 
-        // TODODOCS.
         /// <summary>
+        /// The e-mail address of creator of this <see cref="DataFeed"/>.
         /// </summary>
         public string Creator { get; }
 

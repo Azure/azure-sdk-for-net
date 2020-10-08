@@ -16,8 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
         }
 
-        // TODODOCS.
         /// <summary>
+        /// The dimension value to be filtered.
         /// </summary>
         public string DimensionValueToFilter { get; set; }
 

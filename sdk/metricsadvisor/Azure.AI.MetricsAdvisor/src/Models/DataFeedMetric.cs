@@ -6,8 +6,10 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    // TODODOCS: hard to explain.
     /// <summary>
+    /// A <see cref="DataFeedMetric"/> is a quantifiable measure that is used to monitor and assess the status of a specific business process.
+    /// It can be a combination of multiple time series values divided into dimensions.
+    /// For example, a web health metric might contain dimensions for user count in a specific market.
     /// </summary>
     [CodeGenModel("Metric")]
     public partial class DataFeedMetric

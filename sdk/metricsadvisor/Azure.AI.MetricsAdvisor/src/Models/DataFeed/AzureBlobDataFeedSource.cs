@@ -11,13 +11,36 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureBlobDataFeedSource : DataFeedSource
     {
-        // TODODOCS.
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureBlobDataFeedSource"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string for authenticating to the Azure Storage Account.</param>
         /// <param name="container">The name of the blob container.</param>
-        /// <param name="blobTemplate"></param>
+        /// <param name="blobTemplate">
+        /// This is the template of the Blob file names. For example: /%Y/%m/X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>%Y</term>
+        /// <description>The year formatted as yyyy</description>
+        /// </item>
+        /// <item>
+        /// <term>%m</term>
+        /// <description>The month formatted as MM</description>
+        /// </item>
+        /// <item>
+        /// <term>%d</term>
+        /// <description>The day formatted as dd</description>
+        /// </item>
+        /// <item>
+        /// <term>%h</term>
+        /// <description>The hour formatted as HH</description>
+        /// </item>
+        /// <item>
+        /// <term>%M</term>
+        /// <description>The minute formatted as mm</description>
+        /// </item>
+        /// </list>
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is empty.</exception>
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate)

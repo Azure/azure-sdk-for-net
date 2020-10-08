@@ -472,12 +472,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        // TODODOCS
         /// <summary>
+        /// Gets the ingestion progress for data being ingested to a given data feed.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeedIngestionProgress"/> instance.
+        /// </returns>
         public virtual async Task<Response<DataFeedIngestionProgress>> GetDataFeedIngestionProgressAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -495,12 +497,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        // TODODOCS.
         /// <summary>
+        /// Gets the ingestion progress for data being ingested to a given data feed.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeedIngestionProgress"/> instance.
+        /// </returns>
         public virtual Response<DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -518,14 +522,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        // TODODOCS.
         /// <summary>
+        /// Resets the data ingestion status for a given data feed to back-fill data. This can be useful to fix a failed ingestion or override the existing data.
+        /// Anomaly detection is re-triggered on selected range only.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="startTime">The inclusive data back-fill time range.</param>
+        /// <param name="endTime">The exclusive data back-fill time range.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
         public virtual async Task<Response> RefreshDataFeedIngestionAsync(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -545,14 +552,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        // TODODOCS.
         /// <summary>
+        /// Resets the data ingestion status for a given data feed to back-fill data. This can be useful to fix a failed ingestion or override the existing data.
+        /// Anomaly detection is re-triggered on selected range only.
         /// </summary>
-        /// <param name="dataFeedId"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="startTime">The inclusive data back-fill time range.</param>
+        /// <param name="endTime">The exclusive data back-fill time range.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
         public virtual Response RefreshDataFeedIngestion(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -572,9 +582,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        // TODODOCS.
         /// <summary>
+        /// Gets the ingestion status for data being ingested to a given data feed.
         /// </summary>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeedIngestionStatus"/>.</returns>
         public virtual AsyncPageable<DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -621,9 +635,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        // TODODOCS.
         /// <summary>
+        /// Gets the ingestion status for data being ingested to a given data feed.
         /// </summary>
+        /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeedIngestionStatus"/>.</returns>
         public virtual Pageable<DataFeedIngestionStatus> GetDataFeedIngestionStatuses(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));

@@ -55,7 +55,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public AnomalySeverity Severity { get; }
 
-        // TODO: how can the service tell when an anomaly has been resolved? What criteria is used?
         /// <summary>
         /// The status of the issue that caused this <see cref="DataAnomaly"/>. This property is only populated
         /// when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/> or
