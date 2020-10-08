@@ -1203,7 +1203,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Query series enriched by anomaly detection.
         /// </summary>
-        /// <param name="seriesKeys">The deection series keys.</param>
+        /// <param name="seriesKeys">The detection series keys.</param>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
