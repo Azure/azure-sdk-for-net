@@ -93,21 +93,35 @@ You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_adm
 
 `MetricsAdvisorAdministrationClient` is the interface responsible for managing entities in the Metrics Advisor resource. It provides synchronous and asynchronous methods for tasks such as creating and updating data feeds, anomaly detection configurations, and anomaly alerting configurations.
 
-### Data Feed (TODO)
+### Data Feed
 
-### Metric (TODO)
+A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data and, therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
 
-### Dimension (TODO)
+### Data Feed Metric
 
-### Time series (TODO)
+A `DataFeedMetric`, or simply "metric", is a quantifiable measure to be monitored by the Metrics Advisor service. It could be the cost of a product over the months, or even a daily measure of temperature. The service will monitor how this value varies over time in search of any anomalous behavior. A [data feed](#data-feed) can ingest multiple metrics from the same data source.
 
-### Anomaly (TODO)
+### Metric Dimension
 
-### Incident (TODO)
+A `MetricDimension`, or simply "dimension", is a set of categorical values that characterize a [metric](#data-feed-metric). For instance, if a metric represents the cost of a product, the type of product (e.g., shoes, hats) and the city in which these values were measured (e.g., New York, Tokyo) could be used as a dimension. Possible dimension values would include: `(shoes, New York)`, `(shoes, Tokyo)`, `(hats, New York)`, and `(hats, Tokyo)`.
 
-### Alert (TODO)
+### Time Series
 
-### Hook (TODO)
+A time series is a series of data points indexed in time order. These data points describe the variation of the value of a [metric](#data-feed-metric) over time.
+
+Given a metric, the Metrics Advisor service creates one series for every possible [dimension](#metric-dimension) value, which means that multiple time series can be monitored for the same metric.
+
+### Data Anomaly
+
+A `DataAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with a `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
+
+### Anomaly Incident
+
+Detected [anomalies](#data-anomaly) within the same [time series](#time-series) can be grouped into an `AnomalyIncident`, or simply "incident". The service looks for patterns across anomalies to determine which ones are likely to have the same cause, grouping them together.
+
+### Anomaly Alert (TODO)
+
+### Alerting Hook (TODO)
 
 ## Examples
 
