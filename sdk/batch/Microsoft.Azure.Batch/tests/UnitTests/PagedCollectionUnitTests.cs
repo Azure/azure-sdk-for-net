@@ -130,12 +130,10 @@
             PagedAlphabet seq = new PagedAlphabet(4, 10);
 
             //Call with an already cancelled cancellation token
-            using (CancellationTokenSource source = new CancellationTokenSource())
-            {
-                source.Cancel();
+            using CancellationTokenSource source = new CancellationTokenSource();
+            source.Cancel();
 
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ToListAsync(source.Token));
-            }
+            await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ToListAsync(source.Token));
         }
 
         [Fact]
@@ -145,12 +143,10 @@
             PagedAlphabet seq = new PagedAlphabet(4, 10);
 
             //Call with an already cancelled cancellation token
-            using (CancellationTokenSource source = new CancellationTokenSource())
-            {
-                source.Cancel();
+            using CancellationTokenSource source = new CancellationTokenSource();
+            source.Cancel();
 
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ForEachAsync(item => { }, source.Token));
-            }
+            await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ForEachAsync(item => { }, source.Token));
         }
 
         [Fact]
@@ -160,13 +156,10 @@
             PagedAlphabet seq = new PagedAlphabet(4, 10);
 
             //Call with an already cancelled cancellation token
-            using (CancellationTokenSource source = new CancellationTokenSource())
-            {
+            using CancellationTokenSource source = new CancellationTokenSource();
+            source.Cancel();
 
-                source.Cancel();
-
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ForEachAsync(item => Task.Delay(0), source.Token));
-            }
+            await Assert.ThrowsAsync<OperationCanceledException>(async () => await seq.ForEachAsync(item => Task.Delay(0), source.Token));
         }
 
         private class PagedAlphabet : PagedEnumerable<string>
