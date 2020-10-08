@@ -7,17 +7,14 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Definition of ARM tracked top level resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataCollectionRuleResource
+    public partial class DataCollectionRuleResource : Resource
     {
         /// <summary>
         /// Initializes a new instance of the DataCollectionRuleResource class.
@@ -49,6 +46,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="etag">Resource entity tag (ETag).</param>
         public DataCollectionRuleResource(DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, string location, string description = default(string), DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(location, id, name, type, tags)
         {
             Description = description;
             DataSources = dataSources;
@@ -56,10 +54,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             DataFlows = dataFlows;
             ProvisioningState = provisioningState;
             Location = location;
-            Tags = tags;
-            Id = id;
-            Name = name;
-            Type = type;
             Etag = etag;
             CustomInit();
         }
@@ -103,36 +97,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the geo-location where the resource lives.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets fully qualified ID of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
         /// Gets resource entity tag (ETag).
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
@@ -144,8 +108,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
+
             if (Destinations == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Destinations");

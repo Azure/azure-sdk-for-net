@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='resourceUri'>
         /// The identifier of the resource.
         /// </param>
-        public static DataCollectionRuleAssociationProxyOnlyResourceListResult ListByResource(this IDataCollectionRuleAssociations operations, string resourceUri)
+        public static Page<DataCollectionRuleAssociationProxyOnlyResource> ListByResource(this IDataCollectionRuleAssociations operations, string resourceUri)
         {
             return operations.ListByResourceAsync(resourceUri).GetAwaiter().GetResult();
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByResourceAsync(this IDataCollectionRuleAssociations operations, string resourceUri, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Page<DataCollectionRuleAssociationProxyOnlyResource>> ListByResourceAsync(this IDataCollectionRuleAssociations operations, string resourceUri, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ListByResourceWithHttpMessagesAsync(resourceUri, null, cancellationToken).ConfigureAwait(false))
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='dataCollectionRuleName'>
         /// The name of the data collection rule. The name is case insensitive.
         /// </param>
-        public static DataCollectionRuleAssociationProxyOnlyResourceListResult ListByRule(this IDataCollectionRuleAssociations operations, string resourceGroupName, string dataCollectionRuleName)
+        public static Page<DataCollectionRuleAssociationProxyOnlyResource> ListByRule(this IDataCollectionRuleAssociations operations, string resourceGroupName, string dataCollectionRuleName)
         {
             return operations.ListByRuleAsync(resourceGroupName, dataCollectionRuleName).GetAwaiter().GetResult();
         }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByRuleAsync(this IDataCollectionRuleAssociations operations, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Page<DataCollectionRuleAssociationProxyOnlyResource>> ListByRuleAsync(this IDataCollectionRuleAssociations operations, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ListByRuleWithHttpMessagesAsync(resourceGroupName, dataCollectionRuleName, null, cancellationToken).ConfigureAwait(false))
             {

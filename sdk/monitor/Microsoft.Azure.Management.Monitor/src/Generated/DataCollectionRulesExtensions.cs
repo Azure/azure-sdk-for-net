@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        public static DataCollectionRuleResourceListResult ListByResourceGroup(this IDataCollectionRules operations, string resourceGroupName)
+        public static Page<DataCollectionRuleResource> ListByResourceGroup(this IDataCollectionRules operations, string resourceGroupName)
         {
             return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<DataCollectionRuleResourceListResult> ListByResourceGroupAsync(this IDataCollectionRules operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Page<DataCollectionRuleResource>> ListByResourceGroupAsync(this IDataCollectionRules operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
-        public static DataCollectionRuleResourceListResult ListBySubscription(this IDataCollectionRules operations)
+        public static Page<DataCollectionRuleResource> ListBySubscription(this IDataCollectionRules operations)
         {
             return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
         }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<DataCollectionRuleResourceListResult> ListBySubscriptionAsync(this IDataCollectionRules operations, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Page<DataCollectionRuleResource>> ListBySubscriptionAsync(this IDataCollectionRules operations, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
             {

@@ -7,15 +7,13 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Linq;
 
     /// <summary>
     /// Definition of generic ARM proxy resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataCollectionRuleAssociationProxyOnlyResource
+    public partial class DataCollectionRuleAssociationProxyOnlyResource : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -41,13 +39,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="etag">Resource entity tag (ETag).</param>
         public DataCollectionRuleAssociationProxyOnlyResource(string dataCollectionRuleId, string description = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(id, name, type)
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
             ProvisioningState = provisioningState;
-            Id = id;
-            Name = name;
-            Type = type;
             Etag = etag;
             CustomInit();
         }
@@ -76,24 +72,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets fully qualified ID of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
         /// <summary>
         /// Gets resource entity tag (ETag).

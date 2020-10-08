@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>> ListByResourceWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
             {
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>();
+            var _result = new HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Monitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataCollectionRuleAssociationProxyOnlyResourceListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DataCollectionRuleAssociationProxyOnlyResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>();
+            var _result = new HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.Monitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataCollectionRuleAssociationProxyOnlyResourceListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DataCollectionRuleAssociationProxyOnlyResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

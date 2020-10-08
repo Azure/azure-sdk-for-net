@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>> ListByResourceWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists associations for the specified data collection rule.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Page<DataCollectionRuleAssociationProxyOnlyResource>>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the specified association.
         /// </summary>
