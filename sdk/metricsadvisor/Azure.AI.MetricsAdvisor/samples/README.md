@@ -21,9 +21,9 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 
 # Samples
 
-- [Create a data feed from a data source](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs)
-- [Check the ingestion status of a data feed](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs)
-- [Create an anomaly detection configuration](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs)
-- [Create a hook for receiving anomaly alerts](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs)
-- [Create an anomaly alert configuration](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs)
-- [Query detected anomalies and triggered alerts](https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs)
+- [Create a data feed from a data source](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs)
+- [Check the ingestion status of a data feed](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs)
+- [Create an anomaly detection configuration](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs)
+- [Create a hook for receiving anomaly alerts](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs)
+- [Create an anomaly alert configuration](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs)
+- [Query detected anomalies and triggered alerts](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs)
