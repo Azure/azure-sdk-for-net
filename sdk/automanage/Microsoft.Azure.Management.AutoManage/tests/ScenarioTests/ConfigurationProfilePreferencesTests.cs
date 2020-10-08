@@ -3,7 +3,6 @@
 // license information.
 namespace Automanage.Tests.ScenarioTests
 {
-    using System.Collections.Generic;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,25 +16,13 @@ namespace Automanage.Tests.ScenarioTests
     public class ConfigurationProfilePreferencesTests : TestBase
     {
         private RecordedDelegatingHandler handler;
-        
+        private string vmName = "mynewamvmVM2";
+        private string vmID = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/mynewamvmVM_group/providers/Microsoft.Compute/virtualMachines/mynewamvmVM2";
+        private string automanageAccountId = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/AMVM-SubLib-017_group/providers/Microsoft.Automanage/accounts/AMVM-SubLib-017-ABP";
         public ConfigurationProfilePreferencesTests()
             : base()
         {
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void ConfigurationProfilesPreferencesCreatesAPreference()
-        {
-            var thisType = this.GetType();
-            var pref = GetAConfigurationProfilePreferenceObject("myNewPref");
-            using (MockContext context = MockContext.Start(thisType))
-            {
-                var automanageClient = GetAutomanagementClient(context, handler);
-                var actual = automanageClient.ConfigurationProfilePreferences.CreateOrUpdate(pref.Name, "MYNEWAMVM3", pref);
-                Assert.NotNull(actual);
-            }
         }
 
         [Fact]
@@ -64,28 +51,23 @@ namespace Automanage.Tests.ScenarioTests
             }
         }
 
-        private ConfigurationProfilePreference GetAConfigurationProfilePreferenceObject(string name)
-        {                        
-            //var exclusions = new Dictionary<string, string>(){
-            //                      {"processes", "notepad.exe"},
-            //                      {"extensions", "sql"},
-            //                      {"paths", "c:\\temp\\"} };
-
+        private ConfigurationProfilePreference GetAConfigurationProfilePreferenceObject()
+        {
             var customAntiMalwareProps = new ConfigurationProfilePreferenceAntiMalware(
                 enableRealTimeProtection: "True",
-                runScheduledScan: "True",
-                exclusions: null,
+                exclusions: new[] { "C:\\temp", "notepad.exe" },
                 scanType: "Quick",
                 scanDay: "1",
-                scanTimeInMinutes: "360");            
+                scanTimeInMinutes: "360");
+            var vmBackupProps = new ConfigurationProfilePreferenceVmBackup("Pacific Standard Time", 14, null, null);
 
             var preferenceProperties = new ConfigurationProfilePreferenceProperties(
-                vmBackup: null, antiMalware: customAntiMalwareProps);
+                vmBackup: vmBackupProps, antiMalware: customAntiMalwareProps);
             
             var thisAssignment = new ConfigurationProfilePreference(
                 id: null,
-                name: name,
-                location: "eastus",
+                name: "default",
+                location: "West US 2",
                 properties: preferenceProperties);
             return thisAssignment;
         }

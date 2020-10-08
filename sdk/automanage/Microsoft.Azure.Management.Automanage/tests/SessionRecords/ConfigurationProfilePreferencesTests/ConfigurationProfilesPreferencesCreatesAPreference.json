@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/MYNEWAMVM3/providers/Microsoft.Automanage/configurationProfilePreferences/myNewPref?api-version=2020-06-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2RkNTNhNzEtN2Q4MS00OTNkLWJjZTYtMjI0ZmVjNzIyM2E5L3Jlc291cmNlR3JvdXBzL01ZTkVXQU1WTTMvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWFuYWdlL2NvbmZpZ3VyYXRpb25Qcm9maWxlUHJlZmVyZW5jZXMvbXlOZXdQcmVmP2FwaS12ZXJzaW9uPTIwMjAtMDYtMzAtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"vmBackup\": null,\r\n    \"antiMalware\": {\r\n      \"enableRealTimeProtection\": \"True\",\r\n      \"exclusions\": null,\r\n      \"runScheduledScan\": \"True\",\r\n      \"scanType\": \"Quick\",\r\n      \"scanDay\": \"1\",\r\n      \"scanTimeInMinutes\": \"360\"\r\n    }\r\n  },\r\n  \"tags\": null,\r\n  \"id\": null,\r\n  \"name\": \"myNewPref\",\r\n  \"location\": \"eastus\",\r\n  \"type\": null\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "55e8198b-37c1-4cce-834e-aeb0e11b0671"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.AutoManage.AutomanageClient/0.6.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "368"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "823b33e9-ed94-4d15-8bdd-46b2cf7f440c"
+        ],
+        "x-ms-correlation-request-id": [
+          "823b33e9-ed94-4d15-8bdd-46b2cf7f440c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20201008T180148Z:823b33e9-ed94-4d15-8bdd-46b2cf7f440c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 08 Oct 2020 18:01:48 GMT"
+        ],
+        "Content-Length": [
+          "732"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/MYNEWAMVM3/providers/Microsoft.Automanage/configurationProfilePreferences/myNewPref\",\r\n  \"name\": \"myNewPref\",\r\n  \"type\": \"Microsoft.Automanage/configurationProfilePreferences\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"vmBackup\": null,\r\n    \"antiMalware\": {\r\n      \"enableRealTimeProtection\": \"True\",\r\n      \"exclusions\": null,\r\n      \"runScheduledScan\": \"True\",\r\n      \"scanType\": \"Quick\",\r\n      \"scanDay\": \"1\",\r\n      \"scanTimeInMinutes\": \"360\"\r\n    }\r\n  },\r\n  \"systemData\": {\r\n    \"createdAt\": \"2020-10-08T13:58:29.6353959-04:00\",\r\n    \"createdBy\": \"05c53b9a-4aec-4cef-9db3-d91598153656\",\r\n    \"createdByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2020-10-08T14:01:48.1730239-04:00\",\r\n    \"lastModifiedBy\": \"05c53b9a-4aec-4cef-9db3-d91598153656\",\r\n    \"lastModifiedByType\": \"Application\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "cdd53a71-7d81-493d-bce6-224fec7223a9"
+  }
+}
