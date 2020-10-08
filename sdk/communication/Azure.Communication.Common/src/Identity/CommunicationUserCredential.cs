@@ -42,14 +42,6 @@ namespace Azure.Communication.Identity
                 refreshProactively);
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="CommunicationUserCredential"/> class.
-        /// </summary>
-        ~CommunicationUserCredential()
-        {
-            Dispose();
-        }
-
-        /// <summary>
         /// Gets an <see cref="AccessToken"/> for the user.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
@@ -84,7 +76,6 @@ namespace Azure.Communication.Identity
                 return;
 
             _userTokenCredential.Dispose();
-            GC.SuppressFinalize(this);
             _isDisposed = true;
         }
     }
