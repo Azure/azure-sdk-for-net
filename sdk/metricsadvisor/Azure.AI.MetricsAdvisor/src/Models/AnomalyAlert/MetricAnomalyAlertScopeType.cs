@@ -12,19 +12,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     public readonly partial struct MetricAnomalyAlertScopeType
     {
         /// <summary>
-        /// The scope is all time series within the associated metric.
+        /// Alerts will be triggered for anomalies in all series within the metric.
         /// </summary>
         [CodeGenMember("All")]
         public static MetricAnomalyAlertScopeType WholeSeries { get; } = new MetricAnomalyAlertScopeType(WholeSeriesValue);
 
         /// <summary>
-        /// The scope is a fixed group of time series.
+        /// Alerts will only be triggered for anomalies in specific dimensions of the series group.
         /// </summary>
         [CodeGenMember("Dimension")]
         public static MetricAnomalyAlertScopeType SeriesGroup { get; } = new MetricAnomalyAlertScopeType(SeriesGroupValue);
 
-        // TODODOCS.
         /// <summary>
+        /// Alerts will only be triggered for anomalies in the top N series.
+        /// You can set parameters to specify the number of timestamps to take into account, and how many anomalies must be in them to send the alert.
         /// </summary>
         public static MetricAnomalyAlertScopeType TopN { get; } = new MetricAnomalyAlertScopeType(TopNValue);
     }
