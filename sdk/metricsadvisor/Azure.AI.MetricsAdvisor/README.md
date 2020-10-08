@@ -451,12 +451,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metrics_advisor_admin_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs
 [metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
 
-[metricsadv-sample1]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs
-[metricsadv-sample2]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs
-[metricsadv-sample3]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs
-[metricsadv-sample4]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs
-[metricsadv-sample5]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs
-[metricsadv-sample6]: https://github.com/kinelski/azure-sdk-for-net/tree/ma-readme/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs
+[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs
+[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs
+[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs
+[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs
+[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs
+[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs
 
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
