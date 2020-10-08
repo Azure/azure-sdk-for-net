@@ -341,11 +341,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
             FeedbackDimensionFilter dimensionFilter = new FeedbackDimensionFilter(
-                new Dictionary<string, string>
-                {
-                    {"Dim1", "Common Lime"},
-                    {"Dim2", "Ant"}
-                });
+                new DimensionKey(
+                    new Dictionary<string, string>
+                    {
+                        {"Dim1", "Common Lime"},
+                        {"Dim2", "Ant"}
+                    }));
             DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
             DateTimeOffset end = Recording.UtcNow;
 
