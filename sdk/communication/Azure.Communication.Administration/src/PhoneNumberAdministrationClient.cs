@@ -530,16 +530,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Creates a release for the given phone numbers. </summary>
+        /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ReleasePhoneNumbers)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
             try
             {
-                return await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken).ConfigureAwait(false);
+                return new ReleasePhoneNumberOperation(
+                       this,
+                       response.Value.ReleaseId,
+                       response.GetRawResponse(),
+                       cancellationToken);
             }
             catch (Exception ex)
             {
@@ -548,16 +553,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Creates a release for the given phone numbers. </summary>
+        /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReleaseResponse> ReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ReleasePhoneNumbers)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
             try
             {
-                return RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken);
+                var response = RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken);
+                return new ReleasePhoneNumberOperation(
+                       this,
+                       response.Value.ReleaseId,
+                       response.GetRawResponse(),
+                       cancellationToken);
             }
             catch (Exception ex)
             {
@@ -641,16 +651,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Creates a phone number search. </summary>
+        /// <summary> Startss a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateSearchResponse>> CreateSearchAsync(CreateSearchOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<PhoneNumberSearchOperation> StartSearchAsync(CreateSearchOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CreateSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartSearch)}");
             scope.Start();
             try
             {
-                return await RestClient.CreateSearchAsync(body, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.CreateSearchAsync(body, cancellationToken).ConfigureAwait(false);
+                return new PhoneNumberSearchOperation(
+                    this,
+                    response.Value.SearchId,
+                    response.GetRawResponse(),
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -659,16 +674,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Creates a phone number search. </summary>
+        /// <summary> Starts a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateSearchResponse> CreateSearch(CreateSearchOptions body, CancellationToken cancellationToken = default)
+        public virtual PhoneNumberSearchOperation StartSearch(CreateSearchOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CreateSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartSearch)}");
             scope.Start();
             try
             {
-                return RestClient.CreateSearch(body, cancellationToken);
+                var response = RestClient.CreateSearch(body, cancellationToken);
+                return new PhoneNumberSearchOperation(
+                    this,
+                    response.Value.SearchId,
+                    response.GetRawResponse(),
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -752,16 +772,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Purchases the phone number search. </summary>
+        /// <summary> Starts purchases the phone number search. </summary>
         /// <param name="searchId"> The search id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PurchaseSearchAsync(string searchId, CancellationToken cancellationToken = default)
+        public virtual async Task<PhoneNumberSearchPurchaseOperation> StartPurchaseSearchAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(PurchaseSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseSearch)}");
             scope.Start();
             try
             {
-                return await RestClient.PurchaseSearchAsync(searchId, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.PurchaseSearchAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return new PhoneNumberSearchPurchaseOperation(
+                        this,
+                        searchId,
+                        response,
+                        cancellationToken);
             }
             catch (Exception ex)
             {
@@ -770,16 +795,21 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Purchases the phone number search. </summary>
+        /// <summary> Starts purchases the phone number search. </summary>
         /// <param name="searchId"> The search id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PurchaseSearch(string searchId, CancellationToken cancellationToken = default)
+        public virtual PhoneNumberSearchPurchaseOperation StartPurchaseSearch(string searchId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(PurchaseSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseSearch)}");
             scope.Start();
             try
             {
-                return RestClient.PurchaseSearch(searchId, cancellationToken);
+                var response = RestClient.PurchaseSearch(searchId, cancellationToken);
+                return new PhoneNumberSearchPurchaseOperation(
+                        this,
+                        searchId,
+                        response,
+                        cancellationToken);
             }
             catch (Exception ex)
             {
