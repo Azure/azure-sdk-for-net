@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.WebJobs.Host.Protocols
 {
     /// <summary>Represents a function parameter log for a write-only blob parameter.</summary>
-    [JsonTypeName("WriteBlob")]
     internal class WriteBlobParameterLog : ParameterLog
     {
         /// <summary>Gets or sets a value indicating whether the blob was written at all.</summary>

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Description;
@@ -84,20 +82,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
                 binding.AddValidator(ValidateQueueAttribute);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToCollector<QueueMessage>(this);
+                binding.BindToCollector<QueueMessage>(this);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToInput<QueueClient>(builder);
+                binding.BindToInput<QueueClient>(builder);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToInput<QueueClient>(builder);
+                binding.BindToInput<QueueClient>(builder);
             }
 
             private async Task<object> ConvertPocoToCloudQueueMessage(object arg, Attribute attrResolved, ValueBindingContext context)
@@ -122,34 +111,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 QueueCausalityManager.SetOwner(functionInstanceId, objectToken);
 
                 return Task.FromResult<JObject>(objectToken);
-            }
-
-            // ParameterDescriptor for binding to CloudQueue. Whereas the output bindings are FileAccess.Write; CloudQueue exposes Peek()
-            // and so is technically Read/Write.
-            // Preserves compat with older SDK.
-            private ParameterDescriptor ToReadWriteParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
-            {
-                return ToParameterDescriptorForCollector(attr, parameter, nameResolver, FileAccess.ReadWrite);
-            }
-
-            // Asyncollector version. Write-only
-            private ParameterDescriptor ToWriteParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
-            {
-                return ToParameterDescriptorForCollector(attr, parameter, nameResolver, FileAccess.Write);
-            }
-
-            private ParameterDescriptor ToParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver, FileAccess access)
-            {
-                var queueServiceClient = _queueServiceClientProvider.Get(attr.Connection, nameResolver);
-                var accountName = queueServiceClient.AccountName;
-
-                return new QueueParameterDescriptor
-                {
-                    Name = parameter.Name,
-                    AccountName = accountName,
-                    QueueName = NormalizeQueueName(attr, nameResolver),
-                    Access = access
-                };
             }
 
             private static string NormalizeQueueName(QueueAttribute attribute, INameResolver nameResolver)

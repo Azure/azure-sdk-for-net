@@ -52,36 +52,6 @@ namespace Microsoft.Azure.WebJobs.Host
         public string Format() { throw null; }
     }
 }
-namespace Microsoft.Azure.WebJobs.Host.Protocols
-{
-    public partial class BlobParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.ParameterDescriptor
-    {
-        public BlobParameterDescriptor() { }
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public System.IO.FileAccess Access { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string BlobName { get { throw null; } set { } }
-        public string ContainerName { get { throw null; } set { } }
-    }
-    public partial class BlobTriggerParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.TriggerParameterDescriptor
-    {
-        public BlobTriggerParameterDescriptor() { }
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public System.IO.FileAccess Access { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string BlobName { get { throw null; } set { } }
-        public string ContainerName { get { throw null; } set { } }
-        public override string GetTriggerReason(System.Collections.Generic.IDictionary<string, string> arguments) { throw null; }
-    }
-    public partial class QueueParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.ParameterDescriptor
-    {
-        public QueueParameterDescriptor() { }
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public System.IO.FileAccess Access { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string QueueName { get { throw null; } set { } }
-    }
-}
 namespace Microsoft.Extensions.Hosting
 {
     public static partial class StorageBlobsWebJobsBuilderExtensions
