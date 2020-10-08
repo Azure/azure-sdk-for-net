@@ -22,8 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            DataFeed dataFeed = await CreateSampleDataFeed(adminClient);
-            string dataFeedId = dataFeed.Id;
+            string dataFeedId = DataFeedId;
 
             #region Snippet:CheckIngestionStatusOfDataFeed
             //@@ string dataFeedId = "<dataFeedId>";
@@ -43,11 +42,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine();
             }
             #endregion
-
-            // Delete the created data feed to clean up the Metrics Advisor resource. Do not perform this
-            // step if you intend to keep using the data feed.
-
-            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
     }
 }

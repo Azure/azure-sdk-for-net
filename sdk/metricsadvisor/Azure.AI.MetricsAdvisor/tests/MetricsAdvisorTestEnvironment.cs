@@ -25,5 +25,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public string SqlServerConnectionString => GetRecordedVariable("METRICSADVISOR_SQL_SERVER_CONNECTION_STRING", options => options.IsSecret(SanitizedValue.Base64));
         public string SqlServerQuery => GetRecordedVariable("METRICSADVISOR_SQL_SERVER_QUERY");
+
+        // Samples
+        public string DataFeedId => GetRecordedVariable("METRICSADVISOR_DATA_FEED_ID");
     }
 }
