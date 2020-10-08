@@ -31,45 +31,43 @@
 
             Func<Task> test = async () =>
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                var poolInfo = new PoolInformation
                 {
-                    var poolInfo = new PoolInformation
+                    AutoPoolSpecification = new AutoPoolSpecification
                     {
-                        AutoPoolSpecification = new AutoPoolSpecification
+                        PoolSpecification = new PoolSpecification
                         {
-                            PoolSpecification = new PoolSpecification
+                            ApplicationPackageReferences = new[]
                             {
-                                ApplicationPackageReferences = new[]
-                                {
                                     new ApplicationPackageReference
                                     {
                                         ApplicationId = applicationId,
                                         Version = PoolFixture.VMSize,
                                     }
                                 },
-                                CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                VirtualMachineSize = PoolFixture.VMSize,
-                            },
-                            PoolLifetimeOption = PoolLifetimeOption.Job
-                        }
-                    };
-
-                    CloudJob response = null;
-                    try
-                    {
-                        CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
-                        await job.CommitAsync().ConfigureAwait(false);
-
-                        response = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
-
-                        Assert.Equal(response.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
+                            CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            VirtualMachineSize = PoolFixture.VMSize,
+                        },
+                        PoolLifetimeOption = PoolLifetimeOption.Job
                     }
-                    finally
+                };
+
+                CloudJob response = null;
+                try
+                {
+                    CloudJob job = client.JobOperations.CreateJob(jobId, poolInfo);
+                    await job.CommitAsync().ConfigureAwait(false);
+
+                    response = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
+
+                    Assert.Equal(response.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
+                }
+                finally
+                {
+                    if (response != null)
                     {
-                        if (response != null)
-                        {
-                            TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                        }
+                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                     }
                 }
             };

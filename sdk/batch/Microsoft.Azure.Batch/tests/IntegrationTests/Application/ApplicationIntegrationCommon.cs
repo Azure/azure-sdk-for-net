@@ -25,45 +25,41 @@
             string accountName,
             string resourceGroupName)
         {
-            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
+            using BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
+            IPage<Application> applicationSummaries =
+                await mgmtClient.Application.ListAsync(resourceGroupName, accountName).ConfigureAwait(false);
+
+            bool testPackageAlreadyUploaded =
+                applicationSummaries.Any(a => string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase));
+
+            if (!testPackageAlreadyUploaded)
             {
-                IPage<Application> applicationSummaries =
-                    await mgmtClient.Application.ListAsync(resourceGroupName, accountName).ConfigureAwait(false);
+                const string format = "zip";
 
-                bool testPackageAlreadyUploaded =
-                    applicationSummaries.Any(a => string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase));
-
-                if (!testPackageAlreadyUploaded)
-                {
-                    const string format = "zip";
-
-                    var addResponse =
-                        await
-                        mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion)
-                                  .ConfigureAwait(false);
-                    var storageUrl = addResponse.StorageUrl;
-
-                    await IntegrationTestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
-
+                var addResponse =
                     await
-                        mgmtClient.ApplicationPackage.ActivateAsync(
-                            resourceGroupName,
-                            accountName,
-                            appPackageName,
-                            applicationVersion,
-                            format).ConfigureAwait(false);
-                }
+                    mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion)
+                              .ConfigureAwait(false);
+                var storageUrl = addResponse.StorageUrl;
+
+                await IntegrationTestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
+
+                await
+                    mgmtClient.ApplicationPackage.ActivateAsync(
+                        resourceGroupName,
+                        accountName,
+                        appPackageName,
+                        applicationVersion,
+                        format).ConfigureAwait(false);
             }
         }
 
         public static async Task DeleteApplicationAsync(string applicationPackage, string resourceGroupName, string accountName)
         {
-            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
-            {
-                await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, applicationPackage, Version).ConfigureAwait(false);
+            using BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
+            await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, applicationPackage, Version).ConfigureAwait(false);
 
-                await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, applicationPackage).ConfigureAwait(false);
-            }
+            await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, applicationPackage).ConfigureAwait(false);
         }
     }
 }

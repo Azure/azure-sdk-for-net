@@ -27,10 +27,8 @@ namespace BatchClientIntegrationTests
         {
             Func<Task<string>> tokenProvider = () => IntegrationTestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
 
-            using (var client = BatchClient.Open(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, tokenProvider)))
-            {
-                await client.JobOperations.ListJobs().ToListAsync();
-            }
+            using var client = BatchClient.Open(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, tokenProvider));
+            await client.JobOperations.ListJobs().ToListAsync();
         }
     }
 }

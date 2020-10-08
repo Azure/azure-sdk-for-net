@@ -28,8 +28,8 @@
 
         protected PoolFixture(string poolId)
         {
-            this.PoolId = poolId;
-            this.client = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
+            PoolId = poolId;
+            client = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
         }
 
         public void Dispose()
@@ -44,17 +44,17 @@
             {
 
             }
-            this.client.Dispose();
+            client.Dispose();
         }
 
         protected CloudPool FindPoolIfExists()
         {
             // reuse existing pool if it exists
-            List<CloudPool> pools = new List<CloudPool>(this.client.PoolOperations.ListPools());
+            List<CloudPool> pools = new List<CloudPool>(client.PoolOperations.ListPools());
 
             foreach (CloudPool curPool in pools)
             {
-                if (curPool.Id.Equals(this.PoolId))
+                if (curPool.Id.Equals(PoolId))
                 {
                     return curPool;
                 }

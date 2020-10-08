@@ -78,17 +78,15 @@ namespace BatchClientIntegrationTests
 
             try
             {
-                using (BatchClient batchClient = CreateDummyClient())
-                {
-                    X509Certificate2 x509Certificate = password == null ? new X509Certificate2(certificateFileLocation) : new X509Certificate2(certificateFileLocation, password);
-                    byte[] cerBytes = x509Certificate.Export(X509ContentType.Cert);
+                using BatchClient batchClient = CreateDummyClient();
+                X509Certificate2 x509Certificate = password == null ? new X509Certificate2(certificateFileLocation) : new X509Certificate2(certificateFileLocation, password);
+                byte[] cerBytes = x509Certificate.Export(X509ContentType.Cert);
 
-                    Certificate certificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerBytes);
+                Certificate certificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerBytes);
 
-                    Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
-                    Assert.Equal("sha1", certificate.ThumbprintAlgorithm);
-                    Assert.Equal(expectedSignatureAlgorithm, x509Certificate.SignatureAlgorithm.FriendlyName);
-                }
+                Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
+                Assert.Equal("sha1", certificate.ThumbprintAlgorithm);
+                Assert.Equal(expectedSignatureAlgorithm, x509Certificate.SignatureAlgorithm.FriendlyName);
             }
             finally
             {

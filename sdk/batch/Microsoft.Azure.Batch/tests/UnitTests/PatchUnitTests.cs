@@ -23,11 +23,9 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestPatchJob_ThrowsOnUnbound()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudJob job = client.JobOperations.CreateJob();
-                Assert.Throws<InvalidOperationException>(() => job.CommitChanges());
-            }
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudJob job = client.JobOperations.CreateJob();
+            Assert.Throws<InvalidOperationException>(() => job.CommitChanges());
         }
 
         [Fact]
@@ -243,11 +241,9 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestPatchPool_ThrowsOnUnbound()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudPool pool = client.PoolOperations.CreatePool();
-                Assert.Throws<InvalidOperationException>(() => pool.CommitChanges());
-            }
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudPool pool = client.PoolOperations.CreatePool();
+            Assert.Throws<InvalidOperationException>(() => pool.CommitChanges());
         }
 
         [Fact]
@@ -406,11 +402,9 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestPatchJobSchedule_ThrowsOnUnbound()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudJobSchedule jobSchedule = client.JobScheduleOperations.CreateJobSchedule();
-                Assert.Throws<InvalidOperationException>(() => jobSchedule.CommitChanges());
-            }
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudJobSchedule jobSchedule = client.JobScheduleOperations.CreateJobSchedule();
+            Assert.Throws<InvalidOperationException>(() => jobSchedule.CommitChanges());
         }
 
         [Fact]
@@ -574,23 +568,21 @@
             Action<CloudJob> modificationFunction,
             Action<Protocol.Models.JobPatchParameter> assertAction)
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudJob job = client.JobOperations.GetJob(
-                    string.Empty,
-                    additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(startEntity));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudJob job = client.JobOperations.GetJob(
+                string.Empty,
+                additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(startEntity));
 
-                modificationFunction(job);
+            modificationFunction(job);
 
-                var patchInterceptor = ShimPatchJob(assertAction);
-                job.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
+            var patchInterceptor = ShimPatchJob(assertAction);
+            job.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
 
-                //Ensure that the job is in readable but unmodifiable state
-                var id = job.Id;
-                var priority = job.Priority;
+            //Ensure that the job is in readable but unmodifiable state
+            var id = job.Id;
+            var priority = job.Priority;
 
-                Assert.Throws<InvalidOperationException>(() => job.Priority = 5);
-            }
+            Assert.Throws<InvalidOperationException>(() => job.Priority = 5);
         }
 
         private static Protocol.RequestInterceptor ShimPatchJob(Action<Protocol.Models.JobPatchParameter> assertAction)
@@ -612,21 +604,19 @@
             Action<CloudPool> modificationFunction,
             Action<Protocol.Models.PoolPatchParameter> assertAction)
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudPool pool = client.PoolOperations.GetPool(
-                    string.Empty,
-                    additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(startEntity));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudPool pool = client.PoolOperations.GetPool(
+                string.Empty,
+                additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(startEntity));
 
-                modificationFunction(pool);
+            modificationFunction(pool);
 
-                var patchInterceptor = ShimPatchPool(assertAction);
-                pool.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
+            var patchInterceptor = ShimPatchPool(assertAction);
+            pool.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
 
-                //Ensure that the job is in readable but unmodifiable state
-                var id = pool.Id;
-                Assert.Throws<InvalidOperationException>(() => pool.Metadata = null);
-            }
+            //Ensure that the job is in readable but unmodifiable state
+            var id = pool.Id;
+            Assert.Throws<InvalidOperationException>(() => pool.Metadata = null);
         }
 
         private static Protocol.RequestInterceptor ShimPatchPool(Action<Protocol.Models.PoolPatchParameter> assertAction)
@@ -648,22 +638,20 @@
             Action<CloudJobSchedule> modificationFunction,
             Action<Protocol.Models.JobSchedulePatchParameter> assertAction)
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                CloudJobSchedule jobSchedule = client.JobScheduleOperations.GetJobSchedule(
-                    string.Empty,
-                    additionalBehaviors: InterceptorFactory.CreateGetJobScheduleRequestInterceptor(startEntity));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            CloudJobSchedule jobSchedule = client.JobScheduleOperations.GetJobSchedule(
+                string.Empty,
+                additionalBehaviors: InterceptorFactory.CreateGetJobScheduleRequestInterceptor(startEntity));
 
-                modificationFunction(jobSchedule);
+            modificationFunction(jobSchedule);
 
-                var patchInterceptor = ShimPatchJobSchedule(assertAction);
-                jobSchedule.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
+            var patchInterceptor = ShimPatchJobSchedule(assertAction);
+            jobSchedule.CommitChanges(additionalBehaviors: new[] { patchInterceptor });
 
-                //Ensure that the job is in readable but unmodifiable state
-                var id = jobSchedule.Id;
+            //Ensure that the job is in readable but unmodifiable state
+            var id = jobSchedule.Id;
 
-                Assert.Throws<InvalidOperationException>(() => jobSchedule.Metadata = null);
-            }
+            Assert.Throws<InvalidOperationException>(() => jobSchedule.Metadata = null);
         }
 
         private static Protocol.RequestInterceptor ShimPatchJobSchedule(Action<Protocol.Models.JobSchedulePatchParameter> assertAction)

@@ -27,62 +27,60 @@
         {
             const string testName = "Bug1910530_ConcurrentChangeTrackedListThreadsafeTest";
 
-            using(BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
+            JobScheduleOperations jobScheduleOperations = batchCli.JobScheduleOperations;
+
+            string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + "-" + testName;
+
+            //
+            //Unbound job schedule properties
+            //
+            this.testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
+            CloudJobSchedule unboundJobSchedule = jobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
+
+            //Create a new threadsafe collection
+            unboundJobSchedule.Metadata = new List<MetadataItem>();
+
+            //Now it should be magically threadsafe
+            Action addAction = () =>
             {
-                JobScheduleOperations jobScheduleOperations = batchCli.JobScheduleOperations;
-                
-                string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + "-" + testName;
+                this.testOutputHelper.WriteLine("Adding an item");
+                unboundJobSchedule.Metadata.Add(new MetadataItem("test", "test"));
+            };
 
-                //
-                //Unbound job schedule properties
-                //
-                this.testOutputHelper.WriteLine("Creating job schedule {0}", jobScheduleId);
-                CloudJobSchedule unboundJobSchedule = jobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
-
-                //Create a new threadsafe collection
-                unboundJobSchedule.Metadata = new List<MetadataItem>();
-
-                //Now it should be magically threadsafe
-                Action addAction = () =>
+            Action removeAction = () =>
+            {
+                this.testOutputHelper.WriteLine("Removing an item");
+                try
                 {
-                    this.testOutputHelper.WriteLine("Adding an item");
-                    unboundJobSchedule.Metadata.Add(new MetadataItem("test", "test"));
-                };
-
-                Action removeAction = () =>
+                    unboundJobSchedule.Metadata.RemoveAt(0);
+                }
+                catch (ArgumentOutOfRangeException)
                 {
-                    this.testOutputHelper.WriteLine("Removing an item");
-                    try
-                    {
-                        unboundJobSchedule.Metadata.RemoveAt(0);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                    }
-                };
+                }
+            };
 
-                Random rand = new Random();
-                object randLock = new object();
+            Random rand = new Random();
+            object randLock = new object();
 
-                Parallel.For(0, 100, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, (i) =>
+            Parallel.For(0, 100, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, (i) =>
+            {
+                int randomInt;
+                lock (randLock)
                 {
-                    int randomInt;
-                    lock (randLock)
-                    {
-                        randomInt = rand.Next(0, 2);
-                    }
+                    randomInt = rand.Next(0, 2);
+                }
 
-                    if (randomInt == 0)
-                    {
-                        addAction();
-                    }
-                    else
-                    {
-                        removeAction();
-                    }
-                });
-            }
-            
+                if (randomInt == 0)
+                {
+                    addAction();
+                }
+                else
+                {
+                    removeAction();
+                }
+            });
+
         }
 
         [Fact]
