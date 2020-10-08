@@ -1,41 +1,74 @@
-param(
-  $AuthToken
-)
-
-$Token = ConvertTo-SecureString -String $AuthToken -AsPlainText -Force
 $GithubAPIBaseURI = "https://api.github.com/repos"
-function InvokePost($apiURI, $body) {
-    $resp = Invoke-RestMethod `
-        -Method POST `
-        -Body ($body | ConvertTo-Json) `
-        -Uri $apiURI `
-        -Authentication Bearer `
-        -Token $Token `
-        -MaximumRetryCount 3
 
-    return $resp
+function Get-Headers ($token) {
+  $headers = @{
+    Authorization = "bearer $token"
+  }
+  return $headers
 }
 
-function InvokePatch($apiURI, $body) {
+function InvokePost {
+  param (
+    [Parameter(Mandatory = $true)]
+    $apiURI,
+    [Parameter(Mandatory = $true)]
+    $body,
+    [Parameter(Mandatory = $true)]
+    $token
+  )
+
   $resp = Invoke-RestMethod `
-      -Method PATCH `
-      -Body ($body | ConvertTo-Json) `
-      -Uri $apiURI `
-      -Authentication Bearer `
-      -Token $Token `
-      -MaximumRetryCount 3
+    -Method POST `
+    -Body ($body | ConvertTo-Json) `
+    -Uri $apiURI `
+    -Headers (Get-Headers -token $token) `
+    -MaximumRetryCount 3
 
   return $resp
 }
 
-function InvokeGet($apiURI) {
+function InvokePatch {
+  param (
+    [Parameter(Mandatory = $true)]
+    $apiURI,
+    [Parameter(Mandatory = $true)]
+    $body,
+    [Parameter(Mandatory = $true)]
+    $token
+  )
+
   $resp = Invoke-RestMethod `
+    -Method PATCH `
+    -Body ($body | ConvertTo-Json) `
+    -Uri $apiURI `
+    -Headers (Get-Headers -token $token) `
+    -MaximumRetryCount 3
+
+  return $resp
+}
+
+function InvokeGet {
+  param (
+    [Parameter(Mandatory = $true)]
+    $apiURI,
+    $token
+  )
+
+  if ($token)
+  {
+    $resp = Invoke-RestMethod `
       -Method GET `
       -Uri $apiURI `
-      -Authentication Bearer `
-      -Token $Token `
+      -Headers (Get-Headers -token $token) `
       -MaximumRetryCount 3
-      
+  }
+  else {
+    $resp = Invoke-RestMethod `
+      -Method GET `
+      -Uri $apiURI `
+      -MaximumRetryCount 3
+  }
+
   return $resp
 }
 
@@ -52,22 +85,22 @@ function ListPullRequests {
     [Parameter(Mandatory = $true)]
     $RepoName,
     [ValidateSet("open","closed","all")]
-    $state = "open",
-    $head,
-    $base,
+    $State = "open",
+    $Head,
+    $Base,
     [ValidateSet("created","updated","popularity","long-running")]
-    $sort,
+    $Sort,
     [ValidateSet("asc","desc")]
-    $direction
+    $Direction
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls"
-  if ($state -or $head -or $base -or $sort -or $direction) { $uri += '?'}
-  if ($state){ $uri += "state=$state&" }
-  if ($head){ $uri += "head=$head&" }
-  if ($base){ $uri += "base=$base&" }
-  if ($sort){ $uri += "sort=$sort&" }
-  if ($direction){ $uri += "direction=$direction&" }
+  if ($State -or $Head -or $Base -or $Sort -or $Direction) { $uri += '?'}
+  if ($State) { $uri += "state=$State&" }
+  if ($Head) { $uri += "head=$Head&" }
+  if ($Base) { $uri += "base=$Base&" }
+  if ($Sort) { $uri += "sort=$Sort&" }
+  if ($Direction){ $uri += "direction=$Direction&" }
 
   return InvokeGet -apiURI $uri
 }
@@ -80,18 +113,19 @@ function AddIssueComment {
     $RepoName,
     [Parameter(Mandatory = $true)]
     $IssueNumber,
-    $CommentPrefix,
     [Parameter(Mandatory = $true)]
     $Comment,
-    $CommentSuffix
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+
   )
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/comments"
-  $PRComment = "$CommentPrefix $Comment $CommentSuffix"
 
   $parameters = @{
-    body = $PRComment
+    body = $Comment
   }
-  return InvokePost -apiURI $uri -body $parameters
+
+  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # Will add labels to existing labels on the issue
@@ -105,16 +139,18 @@ function AddIssueLabels {
     $IssueNumber,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $labels
+    $Labels,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/labels"
-  $labelAdditions = SplitMembers -membersString $labels
+  $labelAdditions = SplitMembers -membersString $Labels
   $parameters = @{
-    labels = @($labelAdditions)
+    labels = $labelAdditions
   }
 
-  return InvokePost -apiURI $uri -body $parameters
+  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # Will add assignees to existing assignees on the issue
@@ -128,16 +164,18 @@ function AddIssueAssignees {
     $IssueNumber,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $assignees
+    $Assignees,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/assignees"
-  $assigneesAdditions = SplitMembers -membersString $assignees
+  $assigneesAdditions = SplitMembers -membersString $Assignees
   $parameters = @{
-    assignees = @($assigneesAdditions)
+    assignees = $assigneesAdditions
   }
 
-  return InvokePost -apiURI $uri -body $parameters
+  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # For labels and assignee pass comma delimited string, to replace existing labels or assignees.
@@ -150,30 +188,33 @@ function UpdateIssue {
     $RepoName,
     [Parameter(Mandatory = $true)]
     $IssueNumber,
-    [string]$title,
-    [string]$body,
-    [string]$state,
-    [int]$milestome,
+    [string]$Title,
+    [string]$Body,
+    [ValidateSet("open","closed")]
+    [string]$State,
+    [int]$Milestome,
     [ValidateNotNullOrEmpty()]
-    [string]$labels,
+    [string]$Labels,
     [ValidateNotNullOrEmpty()]
-    [string]$assignees
+    [string]$Assignees,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber"
   $parameters = @{}
-  if ($title) { $parameters["title"] = $title }
-  if ($body) { $parameters["body"] = $body }
-  if ($state) { $parameters["state"] = $state }
-  if ($milestone) { $parameters["milestone"] = $milestone }
-  if ($labels) { 
-    $labelAdditions = SplitMembers -membersString $labels
-    $parameters["labels"] = @($labelAdditions) 
+  if ($Title) { $parameters["title"] = $Title }
+  if ($Body) { $parameters["body"] = $Body }
+  if ($State) { $parameters["state"] = $State }
+  if ($Milestone) { $parameters["milestone"] = $Milestone }
+  if ($Labels) { 
+    $labelAdditions = SplitMembers -membersString $Labels
+    $parameters["labels"] = $labelAdditions
   }
-  if ($assignees) { 
-    $assigneesAdditions = SplitMembers -membersString $assignees
-    $parameters["assignees"] = @($assigneesAdditions) 
+  if ($Assignees) { 
+    $assigneesAdditions = SplitMembers -membersString $Assignees
+    $parameters["assignees"] = $assigneesAdditions
   }
 
-  return InvokePatch -apiURI $uri -body $parameters
+  return InvokePatch -apiURI $uri -body $parameters -token $AuthToken
 }

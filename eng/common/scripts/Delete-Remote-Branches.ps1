@@ -6,19 +6,18 @@ param(
   $AuthToken
 )
 
-. "${PSScriptRoot}\logging.ps1"
-. "${PSScriptRoot}\Invoke-GitHub-API.ps1" -AuthToken $AuthToken
+. "${PSScriptRoot}\common.ps1"
 
 pushd $WorkingDirectory
 git clone https://github.com/$RepoOwner/$RepoName.git
 pushd $RepoName
-$syncBranches = (git branch --remote).where{ $_ -like "*origin/$BranchPrefix*" }
+$syncBranches = git branch -r --list origin/$BranchPrefix* | % { $_ -replace "origin/", "" }
 
 LogDebug "Operating on Repo [ $RepoName ]"
 foreach ($branch in $syncBranches)
 {
   try {
-    $branchName = ($branch.Trim()).Replace("origin/","")
+    $branchName = $branch.Trim()
     $head = "${RepoOwner}/${RepoName}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
     $response = ListPullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head

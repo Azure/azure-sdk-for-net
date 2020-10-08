@@ -10,7 +10,7 @@ param(
   [string]$IssueNumber,
 
   [Parameter(Mandatory = $true)]
-  [string]$Comment,
+  [string]$Labels,
 
   [Parameter(Mandatory = $true)]
   [string]$AuthToken
@@ -19,10 +19,10 @@ param(
 . "${PSScriptRoot}\common.ps1"
 
 try {
-  AddIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
-  -IssueNumber $IssueNumber -Comment $Comment -AuthToken $AuthToken
+  AddIssueLabels -RepoOwner $RepoOwner -RepoName $RepoName `
+  -IssueNumber $IssueNumber -Labels $Labels -AuthToken $AuthToken
 }
 catch {
-  LogError "AddIssueComment failed with exception:`n$_"
+  LogError "AddIssueLabels failed with exception:`n$_"
   exit 1
 }

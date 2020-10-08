@@ -13,13 +13,12 @@ languages repos as they will be overwritten the next time an update is taken fro
 
 ### Workflow
 
-The 'Sync eng/common directory' PRs will be created in the language repositories once a pull request that touches the eng/common directory is submitted against the master branch. This will make it easier for changes to be tested in each individual language repo before merging the changes in the azure-sdk-tools repo. The workflow is explained below:
+The 'Sync eng/common directory' PRs will be created in the language repositories when a pull request that touches the eng/common directory is submitted against the master branch. This will make it easier for changes to be tested in each individual language repo before merging the changes in the azure-sdk-tools repo. The workflow is explained below:
 
-1. Create a PR against Azure/azure-sdk-tools:master. This is the **Tools PR**.
-2. `azure-sdk-tools - sync - eng-common` is run automatically. It creates **Sync PRs** in each of the connected language repositories using the format `Sync eng/common directory with azure-sdk-tools for PR {Tools PR Number}`. Each **Sync PR** will contain a link back to the **Tools PR** that triggered it.
-3. More changes pushed to the **Tools PR**, will automatically triggered new pipeline runs in the respective **Sync PRs**. The **Sync PRs** are used to make sure the changes would not break any of the connected pipelines.
-4. Once satisfied with the changes;
-    - First make sure all checks in the **Sync PRs** are green and approved. The **Tools PR** contains links to all the **Sync PRs**. If for some reason the PRs is blocked by a CI gate get someone with permission to override and manually merge the PR.
-    - To test the state of all the **Sync PRs**, you can download the `PRsCreated.txt` artifact from your `azure-sdk-tools - sync - eng-common` pipeline, then run `./eng/scripts/Verify-And-Merge-PRs.ps1 <path to PRsCreated.txt>` which will output the status of each associated PR.
-    - Next approve the `VerifyAndMerge` job for the `azure-sdk-tools - sync - eng-common` pipeline triggered by your **Tools PR** which will automatically merge all the **Sync PRs**. You need `azure-sdk` devops contributor permissions to reach the `azure-sdk-tools - sync - eng-common` pipeline.
-    - Finally merge the **Tools PR**. 
+1. Create a PR (**Tools PR**) in the `azure - sdk - tools` Repo with changes to eng/common directory.
+2. `azure-sdk-tools - sync - eng-common` pipeline is triggered for the **Tools PR**
+3. The  `azure-sdk-tools - sync - eng-common` pipeline queues test runs using the dotnet, js, java and python template pipelines. This help to test the recent changes in the **Tools PR**
+4. If there are changes in the **Tools PR** that will affect the release stage you should approve the release test pipelines by clicking the approval gate. The test (template) pipeline will automatically release the next eligible version without needing manual intervention for the versioning. Please approve your test releases as quickly as possible. A race condition may occur due to someone else queueing the pipeline and going all the way to release using your version while yours is still waiting. If this occurs manually rerun the pipeline that failed.
+5. Repeat step 1 - 4 by pushing new changes to your **Tools PR** Do this until you have satisfactory test runs all the way to release of the template package if necessary.
+6. Sign off on next stage of the sync pipeline using the approval gate. The CreateSyncPRs stage will create the sync PR in the various language repos. Before doing this you need to be satisfied with the testing from the previous steps. This stage will append the `auto-merge` label to the **Sync PRs** as well as the **Tools PR**.
+6. Go review and approve each of your **Sync PRs**. The merging will happen automatically.
