@@ -21,16 +21,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="componentFactory"></param>
-        public StorageClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
+        /// <param name="logForwarder"></param>
+        public StorageClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
+            _logForwarder = logForwarder;
         }
 
         /// <summary>
@@ -65,6 +68,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
+            _logForwarder.Start();
+
             if (!string.IsNullOrWhiteSpace(connectionSection.Value))
             {
                 return CreateClientFromConnectionString(connectionSection.Value, CreateClientOptions(null));
@@ -98,6 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private TClientOptions CreateClientOptions(IConfiguration configuration)
         {
             var clientOptions = (TClientOptions) _componentFactory.CreateClientOptions(typeof(TClientOptions), null, configuration);
+            clientOptions.Diagnostics.ApplicationId ??= "AzureWebJobs";
             if (SkuUtility.IsDynamicSku)
             {
                 clientOptions.Transport = CreateTransportForDynamicSku();

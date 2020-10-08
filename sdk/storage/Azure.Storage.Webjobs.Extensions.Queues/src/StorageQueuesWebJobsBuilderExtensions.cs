@@ -33,9 +33,6 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageQueues(this IWebJobsBuilder builder, Action<QueuesOptions> configureQueues = null)
         {
-            // add webjobs to user agent for all storage calls
-            DiagnosticsOptions.DefaultApplicationId = "AzureWebJobs";
-
             builder.Services.AddAzureClients(_ => { });
 
             builder.Services.TryAddSingleton<SharedQueueWatcher>();

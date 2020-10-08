@@ -12,8 +12,8 @@ namespace Azure.WebJobs.Extensions.Storage.Queues
 {
     internal class QueueServiceClientProvider : StorageClientProvider<QueueServiceClient, QueueClientOptions>
     {
-        public QueueServiceClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
-            : base(configuration, componentFactory) {}
+        public QueueServiceClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
+            : base(configuration, componentFactory, logForwarder) {}
 
         protected override QueueServiceClient CreateClientFromConnectionString(string connectionString, QueueClientOptions options)
         {

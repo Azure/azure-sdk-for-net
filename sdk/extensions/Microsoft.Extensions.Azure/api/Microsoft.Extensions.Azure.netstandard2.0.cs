@@ -25,6 +25,7 @@ namespace Microsoft.Extensions.Azure
     }
     public static partial class AzureClientServiceCollectionExtensions
     {
+        public static void AddAzureClientCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection) { }
         public static void AddAzureClients(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection, System.Action<Microsoft.Extensions.Azure.AzureClientFactoryBuilder> configureClients) { }
     }
     public abstract partial class AzureComponentFactory
@@ -32,6 +33,12 @@ namespace Microsoft.Extensions.Azure
         protected AzureComponentFactory() { }
         public abstract object CreateClientOptions(System.Type optionsType, object serviceVersion, Microsoft.Extensions.Configuration.IConfiguration configuration);
         public abstract Azure.Core.TokenCredential CreateCredential(Microsoft.Extensions.Configuration.IConfiguration configuration);
+    }
+    public sealed partial class AzureEventSourceLogForwarder : System.IDisposable
+    {
+        public AzureEventSourceLogForwarder(Microsoft.Extensions.Logging.ILoggerFactory loggerFactory) { }
+        public void Dispose() { }
+        public void Start() { }
     }
     public partial interface IAzureClientFactory<TClient>
     {

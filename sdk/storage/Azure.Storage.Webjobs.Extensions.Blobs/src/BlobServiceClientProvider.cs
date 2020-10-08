@@ -12,8 +12,8 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class BlobServiceClientProvider : StorageClientProvider<BlobServiceClient, BlobClientOptions>
     {
-        public BlobServiceClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
-            : base(configuration, componentFactory) {}
+        public BlobServiceClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
+            : base(configuration, componentFactory, logForwarder) {}
 
         protected override BlobServiceClient CreateClientFromConnectionString(string connectionString, BlobClientOptions options)
         {

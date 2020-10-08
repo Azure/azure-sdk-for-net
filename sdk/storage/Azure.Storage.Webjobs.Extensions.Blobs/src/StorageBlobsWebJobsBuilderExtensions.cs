@@ -32,9 +32,6 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
-            // add webjobs to user agent for all storage calls
-            DiagnosticsOptions.DefaultApplicationId = "AzureWebJobs";
-
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO (kasobol-msft) figure out if this is needed in extension and if so if it's needed in both blobs and queues?

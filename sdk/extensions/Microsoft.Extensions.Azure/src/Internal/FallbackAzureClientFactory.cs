@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.Azure
     internal class FallbackAzureClientFactory<TClient>: IAzureClientFactory<TClient>
     {
         private readonly AzureComponentFactory _componentFactory;
-        private readonly EventSourceLogForwarder _logForwarder;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
         private readonly Dictionary<string, FallbackClientRegistration<TClient>> _clientRegistrations;
         private readonly Type _clientOptionType;
         private readonly IConfiguration _configurationRoot;
@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.Azure
             IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IServiceProvider serviceProvider,
             AzureComponentFactory componentFactory,
-            EventSourceLogForwarder logForwarder)
+            AzureEventSourceLogForwarder logForwarder)
         {
             _configurationRoot = globalOptions.CurrentValue.ConfigurationRootResolver?.Invoke(serviceProvider);
 

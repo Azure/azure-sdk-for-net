@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Azure
 
         private readonly IOptionsMonitor<TOptions> _monitor;
 
-        private readonly EventSourceLogForwarder _logForwarder;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
         private readonly AzureComponentFactory _componentFactory;
         private FallbackAzureClientFactory<TClient> _fallbackFactory;
 
@@ -28,7 +28,7 @@ namespace Microsoft.Extensions.Azure
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
-            EventSourceLogForwarder logForwarder,
+            AzureEventSourceLogForwarder logForwarder,
             AzureComponentFactory componentFactory)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
