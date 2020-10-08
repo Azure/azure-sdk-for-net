@@ -40,6 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The number of anomalies that must be in the specified <see cref="Top"/> number of timestamps to send an alert.
+        /// The number of anomalies that must be in the specified <see cref="Top"/> number of timestamps to send an alert.
         /// </summary>
         [CodeGenMember("MinTopCount")]
         public int MinimumTopCount { get; }
