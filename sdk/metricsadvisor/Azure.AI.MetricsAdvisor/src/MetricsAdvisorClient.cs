@@ -1205,8 +1205,8 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="seriesKeys">The deection series keys.</param>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
-        /// <param name="startTime">Filters the result. Only series data after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only series data after this point in time, in UTC, will be returned.</param>
+        /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection <see cref="MetricEnrichedSeriesData"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is null.</exception>
@@ -1240,8 +1240,8 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         /// <param name="seriesKeys">The deection series keys.</param>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
-        /// <param name="startTime">Filters the result. Only series data after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only series data after this point in time, in UTC, will be returned.</param>
+        /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection <see cref="MetricEnrichedSeriesData"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="seriesKeys"/> or <paramref name="detectionConfigurationId"/> is null.</exception>
