@@ -457,7 +457,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
                         var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         if (outcome.DescriptorCode != Accepted.Code)
                         {
