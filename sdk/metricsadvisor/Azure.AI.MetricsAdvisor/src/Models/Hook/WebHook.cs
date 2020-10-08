@@ -7,12 +7,15 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
+    /// A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided api when an alert is triggered.
+    /// All alerts can be sent through a web hook.
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
     [CodeGenSuppress(nameof(WebHook), typeof(string), typeof(WebhookHookParameter))]
     public partial class WebHook : AlertingHook
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="WebHook"/> class.
         /// </summary>
         public WebHook(string name, string endpoint)
             : base(name)
@@ -32,26 +35,32 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The API address to be called when an alert is triggered.
         /// </summary>
         public string Endpoint { get => HookParameter.Endpoint; }
 
         /// <summary>
+        /// The username for authenticating to the API address. Leave this black if authentication isn't needed.
         /// </summary>
         public string Username { get => HookParameter.Username; set => HookParameter.Username = value; }
 
         /// <summary>
+        /// The password for authenticating to the API address. Leave this black if authentication isn't needed.
         /// </summary>
         public string Password { get => HookParameter.Password; set => HookParameter.Password = value; }
 
         /// <summary>
+        /// The certificate key for authenticating to the API address. Leave this black if authentication isn't needed.
         /// </summary>
         public string CertificateKey { get => HookParameter.CertificateKey; set => HookParameter.CertificateKey = value; }
 
         /// <summary>
+        /// The certificate password for authenticating to the API address. Leave this black if authentication isn't needed.
         /// </summary>
         public string CertificatePassword { get => HookParameter.Username; set => HookParameter.Username = value; }
 
         /// <summary>
+        /// Custom headers to send in the API call.
         /// </summary>
         public IDictionary<string, string> Headers
         {
