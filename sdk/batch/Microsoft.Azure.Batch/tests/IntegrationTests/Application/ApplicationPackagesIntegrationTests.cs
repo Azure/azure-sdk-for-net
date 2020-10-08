@@ -40,19 +40,17 @@
         {
             Func<Task> test = async () =>
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
-                {
-                    List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
-                    var application = applicationSummaries.First(app => app.Id == ApplicationId);
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
+                var application = applicationSummaries.First(app => app.Id == ApplicationId);
 
-                    Assert.Equal(ApplicationId, application.Id);
-                    Assert.Equal(ApplicationIntegrationCommon.Version, application.Versions.FirstOrDefault());
+                Assert.Equal(ApplicationId, application.Id);
+                Assert.Equal(ApplicationIntegrationCommon.Version, application.Versions.FirstOrDefault());
 
-                    ApplicationSummary getApplicationSummary = await client.ApplicationOperations.GetApplicationSummaryAsync(application.Id).ConfigureAwait(false);
+                ApplicationSummary getApplicationSummary = await client.ApplicationOperations.GetApplicationSummaryAsync(application.Id).ConfigureAwait(false);
 
-                    Assert.Equal(ApplicationId, getApplicationSummary.Id);
-                    Assert.Equal(ApplicationIntegrationCommon.Version, getApplicationSummary.Versions.First());
-                }
+                Assert.Equal(ApplicationId, getApplicationSummary.Id);
+                Assert.Equal(ApplicationIntegrationCommon.Version, getApplicationSummary.Versions.First());
             };
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);

@@ -15,20 +15,20 @@
         public PaasWindowsPoolFixture()
             : base(TestUtilities.GetMyName() + "-pooltest")
         {
-            this.Pool = this.CreatePool();
+            Pool = CreatePool();
         }
 
         protected CloudPool CreatePool()
         {
-            CloudPool currentPool = this.FindPoolIfExists();
+            CloudPool currentPool = FindPoolIfExists();
 
             if (currentPool == null)
             {
                 // gotta create a new pool
                 CloudServiceConfiguration passConfiguration = new CloudServiceConfiguration(OSFamily);
 
-                currentPool = this.client.PoolOperations.CreatePool(
-                    this.PoolId,
+                currentPool = client.PoolOperations.CreatePool(
+                    PoolId,
                     VMSize,
                     passConfiguration,
                     targetDedicatedComputeNodes: 1);
@@ -55,7 +55,7 @@
                 currentPool.Commit();
             }
 
-            return WaitForPoolAllocation(this.client, this.PoolId);
+            return WaitForPoolAllocation(client, PoolId);
         }
     }
 
