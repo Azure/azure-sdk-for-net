@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Description
     /// Validate this on the client side so that we can get a user-friendly error rather than a 400 from the service.
     /// See code here: http://social.msdn.microsoft.com/Forums/en-GB/windowsazuredata/thread/d364761b-6d9d-4c15-8353-46c6719a3392
     /// </summary>
-    public class BlobNameValidationAttribute : ValidationAttribute
+    internal sealed class BlobNameValidationAttribute : ValidationAttribute
     {
         // Tested against storage service on July 2016. All other unsafe and reserved characters work fine.
         private static readonly char[] UnsafeBlobNameCharacters = { '\\' };
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Description
         /// </summary>
         /// <param name="containerName"></param>
         /// <returns></returns>
-        public static bool IsValidContainerName(string containerName)
+        internal static bool IsValidContainerName(string containerName)
         {
             if (containerName == null)
             {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Description
         /// <param name="blobName"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        public static bool IsValidBlobName(string blobName, out string errorMessage)
+        internal static bool IsValidBlobName(string blobName, out string errorMessage)
         {
             const string UnsafeCharactersMessage =
                 "The given blob name '{0}' contain illegal characters. A blob name cannot the following character(s): '\\'.";
