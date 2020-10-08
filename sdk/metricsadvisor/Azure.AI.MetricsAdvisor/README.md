@@ -78,11 +78,21 @@ Once logged in, fill in your Azure Active Directory, Subscription and Metrics Ad
 Once you have the subscription and API keys, create a `MetricsAdvisorKeyCredential`. With the endpoint and the key credential, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
 
 ```C# Snippet:CreateMetricsAdvisorClient
+string endpoint = "<endpoint>";
+string subscriptionKey = "<subscriptionKey>";
+string apiKey = "<apiKey>";
+var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
+var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 ```
 
 You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_administration_client_class] to perform administration operations:
 
 ```C# Snippet:CreateMetricsAdvisorAdministrationClient
+string endpoint = "<endpoint>";
+string subscriptionKey = "<subscriptionKey>";
+string apiKey = "<apiKey>";
+var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
+var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Key concepts
@@ -145,6 +155,60 @@ The following section provides several code snippets illustrating common pattern
 Metrics Advisor supports multiple types of data sources. In this sample we'll illustrate how to create a [`DataFeed`](#data-feed) that extracts data from a SQL server.
 
 ```C# Snippet:CreateDataFeedFromDataSource
+string mySqlConnectionString = "<connectionString>";
+string mySqlQuery = "<query>";
+
+var dataFeedName = "Sample data feed";
+var dataFeedSource = new MySqlDataFeedSource(mySqlConnectionString, mySqlQuery);
+var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+
+var dataFeedMetrics = new List<DataFeedMetric>()
+{
+    new DataFeedMetric("cost"),
+    new DataFeedMetric("revenue")
+};
+var dataFeedDimensions = new List<MetricDimension>()
+{
+    new MetricDimension("category"),
+    new MetricDimension("city")
+};
+var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
+{
+    DimensionColumns = dataFeedDimensions
+};
+
+var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
+
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeedName, dataFeedSource,
+    dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+
+DataFeed dataFeed = response.Value;
+
+Console.WriteLine($"Data feed ID: {dataFeed.Id}");
+
+// Only the ID of the data feed is known at this point. You can perform another service
+// call to get more information, such as status, created time, the list of administrators,
+// or the metric IDs.
+
+response = await adminClient.GetDataFeedAsync(dataFeed.Id);
+
+dataFeed = response.Value;
+
+Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
+Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+
+Console.WriteLine($"Data feed administrators:");
+foreach (string admin in dataFeed.Options.Administrators)
+{
+    Console.WriteLine($" - {admin}");
+}
+
+Console.WriteLine($"Metric IDs:");
+foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+{
+    Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+}
 ```
 
 ### Check the ingestion status of a data feed
@@ -152,6 +216,22 @@ Metrics Advisor supports multiple types of data sources. In this sample we'll il
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 
 ```C# Snippet:CheckIngestionStatusOfDataFeed
+string dataFeedId = "<dataFeedId>";
+
+var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
+var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime);
+
+Console.WriteLine("Ingestion statuses:");
+Console.WriteLine();
+
+await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFeedIngestionStatusesAsync(dataFeedId, options))
+{
+    Console.WriteLine($"Timestamp: {ingestionStatus.Timestamp}");
+    Console.WriteLine($"Status: {ingestionStatus.Status.Value}");
+    Console.WriteLine($"Service message: {ingestionStatus.Message}");
+    Console.WriteLine();
+}
 ```
 
 ### Create an anomaly detection configuration
@@ -159,6 +239,32 @@ Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 Create an [`AnomalyDetectionConfiguration`](#data-anomaly) to tell the service which data points should be considered anomalies.
 
 ```C# Snippet:CreateAnomalyDetectionConfiguration
+string metricId = "<metricId>";
+string configurationName = "Sample anomaly detection configuration";
+
+var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
+var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+{
+    LowerBound = 5.0
+};
+
+var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
+var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+
+var detectionCondition = new MetricWholeSeriesDetectionCondition()
+{
+    HardThresholdCondition = hardThresholdCondition,
+    SmartDetectionCondition = smartDetectionCondition,
+    CrossConditionsOperator = DetectionConditionsOperator.Or
+};
+
+var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfiguration);
+
+detectionConfiguration = response.Value;
+
+Console.WriteLine($"Anomaly detection configuration ID: {detectionConfiguration.Id}");
 ```
 
 ### Create a hook for receiving anomaly alerts
@@ -166,6 +272,20 @@ Create an [`AnomalyDetectionConfiguration`](#data-anomaly) to tell the service w
 Metrics Advisor supports the [`EmailHook` and `WebHook`](#alerting-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookForReceivingAnomalyAlerts
+string hookName = "Sample hook";
+var emailsToAlert = new List<string>()
+{
+    "email1@sample.com",
+    "email2@sample.com"
+};
+
+var emailHook = new EmailHook(hookName, emailsToAlert);
+
+Response<AlertingHook> response = adminClient.CreateHook(emailHook);
+
+AlertingHook hook = response.Value;
+
+Console.WriteLine($"Hook ID: {hook.Id}");
 ```
 
 ### Create an anomaly alert configuration
@@ -173,6 +293,25 @@ Metrics Advisor supports the [`EmailHook` and `WebHook`](#alerting-hook) classes
 Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service which anomalies should trigger alerts.
 
 ```C# Snippet:CreateAnomalyAlertConfiguration
+string hookId = "<hookId>";
+string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
+
+string configurationName = "Sample anomaly alert configuration";
+var idsOfHooksToAlert = new List<string>() { hookId };
+
+var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+{
+    new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+};
+
+AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAnomalyAlertConfigurationAsync(alertConfiguration);
+
+alertConfiguration = response.Value;
+
+Console.WriteLine($"Alert configuration ID: {alertConfiguration.Id}");
 ```
 
 ### Query detected anomalies and triggered alerts
@@ -180,6 +319,41 @@ Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service whic
 Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration, and list the [anomalies](#data-anomaly) that triggered these alerts.
 
 ```C# Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
+string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
+
+var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endTime = DateTimeOffset.UtcNow;
+var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime);
+
+int alertCount = 0;
+
+await foreach (AlertResult alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
+{
+    Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
+    Console.WriteLine($"Id: {alert.Id}");
+    Console.WriteLine($"Anomalies that triggered this alert:");
+
+    await foreach (DataAnomaly anomaly in client.GetAnomaliesForAlertAsync(anomalyAlertConfigurationId, alert.Id))
+    {
+        Console.WriteLine("  Anomaly:");
+        Console.WriteLine($"    Status: {anomaly.Status.Value}");
+        Console.WriteLine($"    Severity: {anomaly.Severity}");
+        Console.WriteLine($"    Series key:");
+
+        foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+        {
+            Console.WriteLine($"      Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
+        }
+
+        Console.WriteLine();
+    }
+
+    // Print at most 10 alerts.
+    if (++alertCount >= 10)
+    {
+        break;
+    }
+}
 ```
 
 ## Troubleshooting
@@ -191,6 +365,16 @@ When you interact with the Cognitive Services Metrics Advisor client library usi
 For example, if you try to get a data feed from the service with a non-existent ID, a `404` error is returned, indicating "Not Found".
 
 ```C# Snippet:MetricsAdvisorNotFound
+string dataFeedId = "00000000-0000-0000-0000-000000000000";
+
+try
+{
+    Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine(ex.ToString());
+}
 ```
 
 Note that additional information is logged, such as the error message returned by the service.

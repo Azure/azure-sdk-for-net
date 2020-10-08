@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            #region Snippet:MetricsAdvisorBadRequest
+            #region Snippet:MetricsAdvisorNotFound
             string dataFeedId = "00000000-0000-0000-0000-000000000000";
 
             try
