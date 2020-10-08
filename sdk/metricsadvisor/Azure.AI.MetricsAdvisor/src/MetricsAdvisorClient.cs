@@ -683,7 +683,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 scope.Failed(e);
                 throw;
-        }
+            }
         }
 
         /// <summary>
@@ -1186,6 +1186,7 @@ namespace Azure.AI.MetricsAdvisor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        // TODODOCS.
         /// <summary>
         /// Gets data about the data points present in the specified set of time series.
         /// <see cref="MetricAnomalyAlertConfiguration"/>.

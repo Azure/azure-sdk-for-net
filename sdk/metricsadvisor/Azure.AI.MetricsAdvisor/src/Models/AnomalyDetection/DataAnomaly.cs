@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             ModifiedTime = modifiedTime;
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
-            AnomalyStatus = property.AnomalyStatus;
+            Status = property.AnomalyStatus;
         }
 
         /// <summary>
@@ -61,7 +61,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/> or
         /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync"/>.
         /// </summary>
-        public AnomalyStatus? AnomalyStatus { get; }
+        [CodeGenMember("AnomalyStatus")]
+        public AnomalyStatus? Status { get; }
 
         /// <summary>
         /// The timestamp, in UTC, of the data point that generated this anomaly, as described by the

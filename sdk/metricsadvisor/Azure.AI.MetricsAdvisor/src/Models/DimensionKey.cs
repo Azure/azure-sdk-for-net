@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -54,6 +55,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         public void RemoveDimensionColumn(string dimensionColumnName) =>
             Dimension.Remove(dimensionColumnName);
 
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, string> AsDictionary() =>
+            Dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
         /// <inheritdoc />
         public bool Equals(DimensionKey other)
         {
@@ -83,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode() => Dimension.GetHashCode();
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
         internal DimensionKey Clone() => new DimensionKey(Dimension);
