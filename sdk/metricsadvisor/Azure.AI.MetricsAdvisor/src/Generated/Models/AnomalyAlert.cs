@@ -10,25 +10,25 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AlertResult. </summary>
-    public partial class AlertResult
+    public partial class AnomalyAlert
     {
-        /// <summary> Initializes a new instance of AlertResult. </summary>
+        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdTime"> created time. </param>
         /// <param name="modifiedTime"> modified time. </param>
-        internal AlertResult(DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
+        internal AnomalyAlert(DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
         {
             Timestamp = timestamp;
             CreatedTime = createdTime;
             ModifiedTime = modifiedTime;
         }
 
-        /// <summary> Initializes a new instance of AlertResult. </summary>
+        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdTime"> created time. </param>
         /// <param name="modifiedTime"> modified time. </param>
-        internal AlertResult(string id, DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
+        internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
         {
             Id = id;
             Timestamp = timestamp;
