@@ -3,6 +3,7 @@
 // license information.
 namespace AutoManage.Tests.ScenarioTests
 {
+    using System.Collections.Generic;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
@@ -16,13 +17,25 @@ namespace AutoManage.Tests.ScenarioTests
     public class ConfigurationProfilePreferencesTests : TestBase
     {
         private RecordedDelegatingHandler handler;
-        private string vmName = "mynewamvmVM2";
-        private string vmID = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/mynewamvmVM_group/providers/Microsoft.Compute/virtualMachines/mynewamvmVM2";
-        private string automanageAccountId = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/AMVM-SubLib-017_group/providers/Microsoft.Automanage/accounts/AMVM-SubLib-017-ABP";
+        
         public ConfigurationProfilePreferencesTests()
             : base()
         {
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
+        }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void ConfigurationProfilesPreferencesCreatesAPreference()
+        {
+            var thisType = this.GetType();
+            var pref = GetAConfigurationProfilePreferenceObject("myNewPref");
+            using (MockContext context = MockContext.Start(thisType))
+            {
+                var automanageClient = GetAutomanagementClient(context, handler);
+                var actual = automanageClient.ConfigurationProfilePreferences.CreateOrUpdate(pref.Name, "MYNEWAMVM3", pref);
+                Assert.NotNull(actual);
+            }
         }
 
         [Fact]
@@ -51,23 +64,28 @@ namespace AutoManage.Tests.ScenarioTests
             }
         }
 
-        private ConfigurationProfilePreference GetAConfigurationProfilePreferenceObject()
-        {
+        private ConfigurationProfilePreference GetAConfigurationProfilePreferenceObject(string name)
+        {                        
+            //var exclusions = new Dictionary<string, string>(){
+            //                      {"processes", "notepad.exe"},
+            //                      {"extensions", "sql"},
+            //                      {"paths", "c:\\temp\\"} };
+
             var customAntiMalwareProps = new ConfigurationProfilePreferenceAntiMalware(
                 enableRealTimeProtection: "True",
-                exclusions: new[] { "C:\\temp", "notepad.exe" },
+                runScheduledScan: "True",
+                exclusions: null,
                 scanType: "Quick",
                 scanDay: "1",
-                scanTimeInMinutes: "360");
-            var vmBackupProps = new ConfigurationProfilePreferenceVmBackup("Pacific Standard Time", 14, null, null);
+                scanTimeInMinutes: "360");            
 
             var preferenceProperties = new ConfigurationProfilePreferenceProperties(
-                vmBackup: vmBackupProps, antiMalware: customAntiMalwareProps);
+                vmBackup: null, antiMalware: customAntiMalwareProps);
             
             var thisAssignment = new ConfigurationProfilePreference(
                 id: null,
-                name: "default",
-                location: "West US 2",
+                name: name,
+                location: "eastus",
                 properties: preferenceProperties);
             return thisAssignment;
         }
