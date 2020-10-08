@@ -13,12 +13,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
     internal static class ReadBlobArgumentBinding
     {
-        public static Task<WatchableReadStream> TryBindStreamAsync(BlobBaseClient blob, ValueBindingContext context)
+        public static Task<Stream> TryBindStreamAsync(BlobBaseClient blob, ValueBindingContext context)
         {
             return TryBindStreamAsync(blob, context.CancellationToken);
         }
 
-        public static async Task<WatchableReadStream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken)
+        public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken)
         {
             Stream rawStream;
             try
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 return null;
             }
 
-            return new WatchableReadStream(rawStream);
+            return rawStream;
         }
     }
 }

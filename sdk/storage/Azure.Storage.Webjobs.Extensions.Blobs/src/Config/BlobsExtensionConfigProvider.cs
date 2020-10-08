@@ -238,8 +238,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         private async Task<Stream> ConvertToStreamAsync(BlobBaseClient input, CancellationToken cancellationToken)
         {
-            WatchableReadStream watchableStream = await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
-            return watchableStream;
+            return await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         // For describing InvokeStrings.
