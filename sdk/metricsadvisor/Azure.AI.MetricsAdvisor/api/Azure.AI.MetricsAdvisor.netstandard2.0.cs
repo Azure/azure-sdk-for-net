@@ -7,8 +7,8 @@ namespace Azure.AI.MetricsAdvisor
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientOptions options) { }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> CreateMetricFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> CreateMetricFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AlertResult> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AlertResult> GetAlertsAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlertsAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForAlert(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForAlertAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataAnomaly> GetAnomaliesForDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -127,9 +127,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class AlertResult
+    public partial class AnomalyAlert
     {
-        internal AlertResult() { }
+        internal AnomalyAlert() { }
         public System.DateTimeOffset CreatedTime { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset ModifiedTime { get { throw null; } }
@@ -286,11 +286,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.BoundaryDirection left, Azure.AI.MetricsAdvisor.Models.BoundaryDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ChangePointFeedbackValue
-    {
-        public ChangePointFeedbackValue(Azure.AI.MetricsAdvisor.Models.ChangePointValue changePointValue) { }
-        public Azure.AI.MetricsAdvisor.Models.ChangePointValue ChangePointValue { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChangePointValue : System.IEquatable<Azure.AI.MetricsAdvisor.Models.ChangePointValue>
     {
@@ -318,11 +313,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public bool IsWithinRange { get { throw null; } }
         public int ShiftPoint { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.SuppressCondition SuppressCondition { get { throw null; } }
-    }
-    public partial class CommentFeedbackValue
-    {
-        public CommentFeedbackValue(string commentValue) { }
-        public string CommentValue { get { throw null; } set { } }
     }
     public partial class DataAnomaly
     {
@@ -624,8 +614,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class FeedbackDimensionFilter
     {
-        public FeedbackDimensionFilter(System.Collections.Generic.IDictionary<string, string> dimension) { }
-        public System.Collections.Generic.IDictionary<string, string> Dimension { get { throw null; } }
+        public FeedbackDimensionFilter(Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionFilter) { }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionFilter { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FeedbackQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode>
@@ -762,7 +752,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public GetMetricFeedbacksOptions() { }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
@@ -992,7 +982,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class MetricPeriodFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
-        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodFeedbackValue value) { }
+        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.PeriodType periodType, int periodValue) { }
         public Azure.AI.MetricsAdvisor.Models.PeriodType PeriodType { get { throw null; } }
         public int PeriodValue { get { throw null; } }
     }
@@ -1034,12 +1024,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MySqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MySqlDataFeedSource(string connectionString, string query) { }
-    }
-    public partial class PeriodFeedbackValue
-    {
-        public PeriodFeedbackValue(Azure.AI.MetricsAdvisor.Models.PeriodType periodType, int periodValue) { }
-        public Azure.AI.MetricsAdvisor.Models.PeriodType PeriodType { get { throw null; } set { } }
-        public int PeriodValue { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeriodType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.PeriodType>
