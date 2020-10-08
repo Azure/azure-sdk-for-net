@@ -13,6 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     /// <summary>
     /// Samples that are used in the README.md file.
     /// </summary>
+    [LiveOnly]
     public class Snippets : MetricsAdvisorTestEnvironment
     {
         [RecordedTest]
