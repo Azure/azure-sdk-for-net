@@ -182,6 +182,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// Specifies whether environment is Test or Prod. Possible values
         /// include: 'Prod', 'Test'
         /// </param>
+        /// <param name='source'>
+        /// The source property filter to apply.
+        /// </param>
+        /// <param name='changedSince'>
+        /// The last changed status property filter to apply.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -197,6 +203,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<QnADocumentsDTO>> DownloadWithHttpMessagesAsync(string kbId, string environment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<QnADocumentsDTO>> DownloadWithHttpMessagesAsync(string kbId, string environment, string source = default(string), string changedSince = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

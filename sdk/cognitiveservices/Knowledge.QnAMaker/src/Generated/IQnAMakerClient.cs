@@ -34,8 +34,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints (protocol and hostname, for
-        /// example: https://westus.api.cognitive.microsoft.com).
+        /// Supported Cognitive Services endpoint (e.g., https://&lt;
+        /// qnamaker-resource-name &gt;.api.cognitiveservices.azure.com).
         /// </summary>
         string Endpoint { get; set; }
 
@@ -70,6 +70,11 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IRuntime.
+        /// </summary>
+        IRuntime Runtime { get; }
 
     }
 }

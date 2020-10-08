@@ -40,8 +40,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
+        /// Supported Cognitive Services endpoint (e.g., https://&lt;
+        /// qnamaker-resource-name &gt;.api.cognitiveservices.azure.com).
         /// </summary>
         public string Endpoint { get; set; }
 
@@ -74,6 +74,11 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IRuntime.
+        /// </summary>
+        public virtual IRuntime Runtime { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the QnAMakerClient class.
@@ -207,7 +212,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             Alterations = new Alterations(this);
             Knowledgebase = new Knowledgebase(this);
             Operations = new Operations(this);
-            BaseUri = "{Endpoint}/qnamaker/v4.0";
+            Runtime = new Runtime(this);
+            BaseUri = "{Endpoint}/qnamaker/v5.0-preview.1";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

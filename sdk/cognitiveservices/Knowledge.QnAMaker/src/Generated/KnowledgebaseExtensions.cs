@@ -166,12 +166,18 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             /// Specifies whether environment is Test or Prod. Possible values include:
             /// 'Prod', 'Test'
             /// </param>
+            /// <param name='source'>
+            /// The source property filter to apply.
+            /// </param>
+            /// <param name='changedSince'>
+            /// The last changed status property filter to apply.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QnADocumentsDTO> DownloadAsync(this IKnowledgebase operations, string kbId, string environment, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QnADocumentsDTO> DownloadAsync(this IKnowledgebase operations, string kbId, string environment, string source = default(string), string changedSince = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadWithHttpMessagesAsync(kbId, environment, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(kbId, environment, source, changedSince, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

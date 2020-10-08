@@ -37,7 +37,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// base.</param>
         /// <param name="top">Max number of answers to be returned for the
         /// question.</param>
-        /// <param name="userId">Unique identifier for the user.</param>
+        /// <param name="userId">Unique identifier for the user. Optional
+        /// parameter for telemetry. For more information, refer &lt;a
+        /// href="http://aka.ms/qnamaker-analytics#user-traffic"
+        /// target="blank"&gt;Analytics and Telemetry&lt;/a&gt;.</param>
         /// <param name="isTest">Query against the test index.</param>
         /// <param name="scoreThreshold">Threshold for answers returned based
         /// on score.</param>
@@ -90,7 +93,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public int? Top { get; set; }
 
         /// <summary>
-        /// Gets or sets unique identifier for the user.
+        /// Gets or sets unique identifier for the user. Optional parameter for
+        /// telemetry. For more information, refer &amp;lt;a
+        /// href="http://aka.ms/qnamaker-analytics#user-traffic"
+        /// target="blank"&amp;gt;Analytics and Telemetry&amp;lt;/a&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "userId")]
         public string UserId { get; set; }

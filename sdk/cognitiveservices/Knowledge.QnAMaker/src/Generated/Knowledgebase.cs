@@ -1113,6 +1113,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// Specifies whether environment is Test or Prod. Possible values include:
         /// 'Prod', 'Test'
         /// </param>
+        /// <param name='source'>
+        /// The source property filter to apply.
+        /// </param>
+        /// <param name='changedSince'>
+        /// The last changed status property filter to apply.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1134,7 +1140,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<QnADocumentsDTO>> DownloadWithHttpMessagesAsync(string kbId, string environment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<QnADocumentsDTO>> DownloadWithHttpMessagesAsync(string kbId, string environment, string source = default(string), string changedSince = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1157,6 +1163,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("kbId", kbId);
                 tracingParameters.Add("environment", environment);
+                tracingParameters.Add("source", source);
+                tracingParameters.Add("changedSince", changedSince);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Download", tracingParameters);
             }
@@ -1166,6 +1174,19 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{kbId}", System.Uri.EscapeDataString(kbId));
             _url = _url.Replace("{environment}", System.Uri.EscapeDataString(environment));
+            List<string> _queryParameters = new List<string>();
+            if (source != null)
+            {
+                _queryParameters.Add(string.Format("source={0}", System.Uri.EscapeDataString(source)));
+            }
+            if (changedSince != null)
+            {
+                _queryParameters.Add(string.Format("changedSince={0}", System.Uri.EscapeDataString(changedSince)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
