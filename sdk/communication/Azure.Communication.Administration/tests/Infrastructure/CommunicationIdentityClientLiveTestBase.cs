@@ -19,6 +19,6 @@ namespace Azure.Communication.Administration.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.ConnectionString,
-                    Recording.InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
     }
 }

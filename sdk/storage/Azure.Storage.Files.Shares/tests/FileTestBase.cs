@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingShare> GetTestShareAsync(ShareServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)
@@ -284,7 +284,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata);
+                await share.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     try
                     {
-                        await Share.DeleteAsync(true);
+                        await Share.DeleteIfExistsAsync();
                         Share = null;
                     }
                     catch
@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
             {
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
                 return new DisposingDirectory(test, directory);
             }
 

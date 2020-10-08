@@ -87,6 +87,18 @@ namespace Azure
         }
 
         /// <summary>
+        /// Creates an instance of <see cref="Pageable{T}"/> using the provided pages.
+        /// </summary>
+        /// <param name="pages">The pages of values to list as part of net new pageable instance.</param>
+        /// <returns>A new instance of <see cref="Pageable{T}"/></returns>
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        public static Pageable<T> FromPages(IEnumerable<Page<T>> pages)
+#pragma warning restore CA1000 // Do not declare static members on generic types
+        {
+            return new StaticPageable(pages);
+        }
+
+        /// <summary>
         /// Check if two <see cref="Pageable{T}"/> instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
@@ -100,5 +112,20 @@ namespace Azure
         /// <returns>Hash code for the <see cref="Pageable{T}"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        private class StaticPageable: Pageable<T>
+        {
+            private readonly IEnumerable<Page<T>> _pages;
+
+            public StaticPageable(IEnumerable<Page<T>> pages)
+            {
+                _pages = pages;
+            }
+
+            public override IEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
+            {
+                return _pages;
+            }
+        }
     }
 }

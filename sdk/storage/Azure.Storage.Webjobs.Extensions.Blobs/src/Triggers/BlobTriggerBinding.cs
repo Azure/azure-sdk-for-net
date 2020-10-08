@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Converters;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
@@ -27,9 +28,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
     internal class BlobTriggerBinding : ITriggerBinding
     {
         private readonly ParameterInfo _parameter;
-        private readonly StorageAccount _hostAccount;
-        private readonly StorageAccount _dataAccount;
-        private readonly BlobServiceClient _blobClient;
+        private readonly BlobServiceClient _hostBlobServiceClient;
+        private readonly QueueServiceClient _hostQueueServiceClient;
+        private readonly BlobServiceClient _dataBlobServiceClient;
+        private readonly QueueServiceClient _dataQueueServiceClient;
         private readonly string _accountName;
         private readonly IBlobPathSource _path;
         private readonly IHostIdProvider _hostIdProvider;
@@ -45,8 +47,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
         private readonly IHostSingletonManager _singletonManager;
 
         public BlobTriggerBinding(ParameterInfo parameter,
-            StorageAccount hostAccount,
-            StorageAccount dataAccount,
+            BlobServiceClient hostBlobServiceClient,
+            QueueServiceClient hostQueueServiceClient,
+            BlobServiceClient dataBlobServiceClient,
+            QueueServiceClient dataQueueServiceClient,
             IBlobPathSource path,
             IHostIdProvider hostIdProvider,
             QueuesOptions queueOptions,
@@ -59,11 +63,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             ILoggerFactory loggerFactory)
         {
             _parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
-            _hostAccount = hostAccount ?? throw new ArgumentNullException(nameof(hostAccount));
-            _dataAccount = dataAccount ?? throw new ArgumentNullException(nameof(dataAccount));
+            _hostBlobServiceClient = hostBlobServiceClient ?? throw new ArgumentNullException(nameof(hostBlobServiceClient));
+            _hostQueueServiceClient = hostQueueServiceClient ?? throw new ArgumentNullException(nameof(hostQueueServiceClient));
+            _dataBlobServiceClient = dataBlobServiceClient ?? throw new ArgumentNullException(nameof(dataBlobServiceClient));
+            _dataQueueServiceClient = dataQueueServiceClient ?? throw new ArgumentNullException(nameof(dataQueueServiceClient));
 
-            _blobClient = dataAccount.CreateBlobServiceClient();
-            _accountName = _blobClient.AccountName;
+            _accountName = _dataBlobServiceClient.AccountName;
             _path = path ?? throw new ArgumentNullException(nameof(path));
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -74,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             _sharedContextProvider = sharedContextProvider ?? throw new ArgumentNullException(nameof(sharedContextProvider));
             _singletonManager = singletonManager ?? throw new ArgumentNullException(nameof(singletonManager));
             _loggerFactory = loggerFactory;
-            _converter = CreateConverter(_blobClient);
+            _converter = CreateConverter(_dataBlobServiceClient);
             _bindingDataContract = CreateBindingDataContract(path);
         }
 
@@ -179,11 +184,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var container = _blobClient.GetBlobContainerClient(_path.ContainerNamePattern);
+            var container = _dataBlobServiceClient.GetBlobContainerClient(_path.ContainerNamePattern);
 
             var factory = new BlobListenerFactory(_hostIdProvider, _queueOptions, _blobsOptions, _exceptionHandler,
                 _blobWrittenWatcherSetter, _messageEnqueuedWatcherSetter, _sharedContextProvider, _loggerFactory,
-                context.Descriptor, _hostAccount, _dataAccount, container, _path, context.Executor, _singletonManager);
+                context.Descriptor, _hostBlobServiceClient, _hostQueueServiceClient, _dataBlobServiceClient, _dataQueueServiceClient,
+                container, _path, context.Executor, _singletonManager);
 
             return factory.CreateAsync(context.CancellationToken);
         }

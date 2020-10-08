@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20200928.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201006.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.5.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.5" />
+    <PackageReference Update="Azure.Core" Version="1.5.1" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.6" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
@@ -87,6 +87,10 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="nunit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Update="OpenTelemetry" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.6.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.6.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
@@ -163,6 +167,8 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
 
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
+
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
@@ -174,9 +180,9 @@
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
 	
 	 <!-- Mgmt sdk packages-->
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.1" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
   </ItemGroup>
 </Project>

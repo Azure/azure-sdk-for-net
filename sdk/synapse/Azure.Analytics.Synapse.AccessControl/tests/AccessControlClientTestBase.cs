@@ -46,13 +46,12 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        internal AccessControlClient CreateAccessControlClient(TestRecording recording = null)
+        internal AccessControlClient CreateAccessControlClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new AccessControlClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new AccessControlClientOptions())));
+                InstrumentClientOptions(new AccessControlClientOptions())));
         }
     }
 }

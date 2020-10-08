@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.Models
                     if (update.Value.Status == OperationStatus.Succeeded)
                     {
                         // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult, _modelId);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == OperationStatus.Failed)
@@ -235,29 +235,29 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult, string modelId)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?
-                ConvertUnsupervisedResult(analyzeResult) :
-                ConvertSupervisedResult(analyzeResult);
+                ConvertUnsupervisedResult(analyzeResult, modelId) :
+                ConvertSupervisedResult(analyzeResult, modelId);
         }
 
-        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult, string modelId)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
             {
-                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex));
+                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex, modelId));
             }
             return new RecognizedFormCollection(forms);
         }
 
-        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult, string modelId)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var documentResult in analyzeResult.DocumentResults)
             {
-                forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
+                forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults, modelId));
             }
             return new RecognizedFormCollection(forms);
         }

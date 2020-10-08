@@ -6,51 +6,50 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Xunit;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class BinderTests
     {
         private const string QueueName = "input-bindertests";
-        private readonly StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
-        public BinderTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange
             const string expectedContents = "abc";
-            QueueClient queue = CreateQueue(account, QueueName);
+            QueueClient queue = CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedContents);
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerViaIBinderProgram),
+            Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerViaIBinderProgram),
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
+            Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
         }
 
-        private static QueueClient CreateQueue(StorageAccount account, string queueName)
+        private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             queue.CreateIfNotExists();
             return queue;
         }
 
-        private static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
         }
 
         private class BindToQueueTriggerViaIBinderProgram

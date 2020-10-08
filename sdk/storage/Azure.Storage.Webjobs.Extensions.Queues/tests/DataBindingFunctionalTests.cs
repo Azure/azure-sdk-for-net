@@ -7,32 +7,34 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Xunit;
+using NUnit.Framework;
+using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
-    [Collection(AzuriteCollection.Name)]
     public class DataBindingFunctionalTests
     {
         private const string QueueName = "queue-databindingfunctionaltests";
-        private readonly StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
-        public DataBindingFunctionalTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task BindStringableParameter_CanInvoke()
         {
             // Arrange
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseStorage(account);
+                    b.AddAzureStorageQueues();
+                    b.UseQueueService(queueServiceClient);
                 });
 
 
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
                 await host.CallAsync(method, new { message = message });
 
                 // Assert
-                Assert.Equal(expectedGuidValue, TestFunctions.Result);
+                Assert.AreEqual(expectedGuidValue, TestFunctions.Result);
             }
             finally
             {

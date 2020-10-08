@@ -30,11 +30,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string ActiveValue = "Active";
         private const string ResolvedValue = "Resolved";
-
-        /// <summary> Active. </summary>
-        public static IncidentStatus Active { get; } = new IncidentStatus(ActiveValue);
-        /// <summary> Resolved. </summary>
-        public static IncidentStatus Resolved { get; } = new IncidentStatus(ResolvedValue);
         /// <summary> Determines if two <see cref="IncidentStatus"/> values are the same. </summary>
         public static bool operator ==(IncidentStatus left, IncidentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IncidentStatus"/> values are not the same. </summary>

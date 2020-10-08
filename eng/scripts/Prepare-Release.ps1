@@ -1,3 +1,5 @@
+#Requires -Version 6.0
+
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
@@ -56,10 +58,10 @@ function Get-LevenshteinDistance {
 
     for ($i = 1; $i -le $d.GetUpperBound(0); $i++) {
         for ($j = 1; $j -le $d.GetUpperBound(1); $j++) {
-            $cost = [Convert]::ToInt32((-not($String1[$i–1] -ceq $String2[$j–1])))
-            $min1 = $d[($i–1),$j] + 1
-            $min2 = $d[$i,($j–1)] + 1
-            $min3 = $d[($i–1),($j–1)] + $cost
+            $cost = [Convert]::ToInt32((-not($String1[$i-1] -ceq $String2[$j-1])))
+            $min1 = $d[($i-1),$j] + 1
+            $min2 = $d[$i,($j-1)] + 1
+            $min3 = $d[($i-1),($j-1)] + $cost
             $d[$i,$j] = [Math]::Min([Math]::Min($min1,$min2),$min3)
         }
     }
@@ -67,7 +69,7 @@ function Get-LevenshteinDistance {
     $distance = ($d[$d.GetUpperBound(0),$d.GetUpperBound(1)])
 
     if ($NormalizeOutput) {
-        return (1 – ($distance) / ([Math]::Max($String1.Length,$String2.Length)))
+        return (1 - ($distance) / ([Math]::Max($String1.Length,$String2.Length)))
     }
 
     else {
@@ -168,6 +170,7 @@ foreach ($existingVersion in $existing.versions)
 }
 
 $currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
+$currentProjectVersion = "$currentProjectVersion".Trim()
 
 if ($latestVersion)
 {
@@ -225,7 +228,7 @@ if ($releasing)
     Write-Host "Detected released type $releaseType" -ForegroundColor Green
 
     Write-Host
-    Write-Host "Updating versions" -ForegroundColor Green
+    Write-Host "Updating versions to $newVersion with date $releaseDateString" -ForegroundColor Green
 
     & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
 
