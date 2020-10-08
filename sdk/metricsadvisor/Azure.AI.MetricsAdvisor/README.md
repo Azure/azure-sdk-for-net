@@ -7,7 +7,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 - Configure and fine-tune the anomaly detection model used on your data.
 - Diagnose anomalies and help with root cause analysis.
 
-[Source code][metricsadv_client_src] | Package (NuGet) | [API reference documentation][metricsadv_refdocs] | Product documentation | [Samples][metricsadv_samples]
+[Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | [API reference documentation][metricsadv_refdocs] | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
 
 ## Getting started
 
@@ -441,8 +441,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
-<!--[metricsadv_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor
-[metricsadv_nuget_package]: https://www.nuget.org/packages/Azure.AI.MetricsAdvisor-->
+[metricsadv_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor
+[metricsadv_nuget_package]: https://www.nuget.org/packages?q=Azure.AI.MetricsAdvisor
 [metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
 [metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
