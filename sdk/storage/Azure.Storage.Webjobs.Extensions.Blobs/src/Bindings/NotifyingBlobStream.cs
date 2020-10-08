@@ -34,5 +34,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 await _committedAction.ExecuteAsync(cancellationToken).ConfigureAwait(false);
             }
         }
+
+        public override void Close()
+        {
+            base.Close();
+            if (_committedAction != null)
+            {
+                _committedAction.Execute();
+            }
+        }
     }
 }

@@ -1300,6 +1300,58 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             committedActionMock.Verify();
         }
 
+        [Test]
+        public void Dispose_IfCommittedActionIsNotNull_CallsCommittedAction()
+        {
+            // Arrange
+            Mock<IBlobCommitedAction> committedActionMock = new Mock<IBlobCommitedAction>(MockBehavior.Strict);
+            committedActionMock
+                .Setup(a => a.Execute())
+                .Verifiable();
+            IBlobCommitedAction committedAction = committedActionMock.Object;
+
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
+            innerStreamMock.Setup(x => x.FlushAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+            innerStreamMock.Setup(x => x.Close()).Verifiable();
+            Stream innerStream = innerStreamMock.Object;
+
+            // Act
+            using (Stream product = CreateProductUnderTest(innerStream, committedAction))
+            {
+
+            }
+
+            // Assert
+            committedActionMock.Verify();
+        }
+
+        [Test]
+        public void Close_IfCommittedActionIsNotNull_CallsCommittedAction()
+        {
+            // Arrange
+            Mock<IBlobCommitedAction> committedActionMock = new Mock<IBlobCommitedAction>(MockBehavior.Strict);
+            committedActionMock
+                .Setup(a => a.Execute())
+                .Verifiable();
+            IBlobCommitedAction committedAction = committedActionMock.Object;
+
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
+            innerStreamMock.Setup(x => x.FlushAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+            innerStreamMock.Setup(x => x.Close()).Verifiable();
+            Stream innerStream = innerStreamMock.Object;
+
+            Stream product = CreateProductUnderTest(innerStream, committedAction);
+            // Act
+            product.Close();
+
+            // Assert
+            committedActionMock.Verify();
+        }
+
         private static void AssertEqual(ExpectedAsyncResult expected, IAsyncResult actual,
             bool disposeActual = false)
         {
