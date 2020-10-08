@@ -7,8 +7,7 @@ using System.Globalization;
 namespace Microsoft.Azure.WebJobs.Host.Protocols
 {
     /// <summary>Represents a parameter triggered on a queue in Azure Storage.</summary>
-    [JsonTypeName("QueueTrigger")]
-    public class QueueTriggerParameterDescriptor : TriggerParameterDescriptor
+    internal class QueueTriggerParameterDescriptor : TriggerParameterDescriptor
     {
         /// <summary>Gets or sets the name of the storage account.</summary>
         public string AccountName { get; set; }
