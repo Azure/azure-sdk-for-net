@@ -6,7 +6,6 @@ using System;
 namespace Microsoft.Azure.WebJobs.Host.Protocols
 {
     /// <summary>Represents a function parameter log for a read-only blob parameter.</summary>
-    [JsonTypeName("ReadBlob")]
     internal class ReadBlobParameterLog : ParameterLog
     {
         /// <summary>Gets or sets the number of bytes read.</summary>
