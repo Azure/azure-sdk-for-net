@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -23,10 +25,6 @@ namespace Microsoft.Extensions.Azure
         internal AzureClientFactoryBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection;
-            _serviceCollection.AddOptions();
-            _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
-            _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
-            _serviceCollection.TryAddSingleton<AzureComponentFactory, AzureComponentFactoryImpl>();
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
