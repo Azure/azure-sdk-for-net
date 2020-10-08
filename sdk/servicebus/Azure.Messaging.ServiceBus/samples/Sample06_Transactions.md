@@ -68,7 +68,7 @@ var state = Encoding.UTF8.GetBytes("some state");
 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
     await receiver.CompleteMessageAsync(receivedMessage);
-    await receiver.SetSessionStateAsync(state);
+    await receiver.SetSessionStateAsync(new BinaryData(state));
     ts.Complete();
 }
 ```

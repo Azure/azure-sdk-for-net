@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -81,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                     // we can also set arbitrary session state using this receiver
                     // the state is specific to the session, and not any particular message
-                    await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+                    await args.SetSessionStateAsync(new BinaryData("some state"));
 
                     // Once we've received the last message, complete the
                     // task completion source.

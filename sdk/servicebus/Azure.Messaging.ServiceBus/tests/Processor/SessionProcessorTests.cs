@@ -229,7 +229,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.SetSessionStateAsync(new byte[] { });
+            await args.SetSessionStateAsync(default);
             Assert.IsFalse(msg.IsSettled);
         }
 
