@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var emailHook = new EmailHook(hookName, emailsToAlert);
 
-            Response<AlertingHook> response = await adminClient.CreateHookAsync(emailHook);
+            Response<AlertingHook> response = adminClient.CreateHook(emailHook);
 
             AlertingHook hook = response.Value;
 

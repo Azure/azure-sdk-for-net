@@ -7,9 +7,9 @@ Brief description.
 
 [Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | [API reference documentation][metricsadv_refdocs] | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
 
-## Getting started (TODO)
+## Getting started
 
-### Install the package (TODO)
+### Install the package
 
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
@@ -17,14 +17,18 @@ Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.1
 ```
 
-### Prerequisites (TODO)
+### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* An existing Cognitive Services or Metrics Advisor resource. TODO: double check.
+* An existing Metrics Advisor resource.
 
-#### Create a Cognitive Services or Metrics Advisor resource (TODO)
+#### Create a Metrics Advisor resource
 
-Explanation. TODO: double check header title.
+You can create a Metrics Advisor resource using:
+
+**Option 1**: [Azure Portal][cognitive_resource_portal].
+
+**Option 2**: [Azure CLI][cognitive_resource_cli].
 
 Below is an example of how you can create a Metrics Advisor resource using the CLI:
 
@@ -36,28 +40,45 @@ az group create --name <your-resource-name> --location <location>
 
 ```PowerShell
 # Create the Metrics Advisor resource.
-TODO
+az cognitiveservices account create \
+    --name <your-resource-name> \
+    --resource-group <your-resource-group-name> \
+    --kind MetricsAdvisor \
+    --sku <sku> \
+    --location <location>
+    --yes
 ```
 
-More info.
+For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
-### Authenticate the client (TODO)
+### Authenticate the client
 
-Introduction.
+In order to interact with the Metrics Advisor service, you'll need to create an instance of the [`MetricsAdvisorClient`][metrics_advisor_client_class] or the [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] classes. You will need an **endpoint**, a **subscription key** and an **API key** to instantiate a client object.
 
-#### Get Subscription Key (TODO)
+#### Get the Endpoint and the Subscription Key
 
-Stuff. Double check.
+You can obtain the endpoint and the subscription key from the resource information in the [Azure Portal][azure_portal].
 
-#### Get API Key (TODO)
+Alternately, you can use the [Azure CLI][azure_cli] snippet below to get the subscription key from the Metrics Advisor resource.
+
+```Powershell
+az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
+```
+
+#### Get the API Key (TODO)
 
 Stuff.
 
-#### Create a MetricsAdvisorClient with a MetricsAdvisorKeyCredential (TODO)
+#### Create a MetricsAdvisorClient or a MetricsAdvisorAdministrationClient
 
-Once you have the Subscription and API keys, create a `MetricsAdvisorKeyCredential`. With the endpoint and key credential, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
+Once you have the subscription and API keys, create a `MetricsAdvisorKeyCredential`. With the endpoint and the key credential, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
 
 ```C# Snippet:CreateMetricsAdvisorClient
+```
+
+You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_administration_client_class] to perform administration operations:
+
+```C# Snippet:CreateMetricsAdvisorAdministrationClient
 ```
 
 ## Key concepts (TODO)
@@ -66,17 +87,18 @@ Once you have the Subscription and API keys, create a `MetricsAdvisorKeyCredenti
 
 ### MetricsAdvisorAdministrationClient (TODO)
 
-## Examples (TODO)
+### Others (TODO)
 
-The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. Most of the snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
+## Examples
 
-### Async examples (TODO)
+The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. The snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
 
-List.
-
-### Sync examples (TODO)
-
-List.
+* [Create a data feed from a data source](#create-a-data-feed-from-a-data-source)
+* [Check the ingestion status of a data feed](#check-the-ingestion-status-of-a-data-feed)
+* [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration)
+* [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts)
+* [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration)
+* [Query detected anomalies and triggered alerts](#query-detected-anomalies-and-triggered-alerts)
 
 ### Create a data feed from a data source (TODO)
 
@@ -110,7 +132,7 @@ Info.
 ```C# Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
 ```
 
-## Troubleshooting (TODO)
+## Troubleshooting
 
 ### General
 
@@ -176,10 +198,15 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metricsadv_rest_api]: TODO
 [metricsadv_samples]: TODO
 
+[metrics_advisor_admin_client_class]: TODO
 [metrics_advisor_client_class]: TODO
+
+[cognitive_resource_cli]: TODO
+[cognitive_resource_portal]: TODO
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
 
+[azure_portal]: TODO
 [azure_sub]: https://azure.microsoft.com/free/
 [nuget]: https://www.nuget.org/
 

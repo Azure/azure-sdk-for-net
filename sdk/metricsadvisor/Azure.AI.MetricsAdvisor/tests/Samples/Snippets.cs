@@ -32,6 +32,22 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [RecordedTest]
+        public void CreateMetricsAdvisorAdministrationClient()
+        {
+            string endpoint = MetricsAdvisorUri;
+            string subscriptionKey = MetricsAdvisorSubscriptionKey;
+            string apiKey = MetricsAdvisorApiKey;
+
+            #region Snippet:CreateMetricsAdvisorAdministrationClient
+            //@@ string endpoint = "<endpoint>";
+            //@@ string subscriptionKey = "<subscriptionKey>";
+            //@@ string apiKey = "<apiKey>";
+            var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
+            var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
         public async Task MetricsAdvisorNotFound()
         {
             string endpoint = MetricsAdvisorUri;
