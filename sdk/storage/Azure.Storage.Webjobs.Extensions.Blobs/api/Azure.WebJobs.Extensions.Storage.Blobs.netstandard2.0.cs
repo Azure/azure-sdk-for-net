@@ -10,7 +10,6 @@ namespace Microsoft.Azure.WebJobs
         public BlobAttribute(string blobPath, System.IO.FileAccess access) { }
         public System.IO.FileAccess? Access { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
-        [Microsoft.Azure.WebJobs.Description.BlobNameValidationAttribute]
         public string BlobPath { get { throw null; } }
         public string Connection { get { throw null; } set { } }
     }
@@ -23,16 +22,6 @@ namespace Microsoft.Azure.WebJobs
         public BlobTriggerAttribute(string blobPath) { }
         public string BlobPath { get { throw null; } }
         public string Connection { get { throw null; } set { } }
-    }
-}
-namespace Microsoft.Azure.WebJobs.Description
-{
-    public partial class BlobNameValidationAttribute : System.ComponentModel.DataAnnotations.ValidationAttribute
-    {
-        public BlobNameValidationAttribute() { }
-        protected override System.ComponentModel.DataAnnotations.ValidationResult IsValid(object value, System.ComponentModel.DataAnnotations.ValidationContext validationContext) { throw null; }
-        public static bool IsValidBlobName(string blobName, out string errorMessage) { throw null; }
-        public static bool IsValidContainerName(string containerName) { throw null; }
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.Storage
