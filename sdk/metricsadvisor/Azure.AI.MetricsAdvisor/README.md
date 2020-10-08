@@ -1,9 +1,11 @@
-# Azure Metrics Advisor client library for .NET (TODO)
+# Azure Metrics Advisor client library for .NET
 
-Brief description.
+Azure Cognitive Services Metrics Advisor is a cloud service that uses machine learning to monitor and detect anomalies in time series data. It includes the following capabilities:
 
-- Func 1.
-- Func 2.
+- Analyze multi-dimensional data from multiple data sources.
+- Identify and correlate anomalies.
+- Configure and fine-tune the anomaly detection model used on your data.
+- Diagnose anomalies and help with root cause analysis.
 
 [Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | [API reference documentation][metricsadv_refdocs] | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
 
@@ -81,13 +83,31 @@ You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_adm
 ```C# Snippet:CreateMetricsAdvisorAdministrationClient
 ```
 
-## Key concepts (TODO)
+## Key concepts
 
-### MetricsAdvisorClient (TODO)
+### MetricsAdvisorClient
 
-### MetricsAdvisorAdministrationClient (TODO)
+`MetricsAdvisorClient` is the primary querying interface for developers using the Metrics Advisor client library. It provides synchronous and asynchronous methods to access a specific use of Metrics Advisor, such as listing incidents, retrieving root causes of incidents, and retrieving time series data.
 
-### Others (TODO)
+### MetricsAdvisorAdministrationClient
+
+`MetricsAdvisorAdministrationClient` is the interface responsible for managing entities in the Metrics Advisor resource. It provides synchronous and asynchronous methods for tasks such as creating and updating data feeds, anomaly detection configurations, and anomaly alerting configurations.
+
+### Data Feed (TODO)
+
+### Metric (TODO)
+
+### Dimension (TODO)
+
+### Time series (TODO)
+
+### Anomaly (TODO)
+
+### Incident (TODO)
+
+### Alert (TODO)
+
+### Hook (TODO)
 
 ## Examples
 
@@ -170,15 +190,22 @@ The simplest way to see the logs is to enable console logging.
 To create an Azure SDK log listener that outputs messages to the console use the `AzureEventSourceListener.CreateConsoleLogger` method.
 
 ```C#
-// Setup a listener to monitor logged events.
+// Set up a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
-## Next steps (TODO)
+## Next steps
 
-Forthcoming
+Samples showing how to use the Cognitive Services Metrics Advisor library are available in this GitHub repository. Samples are provided for each main functional area:
+
+- [Create a data feed from a data source][metricsadv_sample1]
+- [Check the ingestion status of a data feed][metricsadv_sample2]
+- [Create an anomaly detection configuration][metricsadv_sample3]
+- [Create a hook for receiving anomaly alerts][metricsadv_sample4]
+- [Create an anomaly alert configuration][metricsadv_sample5]
+- [Query detected anomalies and triggered alerts][metricsadv_sample6]
 
 ## Contributing
 
@@ -191,26 +218,34 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmetricsadvisor%2FAzure.AI.MetricsAdvisor%2FREADME.png)
 
 <!-- LINKS -->
-[metricsadv_client_src]: TODO
-[metricsadv_docs]: TODO
-[metricsadv_nuget_package]: TODO
-[metricsadv_refdocs]: TODO
-[metricsadv_rest_api]: TODO
-[metricsadv_samples]: TODO
+[metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
+[metricsadv_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor
+[metricsadv_nuget_package]: https://www.nuget.org/packages/Azure.AI.MetricsAdvisor
+[metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
+[metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
+[metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
 
-[metrics_advisor_admin_client_class]: TODO
-[metrics_advisor_client_class]: TODO
+[metrics_advisor_admin_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs
+[metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
 
-[cognitive_resource_cli]: TODO
-[cognitive_resource_portal]: TODO
+[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs
+[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs
+[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs
+[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs
+[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs
+[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.FormRecognizer/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs
+
+[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[azure_portal]: TODO
-[azure_sub]: https://azure.microsoft.com/free/
-[nuget]: https://www.nuget.org/
+[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_portal]: https://portal.azure.com
+[azure_sub]: https://azure.microsoft.com/free
+[nuget]: https://www.nuget.org
 
 [cla]: https://cla.microsoft.com
 [coc_contact]: mailto:opencode@microsoft.com
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct
