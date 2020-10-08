@@ -6,8 +6,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    // TODODOCS: hard to explain.
     /// <summary>
+    /// A <see cref="MetricDimension"/>  is one or more categorical values. The combination of those values identify a particular univariate time series.
+    /// For example: country, language, tenant, and so on.
     /// </summary>
     [CodeGenModel("Dimension")]
     public partial class MetricDimension
