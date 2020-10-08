@@ -328,12 +328,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal DataAnomaly() { }
         public string AnomalyDetectionConfigurationId { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalyStatus? AnomalyStatus { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public string MetricId { get { throw null; } }
         public System.DateTimeOffset? ModifiedTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalyStatus? Status { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class DataFeed
@@ -596,6 +596,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         public DimensionKey() { }
         public void AddDimensionColumn(string dimensionColumnName, string dimensionColumnValue) { }
+        public System.Collections.Generic.Dictionary<string, string> AsDictionary() { throw null; }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DimensionKey other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

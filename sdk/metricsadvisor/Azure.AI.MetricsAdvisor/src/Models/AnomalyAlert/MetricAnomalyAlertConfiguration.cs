@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Defines which anomalies detected by a <see cref="AnomalyDetectionConfiguration"/> are eligible for
+    /// Defines which anomalies detected by an <see cref="AnomalyDetectionConfiguration"/> are eligible for
     /// triggering an alert.
     /// </summary>
     [CodeGenModel("MetricAlertingConfiguration")]
