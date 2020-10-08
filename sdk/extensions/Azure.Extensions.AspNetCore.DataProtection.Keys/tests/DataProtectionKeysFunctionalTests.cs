@@ -22,18 +22,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         [Test]
         public async Task ProtectsKeysWithKeyVaultKey()
         {
-            var credential = new ClientSecretCredential(
-                TestEnvironment.TenantId,
-                TestEnvironment.ClientId,
-                TestEnvironment.ClientSecret);
-            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), credential);
+            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), TestEnvironment.Credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey", KeyType.Rsa);
 
             var serviceCollection = new ServiceCollection();
 
             var testKeyRepository = new TestKeyRepository();
 
-            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, credential);
+            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, TestEnvironment.Credential);
 
             serviceCollection.Configure<KeyManagementOptions>(options =>
             {
@@ -62,11 +58,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         [Test]
         public async Task CanUprotectExistingKeys()
         {
-            var credential = new ClientSecretCredential(
-                TestEnvironment.TenantId,
-                TestEnvironment.ClientId,
-                TestEnvironment.ClientSecret);
-            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), credential);
+            var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), TestEnvironment.Credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey2", KeyType.Rsa);
 
             var serviceCollection = new ServiceCollection();
@@ -87,7 +79,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var servicesOld = serviceCollection.BuildServiceProvider();
 
             var serviceCollectionNew = new ServiceCollection();
-            serviceCollectionNew.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, credential);
+            serviceCollectionNew.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, TestEnvironment.Credential);
             serviceCollectionNew.Configure<KeyManagementOptions>(options =>
             {
                 options.XmlRepository = testKeyRepository;
