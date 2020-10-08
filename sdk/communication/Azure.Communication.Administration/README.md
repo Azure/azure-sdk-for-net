@@ -194,15 +194,19 @@ foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
 
 ```C#
 var searchOptions = new CreateSearchOptions(displayName, description, plans, areaCode) { Quantity = 1 };
-var createSearchResponse = client.CreateSearch(searchOptions);
+var searchOperation = await client.StartSearchAsync(searchOptions).ConfigureAwait(false);
+var searchResponse = await searchOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-Console.WriteLine($"Search result: SearchId: {createSearchResponse.Value.SearchId}");
+Console.WriteLine($"Search result: SearchId: {searchResponse.Value.SearchId}");
 ```
 
 ### Purchase search
 
 ```C#
-client.PurchaseSearch(searchId);
+var searchPurchaseOperation = await client.StartPurchaseSearchAsync(searchId).ConfigureAwait(false);
+await searchPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+Console.WriteLine($"Purchase status: {searchPurchaseOperation.Value.Status}, AreaCode: {searchPurchaseOperation.Value.AreaCode}, DisplayName: {searchPurchaseOperation.Value.DisplayName}");
 ```
 
 ### Configure phone number
@@ -211,6 +215,15 @@ client.PurchaseSearch(searchId);
 var pstnConfiguration = new PstnConfiguration("<url>");
 var phoneNumber = new PhoneNumber("<phone_number>");
 client.ConfigureNumber(pstnConfiguration, phoneNumber);
+```
+
+### Release phone numbers
+
+```C#
+var releasePhoneNumberOperation = await client.StartReleasePhoneNumbersAsync(numbers).ConfigureAwait(false);
+await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
 ```
 
 ## Next steps
