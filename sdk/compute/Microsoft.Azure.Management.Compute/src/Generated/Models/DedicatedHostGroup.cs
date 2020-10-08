@@ -130,10 +130,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public override void Validate()
         {
             base.Validate();
-            if (PlatformFaultDomainCount > 3)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "PlatformFaultDomainCount", 3);
-            }
             if (PlatformFaultDomainCount < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomainCount", 1);
