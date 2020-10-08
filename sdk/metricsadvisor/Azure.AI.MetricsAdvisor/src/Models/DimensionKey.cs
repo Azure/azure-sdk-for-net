@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -53,6 +54,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public void RemoveDimensionColumn(string dimensionColumnName) =>
             Dimension.Remove(dimensionColumnName);
+
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, string> AsDictionary() =>
+            Dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         /// <inheritdoc />
         public bool Equals(DimensionKey other)
