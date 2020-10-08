@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public readonly partial struct DataFeedAccessMode
     {
         /// <summary>
-        /// Indicates that the view data feed is private.
+        /// Indicates that the data feed is private.
         /// </summary>
         public static DataFeedAccessMode Private { get; } = new DataFeedAccessMode(PrivateValue);
 

@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public TimeSpan? IngestionStartOffset { get; set; }
 
         /// <summary>
-        /// Specifies the maximum amount of time in which to attempt a retry if ingestions fails.
+        /// Specifies the maximum amount of time in which to attempt a retry if ingestion fails.
         /// </summary>
         public TimeSpan? StopRetryAfter { get; set; }
     }

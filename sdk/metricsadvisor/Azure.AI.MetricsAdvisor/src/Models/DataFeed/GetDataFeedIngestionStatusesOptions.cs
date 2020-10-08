@@ -7,8 +7,8 @@ using Azure.AI.MetricsAdvisor.Administration;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionProgress"/> or
-    /// <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionProgressAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatuses"/> or
+    /// <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatusesAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetDataFeedIngestionStatusesOptions
     {
