@@ -441,9 +441,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
-[metricsadv_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor
+[metricsadv_docs]: https://docs.microsoft.com/azure/cognitive-services/metrics-advisor
 [metricsadv_nuget_package]: https://www.nuget.org/packages?q=Azure.AI.MetricsAdvisor
-<!--[metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor-->
+[metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
 [metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
 [metricsadv_web_portal]: https://metricsadvisor.azurewebsites.net
