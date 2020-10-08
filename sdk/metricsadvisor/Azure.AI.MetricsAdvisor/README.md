@@ -155,11 +155,11 @@ The following section provides several code snippets illustrating common pattern
 Metrics Advisor supports multiple types of data sources. In this sample we'll illustrate how to create a [`DataFeed`](#data-feed) that extracts data from a SQL server.
 
 ```C# Snippet:CreateDataFeedFromDataSource
-string mySqlConnectionString = "<connectionString>";
-string mySqlQuery = "<query>";
+string sqlServerConnectionString = "<connectionString>";
+string sqlServerQuery = "<query>";
 
 var dataFeedName = "Sample data feed";
-var dataFeedSource = new MySqlDataFeedSource(mySqlConnectionString, mySqlQuery);
+var dataFeedSource = new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery);
 var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
 var dataFeedMetrics = new List<DataFeedMetric>()
@@ -225,12 +225,20 @@ var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime);
 Console.WriteLine("Ingestion statuses:");
 Console.WriteLine();
 
+int statusCount = 0;
+
 await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFeedIngestionStatusesAsync(dataFeedId, options))
 {
     Console.WriteLine($"Timestamp: {ingestionStatus.Timestamp}");
     Console.WriteLine($"Status: {ingestionStatus.Status.Value}");
     Console.WriteLine($"Service message: {ingestionStatus.Message}");
     Console.WriteLine();
+
+    // Print at most 10 statuses.
+    if (++statusCount >= 10)
+    {
+        break;
+    }
 }
 ```
 
@@ -348,8 +356,8 @@ await foreach (AlertResult alert in client.GetAlertsAsync(anomalyAlertConfigurat
         Console.WriteLine();
     }
 
-    // Print at most 10 alerts.
-    if (++alertCount >= 10)
+    // Print at most 3 alerts.
+    if (++alertCount >= 3)
     {
         break;
     }
