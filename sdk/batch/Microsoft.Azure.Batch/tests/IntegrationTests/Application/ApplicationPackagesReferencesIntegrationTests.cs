@@ -31,7 +31,7 @@
         {
             var poolId = "app-ref-test-1-" + Guid.NewGuid();
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
                 CloudPool newPool = null;
@@ -60,7 +60,7 @@
                 {
                     TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -72,7 +72,7 @@
         {
             var poolId = "app-ref-test-2-" + Guid.NewGuid();
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
                 try
@@ -98,7 +98,7 @@
                 {
                     TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -157,23 +157,23 @@
             using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
             CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jobId, schedule, jobSpecification);
 
-            Func<Task> test = async () =>
+            async Task test()
+            {
+                CloudJobSchedule updatedBoundJobSchedule = null;
+
+                try
                 {
-                    CloudJobSchedule updatedBoundJobSchedule = null;
+                    await cloudJobSchedule.CommitAsync().ConfigureAwait(false);
 
-                    try
+                    CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jobId);
+
+                    ApplicationPackageReference apr = boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
+
+                    Assert.Equal(ApplicationId, apr.ApplicationId);
+                    Assert.Equal(Version, apr.Version);
+
+                    boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences = new[]
                     {
-                        await cloudJobSchedule.CommitAsync().ConfigureAwait(false);
-
-                        CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jobId);
-
-                        ApplicationPackageReference apr = boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
-
-                        Assert.Equal(ApplicationId, apr.ApplicationId);
-                        Assert.Equal(Version, apr.Version);
-
-                        boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences = new[]
-                        {
                                 new ApplicationPackageReference()
                                 {
                                     ApplicationId = ApplicationId,
@@ -181,23 +181,23 @@
                                 }
                         };
 
-                        await boundJobSchedule.CommitAsync().ConfigureAwait(false);
-                        await boundJobSchedule.RefreshAsync().ConfigureAwait(false);
+                    await boundJobSchedule.CommitAsync().ConfigureAwait(false);
+                    await boundJobSchedule.RefreshAsync().ConfigureAwait(false);
 
-                        updatedBoundJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId).ConfigureAwait(false);
+                    updatedBoundJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId).ConfigureAwait(false);
 
-                        ApplicationPackageReference updatedApr =
-                            updatedBoundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences
-                                                   .First();
+                    ApplicationPackageReference updatedApr =
+                        updatedBoundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences
+                                               .First();
 
-                        Assert.Equal(ApplicationId, updatedApr.ApplicationId);
-                        Assert.Equal(newVersion, updatedApr.Version);
-                    }
-                    finally
-                    {
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(client, jobId).Wait();
-                    }
-                };
+                    Assert.Equal(ApplicationId, updatedApr.ApplicationId);
+                    Assert.Equal(newVersion, updatedApr.Version);
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(client, jobId).Wait();
+                }
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -230,7 +230,7 @@
                 }
             };
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 try
@@ -250,7 +250,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }

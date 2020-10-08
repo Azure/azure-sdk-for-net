@@ -33,7 +33,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public async Task TestCertificateVerbs()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Generate the certificates
@@ -100,7 +100,7 @@
                         TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -110,7 +110,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public async Task TestPoolCertificateReferencesWithUpdate()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Generate the certificates
@@ -154,7 +154,7 @@
                         TestUtilities.DeleteCertMonitor(batchCli.CertificateOperations, testOutputHelper, certificate.ThumbprintAlgorithm, certificate.Thumbprint);
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -253,10 +253,11 @@
 
                 // mutate the cert refs: assign only one
                 {
-                    List<CertificateReference> listOfOne = new List<CertificateReference>();
-
-                    // just pick one cert
-                    listOfOne.Add(certificateReferences.ToArray()[1]);
+                    List<CertificateReference> listOfOne = new List<CertificateReference>
+                    {
+                        // just pick one cert
+                        certificateReferences.ToArray()[1]
+                    };
 
                     boundPool.CertificateReferences = listOfOne;
 
@@ -279,7 +280,6 @@
             }
             finally
             {
-                // cleanup
                 TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
             }
         }

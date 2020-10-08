@@ -36,11 +36,11 @@
             var protoJob = new Protocol.Models.CloudJob(
                 id: jobId);
 
-            Action<CloudJob> modificationFunction = job => job.PoolInformation = null;
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
+            void modificationFunction(CloudJob job) => job.PoolInformation = null;
+            void assertAction(Protocol.Models.JobPatchParameter patchParameters)
             {
                 Assert.False(true, "Should have failed PATCH validation before issuing the request");
-            };
+            }
 
             //This should throw because we set a property to null which is not supported by PATCH
             Assert.Throws<InvalidOperationException>(() => CommonPatchJobTest(protoJob, modificationFunction, assertAction));
@@ -54,12 +54,12 @@
             const string newPoolId = "Bar";
             var protoJob = new Protocol.Models.CloudJob(id: jobId);
 
-            Action<CloudJob> modificationFunction = job =>
+            static void modificationFunction(CloudJob job)
             {
                 job.PoolInformation = new PoolInformation() { PoolId = newPoolId };
-            };
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
+            static void assertAction(Protocol.Models.JobPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Priority);
                 Assert.Null(patchParameters.Constraints);
@@ -68,7 +68,7 @@
 
                 Assert.NotNull(patchParameters.PoolInfo);
                 Assert.Equal(newPoolId, patchParameters.PoolInfo.PoolId);
-            };
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -83,13 +83,13 @@
             var newOnAllTasksCompleted = Protocol.Models.OnAllTasksComplete.TerminateJob;
 
 
-            Action<CloudJob> modificationFunction = job =>
+            void modificationFunction(CloudJob job)
             {
                 job.Priority = newPriority;
                 job.OnAllTasksComplete = (Microsoft.Azure.Batch.Common.OnAllTasksComplete?)newOnAllTasksCompleted;
-            };
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
+            void assertAction(Protocol.Models.JobPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Constraints);
                 Assert.Null(patchParameters.Metadata);
@@ -100,7 +100,7 @@
 
                 Assert.NotNull(patchParameters.OnAllTasksComplete);
                 Assert.Equal(newOnAllTasksCompleted, patchParameters.OnAllTasksComplete);
-            };
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -118,21 +118,21 @@
                         new Protocol.Models.MetadataItem("Foo", "Bar")
                     });
 
-            Action<CloudJob> modificationFunction = job =>
-                {
-                    job.Metadata.Add(new MetadataItem("Baz", "Qux"));
-                };
+            static void modificationFunction(CloudJob job)
+            {
+                job.Metadata.Add(new MetadataItem("Baz", "Qux"));
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.Priority);
-                    Assert.Null(patchParameters.Constraints);
-                    Assert.Null(patchParameters.PoolInfo);
-                    Assert.Null(patchParameters.OnAllTasksComplete);
+            static void assertAction(Protocol.Models.JobPatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.Priority);
+                Assert.Null(patchParameters.Constraints);
+                Assert.Null(patchParameters.PoolInfo);
+                Assert.Null(patchParameters.OnAllTasksComplete);
 
-                    Assert.NotNull(patchParameters.Metadata);
-                    Assert.Equal(2, patchParameters.Metadata.Count);
-                };
+                Assert.NotNull(patchParameters.Metadata);
+                Assert.Equal(2, patchParameters.Metadata.Count);
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -148,22 +148,22 @@
                 id: jobId,
                 constraints: new Protocol.Models.JobConstraints(maxWallClockTime: TimeSpan.FromSeconds(10)));
 
-            Action<CloudJob> modificationFunction = job =>
-                {
-                    job.Constraints.MaxWallClockTime = newMaxWallClock;
-                };
+            void modificationFunction(CloudJob job)
+            {
+                job.Constraints.MaxWallClockTime = newMaxWallClock;
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.Priority);
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.PoolInfo);
-                    Assert.Null(patchParameters.OnAllTasksComplete);
+            void assertAction(Protocol.Models.JobPatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.Priority);
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.PoolInfo);
+                Assert.Null(patchParameters.OnAllTasksComplete);
 
-                    Assert.NotNull(patchParameters.Constraints);
-                    Assert.Equal(newMaxWallClock, patchParameters.Constraints.MaxWallClockTime);
-                    Assert.Null(patchParameters.Constraints.MaxTaskRetryCount);
-                };
+                Assert.NotNull(patchParameters.Constraints);
+                Assert.Equal(newMaxWallClock, patchParameters.Constraints.MaxWallClockTime);
+                Assert.Null(patchParameters.Constraints.MaxTaskRetryCount);
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -180,19 +180,19 @@
                 metadata: new List<Protocol.Models.MetadataItem>() { new Protocol.Models.MetadataItem() },
                 poolInfo: new Protocol.Models.PoolInformation(poolId: "Test"));
 
-            Action<CloudJob> modificationFunction = job =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudJob job)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.Priority);
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.PoolInfo);
-                    Assert.Null(patchParameters.OnAllTasksComplete);
-                    Assert.Null(patchParameters.Constraints);
-                };
+            static void assertAction(Protocol.Models.JobPatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.Priority);
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.PoolInfo);
+                Assert.Null(patchParameters.OnAllTasksComplete);
+                Assert.Null(patchParameters.Constraints);
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -216,19 +216,19 @@
                                     new Protocol.Models.ApplicationPackageReference("a")
                                 }))));
 
-            Action<CloudJob> modificationFunction = job =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudJob job)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.Priority);
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.PoolInfo);
-                    Assert.Null(patchParameters.OnAllTasksComplete);
-                    Assert.Null(patchParameters.Constraints);
-                };
+            static void assertAction(Protocol.Models.JobPatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.Priority);
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.PoolInfo);
+                Assert.Null(patchParameters.OnAllTasksComplete);
+                Assert.Null(patchParameters.Constraints);
+            }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
@@ -253,11 +253,11 @@
             const string poolId = "Foo";
             var protoPool = new Protocol.Models.CloudPool(id: poolId);
 
-            Action<CloudPool> modificationFunction = pool => pool.StartTask = null;
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            void modificationFunction(CloudPool pool) => pool.StartTask = null;
+            void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
             {
                 Assert.False(true, "Should have failed PATCH validation before issuing the request");
-            };
+            }
 
             //This should throw because we set a property to null which is not supported by PATCH
             Assert.Throws<InvalidOperationException>(() => CommonPatchPoolTest(protoPool, modificationFunction, assertAction));
@@ -272,8 +272,8 @@
 
             var protoPool = new Protocol.Models.CloudPool(id: poolId);
 
-            Action<CloudPool> modificationFunction = pool => pool.StartTask = new StartTask(newCommandLine);
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            static void modificationFunction(CloudPool pool) => pool.StartTask = new StartTask(newCommandLine);
+            static void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
@@ -281,7 +281,7 @@
 
                 Assert.NotNull(patchParameters.StartTask);
                 Assert.Equal(newCommandLine, patchParameters.StartTask.CommandLine);
-            };
+            }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
@@ -299,8 +299,8 @@
                         new Protocol.Models.MetadataItem("Foo", "Bar")
                     });
 
-            Action<CloudPool> modificationFunction = pool => pool.Metadata.Add(new MetadataItem("Baz", "Qux"));
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            static void modificationFunction(CloudPool pool) => pool.Metadata.Add(new MetadataItem("Baz", "Qux"));
+            static void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.StartTask);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
@@ -308,7 +308,7 @@
 
                 Assert.NotNull(patchParameters.Metadata);
                 Assert.Equal(2, patchParameters.Metadata.Count);
-            };
+            }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
@@ -322,8 +322,8 @@
 
             var protoPool = new Protocol.Models.CloudPool(id: poolId, startTask: new Protocol.Models.StartTask(commandLine: "Foo"));
 
-            Action<CloudPool> modificationFunction = pool => pool.StartTask.CommandLine = newCommandLine;
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            static void modificationFunction(CloudPool pool) => pool.StartTask.CommandLine = newCommandLine;
+            static void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
@@ -331,7 +331,7 @@
 
                 Assert.NotNull(patchParameters.StartTask);
                 Assert.Equal(newCommandLine, patchParameters.StartTask.CommandLine);
-            };
+            }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
@@ -347,18 +347,18 @@
                 startTask: new Protocol.Models.StartTask(commandLine: "Foo"),
                 metadata: new List<Protocol.Models.MetadataItem>() { new Protocol.Models.MetadataItem() });
 
-            Action<CloudPool> modificationFunction = pool =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudPool pool)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            static void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
                 Assert.Null(patchParameters.StartTask);
-            };
+            }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
@@ -378,18 +378,18 @@
                             new Protocol.Models.ResourceFile("sas", "filepath")
                         }));
 
-            Action<CloudPool> modificationFunction = pool =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudPool pool)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.ApplicationPackageReferences);
-                    Assert.Null(patchParameters.CertificateReferences);
-                    Assert.Null(patchParameters.StartTask);
-                };
+            static void assertAction(Protocol.Models.PoolPatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.ApplicationPackageReferences);
+                Assert.Null(patchParameters.CertificateReferences);
+                Assert.Null(patchParameters.StartTask);
+            }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
@@ -414,11 +414,11 @@
             const string jobScheduleId = "Foo";
             var protoJobSchedule = new Protocol.Models.CloudJobSchedule(id: jobScheduleId);
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule => jobSchedule.JobSpecification = null;
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+            void modificationFunction(CloudJobSchedule jobSchedule) => jobSchedule.JobSpecification = null;
+            void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
             {
                 Assert.False(true, "Should have failed PATCH validation before issuing the request");
-            };
+            }
 
             //This should throw because we set a property to null which is not supported by PATCH
             Assert.Throws<InvalidOperationException>(() => CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction));
@@ -433,15 +433,15 @@
 
             var protoJobSchedule = new Protocol.Models.CloudJobSchedule(id: jobScheduleId);
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule => jobSchedule.JobSpecification = new JobSpecification() { Priority = newPriority };
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+            static void modificationFunction(CloudJobSchedule jobSchedule) => jobSchedule.JobSpecification = new JobSpecification() { Priority = newPriority };
+            static void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.Schedule);
 
                 Assert.NotNull(patchParameters.JobSpecification);
                 Assert.Equal(newPriority, patchParameters.JobSpecification.Priority);
-            };
+            }
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
@@ -459,15 +459,15 @@
                         new Protocol.Models.MetadataItem("Foo", "Bar")
                     });
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule => jobSchedule.Metadata.Add(new MetadataItem("Baz", "Qux"));
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+            static void modificationFunction(CloudJobSchedule jobSchedule) => jobSchedule.Metadata.Add(new MetadataItem("Baz", "Qux"));
+            static void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.JobSpecification);
                 Assert.Null(patchParameters.Schedule);
 
                 Assert.NotNull(patchParameters.Metadata);
                 Assert.Equal(2, patchParameters.Metadata.Count);
-            };
+            }
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
@@ -483,15 +483,15 @@
                 id: jobScheduleId,
                 schedule: new Protocol.Models.Schedule(startWindow: TimeSpan.FromSeconds(10)));
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule => jobSchedule.Schedule.StartWindow = newStartWindow;
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+            void modificationFunction(CloudJobSchedule jobSchedule) => jobSchedule.Schedule.StartWindow = newStartWindow;
+            void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
             {
                 Assert.Null(patchParameters.JobSpecification);
                 Assert.Null(patchParameters.Metadata);
 
                 Assert.NotNull(patchParameters.Schedule);
                 Assert.Equal(newStartWindow, patchParameters.Schedule.StartWindow);
-            };
+            }
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
@@ -509,17 +509,17 @@
                 jobSpecification: new Protocol.Models.JobSpecification(
                     poolInfo: new Protocol.Models.PoolInformation(poolId: "Test")));
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudJobSchedule jobSchedule)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.JobSpecification);
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.Schedule);
-                };
+            static void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.JobSpecification);
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.Schedule);
+            }
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
@@ -544,17 +544,17 @@
                                     new Protocol.Models.ApplicationPackageReference("a")
                                 })))));
 
-            Action<CloudJobSchedule> modificationFunction = jobSchedule =>
-                {
-                    //Do nothing
-                };
+            static void modificationFunction(CloudJobSchedule jobSchedule)
+            {
+                //Do nothing
+            }
 
-            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
-                {
-                    Assert.Null(patchParameters.JobSpecification);
-                    Assert.Null(patchParameters.Metadata);
-                    Assert.Null(patchParameters.Schedule);
-                };
+            static void assertAction(Protocol.Models.JobSchedulePatchParameter patchParameters)
+            {
+                Assert.Null(patchParameters.JobSpecification);
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.Schedule);
+            }
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
