@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
@@ -42,8 +43,6 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", "https://sample.search.windows.net");
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", "sample");
 
-            Mountain _mountain = null;
-
             #region Snippet:Microsoft_Azure_Core_Spatial_NewtonsoftJson_Samples_Readme_SearchSample
             // Get the Azure Cognitive Search endpoint and read-only API key.
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -71,7 +70,6 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.Samples
             foreach (SearchResult<Mountain> result in results.Value.GetResults())
             {
                 Mountain mountain = result.Document;
-                /*@@*/ _mountain = mountain;
                 Console.WriteLine("https://www.bing.com/maps?cp={0}~{1}&sp=point.{0}_{1}_{2}",
                     mountain.Summit.Latitude,
                     mountain.Summit.Longitude,
@@ -79,6 +77,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.Samples
             }
             #endregion Snippet:Microsoft_Azure_Core_Spatial_NewtonsoftJson_Samples_Readme_SearchSample
 
+            Mountain _mountain = results.Value.GetResults().Single().Document;
             Assert.AreEqual("Mount Rainier", _mountain.Name);
             Assert.AreEqual(-121.76044, _mountain.Summit.Longitude);
             Assert.AreEqual(46.85287, _mountain.Summit.Latitude);
