@@ -180,10 +180,7 @@ namespace Azure.Communication.Identity
            => !_valueIsInitialized || UtcNow() >= _currentToken.ExpiresOn - _proactiveRefreshingInterval;
 
         public void Dispose()
-        {
-            _scheduledProactiveRefreshing?.Dispose();
-            GC.SuppressFinalize(this);
-        }
+            => _scheduledProactiveRefreshing?.Dispose();
 
         internal interface IScheduledAction : IDisposable { }
 
