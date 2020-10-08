@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
+    [LiveOnly]
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [RecordedTest]
