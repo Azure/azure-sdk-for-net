@@ -47,7 +47,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// Sets whether to detect data within the range or outside the range. If you want to detect fluctuations, select false.
-        /// Sets whether to detect data within the range or outside the range. If you want to detect fluctuations, select false.
         /// If you want to detect flat lines in your data, select true.
         /// </summary>
         [CodeGenMember("WithinRange")]
