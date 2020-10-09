@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configureClients">An <see cref="AzureClientFactoryBuilder"/> that can be used to configure the client.</param>
         public static void AddAzureClients(this IServiceCollection collection, Action<AzureClientFactoryBuilder> configureClients)
         {
-            collection.AddAzureClientCore();
+            collection.AddAzureClientsCore();
             configureClients(new AzureClientFactoryBuilder(collection));
         }
 
@@ -30,12 +30,11 @@ namespace Microsoft.Extensions.Azure
         /// Adds the minimum essential Azure SDK interop services like <see cref="AzureEventSourceLogForwarder"/> and <see cref="AzureComponentFactory"/> to the specified <see cref="IServiceCollection"/> without registering any client types.
         /// </summary>
         /// <param name="collection">The <see cref="IServiceCollection"/>.</param>
-        public static void AddAzureClientCore(this IServiceCollection collection)
+        public static void AddAzureClientsCore(this IServiceCollection collection)
         {
             collection.AddOptions();
             collection.TryAddSingleton<AzureEventSourceLogForwarder>();
             collection.TryAddSingleton<ILoggerFactory, NullLoggerFactory>();
-            collection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
             collection.TryAddSingleton<AzureComponentFactory, AzureComponentFactoryImpl>();
         }
     }
