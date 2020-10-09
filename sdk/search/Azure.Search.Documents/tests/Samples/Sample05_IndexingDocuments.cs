@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Tests.Samples
     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_LegacyProduct
     public class Product
     {
-        [SearchableField(IsKey = true)]
+        [SimpleField(IsKey = true)]
         public string Id { get; set; }
 
         [SearchableField(IsFilterable = true)]

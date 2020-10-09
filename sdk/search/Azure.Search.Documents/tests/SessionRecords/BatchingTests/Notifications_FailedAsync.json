@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027yaerripi\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027bvyydevm\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -2585,8 +2585,8 @@
         "client-request-id": "df9c470a-e415-7c98-82ec-86e19329feaf",
         "Content-Length": "42399",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 09 Oct 2020 15:07:10 GMT",
-        "elapsed-time": "92",
+        "Date": "Fri, 09 Oct 2020 18:08:52 GMT",
+        "elapsed-time": "98",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -5673,7 +5673,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027yaerripi\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027bvyydevm\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -6977,7 +6977,7 @@
         "client-request-id": "3fd3bc06-8b5b-1fc9-f1eb-600ec2a88d7e",
         "Content-Length": "21259",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 09 Oct 2020 15:07:10 GMT",
+        "Date": "Fri, 09 Oct 2020 18:08:52 GMT",
         "elapsed-time": "29",
         "Expires": "-1",
         "OData-Version": "4.0",
@@ -8529,12 +8529,12 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027yaerripi\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-teglaza2.search.windows.net/indexes(\u0027bvyydevm\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-58bad150829b1f498314992ca12fb424-295e84642903514f-00",
+        "traceparent": "00-059fd9ed998c4f459fdc75944f3debd5-6b86a6f207965246-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.2.0-alpha.20201009.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
@@ -8547,8 +8547,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "048ae09e-7886-1a4b-747a-536858e64667",
-        "Date": "Fri, 09 Oct 2020 15:07:10 GMT",
-        "elapsed-time": "183",
+        "Date": "Fri, 09 Oct 2020 18:08:52 GMT",
+        "elapsed-time": "164",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "048ae09e-7886-1a4b-747a-536858e64667",
@@ -8560,7 +8560,7 @@
   ],
   "Variables": {
     "RandomSeed": "74567797",
-    "SearchIndexName": "yaerripi",
+    "SearchIndexName": "bvyydevm",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-teglaza2"
   }
