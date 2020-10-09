@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageQueues(this IWebJobsBuilder builder, Action<QueuesOptions> configureQueues = null)
         {
-            builder.Services.AddAzureClients(_ => { });
+            builder.Services.AddAzureClientsCore();
 
             builder.Services.TryAddSingleton<SharedQueueWatcher>();
 
