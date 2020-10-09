@@ -18,10 +18,29 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
         [Fact]
-        public async Task VerifyIngestionSuccessBehavior()
+        public async Task VerifyIngestionBehavior_Success()
         {
             int testItemsReceived = 1, testItemsAccepted = 1;
             var errors = new List<TelemetryErrorDetails>();
+
+            var transmitter = new AzureMonitorTransmitter(
+                exporterOptions: new AzureMonitorExporterOptions { ConnectionString = EmptyConnectionString },
+                applicationInsightsRestClient: GetMockServiceRestClient(itemsReceived: testItemsReceived, itemsAccepted: testItemsAccepted, errors));
+
+            var returnValue = await transmitter.TrackAsync(
+                telemetryItems: new List<TelemetryItem> { default },
+                async: true,
+                cancellationToken: CancellationToken.None);
+
+            Assert.Equal(testItemsAccepted, returnValue);
+        }
+
+
+        [Fact]
+        public async Task VerifyIngestionBehavior_Failure()
+        {
+            int testItemsReceived = 1, testItemsAccepted = 0;
+            var errors = new List<TelemetryErrorDetails> { new TelemetryErrorDetails(index:0, statusCode: 400, message: "Invalid instrumentation key") };
 
             var transmitter = new AzureMonitorTransmitter(
                 exporterOptions: new AzureMonitorExporterOptions { ConnectionString = EmptyConnectionString },

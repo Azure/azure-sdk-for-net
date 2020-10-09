@@ -25,15 +25,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                case 206:
-                case 408:
-                case 429:
-                case 439:
-                case 500:
-                case 502:
-                case 503:
-                case 504:
+                case 200: // Accepted
+                case 206: // Partial Content
+                case 408: // Request Timeout
+                case 429: // Too Many Requests
+                case 439: // ???
+                case 500: // Internal Server Error
+                case 502: // Bad Gateway
+                case 503: // Service Unavailable
+                case 504: // Gateway Timeout
                     {
                         TrackResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
