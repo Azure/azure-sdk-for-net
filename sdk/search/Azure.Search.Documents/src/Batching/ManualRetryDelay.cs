@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Batching
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Task that will delay if needed.</returns>
-        public async Task WaitIfNeededAsync(CancellationToken cancellationToken)
+        public async Task WaitIfNeededAsync(CancellationToken cancellationToken = default)
         {
             TimeSpan? wait = _waitUntil - DateTimeOffset.Now;
             if (wait >= TimeSpan.Zero)

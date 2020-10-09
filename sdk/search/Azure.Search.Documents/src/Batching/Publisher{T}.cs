@@ -282,14 +282,14 @@ namespace Azure.Search.Documents.Batching
             {
                 // Determine whether or not we crossed the threshold and we need
                 // to automatically submit the next batch.
-                if (HasFullBatch())
+                if (HasBatch())
                 {
-                    await PublishAsync(cancellationToken).ConfigureAwait(false);
+                    await PublishAsync(flush: false, cancellationToken).ConfigureAwait(false);
                 }
-                else
+
+                // Try starting a timer to flush whatever's ready when it fires
+                if (IndexingActionsCount > 0)
                 {
-                    // Otherwise try starting a timer to flush whatever's ready
-                    // when it fires
                     StartTimer();
                 }
             }
@@ -303,7 +303,7 @@ namespace Azure.Search.Documents.Batching
         /// <returns>Task for flushing.</returns>
         protected virtual async Task OnFlushedAsync(CancellationToken cancellationToken)
         {
-            await PublishAsync(cancellationToken).ConfigureAwait(false);
+            await PublishAsync(flush: true, cancellationToken).ConfigureAwait(false);
 
             // Wake up anyone who was blocked on a flush finishing
             TaskCompletionSource<object> previous = _flushCompletionSource;
@@ -369,15 +369,18 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// Check if we have a full batch ready to send.
         /// </summary>
+        /// <param name="flush">Whether we're flushing.</param>
         /// <returns>If we have a full batch ready to send.</returns>
-        private bool HasFullBatch() => IndexingActionsCount >= BatchActionSize;
+        private bool HasBatch(bool flush = false) =>
+            IndexingActionsCount > (flush ? 0 : BatchActionSize);
 
         /// <summary>
         /// Publish as many batches are ready.
         /// </summary>
+        /// <param name="flush">Whether we're flushing.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A task that represents the operation.</returns>
-        private async Task PublishAsync(CancellationToken cancellationToken)
+        private async Task PublishAsync(bool flush, CancellationToken cancellationToken)
         {
             // There's no need to let the timer keep running since we're
             // already submitting
@@ -401,14 +404,14 @@ namespace Azure.Search.Documents.Batching
                     .ConfigureAwait(false);
 
             // Keep going if we have more full batches ready to submit
-            } while (HasFullBatch());
+            } while (HasBatch(flush));
 
             // Fill as much of the batch as possible from the given queue.
             // Returns whether the batch is now full.
             bool FillBatchFromQueue(List<PublisherAction<T>> batch, Queue< PublisherAction<T>> queue)
             {
-                // TODO: Consider tracking the keys in the batch and requiring them
-                // to be unique to avoid error alignment problems
+                // TODO: Consider tracking the keys in the batch and requiring
+                // them to be unique to avoid error alignment problems
 
                 while (queue.Count > 0)
                 {
