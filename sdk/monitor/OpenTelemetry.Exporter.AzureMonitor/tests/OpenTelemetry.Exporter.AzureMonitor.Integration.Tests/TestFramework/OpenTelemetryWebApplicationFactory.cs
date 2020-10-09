@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework
 {
     /// <summary>
     /// This class implements <see cref="WebApplicationFactory"/> and will configure the <see cref="IServiceCollection"/> for OpenTelemetry and the <see cref="AzureMonitorTraceExporter"/>.

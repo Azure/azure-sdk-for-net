@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -32,11 +34,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             string testValue = Guid.NewGuid().ToString();
 
             // Arrange
-            using var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
+            var client = this.factory.CreateClient();
 
-            // Act
-            var response = await client.GetAsync(request);
+            //// Act
+            var response = await client.GetAsync($"api/home/{testValue}");
 
             // Shutdown
             response.EnsureSuccessStatusCode();

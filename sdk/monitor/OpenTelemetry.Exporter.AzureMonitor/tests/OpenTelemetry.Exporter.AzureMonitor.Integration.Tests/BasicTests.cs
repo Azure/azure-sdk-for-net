@@ -29,7 +29,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         public async Task VerifyRequest(HttpStatusCode httpStatusCode)
         {
             // Arrange
-            using var client = this.factory.CreateClient();
+            var client = this.factory.CreateClient();
             var request = new Uri(client.BaseAddress, $"api/home/statuscode/{(int)httpStatusCode}");
 
             // Act
