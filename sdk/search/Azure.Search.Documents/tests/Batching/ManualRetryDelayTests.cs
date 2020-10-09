@@ -70,8 +70,9 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.LessOrEqual(250, watch.ElapsedMilliseconds);
-            Assert.Greater(1000, watch.ElapsedMilliseconds);
+            Assert.IsTrue(
+                250 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 1000,
+                $"Expected a delay between 250ms and 1000ms, not ${watch.ElapsedMilliseconds}");
         }
 
         [Test]
