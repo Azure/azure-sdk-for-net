@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The DocumentHealthcareEntities. </summary>
-    internal partial class DocumentHealthcareEntities
+    public partial class DocumentHealthcareEntities
     {
     }
 }

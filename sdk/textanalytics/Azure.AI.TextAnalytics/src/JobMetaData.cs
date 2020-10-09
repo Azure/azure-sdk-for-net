@@ -2,29 +2,48 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("JobMetadata")]
     public partial class JobMetadata
     {
-        [CodeGenMember("Documents")]
-        internal DateTimeOffset CreatedDateTime { get; }
+        /// <summary>
+        /// CreatedDateTime
+        /// </summary>
+        [CodeGenMember("CreatedDateTime")]
+        public DateTimeOffset CreatedDateTime { get; }
 
-        [CodeGenMember("Documents")]
-        internal string DisplayName { get; }
+        /// <summary>
+        /// DisplayName
+        /// </summary>
+        [CodeGenMember("DisplayName")]
+        public string DisplayName { get; }
 
-        [CodeGenMember("Documents")]
-        internal DateTimeOffset? ExpirationDateTime { get; }
+        /// <summary>
+        /// ExpirationDateTime
+        /// </summary>
+        [CodeGenMember("ExpirationDateTime")]
+        public DateTimeOffset? ExpirationDateTime { get; }
 
-        [CodeGenMember("Documents")]
-        internal Guid JobId { get; }
+        /// <summary>
+        /// JobId
+        /// </summary>
+        [CodeGenMember("JobId")]
+        public Guid JobId { get; }
 
-        [CodeGenMember("Documents")]
-        internal DateTimeOffset LastUpdateDateTime { get; }
+        /// <summary>
+        /// LastUpdateDateTime
+        /// </summary>
+        [CodeGenMember("LastUpdateDateTime")]
+        public DateTimeOffset LastUpdateDateTime { get; }
 
-        [CodeGenMember("Documents")]
+        /// <summary>
+        /// Status
+        /// </summary>
+        [CodeGenMember("Status")]
         internal State Status { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
     public class AnalyzeOperation : Operation<AnalyzeResultCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly TextAnalyticsRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal AnalyzeOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal AnalyzeOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;

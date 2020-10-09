@@ -69,14 +69,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -134,14 +134,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -198,14 +198,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -229,7 +229,7 @@
           }
         ],
         "responses": {
-          "204": {
+          "202": {
             "description": "Cancel Job request has been received.",
             "headers": {
               "Operation-Location": {
@@ -242,14 +242,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -298,15 +298,15 @@
             "description": "Bad Request.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
-						},
-						"x-ms-error-response": true
+            },
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -357,14 +357,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -420,14 +420,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -477,14 +477,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -531,14 +531,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -585,14 +585,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -648,14 +648,14 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           },
           "500": {
             "description": "Internal error response",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-						"x-ms-error-response": true
+            "x-ms-error-response": true
           }
         },
         "x-ms-examples": {
@@ -842,10 +842,10 @@
         "enable"
       ],
       "properties": {
-          "enable": {
-            "default": false,
-            "type": "boolean"
-          }
+        "enable": {
+          "default": false,
+          "type": "boolean"
+        }
       }
     },
     "TextAnalyticsWarning": {
@@ -916,18 +916,18 @@
         },
         {
           "properties": {
-              "parameters": {
-                "properties": {
-                  "model-version": {
-                    "default": "latest",
-                    "type": "string"
-                  },
-                  "stringIndexType": {
-                    "$ref": "#/definitions/StringIndexType"
-                  }
+            "parameters": {
+              "properties": {
+                "model-version": {
+                  "default": "latest",
+                  "type": "string"
                 },
-                "type": "object"
-              }
+                "stringIndexType": {
+                  "$ref": "#/definitions/StringIndexType"
+                }
+              },
+              "type": "object"
+            }
           },
           "type": "object"
         }
@@ -991,8 +991,7 @@
             "analysisInput"
           ],
           "properties": {
-            "analysisInput":
-            {
+            "analysisInput": {
               "$ref": "#/definitions/MultiLanguageBatchInput"
             }
           }
@@ -1339,6 +1338,7 @@
             "entityRecognitionTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1357,6 +1357,7 @@
             "entityRecognitionPiiTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1375,6 +1376,7 @@
             "entityLinkingTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1393,6 +1395,7 @@
             "keyPhraseExtractionTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1411,6 +1414,7 @@
             "sentimentAnalysisTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1429,6 +1433,7 @@
             "customClassificationTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1447,6 +1452,7 @@
             "customEntityRecognitionTasks": {
               "type": "array",
               "items": {
+                "type": "object",
                 "allOf": [
                   {
                     "$ref": "#/definitions/TaskState"
@@ -1869,14 +1875,18 @@
       "type": "object",
       "required": [
         "id",
+        "redactedText",
         "entities",
-				"warnings",
-				"redactedText"
+        "warnings"
       ],
       "properties": {
         "id": {
           "type": "string",
           "description": "Unique, non-empty document identifier."
+        },
+        "redactedText": {
+          "type": "string",
+          "description": "Returns redacted text."
         },
         "entities": {
           "type": "array",
@@ -1895,10 +1905,7 @@
         "statistics": {
           "description": "if showStats=true was specified in the request this field will contain information about the document payload.",
           "$ref": "#/definitions/DocumentStatistics"
-				},
-				"redactedText": {
-					"type": "string"
-				}
+        }
       }
     },
     "Entity": {
@@ -2117,6 +2124,7 @@
       }
     },
     "HealthcareEntity": {
+      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/Entity"
@@ -2220,8 +2228,8 @@
         "dataSource": {
           "type": "string",
           "description": "Data source used to extract entity linking, such as Wiki/Bing etc."
-				},
-				"bingId": {
+        },
+        "bingId": {
           "type": "string",
           "description": "Bing Entity Search API unique identifier of the recognized entity."
         }

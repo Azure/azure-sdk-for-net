@@ -14,10 +14,10 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The AnalyzeOperation class for LRO. </summary>
-    public class AnalyzeHealthOperation : Operation<AnalyzeHealthResultCollection>
+    public class AnalyzeHealthOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly TextAnalyticsRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override AnalyzeHealthResultCollection Value
+        public override RecognizeHealthcareEntitiesResultCollection Value
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private AnalyzeHealthResultCollection _value;
+        private RecognizeHealthcareEntitiesResultCollection _value;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal AnalyzeHealthOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -141,7 +141,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AnalyzeHealthResultCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AnalyzeHealthResultCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.AI.TextAnalytics
                     if (update.Value.Status == State.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = new AnalyzeHealthResultCollection(new List<HealthcareResult>() { update.Value.Results },
+                        _value = new RecognizeHealthcareEntitiesResultCollection(new List<HealthcareEntititesResult>() { update.Value.Results },
                             update.Value.Results.Statistics,
                             update.Value.Results.ModelVersion);
                         _hasCompleted = true;

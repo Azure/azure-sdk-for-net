@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Microsoft.Extensions.Azure;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("DocumentHealthcareEntities")]
-    internal partial class DocumentHealthcareEntities
+    public partial class DocumentHealthcareEntities
     {
         /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
@@ -77,11 +78,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Healthcare entities. </summary>
-        public IReadOnlyList<HealthcareEntity> Entities { get; }
+        internal IReadOnlyList<HealthcareEntity> Entities { get; }
         /// <summary> Healthcare entity relations. </summary>
         public IReadOnlyList<HealthcareRelation> Relations { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
+        internal IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
     }

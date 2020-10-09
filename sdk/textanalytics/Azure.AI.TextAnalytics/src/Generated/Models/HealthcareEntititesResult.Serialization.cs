@@ -7,14 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareResult
+    public partial class HealthcareEntititesResult
     {
-        internal static HealthcareResult DeserializeHealthcareResult(JsonElement element)
+        internal static HealthcareEntititesResult DeserializeHealthcareEntititesResult(JsonElement element)
         {
             IReadOnlyList<DocumentHealthcareEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareResult(documents, errors, statistics.Value, modelVersion);
+            return new HealthcareEntititesResult(documents, errors, statistics.Value, modelVersion);
         }
     }
 }

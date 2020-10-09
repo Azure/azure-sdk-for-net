@@ -8,29 +8,21 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="DetectLanguageResult"/> objects corresponding
+    /// Collection of <see cref="HealthcareEntititesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    public class AnalyzeHealthResultCollection : ReadOnlyCollection<HealthcareResult>
+    public class RecognizeHealthcareEntitiesResultCollection : ReadOnlyCollection<HealthcareEntititesResult>
     {
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"></param>
-        internal AnalyzeHealthResultCollection(IList<HealthcareResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal RecognizeHealthcareEntitiesResultCollection(IList<HealthcareEntititesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
-            Documents = list;
             Statistics = statistics;
             ModelVersion = modelVersion;
         }
-
-        /// <summary>
-        /// Gets statistics about the documents batch and how it was processed
-        /// by the service.  This property will have a value when IncludeStatistics
-        /// is set to true in the client call.
-        /// </summary>
-        public IList<HealthcareResult> Documents { get; }
 
         /// <summary>
         /// Gets statistics about the documents batch and how it was processed

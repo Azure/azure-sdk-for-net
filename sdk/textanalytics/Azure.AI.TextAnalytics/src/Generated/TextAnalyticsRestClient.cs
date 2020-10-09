@@ -63,11 +63,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeHeaders(message.Response);
+            var headers = new TextAnalyticsAnalyzeHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -80,11 +80,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeHeaders(message.Response);
+            var headers = new TextAnalyticsAnalyzeHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -262,14 +262,14 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Cancel healthcare prediction job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceCancelHealthJobHeaders(message.Response);
+            var headers = new TextAnalyticsCancelHealthJobHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 204:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -279,14 +279,14 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Cancel healthcare prediction job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceCancelHealthJobHeaders(message.Response);
+            var headers = new TextAnalyticsCancelHealthJobHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 204:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -325,7 +325,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -334,7 +334,7 @@ namespace Azure.AI.TextAnalytics
 
             using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceHealthHeaders(message.Response);
+            var headers = new TextAnalyticsHealthHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -350,7 +350,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public ResponseWithHeaders<ServiceHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -359,7 +359,7 @@ namespace Azure.AI.TextAnalytics
 
             using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceHealthHeaders(message.Response);
+            var headers = new TextAnalyticsHealthHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:

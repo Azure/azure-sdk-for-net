@@ -2,16 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("HealthcareResult")]
-    public partial class HealthcareResult
+    public partial class HealthcareEntititesResult
     {
+        /// <summary> Documents. </summary>
         [CodeGenMember("Documents")]
-        internal IReadOnlyList<DocumentHealthcareEntities> Documents { get; }
+        public IReadOnlyList<DocumentHealthcareEntities> Documents { get; }
 
+        /// <summary> Errors. </summary>
         [CodeGenMember("Errors")]
         internal IReadOnlyList<DocumentError> Errors { get; }
 

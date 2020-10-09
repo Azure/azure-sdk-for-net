@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal class ServiceHealthHeaders
+    internal class TextAnalyticsHealthHeaders
     {
         private readonly Response _response;
-        public ServiceHealthHeaders(Response response)
+        public TextAnalyticsHealthHeaders(Response response)
         {
             _response = response;
         }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -30,13 +31,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
         /// <param name="nextLink"> . </param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, HealthcareResult results, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, HealthcareEntititesResult results, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Results = results;
             NextLink = nextLink;
         }
 
-        public HealthcareResult Results { get; }
+        public HealthcareEntititesResult Results { get; }
         public string NextLink { get; }
     }
 }

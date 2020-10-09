@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("HealthcareRelation")]
-    internal partial class HealthcareRelation
+    public partial class HealthcareRelation
     {
         /// <summary> Initializes a new instance of HealthcareRelation. </summary>
         /// <param name="entities"></param>
@@ -64,15 +65,29 @@ namespace Azure.AI.TextAnalytics.Models
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
-
+        /// <summary>
+        /// Source Entity
+        /// </summary>
         [CodeGenMember("Source")]
         public string Source { get; }
+        /// <summary>
+        /// Target Entity
+        /// </summary>
+
         [CodeGenMember("Target")]
         public string Target { get; }
+        /// <summary>
+        /// Gets the spelled-out name of the detected language (for example,
+        /// "English" or "French").
+        /// </summary>
 
-        public HealthcareEntity SourceEntity { get; }
+        internal HealthcareEntity SourceEntity { get; }
+        /// <summary>
+        /// Gets the spelled-out name of the detected language (for example,
+        /// "English" or "French").
+        /// </summary>
 
-        public HealthcareEntity TargetEntity { get; }
+        internal HealthcareEntity TargetEntity { get; }
 
     }
 }

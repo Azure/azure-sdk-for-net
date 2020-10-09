@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The JobMetadata. </summary>
     public partial class JobMetadata
