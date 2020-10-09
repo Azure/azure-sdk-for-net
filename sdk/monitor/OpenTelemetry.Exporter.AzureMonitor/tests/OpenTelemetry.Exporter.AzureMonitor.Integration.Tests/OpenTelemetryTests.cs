@@ -41,7 +41,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // Shutdown
             response.EnsureSuccessStatusCode();
-            Task.Delay(1000).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
+            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
             this.factory.ForceFlush();
 
             // Assert
@@ -53,6 +53,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             Assert.True(baseData.Url.EndsWith(testValue), "it is expected that the recorded TelemetryItem matches the value of testValue.");
         }
 
+        /// <summary>
+        /// This uses the XUnit ITestOutputHelper to print details to the output of the test run.
+        /// </summary>
         private void PrintTelemetryItems(IEnumerable<Models.TelemetryItem> telemetryItems)
         {
             foreach (var item in telemetryItems)
