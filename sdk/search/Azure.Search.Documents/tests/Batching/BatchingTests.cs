@@ -592,7 +592,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await client.GetDocumentCountAsync());
+            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
 
             await DelayAsync(TimeSpan.FromMilliseconds(500), EventDelay);
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
