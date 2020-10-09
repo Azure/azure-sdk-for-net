@@ -38,7 +38,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public async Task IfThereAreApplicationsInTheAccountThenListApplicationSummariesReturnsThem()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
@@ -51,7 +51,7 @@
 
                 Assert.Equal(ApplicationId, getApplicationSummary.Id);
                 Assert.Equal(ApplicationIntegrationCommon.Version, getApplicationSummary.Versions.First());
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }

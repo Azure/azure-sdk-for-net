@@ -19,7 +19,6 @@ using Xunit.Abstractions;
 using Protocol = Microsoft.Azure.Batch.Protocol;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
-using Azure.Storage.Blobs.Models;
 
 namespace BatchClientIntegrationTests
 {
@@ -44,7 +43,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void BugComputeNodeMissingStartTaskInfo_RunAfterPoolIsUsed()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 CloudPool pool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
@@ -59,7 +58,7 @@ namespace BatchClientIntegrationTests
                     Assert.NotNull(sti);
                     Assert.True(StartTaskState.Running == sti.State || StartTaskState.Completed == sti.State);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -69,7 +68,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1771163TestGetComputeNode_RefreshComputeNode()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 PoolOperations poolOperations = batchCli.PoolOperations;
@@ -109,7 +108,7 @@ namespace BatchClientIntegrationTests
                 //Refresh again with increased detail level
                 computeNodeToGet.Refresh();
                 CompareComputeNodeObjects(computeNodeToGet, computeNodeFromManager);
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -119,7 +118,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug2302907_TestComputeNodeDoesInheritBehaviors()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor();
@@ -131,7 +130,7 @@ namespace BatchClientIntegrationTests
 
                 Assert.Equal(2, computeNode.CustomBehaviors.Count);
                 Assert.Contains(interceptor, computeNode.CustomBehaviors);
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -141,7 +140,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug2329884_ComputeNodeRecentTasksAndComputeNodeError()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug2329884Job-" + TestUtilities.GetMyName();
@@ -227,36 +226,42 @@ namespace BatchClientIntegrationTests
                                 List<Protocol.Models.ComputeNodeError> errors =
                                     new List<Protocol.Models.ComputeNodeError>();
 
-                                    //Generate first Compute Node Error
-                                    List<Protocol.Models.NameValuePair> nvps = new List<Protocol.Models.NameValuePair>
+                                //Generate first Compute Node Error
+                                List<Protocol.Models.NameValuePair> nvps = new List<Protocol.Models.NameValuePair>
                                 {
                                         new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue }
                                 };
 
-                                Protocol.Models.ComputeNodeError error1 = new Protocol.Models.ComputeNodeError();
-                                error1.Code = expectedErrorCode;
-                                error1.Message = expectedErrorMessage;
-                                error1.ErrorDetails = nvps;
+                                Protocol.Models.ComputeNodeError error1 = new Protocol.Models.ComputeNodeError
+                                {
+                                    Code = expectedErrorCode,
+                                    Message = expectedErrorMessage,
+                                    ErrorDetails = nvps
+                                };
 
                                 errors.Add(error1);
 
-                                    //Generate second Compute Node Error
-                                    nvps = new List<Protocol.Models.NameValuePair>
+                                //Generate second Compute Node Error
+                                nvps = new List<Protocol.Models.NameValuePair>
                                 {
-                                        new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue }
+                                    new Protocol.Models.NameValuePair() { Name = nvpValue, Value = nvpValue }
                                 };
 
-                                Protocol.Models.ComputeNodeError error2 = new Protocol.Models.ComputeNodeError();
-                                error2.Code = expectedErrorCode;
-                                error2.Message = expectedErrorMessage;
-                                error2.ErrorDetails = nvps;
+                                Protocol.Models.ComputeNodeError error2 = new Protocol.Models.ComputeNodeError
+                                {
+                                    Code = expectedErrorCode,
+                                    Message = expectedErrorMessage,
+                                    ErrorDetails = nvps
+                                };
 
                                 errors.Add(error2);
 
-                                Protocol.Models.ComputeNode protoComputeNode = new Protocol.Models.ComputeNode();
-                                protoComputeNode.Id = computeNodeId;
-                                protoComputeNode.State = Protocol.Models.ComputeNodeState.Idle;
-                                protoComputeNode.Errors = errors;
+                                Protocol.Models.ComputeNode protoComputeNode = new Protocol.Models.ComputeNode
+                                {
+                                    Id = computeNodeId,
+                                    State = Protocol.Models.ComputeNodeState.Idle,
+                                    Errors = errors
+                                };
 
                                 response.Body = protoComputeNode;
 
@@ -286,7 +291,7 @@ namespace BatchClientIntegrationTests
                 {
                     batchCli.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -296,7 +301,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1770933_1770935_1771164_AddUserCRUDAndGetRDP()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 // names to create/delete
@@ -476,7 +481,7 @@ namespace BatchClientIntegrationTests
                         Assert.True(hitException, "Should have hit exception on user: " + curName + ", compute node: " + computeNode.Id + ".");
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -486,7 +491,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug2342986_StartTaskMissingOnComputeNode()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 CloudPool pool = batchCli.PoolOperations.GetPool(poolFixture.PoolId);
@@ -560,7 +565,7 @@ namespace BatchClientIntegrationTests
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.ResourceFiles.Add(ResourceFile.FromUrl("test", "test")); });
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -719,7 +724,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestComputeNodeUserIaas()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 CloudPool sharedPool = poolFixture.Pool;
@@ -767,7 +772,7 @@ namespace BatchClientIntegrationTests
                         testOutputHelper.WriteLine("TestComputeNodeUserIAAS: exception deleting user account.  ex: " + ex.ToString());
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -777,7 +782,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task ComputeNodeUploadLogs()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 const string containerName = "computenodelogscontainer";
@@ -826,7 +831,7 @@ namespace BatchClientIntegrationTests
                 {
                     containerClient.DeleteIfExists();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -836,7 +841,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestGetRemoteLoginSettings()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 CloudPool sharedPool = poolFixture.Pool;
@@ -872,7 +877,7 @@ namespace BatchClientIntegrationTests
                 {
                     // cleanup goes here
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

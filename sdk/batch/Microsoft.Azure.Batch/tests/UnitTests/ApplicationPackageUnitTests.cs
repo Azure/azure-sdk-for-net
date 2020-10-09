@@ -156,12 +156,12 @@ namespace Azure.Batch.Unit.Tests
             var requests = new List<Uri>();
             var results = new List<Microsoft.Azure.Batch.ApplicationSummary>();
 
-            Func<Uri, string> responseBody = uri =>
+            string responseBody(Uri uri)
             {
                 requests.Add(uri);
 
                 return fakeResponse;
-            };
+            }
 
             using (BatchClient client = BatchClient.Open(FakeClient.Create(HttpStatusCode.OK, responseBody)))
             {
@@ -204,17 +204,17 @@ namespace Azure.Batch.Unit.Tests
             var requests = new List<Uri>();
             var results = new List<Microsoft.Azure.Batch.ApplicationSummary>();
 
-            Func<Uri, string> responseBody = uri =>
-                {
-                    requests.Add(uri);
+            string responseBody(Uri uri)
+            {
+                requests.Add(uri);
 
-                    return uri.AbsoluteUri switch
-                    {
-                        "http://skip1/" => fakeResponse2,
-                        "http://skip2/" => fakeResponse3,
-                        _ => fakeResponse1,
-                    };
+                return uri.AbsoluteUri switch
+                {
+                    "http://skip1/" => fakeResponse2,
+                    "http://skip2/" => fakeResponse3,
+                    _ => fakeResponse1,
                 };
+            }
 
             using (BatchClient client = BatchClient.Open(FakeClient.Create(HttpStatusCode.OK, responseBody)))
             {

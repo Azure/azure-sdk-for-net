@@ -36,7 +36,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public void Bug1665834TaskStateMonitor()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1665834Job-" + TestUtilities.GetMyName();
@@ -128,7 +128,7 @@
                     // cleanup
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -138,7 +138,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestBoundJobVerbs()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Create a job
@@ -229,7 +229,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -239,7 +239,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1433069TestBoundJobCommit()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobCommit";
@@ -311,7 +311,7 @@
                 {
                     batchCli.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -321,7 +321,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1996130_JobTaskVerbsFailAfterDoubleRefresh()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1996130Job-" + TestUtilities.GetMyName();
@@ -384,7 +384,7 @@
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
 
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -394,7 +394,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestJobCompletesWhenAllItsTasksComplete()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Create a job
@@ -427,7 +427,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -437,7 +437,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void IfJobSetsOnTaskFailed_JobCompletesWhenAnyTaskFails()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Create a job
@@ -476,7 +476,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -486,7 +486,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestExitConditionsAreBeingRoundTrippedCorrectly()
         {
-            Action test = () => 
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 //Create a job
@@ -534,7 +534,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -610,7 +610,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestJobUpdateWithAndWithoutPoolInfo()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string testName = "TestJobUpdateWithAndWithoutPoolInfo";
@@ -711,7 +711,7 @@
                         TestUtilities.DeletePoolIfExistsAsync(batchCli, pool.Id).Wait();
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -721,7 +721,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void LongRunning_Bug1965363Wat7OSVersionFeaturesQuickJobWithAutoPool()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1965363Job-" + TestUtilities.GetMyName();
@@ -791,7 +791,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -801,7 +801,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void SetUpdateJobConditionalHeader()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string jobId = "JobConditionalHeaders-" + TestUtilities.GetMyName();
@@ -846,7 +846,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -856,7 +856,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task Job_CanAddJobWithJobManagerAndAllowLowPriorityTrue()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string jobId = "TestJobWithLowPriJobManager-" + TestUtilities.GetMyName();
@@ -881,7 +881,7 @@
                 {
                     await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -891,7 +891,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task Job_GetTaskCounts_ReturnsCorrectCount()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string jobId = "TestJobGetTaskCounts-" + TestUtilities.GetMyName();
@@ -922,7 +922,7 @@
                 {
                     await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -933,7 +933,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task Job_GetTaskCounts_ReturnsCorrectCountNonZeroTaskSlots()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string jobId = "NonZeroTaskSlots-" + TestUtilities.GetMyName();
@@ -972,7 +972,7 @@
                 {
                     await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }

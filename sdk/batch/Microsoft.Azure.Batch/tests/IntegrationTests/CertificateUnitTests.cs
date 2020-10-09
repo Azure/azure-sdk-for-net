@@ -4,18 +4,14 @@
 namespace BatchClientIntegrationTests
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Security.Cryptography.X509Certificates;
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
-    using Microsoft.Azure.Batch.Common;
     using IntegrationTestCommon;
     using Xunit;
     using Xunit.Abstractions;
-    using Protocol = Microsoft.Azure.Batch.Protocol;
 
     //
     // NOTE: These are really unit tests but they cannot live in the unit tests project right now because the method we use to generate certificates is not

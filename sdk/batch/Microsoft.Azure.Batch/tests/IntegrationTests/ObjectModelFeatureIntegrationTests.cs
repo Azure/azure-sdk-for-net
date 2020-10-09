@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
@@ -15,11 +15,11 @@
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
     using Microsoft.Azure.Batch.Protocol.BatchRequests;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
+    using System.Threading;
 
     [Collection("SharedPoolCollection")]
     public class ObjectModelFeatureIntegrationTests
@@ -39,7 +39,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug957878SkipTokenSupportMissing()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 int numTasksCreated = 0;
@@ -95,7 +95,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -105,7 +105,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1568799IEnumerableAsyncCannotBeIteratedAgain()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1568799Job-" + TestUtilities.GetMyName();
@@ -133,7 +133,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -143,7 +143,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1719609ODATADetailLevel()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 // pools tested in Bug1770942ExposeBatchRequestProperties
@@ -454,7 +454,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -464,7 +464,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1996130_ResourceDoubleRefreshDoesntWork()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string testName = "Bug1996130_ResourceDoubleRefreshDoesntWork";
@@ -563,7 +563,7 @@
                 {
                     batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -573,7 +573,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void CommitFollowedByRefreshTest()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string testName = "PostCommitInvalidPropRouterTests";
@@ -608,7 +608,7 @@
                 {
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -618,7 +618,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1959324TestCustomBehaviorWorksOnLists()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string bug1959324JobId = null;
@@ -674,19 +674,19 @@
                     // this yield injector will mung the func to make a get job call
                     // with real arguments.  the call made in the test has arguments that
                     // would fail/throw.
-                    Protocol.BatchRequestModificationInterceptHandler yieldInjectionInterceptor = baseRequest =>
+                    void yieldInjectionInterceptor(Protocol.IBatchRequest baseRequest)
                     {
                         testOutputHelper.WriteLine("Yield Injector!");
 
                         var request =
                             (JobGetBatchRequest)baseRequest;
 
-                            // replace the func with one that actually will work
-                            request.ServiceRequestFunc = (token) => { return request.RestClient.Job.GetWithHttpMessagesAsync(bug1959324JobId, request.Options, cancellationToken: token); };
+                        // replace the func with one that actually will work
+                        request.ServiceRequestFunc = (token) => { return request.RestClient.Job.GetWithHttpMessagesAsync(bug1959324JobId, request.Options, cancellationToken: token); };
 
-                            // the func has been replaced with one that will work.. and the caller will get a real job
-                            testOutputHelper.WriteLine("Leaving Yield Injector!");
-                    };
+                        // the func has been replaced with one that will work.. and the caller will get a real job
+                        testOutputHelper.WriteLine("Leaving Yield Injector!");
+                    }
 
                     CloudJob boundJob = batchCli.JobOperations.GetJob(
                                         "test value that can't possibly be found as a job id",
@@ -703,7 +703,7 @@
                     // cleanup
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, bug1959324JobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -713,7 +713,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1910530_ConcurrentChangeTrackedList()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string testName = "Bug1910530_ConcurrentChangeTrackedList";
@@ -932,7 +932,7 @@
                         TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -942,7 +942,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestDisplayNameMutability()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string testName = "TestDisplayNameMutability";
@@ -1111,7 +1111,7 @@
                     testOutputHelper.WriteLine("Deleting pool {0}", poolId);
                     batchCli.PoolOperations.DeletePool(poolId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -1179,9 +1179,10 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        [Trait("Flaky", "true")]
         public void Bug1770942ExposeBatchRequestProperties()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 List<string> poolIdsToCreate = new List<string>();
@@ -1307,6 +1308,7 @@
                         // we have the matching instance with full props from list-all, and selected props from list+DetailLevel
                         // now test poolMgr.GetPool + detailLevel
 
+                        Thread.Sleep(10000); // TODO: Remove this band-aid. It's just to give the operation more time before the following line, but this is a bad, flaky solution.
                         CloudPool lowerDetailLevel = batchCli.PoolOperations.GetPool(matchingPoolWithFullDetailLevel.Id, new ODATADetailLevel() { SelectClause = "id,state" });
 
                         // confirm that allocation state was not read in
@@ -1347,7 +1349,7 @@
 
                     Task.WhenAll(deletePoolTasks).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

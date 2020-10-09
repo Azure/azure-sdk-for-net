@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿
+
 namespace BatchClientIntegrationTests.IntegrationTestUtilities
 {
     using BatchTestCommon;
@@ -18,7 +18,6 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
     using Microsoft.Azure.Batch.Common;
-    using Newtonsoft.Json;
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;

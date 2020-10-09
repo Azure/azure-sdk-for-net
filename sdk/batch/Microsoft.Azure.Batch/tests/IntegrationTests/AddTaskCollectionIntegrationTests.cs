@@ -95,7 +95,7 @@
             const int countToFailAt = 102;
             const int taskCount = 407;
             HashSet<string> taskIdsExpectedToFail = new HashSet<string>();
-            Func<AddTaskResult, CancellationToken, AddTaskResultStatus> resultHandlerFunc = (result, token) =>
+            AddTaskResultStatus resultHandlerFunc(AddTaskResult result, CancellationToken token)
             {
                 testOutputHelper.WriteLine("Task: {0} got status code: {1}", result.TaskId, result.Status);
                 ++count;
@@ -121,7 +121,7 @@
                         return AddTaskResultStatus.Success;
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
@@ -157,7 +157,7 @@
             int numberOfTasksWhichHitClientError = 0;
             int numberOfTasksWhichWereForcedToRetry = 0;
 
-            Func<AddTaskResult, CancellationToken, AddTaskResultStatus> resultHandlerFunc = (result, token) =>
+            AddTaskResultStatus resultHandlerFunc(AddTaskResult result, CancellationToken token)
             {
                 testOutputHelper.WriteLine("Task: {0} got status code: {1}", result.TaskId, result.Status);
                 AddTaskResultStatus resultAction;
@@ -186,7 +186,7 @@
                 }
 
                 return resultAction;
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
@@ -379,13 +379,13 @@
         {
             const string testName = "Bug1360227_ConfirmResultHandlerTaskReadOnly";
 
-            Func<AddTaskResult, CancellationToken, AddTaskResultStatus> resultHandlerFunc = (result, token) =>
+            AddTaskResultStatus resultHandlerFunc(AddTaskResult result, CancellationToken token)
             {
                 //Count everything as a success
                 AddTaskResultStatus resultAction = AddTaskResultStatus.Success;
 
                 //Try to set a property of the cloud task
-                InvalidOperationException e = TestUtilities.AssertThrows<InvalidOperationException>(() => 
+                InvalidOperationException e = TestUtilities.AssertThrows<InvalidOperationException>(() =>
                     result.Task.Constraints = new TaskConstraints(TimeSpan.FromSeconds(5), null, null));
 
                 Assert.Contains("Write access is not allowed.", e.Message);
@@ -404,7 +404,7 @@
                 //}
 
                 return resultAction;
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {

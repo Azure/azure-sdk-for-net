@@ -22,8 +22,6 @@ namespace BatchClientIntegrationTests
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
-    using Azure.Storage;
-    using Azure.Storage.Blobs.Models;
     using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
 
     public class CloudPoolIntegrationTests
@@ -43,7 +41,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task PoolPatch()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string poolId = "TestPatchPool-" + TestUtilities.GetMyName();
@@ -80,7 +78,7 @@ namespace BatchClientIntegrationTests
                 {
                     await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -90,7 +88,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1505248SupportMultipleTasksPerComputeNodeOnPoolAndPoolUserSpec()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 // create a pool with the two new props
@@ -171,7 +169,7 @@ namespace BatchClientIntegrationTests
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -181,7 +179,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1587303StartTaskResourceFilesNotPushedToServer()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "Bug1587303Pool-" + TestUtilities.GetMyName();
@@ -269,10 +267,12 @@ namespace BatchClientIntegrationTests
                     {
                         CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
-                        StartTask st = new StartTask("dir");
-                        // use the empty collections from above
-                        st.ResourceFiles = emptyResfiles;
-                        st.EnvironmentSettings = emptyEnvSettings;
+                        StartTask st = new StartTask("dir")
+                        {
+                            // use the empty collections from above
+                            ResourceFiles = emptyResfiles,
+                            EnvironmentSettings = emptyEnvSettings
+                        };
 
                         // set the pool's start task so the collections get pushed
                         myPool.StartTask = st;
@@ -297,7 +297,7 @@ namespace BatchClientIntegrationTests
                     // cleanup
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -307,7 +307,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1433123PoolMissingResizeTimeout()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "Bug1433123PoolMissingResizeTimeout-" + TestUtilities.GetMyName();
@@ -341,7 +341,7 @@ namespace BatchClientIntegrationTests
                     // cleanup
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -351,7 +351,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1656475PoolLifetimeOption()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jsId = "Bug1656475PoolLifetimeOption-" + TestUtilities.GetMyName();
@@ -410,7 +410,7 @@ namespace BatchClientIntegrationTests
                     // cleanup
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -420,7 +420,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public void Bug1432812SetAutoScaleMissingOnPoolPoolMgr()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "Bug1432812-" + TestUtilities.GetMyName();
@@ -480,7 +480,7 @@ namespace BatchClientIntegrationTests
                 {
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -490,7 +490,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1432819UpdateImplOnCloudPool()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "Bug1432819-" + TestUtilities.GetMyName();
@@ -520,7 +520,7 @@ namespace BatchClientIntegrationTests
                     // cleanup
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -530,7 +530,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestListPoolUsageMetrics()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 // test via faking data
@@ -576,7 +576,7 @@ namespace BatchClientIntegrationTests
                 }
 
                 List<PoolUsageMetrics> list = batchCli.PoolOperations.ListPoolUsageMetrics(DateTime.Now - TimeSpan.FromDays(1)).ToList();
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -586,7 +586,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestPoolObjectResizeStopResize()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "TestPoolObjectResizeStopResize" + TestUtilities.GetMyName();
@@ -622,7 +622,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -632,7 +632,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public void TestPoolAutoscaleVerbs()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = TestUtilities.GenerateResourceId();
@@ -718,7 +718,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -728,7 +728,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestServerRejectsNonExistantVNetWithCorrectError()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "TestPoolVNet" + TestUtilities.GetMyName();
@@ -758,7 +758,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -768,7 +768,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestPoolCreatedWithUserAccountsSucceeds()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string poolId = "TestPoolCreatedWithUserAccounts" + TestUtilities.GetMyName();
@@ -804,7 +804,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -814,7 +814,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestPoolCreatedOSDiskSucceeds()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string poolId = nameof(TestPoolCreatedOSDiskSucceeds) + TestUtilities.GetMyName();
@@ -845,7 +845,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -855,7 +855,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestPoolCreatedDataDiskSucceeds()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string poolId = nameof(TestPoolCreatedDataDiskSucceeds) + TestUtilities.GetMyName();
@@ -891,7 +891,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -901,9 +901,9 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestPoolCreatedCustomImageExpectedError()
         {
-            Action test = () =>
+            void test()
             {
-                Func<Task<string>> tokenProvider = () => IntegrationTestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
+                static Task<string> tokenProvider() => IntegrationTestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
 
                 using var client = BatchClient.Open(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, tokenProvider));
                 string poolId = "TestPoolCreatedWithCustomImage" + TestUtilities.GetMyName();
@@ -933,7 +933,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -947,7 +947,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task ResizePool_AcceptedByServer(int? targetDedicated, int? targetLowPriority)
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string poolId = TestUtilities.GenerateResourceId();
@@ -978,7 +978,7 @@ namespace BatchClientIntegrationTests
                 {
                     await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
                 }
-            };
+            }
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
@@ -987,7 +987,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void PoolStateCount_IsReturnedFromServer()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 var nodeCounts = batchCli.PoolOperations.ListPoolNodeCounts();
@@ -1008,7 +1008,7 @@ namespace BatchClientIntegrationTests
 
                 var filteredNodeCounts = batchCli.PoolOperations.ListPoolNodeCounts(new ODATADetailLevel(filterClause: $"poolId eq '{poolId}'")).ToList();
                 Assert.Single(filteredNodeCounts);
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -1018,7 +1018,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void ListSupportedImages()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 var supportedImages = batchCli.PoolOperations.ListSupportedImages().ToList();
@@ -1035,7 +1035,7 @@ namespace BatchClientIntegrationTests
                     testOutputHelper.WriteLine("   sku: " + imageInfo.ImageReference.Sku);
                     testOutputHelper.WriteLine("   version: " + imageInfo.ImageReference.Version);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
         }
@@ -1045,7 +1045,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task CreatePool_WithBlobFuseMountConfiguration()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string poolId = TestUtilities.GenerateResourceId();
@@ -1089,7 +1089,7 @@ namespace BatchClientIntegrationTests
                 {
                     await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
                 }
-            };
+            }
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
@@ -1098,7 +1098,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestCreatePoolEncryptionEnabled()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string poolId = nameof(TestCreatePoolEncryptionEnabled) + TestUtilities.GetMyName();
@@ -1128,7 +1128,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -1255,7 +1255,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void LongRunning_RemovePoolComputeNodesResizeTimeout_ResizeErrorsPopulated()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "Bug2251050_TestRemoveComputeNodesResizeTimeout_LR" + TestUtilities.GetMyName();
@@ -1332,7 +1332,7 @@ namespace BatchClientIntegrationTests
                     //Delete the job schedule
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -1358,7 +1358,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void LongRunning_TestRemovePoolComputeNodes()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "TestRemovePoolComputeNodes_LongRunning" + TestUtilities.GetMyName();
@@ -1458,7 +1458,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     batchCli.PoolOperations.DeletePool(poolId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -1484,7 +1484,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public async Task LongRunning_LowPriorityComputeNodeAllocated_IsDedicatedFalse()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "TestLowPri_LongRunning" + TestUtilities.GetMyName();
@@ -1522,7 +1522,7 @@ namespace BatchClientIntegrationTests
                     //Delete the pool
                     await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -1544,7 +1544,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void LongRunning_Bug1771277_1771278_RebootReimageComputeNode()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "LongRunning_Bug1771277_1771278_RebootReimageComputeNode" + TestUtilities.GetMyName();
@@ -1658,7 +1658,7 @@ namespace BatchClientIntegrationTests
                         Assert.False(DateTime.UtcNow > timeoutAfterThisTimeUtc, "Timed out waiting for compute nodes in pool to reach idle state");
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }

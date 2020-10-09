@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests.Fixtures
+namespace BatchClientIntegrationTests.Fixtures
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using IntegrationTestUtilities;
@@ -21,7 +20,7 @@
         {
             List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
-            Func<ImageInformation, bool> ubuntuImageScanner = imageInfo =>
+            static bool ubuntuImageScanner(ImageInformation imageInfo) =>
                 imageInfo.ImageReference.Publisher == "canonical" &&
                 imageInfo.ImageReference.Offer == "ubuntuserver" &&
                 imageInfo.ImageReference.Sku.Contains("16.04");

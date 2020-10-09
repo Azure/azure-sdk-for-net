@@ -18,15 +18,6 @@ namespace Azure.Batch.Unit.Tests
 
     public class GetFileRequestByteRangeTests
     {
-        private ITestOutputHelper testOutputHelper;
-        private const int DefaultServerTimeoutInSeconds = 30;
-        private static readonly TimeSpan DefaultClientTimeout = TimeSpan.FromSeconds(60);
-
-        public GetFileRequestByteRangeTests(ITestOutputHelper testOutputHelper)
-        {
-            this.testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task WhenGettingTaskFileUsingReadAsString_OcpRangeHeaderIsSet()
@@ -145,8 +136,7 @@ namespace Azure.Batch.Unit.Tests
         {
             return new Protocol.RequestInterceptor(request =>
             {
-                TRequest getFileRequest = request as TRequest;
-                if (getFileRequest != null)
+                if (request is TRequest getFileRequest)
                 {
                     getFileRequest.ServiceRequestFunc = t =>
                     {
@@ -172,8 +162,7 @@ namespace Azure.Batch.Unit.Tests
         {
             return new Protocol.RequestInterceptor(request =>
             {
-                TRequest getFilePropertiesRequest = request as TRequest;
-                if (getFilePropertiesRequest != null)
+                if (request is TRequest getFilePropertiesRequest)
                 {
                     getFilePropertiesRequest.ServiceRequestFunc = t =>
                     {

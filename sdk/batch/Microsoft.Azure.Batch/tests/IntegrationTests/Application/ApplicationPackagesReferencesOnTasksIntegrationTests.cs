@@ -29,7 +29,7 @@
             const string applicationId = "blender";
             const string applicationVerson = "beta";
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 var poolInfo = new PoolInformation
@@ -75,7 +75,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -89,7 +89,7 @@
             const string applicationId = "blender";
             const string applicationVersion = "beta";
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 var poolInfo = new PoolInformation
@@ -131,7 +131,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }

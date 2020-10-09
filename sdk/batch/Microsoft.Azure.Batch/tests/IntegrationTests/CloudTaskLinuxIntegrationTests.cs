@@ -13,10 +13,8 @@ namespace BatchClientIntegrationTests
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
     using IntegrationTestUtilities;
     using Xunit;
-    using Xunit.Abstractions;
     using Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities;
     using Azure.Storage.Blobs;
-    using Azure.Storage.Blobs.Models;
     using System.Threading.Tasks;
 
     [Collection("SharedLinuxPoolCollection")]
@@ -35,7 +33,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task RunTaskAndUploadFiles_FilesAreSuccessfullyUploaded()
         {
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "RunTaskAndUploadFiles-" + TestUtilities.GetMyName();
@@ -83,17 +81,10 @@ namespace BatchClientIntegrationTests
                 }
                 finally
                 {
-                    try
-                    {
-                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).ConfigureAwait(false);
-                        containerClient.DeleteIfExists();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw;
-                    }
+                    await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).ConfigureAwait(false);
+                    containerClient.DeleteIfExists();
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -103,7 +94,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public void TestContainerTask()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "ContainerJob" + TestUtilities.GetMyName();
@@ -136,7 +127,7 @@ namespace BatchClientIntegrationTests
                 {
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TimeSpan.FromMinutes(10));
         }

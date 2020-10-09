@@ -160,25 +160,25 @@ namespace Azure.Batch.Unit.Tests
 
             Random rand = new Random();
 
-            Func<object> omTaskRangeBuilder = () =>
+            object omTaskRangeBuilder()
             {
                 int rangeLimit1 = rand.Next(0, int.MaxValue);
                 int rangeLimit2 = rand.Next(0, int.MaxValue);
 
                 return new TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
-            };
+            }
 
-            Func<object> iFileStagingProviderBuilder = () => null;
+            object iFileStagingProviderBuilder() => null;
 
-            Func<object> batchClientBehaviorBuilder = () => null;
+            object batchClientBehaviorBuilder() => null;
 
-            Func<object> taskRangeBuilder = () =>
+            object taskRangeBuilder()
             {
                 int rangeLimit1 = rand.Next(0, int.MaxValue);
                 int rangeLimit2 = rand.Next(0, int.MaxValue);
 
                 return new Protocol.Models.TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
-            };
+            }
 
             ObjectFactoryConstructionSpecification certificateReferenceSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.CertificateReference),

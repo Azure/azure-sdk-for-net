@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
@@ -14,7 +11,6 @@
     using Xunit.Abstractions;
 
     using Microsoft.Azure.Batch;
-    using Protocol = Microsoft.Azure.Batch.Protocol;
     using BatchTestCommon;
     using IntegrationTestUtilities;
     using Fixtures;

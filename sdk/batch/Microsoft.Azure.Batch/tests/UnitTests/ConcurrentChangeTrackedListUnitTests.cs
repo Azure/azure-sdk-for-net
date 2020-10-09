@@ -42,13 +42,13 @@
             unboundJobSchedule.Metadata = new List<MetadataItem>();
 
             //Now it should be magically threadsafe
-            Action addAction = () =>
+            void addAction()
             {
                 this.testOutputHelper.WriteLine("Adding an item");
                 unboundJobSchedule.Metadata.Add(new MetadataItem("test", "test"));
-            };
+            }
 
-            Action removeAction = () =>
+            void removeAction()
             {
                 this.testOutputHelper.WriteLine("Removing an item");
                 try
@@ -58,7 +58,7 @@
                 catch (ArgumentOutOfRangeException)
                 {
                 }
-            };
+            }
 
             Random rand = new Random();
             object randLock = new object();
@@ -116,9 +116,10 @@
         public void ConcurrentChangeTrackedSimpleTypeListReadOnly()
         {
             const string item1 = "Foo";
-            var list = new ConcurrentChangeTrackedList<string>();
-
-            list.IsReadOnly = true;
+            var list = new ConcurrentChangeTrackedList<string>
+            {
+                IsReadOnly = true
+            };
             Assert.Throws<InvalidOperationException>(() => list.Add(item1));
             Assert.False(list.HasBeenModified);
         }
@@ -134,9 +135,10 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void ConcurrentChangeTrackedComplexTypeListReadOnly()
         {
-            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { new DummyComplexType() });
-
-            list.IsReadOnly = true;
+            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { new DummyComplexType() })
+            {
+                IsReadOnly = true
+            };
             Assert.Throws<InvalidOperationException>(() => list.Add(new DummyComplexType()));
             Assert.False(list.HasBeenModified);
             Assert.True(list.First().IsReadOnly);
@@ -146,9 +148,10 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void ConcurrentChangeTrackedComplexTypeListReadOnlyWithNull()
         {
-            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { null });
-
-            list.IsReadOnly = true;
+            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { null })
+            {
+                IsReadOnly = true
+            };
             Assert.Throws<InvalidOperationException>(() => list.Add(new DummyComplexType()));
         }
 
@@ -156,9 +159,10 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void ConcurrentChangeTrackedComplexTypeListHasBeenModifiedWithNull()
         {
-            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { null });
-
-            list.Add(null);
+            var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(new List<DummyComplexType> { null })
+            {
+                null
+            };
             Assert.True(list.HasBeenModified);
         }
         

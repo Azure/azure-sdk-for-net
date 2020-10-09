@@ -5,7 +5,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using BatchClientIntegrationTests.IntegrationTestUtilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities
