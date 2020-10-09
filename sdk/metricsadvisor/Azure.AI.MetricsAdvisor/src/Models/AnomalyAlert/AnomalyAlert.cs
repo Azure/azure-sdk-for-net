@@ -10,7 +10,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// The properties of a triggered alert. An alert is triggered according to the rules set by an
     /// <see cref="AnomalyAlertConfiguration"/>.
     /// </summary>
-    public partial class AlertResult
+    [CodeGenModel("AlertResult")]
+    public partial class AnomalyAlert
     {
         /// <summary>
         /// The unique identifier of this alert.

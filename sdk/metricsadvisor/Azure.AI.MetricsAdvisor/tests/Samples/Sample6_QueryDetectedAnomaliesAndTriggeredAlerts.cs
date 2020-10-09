@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int alertCount = 0;
 
-            await foreach (AlertResult alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
+            await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
             {
                 Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
                 Console.WriteLine($"Id: {alert.Id}");
