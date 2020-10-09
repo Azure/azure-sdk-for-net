@@ -408,7 +408,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValue, ServiceGetKeyValueHeaders>> GetKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, ServiceGetKeyValueHeaders>> GetKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -422,9 +422,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -441,7 +441,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<KeyValue, ServiceGetKeyValueHeaders> GetKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, ServiceGetKeyValueHeaders> GetKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -455,9 +455,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -465,7 +465,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreatePutKeyValueRequest(string key, string label, string ifMatch, string ifNoneMatch, KeyValue entity)
+        internal HttpMessage CreatePutKeyValueRequest(string key, string label, string ifMatch, string ifNoneMatch, ConfigurationSetting entity)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -510,7 +510,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="entity"> The key-value to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValue, ServicePutKeyValueHeaders>> PutKeyValueAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, KeyValue entity = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, ServicePutKeyValueHeaders>> PutKeyValueAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, ConfigurationSetting entity = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -524,9 +524,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -542,7 +542,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="entity"> The key-value to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<KeyValue, ServicePutKeyValueHeaders> PutKeyValue(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, KeyValue entity = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, ServicePutKeyValueHeaders> PutKeyValue(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, ConfigurationSetting entity = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -556,9 +556,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -598,7 +598,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValue, ServiceDeleteKeyValueHeaders>> DeleteKeyValueAsync(string key, string label = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, ServiceDeleteKeyValueHeaders>> DeleteKeyValueAsync(string key, string label = null, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -612,13 +612,13 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue<KeyValue, ServiceDeleteKeyValueHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<ConfigurationSetting, ServiceDeleteKeyValueHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -630,7 +630,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<KeyValue, ServiceDeleteKeyValueHeaders> DeleteKeyValue(string key, string label = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, ServiceDeleteKeyValueHeaders> DeleteKeyValue(string key, string label = null, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -644,13 +644,13 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue<KeyValue, ServiceDeleteKeyValueHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<ConfigurationSetting, ServiceDeleteKeyValueHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -943,7 +943,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifNoneMatch"> Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValue, ServicePutLockHeaders>> PutLockAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, ServicePutLockHeaders>> PutLockAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -957,9 +957,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -974,7 +974,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifNoneMatch"> Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<KeyValue, ServicePutLockHeaders> PutLock(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, ServicePutLockHeaders> PutLock(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -988,9 +988,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1035,7 +1035,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifNoneMatch"> Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValue, ServiceDeleteLockHeaders>> DeleteLockAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, ServiceDeleteLockHeaders>> DeleteLockAsync(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -1049,9 +1049,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1066,7 +1066,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="ifNoneMatch"> Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<KeyValue, ServiceDeleteLockHeaders> DeleteLock(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, ServiceDeleteLockHeaders> DeleteLock(string key, string label = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -1080,9 +1080,9 @@ namespace Azure.Learn.AppConfig
             {
                 case 200:
                     {
-                        KeyValue value = default;
+                        ConfigurationSetting value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
+                        value = ConfigurationSetting.DeserializeConfigurationSetting(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
