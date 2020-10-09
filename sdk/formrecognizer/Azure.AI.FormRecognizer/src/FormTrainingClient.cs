@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -113,7 +114,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -128,7 +129,11 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
+                    SourceFilter = trainingOptions.TrainingFileFilter,
+                    UseLabelFile = useTrainingLabels,
+                    ModelName = trainingOptions.ModelName
+                };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
@@ -149,7 +154,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -164,10 +169,102 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
+                    SourceFilter = trainingOptions.TrainingFileFilter,
+                    UseLabelFile = useTrainingLabels,
+                    ModelName = trainingOptions.ModelName
+                };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Composed model
+
+        /// <summary>
+        /// Creates a composed model from a collection of existing trained models with labels.
+        /// </summary>
+        /// <param name="modelIds">List of model ids to use in the composed model.</param>
+        /// <param name="createComposedModelOptions">A set of options available for configuring the create composed model request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the composed model.</para>
+        /// </returns>
+        public virtual CreateComposedModelOperation StartCreateComposedModel(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(modelIds, nameof(modelIds));
+            createComposedModelOptions ??= new CreateComposedModelOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartCreateComposedModel)}");
+            scope.Start();
+
+            try
+            {
+                var modelIdsGuid = new List<Guid>();
+                foreach (var modelId in modelIds)
+                {
+                    modelIdsGuid.Add(ClientCommon.ValidateModelId(modelId, nameof(modelId)));
+                }
+
+                var composeRequest = new ComposeRequest(modelIdsGuid);
+                if (createComposedModelOptions.ModelName.Length > 0)
+                {
+                    composeRequest.ModelName = createComposedModelOptions.ModelName;
+                }
+
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a composed model from a collection of existing trained models with labels.
+        /// </summary>
+        /// <param name="modelIds">List of model ids to use in the composed model.</param>
+        /// <param name="createComposedModelOptions">A set of options available for configuring the create composed model request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the composed model.</para>
+        /// </returns>
+        public virtual async Task<CreateComposedModelOperation> StartCreateComposedModelAsync(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(modelIds, nameof(modelIds));
+            createComposedModelOptions ??= new CreateComposedModelOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartCreateComposedModel)}");
+            scope.Start();
+
+            try
+            {
+                var modelIdsGuid = new List<Guid>();
+                foreach (var modelId in modelIds)
+                {
+                    modelIdsGuid.Add(ClientCommon.ValidateModelId(modelId, nameof(modelId)));
+                }
+
+                var composeRequest = new ComposeRequest(modelIdsGuid);
+                if (createComposedModelOptions.ModelName?.Length > 0)
+                {
+                    composeRequest.ModelName = createComposedModelOptions.ModelName;
+                }
+
+                ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {

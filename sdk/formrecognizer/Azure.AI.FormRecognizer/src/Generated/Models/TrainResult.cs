@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, Guid? modelId, IReadOnlyList<FormRecognizerError> errors)
+        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, string modelId, IReadOnlyList<FormRecognizerError> errors)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;
@@ -52,8 +52,6 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<CustomFormModelField> Fields { get; }
         /// <summary> Average accuracy. </summary>
         public float? AverageModelAccuracy { get; }
-        /// <summary> Model identifier. </summary>
-        public Guid? ModelId { get; }
         /// <summary> Errors returned during the training operation. </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
     }

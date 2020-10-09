@@ -1,7 +1,9 @@
 # Azure Communication Administration client library for .NET
 
-> Server Version: 
+> Server Version:
 Identity client: 2020-07-20-preview2
+
+> Phone number administration client: 2020-07-20-preview1
 
 Azure Communication Administration is managing tokens and phone numbers for Azure Communication Services.
 
@@ -13,7 +15,7 @@ Azure Communication Administration is managing tokens and phone numbers for Azur
 Install the Azure Communication Administration client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Administration --version 1.0.0-beta.1
+dotnet add package Azure.Communication.Administration --version 1.0.0-beta.2
 ```
 
 ### Prerequisites
@@ -91,6 +93,126 @@ catch (RequestFailedException ex)
 }
 ```
 
+
+
+### Phone plans overview
+
+Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
+
+All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
+
+### Searching and acquiring numbers
+
+Phone numbers search can be performed through the search creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This search of phone numbers can either be cancelled or purchased. If the search is cancelled, then the phone numbers will become available to others. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+
+### Configuring / Assigning numbers
+
+Phone numbers can be assigned to a callback URL via the configure number API. As part of the configuration, you will need an acquired phone number, callback URL and application id.
+
+## Examples
+
+### Get list of the countries that are supported by the service
+
+```C#
+string connectionString = "<connection_string>";
+PhoneNumberAdministrationClient client = new PhoneNumberAdministrationClient(connectionString);
+Pageable<PhoneNumberCountry> countries = client.GetAllSupportedCountries();
+
+foreach (var country in countries)
+{
+    Console.WriteLine($"Country code {country.CountryCode}, Country name: {country.LocalizedName}");
+}
+```
+
+### Get phone plan groups
+
+Phone plan groups come in two types, Geographic and Toll-Free.
+
+```C#
+var phonePlanGroups = client.GetPhonePlanGroups(countryCode);
+
+foreach (var group in phonePlanGroups)
+{
+    Console.WriteLine($"PhonePlanGroupId {group.PhonePlanGroupId}, Name: {group.LocalizedName}, PhoneNumberType: {group.PhoneNumberType}");
+}
+```
+
+### Get phone plans
+
+Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
+
+```C#
+var phonePlans = client.GetPhonePlans(countryCode, planGroupId);
+
+foreach (var plan in phonePlans)
+{
+    Console.WriteLine($"PhonePlanId {plan.PhonePlanId}, Name: {plan.LocalizedName}");
+    Console.WriteLine("Top 10 area codes");
+    foreach (var areaCode in plan.AreaCodes.Take(10).ToList())
+    {
+        Console.WriteLine($"Area code: {areaCode}");
+    }
+}
+```
+
+### Get location options
+
+For Geographic phone plans, you can query the available geographic locations. The locations options are structured like the geographic hierarchy of a country. For example, the US has states and within each state are cities.
+
+```C#
+var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, phonePlanGroupId, phonePlanId);
+var locationOprions = locationOptionsResponse.Value.LocationOptions;
+
+Console.WriteLine($"LabelId: {locationOprions.LabelId}, LabelName: {locationOprions.LabelName}");
+foreach(var locationOption in locationOprions.Options)
+{
+    Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
+}
+```
+
+### Get area codes
+
+Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
+
+
+```C#
+var areaCodesResponse = client.GetAllAreaCodes(locationType, countryCode, planId, locationOptionsQueries);
+var areaCodes = areaCodesResponse.Value;
+
+foreach(var primaryAreaCode in areaCodes.PrimaryAreaCodes)
+{
+    Console.WriteLine("Primary area code" + primaryAreaCode);
+}
+
+foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
+{
+    Console.WriteLine("Secondary area code" + secondaryAreaCode);
+}
+```
+
+### Create search
+
+```C#
+var searchOptions = new CreateSearchOptions(displayName, description, plans, areaCode) { Quantity = 1 };
+var createSearchResponse = client.CreateSearch(searchOptions);
+
+Console.WriteLine($"Search result: SearchId: {createSearchResponse.Value.SearchId}");
+```
+
+### Purchase search
+
+```C#
+client.PurchaseSearch(searchId);
+```
+
+### Configure phone number
+
+```C#
+var pstnConfiguration = new PstnConfiguration("<url>");
+var phoneNumber = new PhoneNumber("<phone_number>");
+client.ConfigureNumber(pstnConfiguration, phoneNumber);
+```
+
 ## Next steps
 [Read more about Communication user access tokens][user_access_token]
 
@@ -114,4 +236,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-

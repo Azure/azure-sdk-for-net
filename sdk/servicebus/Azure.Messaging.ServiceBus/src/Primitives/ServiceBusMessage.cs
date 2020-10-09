@@ -63,6 +63,14 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
             AmqpMessage = new AmqpAnnotatedMessage(receivedMessage.AmqpMessage);
+            AmqpMessage.Header.DeliveryCount = null;
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.LockedUntilName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.SequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.DeadLetterSourceName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueueSequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueuedTimeUtcName);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterReasonHeader);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
         }
 
         /// <summary>

@@ -1,5 +1,10 @@
 # Release History
 
+## 1.6.0-beta.1 (Unreleased)
+
+### Added
+- The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+
 ## 1.5.1 (2020-10-01)
 
 ### Changed
@@ -17,7 +22,7 @@
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
-  </ItemGroup>
+  </ItemGroup> 
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.

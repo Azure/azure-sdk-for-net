@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             return CreateClient<CosmosDBManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new CosmosDBManagementClientOptions()));
+                InstrumentClientOptions(new CosmosDBManagementClientOptions()));
         }
 
         protected void initNewRecord()

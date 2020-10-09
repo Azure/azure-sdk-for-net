@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -35,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         metricId,
                         new GetMetricSeriesDefinitionsOptions(Recording.UtcNow.AddYears(-5)) { TopCount = 2 }))
                     {
-                        Assert.That(metricDef.Dimension.Count, Is.Not.Zero);
+                        Assert.That(metricDef.SeriesKey.Dimension.Count, Is.Not.Zero);
 
                         // stop when we find at least one definition
                         if (++totalcount >= 1)
@@ -178,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 AlertConfigurationId,
                 new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
             {
-                Assert.That(alert.AlertId, Is.Not.Null);
+                Assert.That(alert.Id, Is.Not.Null);
 
                 // Just fetch 2 pages
                 if (++pages > 2)
@@ -283,7 +282,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var status in client.GetEnrichmentStatusesAsync(MetricId, new GetEnrichmentStatusOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
+            await foreach (var status in client.GetMetricEnrichmentStatusesAsync(MetricId, new GetMetricEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
             {
                 Assert.That(status, Is.Not.Null);
 
@@ -297,31 +296,30 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(pages, Is.GreaterThan(0));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricFeedbacks()
         {
             var client = GetMetricsAdvisorClient();
 
-            Guid expectedId = new Guid(MetricId);
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(new GetMetricFeedbackOptions(MetricId) { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
-                Assert.That(feedback.MetricId, Is.EqualTo(expectedId));
-                switch (feedback.FeedbackType.ToString())
+                Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
+                switch (feedback.Type.ToString())
                 {
                     case "Anomaly":
-                        Assert.That(feedback is AnomalyFeedback);
+                        Assert.That(feedback is MetricAnomalyFeedback);
                         break;
                     case "ChangePoint":
-                        Assert.That(feedback is ChangePointFeedback);
+                        Assert.That(feedback is MetricChangePointFeedback);
                         break;
                     case "Period":
-                        Assert.That(feedback is PeriodFeedback);
+                        Assert.That(feedback is MetricPeriodFeedback);
                         break;
                     case "Comment":
-                        Assert.That(feedback is CommentFeedback);
+                        Assert.That(feedback is MetricCommentFeedback);
                         break;
                     default:
                         Assert.Fail("Unexpected MetricFeedback type");
@@ -342,20 +340,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateMetricFeedback()
         {
             var client = GetMetricsAdvisorClient();
-            Guid metricIdGuid = new Guid(MetricId);
             FeedbackDimensionFilter dimensionFilter = new FeedbackDimensionFilter(
-                new Dictionary<string, string>
-                {
-                    {"Dim1", "Common Lime"},
-                    {"Dim2", "Ant"}
-                });
+                new DimensionKey(
+                    new Dictionary<string, string>
+                    {
+                        {"Dim1", "Common Lime"},
+                        {"Dim2", "Ant"}
+                    }));
             DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
             DateTimeOffset end = Recording.UtcNow;
 
-            AnomalyFeedback anomalyFeedback = new AnomalyFeedback(metricIdGuid, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
-            ChangePointFeedback changePointFeedback = new ChangePointFeedback(metricIdGuid, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
-            PeriodFeedback periodFeedback = new PeriodFeedback(metricIdGuid, dimensionFilter, new PeriodFeedbackValue(PeriodType.AssignValue, 5));
-            CommentFeedback commentFeedback = new CommentFeedback(metricIdGuid, dimensionFilter, "my comment");
+            MetricAnomalyFeedback anomalyFeedback = new MetricAnomalyFeedback(MetricId, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
+            MetricChangePointFeedback changePointFeedback = new MetricChangePointFeedback(MetricId, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
+            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, PeriodType.AssignValue, 5);
+            MetricCommentFeedback commentFeedback = new MetricCommentFeedback(MetricId, dimensionFilter, "my comment");
 
             var feedbacks = new List<MetricFeedback>
             {
@@ -369,12 +367,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 MetricFeedback createdFeedback = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
 
-                Assert.That(createdFeedback.MetricId, Is.EqualTo(metricIdGuid));
-                Assert.That(createdFeedback.FeedbackId, Is.Not.Null);
+                Assert.That(createdFeedback.MetricId, Is.EqualTo(MetricId));
+                Assert.That(createdFeedback.Id, Is.Not.Null);
 
-                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(createdFeedback.FeedbackId.ToString()).ConfigureAwait(false);
+                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedback.Id).ConfigureAwait(false);
 
-                Assert.That(createdFeedback.FeedbackId, Is.EqualTo(getFeedback.FeedbackId));
+                Assert.That(getFeedback.Id, Is.EqualTo(createdFeedback.Id));
             }
         }
     }

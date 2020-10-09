@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A Data feed source.
+    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public abstract class DataFeedSource
     {
@@ -78,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     DataFeedDetail.Viewers.Add(viewer);
                 }
-                DataFeedDetail.DataFeedDescription = dataFeedOptions.FeedDescription;
+                DataFeedDetail.DataFeedDescription = dataFeedOptions.Description;
                 DataFeedDetail.ViewMode = dataFeedOptions.AccessMode;
                 if (dataFeedOptions.RollupSettings != null)
                 {
@@ -94,6 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     DataFeedDetail.FillMissingPointType = dataFeedOptions.MissingDataPointFillSettings.FillType;
                     DataFeedDetail.FillMissingPointValue = dataFeedOptions.MissingDataPointFillSettings.CustomFillValue;
                 }
+                DataFeedDetail.ActionLinkTemplate = dataFeedOptions.ActionLinkTemplate;
             }
         }
     }

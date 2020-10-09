@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             return CreateClient<AppConfigurationManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
+                InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
         }
         internal NetworkManagementClient GetNetworkManagementClient()
         {
             return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
     }
 }

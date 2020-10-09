@@ -10,13 +10,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeverityCondition. </summary>
     public partial class SeverityCondition
     {
-        /// <summary> Initializes a new instance of SeverityCondition. </summary>
-        /// <param name="minimumAlertSeverity"> min alert severity. </param>
-        /// <param name="maximumAlertSeverity"> max alert severity. </param>
-        public SeverityCondition(AnomalySeverity minimumAlertSeverity, AnomalySeverity maximumAlertSeverity)
-        {
-            MinimumAlertSeverity = minimumAlertSeverity;
-            MaximumAlertSeverity = maximumAlertSeverity;
-        }
     }
 }

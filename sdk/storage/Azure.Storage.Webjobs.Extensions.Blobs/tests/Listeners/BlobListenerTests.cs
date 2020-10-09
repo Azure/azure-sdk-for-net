@@ -7,13 +7,13 @@ using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Blobs.Listeners
 {
     public class BlobListenerTests
     {
-        [Fact]
+        [Test]
         public void GetMonitor_ReturnsSharedMonitor()
         {
             var queueListener = new QueueListener();
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Blobs.Listeners
             var monitor1 = blobListener1.GetMonitor();
             var monitor2 = blobListener1.GetMonitor();
 
-            Assert.Same(monitor1, monitor2);
-            Assert.Same(monitor1, queueListener);
+            Assert.AreSame(monitor1, monitor2);
+            Assert.AreSame(monitor1, queueListener);
         }
     }
 }
