@@ -4,6 +4,7 @@
 
 ### Added
 - The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `AuthenticationRequiredException` was moved and forwarded from `Azure.Identity`. Please update to `Azure.Identity` to version `1.3.2`.
 
 ## 1.5.1 (2020-10-01)
 
