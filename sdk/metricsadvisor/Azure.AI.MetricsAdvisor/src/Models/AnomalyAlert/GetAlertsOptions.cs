@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="startTime">Filters the result. Only alerts triggered from this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only alerts triggered up to this point in time, in UTC, will be returned.</param>
-        /// <param name="timeMode">Specifies to which time property of an <see cref="AlertResult"/> the filters <paramref name="startTime"/> and <paramref name="endTime"/> will be applied.</param>
+        /// <param name="timeMode">Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <paramref name="startTime"/> and <paramref name="endTime"/> will be applied.</param>
         public GetAlertsOptions(DateTimeOffset startTime, DateTimeOffset endTime, TimeMode timeMode)
         {
             StartTime = startTime;
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset EndTime { get; }
 
         /// <summary>
-        /// Specifies to which time property of an <see cref="AlertResult"/> the filters <see cref="StartTime"/>
+        /// Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <see cref="StartTime"/>
         /// and <see cref="EndTime"/> will be applied.
         /// </summary>
         public TimeMode TimeMode { get; }

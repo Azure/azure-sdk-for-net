@@ -341,17 +341,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
             FeedbackDimensionFilter dimensionFilter = new FeedbackDimensionFilter(
-                new Dictionary<string, string>
-                {
-                    {"Dim1", "Common Lime"},
-                    {"Dim2", "Ant"}
-                });
+                new DimensionKey(
+                    new Dictionary<string, string>
+                    {
+                        {"Dim1", "Common Lime"},
+                        {"Dim2", "Ant"}
+                    }));
             DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
             DateTimeOffset end = Recording.UtcNow;
 
             MetricAnomalyFeedback anomalyFeedback = new MetricAnomalyFeedback(MetricId, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
             MetricChangePointFeedback changePointFeedback = new MetricChangePointFeedback(MetricId, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
-            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, new PeriodFeedbackValue(PeriodType.AssignValue, 5));
+            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, PeriodType.AssignValue, 5);
             MetricCommentFeedback commentFeedback = new MetricCommentFeedback(MetricId, dimensionFilter, "my comment");
 
             var feedbacks = new List<MetricFeedback>

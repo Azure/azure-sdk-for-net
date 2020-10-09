@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static AlertResultList DeserializeAlertResultList(JsonElement element)
         {
             string nextLink = default;
-            IReadOnlyList<AlertResult> value = default;
+            IReadOnlyList<AnomalyAlert> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"))
@@ -26,10 +26,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<AlertResult> array = new List<AlertResult>();
+                    List<AnomalyAlert> array = new List<AnomalyAlert>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertResult.DeserializeAlertResult(item));
+                        array.Add(AnomalyAlert.DeserializeAnomalyAlert(item));
                     }
                     value = array;
                     continue;

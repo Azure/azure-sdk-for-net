@@ -1280,10 +1280,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AlertResult"/>s.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlert"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AlertResult> GetAlertsAsync(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyAlert> GetAlertsAsync(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
@@ -1293,7 +1293,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options.SkipCount;
             int? top = options.TopCount;
 
-            async Task<Page<AlertResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnomalyAlert>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAlerts)}");
                 scope.Start();
@@ -1310,7 +1310,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            async Task<Page<AlertResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AnomalyAlert>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAlerts)}");
                 scope.Start();
@@ -1336,10 +1336,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AlertResult"/>s.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyAlert"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AlertResult> GetAlerts(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyAlert> GetAlerts(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
@@ -1349,7 +1349,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options.SkipCount;
             int? top = options.TopCount;
 
-            Page<AlertResult> FirstPageFunc(int? pageSizeHint)
+            Page<AnomalyAlert> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAlerts)}");
                 scope.Start();
@@ -1366,7 +1366,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            Page<AlertResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AnomalyAlert> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAlerts)}");
                 scope.Start();
