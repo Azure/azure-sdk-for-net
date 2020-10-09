@@ -31,12 +31,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             ExternalLink = externalLink;
             Administrators = administrators;
         }
-
-        /// <summary> hook type. </summary>
-        internal HookType HookType { get; set; }
-        /// <summary> hook description. </summary>
-        public string Description { get; set; }
-        /// <summary> hook external link. </summary>
-        public string ExternalLink { get; set; }
     }
 }
