@@ -26,8 +26,12 @@
 /sdk/applicationinsights/Microsoft.Azure.App*/  @divyajay @geneh @alongafni
 /sdk/operationalinsights/Microsoft.Azure.Ope*/  @divyajay @geneh @alongafni
 
+# ###############
+# ### Service: Batch
+# ###############
+# ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                     @paterasMSFT @dpwatrous
+/sdk/batch/                                     @paterasMSFT @dpwatrous @mksuni @bgklein @mscurrell
 
 # PRLabel: %Communication
 /sdk/communication/                             @RezaJooyandeh @DominikMe @Azure/azure-sdk-communication-code-reviewers
@@ -104,3 +108,988 @@
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
+
+
+# ###############
+# ### Service: AAD
+# ###############
+# ServiceLabel: %AAD %Service Attention
+#/<NotInRepo>/            @adamedx
+
+# ###############
+# ### Service: AKS
+# ###############
+# ServiceLabel: %AKS %Service Attention
+#/<NotInRepo>/            @Azure/aks-pm
+
+# ###############
+# ### Service: Alerts Management
+# ###############
+# ServiceLabel: %Alerts Management %Service Attention
+/sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement            @liadtal @yairgil
+
+# ###############
+# ### Service: ARM
+# ###############
+# ServiceLabel: %ARM %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - Templates
+# ###############
+# ServiceLabel: %ARM - Templates %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - Tags
+# ###############
+# ServiceLabel: %ARM - Tags %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - Core
+# ###############
+# ServiceLabel: %ARM - Core %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - Managed Applications
+# ###############
+# ServiceLabel: %ARM - Managed Applications %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - Service Catalog
+# ###############
+# ServiceLabel: %ARM - Service Catalog %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: ARM - RBAC
+# ###############
+# ServiceLabel: %ARM - RBAC %Service Attention
+#/<NotInRepo>/            @armleads-azure
+
+# ###############
+# ### Service: Advisor
+# ###############
+# ServiceLabel: %Advisor %Service Attention
+/sdk/advisor/Microsoft.Azure.Management.Advisor/            @mojayara @Prasanna-Padmanabhan
+
+# ###############
+# ### Service: Analysis Services
+# ###############
+# ServiceLabel: %Analysis Services %Service Attention
+/sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices/            @athipp @taiwu @minghan
+
+# ###############
+# ### Service: API Management
+# ###############
+# ServiceLabel: %API Management %Service Attention
+/sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/            @miaojiang
+
+# ###############
+# ### Service: Application Insights
+# ###############
+# ServiceLabel: %Application Insights %Service Attention
+/sdk/applicationinsights/            @azmonapplicationinsights
+
+# ###############
+# ### Service: App Services
+# ###############
+# ServiceLabel: %App Services %Service Attention
+#/<NotInRepo>/            @antcp @AzureAppServiceCLI
+
+# ###############
+# ### Service: Attestation
+# ###############
+# ServiceLabel: %Attestation %Service Attention
+/sdk/attestation/            @anilba06
+
+# ###############
+# ### Service: Authorization
+# ###############
+# ServiceLabel: %Authorization %Service Attention
+/sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
+
+# ###############
+# ### Service: Automation
+# ###############
+# ServiceLabel: %Automation %Service Attention
+/sdk/automation/Microsoft.Azure.Management.Automation/            @jaspkaur28
+
+# ###############
+# ### Service: AVS
+# ###############
+# ServiceLabel: %AVS %Service Attention
+/sdk/avs/Microsoft.Azure.Management.Avs/           @divka78 @amitchat @aishu
+
+# ###############
+# ### Service: Azure Stack
+# ###############
+# ServiceLabel: %Azure Stack %Service Attention
+/sdk/azurestack/            @sijuman @sarathys @bganapa @rakku-ms
+
+# ###############
+# ### Service: Azure.Spring - Cosmos
+# ###############
+# ServiceLabel: %Azure.Spring - Cosmos %Service Attention
+#/<NotInRepo>/            @kushagraThapar
+
+# ###############
+# ### Service: Azure Arc enabled servers
+# ###############
+# ServiceLabel: %Azure Arc enabled servers %Service Attention
+#/<NotInRepo>/            @rpsqrd @edyoung
+
+# ###############
+# ### Service: BatchAI
+# ###############
+# ServiceLabel: %BatchAI %Service Attention
+/sdk/batchai/Microsoft.Azure.Management.BatchAI/            @matthchr
+
+# ###############
+# ### Service: Billing
+# ###############
+# ServiceLabel: %Billing %Service Attention
+/sdk/billing/Microsoft.Azure.Management.Billing/            @amberbhargava @shilpigautam @ramaganesan-rg @anand-rengasamy
+
+# ###############
+# ### Service: Blueprint
+# ###############
+# ServiceLabel: %Blueprint %Service Attention
+/sdk/blueprint/Microsoft.Azure.Management.Blueprint/            @alex-frankel @filizt
+
+# ###############
+# ### Service: Bot Service
+# ###############
+# ServiceLabel: %Bot Service %Service Attention
+/sdk/botservice/Microsoft.Azure.Management.BotService/            @sgellock
+
+# ###############
+# ### Service: Cloud Shell
+# ###############
+# ServiceLabel: %Cloud Shell %Service Attention
+#/<NotInRepo>/            @maertendMSFT
+
+# ###############
+# ### Service: Cognitive - Text Analytics
+# ###############
+# ServiceLabel: %Cognitive - Text Analytics %Service Attention
+/sdk/cognitiveservices/Language.TextAnalytics/            @assafi
+
+# ###############
+# ### Service: Cognitive - Form Recognizer
+# ###############
+# ServiceLabel: %Cognitive - Form Recognizer %Service Attention
+/sdk/cognitiveservices/FormRecognizer/            @ctstone @anrothMSFT
+
+# ###############
+# ### Service: Cognitive - Anomaly Detector
+# ###############
+# ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
+/sdk/cognitiveservices/AnomalyDetector/            @yingqunpku @bowgong
+
+# ###############
+# ### Service: Cognitive - Custom Vision
+# ###############
+# ServiceLabel: %Cognitive - Custom Vision %Service Attention
+/sdk/cognitiveservices/Vision.CustomVision*/            @areddish @tburns10
+
+# ###############
+# ### Service: Cognitive - Computer Vision
+# ###############
+# ServiceLabel: %Cognitive - Computer Vision %Service Attention
+/sdk/cognitiveservices/Vision.ComputerVision/            @ryogok @TFR258 @tburns10 @areddish 
+
+# ###############
+# ### Service: Cognitive - Face
+# ###############
+# ServiceLabel: %Cognitive - Face %Service Attention
+/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT
+
+# ###############
+# ### Service: Cognitive - QnA Maker
+# ###############
+# ServiceLabel: %Cognitive - QnA Maker %Service Attention
+/sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
+
+# ###############
+# ### Service: Cognitive - Translator
+# ###############
+# ServiceLabel: %Cognitive - Translator %Service Attention
+#/<NotInRepo>/            @swmachan
+
+# ###############
+# ### Service: Cognitive - Speech
+# ###############
+# ServiceLabel: %Cognitive - Speech %Service Attention
+#/<NotInRepo>/            @robch @oscholz
+
+# ###############
+# ### Service: Cognitive - LUIS
+# ###############
+# ServiceLabel: %Cognitive - LUIS %Service Attention
+/sdk/cognitiveservices/Language.LUIS*            @cahann @kayousef
+
+# ###############
+# ### Service: Cognitive - Content Moderator
+# ###############
+# ServiceLabel: %Cognitive - Content Moderator %Service Attention
+#/<NotInRepo>/            @swiftarrow11
+
+# ###############
+# ### Service: Cognitive - Personalizer
+# ###############
+# ServiceLabel: %Cognitive - Personalizer %Service Attention
+/sdk/cognitiveservices/Personalizer/           @dwaijam
+
+# ###############
+# ### Service: Cognitive - Immersive Reader
+# ###############
+# ServiceLabel: %Cognitive - Immersive Reader %Service Attention
+#/<NotInRepo>/            @metanMSFT
+
+# ###############
+# ### Service: Cognitive - Ink Recognizer
+# ###############
+# ServiceLabel: %Cognitive - Ink Recognizer %Service Attention
+#/<NotInRepo>/            @olduroja
+
+# ###############
+# ### Service: Cognitive - Bing
+# ###############
+# ServiceLabel: %Cognitive - Bing %Service Attention
+/sdk/cognitiveservices/Search.Bing*            @jaggerbodas-ms @arwong
+
+# ###############
+# ### Service: Cognitive - Mgmt
+# ###############
+# ServiceLabel: %Cognitive - Mgmt %Service Attention
+/sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices/            @yangyuan
+
+# ###############
+# ### Service: Commerce
+# ###############
+# ServiceLabel: %Commerce %Service Attention
+#/<NotInRepo>/            @ms-premp @qiaozha
+
+# ###############
+# ### Service: Compute
+# ###############
+# ServiceLabel: %Compute %Service Attention
+#/<NotInRepo>/            @amjads1 @avirishuv @vaibhav-agar @Drewm3
+
+# ###############
+# ### Service: Compute - Extensions
+# ###############
+# ServiceLabel: %Compute - Extensions %Service Attention
+#/<NotInRepo>/            @amjads1 @Drewm3
+
+# ###############
+# ### Service: Compute - Images
+# ###############
+# ServiceLabel: %Compute - Images %Service Attention
+#/<NotInRepo>/            @Drewm3 @vaibhav-agar
+
+# ###############
+# ### Service: Compute - Managed Disks
+# ###############
+# ServiceLabel: %Compute - Managed Disks %Service Attention
+#/<NotInRepo>/            @Drewm3 @vaibhav-agar
+
+# ###############
+# ### Service: Compute - RDFE
+# ###############
+# ServiceLabel: %Compute - RDFE %Service Attention
+#/<NotInRepo>/            @Drewm3 @avirishuv
+
+# ###############
+# ### Service: Compute - VM
+# ###############
+# ServiceLabel: %Compute - VM %Service Attention
+#/<NotInRepo>/            @Drewm3 @avirishuv
+
+# ###############
+# ### Service: Compute - VMSS
+# ###############
+# ServiceLabel: %Compute - VMSS %Service Attention
+#/<NotInRepo>/            @Drewm3 @avirishuv
+
+# ###############
+# ### Service: Consumption
+# ###############
+# ServiceLabel: %Consumption %Service Attention
+#/<NotInRepo>/            @ms-premp
+
+# ###############
+# ### Service: Connected Kubernetes
+# ###############
+# ServiceLabel: %Connected Kubernetes %Service Attention
+#/<NotInRepo>/            @akashkeshari
+
+# ###############
+# ### Service: Container Instances
+# ###############
+# ServiceLabel: %Container Instances %Service Attention
+#/<NotInRepo>/            @dkkapur
+
+# ###############
+# ### Service: Container Registry
+# ###############
+# ServiceLabel: %Container Registry %Service Attention
+#/<NotInRepo>/            @toddysm @yugangw-MSFT
+
+# ###############
+# ### Service: Cosmos
+# ###############
+# ServiceLabel: %Cosmos %Service Attention
+#/<NotInRepo>/            @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
+
+# ###############
+# ### Service: Cost Management
+# ###############
+# ServiceLabel: %Cost Management %Service Attention
+#/<NotInRepo>/            @ms-premp @ramaganesan-rg
+
+# ###############
+# ### Service: Customer Insights
+# ###############
+# ServiceLabel: %Customer Insights %Service Attention
+#/<NotInRepo>/            @shefymk
+
+# ###############
+# ### Service: CycleCloud
+# ###############
+# ServiceLabel: %CycleCloud %Service Attention
+#/<NotInRepo>/            @adriankjohnson
+
+# ###############
+# ### Service: Data Bricks
+# ###############
+# ServiceLabel: %Data Bricks %Service Attention
+#/<NotInRepo>/            @yagupta
+
+# ###############
+# ### Service: DataBox
+# ###############
+# ServiceLabel: %DataBox %Service Attention
+#/<NotInRepo>/            @tmvishwajit @matdickson @manuaery @madhurinms
+
+# ###############
+# ### Service: Data Catalog
+# ###############
+# ServiceLabel: %Data Catalog %Service Attention
+#/<NotInRepo>/            @anilman
+
+# ###############
+# ### Service: Data Factory
+# ###############
+# ServiceLabel: %Data Factory %Service Attention
+#/<NotInRepo>/            @shawnxzq @lmy269
+
+# ###############
+# ### Service: Data Lake
+# ###############
+# ServiceLabel: %Data Lake %Service Attention
+#/<NotInRepo>/            @sumantmehtams
+
+# ###############
+# ### Service: Data Lake Storage Gen1
+# ###############
+# ServiceLabel: %Data Lake Storage Gen1 %Service Attention
+#/<NotInRepo>/            @sumantmehtams
+
+# ###############
+# ### Service: Data Lake Storage Gen2
+# ###############
+# ServiceLabel: %Data Lake Storage Gen2 %Service Attention
+#/<NotInRepo>/            @sumantmehtams
+
+# ###############
+# ### Service: Data Lake Analytics
+# ###############
+# ServiceLabel: %Data Lake Analytics %Service Attention
+#/<NotInRepo>/            @idear1203
+
+# ###############
+# ### Service: Data Lake Store
+# ###############
+# ServiceLabel: %Data Lake Store %Service Attention
+#/<NotInRepo>/            @sumantmehtams
+
+# ###############
+# ### Service: Data Migration
+# ###############
+# ServiceLabel: %Data Migration %Service Attention
+#/<NotInRepo>/            @rgreenMSFT
+
+# ###############
+# ### Service: Devtestlab
+# ###############
+# ServiceLabel: %Devtestlab %Service Attention
+#/<NotInRepo>/            @Tanmayeekamath
+
+# ###############
+# ### Service: Device Provisioning Service
+# ###############
+# ServiceLabel: %Device Provisioning Service %Service Attention
+#/<NotInRepo>/            @nberdy
+
+# ###############
+# ### Service: Digital Twins
+# ###############
+# ServiceLabel: %Digital Twins %Service Attention
+#/<NotInRepo>/            @sourabhguha @inesk-vt
+
+# ###############
+# ### Service: Event Grid
+# ###############
+# ServiceLabel: %Event Grid %Service Attention
+#/<NotInRepo>/            @jfggdl
+
+# ###############
+# ### Service: Event Hubs
+# ###############
+# ServiceLabel: %Event Hubs %Service Attention
+#/<NotInRepo>/            @jfggdl
+
+# ###############
+# ### Service: Functions
+# ###############
+# ServiceLabel: %Functions %Service Attention
+#/<NotInRepo>/            @ahmedelnably @fabiocav
+
+# ###############
+# ### Service: Graph.Microsoft
+# ###############
+# ServiceLabel: %Graph.Microsoft %Service Attention
+#/<NotInRepo>/            @dkershaw10 @baywet
+
+# ###############
+# ### Service: Guest Configuration
+# ###############
+# ServiceLabel: %Guest Configuration %Service Attention
+#/<NotInRepo>/            @mgreenegit @vivlingaiah
+
+# ###############
+# ### Service: HDInsight
+# ###############
+# ServiceLabel: %HDInsight %Service Attention
+#/<NotInRepo>/            @aim-for-better @idear1203 @deshriva
+
+# ###############
+# ### Service: HPC Cache
+# ###############
+# ServiceLabel: %HPC Cache %Service Attention
+#/<NotInRepo>/            @romahamu @omzevall
+
+# ###############
+# ### Service: Import Export
+# ###############
+# ServiceLabel: %Import Export %Service Attention
+#/<NotInRepo>/            @madhurinms
+
+# ###############
+# ### Service: IotCentral
+# ###############
+# ServiceLabel: %IotCentral %Service Attention
+#/<NotInRepo>/            @iluican @jlian
+
+# ###############
+# ### Service: IotDPS
+# ###############
+# ServiceLabel: %IotDPS %Service Attention
+#/<NotInRepo>/            @iluican @jlian
+
+# ###############
+# ### Service: IotHub
+# ###############
+# ServiceLabel: %IotHub %Service Attention
+#/<NotInRepo>/            @rkmanda @chieftn
+
+# ###############
+# ### Service: KeyVault
+# ###############
+# ServiceLabel: %KeyVault %Service Attention
+#/<NotInRepo>/            @RandalliLama @schaabs @jlichwa
+
+# ###############
+# ### Service: Kubernetes Configuration
+# ###############
+# ServiceLabel: %Kubernetes Configuration %Service Attention
+#/<NotInRepo>/            @NarayanThiru
+
+# ###############
+# ### Service: Kusto
+# ###############
+# ServiceLabel: %Kusto %Service Attention
+#/<NotInRepo>/            @ilayrn @orhasban
+
+# ###############
+# ### Service: Lab Services
+# ###############
+# ServiceLabel: %Lab Services %Service Attention
+#/<NotInRepo>/            @Tanmayeekamath
+
+# ###############
+# ### Service: Logic App
+# ###############
+# ServiceLabel: %Logic App %Service Attention
+#/<NotInRepo>/            @Azure/azure-logicapps-team
+
+# ###############
+# ### Service: LOUIS
+# ###############
+# ServiceLabel: %LOUIS %Service Attention
+#/<NotInRepo>/            @minamnmik
+
+# ###############
+# ### Service: Managed Identity
+# ###############
+# ServiceLabel: %Managed Identity %Service Attention
+#/<NotInRepo>/            @varunkch
+
+# ###############
+# ### Service: Machine Learning
+# ###############
+# ServiceLabel: %Machine Learning %Service Attention
+#/<NotInRepo>/            @azureml-github
+
+# ###############
+# ### Service: Machine Learning Compute
+# ###############
+# ServiceLabel: %Machine Learning Compute %Service Attention
+#/<NotInRepo>/            @azureml-github
+
+# ###############
+# ### Service: Machine Learning Experimentation
+# ###############
+# ServiceLabel: %Machine Learning Experimentation %Service Attention
+#/<NotInRepo>/            @aashishb
+
+# ###############
+# ### Service: Managed Services
+# ###############
+# ServiceLabel: %Managed Services %Service Attention
+#/<NotInRepo>/            @Lighthouse-Azure
+
+# ###############
+# ### Service: MariaDB
+# ###############
+# ServiceLabel: %MariaDB %Service Attention
+#/<NotInRepo>/            @ajlam @ambhatna @kummanish
+
+# ###############
+# ### Service: Marketplace Ordering
+# ###############
+# ServiceLabel: %Marketplace Ordering %Service Attention
+#/<NotInRepo>/            @prbansa
+
+# ###############
+# ### Service: Media Services
+# ###############
+# ServiceLabel: %Media Services %Service Attention
+#/<NotInRepo>/            @akucer
+
+# ###############
+# ### Service: Migrate
+# ###############
+# ServiceLabel: %Migrate %Service Attention
+#/<NotInRepo>/            @shijojoy
+
+# ###############
+# ### Service: Mobile Engagement
+# ###############
+# ServiceLabel: %Mobile Engagement %Service Attention
+#/<NotInRepo>/            @kpiteira
+
+# ###############
+# ### Service: Monitor
+# ###############
+# ServiceLabel: %Monitor %Service Attention
+#/<NotInRepo>/            @SameergMS @dadunl
+
+# ###############
+# ### Service: Monitor - Autoscale
+# ###############
+# ServiceLabel: %Monitor - Autoscale %Service Attention
+#/<NotInRepo>/            @AzMonEssential
+
+# ###############
+# ### Service: Monitor - ActivityLogs
+# ###############
+# ServiceLabel: %Monitor - ActivityLogs %Service Attention
+#/<NotInRepo>/            @AzMonEssential
+
+# ###############
+# ### Service: Monitor - Metrics
+# ###############
+# ServiceLabel: %Monitor - Metrics %Service Attention
+#/<NotInRepo>/            @AzMonEssential
+
+# ###############
+# ### Service: Monitor - Diagnostic Settings
+# ###############
+# ServiceLabel: %Monitor - Diagnostic Settings %Service Attention
+#/<NotInRepo>/            @AzMonEssential
+
+# ###############
+# ### Service: Monitor - Alerts
+# ###############
+# ServiceLabel: %Monitor - Alerts %Service Attention
+#/<NotInRepo>/            @AzmonAlerts
+
+# ###############
+# ### Service: Monitor - ActionGroups
+# ###############
+# ServiceLabel: %Monitor - ActionGroups %Service Attention
+#/<NotInRepo>/            @AzmonActionG
+
+# ###############
+# ### Service: Monitor - LogAnalytics
+# ###############
+# ServiceLabel: %Monitor - LogAnalytics %Service Attention
+#/<NotInRepo>/            @AzmonLogA
+
+# ###############
+# ### Service: Monitor - ApplicationInsights
+# ###############
+# ServiceLabel: %Monitor - ApplicationInsights %Service Attention
+#/<NotInRepo>/            @azmonapplicationinsights
+
+# ###############
+# ### Service: MySQL
+# ###############
+# ServiceLabel: %MySQL %Service Attention
+#/<NotInRepo>/            @ajlam @ambhatna @kummanish
+
+# ###############
+# ### Service: Network
+# ###############
+# ServiceLabel: %Network %Service Attention
+#/<NotInRepo>/            @aznetsuppgithub
+
+# ###############
+# ### Service: Network - Application Gateway
+# ###############
+# ServiceLabel: %Network - Application Gateway %Service Attention
+#/<NotInRepo>/            @appgwsuppgithub
+
+# ###############
+# ### Service: Network - Bastion
+# ###############
+# ServiceLabel: %Network - Bastion %Service Attention
+#/<NotInRepo>/            @bastionsuppgithub
+
+# ###############
+# ### Service: Network - CDN
+# ###############
+# ServiceLabel: %Network - CDN %Service Attention
+#/<NotInRepo>/            @cdnfdsuppgithub
+
+# ###############
+# ### Service: Network - DDOS Protection
+# ###############
+# ServiceLabel: %Network - DDOS Protection %Service Attention
+#/<NotInRepo>/            @ddossuppgithub
+
+# ###############
+# ### Service: Network - ExpressRoutes
+# ###############
+# ServiceLabel: %Network - ExpressRoutes %Service Attention
+#/<NotInRepo>/            @exrsuppgithub
+
+# ###############
+# ### Service: Network - Firewall
+# ###############
+# ServiceLabel: %Network - Firewall %Service Attention
+#/<NotInRepo>/            @fwsuppgithub
+
+# ###############
+# ### Service: Network - Front Door
+# ###############
+# ServiceLabel: %Network - Front Door %Service Attention
+#/<NotInRepo>/            @cdnfdsuppgithub
+
+# ###############
+# ### Service: Network - Virtual Network
+# ###############
+# ServiceLabel: %Network - Virtual Network %Service Attention
+#/<NotInRepo>/            @vnetsuppgithub
+
+# ###############
+# ### Service: Network - Load Balancer
+# ###############
+# ServiceLabel: %Network - Load Balancer %Service Attention
+#/<NotInRepo>/            @slbsupportgithub
+
+# ###############
+# ### Service: Network - Virtual Network NAT
+# ###############
+# ServiceLabel: %Network - Virtual Network NAT %Service Attention
+#/<NotInRepo>/            @vnetsuppgithub
+
+# ###############
+# ### Service: Network - Network Watcher
+# ###############
+# ServiceLabel: %Network - Network Watcher %Service Attention
+#/<NotInRepo>/            @netwatchsuppgithub
+
+# ###############
+# ### Service: Network - DNS
+# ###############
+# ServiceLabel: %Network - DNS %Service Attention
+#/<NotInRepo>/            @dnssuppgithub
+
+# ###############
+# ### Service: Network - Network Virtual Appliance
+# ###############
+# ServiceLabel: %Network - Network Virtual Appliance %Service Attention
+#/<NotInRepo>/            @nvasuppgithub
+
+# ###############
+# ### Service: Network - Traffic Manager
+# ###############
+# ServiceLabel: %Network - Traffic Manager %Service Attention
+#/<NotInRepo>/            @tmsuppgithub
+
+# ###############
+# ### Service: Network - Virtual WAN
+# ###############
+# ServiceLabel: %Network - Virtual WAN %Service Attention
+#/<NotInRepo>/            @vwansuppgithub
+
+# ###############
+# ### Service: Network - VPN Gateway
+# ###############
+# ServiceLabel: %Network - VPN Gateway %Service Attention
+#/<NotInRepo>/            @vpngwsuppgithub
+
+# ###############
+# ### Service: Network - Private Link
+# ###############
+# ServiceLabel: %Network - Private Link %Service Attention
+#/<NotInRepo>/            @privlinksuppgithub
+
+# ###############
+# ### Service: Notification Hub
+# ###############
+# ServiceLabel: %Notification Hub %Service Attention
+#/<NotInRepo>/            @tjsomasundaram
+
+# ###############
+# ### Service: Operational Insights
+# ###############
+# ServiceLabel: %Operational Insights %Service Attention
+#/<NotInRepo>/            @AzmonLogA
+
+# ###############
+# ### Service: Policy
+# ###############
+# ServiceLabel: %Policy %Service Attention
+#/<NotInRepo>/            @aperezcloud @kenieva
+
+# ###############
+# ### Service: Policy Insights
+# ###############
+# ServiceLabel: %Policy Insights %Service Attention
+#/<NotInRepo>/            @kenieva
+
+# ###############
+# ### Service: PostgreSQL
+# ###############
+# ServiceLabel: %PostgreSQL %Service Attention
+#/<NotInRepo>/            @sunilagarwal @lfittl-msft @sr-msft @niklarin
+
+# ###############
+# ### Service: Recovery Services Backup
+# ###############
+# ServiceLabel: %Recovery Services Backup %Service Attention
+#/<NotInRepo>/            @pvrk
+
+# ###############
+# ### Service: Recovery Services Site-Recovery
+# ###############
+# ServiceLabel: %Recovery Services Site-Recovery %Service Attention
+#/<NotInRepo>/            @Sharmistha-Rai
+
+# ###############
+# ### Service: Redis Cache
+# ###############
+# ServiceLabel: %Redis Cache %Service Attention
+#/<NotInRepo>/            @yegu-ms
+
+# ###############
+# ### Service: Relay
+# ###############
+# ServiceLabel: %Relay %Service Attention
+#/<NotInRepo>/            @jfggdl
+
+# ###############
+# ### Service: Reservations
+# ###############
+# ServiceLabel: %Reservations %Service Attention
+#/<NotInRepo>/            @corquiri
+
+# ###############
+# ### Service: Resource Authorization
+# ###############
+# ServiceLabel: %Resource Authorization %Service Attention
+#/<NotInRepo>/            @darshanhs90 @AshishGargMicrosoft
+
+# ###############
+# ### Service: Resource Graph
+# ###############
+# ServiceLabel: %Resource Graph %Service Attention
+#/<NotInRepo>/            @chiragg4u
+
+# ###############
+# ### Service: Resource Health
+# ###############
+# ServiceLabel: %Resource Health %Service Attention
+#/<NotInRepo>/            @stephbaron
+
+# ###############
+# ### Service: Scheduler
+# ###############
+# ServiceLabel: %Scheduler %Service Attention
+#/<NotInRepo>/            @derek1ee
+
+# ###############
+# ### Service: Search
+# ###############
+# ServiceLabel: %Search %Service Attention
+#/<NotInRepo>/            @brjohnstmsft @bleroy @tjacobhi @markheff @miwelsh
+
+# ###############
+# ### Service: Security
+# ###############
+# ServiceLabel: %Security %Service Attention
+#/<NotInRepo>/            @chlahav
+
+# ###############
+# ### Service: Service Bus
+# ###############
+# ServiceLabel: %Service Bus %Service Attention
+#/<NotInRepo>/            @jfggdl
+
+# ###############
+# ### Service: Service Fabric
+# ###############
+# ServiceLabel: %Service Fabric %Service Attention
+#/<NotInRepo>/            @QingChenmsft @vaishnavk @juhacket
+
+# ###############
+# ### Service: Schema Registry
+# ###############
+# ServiceLabel: %Schema Registry %Service Attention
+#/<NotInRepo>/            @arerlend @alzimmermsft
+
+# ###############
+# ### Service: SignalR
+# ###############
+# ServiceLabel: %SignalR %Service Attention
+#/<NotInRepo>/            @sffamily @chenkennt
+
+# ###############
+# ### Service: SQL
+# ###############
+# ServiceLabel: %SQL %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - VM
+# ###############
+# ServiceLabel: %SQL - VM %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - Backup & Restore
+# ###############
+# ServiceLabel: %SQL - Backup & Restore %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - Data Security
+# ###############
+# ServiceLabel: %SQL - Data Security %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - Elastic Jobs
+# ###############
+# ServiceLabel: %SQL - Elastic Jobs %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - Managed Instance
+# ###############
+# ServiceLabel: %SQL - Managed Instance %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: SQL - Replication & Failover
+# ###############
+# ServiceLabel: %SQL - Replication & Failover %Service Attention
+#/<NotInRepo>/            @azureSQLGitHub
+
+# ###############
+# ### Service: Storage
+# ###############
+# ServiceLabel: %Storage %Service Attention
+#/<NotInRepo>/            @xgithubtriage
+
+# ###############
+# ### Service: Storsimple
+# ###############
+# ServiceLabel: %Storsimple %Service Attention
+#/<NotInRepo>/            @anoobbacker @ganzee @manuaery @patelkunal
+
+# ###############
+# ### Service: Stream Analytics
+# ###############
+# ServiceLabel: %Stream Analytics %Service Attention
+#/<NotInRepo>/            @atpham256
+
+# ###############
+# ### Service: Subscription
+# ###############
+# ServiceLabel: %Subscription %Service Attention
+#/<NotInRepo>/            @anuragdalmia @shilpigautam @ramaganesan-rg
+
+# ###############
+# ### Service: Support
+# ###############
+# ServiceLabel: %Support %Service Attention
+#/<NotInRepo>/            @shahbj79 @mit2nil @aygoya @ganganarayanan
+
+# ###############
+# ### Service: Synapse
+# ###############
+# ServiceLabel: %Synapse %Service Attention
+#/<NotInRepo>/            @aim-for-better @idear1203
+
+# ###############
+# ### Service: Tables
+# ###############
+# ServiceLabel: %Tables %Service Attention
+#/<NotInRepo>/            @klaaslanghout
+
+# ###############
+# ### Service: TimeseriesInsights
+# ###############
+# ServiceLabel: %TimeseriesInsights %Service Attention
+#/<NotInRepo>/            @Shipra1Mishra
+
+# ###############
+# ### Service: vFXT
+# ###############
+# ServiceLabel: %vFXT %Service Attention
+#/<NotInRepo>/            @zhusijia26
+
+# ###############
+# ### Service: Web Apps
+# ###############
+# ServiceLabel: %Web Apps %Service Attention
+#/<NotInRepo>/            @AzureAppServiceCLI @antcp
