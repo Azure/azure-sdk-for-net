@@ -35,7 +35,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal(testItemsAccepted, returnValue);
         }
 
-
         [Fact]
         public async Task VerifyIngestionBehavior_Failure()
         {
@@ -56,14 +55,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal(testItemsAccepted, returnValue);
         }
 
-        private IServiceRestClient GetMockServiceRestClient(int itemsReceived, int itemsAccepted, List<TelemetryErrorDetails> errors)
+        private ApplicationInsightsRestClient GetMockServiceRestClient(int itemsReceived, int itemsAccepted, List<TelemetryErrorDetails> errors)
         {
-            var mockServiceRestClient = new Mock<IServiceRestClient>();
-            mockServiceRestClient
+            var mockApplicationInsightsRestClient = new Mock<ApplicationInsightsRestClient>();
+            mockApplicationInsightsRestClient
                 .Setup(x => x.InternalTrackAsync(It.IsAny<IEnumerable<TelemetryItem>>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetMockResponse(itemsReceived, itemsAccepted, errors)));
 
-            return mockServiceRestClient.Object;
+            return mockApplicationInsightsRestClient.Object;
         }
 
         private Azure.Response<TrackResponse> GetMockResponse(int itemsReceived, int itemsAccepted, List<TelemetryErrorDetails> errors)

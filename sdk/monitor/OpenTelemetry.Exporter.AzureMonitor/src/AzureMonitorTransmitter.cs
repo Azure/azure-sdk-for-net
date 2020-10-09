@@ -18,15 +18,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     /// </summary>
     internal class AzureMonitorTransmitter
     {
-        //private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
-        private readonly IServiceRestClient applicationInsightsRestClient;
+        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions) : this(exporterOptions, null)
         {
         }
 
-        internal AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions, IServiceRestClient applicationInsightsRestClient = null)
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions, ApplicationInsightsRestClient applicationInsightsRestClient = null)
         {
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out _, out string ingestionEndpoint);
 
