@@ -140,6 +140,7 @@ pr:
     - sdk/synapse/Microsoft.Azure.Management.Synapse
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
+    - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
     - eng/pipelines/mgmt.yml
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
 
