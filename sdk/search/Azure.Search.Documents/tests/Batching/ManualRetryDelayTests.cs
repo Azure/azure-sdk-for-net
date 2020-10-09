@@ -73,8 +73,8 @@ namespace Azure.Search.Documents.Tests
             watch.Stop();
 
             Assert.IsTrue(
-                250 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 1000,
-                $"Expected a delay between 250ms and 1000ms, not {watch.ElapsedMilliseconds}");
+                248 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
+                $"Expected a delay between 248ms and 500ms, not {watch.ElapsedMilliseconds}");
         }
 
         [Test]
