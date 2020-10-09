@@ -8,8 +8,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// An alert notification to be triggered After an anomaly is detected by Metrics Advisor.
-    /// An alert setting can be used with multiple detection configurations, various parameters are available to customize your alert rule.
+    /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
     public partial class AlertingHook
@@ -38,6 +37,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("Admins")]
         public IReadOnlyList<string> Administrators { get; }
+
+        /// <summary> The hook type. </summary>
+        internal HookType HookType { get; set; }
+
+        /// <summary> The hook description. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
+        public string ExternalLink { get; set; }
 
         internal static HookInfoPatch GetPatchModel(AlertingHook hook)
         {

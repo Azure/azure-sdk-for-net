@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,6 +17,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailHook"/> class.
+        /// <param name="name">The name to assign to the hook.</param>
+        /// <param name="emailsToAlert">The list of e-mail addresses to alert.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="emailsToAlert"/> is null.</exception>
         /// </summary>
         public EmailHook(string name, IList<string> emailsToAlert)
             : base(name)
