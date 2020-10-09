@@ -119,19 +119,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
-                var statusCode = GetHttpStatusCode(partBTags);
-                var success = GetSuccessFromHttpStatusCode(statusCode);
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
+                string source = null;
+                string statusCode = string.Empty;
+                string url = null;
+                bool success = true;
+
+                switch (activityType)
+                {
+                    case PartBType.Http:
+                        url = activity.Kind == ActivityKind.Server ? HttpHelper.GetUrl(partBTags) : AzureMonitorConverter.GetMessagingUrl(partBTags);
+                        statusCode = HttpHelper.GetHttpStatusCode(partBTags);
+                        success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                        break;
+                    case PartBType.Azure:
+                        ComponentHelper.ExtractComponentProperties(partBTags, activity.Kind, out _, out source);
+                        break;
+                }
+
+                RequestData request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
-                    // TODO: Handle request.source.
+                    Source = source
                 };
 
-                // TODO: Handle activity.TagObjects, extract well-known tags
-                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
-
+                AddPropertiesToTelemetry(request.Properties, PartCTags);
                 telemetry.BaseData = request;
             }
             else if (telemetryType == TelemetryType.Dependency)
@@ -141,19 +153,24 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     Id = activity.Context.SpanId.ToHexString()
                 };
 
-                // TODO: Handle activity.TagObjects
-                // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
-
-                if (activityType == PartBType.Http)
+                switch (activityType)
                 {
-                    dependency.Data = UrlHelper.GetUrl(partBTags);
-                    dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    var statusCode = GetHttpStatusCode(partBTags);
-                    dependency.ResultCode = statusCode;
-                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
+                    case PartBType.Http:
+                        dependency.Data = HttpHelper.GetUrl(partBTags);
+                        dependency.Target = HttpHelper.GetHost(partBTags);
+                        dependency.Type = RemoteDependencyConstants.HTTP;
+                        var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
+                        dependency.ResultCode = statusCode;
+                        dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                        break;
+                    case PartBType.Azure:
+                        ComponentHelper.ExtractComponentProperties(partBTags, activity.Kind, out var type, out var target);
+                        dependency.Target = target;
+                        dependency.Type = type;
+                        break;
                 }
 
-                // TODO: Handle dependency.target.
+                AddPropertiesToTelemetry(dependency.Properties, PartCTags);
                 telemetry.BaseData = dependency;
             }
 
@@ -178,16 +195,21 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetMessagingUrl(Dictionary<string, string> tags)
+        internal static string GetMessagingUrl(Dictionary<string, string> tags)
         {
-            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
-            return url;
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url))
+            {
+                return url;
+            }
+
+            return null;
         }
 
-        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AddPropertiesToTelemetry(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> PartCTags)
         {
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
+            foreach (var tag in PartCTags)
             {
                 destination.Add(tag);
             }

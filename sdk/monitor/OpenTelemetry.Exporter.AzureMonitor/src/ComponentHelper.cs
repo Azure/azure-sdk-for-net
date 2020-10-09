@@ -69,16 +69,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     break;
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetMessagingUrl(Dictionary<string, string> tags)
-        {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url))
-            {
-                return url;
-            }
-
-            return null;
-        }
     }
 }

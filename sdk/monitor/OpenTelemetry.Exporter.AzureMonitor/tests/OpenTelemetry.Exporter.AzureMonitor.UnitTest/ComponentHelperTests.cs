@@ -10,20 +10,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     public class ComponentHelperTests
     {
         [Fact]
-        public void GetMessagingUrl_Success()
-        {
-            Assert.Equal("test", ComponentHelper.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = "test" }));
-            Assert.Null(ComponentHelper.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = null }));
-        }
-
-        [Fact]
-        public void GetMessagingUrl_Failure()
-        {
-            Assert.Null(ComponentHelper.GetMessagingUrl(null));
-            Assert.Null(ComponentHelper.GetMessagingUrl(new Dictionary<string, string>()));
-        }
-
-        [Fact]
         public void PartBTagsAreCollectedProducerKindWithAzNamespaceEventHubs()
         {
             var partBTags = new Dictionary<string, string>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
@@ -70,6 +71,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-namespace.my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
+        }
+
+        [Fact]
+        public void GetMessagingUrl_Success()
+        {
+            Assert.Equal("test", AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = "test" }));
+            Assert.Null(AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = null }));
+        }
+
+        [Fact]
+        public void GetMessagingUrl_Failure()
+        {
+            Assert.Null(AzureMonitorConverter.GetMessagingUrl(null));
+            Assert.Null(AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string>()));
         }
     }
 }

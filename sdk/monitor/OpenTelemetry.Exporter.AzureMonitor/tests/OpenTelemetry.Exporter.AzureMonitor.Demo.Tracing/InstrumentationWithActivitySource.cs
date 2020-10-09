@@ -67,7 +67,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                             activity?.SetTag("http.host", context.Request.Url.Host);
 
                             string requestContent;
-                            // using (var childSpan = source.StartActivity("ReadStream", ActivityKind.Consumer))
                             using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                             {
                                 requestContent = reader.ReadToEnd();
@@ -123,9 +122,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                                 count++;
 
                                 activity?.AddEvent(new ActivityEvent("PostAsync:Started"));
-#pragma warning disable CA2234 // Pass system uri objects instead of strings
                                 using var response = await client.PostAsync(url, content, cancellationToken).ConfigureAwait(false);
-#pragma warning restore CA2234 // Pass system uri objects instead of strings
                                 activity?.AddEvent(new ActivityEvent("PostAsync:Ended"));
 
                                 activity?.SetTag("http.url", url);
