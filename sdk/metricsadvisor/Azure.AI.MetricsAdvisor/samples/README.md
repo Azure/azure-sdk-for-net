@@ -5,7 +5,6 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-metrics-advisor
 name: Azure Metrics Advisor samples for .NET
 description: Samples for the Azure.AI.MetricsAdvisor client library
 ---

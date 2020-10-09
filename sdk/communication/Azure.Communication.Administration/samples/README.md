@@ -4,7 +4,6 @@ languages:
 - csharp
 products:
 - azure
-- azure-communication
 name: Azure Communication Administration samples for .NET
 description: Samples for the Azure.Communication.Administration client library
 ---
