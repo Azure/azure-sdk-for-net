@@ -21,7 +21,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions) : this(exporterOptions, null)
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions) : this(exporterOptions, null)
         {
         }
 
