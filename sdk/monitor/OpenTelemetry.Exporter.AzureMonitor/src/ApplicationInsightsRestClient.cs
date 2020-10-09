@@ -33,7 +33,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 case 206: // Partial Content
                 case 408: // Request Timeout
                 case 429: // Too Many Requests
-                case 439: // ???
+                case 439: // Too Many Requests Over Extended Time
                 case 500: // Internal Server Error
                 case 502: // Bad Gateway
                 case 503: // Service Unavailable
