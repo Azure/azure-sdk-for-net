@@ -67,6 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Custom headers to send in the API call.
         /// </summary>
+        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Headers"/> is null.</exception>
         public IDictionary<string, string> Headers
         {
             get => HookParameter.Headers;

@@ -27,12 +27,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             Status = status;
             Message = message;
         }
-
-        /// <summary> data slice timestamp. </summary>
-        public DateTimeOffset? Timestamp { get; }
-        /// <summary> latest ingestion task status for this data slice. </summary>
-        public IngestionStatusType? Status { get; }
-        /// <summary> the trimmed message of last ingestion job. </summary>
-        public string Message { get; }
     }
 }
