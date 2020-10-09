@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal static class WriteBlobArgumentBinding
     {
-        public static async Task<WatchableCloudBlobStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
+        public static async Task<NotifyingBlobStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
             ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher)
         {
             var blockBlob = blob.BlobClient as BlockBlobClient;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             };
             Stream rawStream = await blockBlob.OpenWriteAsync(true, options).ConfigureAwait(false);
             IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
-            return await Task.FromResult(new WatchableCloudBlobStream(rawStream, committedAction)).ConfigureAwait(false);
+            return await Task.FromResult(new NotifyingBlobStream(rawStream, committedAction)).ConfigureAwait(false);
         }
     }
 }

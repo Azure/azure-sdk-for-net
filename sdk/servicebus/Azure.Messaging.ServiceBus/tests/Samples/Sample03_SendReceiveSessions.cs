@@ -45,15 +45,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // we can also set arbitrary session state using this receiver
                 // the state is specific to the session, and not any particular message
-                await receiver.SetSessionStateAsync(Encoding.UTF8.GetBytes("some state"));
+                await receiver.SetSessionStateAsync(new BinaryData("some state"));
 
                 // the state can be retrieved for the session as well
-                byte[] state = await receiver.GetSessionStateAsync();
+                BinaryData state = await receiver.GetSessionStateAsync();
 
                 #endregion
                 Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToBytes().ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
-                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state);
+                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state.ToBytes().ToArray());
             }
         }
 

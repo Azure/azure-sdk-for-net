@@ -27,16 +27,10 @@ is a member of multiple subscriptions.
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-$sp = New-AzADServicePrincipal -Role Owner
-eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
-  -ServiceDirectory 'search' `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
+eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
 ```
 
-If you are running this for a .NET project on Windows, the recommended method is to
-add the `-OutFile` switch to the above command. This will save test environment settings
+The `OutFile` switch would be set if you are running this for a .NET project on Windows. This will save test environment settings
 into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI.
 The environment file would be scoped to the current repository directory and avoids the need to
 set environment variables or restart your IDE to recognize them.

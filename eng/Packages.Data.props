@@ -9,13 +9,14 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201005.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201006.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
     <PackageReference Update="Azure.Core" Version="1.5.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.6" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
+    <PackageReference Update="Azure.Search.Documents" Version="11.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.1" />
@@ -180,9 +181,9 @@
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
 	
 	 <!-- Mgmt sdk packages-->
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.1" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.1" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.2" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
   </ItemGroup>
 </Project>

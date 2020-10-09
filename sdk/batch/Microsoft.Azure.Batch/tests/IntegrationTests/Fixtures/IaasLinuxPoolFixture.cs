@@ -14,7 +14,7 @@
     {
         public IaasLinuxPoolFixture() : base(TestUtilities.GetMyName() + "-pooltest-linux")
         {
-            this.Pool = this.CreatePool();
+            Pool = CreatePool();
         }
 
         public static ImageInformation GetUbuntuImageDetails(BatchClient client)
@@ -33,19 +33,19 @@
 
         protected CloudPool CreatePool()
         {
-            CloudPool currentPool = this.FindPoolIfExists();
+            CloudPool currentPool = FindPoolIfExists();
 
             // gotta create a new pool
             if (currentPool == null)
             {
-                var ubuntuImageDetails = GetUbuntuImageDetails(this.client);
+                var ubuntuImageDetails = GetUbuntuImageDetails(client);
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
                     ubuntuImageDetails.ImageReference,
                     nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
-                currentPool = this.client.PoolOperations.CreatePool(
-                    poolId: this.PoolId,
+                currentPool = client.PoolOperations.CreatePool(
+                    poolId: PoolId,
                     virtualMachineSize: VMSize,
                     virtualMachineConfiguration: virtualMachineConfiguration,
                     targetDedicatedComputeNodes: 1);
@@ -53,7 +53,7 @@
                 currentPool.Commit();
             }
 
-            return WaitForPoolAllocation(this.client, this.PoolId);
+            return WaitForPoolAllocation(client, PoolId);
         }
     }
 

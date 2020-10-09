@@ -17,19 +17,15 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         [Category("Live")]
         public async Task SecretsAreLoadedFromKeyVault()
         {
-            var credential = new ClientSecretCredential(
-                TestEnvironment.TenantId,
-                TestEnvironment.ClientId,
-                TestEnvironment.ClientSecret);
             var vaultUri = new Uri(TestEnvironment.KeyVaultUrl);
 
-            var client = new SecretClient(vaultUri, credential);
+            var client = new SecretClient(vaultUri, TestEnvironment.Credential);
             await client.SetSecretAsync("TestSecret1", "1");
             await client.SetSecretAsync("TestSecret2", "2");
             await client.SetSecretAsync("Nested--TestSecret3", "3");
 
             var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddAzureKeyVault(vaultUri, credential);
+            configurationBuilder.AddAzureKeyVault(vaultUri, TestEnvironment.Credential);
 
             IConfigurationRoot configuration = configurationBuilder.Build();
 

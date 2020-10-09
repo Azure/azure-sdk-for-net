@@ -9,8 +9,7 @@ using Newtonsoft.Json.Converters;
 namespace Microsoft.Azure.WebJobs.Host.Protocols
 {
     /// <summary>Represents a parameter triggered on a blob in Azure Storage.</summary>
-    [JsonTypeName("BlobTrigger")]
-    public class BlobTriggerParameterDescriptor : TriggerParameterDescriptor
+    internal class BlobTriggerParameterDescriptor : TriggerParameterDescriptor
     {
         /// <summary>Gets or sets the name of the storage account.</summary>
         public string AccountName { get; set; }

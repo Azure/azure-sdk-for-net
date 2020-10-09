@@ -12,7 +12,15 @@ namespace Azure.Core.Tests
         public void AddIsSerializedCorrectly()
         {
             JsonPatchDocument document = new JsonPatchDocument();
-            document.AppendAdd("/a/b/c","[ \"foo\", \"bar\" ]");
+            document.AppendAddRaw("/a/b/c","[ \"foo\", \"bar\" ]");
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"add\",\"path\":\"/a/b/c\",\"value\":[\"foo\",\"bar\"]}]");
+        }
+
+        [Test]
+        public void AddIsSerializedCorrectlyGeneric()
+        {
+            JsonPatchDocument document = new JsonPatchDocument();
+            document.AppendAdd("/a/b/c",new[] { "foo", "bar" });
             Assert.AreEqual(document.ToString(), "[{\"op\":\"add\",\"path\":\"/a/b/c\",\"value\":[\"foo\",\"bar\"]}]");
         }
 
@@ -20,16 +28,32 @@ namespace Azure.Core.Tests
         public void ReplaceIsSerializedCorrectly()
         {
             JsonPatchDocument document = new JsonPatchDocument();
-            document.AppendReplace("/a/b/c","[ \"foo\", \"bar\" ]");
+            document.AppendReplaceRaw("/a/b/c","[ \"foo\", \"bar\" ]");
             Assert.AreEqual(document.ToString(), "[{\"op\":\"replace\",\"path\":\"/a/b/c\",\"value\":[\"foo\",\"bar\"]}]");
+        }
+
+        [Test]
+        public void ReplaceIsSerializedCorrectlyGeneric()
+        {
+            JsonPatchDocument document = new JsonPatchDocument();
+            document.AppendReplace("/a/b/c",2);
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"replace\",\"path\":\"/a/b/c\",\"value\":2}]");
         }
 
         [Test]
         public void TestIsSerializedCorrectly()
         {
             JsonPatchDocument document = new JsonPatchDocument();
-            document.AppendTest("/a/b/c","[ \"foo\", \"bar\" ]");
+            document.AppendTestRaw("/a/b/c","[ \"foo\", \"bar\" ]");
             Assert.AreEqual(document.ToString(), "[{\"op\":\"test\",\"path\":\"/a/b/c\",\"value\":[\"foo\",\"bar\"]}]");
+        }
+
+        [Test]
+        public void TestIsSerializedCorrectlyGeneric()
+        {
+            JsonPatchDocument document = new JsonPatchDocument();
+            document.AppendTest("/a/b/c",new { a = 2});
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"test\",\"path\":\"/a/b/c\",\"value\":{\"a\":2}}]");
         }
 
         [Test]
@@ -60,9 +84,9 @@ namespace Azure.Core.Tests
         public void MultipleOperationsSerializedInOrder()
         {
             JsonPatchDocument document = new JsonPatchDocument();
-            document.AppendTest("/a/b/c","\"foo\"");
-            document.AppendAdd("/a/b/c","42");
-            document.AppendReplace("/a/b/c","[ \"foo\", \"bar\" ]");
+            document.AppendTestRaw("/a/b/c","\"foo\"");
+            document.AppendAddRaw("/a/b/c","42");
+            document.AppendReplaceRaw("/a/b/c","[ \"foo\", \"bar\" ]");
             document.AppendRemove("/a/b/c");
             document.AppendMove("/a/b/c", "/a/b/d");
             document.AppendCopy("/a/b/c", "/a/b/d");

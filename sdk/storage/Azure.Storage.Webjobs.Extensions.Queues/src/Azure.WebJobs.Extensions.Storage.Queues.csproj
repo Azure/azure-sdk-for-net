@@ -13,11 +13,12 @@
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
-    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Common\src\Azure.WebJobs.Extensions.Storage.Common.csproj" />
   </ItemGroup>
 </Project>

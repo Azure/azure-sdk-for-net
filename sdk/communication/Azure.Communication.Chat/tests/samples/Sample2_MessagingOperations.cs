@@ -60,8 +60,9 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatThreadClient.UpdateMessageAsync(messageId, "updated message content");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateMessage
 
+            //Note : Due to the async nature of the storage, moving coverage to CI tests
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
-            await chatThreadClient.SendReadReceiptAsync(messageId);
+            //@@await chatThreadClient.SendReadReceiptAsync(messageId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
@@ -81,54 +82,6 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification
 
             await chatClient.DeleteChatThreadAsync(threadId);
-
-        }
-
-        [Test]
-        public void SendGetUpdateDeleteMessagesSendNotificationReadReceipts()
-        {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> threadMember = communicationIdentityClient.CreateUser();
-            CommunicationUserToken communicationUserToken = communicationIdentityClient.IssueToken(threadMember.Value, new[] { CommunicationTokenScope.Chat });
-            string userToken = communicationUserToken.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
-            string theadCreatorMemberId = communicationUserToken.User.Id;
-
-            ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
-
-            var chatThreadMember = new ChatThreadMember(new CommunicationUser(theadCreatorMemberId))
-            {
-                DisplayName = "UserDisplayName",
-                ShareHistoryTime = DateTime.MinValue
-            };
-            ChatThreadClient chatThreadClient = chatClient.CreateChatThread(topic: "Hello world!", members: new[] { chatThreadMember });
-            string threadId = chatThreadClient.Id;
-
-            var content = "hello world";
-            var priority = ChatMessagePriority.Normal;
-            var senderDisplayName = "sender name";
-            SendChatMessageResult sendMessageResult = chatThreadClient.SendMessage(content, priority, senderDisplayName);
-
-            var messageId = sendMessageResult.Id;
-            ChatMessage chatMessage = chatThreadClient.GetMessage(messageId);
-            Pageable<ChatMessage> allMessages = chatThreadClient.GetMessages();
-            foreach (ChatMessage message in allMessages)
-            {
-                Console.WriteLine($"{message.Id}:{message.Sender.Id}:{message.Content}");
-            }
-
-            chatThreadClient.UpdateMessage(messageId, "updated message content");
-            chatThreadClient.SendReadReceipt(messageId);
-            Pageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceipts();
-            foreach (ReadReceipt readReceipt in allReadReceipts)
-            {
-                Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
-            }
-            chatThreadClient.DeleteMessage(messageId);
-            chatThreadClient.SendTypingNotification();
-            chatClient.DeleteChatThread(threadId);
         }
     }
 }

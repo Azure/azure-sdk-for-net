@@ -7,8 +7,8 @@
 
 ### New Features
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
-- Added the properties `DisplayName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
-- Added property `DisplayName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
+- Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
+- Added property `ModelName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
