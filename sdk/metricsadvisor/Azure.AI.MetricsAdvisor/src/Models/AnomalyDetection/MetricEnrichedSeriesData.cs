@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public IReadOnlyList<double> ExpectedValues { get; }
 
         /// <summary>
-        /// Whether or not a data points is considered an anomaly, according to the
+        /// Whether or not a data point is considered an anomaly, according to the
         /// associated <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         [CodeGenMember("IsAnomalyList")]
