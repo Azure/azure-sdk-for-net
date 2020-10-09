@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
-            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { DisplayName = "My composed model" });
+            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" });
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
@@ -210,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var modelIds = new List<string> { trainedModelA.ModelId, "00000000-0000-0000-0000-000000000000" };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { DisplayName = "My composed model" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" }));
             Assert.AreEqual("1001", ex.ErrorCode);
         }
 
@@ -243,34 +243,34 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartTrainingWithLabelsDisplayName()
+        public async Task StartTrainingWithLabelsModelName()
         {
             var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var displayName = "My training";
+            var modelName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = displayName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { ModelName = modelName });
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(displayName, operation.Value.DisplayName);
+            Assert.AreEqual(modelName, operation.Value.ModelName);
         }
 
         [Test]
-        [Ignore("Current bug on the service side returns null for display name.")]
-        public async Task StartTrainingWithNoLabelsDisplayName()
+        [Ignore("Current bug on the service side returns null for model name.")]
+        public async Task StartTrainingWithNoLabelsModelName()
         {
             var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var displayName = "My training";
+            var modelName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = displayName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { ModelName = modelName });
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(displayName, operation.Value.DisplayName);
+            Assert.AreEqual(modelName, operation.Value.ModelName);
         }
 
         [Test]

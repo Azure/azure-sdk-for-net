@@ -112,6 +112,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
+- Creating a composed model from a collection of existing trained models with labels.
 
 See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
 
@@ -298,11 +299,11 @@ Train a machine-learned model on your own form types. The resulting model will b
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My Model" }).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
-Console.WriteLine($"    Model display name: {model.DisplayName}");
+Console.WriteLine($"    Model name: {model.ModelName}");
 Console.WriteLine($"    Model Status: {model.Status}");
 Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
 Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
@@ -341,7 +342,7 @@ await foreach (CustomFormModelInfo modelInfo in models)
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
     Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
@@ -349,12 +350,12 @@ await foreach (CustomFormModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My new model" }).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
 
-Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.ModelName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
@@ -392,7 +393,7 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
     Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
     Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
@@ -400,12 +401,12 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My new model" }).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
-Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
+Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.ModelName} recognizes the following form types:");
 
 foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
@@ -484,6 +485,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
+- [Create composed model from a collection of models trained with labels][composed_model]
 
 ## Contributing
 
@@ -528,6 +530,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md
 [manage_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_ManageCustomModels.md
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md
+[composed_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample8_ModelCompose.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

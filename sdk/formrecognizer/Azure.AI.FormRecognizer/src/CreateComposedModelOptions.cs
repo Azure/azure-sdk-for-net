@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Optional user defined displayed model name.
+        /// An optional, user-defined name to associate with your model.
         /// </summary>
-        public string DisplayName { get; set; }
+        public string ModelName { get; set; }
     }
 }

@@ -17,15 +17,15 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="status"> Status of the model. </param>
         /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="displayName"> Optional user defined model name (max length: 1024). </param>
+        /// <param name="modelName"> An optional, user-defined name to associate with your model. </param>
         /// <param name="properties">Model properties, like for example, if a model is composed.</param>
-        internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, string displayName, CustomFormModelProperties properties)
+        internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, string modelName, CustomFormModelProperties properties)
         {
             ModelId = modelId;
             Status = status;
             TrainingStartedOn = trainingStartedOn;
             TrainingCompletedOn = trainingCompletedOn;
-            DisplayName = displayName;
+            ModelName = modelName;
             Properties = properties ?? new CustomFormModelProperties();
         }
 
@@ -35,10 +35,9 @@ namespace Azure.AI.FormRecognizer.Training
         public string ModelId { get; }
 
         /// <summary>
-        /// The optional display name of the model.
+        /// An optional, user-defined name to associate with your model.
         /// </summary>
-        [CodeGenMember("ModelName")]
-        public string DisplayName { get; }
+        public string ModelName { get; }
 
         /// <summary>
         /// Model properties, like for example, if a model is composed.

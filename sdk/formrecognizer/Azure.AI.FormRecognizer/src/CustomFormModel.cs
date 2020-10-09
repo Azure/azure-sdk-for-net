@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal CustomFormModel(Model model)
         {
             ModelId = model.ModelInfo.ModelId;
-            DisplayName = model.ModelInfo.DisplayName;
+            ModelName = model.ModelInfo.ModelName;
             Status = model.ModelInfo.Status;
             TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
             TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
         /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
         /// <param name="errors">A list of errors occurred during the training operation.</param>
-        /// <param name="displayName">User defined displayed model name.</param>
+        /// <param name="modelName">An optional, user-defined name to associate with your model.</param>
         /// <param name="properties">Model properties, like for example, if a model is composed.</param>
         internal CustomFormModel(
             string modelId,
@@ -46,11 +46,11 @@ namespace Azure.AI.FormRecognizer.Training
             IReadOnlyList<CustomFormSubmodel> submodels,
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments,
             IReadOnlyList<FormRecognizerError> errors,
-            string displayName,
+            string modelName,
             CustomFormModelProperties properties)
         {
             ModelId = modelId;
-            DisplayName = displayName;
+            ModelName = modelName;
             Properties = properties;
             Status = status;
             TrainingStartedOn = trainingStartedOn;
@@ -66,9 +66,9 @@ namespace Azure.AI.FormRecognizer.Training
         public string ModelId { get; }
 
         /// <summary>
-        /// Optional user defined displayed model name.
+        /// An optional, user-defined name to associate with your model.
         /// </summary>
-        public string DisplayName { get; }
+        public string ModelName { get; }
 
         /// <summary>
         /// Model properties, like for example, if a model is composed.
@@ -145,10 +145,10 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model)
         {
             string formType = string.Empty;
-            if (string.IsNullOrEmpty(model.ModelInfo.DisplayName))
+            if (string.IsNullOrEmpty(model.ModelInfo.ModelName))
                 formType = $"custom:{model.ModelInfo.ModelId}";
             else
-                formType = $"custom:{model.ModelInfo.DisplayName}";
+                formType = $"custom:{model.ModelInfo.ModelName}";
 
             return new List<CustomFormSubmodel> {
                 new CustomFormSubmodel(

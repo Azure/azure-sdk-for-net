@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
         /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
         /// <param name="errors">A list of errors occurred during the training operation.</param>
-        /// <param name="displayName">User defined displayed model name</param>
+        /// <param name="modelName">An optional, user-defined name to associate with your model.</param>
         /// <param name="properties">Model properties, like for example, if a model is composed.</param>
         /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
         public static CustomFormModel CustomFormModel(
@@ -74,14 +74,14 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<CustomFormSubmodel> submodels,
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments,
             IReadOnlyList<FormRecognizerError> errors,
-            string displayName,
+            string modelName,
             CustomFormModelProperties properties)
         {
             submodels = submodels?.ToList();
             trainingDocuments = trainingDocuments?.ToList();
             errors = errors?.ToList();
 
-            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, displayName, properties);
+            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, modelName, properties);
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
         /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
         /// <param name="status">The status of the model.</param>
-        /// <param name="displayName">The display name of the model.</param>
+        /// <param name="modelName">An optional, user-defined name to associate with your model.</param>
         /// <param name="properties">Model properties, like for example, if a model is composed.</param>
         /// <returns>A new <see cref="Training.CustomFormModelInfo"/> instance for mocking.</returns>
-        public static CustomFormModelInfo CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status, string displayName, CustomFormModelProperties properties) =>
-            new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, displayName, properties);
+        public static CustomFormModelInfo CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status, string modelName, CustomFormModelProperties properties) =>
+            new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, modelName, properties);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModelProperties"/> class.

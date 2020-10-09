@@ -40,10 +40,10 @@ string purchaseOrderOfficeEquipmentUrl = "<purchaseOrderOfficeEquipment>";
 string purchaseOrderFurnitureUrl = "<purchaseOrderFurniture>";
 string purchaseOrderCleaningSuppliesUrl = "<purchaseOrderCleaningSupplies>";
 
-Response<CustomFormModel> purchaseOrderOfficeSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office supplies" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderOfficeEquipmentModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office Equipment" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderFurnitureModel = await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Furniture" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderCleaningSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync();
+Response<CustomFormModel> purchaseOrderOfficeSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Office supplies" }).WaitForCompletionAsync();
+Response<CustomFormModel> purchaseOrderOfficeEquipmentModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Office Equipment" }).WaitForCompletionAsync();
+Response<CustomFormModel> purchaseOrderFurnitureModel = await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Furniture" }).WaitForCompletionAsync();
+Response<CustomFormModel> purchaseOrderCleaningSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync();
 ```
 
 When a purchase order happens, the employee in charge uploads the form to our application. The application then needs to recognize the form to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the form, you can create a composed model that aggregates the previous models, and use that model in `StartRecognizeCustomForms` and let the service decide which model fits best according to the form provided.

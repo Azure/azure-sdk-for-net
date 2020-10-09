@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels,
-                    ModelName = trainingOptions.ModelDisplayName
+                    ModelName = trainingOptions.ModelName
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Training
                 var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels,
-                    ModelName = trainingOptions.ModelDisplayName
+                    ModelName = trainingOptions.ModelName
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
@@ -216,9 +216,9 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 var composeRequest = new ComposeRequest(modelIdsGuid);
-                if (createComposedModelOptions.DisplayName.Length > 0)
+                if (createComposedModelOptions.ModelName.Length > 0)
                 {
-                    composeRequest.ModelName = createComposedModelOptions.DisplayName;
+                    composeRequest.ModelName = createComposedModelOptions.ModelName;
                 }
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
@@ -258,9 +258,9 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 var composeRequest = new ComposeRequest(modelIdsGuid);
-                if (createComposedModelOptions.DisplayName?.Length > 0)
+                if (createComposedModelOptions.ModelName?.Length > 0)
                 {
-                    composeRequest.ModelName = createComposedModelOptions.DisplayName;
+                    composeRequest.ModelName = createComposedModelOptions.ModelName;
                 }
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
