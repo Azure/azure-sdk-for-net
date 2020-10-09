@@ -33,14 +33,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     GetConnectionString(),
-                    Recording.InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
 
         private ServiceBusAdministrationClient GetAADClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     GetTokenCredential(),
-                    Recording.InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
 
         [Test]
         public async Task BasicQueueCrudOperations()

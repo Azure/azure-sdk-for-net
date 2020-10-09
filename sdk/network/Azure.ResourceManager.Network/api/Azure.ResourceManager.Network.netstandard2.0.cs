@@ -7003,26 +7003,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HubVirtualNetworkConnectionStatus : System.IEquatable<Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HubVirtualNetworkConnectionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus Connected { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus Connecting { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus NotConnected { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus left, Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus left, Azure.ResourceManager.Network.Models.HubVirtualNetworkConnectionStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IkeEncryption : System.IEquatable<Azure.ResourceManager.Network.Models.IkeEncryption>
     {
         private readonly object _dummy;
@@ -7853,25 +7833,6 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkInterfaceTapConfigurationListResult() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.NetworkInterfaceTapConfiguration> Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkOperationStatus : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkOperationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.NetworkOperationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.NetworkOperationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.NetworkOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.NetworkOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkOperationStatus left, Azure.ResourceManager.Network.Models.NetworkOperationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.NetworkOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkOperationStatus left, Azure.ResourceManager.Network.Models.NetworkOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class NetworkProfile : Azure.ResourceManager.Network.Models.Resource
     {
@@ -9357,26 +9318,6 @@ namespace Azure.ResourceManager.Network.Models
         public long? IngressBytesTransferred { get { throw null; } }
         public string LastConnectionEstablishedUtcTime { get { throw null; } }
         public string Tunnel { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TunnelConnectionStatus : System.IEquatable<Azure.ResourceManager.Network.Models.TunnelConnectionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TunnelConnectionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.TunnelConnectionStatus Connected { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TunnelConnectionStatus Connecting { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TunnelConnectionStatus NotConnected { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TunnelConnectionStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.TunnelConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.TunnelConnectionStatus left, Azure.ResourceManager.Network.Models.TunnelConnectionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.TunnelConnectionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.TunnelConnectionStatus left, Azure.ResourceManager.Network.Models.TunnelConnectionStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class UnprepareNetworkPoliciesRequest
     {

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host
         public QueuesOptions()
         {
             _newBatchThreshold = -1;
-            _processorCount = SharedUtility.GetProcessorCount();
+            _processorCount = SkuUtility.ProcessorCount;
         }
 
         /// <summary>

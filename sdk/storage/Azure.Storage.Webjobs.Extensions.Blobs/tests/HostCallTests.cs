@@ -4,25 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Newtonsoft.Json;
-using Xunit;
-using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
+using Azure.Storage.Blobs;
+using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
-    [Collection(AzuriteCollection.Name)]
     public class HostCallTests
     {
         private const string ContainerName = "container-hostcalltests";
@@ -31,64 +28,62 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string OutputBlobName = "blob.out";
         private const string OutputBlobPath = ContainerName + "/" + OutputBlobName;
         private const int TestValue = Int32.MinValue;
-        private readonly StorageAccount account;
+        private BlobServiceClient blobServiceClient;
+        private QueueServiceClient queueServiceClient;
 
-        public HostCallTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
-            account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
         }
 
-        [Theory]
-        [InlineData("FuncWithString")]
-        [InlineData("FuncWithTextReader")]
-        [InlineData("FuncWithStreamRead")]
-        [InlineData("FuncWithBlockBlob")]
-        [InlineData("FuncWithOutStringNull")]
-        [InlineData("FuncWithT")]
-        [InlineData("FuncWithOutTNull")]
-        [InlineData("FuncWithValueT")]
+        [TestCase("FuncWithString")]
+        [TestCase("FuncWithTextReader")]
+        [TestCase("FuncWithStreamRead")]
+        [TestCase("FuncWithBlockBlob")]
+        [TestCase("FuncWithOutStringNull")]
+        [TestCase("FuncWithT")]
+        [TestCase("FuncWithOutTNull")]
+        [TestCase("FuncWithValueT")]
         public async Task Blob_IfBoundToTypeAndBlobIsMissing_DoesNotCreate(string methodName)
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
 
             // Act
-            await CallAsync(account, typeof(MissingBlobProgram), methodName, typeof(CustomBlobConverterExtensionConfigProvider));
+            await CallAsync(typeof(MissingBlobProgram), methodName, typeof(CustomBlobConverterExtensionConfigProvider));
 
             // Assert
             Assert.False(await blob.ExistsAsync());
         }
 
-        [Theory]
-        [InlineData("FuncWithOutString")]
-        [InlineData("FuncWithStreamWriteNoop")]
-        [InlineData("FuncWithTextWriter")]
-        [InlineData("FuncWithStreamWrite")]
-        [InlineData("FuncWithOutT")]
-        [InlineData("FuncWithOutValueT")]
+        [TestCase("FuncWithOutString")]
+        [TestCase("FuncWithStreamWriteNoop")]
+        [TestCase("FuncWithTextWriter")]
+        [TestCase("FuncWithStreamWrite")]
+        [TestCase("FuncWithOutT")]
+        [TestCase("FuncWithOutValueT")]
         public async Task Blob_IfBoundToTypeAndBlobIsMissing_Creates(string methodName)
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
 
             // Act
-            await CallAsync(account, typeof(MissingBlobProgram), methodName, typeof(CustomBlobConverterExtensionConfigProvider));
+            await CallAsync(typeof(MissingBlobProgram), methodName, typeof(CustomBlobConverterExtensionConfigProvider));
 
             // Assert
             Assert.True(await blob.ExistsAsync());
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfHasUnboundParameter_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             const string inputBlobName = "note-monday.csv";
             var inputBlob = container.GetBlockBlobClient(inputBlobName);
             await container.CreateIfNotExistsAsync();
@@ -101,11 +96,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            await CallAsync(account, typeof(BlobProgram), "UnboundParameter", arguments);
+            await CallAsync(typeof(BlobProgram), "UnboundParameter", arguments);
 
             var outputBlob = container.GetBlockBlobClient("note.csv");
             string content = await outputBlob.DownloadTextAsync();
-            Assert.Equal("done", content);
+            Assert.AreEqual("done", content);
 
             // $$$ Put this in its own unit test?
             Guid? guid = BlobCausalityManager.GetWriterAsync(outputBlob,
@@ -114,59 +109,55 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(guid != Guid.Empty, "Blob is missing causality information");
         }
 
-        [Fact]
+        [Test]
         public async Task Blob_IfBoundToCloudBlockBlob_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var inputBlob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await inputBlob.UploadTextAsync("ignore");
 
             // Act
-            await CallAsync(account, typeof(BlobProgram), "BindToCloudBlockBlob");
+            await CallAsync(typeof(BlobProgram), "BindToCloudBlockBlob");
         }
 
-        [Fact]
+        [Test]
         public async Task Blob_IfBoundToString_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var inputBlob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await inputBlob.UploadTextAsync("0,1,2");
 
-            await CallAsync(account, typeof(BlobProgram), "BindToString");
+            await CallAsync(typeof(BlobProgram), "BindToString");
         }
 
-        [Fact]
+        [Test]
         public async Task Blob_IfCopiedViaString_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var inputBlob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             string expectedContent = "abc";
             await inputBlob.UploadTextAsync(expectedContent);
 
             // Act
-            await CallAsync(account, typeof(BlobProgram), "CopyViaString");
+            await CallAsync(typeof(BlobProgram), "CopyViaString");
 
             // Assert
             var outputBlob = container.GetBlockBlobClient(OutputBlobName);
             string outputContent = await outputBlob.DownloadTextAsync();
-            Assert.Equal(expectedContent, outputContent);
+            Assert.AreEqual(expectedContent, outputContent);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfCopiedViaTextReaderTextWriter_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var inputBlob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             string expectedContent = "abc";
@@ -179,20 +170,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            await CallAsync(account, typeof(BlobProgram), "CopyViaTextReaderTextWriter", arguments);
+            await CallAsync(typeof(BlobProgram), "CopyViaTextReaderTextWriter", arguments);
 
             // Assert
             var outputBlob = container.GetBlockBlobClient(OutputBlobName);
             string outputContent = await outputBlob.DownloadTextAsync();
-            Assert.Equal(expectedContent, outputContent);
+            Assert.AreEqual(expectedContent, outputContent);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToICloudBlob_CanCallWithBlockBlob()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await blob.UploadTextAsync("ignore");
@@ -204,20 +194,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            BlobBaseClient result = await CallAsync<BlobBaseClient>(account, typeof(BlobTriggerBindToICloudBlobProgram), "Call", arguments,
+            BlobBaseClient result = await CallAsync<BlobBaseClient>(typeof(BlobTriggerBindToICloudBlobProgram), "Call", arguments,
                 (s) => BlobTriggerBindToICloudBlobProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<BlockBlobClient>(result);
+            Assert.IsInstanceOf<BlockBlobClient>(result);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToICloudBlob_CanCallWithPageBlob()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetPageBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await blob.CreateIfNotExistsAsync(512);
@@ -229,31 +218,30 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            BlobBaseClient result = await CallAsync<BlobBaseClient>(account, typeof(BlobTriggerBindToICloudBlobProgram), "Call", arguments,
+            BlobBaseClient result = await CallAsync<BlobBaseClient>(typeof(BlobTriggerBindToICloudBlobProgram), "Call", arguments,
                 (s) => BlobTriggerBindToICloudBlobProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<PageBlobClient>(result);
+            Assert.IsInstanceOf<PageBlobClient>(result);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToICloudBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Act
-            Exception exception = await CallFailureAsync(account, typeof(BlobTriggerBindToICloudBlobProgram), "Call");
+            Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToICloudBlobProgram), "Call");
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Missing value for trigger parameter 'blob'.", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Missing value for trigger parameter 'blob'.", exception.Message);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudBlockBlob_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await blob.UploadTextAsync("ignore");
@@ -265,22 +253,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            var result = await CallAsync<BlockBlobClient>(account, typeof(BlobTriggerBindToCloudBlockBlobProgram),
+            var result = await CallAsync<BlockBlobClient>(typeof(BlobTriggerBindToCloudBlockBlobProgram),
                 "Call", arguments, (s) => BlobTriggerBindToCloudBlockBlobProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudBLockBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Act
-            Exception exception = await CallFailureAsync(account, typeof(BlobTriggerBindToCloudBlockBlobProgram), "Call");
+            Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudBlockBlobProgram), "Call");
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Missing value for trigger parameter 'blob'.", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Missing value for trigger parameter 'blob'.", exception.Message);
         }
 
         private class BlobTriggerBindToCloudBlockBlobProgram
@@ -293,12 +281,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudPageBlob_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetPageBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await blob.CreateIfNotExistsAsync(512);
@@ -310,22 +297,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            PageBlobClient result = await CallAsync<PageBlobClient>(account, typeof(BlobTriggerBindToCloudPageBlobProgram), "Call",
+            PageBlobClient result = await CallAsync<PageBlobClient>(typeof(BlobTriggerBindToCloudPageBlobProgram), "Call",
                 arguments, (s) => BlobTriggerBindToCloudPageBlobProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudPageBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Act
-            Exception exception = await CallFailureAsync(account, typeof(BlobTriggerBindToCloudPageBlobProgram), "Call");
+            Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudPageBlobProgram), "Call");
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Missing value for trigger parameter 'blob'.", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Missing value for trigger parameter 'blob'.", exception.Message);
         }
 
         private class BlobTriggerBindToCloudPageBlobProgram
@@ -338,12 +325,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudAppendBlob_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetAppendBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await blob.UploadTextAsync("test");
@@ -355,22 +341,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            var result = await CallAsync<AppendBlobClient>(account, typeof(BlobTriggerBindToCloudAppendBlobProgram), "Call",
+            var result = await CallAsync<AppendBlobClient>(typeof(BlobTriggerBindToCloudAppendBlobProgram), "Call",
                 arguments, (s) => BlobTriggerBindToCloudAppendBlobProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfBoundToCloudAppendBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Act
-            Exception exception = await CallFailureAsync(account, typeof(BlobTriggerBindToCloudAppendBlobProgram), "Call");
+            Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToCloudAppendBlobProgram), "Call");
 
             // Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.Equal("Missing value for trigger parameter 'blob'.", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Missing value for trigger parameter 'blob'.", exception.Message);
         }
 
         private class BlobTriggerBindToCloudAppendBlobProgram
@@ -383,7 +369,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             IDictionary<string, object> arguments = new Dictionary<string, object>
@@ -392,10 +378,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            int result = await CallAsync<int>(account, typeof(UnboundInt32Program), "Call", arguments,
+            int result = await CallAsync<int>(typeof(UnboundInt32Program), "Call", arguments,
                 (s) => UnboundInt32Program.TaskSource = s);
 
-            Assert.Equal(15, result);
+            Assert.AreEqual(15, result);
         }
 
         private class UnboundInt32Program
@@ -409,17 +395,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Binder_IfBindingBlobToTextWriter_CanCall()
         {
             // Act
-            await CallAsync(account, typeof(BindToBinderBlobTextWriterProgram), "Call");
+            await CallAsync(typeof(BindToBinderBlobTextWriterProgram), "Call");
 
             // Assert
-            var container = account.CreateBlobServiceClient().GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var blob = container.GetBlockBlobClient(OutputBlobName);
             string content = await blob.DownloadTextAsync();
-            Assert.Equal("output", content);
+            Assert.AreEqual("output", content);
         }
 
         private class BindToBinderBlobTextWriterProgram
@@ -434,12 +420,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task BlobTrigger_IfCopiedViaPoco_CanCall()
         {
             // Arrange
-            var client = account.CreateBlobServiceClient();
-            var container = client.GetBlobContainerClient(ContainerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             var inputBlob = container.GetBlockBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
             await inputBlob.UploadTextAsync("abc");
@@ -450,12 +435,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             };
 
             // Act
-            await CallAsync(account, typeof(CopyBlobViaPocoProgram), "CopyViaPoco", arguments, typeof(CustomBlobConverterExtensionConfigProvider));
+            await CallAsync(typeof(CopyBlobViaPocoProgram), "CopyViaPoco", arguments, typeof(CustomBlobConverterExtensionConfigProvider));
 
             // Assert
             var outputBlob = container.GetBlockBlobClient(OutputBlobName);
             string content = await outputBlob.DownloadTextAsync();
-            Assert.Equal("*abc*", content);
+            Assert.AreEqual("*abc*", content);
         }
 
         private class CopyBlobViaPocoProgram
@@ -473,26 +458,26 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public string Value;
         }
 
-        private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
+        private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), null, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
         }
 
-        private static async Task CallAsync(StorageAccount account, Type programType, string methodName,
+        private async Task CallAsync(Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), arguments, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
 
-        private static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, string methodName,
+        private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
-        private static async Task<Exception> CallFailureAsync(StorageAccount account, Type programType, string methodName)
+        private async Task<Exception> CallFailureAsync(Type programType, string methodName)
         {
-            return await FunctionalTest.CallFailureAsync(account, programType, programType.GetMethod(methodName), null);
+            return await FunctionalTest.CallFailureAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), null);
         }
 
         private struct CustomDataValue
@@ -512,8 +497,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static void FuncWithBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
             {
                 Assert.NotNull(blob);
-                Assert.Equal(BlobName, blob.Name);
-                Assert.Equal(ContainerName, blob.BlobContainerName);
+                Assert.AreEqual(BlobName, blob.Name);
+                Assert.AreEqual(ContainerName, blob.BlobContainerName);
             }
 
             public static void FuncWithStreamRead([Blob(BlobPath, FileAccess.Read)] Stream stream)
@@ -577,10 +562,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static void FuncWithValueT([Blob(BlobPath)] CustomDataValue value)
             {
                 // default(T) is blob is missing
-#pragma warning disable xUnit2002 // Do not use null check on value type
                 Assert.NotNull(value);
-#pragma warning restore xUnit2002 // Do not use null check on value type
-                Assert.Equal(0, value.ValueId);
+                Assert.AreEqual(0, value.ValueId);
             }
 
             public static void FuncWithOutValueT([Blob(BlobPath)] out CustomDataValue value)
@@ -601,12 +584,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 [Blob(ContainerName + "/{name}.csv")] TextWriter output
                 )
             {
-                Assert.Equal("test", unbound);
-                Assert.Equal("note", name);
-                Assert.Equal("monday", date);
+                Assert.AreEqual("test", unbound);
+                Assert.AreEqual("note", name);
+                Assert.AreEqual("monday", date);
 
                 string content = values.ReadToEnd();
-                Assert.Equal("abc", content);
+                Assert.AreEqual("abc", content);
 
                 output.Write("done");
             }
@@ -614,7 +597,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static void BindToCloudBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
             {
                 Assert.NotNull(blob);
-                Assert.Equal(BlobName, blob.Name);
+                Assert.AreEqual(BlobName, blob.Name);
             }
 
             public static void BindToString([Blob(BlobPath)] string content)
@@ -622,14 +605,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 Assert.NotNull(content);
                 string[] strings = content.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 // Verify expected number of entries in CloudBlob
-                Assert.Equal(3, strings.Length);
+                Assert.AreEqual(3, strings.Length);
                 for (int i = 0; i < 3; ++i)
                 {
                     bool parsed = int.TryParse(strings[i], out int value);
                     string message = String.Format("Unable to parse CloudBlob strings[{0}]: '{1}'", i, strings[i]);
                     Assert.True(parsed, message);
                     // Ensure expected value in CloudBlob
-                    Assert.Equal(i, value);
+                    Assert.AreEqual(i, value);
                 }
             }
 
@@ -697,7 +680,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
                     if (value != null)
                     {
-                        Assert.Equal(TestValue, value.ValueId);
+                        Assert.AreEqual(TestValue, value.ValueId);
 
                         const byte ignore = 0xFF;
                         stream.WriteByte(ignore);
@@ -718,7 +701,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     CustomDataValue value = p.Value;
                     Stream stream = p.Existing;
 
-                    Assert.Equal(TestValue, value.ValueId);
+                    Assert.AreEqual(TestValue, value.ValueId);
 
                     const byte ignore = 0xFF;
                     stream.WriteByte(ignore);

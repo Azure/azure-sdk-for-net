@@ -44,7 +44,7 @@ namespace Azure.Storage.Test
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public BlobServiceClient GetSecondaryStorageReadEnabledServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, bool simulate404 = false)

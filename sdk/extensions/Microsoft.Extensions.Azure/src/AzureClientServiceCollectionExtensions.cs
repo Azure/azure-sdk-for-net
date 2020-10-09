@@ -4,6 +4,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -19,7 +22,21 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configureClients">An <see cref="AzureClientFactoryBuilder"/> that can be used to configure the client.</param>
         public static void AddAzureClients(this IServiceCollection collection, Action<AzureClientFactoryBuilder> configureClients)
         {
+            collection.AddAzureClientCore();
             configureClients(new AzureClientFactoryBuilder(collection));
+        }
+
+        /// <summary>
+        /// Adds the minimum essential Azure SDK interop services like <see cref="AzureEventSourceLogForwarder"/> and <see cref="AzureComponentFactory"/> to the specified <see cref="IServiceCollection"/> without registering any client types.
+        /// </summary>
+        /// <param name="collection">The <see cref="IServiceCollection"/>.</param>
+        public static void AddAzureClientCore(this IServiceCollection collection)
+        {
+            collection.AddOptions();
+            collection.TryAddSingleton<AzureEventSourceLogForwarder>();
+            collection.TryAddSingleton<ILoggerFactory, NullLoggerFactory>();
+            collection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
+            collection.TryAddSingleton<AzureComponentFactory, AzureComponentFactoryImpl>();
         }
     }
 }

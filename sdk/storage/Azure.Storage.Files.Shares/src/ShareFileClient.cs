@@ -796,7 +796,8 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
-                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ParentNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2143,7 +2144,7 @@ namespace Azure.Storage.Files.Shares
                             (IDownloadedContent)response.Value,
                             response.GetRawResponse());
                     },
-                    createRequestConditionsFunc: null,
+                    (ETag? eTag) => new ShareFileRequestConditions { },
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
                     properties.ContentLength,

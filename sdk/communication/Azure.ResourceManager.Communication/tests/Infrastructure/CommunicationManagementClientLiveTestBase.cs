@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
             return InstrumentClient(new CommunicationManagementClient(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new CommunicationManagementClientOptions())));
+                InstrumentClientOptions(new CommunicationManagementClientOptions())));
         }
     }
 }

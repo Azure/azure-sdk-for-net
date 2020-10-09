@@ -35,15 +35,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             _serviceVersion = serviceVersion;
         }
 
-        internal SecretClient GetClient(TestRecording recording = null)
+        internal SecretClient GetClient()
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new SecretClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
         }
 
         public override void StartTestRecording()

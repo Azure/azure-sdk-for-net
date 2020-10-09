@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var blobContainerName = BlobContainerName;
             var sasToken = "?" + SasToken;
            // var client = Mode == RecordedTestMode.Playback ? GetClient(null, false) : Client;
-            var client = GetClient(null, false);
+            var client = GetClient(false);
 
             // Create a Uri with the storage container
             UriBuilder builder = new UriBuilder(blobStorageUrl)

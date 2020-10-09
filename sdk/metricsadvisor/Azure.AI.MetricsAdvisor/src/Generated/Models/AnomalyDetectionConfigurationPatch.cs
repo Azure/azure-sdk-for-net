@@ -16,18 +16,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationPatch. </summary>
         public AnomalyDetectionConfigurationPatch()
         {
-            DimensionGroupOverrideConfigurations = new ChangeTrackingList<MetricSeriesGroupAnomalyDetectionConditions>();
-            SeriesOverrideConfigurations = new ChangeTrackingList<MetricSingleSeriesAnomalyDetectionConditions>();
+            DimensionGroupOverrideConfigurations = new ChangeTrackingList<MetricSeriesGroupDetectionCondition>();
+            SeriesOverrideConfigurations = new ChangeTrackingList<MetricSingleSeriesDetectionCondition>();
         }
 
         /// <summary> anomaly detection configuration name. </summary>
         public string Name { get; set; }
         /// <summary> anomaly detection configuration description. </summary>
         public string Description { get; set; }
-        public MetricAnomalyDetectionConditions WholeMetricConfiguration { get; set; }
-        /// <summary> detection configuration for series group. </summary>
-        public IList<MetricSeriesGroupAnomalyDetectionConditions> DimensionGroupOverrideConfigurations { get; }
-        /// <summary> detection configuration for specific series. </summary>
-        public IList<MetricSingleSeriesAnomalyDetectionConditions> SeriesOverrideConfigurations { get; }
+        public MetricWholeSeriesDetectionCondition WholeMetricConfiguration { get; set; }
     }
 }

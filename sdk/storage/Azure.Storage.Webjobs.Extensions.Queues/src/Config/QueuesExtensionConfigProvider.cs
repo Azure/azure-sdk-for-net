@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Description;
@@ -15,8 +13,8 @@ using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using System.Text;
-using Azure.Core;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 {
@@ -24,14 +22,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
     internal class QueuesExtensionConfigProvider : IExtensionConfigProvider
     {
         private readonly IContextGetter<IMessageEnqueuedWatcher> _contextGetter;
-        private readonly StorageAccountProvider _storageAccountProvider;
+        private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueueTriggerAttributeBindingProvider _triggerProvider;
 
-        public QueuesExtensionConfigProvider(StorageAccountProvider storageAccountProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
+        public QueuesExtensionConfigProvider(QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
             QueueTriggerAttributeBindingProvider triggerProvider)
         {
             _contextGetter = contextGetter;
-            _storageAccountProvider = storageAccountProvider;
+            _queueServiceClientProvider = queueServiceClientProvider;
             _triggerProvider = triggerProvider;
         }
 
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
             context.AddBindingRule<QueueTriggerAttribute>().BindToTrigger(_triggerProvider);
 
             var config = new PerHostConfig();
-            config.Initialize(context, _storageAccountProvider, _contextGetter);
+            config.Initialize(context, _queueServiceClientProvider, _contextGetter);
         }
 
         // $$$ Get rid of PerHostConfig part?
@@ -55,15 +53,15 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
         private class PerHostConfig : IConverter<QueueAttribute, IAsyncCollector<QueueMessage>>
         {
             // Fields that the various binding funcs need to close over.
-            private StorageAccountProvider _accountProvider;
+            private QueueServiceClientProvider _queueServiceClientProvider;
 
             // Optimization where a queue output can directly trigger a queue input.
             // This is per-host (not per-config)
             private IContextGetter<IMessageEnqueuedWatcher> _messageEnqueuedWatcherGetter;
 
-            public void Initialize(ExtensionConfigContext context, StorageAccountProvider storageAccountProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter)
+            public void Initialize(ExtensionConfigContext context, QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter)
             {
-                _accountProvider = storageAccountProvider;
+                _queueServiceClientProvider = queueServiceClientProvider;
                 _messageEnqueuedWatcherGetter = contextGetter;
 
                 // TODO: FACAVAL replace this with queue options. This should no longer be needed.
@@ -84,20 +82,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
                 binding.AddValidator(ValidateQueueAttribute);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToCollector<QueueMessage>(this);
+                binding.BindToCollector<QueueMessage>(this);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToInput<QueueClient>(builder);
+                binding.BindToInput<QueueClient>(builder);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
-#pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToInput<QueueClient>(builder);
+                binding.BindToInput<QueueClient>(builder);
             }
 
             private async Task<object> ConvertPocoToCloudQueueMessage(object arg, Attribute attrResolved, ValueBindingContext context)
@@ -122,34 +111,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 QueueCausalityManager.SetOwner(functionInstanceId, objectToken);
 
                 return Task.FromResult<JObject>(objectToken);
-            }
-
-            // ParameterDescriptor for binding to CloudQueue. Whereas the output bindings are FileAccess.Write; CloudQueue exposes Peek()
-            // and so is technically Read/Write.
-            // Preserves compat with older SDK.
-            private ParameterDescriptor ToReadWriteParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
-            {
-                return ToParameterDescriptorForCollector(attr, parameter, nameResolver, FileAccess.ReadWrite);
-            }
-
-            // Asyncollector version. Write-only
-            private ParameterDescriptor ToWriteParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
-            {
-                return ToParameterDescriptorForCollector(attr, parameter, nameResolver, FileAccess.Write);
-            }
-
-            private ParameterDescriptor ToParameterDescriptorForCollector(QueueAttribute attr, ParameterInfo parameter, INameResolver nameResolver, FileAccess access)
-            {
-                var account = _accountProvider.Get(attr.Connection, nameResolver);
-                var accountName = account.Name;
-
-                return new QueueParameterDescriptor
-                {
-                    Name = parameter.Name,
-                    AccountName = accountName,
-                    QueueName = NormalizeQueueName(attr, nameResolver),
-                    Access = access
-                };
             }
 
             private static string NormalizeQueueName(QueueAttribute attribute, INameResolver nameResolver)
@@ -205,8 +166,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
             internal QueueClient GetQueue(QueueAttribute attrResolved)
             {
-                var account = _accountProvider.Get(attrResolved.Connection);
-                var client = account.CreateQueueServiceClient();
+                var client = _queueServiceClientProvider.Get(attrResolved.Connection);
 
                 string queueName = attrResolved.QueueName.ToLowerInvariant();
                 QueueClientExtensions.ValidateQueueName(queueName);

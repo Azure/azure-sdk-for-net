@@ -12,20 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The HardThresholdCondition. </summary>
     public partial class HardThresholdCondition
     {
-        /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
-        /// <param name="anomalyDetectorDirection"> detection direction. </param>
-        /// <param name="suppressCondition"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suppressCondition"/> is null. </exception>
-        public HardThresholdCondition(AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
-        {
-            if (suppressCondition == null)
-            {
-                throw new ArgumentNullException(nameof(suppressCondition));
-            }
-
-            AnomalyDetectorDirection = anomalyDetectorDirection;
-            SuppressCondition = suppressCondition;
-        }
 
         /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
         /// <param name="lowerBound">
@@ -51,22 +37,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyDetectorDirection = anomalyDetectorDirection;
             SuppressCondition = suppressCondition;
         }
-
-        /// <summary>
-        /// lower bound
-        /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Down.
-        /// </summary>
-        public double? LowerBound { get; set; }
-        /// <summary>
-        /// upper bound
-        /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Up.
-        /// </summary>
-        public double? UpperBound { get; set; }
     }
 }

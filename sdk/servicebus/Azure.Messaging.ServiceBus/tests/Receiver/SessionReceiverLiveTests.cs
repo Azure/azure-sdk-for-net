@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -40,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sentMessageIdToMsg.Add(message.MessageId, message);
                 }
 
-                var receiver = await client.AcceptNextSessionAsync(
+                var receiver = await client.AcceptSessionAsync(
                     scope.QueueName,
                     sessionId);
 
@@ -591,7 +590,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendMessageAsync(GetMessage("sessionId2"));
                 await sender.SendMessageAsync(message);
 
-                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(
+                ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
                     scope.QueueName,
                     isSessionSpecified ? sessionId1 : null);
                 if (isSessionSpecified)
@@ -756,11 +755,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(message.Body.ToBytes().ToArray(), receivedMessage.Body.ToBytes().ToArray());
 
                 var sessionStateString = "Received Message From Session!";
-                var sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                var sessionState = new BinaryData(sessionStateString);
                 await receiver.SetSessionStateAsync(sessionState);
 
                 var returnedSessionState = await receiver.GetSessionStateAsync();
-                var returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                var returnedSessionStateString = returnedSessionState.ToString();
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
 
                 // Complete message using Session Receiver
@@ -770,11 +769,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNull(peekedMessage.Result);
 
                 sessionStateString = "Completed Message On Session!";
-                sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                sessionState = new BinaryData(sessionStateString);
                 await receiver.SetSessionStateAsync(sessionState);
 
                 returnedSessionState = await receiver.GetSessionStateAsync();
-                returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                returnedSessionStateString = returnedSessionState.ToString();
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
             }
         }
