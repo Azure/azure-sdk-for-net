@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public GetMetricFeedbacksOptions()
         {
+            Filter = new DimensionKey();
         }
 
         /// <summary> The dimension filter. </summary>
@@ -25,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Filters the result by series. Only feedbacks for the series in the time series group specified will
         /// be returned.
         /// </summary>
-        public DimensionKey Filter { get; set; }
+        public DimensionKey Filter { get; }
 
         /// <summary>
         /// Filters the result by <see cref="MetricFeedback.Type"/>.
