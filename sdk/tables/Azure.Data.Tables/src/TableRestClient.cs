@@ -51,27 +51,6 @@ namespace Azure.Data.Tables
             return new MultipartContent("mixed", $"batch_{guid}");
         }
 
-        internal HttpMessage AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
-        {
-            var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
-        internal HttpMessage AddUpdateEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, int? timeout, string requestId, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
-        {
-            var message = CreateUpdateEntityRequest(table, partitionKey, rowKey, timeout, requestId, ifMatch, tableEntityProperties, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
-        internal HttpMessage AddDeleteEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, string ifMatch, int? timeout, string requestId, QueryOptions queryOptions)
-        {
-            var message = CreateDeleteEntityRequest(table, partitionKey, rowKey, ifMatch, timeout, requestId, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
         /// <summary> Insert entity in a table. </summary>
         /// <param name="message"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,8 +70,14 @@ namespace Azure.Data.Tables
                         var responses = await Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            true,
+                            expectBoundariesWithCRLF: false,
+                            async: true,
                             cancellationToken).ConfigureAwait(false);
+
+                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        {
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
+                        }
 
                         return Response.FromValue(responses.ToList(), message.Response);
                     }
@@ -120,8 +105,14 @@ namespace Azure.Data.Tables
                         var responses = Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            false,
+                            expectBoundariesWithCRLF: false,
+                            async: false,
                             cancellationToken).EnsureCompleted();
+
+                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        {
+                            throw _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        }
 
                         return Response.FromValue(responses.ToList(), message.Response);
                     }

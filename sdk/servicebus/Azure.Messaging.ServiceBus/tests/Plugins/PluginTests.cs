@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
@@ -44,8 +45,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 SetContentType(message, "contentType");
                 SetCorrelationId(message, "correlationId");
                 SetUserProperty(message, "propertyKey", "propertyValue");
-                SetUserProperty(message, ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader, "deadLetterDescription");
-                SetUserProperty(message, ServiceBusReceivedMessage.DeadLetterReasonHeader, "deadLetterReason");
+                SetUserProperty(message, AmqpMessageConstants.DeadLetterErrorDescriptionHeader, "deadLetterDescription");
+                SetUserProperty(message, AmqpMessageConstants.DeadLetterReasonHeader, "deadLetterReason");
                 SetLabel(message, "label");
                 SetMessageId(message, "messageId");
                 SetPartitionKey(message, "partitionKey");

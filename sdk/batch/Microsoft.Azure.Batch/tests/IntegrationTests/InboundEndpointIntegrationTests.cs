@@ -32,34 +32,32 @@ namespace BatchClientIntegrationTests
         {
             Action test = () =>
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string poolId = "InboundEndpoints-" + TestUtilities.GetMyName();
+
+                try
                 {
-                    string poolId = "InboundEndpoints-" + TestUtilities.GetMyName();
+                    var pool = CreatePool(batchCli, poolId);
+                    pool.NetworkConfiguration = GetNetworkConfiguration();
+                    pool.Commit();
 
-                    try
+                    var actualPool = batchCli.PoolOperations.GetPool(poolId);
+
+                    var expectedInboundNatPools = pool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.OrderBy(inp => inp.Name).ToList();
+                    var actualInboundNatPools = actualPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.OrderBy(inp => inp.Name).ToList();
+
+                    Assert.Equal(expectedInboundNatPools.Count, actualInboundNatPools.Count);
+
+                    for (var i = 0; i < expectedInboundNatPools.Count; i++)
                     {
-                        var pool = CreatePool(batchCli, poolId);
-                        pool.NetworkConfiguration = GetNetworkConfiguration();
-                        pool.Commit();
+                        ValidateEquality(expectedInboundNatPools[i], actualInboundNatPools[i]);
 
-                        var actualPool = batchCli.PoolOperations.GetPool(poolId);
-
-                        var expectedInboundNatPools = pool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.OrderBy(inp => inp.Name).ToList();
-                        var actualInboundNatPools = actualPool.NetworkConfiguration.EndpointConfiguration.InboundNatPools.OrderBy(inp => inp.Name).ToList();
-
-                        Assert.Equal(expectedInboundNatPools.Count, actualInboundNatPools.Count);
-
-                        for (var i = 0; i < expectedInboundNatPools.Count; i++)
-                        {
-                            ValidateEquality(expectedInboundNatPools[i], actualInboundNatPools[i]);
-
-                            ValidateNatPool(expectedInboundNatPools[i], actualInboundNatPools[i]);
-                        }
+                        ValidateNatPool(expectedInboundNatPools[i], actualInboundNatPools[i]);
                     }
-                    finally
-                    {
-                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
-                    }
+                }
+                finally
+                {
+                    TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
             };
 

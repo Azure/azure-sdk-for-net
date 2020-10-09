@@ -2,6 +2,14 @@
 
 ## 1.6.0-beta.1 (Unreleased)
 
+### Added
+- The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+
+## 1.5.1 (2020-10-01)
+
+### Changed
+- `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints. 
+
 
 ## 1.5.0 (2020-09-03)
 
@@ -14,7 +22,7 @@
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
-  </ItemGroup>
+  </ItemGroup> 
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.

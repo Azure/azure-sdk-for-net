@@ -8,9 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
@@ -23,11 +21,9 @@ namespace Azure.Search.Documents.Indexes
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
-#if EXPERIMENTAL_SERIALIZER
         private readonly ObjectSerializer _serializer;
-#endif
 
-        private ServiceRestClient _serviceClient;
+        private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
@@ -76,9 +72,7 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
-#if EXPERIMENTAL_SERIALIZER
             _serializer = options.Serializer;
-#endif
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(credential);
             _version = options.Version;
@@ -97,9 +91,9 @@ namespace Azure.Search.Documents.Indexes
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the generated <see cref="ServiceRestClient"/> to make requests.
+        /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
         /// </summary>
-        private ServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new ServiceRestClient(
+        private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
@@ -146,9 +140,7 @@ namespace Azure.Search.Documents.Indexes
             return new SearchClient(
                 Endpoint,
                 indexName,
-#if EXPERIMENTAL_SERIALIZER
                 _serializer,
-#endif
                 _pipeline,
                 _clientDiagnostics,
                 _version);

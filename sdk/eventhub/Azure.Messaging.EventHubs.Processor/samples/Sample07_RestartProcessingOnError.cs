@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 try
                 {
                     ++eventIndex;
-                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
                 }
                 catch (Exception ex)
                 {

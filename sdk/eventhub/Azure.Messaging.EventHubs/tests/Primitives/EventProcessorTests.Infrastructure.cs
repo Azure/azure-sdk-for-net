@@ -242,5 +242,30 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ClaimOwnershipAsync", Times.Once(), ItExpr.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), ItExpr.IsAny<CancellationToken>());
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorLoadBalancerIsConfiguredUsingOptions()
+        {
+            var options = new EventProcessorOptions
+            {
+                LoadBalancingUpdateInterval = TimeSpan.FromDays(99),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(5)
+            };
+
+            var fqNamespace = "fqns";
+            var eventHub = "eh";
+            var consumerGroup = "cg";
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), options) { CallBase = true };
+            var loadBalancer = GetLoadBalancer(mockProcessor.Object);
+
+            Assert.That(loadBalancer, Is.Not.Null, "The load balancer should have been created.");
+            Assert.That(loadBalancer.LoadBalanceInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval was incorrect.");
+            Assert.That(loadBalancer.OwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership expiration interval is incorrect.");
+        }
     }
 }

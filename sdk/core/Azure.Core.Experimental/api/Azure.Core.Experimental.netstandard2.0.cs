@@ -16,8 +16,8 @@ namespace Azure
         public static Azure.BinaryData FromBytes(byte[] data) { throw null; }
         public static Azure.BinaryData FromBytes(System.ReadOnlyMemory<byte> data) { throw null; }
         public static Azure.BinaryData FromBytes(System.ReadOnlySpan<byte> data) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.BinaryData> FromObjectAsync<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.BinaryData> FromObjectAsync<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<Azure.BinaryData> FromObjectAsync<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<Azure.BinaryData> FromObjectAsync<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.BinaryData FromObject<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.BinaryData FromObject<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.BinaryData FromStream(System.IO.Stream stream) { throw null; }
@@ -96,12 +96,16 @@ namespace Azure.Core
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
-        public void AppendAdd(string path, string rawJsonValue) { }
+        public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public void AppendAddRaw(string path, string rawJsonValue) { }
+        public void AppendAdd<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public void AppendCopy(string from, string path) { }
         public void AppendMove(string from, string path) { }
         public void AppendRemove(string path) { }
-        public void AppendReplace(string path, string rawJsonValue) { }
-        public void AppendTest(string path, string rawJsonValue) { }
+        public void AppendReplaceRaw(string path, string rawJsonValue) { }
+        public void AppendReplace<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public void AppendTestRaw(string path, string rawJsonValue) { }
+        public void AppendTest<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override string ToString() { throw null; }
     }
 }
@@ -244,7 +248,7 @@ namespace Azure.Core.GeoJson
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoPosition
+    public readonly partial struct GeoPosition : System.IEquatable<Azure.Core.GeoJson.GeoPosition>
     {
         private readonly int _dummyPrimitive;
         public GeoPosition(double longitude, double latitude) { throw null; }

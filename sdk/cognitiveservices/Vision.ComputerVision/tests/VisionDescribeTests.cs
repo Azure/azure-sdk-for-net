@@ -25,34 +25,18 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal(result.Tags, new string[] {
                         "grass",
                         "outdoor",
+                        "sky",
                         "house",
                         "building",
                         "green",
-                        "yard",
                         "lawn",
-                        "front",
-                        "small",
-                        "field",
-                        "home",
-                        "red",
-                        "sitting",
-                        "grassy",
-                        "brick",
-                        "white",
-                        "large",
-                        "old",
-                        "standing",
-                        "grazing",
-                        "sheep",
-                        "parked",
-                        "garden",
-                        "woman",
-                        "man",
-                        "sign"
+                        "residential",
+                        "grassy"
                     });
+
                     Assert.Equal(1, result.Captions.Count);
-                    Assert.Equal("a large lawn in front of a house", result.Captions[0].Text);
-                    Assert.True(result.Captions[0].Confidence > 0.96);
+                    Assert.Equal("a house with a flag", result.Captions[0].Text);
+                    Assert.True(result.Captions[0].Confidence > 0.41);
                 }
             }
         }
@@ -74,31 +58,17 @@ namespace ComputerVisionSDK.Tests
 
                     Assert.Equal(result.Tags, new string[] {
                         "dog",
+                        "tree",
                         "outdoor",
                         "sitting",
+                        "ground",
                         "animal",
                         "mammal",
-                        "looking",
-                        "brown",
-                        "bench",
-                        "yellow",
-                        "front",
-                        "large",
-                        "wooden",
-                        "small",
-                        "white",
-                        "standing",
-                        "close",
-                        "table",
-                        "orange",
-                        "laying",
-                        "park",
-                        "head"
+                        "close"
                     });
-                    Assert.Equal(2, result.Captions.Count);
-                    Assert.Equal("a close up of a dog", result.Captions[0].Text);
-                    Assert.Equal("close up of a dog", result.Captions[1].Text);
-                    Assert.True(result.Captions[0].Confidence > result.Captions[1].Confidence);
+                    Assert.Equal(1, result.Captions.Count);
+                    Assert.Equal("a dog with its mouth open", result.Captions[0].Text);
+                    Assert.True(result.Captions[0].Confidence > 0.5);
                 }
             }
         }
@@ -127,12 +97,10 @@ namespace ComputerVisionSDK.Tests
                         "探す",
                         "茶色",
                         "ベンチ",
-                        "イエロー",
                         "フロント",
-                        "大きい",
                         "木製",
+                        "大きい",
                         "小さい",
-                        "ホワイト",
                         "立つ",
                         "閉じる",
                         "テーブル",
@@ -143,7 +111,7 @@ namespace ComputerVisionSDK.Tests
                     });
                     Assert.Equal(1, result.Captions.Count);
                     Assert.Equal("犬の顔", result.Captions[0].Text);
-                    Assert.True(result.Captions[0].Confidence > 0.8);
+                    Assert.True(result.Captions[0].Confidence > 0.79);
                 }
             }
         }

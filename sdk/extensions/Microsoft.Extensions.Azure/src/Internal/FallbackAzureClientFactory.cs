@@ -14,9 +14,8 @@ namespace Microsoft.Extensions.Azure
 {
     internal class FallbackAzureClientFactory<TClient>: IAzureClientFactory<TClient>
     {
-        private readonly AzureClientsGlobalOptions _globalOptions;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly EventSourceLogForwarder _logForwarder;
+        private readonly AzureComponentFactory _componentFactory;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
         private readonly Dictionary<string, FallbackClientRegistration<TClient>> _clientRegistrations;
         private readonly Type _clientOptionType;
         private readonly IConfiguration _configurationRoot;
@@ -25,12 +24,12 @@ namespace Microsoft.Extensions.Azure
         public FallbackAzureClientFactory(
             IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IServiceProvider serviceProvider,
-            EventSourceLogForwarder logForwarder)
+            AzureComponentFactory componentFactory,
+            AzureEventSourceLogForwarder logForwarder)
         {
-            _serviceProvider = serviceProvider;
-            _globalOptions = globalOptions.CurrentValue;
-            _configurationRoot = _globalOptions.ConfigurationRootResolver?.Invoke(_serviceProvider);
+            _configurationRoot = globalOptions.CurrentValue.ConfigurationRootResolver?.Invoke(serviceProvider);
 
+            _componentFactory = componentFactory;
             _logForwarder = logForwarder;
             _clientRegistrations = new Dictionary<string, FallbackClientRegistration<TClient>>();
 
@@ -84,8 +83,7 @@ namespace Microsoft.Extensions.Azure
 
             var currentOptions = _optionsFactory.CreateOptions(name);
             registration.Configuration.Bind(currentOptions);
-            return registration.GetClient(currentOptions,
-                ClientFactory.CreateCredential(registration.Configuration) ?? _globalOptions.CredentialFactory(_serviceProvider));
+            return registration.GetClient(currentOptions, _componentFactory.CreateCredential(registration.Configuration));
         }
 
 
