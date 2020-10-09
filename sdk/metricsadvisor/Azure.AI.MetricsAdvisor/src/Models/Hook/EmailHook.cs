@@ -19,7 +19,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Initializes a new instance of the <see cref="EmailHook"/> class.
         /// <param name="name">The name to assign to the hook.</param>
         /// <param name="emailsToAlert">The list of e-mail addresses to alert.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="emailsToAlert"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="emailsToAlert"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// </summary>
         public EmailHook(string name, IList<string> emailsToAlert)
             : base(name)
