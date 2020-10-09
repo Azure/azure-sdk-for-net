@@ -1,5 +1,8 @@
 # Release History
 
+## 11.2.0-beta.2 (Unreleased)
+
+
 ## 11.2.0-beta.1 (2020-10-09)
 
 ### Added
