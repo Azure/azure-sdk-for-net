@@ -325,7 +325,7 @@ $shell, $shellExportFormat = if (($parentProcessName = (Get-Process -Id $PID).Pa
 } elseif (@('bash', 'csh', 'tcsh', 'zsh') -contains $parentProcessName) {
     'shell', 'export {0}={1}'
 } else {
-    'PowerShell', '$env:{0} = ''{1}'''
+    'PowerShell', '${{env:{0}}} = ''{1}'''
 }
 
 # Deploy the templates
