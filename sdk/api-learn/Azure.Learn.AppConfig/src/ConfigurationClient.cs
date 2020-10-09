@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Learn.AppConfig
 {
@@ -13,17 +14,32 @@ namespace Azure.Learn.AppConfig
     /// </summary>
     public class ConfigurationClient
     {
+        private readonly Uri _endpoint;
+        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ServiceRestClient _restClient;
+
         /// <summary>Initializes a new instance of the <see cref="ConfigurationClient"/>.</summary>
         public ConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="ConfigurationClient"/>.</summary>
-#pragma warning disable CA1801 // Parameter is never used
         public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            // Add the authentication policy to our builder.
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+
+            // Initialize the ClientDiagnostics.
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            // Initialize the Rest Client.
+            _restClient = new ServiceRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri, options.Version);
         }
-#pragma warning restore CA1801 // Parameter is never used
 
         /// <summary> Initializes a new instance of ConfigurationClient for mocking. </summary>
         protected ConfigurationClient()
@@ -55,5 +71,9 @@ namespace Azure.Learn.AppConfig
             await Task.Yield();
             throw new NotImplementedException();
         }
+
+        // A helper method to construct the default scope based on the service endpoint.
+        private static string GetDefaultScope(Uri uri)
+            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
     }
 }
