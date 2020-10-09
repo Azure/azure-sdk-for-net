@@ -58,8 +58,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// encryption-in-transit properties.</param>
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
-        /// <param name="networkSettings">The network settings.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkSettings networkSettings = default(NetworkSettings))
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -77,7 +76,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             DiskEncryptionProperties = diskEncryptionProperties;
             EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
-            NetworkSettings = networkSettings;
             CustomInit();
         }
 
@@ -185,12 +183,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "minSupportedTlsVersion")]
         public string MinSupportedTlsVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets the network settings.
-        /// </summary>
-        [JsonProperty(PropertyName = "networkSettings")]
-        public NetworkSettings NetworkSettings { get; set; }
 
         /// <summary>
         /// Validate the object.
