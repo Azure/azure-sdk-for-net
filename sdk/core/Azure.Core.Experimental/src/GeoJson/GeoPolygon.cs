@@ -15,7 +15,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
         /// <param name="positions">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
-        public GeoPolygon(IEnumerable<GeoPosition> positions): this(new[] { new GeoLine(positions) }, null, DefaultProperties)
+        public GeoPolygon(IEnumerable<GeoPosition> positions): this(new[] { new GeoLinearRing(positions) }, null, DefaultProperties)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
         /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
-        public GeoPolygon(IEnumerable<GeoLine> rings): this(rings, null, DefaultProperties)
+        public GeoPolygon(IEnumerable<GeoLinearRing> rings): this(rings, null, DefaultProperties)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Core.GeoJson
         /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPolygon(IEnumerable<GeoLine> rings, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoPolygon(IEnumerable<GeoLinearRing> rings, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(rings, nameof(rings));
 
@@ -43,7 +43,7 @@ namespace Azure.Core.GeoJson
         /// <summary>
         /// Gets a set of rings that form the polygon.
         /// </summary>
-        public IReadOnlyList<GeoLine> Rings { get; }
+        public IReadOnlyList<GeoLinearRing> Rings { get; }
 
         /// <summary>
         /// Returns a view over the coordinates array that forms this geometry.

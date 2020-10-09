@@ -110,11 +110,11 @@ namespace Azure.Core.Tests
         {
             var polygon = new GeoPolygon(new[]
             {
-                new GeoLine(new[] {
+                new GeoLinearRing(new[] {
                     new GeoPosition(1, 2),
                     new GeoPosition(3, 4)
                 }),
-                new GeoLine(new[] {
+                new GeoLinearRing(new[] {
                     new GeoPosition(5, 6),
                     new GeoPosition(7, 8)
                 }),
@@ -143,11 +143,11 @@ namespace Azure.Core.Tests
             var polygonCollection = new GeoPolygonCollection(new[]{
                 new GeoPolygon(new[]
                 {
-                    new GeoLine(new[] {
+                    new GeoLinearRing(new[] {
                         new GeoPosition(1, 2),
                         new GeoPosition(3, 4)
                     }),
-                    new GeoLine(new[] {
+                    new GeoLinearRing(new[] {
                         new GeoPosition(5, 6),
                         new GeoPosition(7, 8)
                     }),
@@ -155,11 +155,11 @@ namespace Azure.Core.Tests
 
                 new GeoPolygon(new[]
                 {
-                    new GeoLine(new[] {
+                    new GeoLinearRing(new[] {
                         new GeoPosition(9, 10),
                         new GeoPosition(11, 12)
                     }),
-                    new GeoLine(new[] {
+                    new GeoLinearRing(new[] {
                         new GeoPosition(13, 14),
                         new GeoPosition(15, 16)
                     }),

@@ -82,10 +82,10 @@ namespace Azure.Core.GeoJson
                     return new GeoPointCollection(points, boundingBox, additionalProperties);
 
                 case PolygonType:
-                    var rings = new List<GeoLine>();
+                    var rings = new List<GeoLinearRing>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        rings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                        rings.Add(new GeoLinearRing(ReadCoordinates(ringArray)));
                     }
 
                     return new GeoPolygon(rings, boundingBox, additionalProperties);
@@ -104,10 +104,10 @@ namespace Azure.Core.GeoJson
                     var polygons = new List<GeoPolygon>();
                     foreach (JsonElement polygon in coordinates.EnumerateArray())
                     {
-                        var polygonRings = new List<GeoLine>();
+                        var polygonRings = new List<GeoLinearRing>();
                         foreach (JsonElement ringArray in polygon.EnumerateArray())
                         {
-                            polygonRings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                            polygonRings.Add(new GeoLinearRing(ReadCoordinates(ringArray)));
                         }
 
                         polygons.Add(new GeoPolygon(polygonRings));
