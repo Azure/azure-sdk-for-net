@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Tests
             watch.Stop();
 
             Assert.LessOrEqual(250, watch.ElapsedMilliseconds);
-            Assert.GreaterOrEqual(300, watch.ElapsedMilliseconds);
+            Assert.LessOrEqual(watch.ElapsedMilliseconds, 500);
         }
 
         [Test]

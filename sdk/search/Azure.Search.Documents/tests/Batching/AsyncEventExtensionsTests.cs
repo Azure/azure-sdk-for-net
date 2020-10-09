@@ -423,8 +423,8 @@ namespace Azure.Search.Documents.Tests
         public async Task Cancels_OnlySlow()
         {
             TestHandler first = new TestHandler() { Delay = TimeSpan.FromMilliseconds(20) };
-            TestHandler second = new TestHandler() { Delay = TimeSpan.FromMilliseconds(100) };
-            TestHandler third = new TestHandler() { Delay = TimeSpan.FromMilliseconds(100) };
+            TestHandler second = new TestHandler() { Delay = TimeSpan.FromMilliseconds(200) };
+            TestHandler third = new TestHandler() { Delay = TimeSpan.FromMilliseconds(200) };
             CancellationTokenSource cancellation = new CancellationTokenSource();
 
             Func<EventArgs, CancellationToken, Task> handler = null;
@@ -436,7 +436,7 @@ namespace Azure.Search.Documents.Tests
             {
                 await Task.WhenAll(
                 Pause(
-                    delay: TimeSpan.FromMilliseconds(40),
+                    delay: TimeSpan.FromMilliseconds(100),
                     action: () => cancellation.Cancel()),
                 handler.RaiseAsync(EventArgs.Empty, cancellation.Token));
             }
