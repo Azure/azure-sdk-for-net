@@ -10,8 +10,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.Communication</RootNamespace>
     <EnableApiCompat>false</EnableApiCompat>
-    <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CA1812;AZC0001</NoWarn>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>

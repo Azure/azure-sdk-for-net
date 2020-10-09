@@ -72,6 +72,9 @@ namespace Azure.Communication.Identity
         /// <inheritdoc />
         public void Dispose()
         {
+            if (_isDisposed)
+                return;
+
             _userTokenCredential.Dispose();
             _isDisposed = true;
         }
