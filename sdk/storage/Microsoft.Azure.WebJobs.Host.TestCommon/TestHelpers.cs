@@ -107,7 +107,8 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
         public static IHostBuilder ConfigureDefaultTestHost(this IHostBuilder builder, Action<IWebJobsBuilder> configureWebJobs, params Type[] types)
         {
-            return builder.ConfigureWebJobs(configureWebJobs)
+            return builder
+                .ConfigureWebJobs(configureWebJobs)
                 .ConfigureAppConfiguration(c =>
                 {
                     c.AddTestSettings();
@@ -160,22 +161,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
              {
                  logging.AddProvider(new TestLoggerProvider());
              });
-        }
-
-        public static IWebJobsBuilder ConfigureCatchFailures<TResult>(
-            this IWebJobsBuilder builder,
-            TaskCompletionSource<TResult> src,
-            bool signalOnFirst,
-            IEnumerable<string> ignoreFailureFunctions)
-        {
-            var logger = new ExpectManualCompletionFunctionInstanceLogger<TResult>(
-                src,
-                signalOnFirst,
-                ignoreFailureFunctions);
-
-            builder.Services.AddSingleton<IFunctionInstanceLogger>(logger);
-
-            return builder;
         }
 
         public static TestLoggerProvider GetTestLoggerProvider(this IHost host)

@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -32,12 +33,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             setTaskSource(src);
 
             var host = new HostBuilder()
+              .ConfigureLogging(b => b.AddProvider(new ExpectManualCompletionLoggerProvider<TResult>(src, signalOnFirst, ignoreFailureFunctions)))
               .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(settings))
               .ConfigureDefaultTestHost(builder =>
               {
                   builder.AddAzureStorageBlobs().AddAzureStorageQueues();
                   configureWebJobsBuilderAction.Invoke(builder);
-                  builder.ConfigureCatchFailures(src, signalOnFirst, ignoreFailureFunctions);
 
                   builder.Services.AddSingleton<IConfigureOptions<QueuesOptions>, FakeQueuesOptionsSetup>();
               }, programType)
