@@ -65,6 +65,8 @@ namespace Azure.Search.Documents.Tests
             delay.Update(throttled: true);
             await delay.WaitIfNeededAsync();
             delay.Update(throttled: true);
+            await delay.WaitIfNeededAsync();
+            delay.Update(throttled: true);
 
             watch.Start();
             await delay.WaitIfNeededAsync();
@@ -72,7 +74,7 @@ namespace Azure.Search.Documents.Tests
 
             Assert.IsTrue(
                 250 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 1000,
-                $"Expected a delay between 250ms and 1000ms, not ${watch.ElapsedMilliseconds}");
+                $"Expected a delay between 250ms and 1000ms, not {watch.ElapsedMilliseconds}");
         }
 
         [Test]
