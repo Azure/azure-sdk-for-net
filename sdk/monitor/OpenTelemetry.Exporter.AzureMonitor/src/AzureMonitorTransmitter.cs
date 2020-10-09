@@ -45,11 +45,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 if (async)
                 {
-                    response = await this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                    response = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = this.applicationInsightsRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                    response = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
                 }
             }
             catch (Exception ex)
