@@ -16,6 +16,7 @@
     <PackageReference Update="Azure.Core" Version="1.5.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.6" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
+    <PackageReference Update="Azure.Search.Documents" Version="11.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.1" />
