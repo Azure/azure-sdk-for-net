@@ -156,10 +156,12 @@ $month = $ParsedReleaseDate.ToString("MMMM")
 Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
 
+$isNew = "True";
 $libraryType = "Beta";
 $latestVersion = $null;
 foreach ($existingVersion in $existing.versions)
 {
+    $isNew = "False"
     $parsedVersion = [AzureEngSemanticVersion]::new($existingVersion)
     if (!$parsedVersion.IsPrerelease)
     {
@@ -239,6 +241,7 @@ if ($releasing)
         "Release Type"=$releaseType
         "Version Number"=$newVersion
         "Planned Release Date"=$releaseDateString
+        "New Library Only"=$isNew
     }
     $state = "Active"
 }
