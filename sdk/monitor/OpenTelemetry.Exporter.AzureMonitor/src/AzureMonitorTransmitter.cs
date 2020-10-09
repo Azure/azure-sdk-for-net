@@ -18,15 +18,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     /// </summary>
     internal class AzureMonitorTransmitter
     {
-        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
+        //private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
+        private readonly IServiceRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions) : this(exporterOptions, null)
+        {
+        }
+
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions, IServiceRestClient applicationInsightsRestClient = null)
         {
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out _, out string ingestionEndpoint);
 
-            options = exporterOptions;
-            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+            this.options = exporterOptions;
+            this.applicationInsightsRestClient = applicationInsightsRestClient ?? new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)

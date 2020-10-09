@@ -12,9 +12,9 @@ using OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal partial class ApplicationInsightsRestClient
+    internal partial class ApplicationInsightsRestClient : IServiceRestClient
     {
-        internal async Task<Response<TrackResponse>> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        public  async Task<Response<TrackResponse>> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
