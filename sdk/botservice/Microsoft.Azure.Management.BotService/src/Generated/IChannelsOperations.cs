@@ -27,16 +27,17 @@ namespace Microsoft.Azure.Management.BotService
         /// Creates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
         /// The name of the Channel resource. Possible values include:
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'AlexaChannel', 'FacebookChannel', 'EmailChannel', 'KikChannel',
+        /// 'TelegramChannel', 'SlackChannel', 'MsTeamsChannel',
+        /// 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+        /// 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='parameters'>
         /// The parameters to provide for the created bot.
@@ -61,16 +62,17 @@ namespace Microsoft.Azure.Management.BotService
         /// Updates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
         /// The name of the Channel resource. Possible values include:
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'AlexaChannel', 'FacebookChannel', 'EmailChannel', 'KikChannel',
+        /// 'TelegramChannel', 'SlackChannel', 'MsTeamsChannel',
+        /// 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+        /// 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='location'>
         /// Specifies the location of the resource.
@@ -111,7 +113,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Deletes a Channel registration from a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -137,7 +139,7 @@ namespace Microsoft.Azure.Management.BotService
         /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -165,16 +167,17 @@ namespace Microsoft.Azure.Management.BotService
         /// Lists a Channel registration for a Bot Service including secrets
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
         /// The name of the Channel resource. Possible values include:
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'AlexaChannel', 'FacebookChannel', 'EmailChannel', 'KikChannel',
+        /// 'TelegramChannel', 'SlackChannel', 'MsTeamsChannel',
+        /// 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+        /// 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -197,7 +200,7 @@ namespace Microsoft.Azure.Management.BotService
         /// resource
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.

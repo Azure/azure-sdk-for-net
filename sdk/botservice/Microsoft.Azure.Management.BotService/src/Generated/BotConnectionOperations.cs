@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.BotService
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ChannelsOperations operations.
+    /// BotConnectionOperations operations.
     /// </summary>
-    internal partial class ChannelsOperations : IServiceOperations<AzureBotServiceClient>, IChannelsOperations
+    internal partial class BotConnectionOperations : IServiceOperations<AzureBotServiceClient>, IBotConnectionOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ChannelsOperations class.
+        /// Initializes a new instance of the BotConnectionOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ChannelsOperations(AzureBotServiceClient client)
+        internal BotConnectionOperations(AzureBotServiceClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,180 @@ namespace Microsoft.Azure.Management.BotService
         public AzureBotServiceClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a Channel registration for a Bot Service
+        /// Lists the available Service Providers for creating Connection Settings
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<ServiceProviderResponseList>> ListServiceProvidersWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListServiceProviders", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ServiceProviderResponseList>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServiceProviderResponseList>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get a Connection Setting registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
@@ -59,14 +232,8 @@ namespace Microsoft.Azure.Management.BotService
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
-        /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters to provide for the created bot.
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -89,7 +256,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, BotChannel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionSetting>> ListWithSecretsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -129,6 +296,273 @@ namespace Microsoft.Azure.Management.BotService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
                 }
             }
+            if (connectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
+            }
+            if (connectionName != null)
+            {
+                if (connectionName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "connectionName", 64);
+                }
+                if (connectionName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "connectionName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(connectionName, "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "connectionName", "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$");
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("connectionName", connectionName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListWithSecrets", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/Connections/{connectionName}/listWithSecrets").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{connectionName}", System.Uri.EscapeDataString(connectionName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ConnectionSetting>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Register a new Auth Connection for a Bot Service
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to provide for creating the Connection Setting.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<ConnectionSetting>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, ConnectionSetting parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 64);
+                }
+                if (resourceName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
+            }
+            if (connectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
+            }
+            if (connectionName != null)
+            {
+                if (connectionName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "connectionName", 64);
+                }
+                if (connectionName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "connectionName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(connectionName, "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "connectionName", "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$");
+                }
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
@@ -154,17 +588,17 @@ namespace Microsoft.Azure.Management.BotService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("channelName", channelName);
+                tracingParameters.Add("connectionName", connectionName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/Connections/{connectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(channelName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{connectionName}", System.Uri.EscapeDataString(connectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -265,7 +699,7 @@ namespace Microsoft.Azure.Management.BotService
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BotChannel>();
+            var _result = new AzureOperationResponse<ConnectionSetting>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -278,7 +712,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -296,7 +730,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -316,7 +750,7 @@ namespace Microsoft.Azure.Management.BotService
         }
 
         /// <summary>
-        /// Updates a Channel registration for a Bot Service
+        /// Updates a Connection Setting registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
@@ -324,30 +758,11 @@ namespace Microsoft.Azure.Management.BotService
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
-        /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
         /// </param>
-        /// <param name='location'>
-        /// Specifies the location of the resource.
-        /// </param>
-        /// <param name='tags'>
-        /// Contains resource tags defined as key/value pairs.
-        /// </param>
-        /// <param name='sku'>
-        /// Gets or sets the SKU of the resource.
-        /// </param>
-        /// <param name='kind'>
-        /// Required. Gets or sets the Kind of the resource. Possible values include:
-        /// 'sdk', 'designer', 'bot', 'function'
-        /// </param>
-        /// <param name='etag'>
-        /// Entity Tag
-        /// </param>
-        /// <param name='properties'>
-        /// The set of properties specific to bot channel resource
+        /// <param name='parameters'>
+        /// The parameters to provide for updating the Connection Setting.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -370,7 +785,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionSetting>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, ConnectionSetting parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -410,6 +825,29 @@ namespace Microsoft.Azure.Management.BotService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
                 }
             }
+            if (connectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
+            }
+            if (connectionName != null)
+            {
+                if (connectionName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "connectionName", 64);
+                }
+                if (connectionName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "connectionName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(connectionName, "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "connectionName", "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$");
+                }
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -417,20 +855,6 @@ namespace Microsoft.Azure.Management.BotService
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (sku != null)
-            {
-                sku.Validate();
-            }
-            BotChannel parameters = new BotChannel();
-            if (location != null || tags != null || sku != null || kind != null || etag != null || properties != null)
-            {
-                parameters.Location = location;
-                parameters.Tags = tags;
-                parameters.Sku = sku;
-                parameters.Kind = kind;
-                parameters.Etag = etag;
-                parameters.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -441,17 +865,17 @@ namespace Microsoft.Azure.Management.BotService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("channelName", channelName);
+                tracingParameters.Add("connectionName", connectionName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/Connections/{connectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(channelName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{connectionName}", System.Uri.EscapeDataString(connectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -552,7 +976,7 @@ namespace Microsoft.Azure.Management.BotService
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BotChannel>();
+            var _result = new AzureOperationResponse<ConnectionSetting>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -565,7 +989,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -583,7 +1007,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -603,7 +1027,7 @@ namespace Microsoft.Azure.Management.BotService
         }
 
         /// <summary>
-        /// Deletes a Channel registration from a Bot Service
+        /// Get a Connection Setting registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
@@ -611,8 +1035,8 @@ namespace Microsoft.Azure.Management.BotService
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
-        /// <param name='channelName'>
-        /// The name of the Bot resource.
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -623,6 +1047,9 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="ErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -632,7 +1059,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionSetting>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -672,23 +1099,23 @@ namespace Microsoft.Azure.Management.BotService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
                 }
             }
-            if (channelName == null)
+            if (connectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "channelName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
             }
-            if (channelName != null)
+            if (connectionName != null)
             {
-                if (channelName.Length > 64)
+                if (connectionName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "channelName", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "connectionName", 64);
                 }
-                if (channelName.Length < 2)
+                if (connectionName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "channelName", 2);
+                    throw new ValidationException(ValidationRules.MinLength, "connectionName", 2);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(channelName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(connectionName, "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "channelName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "connectionName", "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -708,16 +1135,258 @@ namespace Microsoft.Azure.Management.BotService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("channelName", channelName);
+                tracingParameters.Add("connectionName", connectionName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/Connections/{connectionName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{connectionName}", System.Uri.EscapeDataString(connectionName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ConnectionSetting>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConnectionSetting>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deletes a Connection Setting registration for a Bot Service
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 64);
+                }
+                if (resourceName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
+            }
+            if (connectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
+            }
+            if (connectionName != null)
+            {
+                if (connectionName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "connectionName", 64);
+                }
+                if (connectionName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "connectionName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(connectionName, "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "connectionName", "^[a-zA-Z0-9][\\sa-zA-Z0-9_.-]*$");
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("connectionName", connectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/Connections/{connectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(channelName));
+            _url = _url.Replace("{connectionName}", System.Uri.EscapeDataString(connectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -827,481 +1496,8 @@ namespace Microsoft.Azure.Management.BotService
         }
 
         /// <summary>
-        /// Returns a BotService Channel registration specified by the parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Bot resource group in the user subscription.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the Bot resource.
-        /// </param>
-        /// <param name='channelName'>
-        /// The name of the Bot resource.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
-                }
-                if (resourceGroupName.Length < 2)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
-                }
-            }
-            if (resourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
-            }
-            if (resourceName != null)
-            {
-                if (resourceName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 64);
-                }
-                if (resourceName.Length < 2)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 2);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
-                }
-            }
-            if (channelName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "channelName");
-            }
-            if (channelName != null)
-            {
-                if (channelName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "channelName", 64);
-                }
-                if (channelName.Length < 2)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "channelName", 2);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(channelName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "channelName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
-                }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("channelName", channelName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(channelName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<BotChannel>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Lists a Channel registration for a Bot Service including secrets
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Bot resource group in the user subscription.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the Bot resource.
-        /// </param>
-        /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
-        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
-        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> ListWithKeysWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
-                }
-                if (resourceGroupName.Length < 2)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
-                }
-            }
-            if (resourceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
-            }
-            if (resourceName != null)
-            {
-                if (resourceName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 64);
-                }
-                if (resourceName.Length < 2)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 2);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
-                }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("channelName", channelName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListWithKeys", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(channelName, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<BotChannel>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BotChannel>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Returns all the Channel registrations of a particular BotService resource
+        /// Returns all the Connection Settings registered to a particular BotService
+        /// resource
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
@@ -1330,7 +1526,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BotChannel>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConnectionSetting>>> ListByBotServiceWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1388,11 +1584,11 @@ namespace Microsoft.Azure.Management.BotService
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBotService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -1489,7 +1685,7 @@ namespace Microsoft.Azure.Management.BotService
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<BotChannel>>();
+            var _result = new AzureOperationResponse<IPage<ConnectionSetting>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1502,7 +1698,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<BotChannel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConnectionSetting>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1522,7 +1718,8 @@ namespace Microsoft.Azure.Management.BotService
         }
 
         /// <summary>
-        /// Returns all the Channel registrations of a particular BotService resource
+        /// Returns all the Connection Settings registered to a particular BotService
+        /// resource
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1548,7 +1745,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<BotChannel>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConnectionSetting>>> ListByBotServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1563,7 +1760,7 @@ namespace Microsoft.Azure.Management.BotService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBotServiceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1657,7 +1854,7 @@ namespace Microsoft.Azure.Management.BotService
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<BotChannel>>();
+            var _result = new AzureOperationResponse<IPage<ConnectionSetting>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1670,7 +1867,7 @@ namespace Microsoft.Azure.Management.BotService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<BotChannel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConnectionSetting>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Creates a Bot Service. Bot Service is a resource group wide resource type.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -88,6 +88,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -296,7 +311,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Updates a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -346,6 +361,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -564,7 +594,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Deletes a Bot Service from the resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -592,6 +622,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -749,7 +794,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Returns a BotService specified by the parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -780,6 +825,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -956,7 +1016,7 @@ namespace Microsoft.Azure.Management.BotService
         /// group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -984,6 +1044,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (Client.SubscriptionId == null)
             {
@@ -1358,7 +1433,7 @@ namespace Microsoft.Azure.Management.BotService
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.BotService/botServices/checkNameAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.BotService/checkNameAvailability").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1371,7 +1446,7 @@ namespace Microsoft.Azure.Management.BotService
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
