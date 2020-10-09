@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -32,6 +33,7 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
+            builder.Services.AddAzureClientsCore();
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO (kasobol-msft) figure out if this is needed in extension and if so if it's needed in both blobs and queues?

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    builder.AddAzureStorageBlobs();
                 })
                 .Build();
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    builder.AddAzureStorageBlobs();
                 })
                 .Build();
 

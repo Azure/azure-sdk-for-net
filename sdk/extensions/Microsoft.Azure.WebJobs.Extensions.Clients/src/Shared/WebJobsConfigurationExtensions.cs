@@ -3,10 +3,12 @@
 
 using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
+namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
 {
-    internal static class IConfigurationExtensions
+    internal static class WebJobsConfigurationExtensions
     {
+        private const string WebJobsConfigurationSectionName = "AzureWebJobs";
+
         public static IConfigurationSection GetWebJobsConnectionStringSection(this IConfiguration configuration, string connectionStringName)
         {
             // first try prefixing
@@ -24,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
         public static string GetPrefixedConnectionStringName(string connectionStringName)
         {
-            return Constants.WebJobsConfigurationSectionName + connectionStringName;
+            return WebJobsConfigurationSectionName + connectionStringName;
         }
 
         /// <summary>
