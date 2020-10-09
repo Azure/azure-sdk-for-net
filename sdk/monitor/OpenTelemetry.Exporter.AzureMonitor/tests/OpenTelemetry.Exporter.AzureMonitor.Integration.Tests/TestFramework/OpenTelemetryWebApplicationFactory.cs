@@ -17,18 +17,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework
     /// Here we mock the <see cref="ServiceRestClient"/> to capture telemetry that would have been sent to the ingestion service.
     /// We also mock the <see cref="TrackResponse"/> which would have been received from the ingestion service.
     /// </summary>
-    /// <remarks>
-    /// https://github.com/open-telemetry/opentelemetry-dotnet/tree/master/src/OpenTelemetry.Instrumentation.AspNetCore
-    /// NOTE: I NOTICED THIS COULD FAIL WHEN DEBUGGING WITH BREAKPOINTS. I SUSPECT THERE MAY BE A REQUEST TIMEOUT SOMEWHERE THAT AFFECTS THE RESULT.
-    /// </remarks>
     /// <typeparam name="TStartup">Startup class from the application to be used during this test.</typeparam>
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        public const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-
         public ConcurrentBag<TelemetryItem> TelemetryItems => this.Transmitter.TelemetryItems;
+
+        private const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+        private readonly MockTransmitter Transmitter = new MockTransmitter();
         private ActivityProcessor ActivityProcessor;
-        private MockTransmitter Transmitter = new MockTransmitter();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
