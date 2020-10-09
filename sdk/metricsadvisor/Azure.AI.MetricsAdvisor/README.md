@@ -85,7 +85,7 @@ var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
 var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 ```
 
-You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_administration_client_class] to perform administration operations:
+You can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] to perform administration operations:
 
 ```C# Snippet:CreateMetricsAdvisorAdministrationClient
 string endpoint = "<endpoint>";
@@ -422,12 +422,12 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Metrics Advisor library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Create a data feed from a data source][metricsadv_sample1]
-- [Check the ingestion status of a data feed][metricsadv_sample2]
-- [Create an anomaly detection configuration][metricsadv_sample3]
-- [Create a hook for receiving anomaly alerts][metricsadv_sample4]
-- [Create an anomaly alert configuration][metricsadv_sample5]
-- [Query detected anomalies and triggered alerts][metricsadv_sample6]
+- [Create a data feed from a data source][metricsadv-sample1]
+- [Check the ingestion status of a data feed][metricsadv-sample2]
+- [Create an anomaly detection configuration][metricsadv-sample3]
+- [Create a hook for receiving anomaly alerts][metricsadv-sample4]
+- [Create an anomaly alert configuration][metricsadv-sample5]
+- [Query detected anomalies and triggered alerts][metricsadv-sample6]
 
 ## Contributing
 
