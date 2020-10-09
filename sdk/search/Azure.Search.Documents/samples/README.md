@@ -15,3 +15,4 @@ description: Samples for the Azure.Search.Documents client library
 - Perform [service level operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample02_Service.md).
 - Perform [index level operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample03_Index.md).
 - Use [`[FieldBuilderIgnore]`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample04_FieldBuilderIgnore.md) to add fields for unsupported properties using `FieldBuilder`.
+- Learn about different ways to [index documents](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample05_IndexingDocuments.md).
