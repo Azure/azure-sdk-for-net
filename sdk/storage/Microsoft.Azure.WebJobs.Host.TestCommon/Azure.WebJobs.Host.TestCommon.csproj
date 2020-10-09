@@ -3,7 +3,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyName>Microsoft.Azure.WebJobs.Host.TestCommon</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Host.TestCommon</RootNamespace>
-    <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
     <IsPackable>false</IsPackable>
     <PublicSign>false</PublicSign>
     <DelaySign>true</DelaySign>

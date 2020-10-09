@@ -463,7 +463,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Act
             string result = await RunTriggerAsync<string>(typeof(PoisonQueueProgram),
                 (s) => PoisonQueueProgram.TaskSource = s,
-                new string[] { typeof(PoisonQueueProgram).FullName + ".PutInPoisonQueue" });
+                new string[] { typeof(PoisonQueueProgram).Name + ".PutInPoisonQueue" });
 
             // Assert
             Assert.AreEqual(expectedContents, result);
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 // Act
                 await RunTriggerAsync<object>(typeof(MaxDequeueCountProgram),
                     (s) => MaxDequeueCountProgram.TaskSource = s,
-                    new string[] { typeof(MaxDequeueCountProgram).FullName + ".PutInPoisonQueue" });
+                    new string[] { typeof(MaxDequeueCountProgram).Name + ".PutInPoisonQueue" });
 
                 // Assert
                 // These tests use the FakeQueuesOptionsSetup, so compare dequeue count to that
