@@ -70,8 +70,8 @@ namespace Azure.Search.Documents.Tests
             await delay.WaitIfNeededAsync();
             watch.Stop();
 
-            Assert.GreaterOrEqual(250, watch.ElapsedMilliseconds);
-            Assert.LessOrEqual(1000, watch.ElapsedMilliseconds);
+            Assert.LessOrEqual(250, watch.ElapsedMilliseconds);
+            Assert.Greater(1000, watch.ElapsedMilliseconds);
         }
 
         [Test]

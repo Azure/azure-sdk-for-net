@@ -277,7 +277,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await client.GetDocumentCountAsync());
+            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -299,7 +299,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await client.GetDocumentCountAsync());
+            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
 
             await DelayAsync(TimeSpan.FromMilliseconds(100));
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -522,7 +522,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(5), EventDelay);
-            Assert.Zero((int)await client.GetDocumentCountAsync());
+            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -666,7 +666,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(3), EventDelay);
-            Assert.Zero((int)await client.GetDocumentCountAsync());
+            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
         }
         #endregion
 
