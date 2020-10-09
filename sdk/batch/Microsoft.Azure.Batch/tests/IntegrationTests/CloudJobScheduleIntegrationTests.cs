@@ -34,7 +34,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestBoundJobScheduleCommit()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobScheduleCommit";
@@ -71,7 +71,7 @@
                     CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
 
                     //Ensure the job schedule is structured as expected
-                    AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
 
                     //Update the bound job schedule schedule
                     TimeSpan recurrenceInterval = TimeSpan.FromMinutes(5);
@@ -84,7 +84,7 @@
                     boundJobSchedule.Commit();
 
                     //Ensure the job schedule is correct after commit
-                    AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
 
                     //Update the bound job schedule priority
                     const int newJobSchedulePriority = 1;
@@ -94,7 +94,7 @@
                     boundJobSchedule.Commit();
 
                     //Ensure the job schedule is correct after commit
-                    AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
 
                     //Update the bound job schedule job manager commandline
                     const string newJobManagerCommandLine = "ping 127.0.0.1 -n 150";
@@ -104,7 +104,7 @@
                     boundJobSchedule.Commit();
 
                     //Ensure the job schedule is correct after commit
-                    AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
 
                     //Update the bound job schedule PoolInformation
                     const string newPoolId = "TestPool";
@@ -116,7 +116,6 @@
 
                     //Ensure the job schedule is correct after commit
                     AssertJobScheduleCorrectness(
-                        batchCli.JobScheduleOperations,
                         boundJobSchedule,
                         newPoolId,
                         newJobSchedulePriority,
@@ -134,7 +133,6 @@
 
                     //Ensure the job schedule is correct after commit
                     AssertJobScheduleCorrectness(
-                        batchCli.JobScheduleOperations,
                         boundJobSchedule,
                         newPoolId,
                         newJobSchedulePriority,
@@ -147,7 +145,7 @@
                 {
                     batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -155,7 +153,6 @@
         #region Test helpers
         
         private static void AssertJobScheduleCorrectness(
-            JobScheduleOperations jobScheduleOperations,
             CloudJobSchedule boundJobSchedule,
             string expectedPoolId,
             int expectedJobPriority,
@@ -208,7 +205,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task JobSchedulePatch()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
                 using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 string jobScheduleId = "TestPatchJobSchedule-" + TestUtilities.GetMyName();
@@ -252,7 +249,7 @@
                 {
                     await TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).ConfigureAwait(false);
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -262,7 +259,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void SampleCreateJobScheduleAutoPool()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-CreateWiAutoPoolTest";
@@ -360,7 +357,7 @@
                     // clean up
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -370,7 +367,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1433008JobScheduleScheduleNewable()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-Bug1433008JobScheduleScheduleNewable";
@@ -434,7 +431,7 @@
                     // clean up
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -444,7 +441,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void TestListJobsByJobSchedule()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestListJobsByJobSchedule";
@@ -490,7 +487,7 @@
                     // clean up
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -500,7 +497,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestJobScheduleVerbs()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestEnableDisableDeleteJobSchedule";
@@ -570,7 +567,7 @@
                     // clean up
                     TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

@@ -29,7 +29,7 @@
             var jobId = Guid.NewGuid().ToString();
             const string applicationId = "blender";
 
-            Func<Task> test = async () =>
+            async Task test()
             {
                 using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
                 var poolInfo = new PoolInformation
@@ -70,7 +70,7 @@
                         TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                     }
                 }
-            };
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
