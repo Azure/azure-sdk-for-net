@@ -86,6 +86,7 @@ namespace BatchClientIntegrationTests
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        [Trait("Flaky", "true")]
         public async Task BatchRequestWithShortUserCancellationToken()
         {
             await SynchronizationContextHelper.RunTestAsync(async () =>

@@ -19,6 +19,7 @@ namespace BatchClientIntegrationTests
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
+    using System.Threading;
 
     [Collection("SharedPoolCollection")]
     public class ObjectModelFeatureIntegrationTests
@@ -1178,6 +1179,7 @@ namespace BatchClientIntegrationTests
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        [Trait("Flaky", "true")]
         public void Bug1770942ExposeBatchRequestProperties()
         {
             void test()
@@ -1306,6 +1308,7 @@ namespace BatchClientIntegrationTests
                         // we have the matching instance with full props from list-all, and selected props from list+DetailLevel
                         // now test poolMgr.GetPool + detailLevel
 
+                        Thread.Sleep(10000); // TODO: Remove this band-aid. It's just to give the operation more time before the following line, but this is a bad, flaky solution.
                         CloudPool lowerDetailLevel = batchCli.PoolOperations.GetPool(matchingPoolWithFullDetailLevel.Id, new ODATADetailLevel() { SelectClause = "id,state" });
 
                         // confirm that allocation state was not read in
