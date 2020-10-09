@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanRoundripPolygon()
         {
-            var input = $" {{ \"type\": \"Polygon\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}] ] ] }}";
+            var input = $" {{ \"type\": \"Polygon\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ] ] }}";
 
             var polygon = AssertRoundtrip<GeoPolygon>(input);
             Assert.AreEqual(1, polygon.Rings.Count);
@@ -84,6 +84,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
+                P(0),
             }, polygon.Rings[0].Coordinates);
         }
 
@@ -91,8 +92,8 @@ namespace Azure.Core.Tests
         public void CanRoundripPolygonHoles()
         {
             var input = $"{{ \"type\": \"Polygon\", \"coordinates\": [" +
-                        $" [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}] ]," +
-                        $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}] ]" +
+                        $" [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ]," +
+                        $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}], [{PS(5)}] ]" +
                         $" ] }}";
 
             var polygon = AssertRoundtrip<GeoPolygon>(input);
@@ -105,6 +106,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
+                P(0),
             }, polygon.Rings[0].Coordinates);
 
             CollectionAssert.AreEqual(new[]
@@ -114,6 +116,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
+                P(5),
             }, polygon.Rings[1].Coordinates);
         }
 
@@ -154,10 +157,10 @@ namespace Azure.Core.Tests
         public void CanRoundripMultiPolygon()
         {
             var input = $" {{ \"type\": \"MultiPolygon\", \"coordinates\": [" +
-                        $" [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}] ] ]," +
+                        $" [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ] ]," +
                         $" [" +
-                        $" [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}] ]," +
-                        $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}] ]" +
+                        $" [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ]," +
+                        $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}], [{PS(5)}] ]" +
                         $" ] ]}}";
 
             var multiPolygon = AssertRoundtrip<GeoPolygonCollection>(input);
@@ -173,6 +176,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
+                P(0),
             }, polygon.Rings[0].Coordinates);
 
             polygon = multiPolygon.Polygons[1];
@@ -185,6 +189,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
+                P(0),
             }, polygon.Rings[0].Coordinates);
 
             CollectionAssert.AreEqual(new[]
@@ -194,6 +199,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
+                P(5),
             }, polygon.Rings[1].Coordinates);
         }
 

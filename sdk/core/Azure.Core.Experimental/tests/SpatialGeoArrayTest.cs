@@ -112,11 +112,15 @@ namespace Azure.Core.Tests
             {
                 new GeoLinearRing(new[] {
                     new GeoPosition(1, 2),
-                    new GeoPosition(3, 4)
+                    new GeoPosition(3, 4),
+                    new GeoPosition(3, 4),
+                    new GeoPosition(1, 2),
                 }),
                 new GeoLinearRing(new[] {
                     new GeoPosition(5, 6),
-                    new GeoPosition(7, 8)
+                    new GeoPosition(7, 8),
+                    new GeoPosition(7, 8),
+                    new GeoPosition(5, 6),
                 }),
             });
 
@@ -129,11 +133,24 @@ namespace Azure.Core.Tests
             Assert.AreEqual(3, polygon.Coordinates[0][1][0]);
             Assert.AreEqual(4, polygon.Coordinates[0][1][1]);
 
+            Assert.AreEqual(3, polygon.Coordinates[0][2][0]);
+            Assert.AreEqual(4, polygon.Coordinates[0][2][1]);
+
+            Assert.AreEqual(1, polygon.Coordinates[0][3][0]);
+            Assert.AreEqual(2, polygon.Coordinates[0][3][1]);
+
+
             Assert.AreEqual(5, polygon.Coordinates[1][0][0]);
             Assert.AreEqual(6, polygon.Coordinates[1][0][1]);
 
             Assert.AreEqual(7, polygon.Coordinates[1][1][0]);
             Assert.AreEqual(8, polygon.Coordinates[1][1][1]);
+
+            Assert.AreEqual(7, polygon.Coordinates[1][2][0]);
+            Assert.AreEqual(8, polygon.Coordinates[1][2][1]);
+
+            Assert.AreEqual(5, polygon.Coordinates[1][3][0]);
+            Assert.AreEqual(6, polygon.Coordinates[1][3][1]);
         }
 
 
@@ -145,11 +162,15 @@ namespace Azure.Core.Tests
                 {
                     new GeoLinearRing(new[] {
                         new GeoPosition(1, 2),
-                        new GeoPosition(3, 4)
+                        new GeoPosition(3, 4),
+                        new GeoPosition(3, 4),
+                        new GeoPosition(1, 2)
                     }),
                     new GeoLinearRing(new[] {
                         new GeoPosition(5, 6),
-                        new GeoPosition(7, 8)
+                        new GeoPosition(7, 8),
+                        new GeoPosition(7, 8),
+                        new GeoPosition(5, 6)
                     }),
                 }),
 
@@ -157,11 +178,15 @@ namespace Azure.Core.Tests
                 {
                     new GeoLinearRing(new[] {
                         new GeoPosition(9, 10),
-                        new GeoPosition(11, 12)
+                        new GeoPosition(11, 12),
+                        new GeoPosition(11, 12),
+                        new GeoPosition(9, 10)
                     }),
                     new GeoLinearRing(new[] {
                         new GeoPosition(13, 14),
-                        new GeoPosition(15, 16)
+                        new GeoPosition(15, 16),
+                        new GeoPosition(15, 16),
+                        new GeoPosition(13, 14)
                     }),
                 }),
             });
@@ -176,11 +201,25 @@ namespace Azure.Core.Tests
             Assert.AreEqual(3, polygonCollection.Coordinates[0][0][1][0]);
             Assert.AreEqual(4, polygonCollection.Coordinates[0][0][1][1]);
 
+            Assert.AreEqual(3, polygonCollection.Coordinates[0][0][2][0]);
+            Assert.AreEqual(4, polygonCollection.Coordinates[0][0][2][1]);
+
+            Assert.AreEqual(1, polygonCollection.Coordinates[0][0][3][0]);
+            Assert.AreEqual(2, polygonCollection.Coordinates[0][0][3][1]);
+
+
             Assert.AreEqual(5, polygonCollection.Coordinates[0][1][0][0]);
             Assert.AreEqual(6, polygonCollection.Coordinates[0][1][0][1]);
 
             Assert.AreEqual(7, polygonCollection.Coordinates[0][1][1][0]);
             Assert.AreEqual(8, polygonCollection.Coordinates[0][1][1][1]);
+
+            Assert.AreEqual(7, polygonCollection.Coordinates[0][1][2][0]);
+            Assert.AreEqual(8, polygonCollection.Coordinates[0][1][2][1]);
+
+            Assert.AreEqual(5, polygonCollection.Coordinates[0][1][3][0]);
+            Assert.AreEqual(6, polygonCollection.Coordinates[0][1][3][1]);
+
 
             Assert.AreEqual(9, polygonCollection.Coordinates[1][0][0][0]);
             Assert.AreEqual(10, polygonCollection.Coordinates[1][0][0][1]);
@@ -188,11 +227,24 @@ namespace Azure.Core.Tests
             Assert.AreEqual(11, polygonCollection.Coordinates[1][0][1][0]);
             Assert.AreEqual(12, polygonCollection.Coordinates[1][0][1][1]);
 
+            Assert.AreEqual(11, polygonCollection.Coordinates[1][0][2][0]);
+            Assert.AreEqual(12, polygonCollection.Coordinates[1][0][2][1]);
+
+            Assert.AreEqual(9, polygonCollection.Coordinates[1][0][3][0]);
+            Assert.AreEqual(10, polygonCollection.Coordinates[1][0][3][1]);
+
+
             Assert.AreEqual(13, polygonCollection.Coordinates[1][1][0][0]);
             Assert.AreEqual(14, polygonCollection.Coordinates[1][1][0][1]);
 
             Assert.AreEqual(15, polygonCollection.Coordinates[1][1][1][0]);
             Assert.AreEqual(16, polygonCollection.Coordinates[1][1][1][1]);
+
+            Assert.AreEqual(15, polygonCollection.Coordinates[1][1][2][0]);
+            Assert.AreEqual(16, polygonCollection.Coordinates[1][1][2][1]);
+
+            Assert.AreEqual(13, polygonCollection.Coordinates[1][1][3][0]);
+            Assert.AreEqual(14, polygonCollection.Coordinates[1][1][3][1]);
         }
     }
 }
