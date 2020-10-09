@@ -49,14 +49,43 @@ namespace Azure.Learn.AppConfig
         /// <summary>Retrieve a <see cref="ConfigurationSetting"/> from the configuration store.</summary>
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
+
+            try
+            {
+                var result = _restClient.GetKeyValue(key, label, cancellationToken: cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>Retrieve a <see cref="ConfigurationSetting"/> from the configuration store.</summary>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = null, CancellationToken cancellationToken = default)
         {
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
+
+            try
+            {
+                var result = await _restClient.GetKeyValueAsync(key, label, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(result.Value, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>Conditionally retrieve a <see cref="ConfigurationSetting"/> from the configuration store if the setting has been changed since it was last retrieved.</summary>
