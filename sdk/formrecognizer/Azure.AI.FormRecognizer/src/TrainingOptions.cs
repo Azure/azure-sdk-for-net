@@ -22,8 +22,8 @@ namespace Azure.AI.FormRecognizer.Training
         public TrainingFileFilter TrainingFileFilter { get; set; }
 
         /// <summary>
-        /// Optional user defined displayed model name.
+        /// An optional, user-defined name to associate with your model.
         /// </summary>
-        public string ModelDisplayName { get; set; }
+        public string ModelName { get; set; }
     }
 }

@@ -173,11 +173,11 @@ namespace Azure.AI.FormRecognizer.Models
         public static Azure.AI.FormRecognizer.Training.AccountProperties AccountProperties(int customModelCount, int customModelLimit) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.CustomFormModel CustomFormModel(string modelId, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> submodels, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> trainingDocuments, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors) { throw null; }
-        public static Azure.AI.FormRecognizer.Training.CustomFormModel CustomFormModel(string modelId, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> submodels, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> trainingDocuments, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, string displayName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
+        public static Azure.AI.FormRecognizer.Training.CustomFormModel CustomFormModel(string modelId, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> submodels, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> trainingDocuments, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, string modelName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
         public static Azure.AI.FormRecognizer.Training.CustomFormModelField CustomFormModelField(string name, string label, float? accuracy) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status) { throw null; }
-        public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, string displayName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
+        public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, string modelName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
         public static Azure.AI.FormRecognizer.Training.CustomFormModelProperties CustomFormModelProperties(bool isComposedModel) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Training.CustomFormModelField> fields) { throw null; }
@@ -344,7 +344,7 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class CreateComposedModelOptions
     {
         public CreateComposedModelOptions() { }
-        public string DisplayName { get { throw null; } set { } }
+        public string ModelName { get { throw null; } set { } }
     }
     public partial class CreateCustomFormModelOperation : Azure.Operation<Azure.AI.FormRecognizer.Training.CustomFormModel>
     {
@@ -362,9 +362,9 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class CustomFormModel
     {
         internal CustomFormModel() { }
-        public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
         public string ModelId { get { throw null; } }
+        public string ModelName { get { throw null; } }
         public Azure.AI.FormRecognizer.Training.CustomFormModelProperties Properties { get { throw null; } }
         public Azure.AI.FormRecognizer.Training.CustomFormModelStatus Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> Submodels { get { throw null; } }
@@ -382,8 +382,8 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class CustomFormModelInfo
     {
         internal CustomFormModelInfo() { }
-        public string DisplayName { get { throw null; } }
         public string ModelId { get { throw null; } }
+        public string ModelName { get { throw null; } }
         public Azure.AI.FormRecognizer.Training.CustomFormModelProperties Properties { get { throw null; } }
         public Azure.AI.FormRecognizer.Training.CustomFormModelStatus Status { get { throw null; } }
         public System.DateTimeOffset TrainingCompletedOn { get { throw null; } }
@@ -455,7 +455,7 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class TrainingOptions
     {
         public TrainingOptions() { }
-        public string ModelDisplayName { get { throw null; } set { } }
+        public string ModelName { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.Training.TrainingFileFilter TrainingFileFilter { get { throw null; } set { } }
     }
     public enum TrainingStatus
