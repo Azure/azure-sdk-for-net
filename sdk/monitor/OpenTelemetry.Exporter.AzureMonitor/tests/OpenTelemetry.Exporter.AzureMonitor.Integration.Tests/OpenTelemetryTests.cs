@@ -29,20 +29,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         [Fact]
         public async Task ProofOfConcept()
         {
-            //Assert.False(this.factory.TelemetryItems.Any(), "1. telemetry items are not empty");
             string testValue = Guid.NewGuid().ToString();
 
             // Arrange
-            var client = this.factory.CreateClient();
+            using var client = this.factory.CreateClient();
             var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
-
-            //Assert.False(this.factory.TelemetryItems.Any(), "2. telemetry items are not empty");
 
             // Act
             var response = await client.GetAsync(request);
 
             // Shutdown
             response.EnsureSuccessStatusCode();
+            Task.Delay(1000).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
             this.factory.ForceFlush();
 
             // Assert
