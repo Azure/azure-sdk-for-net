@@ -15,7 +15,7 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToBuild
+- name: ServiceToTest
   type: string
   default: ''
 - name: TargetDocRepoOwner
@@ -33,7 +33,7 @@ stages:
     jobs:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
-        ServiceToBuild: ${{ coalesce(parameters.ServiceToBuild, parameters.ServiceDirectory) }}
+        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{parameters.ServiceDirectory}}
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages
