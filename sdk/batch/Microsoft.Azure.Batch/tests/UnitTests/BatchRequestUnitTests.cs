@@ -522,44 +522,44 @@
 
         private static async Task InvokeCancellationTokenMethodAsync(MethodInfo method, object objectInstance, CancellationToken cancellationToken)
         {
-            Func<ParameterInfo, object> objectCreationFunc = (parameter) =>
+            object objectCreationFunc(ParameterInfo parameter)
+            {
+                object result;
+
+                if (parameter.ParameterType == typeof(CancellationToken))
                 {
-                    object result;
+                    result = cancellationToken;
+                }
+                else if (parameter.ParameterType.GetTypeInfo().IsValueType)
+                {
+                    result = Activator.CreateInstance(parameter.ParameterType);
+                }
+                //The below list is a list of types which are null-checked in some methods and so must not be null
+                //This is a bit of a hack but it's the easiest way currecntly...
+                else if (parameter.ParameterType == typeof(CloudTask))
+                {
+                    result = new CloudTask("bar", "baz");
+                }
+                else if (parameter.Name == "computeNodeIds")
+                {
+                    result = new List<string>();
+                }
+                else if (parameter.Name == "computeNodes")
+                {
+                    result = new List<ComputeNode>();
+                }
+                else if (parameter.Name == "rdpFileNameToCreate")
+                {
+                    result = "temp";
+                }
+                //Default to null if there is no special handling required
+                else
+                {
+                    result = null;
+                }
 
-                    if (parameter.ParameterType == typeof (CancellationToken))
-                    {
-                        result = cancellationToken;
-                    }
-                    else if (parameter.ParameterType.GetTypeInfo().IsValueType)
-                    {
-                        result = Activator.CreateInstance(parameter.ParameterType);
-                    }
-                    //The below list is a list of types which are null-checked in some methods and so must not be null
-                    //This is a bit of a hack but it's the easiest way currecntly...
-                    else if (parameter.ParameterType == typeof (CloudTask))
-                    {
-                        result = new CloudTask("bar", "baz");
-                    }
-                    else if (parameter.Name == "computeNodeIds")
-                    {
-                        result = new List<string>();
-                    }
-                    else if (parameter.Name == "computeNodes")
-                    {
-                        result = new List<ComputeNode>();
-                    }
-                    else if (parameter.Name == "rdpFileNameToCreate")
-                    {
-                        result = "temp";
-                    }
-                    //Default to null if there is no special handling required
-                    else
-                    {
-                        result = null;
-                    }
-
-                    return result;
-                };
+                return result;
+            }
 
             await (Task)ReflectionHelpers.InvokeMethodWithDefaultArguments(method, objectInstance, objectCreationFunc);
         }

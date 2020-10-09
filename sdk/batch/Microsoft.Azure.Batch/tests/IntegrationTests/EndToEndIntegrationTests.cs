@@ -44,7 +44,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestSampleWithFilesAndPool()
         {
-            Action test = () =>
+            void test()
             {
                 StagingStorageAccount storageCreds = TestUtilities.GetStorageCredentialsFromEnvironment();
 
@@ -166,7 +166,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -176,11 +176,11 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void HelloWorld()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 TestUtilities.HelloWorld(batchCli, testOutputHelper, poolFixture.Pool, out string job, out string task);
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -220,7 +220,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1965363_2384616_Wat7OSVersionFeatures()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 PoolOperations poolOperations = batchCli.PoolOperations;
@@ -264,7 +264,7 @@
 
                     throw;
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -274,7 +274,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1771070_1771072_JobAndPoolLifetimeStats()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 JobStatistics jobStatistics = batchCli.JobOperations.GetAllLifetimeStatistics();
@@ -295,7 +295,7 @@
                 testOutputHelper.WriteLine("PoolStatistics.LastUpdateTime: {0}", poolStatistics.LastUpdateTime);
                 testOutputHelper.WriteLine("PoolStatistics.ResourceStatistics.AvgMemory: {0}", poolStatistics.ResourceStatistics.AverageMemoryGiB);
                 testOutputHelper.WriteLine("PoolStatistics.UsageStatistics.DedicatedCoreTime: {0}", poolStatistics.UsageStatistics.DedicatedCoreTime);
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -305,22 +305,22 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void ReadClientRequestIdAndRequestIdFromResponse()
         {
-            Action test = () =>
-                {
-                    using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
-                    string requestId = null;
-                    //Set up an interceptor to read RequestId from all responses
-                    ResponseInterceptor responseInterceptor = new ResponseInterceptor(
-                        (response, request) =>
-                            {
-                                requestId = response.RequestId;
-                                return Task.FromResult(response);
-                            });
+            void test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string requestId = null;
+                //Set up an interceptor to read RequestId from all responses
+                ResponseInterceptor responseInterceptor = new ResponseInterceptor(
+                    (response, request) =>
+                        {
+                            requestId = response.RequestId;
+                            return Task.FromResult(response);
+                        });
 
-                    batchCli.PoolOperations.ListPools(additionalBehaviors: new[] { responseInterceptor }).ToList(); //Force an enumeration to go to the server
+                batchCli.PoolOperations.ListPools(additionalBehaviors: new[] { responseInterceptor }).ToList(); //Force an enumeration to go to the server
 
-                    Assert.NotNull(requestId);
-                };
+                Assert.NotNull(requestId);
+            }
 
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
@@ -331,7 +331,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void ReadClientRequestIdAndRequestIdFromException()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 Guid myClientRequestid = Guid.NewGuid();
@@ -358,7 +358,7 @@
                 Assert.Equal(myClientRequestid, batchException.RequestInformation.ClientRequestId);
                 Assert.NotNull(batchException.RequestInformation.ServiceRequestId);
                 Assert.Equal("The specified job does not exist.", batchException.RequestInformation.HttpStatusMessage);
-            };
+            }
 
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
