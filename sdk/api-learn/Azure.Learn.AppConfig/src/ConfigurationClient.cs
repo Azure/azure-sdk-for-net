@@ -37,6 +37,8 @@ namespace Azure.Learn.AppConfig
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
 
+            _endpoint = endpoint;
+
             // Initialize the Rest Client.
             _restClient = new ServiceRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri, options.Version);
         }

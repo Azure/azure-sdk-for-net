@@ -9,8 +9,12 @@ using NUnit.Framework;
 
 namespace Azure.Learn.AppConfig.Samples
 {
-    public class Sample1_HelloWorld : SamplesBase<LearnAppConfigTestEnvironment>
+    public class Sample1_HelloWorld : RecordedTestBase<LearnAppConfigTestEnvironment>
     {
+        public Sample1_HelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        {
+        }
+
         [Test]
         public void GetConfigurationSetting()
         {
