@@ -24,6 +24,7 @@ namespace Azure.Learn.AppConfig.Samples
 
             Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color.Value);
             Console.WriteLine(greeting.Value);
+            Console.ResetColor();
         }
     }
 }
