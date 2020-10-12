@@ -36,23 +36,26 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [TelemetryType.Event] = "Event",
         };
 
-        public static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
-            foreach (var activity in batchActivity)
+            if (batchActivity.GetEnumerator().Current != null)
             {
-                telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.InstrumentationKey = instrumentationKey;
-                telemetryItem.Data = GenerateTelemetryData(activity);
-                telemetryItems.Add(telemetryItem);
+                foreach (var activity in batchActivity)
+                {
+                    telemetryItem = GeneratePartAEnvelope(activity);
+                    telemetryItem.InstrumentationKey = instrumentationKey;
+                    telemetryItem.Data = GenerateTelemetryData(activity);
+                    telemetryItems.Add(telemetryItem);
+                }
             }
 
             return telemetryItems;
         }
 
-        private static TelemetryItem GeneratePartAEnvelope(Activity activity)
+        internal static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture));
             ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
