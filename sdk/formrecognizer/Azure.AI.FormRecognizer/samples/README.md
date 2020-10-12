@@ -13,7 +13,7 @@ description: Samples for the Azure.AI.FormRecognizer client library
 # Azure Form Recognizer client SDK Samples
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents. It includes the following capabilities:
 
-- Recognize form content - Recognize and extract tables, lines, and words in forms documents, without the need to train a model.
+- Recognize form content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
 - Recognize custom forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
@@ -28,4 +28,5 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - [Strongly-typing a recognized form](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md)
 - [Differentiate output models trained with and without labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample10_DifferentiateOutputModelsTrainedWithAndWithoutLabels.cs)
 - [Copy a custom model between Form Recognizer resources](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md)
-- [Bounding Box](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample9_BoundingBox.cs)
+- [Create composed model from a collection of models trained with labels](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample8_ModelCompose.md)
+- [Field Bounding Box](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample9_FieldBoundingBox.cs)

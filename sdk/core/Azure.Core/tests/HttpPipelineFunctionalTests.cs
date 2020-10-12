@@ -8,24 +8,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-
     [TestFixture(typeof(HttpClientTransport), true)]
     [TestFixture(typeof(HttpClientTransport), false)]
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
 #endif
-    public class HttpPipelineFunctionalTests: PipelineTestBase
+    public class HttpPipelineFunctionalTests : PipelineTestBase
     {
         private readonly Type _transportType;
 
-        public HttpPipelineFunctionalTests(Type transportType, bool isAsync): base(isAsync)
+        public HttpPipelineFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
         {
             _transportType = transportType;
         }
@@ -33,7 +32,7 @@ namespace Azure.Core.Tests
         private TestOptions GetOptions()
         {
             var options = new TestOptions();
-            options.Transport = (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+            options.Transport = (HttpPipelineTransport)Activator.CreateInstance(_transportType);
             return options;
         }
 
@@ -160,6 +159,82 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task Opens50ParallelConnections()
+        {
+            // Running 50 sync requests on the threadpool would cause starvation
+            // and the test would take 20 sec to finish otherwise
+            ThreadPool.SetMinThreads(100, 100);
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            int reqNum = 0;
+
+            TaskCompletionSource<object> requestsTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    if (Interlocked.Increment(ref reqNum) == 50)
+                    {
+                        requestsTcs.SetResult(true);
+                    }
+
+                    await requestsTcs.Task;
+                });
+
+            var requestCount = 50;
+            List<Task> requests = new List<Task>();
+            for (int i = 0; i < requestCount; i++)
+            {
+                HttpMessage message = httpPipeline.CreateMessage();
+                message.Request.Uri.Reset(testServer.Address);
+
+                requests.Add(Task.Run(() => ExecuteRequest(message, httpPipeline)));
+            }
+
+            await Task.WhenAll(requests);
+        }
+
+        [Test]
+        [Category("Live")]
+        public async Task Opens50ParallelConnectionsLive()
+        {
+            // Running 50 sync requests on the threadpool would cause starvation
+            // and the test would take 20 sec to finish otherwise
+            ThreadPool.SetMinThreads(100, 100);
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            int reqNum = 0;
+
+            TaskCompletionSource<object> requestsTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            async Task Connect()
+            {
+                using HttpMessage message = httpPipeline.CreateMessage();
+                message.Request.Uri.Reset(new Uri("https://www.microsoft.com/"));
+                message.BufferResponse = false;
+
+                await ExecuteRequest(message, httpPipeline);
+
+                if (Interlocked.Increment(ref reqNum) == 50)
+                {
+                    requestsTcs.SetResult(true);
+                }
+
+                await requestsTcs.Task;
+            }
+
+            var requestCount = 50;
+            List<Task> requests = new List<Task>();
+            for (int i = 0; i < requestCount; i++)
+            {
+
+                requests.Add(Task.Run(() => Connect()));
+            }
+
+            await Task.WhenAll(requests);
+        }
+
+        [Test]
         public async Task BufferedResponsesReadableAfterMessageDisposed()
         {
             byte[] buffer = { 0 };
@@ -177,7 +252,6 @@ namespace Azure.Core.Tests
                     }
                 });
 
-            // Make sure we dispose things correctly and not exhaust the connection pool
             var requestCount = 100;
             for (int i = 0; i < requestCount; i++)
             {
@@ -405,7 +479,6 @@ namespace Azure.Core.Tests
             request.Uri.Reset(testServer.Address);
 
             var content = new MultipartFormDataContent("test_boundary");
-            content.ApplyToRequest(request);
             content.Add(RequestContent.Create(Encoding.UTF8.GetBytes("John")), "FirstName", "file_name.txt", new Dictionary<string, string>
             {
                 { "Content-Type", "text/plain; charset=utf-8" }
@@ -415,7 +488,7 @@ namespace Azure.Core.Tests
                 { "Content-Type", "text/plain; charset=utf-8" }
             });
 
-            request.Content = content;
+            content.ApplyToRequest(request);
 
             using Response response = await ExecuteRequest(request, httpPipeline);
             Assert.AreEqual(response.Status, 200);

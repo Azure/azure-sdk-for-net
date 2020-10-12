@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg7594?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "24",
         "Content-Type": "application/json",
@@ -47,6 +48,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg7594/providers/Sendgrid.Email//accounts/csmr9106?api-version=2015-01-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "243",
         "Content-Type": "application/json",
@@ -117,6 +119,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg7594/providers/Sendgrid.Email//accounts/csmr9106?api-version=2015-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-7fc88024180d0048ad97b1a7cf937272-69f3711260a90841-00",
         "User-Agent": [

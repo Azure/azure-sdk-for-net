@@ -1,8 +1,48 @@
 # Release History
+## 1.3.0-beta.3 (Unreleased)
 
-## 1.3.0-preview.1 (Unreleased)
 
+## 1.3.0-beta.2 (2020-10-07)
+
+### New Features
+- Update `DeviceCodeCredential` to output device code information and authentication instructions in the console, in the case no `deviceCodeCallback` is specified.
+  - Added `DeviceCodeCallback` to `DeviceCodeCredentialOptions`
+  - Added default constructor to `DeviceCodeCredential`
+
+### Breaking Changes
+- Replaced `DeviceCodeCredential` constructor overload taking `deviceCodeCallback` and `DeviceCodeCredentialOptions` with constructor taking only `DeviceCodeCredentialOptions`
+
+## 1.3.0-beta.1 (2020-09-11)
+
+### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
+- Added support for App Service Managed Identity API version `2019-08-01` ([#13687](https://github.com/Azure/azure-sdk-for-net/issues/13687))
+- Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
+- Added `RedirectUri` to `InteractiveBrowserCredentialOptions` to enable authentication with user specified application with a custom redirect url.
+- Added `IdentityModelFactory` to enable constructing models from the Azure.Identity library for mocking.
+- Unify exception handling between `DefaultAzureCredential` and `ChainedTokenCredential` ([#14408](https://github.com/Azure/azure-sdk-for-net/issues/14408))
+
+### Fixes and improvements
+- Updated `MsalPublicClient` and `MsalConfidentialClient` to respect `CancellationToken` during initialization ([#13201](https://github.com/Azure/azure-sdk-for-net/issues/13201))
+- Fixed `VisualStudioCodeCredential` crashes on macOS (Issue [#14362](https://github.com/Azure/azure-sdk-for-net/issues/14362))
+- Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
+- Update `VisualStudioCredential` and `VisualStudioCodeCredential` to throw `CredentialUnavailableException` for ADFS tenant (Issue [#14639](https://github.com/Azure/azure-sdk-for-net/issues/14639))
+
+## 1.2.3 (2020-09-11)
+
+### Fixes and improvements
+- Fixed issue with `DefaultAzureCredential` incorrectly catching `AuthenticationFailedException` (Issue [#14974](https://github.com/Azure/azure-sdk-for-net/issues/14974))
+- Fixed issue with `DefaultAzureCredential` throwing exceptions during concurrent calls (Issue [#15013](https://github.com/Azure/azure-sdk-for-net/issues/15013))
+
+## 1.2.2 (2020-08-20)
+
+### Fixes and improvements
+- Fixed issue with `InteractiveBrowserCredential` not specifying correct redirectUrl (Issue [#13940](https://github.com/Azure/azure-sdk-for-net/issues/13940))
+
+## 1.2.1 (2020-08-18)
+
+### Fixes and improvements
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 1.2.0 (2020-08-10)
 

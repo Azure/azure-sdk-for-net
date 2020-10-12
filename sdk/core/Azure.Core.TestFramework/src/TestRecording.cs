@@ -45,7 +45,14 @@ namespace Azure.Core.TestFramework
                     }
                     break;
                 case RecordedTestMode.Playback:
-                    _session = Load();
+                    try
+                    {
+                        _session = Load();
+                    }
+                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                    {
+                        throw new TestRecordingMismatchException(ex.Message, ex);
+                    }
                     break;
             }
         }
@@ -191,12 +198,6 @@ namespace Azure.Core.TestFramework
             Dispose(true);
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
-        {
-            clientOptions.Transport = CreateTransport(clientOptions.Transport);
-            return clientOptions;
-        }
-
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
             return Mode switch
@@ -244,10 +245,10 @@ namespace Azure.Core.TestFramework
         public string GenerateId(string prefix, int maxLength)
         {
             var id = $"{prefix}{Random.Next()}";
-            return id.Length > maxLength ? id.Substring(0, maxLength): id;
+            return id.Length > maxLength ? id.Substring(0, maxLength) : id;
         }
 
-        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {

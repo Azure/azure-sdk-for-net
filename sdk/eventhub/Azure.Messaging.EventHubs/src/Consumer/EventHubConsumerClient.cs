@@ -20,17 +20,24 @@ using Azure.Messaging.EventHubs.Diagnostics;
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
-    ///   A client responsible for reading <see cref="EventData" /> from a specific Event Hub
-    ///   as a member of a specific consumer group.
+    ///   <para>A client responsible for reading <see cref="EventData" /> from a specific Event Hub
+    ///   as a member of a specific consumer group.</para>
     ///
-    ///   A consumer may be exclusive, which asserts ownership over associated partitions for the consumer
+    ///   <para>A consumer may be exclusive, which asserts ownership over associated partitions for the consumer
     ///   group to ensure that only one consumer from that group is reading the from the partition.
-    ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
+    ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."</para>
     ///
-    ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
+    ///   <para>A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
     ///   group to be actively reading events from a given partition.  These non-exclusive consumers are
-    ///   sometimes referred to as "Non-Epoch Consumers."
+    ///   sometimes referred to as "Non-Epoch Consumers."</para>
     /// </summary>
+    ///
+    /// <remarks>
+    ///   The <see cref="EventHubConsumerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   reads events regularly or semi-regularly.  The consumer holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
+    ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    /// </remarks>
     ///
     public class EventHubConsumerClient : IAsyncDisposable
     {
@@ -315,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                             CancellationToken cancellationToken = default)
+                                                                                   CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return await Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);

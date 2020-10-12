@@ -51,6 +51,7 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
+        protected string ConnectionString;
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -59,43 +60,32 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-            service = _endpointType switch
-            {
 
-                TableEndpointType.Storage => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.StorageUri),
-                    new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                TableEndpointType.CosmosTable => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.CosmosUri),
-                    new TableSharedKeyCredential(TestEnvironment.CosmosAccountName, TestEnvironment.PrimaryCosmosAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                _ => throw new NotSupportedException("Unknown endpoint type")
-
-            };
-
-            ServiceUri ??= _endpointType switch
+            ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountName ??= _endpointType switch
+            AccountName = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageAccountName,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountKey ??= _endpointType switch
+            AccountKey = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
+
+            service = InstrumentClient(new TableServiceClient(
+                new Uri(ServiceUri),
+                new TableSharedKeyCredential(AccountName, AccountKey),
+                InstrumentClientOptions(new TableClientOptions())));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -256,13 +246,37 @@ namespace Azure.Data.Tables.Tests
                 {
                     return await action().ConfigureAwait(false);
                 }
-                // Disable retry throttling in Playback mode.
-                catch (RequestFailedException ex) when (ex.Status == 429 && Mode != RecordedTestMode.Playback)
+                catch (RequestFailedException ex) when (ex.Status == 429)
                 {
                     if (++retryCount > 6)
                     {
                         throw;
                     }
+                    // Disable retry throttling in Playback mode.
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        await Task.Delay(delay);
+                        delay *= 2;
+                    }
+                }
+            }
+        }
+
+        protected async Task<TResult> RetryUntilExpectedResponse<TResult>(Func<Task<TResult>> action, Func<TResult, bool> equalityAction, int initialDelay)
+        {
+            int retryCount = 0;
+            int delay = initialDelay;
+            while (true)
+            {
+                var actual = await action().ConfigureAwait(false);
+
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
                     await Task.Delay(delay);
                     delay *= 2;
                 }
@@ -313,7 +327,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class SimpleTestEntity : ITableEntity
@@ -322,7 +336,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class ComplexEntity : ITableEntity
@@ -451,7 +465,7 @@ namespace Azure.Data.Tables.Tests
 
             public DateTimeOffset? Timestamp { get; set; }
 
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {
@@ -496,6 +510,21 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeN, b.DateTimeN);
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
+        }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+        }
+
+        public enum Foo
+        {
+            One,
+            Two
         }
     }
 }

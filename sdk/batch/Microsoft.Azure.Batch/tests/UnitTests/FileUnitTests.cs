@@ -31,22 +31,18 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task GetFilePropertiesFromTaskDoesNotThrowOutOfMemoryException()
         {
-            using (BatchClient client = CreateBatchClientWithHandler())
-            {
-                NodeFile file = await client.JobOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
-                Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
-            }
+            using BatchClient client = CreateBatchClientWithHandler();
+            NodeFile file = await client.JobOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
+            Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task GetFilePropertiesFromNodeDoesNotThrowOutOfMemoryException()
         {
-            using (BatchClient client = CreateBatchClientWithHandler())
-            {
-                NodeFile file = await client.PoolOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
-                Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
-            }
+            using BatchClient client = CreateBatchClientWithHandler();
+            NodeFile file = await client.PoolOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
+            Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
         }
 
         private static BatchClient CreateBatchClientWithHandler()

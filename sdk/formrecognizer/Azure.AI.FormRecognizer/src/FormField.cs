@@ -18,17 +18,17 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Name = name;
 
-            BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
+            FieldBoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new FieldBoundingBox(field.Key.BoundingBox);
             IReadOnlyList<FormElement> labelFormElement = field.Key.Elements != null
                 ? ConvertTextReferences(field.Key.Elements, readResults)
                 : new List<FormElement>();
-            LabelData = new FieldData(field.Key.Text, pageNumber, labelBoundingBox, labelFormElement);
+            LabelData = new FieldData(labelBoundingBox, pageNumber, field.Key.Text, labelFormElement);
 
-            BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
+            FieldBoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new FieldBoundingBox(field.Value.BoundingBox);
             IReadOnlyList<FormElement> valueFormElement = field.Value.Elements != null
                 ? ConvertTextReferences(field.Value.Elements, readResults)
                 : new List<FormElement>();
-            ValueData = new FieldData(field.Value.Text, pageNumber, valueBoundingBox, valueFormElement);
+            ValueData = new FieldData(valueBoundingBox, pageNumber, field.Value.Text, valueFormElement);
 
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
@@ -51,15 +51,32 @@ namespace Azure.AI.FormRecognizer.Models
             }
             else
             {
-                IReadOnlyList<FormElement> FormElement = ConvertTextReferences(fieldValue.Elements, readResults);
+                IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
 
                 // TODO: FormEnum<T> ?
-                BoundingBox boundingBox = new BoundingBox(fieldValue.BoundingBox);
+                FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                ValueData = new FieldData(fieldValue.Text, fieldValue.Page.Value, boundingBox, FormElement);
+                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
             }
 
             Value = new FieldValue(fieldValue, readResults);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormField"/> class.
+        /// </summary>
+        /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
+        /// <param name="labelData">Contains the text, bounding box and content of the label of the field in the form.</param>
+        /// <param name="valueData">Contains the text, bounding box and content of the value of the field in the form.</param>
+        /// <param name="value">The strongly-typed value of this field.</param>
+        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
+        internal FormField(string name, FieldData labelData, FieldData valueData, FieldValue value, float confidence)
+        {
+            Name = name;
+            LabelData = labelData;
+            ValueData = valueData;
+            Value = value;
+            Confidence = confidence;
         }
 
         /// <summary>
@@ -99,6 +116,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _selectionMarkRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/selectionMarks/(?<selectionMarkIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
@@ -128,6 +146,16 @@ namespace Azure.AI.FormRecognizer.Models
                 int lineIndex = int.Parse(lineMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
+            }
+
+            // Selection Mark Reference
+            var selectionMarkMatch = _selectionMarkRegex.Match(reference);
+            if (selectionMarkMatch.Success && selectionMarkMatch.Groups.Count == 3)
+            {
+                int pageIndex = int.Parse(selectionMarkMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int selectionMark = int.Parse(selectionMarkMatch.Groups["selectionMarkIndex"].Value, CultureInfo.InvariantCulture);
+
+                return new FormSelectionMark(readResults[pageIndex].SelectionMarks[selectionMark], pageIndex + 1);
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");

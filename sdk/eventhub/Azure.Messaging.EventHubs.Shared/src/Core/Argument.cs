@@ -101,6 +101,25 @@ namespace Azure.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is at least as large as a given lower bound, throwing
+        ///   <see cref="ArgumentException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
+        ///
+        public static void AssertAtLeast(int argumentValue, int minimumValue, string argumentName)
+        {
+            if (argumentValue < minimumValue)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, $"The value supplied must be greater than or equal to {minimumValue}.");
+            }
+        }
+
+        /// <summary>
         ///   Ensures that an instance has not been disposed, throwing an
         ///   <see cref="ObjectDisposedException" /> if that invariant is not met.
         /// </summary>

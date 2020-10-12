@@ -9,19 +9,14 @@
     <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
     <!--
       Allows passing additional AutoRest command line arguments, for example to run in interactive mode 
-      use the following command line (remove the space between minus minus): dotnet msbuild /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
+      use the following command line (remove the space between minus minus): dotnet build /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
     -->
     <AutoRestAdditionalParameters></AutoRestAdditionalParameters>
-    <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
-    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
   </PropertyGroup>
 
   <PropertyGroup>
-    <_AutoRestVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest/releases/download/autorest-3.0.6223/autorest-3.0.6223.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">3.0.6283</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200625.1/autorest-csharp-v3-3.0.0-dev.20200625.1.tgz</_AutoRestCSharpVersion>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
@@ -38,18 +33,15 @@
     <Error Text="Following GitHub URLs do not contain commit hash: @(GithubUrlsWithoutHash) please use permalinks for code generation inputs (see https://help.github.com/en/github/managing-files-in-a-repository/getting-permanent-links-to-files) " Condition="'@(GithubUrlsWithoutHash)' != ''" />
 
     <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
-    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory)" />
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(AutoRestSharedCodeDirectory).." />
   </Target>
 
-  <PropertyGroup Condition="'$(_GenerateCode)' == 'true'">
-    <NoWarn>$(NoWarn);CA1812</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
-    <Compile Include="$(_AutoRestSharedCodeDirectory)/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
-  </ItemGroup>
-
 </Project>
+
+
+
+
+
 
 
 

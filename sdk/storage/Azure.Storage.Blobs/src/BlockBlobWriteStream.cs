@@ -17,13 +17,19 @@ namespace Azure.Storage.Blobs
         private readonly BlockBlobClient _blockBlobClient;
         private readonly BlobRequestConditions _conditions;
         private readonly List<string> _blockIds;
+        private readonly BlobHttpHeaders _blobHttpHeaders;
+        private readonly IDictionary<string, string> _metadata;
+        private readonly IDictionary<string, string> _tags;
 
         public BlockBlobWriteStream(
             BlockBlobClient blockBlobClient,
             long bufferSize,
             long position,
             BlobRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            BlobHttpHeaders blobHttpHeaders,
+            IDictionary<string, string> metadata,
+            IDictionary<string, string> tags) : base(
                 position,
                 bufferSize,
                 progressHandler)
@@ -32,6 +38,9 @@ namespace Azure.Storage.Blobs
             _blockBlobClient = blockBlobClient;
             _conditions = conditions ?? new BlobRequestConditions();
             _blockIds = new List<string>();
+            _blobHttpHeaders = blobHttpHeaders;
+            _metadata = metadata;
+            _tags = tags;
         }
 
         protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
@@ -63,9 +72,9 @@ namespace Azure.Storage.Blobs
 
             Response<BlobContentInfo> response = await _blockBlobClient.CommitBlockListInternal(
                 base64BlockIds: _blockIds,
-                blobHttpHeaders: default,
-                metadata: default,
-                tags: default,
+                blobHttpHeaders: _blobHttpHeaders,
+                metadata: _metadata,
+                tags: _tags,
                 conditions: _conditions,
                 accessTier: default,
                 async: async,

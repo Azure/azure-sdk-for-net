@@ -37,46 +37,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="dataset"> Dataset resource definition. </param>
-        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatasetResource>> CreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.CreateOrUpdateDataset");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateDatasetAsync(datasetName, dataset, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="dataset"> Dataset resource definition. </param>
-        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatasetResource> CreateOrUpdateDataset(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.CreateOrUpdateDataset");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateDataset(datasetName, dataset, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a dataset. </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -107,42 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetDataset(datasetName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.DeleteDataset");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteDatasetAsync(datasetName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDataset(string datasetName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.DeleteDataset");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteDataset(datasetName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -223,6 +147,118 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="dataset"> Dataset resource definition. </param>
+        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
+        public virtual async Task<DatasetCreateOrUpdateDatasetOperation> StartCreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartCreateOrUpdateDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateDatasetAsync(datasetName, dataset, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new DatasetCreateOrUpdateDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDatasetRequest(datasetName, dataset, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="dataset"> Dataset resource definition. </param>
+        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
+        public virtual DatasetCreateOrUpdateDatasetOperation StartCreateOrUpdateDataset(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartCreateOrUpdateDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateDataset(datasetName, dataset, ifMatch, cancellationToken);
+                return new DatasetCreateOrUpdateDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDatasetRequest(datasetName, dataset, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        public virtual async Task<DatasetDeleteDatasetOperation> StartDeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartDeleteDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteDatasetAsync(datasetName, cancellationToken).ConfigureAwait(false);
+                return new DatasetDeleteDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDatasetRequest(datasetName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        public virtual DatasetDeleteDatasetOperation StartDeleteDataset(string datasetName, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartDeleteDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteDataset(datasetName, cancellationToken);
+                return new DatasetDeleteDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDatasetRequest(datasetName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

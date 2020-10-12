@@ -31,7 +31,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -96,7 +96,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
@@ -183,7 +183,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -245,7 +245,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
@@ -329,7 +329,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -391,7 +391,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetStatisticsAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetStatisticsAsync_CreateMessage(
@@ -479,7 +479,7 @@ namespace Azure.Storage.Queues
             /// <param name="marker">A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxresults">Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000.</param>
             /// <param name="include">Include this parameter to specify that the queues's metadata be returned as part of the response body.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -553,7 +553,7 @@ namespace Azure.Storage.Queues
             /// <param name="marker">A string value that identifies the portion of the list of queues to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all queues remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxresults">Specifies the maximum number of queues to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000.</param>
             /// <param name="include">Include this parameter to specify that the queues's metadata be returned as part of the response body.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.ListQueuesSegmentAsync Message.</returns>
             internal static Azure.Core.HttpMessage ListQueuesSegmentAsync_CreateMessage(
@@ -652,7 +652,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -717,7 +717,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.CreateAsync Message.</returns>
@@ -802,7 +802,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -864,7 +864,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
@@ -937,7 +937,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -999,7 +999,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.GetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetPropertiesAsync_CreateMessage(
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -1161,7 +1161,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.SetMetadataAsync Message.</returns>
@@ -1243,7 +1243,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1305,7 +1305,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.GetAccessPolicyAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetAccessPolicyAsync_CreateMessage(
@@ -1393,7 +1393,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="permissions">the acls for the queue</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1458,7 +1458,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="permissions">the acls for the queue</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Queue.SetAccessPolicyAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetAccessPolicyAsync_CreateMessage(
@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Queues
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1625,7 +1625,7 @@ namespace Azure.Storage.Queues
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.DequeueAsync Message.</returns>
             internal static Azure.Core.HttpMessage DequeueAsync_CreateMessage(
@@ -1715,7 +1715,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1777,7 +1777,7 @@ namespace Azure.Storage.Queues
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.ClearAsync Message.</returns>
             internal static Azure.Core.HttpMessage ClearAsync_CreateMessage(
@@ -1853,7 +1853,7 @@ namespace Azure.Storage.Queues
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1924,7 +1924,7 @@ namespace Azure.Storage.Queues
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.EnqueueAsync Message.</returns>
             internal static Azure.Core.HttpMessage EnqueueAsync_CreateMessage(
@@ -2023,7 +2023,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -2088,7 +2088,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="numberOfMessages">Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Messages.PeekAsync Message.</returns>
             internal static Azure.Core.HttpMessage PeekAsync_CreateMessage(
@@ -2184,11 +2184,11 @@ namespace Azure.Storage.Queues
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
-            /// <param name="message">A Message object which can be stored in a Queue</param>
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="message">A Message object which can be stored in a Queue</param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -2198,10 +2198,10 @@ namespace Azure.Storage.Queues
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string popReceipt,
                 int visibilitytimeout,
                 string version,
+                Azure.Storage.Queues.Models.QueueSendMessage message = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
@@ -2216,10 +2216,10 @@ namespace Azure.Storage.Queues
                     using (Azure.Core.HttpMessage _message = UpdateAsync_CreateMessage(
                         pipeline,
                         resourceUri,
-                        message,
                         popReceipt,
                         visibilitytimeout,
                         version,
+                        message,
                         timeout,
                         requestId))
                     {
@@ -2255,20 +2255,20 @@ namespace Azure.Storage.Queues
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
-            /// <param name="message">A Message object which can be stored in a Queue</param>
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="message">A Message object which can be stored in a Queue</param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The MessageId.UpdateAsync Message.</returns>
             internal static Azure.Core.HttpMessage UpdateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string popReceipt,
                 int visibilitytimeout,
                 string version,
+                Azure.Storage.Queues.Models.QueueSendMessage message = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -2276,10 +2276,6 @@ namespace Azure.Storage.Queues
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (message == null)
-                {
-                    throw new System.ArgumentNullException(nameof(message));
                 }
                 if (popReceipt == null)
                 {
@@ -2306,11 +2302,14 @@ namespace Azure.Storage.Queues
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
-                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
-                _request.Headers.SetValue("Content-Type", "application/xml");
-                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                if (message != null)
+                {
+                    System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
+                    string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+                    _request.Headers.SetValue("Content-Type", "application/xml");
+                    _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                }
 
                 return _message;
             }
@@ -2368,7 +2367,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -2433,7 +2432,7 @@ namespace Azure.Storage.Queues
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
             /// <param name="popReceipt">Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
+            /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The MessageId.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
@@ -4074,7 +4073,7 @@ namespace Azure.Storage.Queues.Models
             }
             if (value.Cors != null)
             {
-                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("CorsRule", ""));
+                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Cors", ""));
                 foreach (Azure.Storage.Queues.Models.QueueCorsRule _child in value.Cors)
                 {
                     _elements.Add(Azure.Storage.Queues.Models.QueueCorsRule.ToXml(_child));
@@ -4109,7 +4108,7 @@ namespace Azure.Storage.Queues.Models
             {
                 _value.MinuteMetrics = Azure.Storage.Queues.Models.QueueMetrics.FromXml(_child);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("CorsRule", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("Cors", ""));
             if (_child != null)
             {
                 _value.Cors = System.Linq.Enumerable.ToList(

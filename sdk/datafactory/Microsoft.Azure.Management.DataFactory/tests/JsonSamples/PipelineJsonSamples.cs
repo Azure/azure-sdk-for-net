@@ -9,6 +9,111 @@ namespace DataFactory.Tests.JsonSamples
     public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""AzureDatabricksDeltaLakeSource"",
+            ""query"": ""abc"",
+            ""exportSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeExportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          },
+          ""sink"": {
+            ""type"": ""AzureDatabricksDeltaLakeSink"",
+            ""preCopyScript"": ""123"",
+            ""importSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeImportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbAtlasCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""CosmosDbMongoDbApiSink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -4374,7 +4479,9 @@ namespace DataFactory.Tests.JsonSamples
             ""formatSettings"": {
               ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
-              ""fileExtension"": "".csv""
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
             }
           },
           ""validateDataConsistency"": true,
@@ -4387,7 +4494,9 @@ namespace DataFactory.Tests.JsonSamples
               ""referenceName"": ""exampleLinkedService"",
               ""type"": ""LinkedServiceReference""
             },
-            ""path"": ""test""
+            ""path"": ""test"",
+            ""logLevel"": ""exampleLogLevel"",
+            ""enableReliableLogging"": true
           }
         },
         ""inputs"": [
@@ -4484,6 +4593,100 @@ namespace DataFactory.Tests.JsonSamples
                 ""formatSettings"": {
                 ""type"": ""DelimitedTextWriteSettings"",
                 ""fileExtension"": "".txt""
+                }
+            }
+        },
+        ""name"": ""DelimitedTextToBlob_Unzip"",
+        ""inputs"": [
+            {
+                ""referenceName"": ""SourceBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ],
+        ""outputs"": [
+            {
+                ""referenceName"": ""SinkBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ]
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_AzureBlob_UntarGZip = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""compressionProperties"": {
+                   ""type"": ""TarGZipReadSettings"",
+                   ""preserveCompressionFileNameAsFolder"": false
+                 }
+             }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+               ""type"": ""AzureDataLakeStoreWriteSettings"",
+               ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""DelimitedTextToBlob_UntarGZip""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+            ""source"": {
+                ""type"": ""DelimitedTextSource"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageReadSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextReadSettings"",
+                    ""compressionProperties"": {
+                        ""type"": ""ZipDeflateReadSettings"",
+                        ""preserveZipFileNameAsFolder"": false
+                    }
+                }
+            },
+            ""sink"": {
+                ""type"": ""DelimitedTextSink"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageWriteSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextWriteSettings"",
+                    ""fileExtension"": "".txt""
                 }
             }
         },
@@ -4685,7 +4888,8 @@ namespace DataFactory.Tests.JsonSamples
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
-              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
+              ""deleteFilesAfterCompletion"": true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -6703,8 +6907,7 @@ namespace DataFactory.Tests.JsonSamples
                         },
                         writeBatchSize: 1000,
                         writeBatchTimeout: ""01:00:00"",
-                        compressionType: ""gzip"",
-                        wrapRequestJsonInAnObject: true,
+                        httpCompressionType: ""gzip""
                     },
                     translator:
                     {

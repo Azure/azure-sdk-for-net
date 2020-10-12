@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.Tests
     [Parallelizable(ParallelScope.Self)]
     public abstract class E2eTestBase : RecordedTestBase<DigitalTwinsTestEnvironment>
     {
-        protected static readonly int MaxTries = 10;
+        protected static readonly int MaxTries = 1000;
 
         // Based on testing, the max length of models can be 27 only and works well for other resources as well. This can be updated when required.
         protected static readonly int MaxIdLength = 27;
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
         }
 
         protected DigitalTwinsClient GetFakeClient()
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     new FakeTokenCredential(),
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
         }
 
         public async Task<string> GetUniqueModelIdAsync(DigitalTwinsClient dtClient, string baseName)

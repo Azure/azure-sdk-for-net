@@ -13,6 +13,7 @@ namespace Azure.Storage.Files.DataLake
     {
         private readonly DataLakeFileClient _fileClient;
         private readonly DataLakeRequestConditions _conditions;
+        private readonly bool? _closeEvent;
         private long _writeIndex;
 
         public DataLakeFileWriteStream(
@@ -20,7 +21,8 @@ namespace Azure.Storage.Files.DataLake
             long bufferSize,
             long position,
             DataLakeRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            bool? closeEvent) : base(
                 position,
                 bufferSize,
                 progressHandler)
@@ -29,6 +31,7 @@ namespace Azure.Storage.Files.DataLake
             _fileClient = fileClient;
             _conditions = conditions ?? new DataLakeRequestConditions();
             _writeIndex = position;
+            _closeEvent = closeEvent;
         }
 
         protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
@@ -59,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
             Response<PathInfo> response = await _fileClient.FlushInternal(
                 position: _writeIndex,
                 retainUncommittedData: default,
-                close: default,
+                close: _closeEvent,
                 httpHeaders: default,
                 conditions: _conditions,
                 async: async,

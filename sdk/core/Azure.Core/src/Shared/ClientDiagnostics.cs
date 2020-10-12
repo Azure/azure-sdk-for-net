@@ -81,20 +81,9 @@ namespace Azure.Core.Pipeline
             return exception;
         }
 
-        public ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message = null, string? errorCode= null, IDictionary<string, string>? additionalInfo = null)
-        {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, true);
-        }
-
-        public string CreateRequestFailedMessage(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
-        {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false).EnsureCompleted();
-        }
-
-        private async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
+        public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
         {
             var content = await ReadContentAsync(response, async).ConfigureAwait(false);
-
             return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
         }
 

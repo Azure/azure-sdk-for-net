@@ -35,7 +35,7 @@ namespace Azure.Identity.Tests
             var cred = CreateManagedIdentityCredential();
 
             // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
@@ -61,7 +61,7 @@ namespace Azure.Identity.Tests
             var cred = CreateManagedIdentityCredential(clientId);
 
             // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
@@ -72,12 +72,14 @@ namespace Azure.Identity.Tests
 
         private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
         {
-            options = Recording.InstrumentClientOptions(options ?? new TokenCredentialOptions());
+            options = InstrumentClientOptions(options ?? new TokenCredentialOptions());
 
             var pipeline = CredentialPipeline.GetInstance(options);
 
             // if we're in playback mode we need to mock the ImdsAvailable call since we won't be able to open a connection
-            var client = (Mode == RecordedTestMode.Playback) ? new MockManagedIdentityClient(pipeline, clientId) { ImdsAvailableFunc = _ => true } : new ManagedIdentityClient(pipeline, clientId);
+            var client = (Mode == RecordedTestMode.Playback)
+                ? new MockManagedIdentityClient(pipeline, clientId) { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, clientId) }
+                : new ManagedIdentityClient(pipeline, clientId);
 
             var cred = new ManagedIdentityCredential(pipeline, client);
 

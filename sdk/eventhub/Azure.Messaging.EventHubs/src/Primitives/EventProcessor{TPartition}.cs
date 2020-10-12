@@ -30,6 +30,13 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
+    /// <remarks>
+    ///   The <see cref="EventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
+    ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    /// </remarks>
+    ///
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -238,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventBatchMaximumCount = eventBatchMaximumCount;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
@@ -312,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventBatchMaximumCount = eventBatchMaximumCount;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -371,6 +378,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
         ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
+        ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
             await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -380,6 +395,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
+        ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
         ///
         public virtual void StopProcessing(CancellationToken cancellationToken = default) =>
             StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
@@ -430,7 +453,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, ownerLevel: 0);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
@@ -452,14 +475,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace that the processor is associated with.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
+        /// <param name="loadBalancingInterval">The minimum amount of time to be elapsed between two load balancing verifications.</param>
         ///
         internal virtual PartitionLoadBalancer CreatePartitionLoadBalancer(StorageManager storageManager,
                                                                            string identifier,
                                                                            string consumerGroup,
                                                                            string fullyQualifiedNamespace,
                                                                            string eventHubName,
-                                                                           TimeSpan ownershipExpiration) =>
-            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
+                                                                           TimeSpan ownershipExpiration,
+                                                                           TimeSpan loadBalancingInterval) =>
+            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration, loadBalancingInterval);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.

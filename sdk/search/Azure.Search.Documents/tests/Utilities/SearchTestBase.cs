@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -77,7 +78,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>
@@ -161,11 +162,15 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 #if EXPERIMENTAL_SPATIAL
-            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
             }
 #endif
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
+            {
+                AssertEqual(eGpt, aGpt, path);
+            }
             else
             {
                 AssertEqual(expected, actual, path);
@@ -199,11 +204,20 @@ namespace Azure.Search.Documents.Tests
 
             while (true)
             {
-                await DelayAsync(delay, cancellationToken: cts.Token);
+                SearchIndexerStatus status = null;
+                try
+                {
+                    await DelayAsync(delay, cancellationToken: cts.Token);
 
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
-                    indexerName,
-                    cancellationToken: cts.Token);
+                    status = await client.GetIndexerStatusAsync(
+                        indexerName,
+                        cancellationToken: cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
 
                 if (status.Status == IndexerStatus.Running)
                 {
@@ -237,6 +251,36 @@ namespace Azure.Search.Documents.Tests
                 // Exponentially increase the delay to mitigate server throttling.
                 delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
             }
+        }
+
+        /// <summary>
+        /// Wait until the document count for a given search index has crosssed
+        /// a minimum value.  This only does simple linear retries for a fixed
+        /// number of attempts.
+        /// </summary>
+        /// <param name="searchClient">Client for the index.</param>
+        /// <param name="minimumCount">Minimum document count to verify indexing.</param>
+        /// <param name="attempts">Maximum number of attempts to retry.</param>
+        /// <param name="delay">Delay between attempts.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForDocumentCountAsync(
+            SearchClient searchClient,
+            int minimumCount,
+            int attempts = 3,
+            TimeSpan? delay = null)
+        {
+            delay ??= TimeSpan.FromSeconds(1);
+            int count = 0;
+            for (int i = 0; i < attempts; i++)
+            {
+                count = (int)await searchClient.GetDocumentCountAsync();
+                if (count >= minimumCount)
+                {
+                    return;
+                }
+                await DelayAsync(delay);
+            }
+            Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
         }
     }
 }

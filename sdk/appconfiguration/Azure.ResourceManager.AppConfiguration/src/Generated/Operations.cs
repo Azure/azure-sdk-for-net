@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
+        internal Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
         {
             RestClient = new RestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;

@@ -12,8 +12,8 @@ parameters:
 #   "TenantId": "<tenant id>",
 #   "TestApplicationId": "<test app id>",
 #   "TestApplicationSecret": "<test app secret>",
-#   "ProvisionerApplicationId": "<provisoner app id>",
-#   "ProvisoinerApplicationSecret": "<provisoner app secert>",
+#   "ProvisionerApplicationId": "<provisioner app id>",
+#   "ProvisionerApplicationSecret": "<provisioner app secret>",
 #   "Environment": "AzureCloud | AzureGov | AzureChina | <other environment>"
 # }
 # The Remove-TestResources.ps1 script accommodates extra parameters so it will
@@ -27,7 +27,7 @@ steps:
 
       eng/common/TestResources/Remove-TestResources.ps1 `
         -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
-        -ServiceDirectory ${{ parameters.ServiceDirectory }} `
+        -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
         @subscriptionConfiguration `
         -Force `
         -Verbose

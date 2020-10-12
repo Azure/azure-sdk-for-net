@@ -84,8 +84,7 @@ namespace Azure.Core
 
         private static HttpPipelineTransport GetDefaultTransport()
         {
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
             bool GetSwitchValue(string switchName, string envVariable)
             {
                 if (!AppContext.TryGetSwitch(switchName, out bool ret))
