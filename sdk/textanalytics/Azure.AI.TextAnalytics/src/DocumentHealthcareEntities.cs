@@ -82,7 +82,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Healthcare entity relations. </summary>
         public IReadOnlyList<HealthcareRelation> Relations { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        internal IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
+        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
     }

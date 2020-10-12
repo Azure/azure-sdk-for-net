@@ -41,8 +41,6 @@ namespace Azure.AI.TextAnalytics.Models
             Message = message;
             TargetRef = targetRef;
         }
-        /// <summary> Warning message. </summary>
-        public string Message { get; }
         /// <summary> A JSON pointer reference indicating the target object. </summary>
         public string TargetRef { get; }
     }

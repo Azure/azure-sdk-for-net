@@ -10,5 +10,6 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Warning code as string </summary>
         public string Code { get; }
+        public string Message { get; internal set; }
     }
 }

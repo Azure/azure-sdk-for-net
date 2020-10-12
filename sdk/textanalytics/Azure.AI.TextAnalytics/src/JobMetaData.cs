@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -44,6 +43,6 @@ namespace Azure.AI.TextAnalytics
         /// Status
         /// </summary>
         [CodeGenMember("Status")]
-        internal State Status { get; }
+        public JobStatus Status { get; }
     }
 }

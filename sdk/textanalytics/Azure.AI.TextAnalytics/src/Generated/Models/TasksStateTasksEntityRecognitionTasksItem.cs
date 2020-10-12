@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TasksStateTasksEntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, State status) : base(lastUpdateDateTime, name, status)
+        internal TasksStateTasksEntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
         {
             if (name == null)
             {
@@ -31,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TasksStateTasksEntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, State status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
+        internal TasksStateTasksEntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
         {
             if (name == null)
             {

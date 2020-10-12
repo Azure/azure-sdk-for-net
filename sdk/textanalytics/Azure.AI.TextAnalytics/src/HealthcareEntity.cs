@@ -7,13 +7,19 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("HealthcareEntity")]
-    internal partial class HealthcareEntity : Entity
+    internal partial class HealthcareEntity
     {
+        /// <summary>
+        /// IsNegated
+        /// </summary>
         [CodeGenMember("IsNegated")]
-        internal bool IsNegated { get; }
+        public bool IsNegated { get; }
 
+        /// <summary>
+        /// Links
+        /// </summary>
         [CodeGenMember("Links")]
-        internal IReadOnlyList<HealthcareEntityLink> Links { get; }
+        public IReadOnlyList<HealthcareEntityLink> Links { get; }
 
     }
 }

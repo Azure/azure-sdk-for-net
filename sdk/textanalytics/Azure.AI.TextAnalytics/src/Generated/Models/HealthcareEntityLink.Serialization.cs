@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class HealthcareEntityLink
+    public partial class HealthcareEntityLink
     {
         internal static HealthcareEntityLink DeserializeHealthcareEntityLink(JsonElement element)
         {

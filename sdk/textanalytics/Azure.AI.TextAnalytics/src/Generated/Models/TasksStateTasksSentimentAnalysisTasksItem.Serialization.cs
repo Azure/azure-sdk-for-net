@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<SentimentResponse> results = default;
             DateTimeOffset lastUpdateDateTime = default;
             string name = default;
-            State status = default;
+            JobStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -38,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new JobStatus(property.Value.GetString());
                     continue;
                 }
             }

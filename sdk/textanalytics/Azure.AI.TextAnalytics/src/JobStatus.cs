@@ -4,10 +4,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("State")]
-    internal partial struct State
+    public partial struct JobStatus
     {
+
     }
 }

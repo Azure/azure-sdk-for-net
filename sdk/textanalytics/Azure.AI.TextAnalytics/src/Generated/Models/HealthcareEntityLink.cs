@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareEntityLink. </summary>
-    internal partial class HealthcareEntityLink
+    public partial class HealthcareEntityLink
     {
         /// <summary> Initializes a new instance of HealthcareEntityLink. </summary>
         /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>

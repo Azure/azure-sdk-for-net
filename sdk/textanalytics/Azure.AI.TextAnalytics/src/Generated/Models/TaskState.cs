@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, State status)
+        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, JobStatus status)
         {
             if (name == null)
             {
@@ -31,6 +32,6 @@ namespace Azure.AI.TextAnalytics.Models
 
         public DateTimeOffset LastUpdateDateTime { get; }
         public string Name { get; }
-        public State Status { get; }
+        public JobStatus Status { get; }
     }
 }

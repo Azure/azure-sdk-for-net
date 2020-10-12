@@ -184,7 +184,7 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
 
-                    if (update.Value.Status == State.Succeeded)
+                    if (update.Value.Status == JobStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = new RecognizeHealthcareEntitiesResultCollection(new List<HealthcareEntititesResult>() { update.Value.Results },
@@ -192,7 +192,7 @@ namespace Azure.AI.TextAnalytics
                             update.Value.Results.ModelVersion);
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == State.Failed)
+                    else if (update.Value.Status == JobStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Results.Errors)
                             .ConfigureAwait(false);
