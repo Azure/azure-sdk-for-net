@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Microsoft.Azure.WebJobs.Host.EndToEndTests\tests\Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Azure.Storage.Webjobs.Extensions.Scenario.Tests\tests\Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Webjobs.Extensions.Storage.Samples", "Azure.Storage.Webjobs.Extensions.Samples\Azure.Webjobs.Extensions.Storage.Samples.csproj", "{0425DF36-E0F1-419A-8B07-E01DE249D066}"
 EndProject
