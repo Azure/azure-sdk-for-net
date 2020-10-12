@@ -54,12 +54,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupOperation.HasValue, Is.True);
 
             #region Snippet:HelloFullRestoreAsync
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
-
-            // Start the restore.
-            RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupBlobUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             Response restoreResult = await restoreOperation.WaitForCompletionAsync();
@@ -101,12 +97,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupOperation.HasValue, Is.True);
 
             #region Snippet:HelloFullRestoreSync
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
-
-            // Start the restore.
-            RestoreOperation restoreOperation = Client.StartRestore(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation restoreOperation = Client.StartRestore(backupBlobUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             while (!restoreOperation.HasCompleted)

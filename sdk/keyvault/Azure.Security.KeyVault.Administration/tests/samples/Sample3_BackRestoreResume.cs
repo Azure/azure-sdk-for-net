@@ -50,12 +50,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupBlobUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
-
-            // Start the restore.
-            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(backupBlobUri, sasToken);
             var restoreOperationId = originalRestoreOperation.Id;
 
             #region Snippet:ResumeRestoreAsync
