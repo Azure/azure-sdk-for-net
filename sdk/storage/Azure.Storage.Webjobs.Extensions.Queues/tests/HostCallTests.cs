@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Indexers;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -305,26 +306,32 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
+            await FunctionalTest.CallAsync(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), null, customExtensions);
         }
 
         private async Task CallAsync(Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
+            await FunctionalTest.CallAsync(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
 
         private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             IDictionary<string, object> arguments = null;
-            return await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
         private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), arguments, setTaskSource);
+        }
+
+        private void ConfigureStorage(IWebJobsBuilder builder)
+        {
+            builder.AddAzureStorageQueues();
+            builder.UseQueueService(queueServiceClient);
         }
 
         private struct CustomDataValue

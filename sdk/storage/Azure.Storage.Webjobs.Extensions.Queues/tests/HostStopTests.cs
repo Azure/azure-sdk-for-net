@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<CallbackCancellationTokenProgram>(c =>
                 {
-                    c.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    c.AddAzureStorageQueues();
                     c.Services.AddSingleton<QueueServiceClientProvider>(_ => new FakeQueueServiceClientProvider(queueServiceClient));
                 })
                 .Build();

@@ -12,6 +12,7 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
@@ -715,6 +716,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private void ConfigureQueues(IWebJobsBuilder builder)
         {
+            builder.AddAzureStorageQueues();
             builder.Services.AddSingleton<IConfigureOptions<QueuesOptions>, FakeQueuesOptionsSetup>();
             builder.UseQueueService(queueServiceClient);
         }

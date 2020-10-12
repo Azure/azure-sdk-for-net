@@ -103,6 +103,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport());
                 });
+                b.AddAzureStorageBlobs();
+                b.AddAzureStorageQueues();
             }, programType,
             settings: new Dictionary<string, string>() {
                 // This takes precedence over env variables.

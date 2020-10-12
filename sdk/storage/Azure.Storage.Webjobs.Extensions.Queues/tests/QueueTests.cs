@@ -487,7 +487,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b =>
+            {
+                b.AddAzureStorageQueues();
+                b.UseQueueService(queueServiceClient);
+            }, programType, setTaskSource);
         }
 
         private class BindToCloudQueueProgram
