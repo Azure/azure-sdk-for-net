@@ -824,6 +824,305 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #endregion
 
+        #region StartRecognizeBusinessCards
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "File not on Github") ]
+        public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeBusinessCardsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
+                operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the business card. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:businesscard", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("ContactNames"));
+            Assert.True(form.Fields.ContainsKey("JobTitles"));
+            Assert.True(form.Fields.ContainsKey("Departments"));
+            Assert.True(form.Fields.ContainsKey("Emails"));
+            Assert.True(form.Fields.ContainsKey("Websites"));
+            Assert.True(form.Fields.ContainsKey("MobilePhones"));
+            Assert.True(form.Fields.ContainsKey("OtherPhones"));
+            Assert.True(form.Fields.ContainsKey("Faxes"));
+            Assert.True(form.Fields.ContainsKey("Addresses"));
+            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+
+            var contactNames = form.Fields["ContactNames"].Value.AsList();
+            Assert.AreEqual(1, contactNames.Count);
+            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+
+            var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
+
+            Assert.True(contactNamesDict.ContainsKey("FirstName"));
+            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+
+            Assert.True(contactNamesDict.ContainsKey("LastName"));
+            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+
+            var jobTitles = form.Fields["JobTitles"].Value.AsList();
+            Assert.AreEqual(1, jobTitles.Count);
+            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+
+            var departments = form.Fields["Departments"].Value.AsList();
+            Assert.AreEqual(1, departments.Count);
+            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+
+            var emails = form.Fields["Emails"].Value.AsList();
+            Assert.AreEqual(1, emails.Count);
+            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+
+            var websites = form.Fields["Websites"].Value.AsList();
+            Assert.AreEqual(1, websites.Count);
+            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+
+            // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
+            var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
+            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+
+            var otherPhones = form.Fields["OtherPhones"].Value.AsList();
+            Assert.AreEqual(1, otherPhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+
+            var faxes = form.Fields["Faxes"].Value.AsList();
+            Assert.AreEqual(1, faxes.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+
+            var addresses = form.Fields["Addresses"].Value.AsList();
+            Assert.AreEqual(1, addresses.Count);
+            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+
+            var companyNames = form.Fields["CompanyNames"].Value.AsList();
+            Assert.AreEqual(1, companyNames.Count);
+            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "File not on Github")]
+        public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeBusinessCardsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardtPng);
+                operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the business card. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:businesscard", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("ContactNames"));
+            Assert.True(form.Fields.ContainsKey("JobTitles"));
+            Assert.True(form.Fields.ContainsKey("Departments"));
+            Assert.True(form.Fields.ContainsKey("Emails"));
+            Assert.True(form.Fields.ContainsKey("Websites"));
+            Assert.True(form.Fields.ContainsKey("MobilePhones"));
+            Assert.True(form.Fields.ContainsKey("OtherPhones"));
+            Assert.True(form.Fields.ContainsKey("Faxes"));
+            Assert.True(form.Fields.ContainsKey("Addresses"));
+            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+
+            var contactNames = form.Fields["ContactNames"].Value.AsList();
+            Assert.AreEqual(1, contactNames.Count);
+            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+
+            var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
+
+            Assert.True(contactNamesDict.ContainsKey("FirstName"));
+            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+
+            Assert.True(contactNamesDict.ContainsKey("LastName"));
+            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+
+            var jobTitles = form.Fields["JobTitles"].Value.AsList();
+            Assert.AreEqual(1, jobTitles.Count);
+            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+
+            var departments = form.Fields["Departments"].Value.AsList();
+            Assert.AreEqual(1, departments.Count);
+            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+
+            var emails = form.Fields["Emails"].Value.AsList();
+            Assert.AreEqual(1, emails.Count);
+            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+
+            var websites = form.Fields["Websites"].Value.AsList();
+            Assert.AreEqual(1, websites.Count);
+            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+
+            // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
+            var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
+            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+
+            var otherPhones = form.Fields["OtherPhones"].Value.AsList();
+            Assert.AreEqual(1, otherPhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+
+            var faxes = form.Fields["Faxes"].Value.AsList();
+            Assert.AreEqual(1, faxes.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+
+            var addresses = form.Fields["Addresses"].Value.AsList();
+            Assert.AreEqual(1, addresses.Count);
+            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+
+            var companyNames = form.Fields["CompanyNames"].Value.AsList();
+            Assert.AreEqual(1, companyNames.Count);
+            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+        }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsIncludeFieldElements()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions() { IncludeFieldElements = true };
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var businessCardsForm = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                businessCardsForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+       }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsCanParseBlankPage()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions() { IncludeFieldElements = true };
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankForm = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                blankForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
+        [Test]
+        public void StartRecognizeBusinessCardsThrowsForDamagedFile()
+        {
+            var client = CreateFormRecognizerClient();
+
+            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
+
+            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
+            using var stream = new MemoryStream(damagedFile);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream));
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and handle returned errors.
+        /// </summary>
+        [Test]
+        public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateFormRecognizerClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+        }
+
+        #endregion
+
         #region StartRecognizeCustomForms
 
         /// <summary>
