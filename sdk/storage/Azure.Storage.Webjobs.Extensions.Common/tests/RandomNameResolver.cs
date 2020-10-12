@@ -3,8 +3,9 @@
 
 using System;
 using System.Globalization;
+using Microsoft.Azure.WebJobs;
 
-namespace Microsoft.Azure.WebJobs.Host.TestCommon
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class RandomNameResolver : INameResolver
     {

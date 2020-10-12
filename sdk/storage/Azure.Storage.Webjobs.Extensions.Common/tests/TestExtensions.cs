@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
-namespace Microsoft.Azure.WebJobs.Host.TestCommon
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public static class TestExtensions
     {

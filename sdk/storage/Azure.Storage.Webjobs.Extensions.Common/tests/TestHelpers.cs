@@ -9,7 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.Loggers;
 using Microsoft.Azure.WebJobs.Host.Timers;
@@ -20,7 +21,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.TestCommon
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public static class TestHelpers
     {

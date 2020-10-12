@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -70,6 +71,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport());
                 });
+                b.AddAzureStorageQueues();
+                b.AddAzureStorageBlobs();
             }, programType, setTaskSource,
             settings: new Dictionary<string, string>() {
                 // This takes precedence over env variables.

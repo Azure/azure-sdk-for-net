@@ -26,15 +26,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Queues.Tests", "Azure.Storage.Webjobs.Extensions.Queues\tests\Azure.WebJobs.Extensions.Storage.Queues.Tests.csproj", "{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.TestCommon", "Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj", "{DE1A44A0-FE29-48D6-8758-BFDC8D6F1EB5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.EndToEnd.Tests", "Microsoft.Azure.WebJobs.Host.EndToEndTests\tests\Azure.WebJobs.Host.EndToEnd.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Azure.Storage.Webjobs.Extensions.Scenario.Tests\tests\Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Webjobs.Extensions.Samples", "Azure.Storage.Webjobs.Extensions.Samples\Azure.Storage.Webjobs.Extensions.Samples.csproj", "{0425DF36-E0F1-419A-8B07-E01DE249D066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Webjobs.Extensions.Storage.Samples", "Azure.Storage.Webjobs.Extensions.Samples\Azure.Webjobs.Extensions.Storage.Samples.csproj", "{0425DF36-E0F1-419A-8B07-E01DE249D066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure", "..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{CB002B93-3D25-42DD-B1A6-472C10B99BA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{CB002B93-3D25-42DD-B1A6-472C10B99BA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,10 +76,6 @@ Global
 		{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE1A44A0-FE29-48D6-8758-BFDC8D6F1EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE1A44A0-FE29-48D6-8758-BFDC8D6F1EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE1A44A0-FE29-48D6-8758-BFDC8D6F1EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE1A44A0-FE29-48D6-8758-BFDC8D6F1EB5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
