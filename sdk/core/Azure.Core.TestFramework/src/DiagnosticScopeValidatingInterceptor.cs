@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Castle.DynamicProxy;
@@ -12,6 +13,8 @@ namespace Azure.Core.TestFramework
 {
     public class DiagnosticScopeValidatingInterceptor : IInterceptor
     {
+        private readonly AsyncLocal<ClientDiagnosticListener> _diagnosticListener = new AsyncLocal<ClientDiagnosticListener>();
+
         public void Intercept(IInvocation invocation)
         {
             var methodName = invocation.Method.Name;
@@ -20,7 +23,7 @@ namespace Azure.Core.TestFramework
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
                 var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
-                using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
+                _diagnosticListener.Value = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
                 invocation.Proceed();
 
                 bool expectFailure = false;
@@ -64,6 +67,8 @@ namespace Azure.Core.TestFramework
                 }
                 finally
                 {
+                    ClientDiagnosticListener diagnosticListener = _diagnosticListener.Value;
+
                     // Remove subscribers before enumerating events.
                     diagnosticListener.Dispose();
                     if (!skipChecks)
