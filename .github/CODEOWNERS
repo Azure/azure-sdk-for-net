@@ -1,14 +1,14 @@
 # Instructions for CODEOWNERS file format and automatic build failure notifications:
 # https://github.com/Azure/azure-sdk/blob/master/docs/policies/opensource.md#codeowners
 
-###########
+#########
 # SDK
-###########
+#########
 
 # Catch all
 /sdk/                                           @AlexGhiondea
 
-# >>>>>>>>> Core Libraries <<<<<<<<<<
+# ######## Core Libraries ########
 
 # > Library: Azure.Core
 # PRLabel: %Azure.Core
@@ -31,7 +31,7 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 
-# >>>>>>>>> Management Plane <<<<<<<<<<
+# ######## Management Plane ########
 
 /**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
 /**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
@@ -43,14 +43,14 @@
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja
 
 
-# >>>>>>>>> Eng Sys <<<<<<<<<< 
+# ######## Eng Sys ######## 
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
 
 
-# >>>>>>>>> Services <<<<<<<<<<
+# ######## Services ########
 
 # > Service: AAD
 # ServiceLabel: %AAD %Service Attention
