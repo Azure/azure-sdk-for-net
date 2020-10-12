@@ -2,8 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,8 +4,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
