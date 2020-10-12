@@ -12,10 +12,5 @@ namespace Azure.Learn.AppConfig.Tests
         public LearnAppConfigTestEnvironment() : base("api-learn")
         {
         }
-
-        public string LearnEndpoint => GetRecordedVariable("API-LEARN_ENDPOINT");
-        public string LearnClientId => GetRecordedVariable("API-LEARN_CLIENT_ID");
-        public string LearnClientSecret => GetRecordedVariable("API-LEARN_CLIENT_SECRET");
-        public string LearnTenantId => GetRecordedVariable("API-LEARN_TENANT_ID");
     }
 }
