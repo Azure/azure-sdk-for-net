@@ -9,8 +9,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// <summary>
     ///   Allows for parsing Service Bus connection strings.
     /// </summary>
-    ///
-    internal static class ConnectionStringParser
+    public static class ConnectionStringParser
     {
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
         private const char TokenValueSeparator = '=';
