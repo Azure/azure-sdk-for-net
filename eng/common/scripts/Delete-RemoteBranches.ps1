@@ -20,11 +20,11 @@ foreach ($branch in $syncBranches)
     $branchName = $branch.Trim()
     $head = "${RepoOwner}/${RepoName}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
-    $response = ListPullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
+    $response = List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head -AuthToken $AuthToken
   }
   catch
   {
-    LogError "ListPullRequests failed with exception:`n$_"
+    LogError "List-PullRequests failed with exception:`n$_"
     exit 1
   }
 
