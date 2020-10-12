@@ -23,6 +23,7 @@ pr:
   paths:
     include:
     - sdk/core/
+    - sdk/testcommon/
     - eng/
     - samples/
     exclude:
@@ -32,14 +33,19 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
-    ServiceToBuild: '*'
+    ServiceToTest: '*'
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
-    - name: Microsoft.Extensions.Azure
-      safeName: MicrosoftExtensionsAzure
     - name: Microsoft.Azure.Core.NewtonsoftJson
       safeName: MicrosoftAzureCoreNewtonsoftJson
+    - name: Microsoft.Azure.Core.Spatial
+      safeName: MicrosoftAzureCoreSpatial
+    - name: Microsoft.Azure.Core.Spatial.NewtonsoftJson
+      safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
+
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml

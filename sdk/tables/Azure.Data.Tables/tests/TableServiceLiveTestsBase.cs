@@ -85,7 +85,7 @@ namespace Azure.Data.Tables.Tests
             service = InstrumentClient(new TableServiceClient(
                 new Uri(ServiceUri),
                 new TableSharedKeyCredential(AccountName, AccountKey),
-                Recording.InstrumentClientOptions(new TableClientOptions())));
+                InstrumentClientOptions(new TableClientOptions())));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -258,6 +258,27 @@ namespace Azure.Data.Tables.Tests
                         await Task.Delay(delay);
                         delay *= 2;
                     }
+                }
+            }
+        }
+
+        protected async Task<TResult> RetryUntilExpectedResponse<TResult>(Func<Task<TResult>> action, Func<TResult, bool> equalityAction, int initialDelay)
+        {
+            int retryCount = 0;
+            int delay = initialDelay;
+            while (true)
+            {
+                var actual = await action().ConfigureAwait(false);
+
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(delay);
+                    delay *= 2;
                 }
             }
         }

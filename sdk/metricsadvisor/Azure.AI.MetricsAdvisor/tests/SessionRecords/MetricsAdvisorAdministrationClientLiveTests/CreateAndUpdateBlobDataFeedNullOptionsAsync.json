@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "350",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2ca2853872d18e4095cf0950775dcc72-b9a9478d4b35e048-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "86de1e049ffe3049bbbde30edec00852",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "dataSourceParameter": {
+          "connectionString": "Sanitized",
+          "container": "foo",
+          "blobTemplate": "template"
+        },
+        "dataSourceType": "AzureBlob",
+        "dataFeedName": "testEm4Bzhht",
+        "granularityName": "Daily",
+        "metrics": [
+          {
+            "metricName": "someMetricName",
+            "metricDisplayName": "someMetricDisplayName",
+            "metricDescription": "someDescription"
+          }
+        ],
+        "dataStartFrom": "2020-10-05T00:00:00Z"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "08a15992-dd70-4997-9ef3-44b7e3201915",
+        "Content-Length": "0",
+        "Date": "Mon, 05 Oct 2020 15:20:52 GMT",
+        "Location": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/721a87b9-c538-4cc1-a503-9041562b7876",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "294",
+        "X-Request-ID": "08a15992-dd70-4997-9ef3-44b7e3201915"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/721a87b9-c538-4cc1-a503-9041562b7876",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "232",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-e4bc1f072296854ab6a21d006b68492d-0331daaa3581d940-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "eed18a881bdc931e56056a89e786667b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "dataSourceType": "AzureBlob",
+        "dataFeedName": "testEm4Bzhht",
+        "dataFeedDescription": "descCUE8itQq",
+        "dataStartFrom": "2020-10-05T00:00:00Z",
+        "needRollup": null,
+        "rollUpMethod": null,
+        "fillMissingPointType": null,
+        "viewMode": null,
+        "status": null
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "167acc86-c8ce-4701-863d-b5302224e1e1",
+        "Content-Length": "0",
+        "Date": "Mon, 05 Oct 2020 15:20:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "453",
+        "X-Request-ID": "167acc86-c8ce-4701-863d-b5302224e1e1"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/721a87b9-c538-4cc1-a503-9041562b7876",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-34a3110cb05fa2448afdac891d2f6704-97cc5b765a868d4d-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "d1e22e512e341b4e81243c5d03680332",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "42c78968-1bf7-459b-a843-ae6e6ae6b89f",
+        "Content-Length": "0",
+        "Date": "Mon, 05 Oct 2020 15:20:53 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "237",
+        "X-Request-ID": "42c78968-1bf7-459b-a843-ae6e6ae6b89f"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2020-10-05T10:20:52.7202771-05:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "306531663"
+  }
+}

@@ -1,18 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/DefaultCosmosDB5382?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-CosmosDB-8930?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-ad6203b40933524d982ce3edc25be239-1c86bab05fe80547-00",
+        "traceparent": "00-6181f02843a1184287b16ec94df6d2b2-569ee63f835ebf44-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB.Tests/1.0.0-dev.20200824.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.CosmosDB.Tests/1.0.0-alpha.20200922.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "9d79404b4d31445c241cc7a3e5326c24",
+        "x-ms-client-request-id": "4508b7bbf9d49a6a1121d0cfdd8d8291",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,21 +22,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "191",
+        "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Aug 2020 01:03:52 GMT",
+        "Date": "Wed, 23 Sep 2020 02:21:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2affb5b4-811b-4022-84a2-ac55c2f4341f",
+        "x-ms-correlation-request-id": "a9468159-eb05-4673-add0-cd6971d77534",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "2affb5b4-811b-4022-84a2-ac55c2f4341f",
-        "x-ms-routing-request-id": "WESTUS:20200825T010352Z:2affb5b4-811b-4022-84a2-ac55c2f4341f"
+        "x-ms-request-id": "a9468159-eb05-4673-add0-cd6971d77534",
+        "x-ms-routing-request-id": "WESTUS2:20200923T022133Z:a9468159-eb05-4673-add0-cd6971d77534"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DefaultCosmosDB5382",
-        "name": "DefaultCosmosDB5382",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-8930",
+        "name": "Default-CosmosDB-8930",
         "location": "westus",
         "properties": {
           "provisioningState": "Succeeded"
@@ -46,31 +47,32 @@
       "RequestUri": "https://management.azure.com/providers/Microsoft.DocumentDB/operations?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-dev.20200824.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200922.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "652e9c25633df7637b797f8821b4c914",
+        "x-ms-client-request-id": "15ab66fd670613b6f596d2ebd79da06d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "137157",
+        "Content-Length": "137222",
         "Content-Location": "https://management.documents.azure.com:450/providers/Microsoft.DocumentDB/operations?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Tue, 25 Aug 2020 01:03:53 GMT",
+        "Date": "Wed, 23 Sep 2020 02:21:33 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "20e392f0-4f93-484b-8ea8-806b3f7087c2",
+        "x-ms-correlation-request-id": "aa3aedfe-6df1-453b-b08b-fa4868609493",
         "x-ms-gatewayversion": "version=2.11.0",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "20e392f0-4f93-484b-8ea8-806b3f7087c2",
-        "x-ms-routing-request-id": "WESTUS:20200825T010354Z:20e392f0-4f93-484b-8ea8-806b3f7087c2"
+        "x-ms-request-id": "aa3aedfe-6df1-453b-b08b-fa4868609493",
+        "x-ms-routing-request-id": "WESTUS2:20200923T022134Z:aa3aedfe-6df1-453b-b08b-fa4868609493"
       },
       "ResponseBody": {
         "value": [
@@ -4391,7 +4393,7 @@
                   },
                   {
                     "name": "MongoRequestsCount",
-                    "displayName": "Mongo Request Rate",
+                    "displayName": "(deprecated) Mongo Request Rate",
                     "internalMetricName": "MongoRequests",
                     "displayDescription": "Mongo request Count per second",
                     "unit": "CountPerSecond",
@@ -4436,7 +4438,7 @@
                   },
                   {
                     "name": "MongoRequestsDelete",
-                    "displayName": "Mongo Delete Request Rate",
+                    "displayName": "(deprecated) Mongo Delete Request Rate",
                     "internalMetricName": "MongoRequests",
                     "displayDescription": "Mongo Delete request per second",
                     "unit": "CountPerSecond",
@@ -4484,7 +4486,7 @@
                   },
                   {
                     "name": "MongoRequestsInsert",
-                    "displayName": "Mongo Insert Request Rate",
+                    "displayName": "(deprecated) Mongo Insert Request Rate",
                     "internalMetricName": "MongoRequests",
                     "displayDescription": "Mongo Insert count per second",
                     "unit": "CountPerSecond",
@@ -4532,7 +4534,7 @@
                   },
                   {
                     "name": "MongoRequestsQuery",
-                    "displayName": "Mongo Query Request Rate",
+                    "displayName": "(deprecated) Mongo Query Request Rate",
                     "internalMetricName": "MongoRequests",
                     "displayDescription": "Mongo Query request per second",
                     "unit": "CountPerSecond",
@@ -4586,7 +4588,7 @@
                   },
                   {
                     "name": "MongoRequestsUpdate",
-                    "displayName": "Mongo Update Request Rate",
+                    "displayName": "(deprecated) Mongo Update Request Rate",
                     "internalMetricName": "MongoRequests",
                     "displayDescription": "Mongo Update request per second",
                     "unit": "CountPerSecond",
@@ -5830,7 +5832,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "330372063",
+    "RandomSeed": "1451144492",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

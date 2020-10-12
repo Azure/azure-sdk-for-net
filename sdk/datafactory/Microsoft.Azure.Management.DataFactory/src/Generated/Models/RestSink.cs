@@ -59,22 +59,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="requestInterval">The time to await before sending next
         /// request, in milliseconds </param>
-        /// <param name="compressionType">Compression Type to Send data in
-        /// compressed format with Optimal Compression Level, Default is None.
-        /// And The Only Supported option is Gzip. </param>
-        /// <param name="wrapRequestJsonInAnObject">Wraps Request Array Json
-        /// into an Object before calling the rest endpoint , Default is false.
-        /// ex: if true request content sample format is { rows:[]} else the
-        /// format is []</param>
-        public RestSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object additionalHeaders = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object), object compressionType = default(object), object wrapRequestJsonInAnObject = default(object))
+        /// <param name="httpCompressionType">Http Compression Type to Send
+        /// data in compressed format with Optimal Compression Level, Default
+        /// is None. And The Only Supported option is Gzip. </param>
+        public RestSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object additionalHeaders = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object), object httpCompressionType = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             RequestMethod = requestMethod;
             AdditionalHeaders = additionalHeaders;
             HttpRequestTimeout = httpRequestTimeout;
             RequestInterval = requestInterval;
-            CompressionType = compressionType;
-            WrapRequestJsonInAnObject = wrapRequestJsonInAnObject;
+            HttpCompressionType = httpCompressionType;
             CustomInit();
         }
 
@@ -116,20 +111,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object RequestInterval { get; set; }
 
         /// <summary>
-        /// Gets or sets compression Type to Send data in compressed format
-        /// with Optimal Compression Level, Default is None. And The Only
-        /// Supported option is Gzip.
+        /// Gets or sets http Compression Type to Send data in compressed
+        /// format with Optimal Compression Level, Default is None. And The
+        /// Only Supported option is Gzip.
         /// </summary>
-        [JsonProperty(PropertyName = "compressionType")]
-        public object CompressionType { get; set; }
-
-        /// <summary>
-        /// Gets or sets wraps Request Array Json into an Object before calling
-        /// the rest endpoint , Default is false. ex: if true request content
-        /// sample format is { rows:[]} else the format is []
-        /// </summary>
-        [JsonProperty(PropertyName = "wrapRequestJsonInAnObject")]
-        public object WrapRequestJsonInAnObject { get; set; }
+        [JsonProperty(PropertyName = "httpCompressionType")]
+        public object HttpCompressionType { get; set; }
 
     }
 }

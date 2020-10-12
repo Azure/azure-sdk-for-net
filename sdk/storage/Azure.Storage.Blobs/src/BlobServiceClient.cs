@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
         /// </param>
         public BlobServiceClient(string connectionString)
             : this(connectionString, null)
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information,
         /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -1507,7 +1507,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual Response<BlobContainerClient> UndeleteBlobContainer(
+        public virtual Response<BlobContainerClient> UndeleteBlobContainer(
             string deletedContainerName,
             string deletedContainerVersion,
             string destinationContainerName = default,
@@ -1546,7 +1546,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
             string destinationContainerName = default,
@@ -1654,10 +1654,11 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where parameter enables the caller to query blobs whose tags match a given expression.
-        /// The given expression must evaluate to true for a blob to be returned in the results.
-        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
-        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1685,10 +1686,11 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where parameter enables the caller to query blobs whose tags match a given expression.
-        /// The given expression must evaluate to true for a blob to be returned in the results.
-        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
-        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate

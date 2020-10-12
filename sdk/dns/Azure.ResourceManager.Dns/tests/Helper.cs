@@ -7,7 +7,6 @@ using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using System.Collections.Generic;
 using System.Net;
-using NUnit.Framework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -22,25 +21,20 @@ namespace Azure.Management.Dns.Tests
             Azure.ResourceManager.Dns.Models.Resource second,
             bool ignoreEtag = false)
         {
-            if (first == null && second == null)
-            {
-                return true;
-            }
-            else if (first == null || second == null)
+
+            if (first == null || second == null)
             {
                 return false;
             }
 
-            if (first.Location != second.Location
-                || first.Name != second.Name)
+            if (!String.Equals(first.Location, second.Location, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
-            if (first.Tags != null || second.Tags != null)
+            if (first.Tags != null && second.Tags != null)
             {
-                if (first.Tags == null || second.Tags == null ||
-                    first.Tags.Count != second.Tags.Count)
+                if (first.Tags.Count != second.Tags.Count)
                 {
                     return false;
                 }
@@ -53,6 +47,9 @@ namespace Azure.Management.Dns.Tests
                         return false;
                     }
                 }
+            }
+            else{
+                return false;
             }
 
             return true;

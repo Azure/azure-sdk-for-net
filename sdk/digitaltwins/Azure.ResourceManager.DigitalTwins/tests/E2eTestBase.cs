@@ -4,18 +4,22 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Management.Resources;
+using Azure.Management.Resources.Models;
+using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {
     [ClientTestFixture]
-    public abstract class E2eTestBase : RecordedTestBase<DigitalTwinsManagementTestEnvironment>
+    public abstract class E2eTestBase : ManagementRecordedTestBase<DigitalTwinsManagementTestEnvironment>
     {
         // This should be checked in as Playback, and changed to Record or Live locally, if needed.
         private const RecordedTestMode TestMode = RecordedTestMode.Playback;
 
         private static readonly TimeSpan s_pollingInterval = TimeSpan.FromSeconds(3);
 
-        protected DigitalTwinsManagementClient Client { get; private set; }
+        protected DigitalTwinsManagementClient DigitalTwinsManagementClient { get; set; }
+        protected ResourcesManagementClient ResourceManagementClient { get; set; }
 
         protected E2eTestBase(bool isAsync)
             : base(isAsync, TestMode)
@@ -27,30 +31,18 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         {
         }
 
-        protected DigitalTwinsManagementClient InitClient()
+        protected void Initialize()
         {
-            Client = InstrumentClient(
-                new DigitalTwinsManagementClient(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                Recording?.InstrumentClientOptions(new DigitalTwinsManagementClientOptions())));
-
-            return Client;
+            ResourceManagementClient = GetResourceManagementClient();
+            DigitalTwinsManagementClient = GetDigitalTwinsManagementClient();
         }
 
-        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        private DigitalTwinsManagementClient GetDigitalTwinsManagementClient()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return operation.WaitForCompletionAsync(s_pollingInterval, default);
-            }
-
-            return operation.WaitForCompletionAsync();
+            return CreateClient<DigitalTwinsManagementClient>(TestEnvironment.SubscriptionId,
+                 TestEnvironment.Credential,
+                 InstrumentClientOptions(new DigitalTwinsManagementClientOptions()));
         }
 
-        protected string GetRandom()
-        {
-            return Recording.GenerateId();
-        }
     }
 }

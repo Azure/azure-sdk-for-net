@@ -202,8 +202,7 @@ namespace NetApp.Tests.ResourceTests
                 dict.Add("Tag3", "Value3");
                 pool.Tags = dict;                
 
-                var updatedPool = netAppMgmtClient.Pools.CreateOrUpdate(pool, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
-                Assert.Equal("Standard", updatedPool.ServiceLevel);                
+                var updatedPool = netAppMgmtClient.Pools.CreateOrUpdate(pool, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);                
                 Assert.True(updatedPool.Tags.ContainsKey("Tag3"));
                 Assert.Equal("Value3", updatedPool.Tags["Tag3"]);
 
@@ -221,7 +220,7 @@ namespace NetApp.Tests.ResourceTests
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 
-                // create the pool
+                // create the pool  
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
                 Assert.Equal("Premium", pool.ServiceLevel);
                 Assert.Null(pool.Tags);
@@ -237,8 +236,7 @@ namespace NetApp.Tests.ResourceTests
                     Tags = dict,                    
                 };
 
-                var resource = netAppMgmtClient.Pools.Update(poolPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
-                Assert.Equal("Standard", resource.ServiceLevel);                
+                var resource = netAppMgmtClient.Pools.Update(poolPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);                             
                 Assert.True(resource.Tags.ContainsKey("Tag1"));
                 Assert.Equal("Value1", resource.Tags["Tag1"]);
 

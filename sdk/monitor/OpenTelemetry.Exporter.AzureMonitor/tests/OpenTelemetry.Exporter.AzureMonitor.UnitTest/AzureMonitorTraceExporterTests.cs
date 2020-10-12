@@ -4,13 +4,13 @@
 using System;
 using System.Reflection;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorTraceExporterTests
     {
-        [Test]
+        [Fact]
         public void VerifyConnectionString_CorrectlySetsEndpoint()
         {
             var testIkey = "test_ikey";
@@ -19,11 +19,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}" });
 
             GetInternalFields(exporter, out string ikey, out string endpoint);
-            Assert.AreEqual(testIkey, ikey);
-            Assert.AreEqual(testEndpoint, endpoint);
+            Assert.Equal(testIkey, ikey);
+            Assert.Equal(testEndpoint, endpoint);
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_CorrectlySetsDefaultEndpoint()
         {
             var testIkey = "test_ikey";
@@ -31,17 +31,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};" });
 
             GetInternalFields(exporter, out string ikey, out string endpoint);
-            Assert.AreEqual(testIkey, ikey);
-            Assert.AreEqual(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
+            Assert.Equal(testIkey, ikey);
+            Assert.Equal(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_ThrowsExceptionWhenInvalid()
         {
             Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_ThrowsExceptionWhenMissingInstrumentationKey()
         {
             var testEndpoint = "https://www.bing.com/";
@@ -55,21 +55,21 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             // instrumentationKey: AzureMonitorTraceExporter.AzureMonitorTransmitter.instrumentationKey
             // endpoint: AzureMonitorTraceExporter.AzureMonitorTransmitter.ServiceRestClient.endpoint
 
+            ikey = typeof(AzureMonitorTraceExporter)
+                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(exporter)
+                .ToString();
+
             var transmitter = typeof(AzureMonitorTraceExporter)
                 .GetField("AzureMonitorTransmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
 
-            ikey = typeof(AzureMonitorTransmitter)
-                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(transmitter)
-                .ToString();
-
             var serviceRestClient = typeof(AzureMonitorTransmitter)
-                .GetField("serviceRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(transmitter);
 
-            endpoint = typeof(ServiceRestClient)
-                .GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic)
+            endpoint = typeof(ApplicationInsightsRestClient)
+                .GetField("host", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(serviceRestClient)
                 .ToString();
         }

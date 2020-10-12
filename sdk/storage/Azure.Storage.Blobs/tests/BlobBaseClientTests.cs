@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,6 +21,8 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
@@ -565,6 +568,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        public async Task DownloadAsync_LastAccess()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.Details.LastAccessed);
+        }
+
+        [Test]
         public async Task DownloadAsync_Overloads()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1020,12 +1045,10 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobClient blobClient = test.Container.GetBlobClient(GetNewBlobName());
-            Stream outputStream = await blobClient.OpenReadAsync();
-            byte[] bytes = new byte[Constants.KB];
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                blobClient.OpenReadAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
@@ -1035,9 +1058,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             int size = Constants.KB;
             var garbageLeaseId = GetGarbageLeaseId();
+            await using DisposingContainer test = await GetTestContainerAsync();
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
             {
-                await using DisposingContainer test = await GetTestContainerAsync();
                 var data = GetRandomBuffer(size);
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
                 using Stream stream = new MemoryStream(data);
@@ -1096,13 +1119,11 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-                byte[] outputBytes = new byte[size];
 
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = await outputStream.ReadAsync(outputBytes, 0, size);
+                        var _ = await blob.OpenReadAsync(options).ConfigureAwait(false);
                     });
             }
         }
@@ -1295,9 +1316,14 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task OpenReadAsync_InvalidParameterTests()
         {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
             // Arrange
-            BlobClient blobClient = new BlobClient(new Uri("https://www.doesntmatter.com"));
-            Stream stream = await blobClient.OpenReadAsync();
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(data));
+            Stream stream = await blob.OpenReadAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
@@ -1321,6 +1347,164 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(
                     $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
                     e.Message));
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Seek_PositionUnchanged()
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            outputStream.Seek(0, SeekOrigin.Begin);
+
+            Assert.AreEqual(0, outputStream.Position);
+
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Seek_NegativeNewPosition()
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => outputStream.Seek(-10, SeekOrigin.Begin),
+                new ArgumentException("New offset cannot be less than 0.  Value was -10"));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task OpenReadAsync_Seek_NewPositionGreaterThanBlobLength(bool allowModifications)
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: allowModifications);
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => outputStream.Seek(1025, SeekOrigin.Begin),
+                new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+        }
+
+        [Test]
+        [TestCase(0, SeekOrigin.Begin)]
+        [TestCase(10, SeekOrigin.Begin)]
+        [TestCase(-10, SeekOrigin.Current)]
+        [TestCase(0, SeekOrigin.Current)]
+        [TestCase(10, SeekOrigin.Current)]
+        [TestCase(0, SeekOrigin.End)]
+        [TestCase(-10, SeekOrigin.End)]
+        public async Task OpenReadAsync_Seek_Position(long offset, SeekOrigin origin)
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false);
+
+            Stream outputStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
+            int readBytes = 512;
+            await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
+            Assert.AreEqual(512, outputStream.Position);
+
+            // Act
+            outputStream.Seek(offset, origin);
+
+            // Assert
+            if (origin == SeekOrigin.Begin)
+            {
+                Assert.AreEqual(offset, outputStream.Position);
+            }
+            else if (origin == SeekOrigin.Current)
+            {
+                Assert.AreEqual(readBytes + offset, outputStream.Position);
+            }
+            else
+            {
+                Assert.AreEqual(size + offset, outputStream.Position);
+            }
+        }
+
+        [Test]
+        // lower position within _buffer
+        [TestCase(-50)]
+        // higher positiuon within _buffer
+        [TestCase(50)]
+        // lower position below _buffer
+        [TestCase(-100)]
+        // higher position above _buffer
+        [TestCase(100)]
+        public async Task OpenReadAsync_Seek(long offset)
+        {
+            int size = Constants.KB;
+            int initalPosition = 450;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - (initalPosition + offset)];
+            Array.Copy(data, initalPosition + offset, expectedData, 0, size - (initalPosition + offset));
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = 128
+            };
+
+            // Act
+            Stream openReadStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
+            int readbytes = initalPosition;
+            while (readbytes > 0)
+            {
+                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
+            }
+
+            openReadStream.Seek(offset, SeekOrigin.Current);
+
+            using MemoryStream outputStream = new MemoryStream();
+            await openReadStream.CopyToAsync(outputStream);
+
+            // Assert
+            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
         [Test]
@@ -2916,7 +3100,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobBaseClient blob = await GetNewBlobClient(test.Container);
-                await blob.DeleteAsync();
+                await blob.DeleteIfExistsAsync();
 
                 // Act
                 Response response = await blob.UndeleteAsync();
@@ -3082,7 +3266,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
@@ -3100,7 +3284,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
@@ -3162,8 +3346,7 @@ namespace Azure.Storage.Blobs.Test
                 containerName: test.Container.Name,
                 BlobContainerSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
-                TestConfigOAuth.AccountName,
-                sasVersion: ToSasVersion(_serviceVersion));
+                TestConfigOAuth.AccountName);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -3369,7 +3552,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(key.SignedService, sas.KeyService);
             Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
             Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            Assert.AreEqual(key.SignedVersion, sas.Version);
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -3449,7 +3632,7 @@ namespace Azure.Storage.Blobs.Test
                 permissions: SnapshotSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
                 accountName: TestConfigOAuth.AccountName,
-                sasVersion: ToSasVersion(_serviceVersion));
+                sasVersion: ToSasVersion(BlobClientOptions.LatestVersion));
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -3600,6 +3783,23 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.GetPropertiesAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        public async Task GetPropertiesAsync_LastAccessed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastAccessed);
         }
 
         [Test]
@@ -3807,7 +4007,7 @@ namespace Azure.Storage.Blobs.Test
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
             IDictionary<string, string> metadata = BuildMetadata();
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             await blob.SetMetadataAsync(metadata);
@@ -3822,7 +4022,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             IDictionary<string, string> metadata = BuildMetadata();
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
@@ -3964,7 +4164,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
@@ -3981,7 +4181,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
@@ -5553,6 +5753,23 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobUriBuilder.BlobName);
             Assert.AreEqual(versionId, blobUriBuilder.VersionId);
             Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
+        }
+
+        [Test]
+        public void CanMockBlobLeaseClientRetrieval()
+        {
+            // Arrange
+            string leaseId = "leaseId";
+            Mock<BlobBaseClient> blobBaseClientMock = new Mock<BlobBaseClient>();
+            Mock<BlobLeaseClient> blobLeaseClientMock = new Mock<BlobLeaseClient>();
+            blobBaseClientMock.Protected().Setup<BlobLeaseClient>("GetBlobLeaseClientCore", leaseId).Returns(blobLeaseClientMock.Object);
+
+            // Act
+            var blobLeaseClient = blobBaseClientMock.Object.GetBlobLeaseClient(leaseId);
+
+            // Assert
+            Assert.IsNotNull(blobLeaseClient);
+            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

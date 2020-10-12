@@ -15,26 +15,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Test))
-            {
-                writer.WritePropertyName("test");
-                writer.WriteStringValue(Test);
-            }
+            writer.WritePropertyName("ver");
+            writer.WriteNumberValue(Version);
             writer.WriteEndObject();
-        }
-
-        internal static MonitorDomain DeserializeMonitorDomain(JsonElement element)
-        {
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MonitorDomain(test.Value);
         }
     }
 }

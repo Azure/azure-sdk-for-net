@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
             string certificateIdentifier, CertificateIdentifierType certificateIdentifierType, string storeLocation,
             string azureAdInstance, string tenantId = default, int msiRetryTimeoutInSeconds = 0,
+            string keyVaultUserAssignedManagedIdentityId = null,
             IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
@@ -89,6 +90,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         $"StoreLocation {storeLocation} is not valid. Valid values are CurrentUser and LocalMachine.");
                 }
             }
+            else
+            {
+                _keyVaultClient = keyVaultClient ?? new KeyVaultClient(msiRetryTimeoutInSeconds, keyVaultUserAssignedManagedIdentityId);
+            }
 
             _clientId = clientId;
 
@@ -96,7 +101,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _azureAdInstance = azureAdInstance;
             _tenantId = tenantId;
             _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
-            _keyVaultClient = keyVaultClient ?? new KeyVaultClient(msiRetryTimeoutInSeconds);
 
             _certificateIdentifier = certificateIdentifier;
 

@@ -3,183 +3,62 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
-using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
+    /// <summary>
+    /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
+    /// </summary>
     internal class AzureMonitorTransmitter
     {
-        private readonly ServiceRestClient serviceRestClient;
+        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
         private readonly AzureMonitorExporterOptions options;
-        private readonly string instrumentationKey;
-
-        private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "RequestData",
-            [TelemetryType.Dependency] = "RemoteDependencyData",
-            [TelemetryType.Message] = "MessageData",
-            [TelemetryType.Event] = "EventData",
-        };
-
-        private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "Request",
-            [TelemetryType.Dependency] = "RemoteDependency",
-            [TelemetryType.Message] = "Message",
-            [TelemetryType.Event] = "Event",
-        };
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
-            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
+            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out _, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
-        internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
+        public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
+            // Prevent Azure Monitor's HTTP operations from being instrumented.
+            using var scope = SuppressInstrumentationScope.Begin();
+
             if (cancellationToken.IsCancellationRequested)
             {
                 return 0;
             }
 
-            List<TelemetryEnvelope> telemetryItems = new List<TelemetryEnvelope>();
-            TelemetryEnvelope telemetryItem;
+            Azure.Response<TrackResponse> response = null;
 
-            foreach (var activity in batchActivity)
+            try
             {
-                telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.IKey = this.instrumentationKey;
-                telemetryItem.Data = GenerateTelemetryData(activity);
-                telemetryItems.Add(telemetryItem);
-            }
-
-            Azure.Response<TrackResponse> response;
-
-            if (async)
-            {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
-            }
-
-            // TODO: Handle exception, check telemetryItems has items
-            return response.Value.ItemsAccepted.GetValueOrDefault();
-        }
-
-        private static TelemetryEnvelope GeneratePartAEnvelope(Activity activity)
-        {
-            // TODO: Get TelemetryEnvelope name changed in swagger
-            TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            // TODO: Validate if Azure SDK has common function to generate role instance
-            envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
-
-            envelope.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
-            if (activity.Parent != null)
-            {
-                envelope.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
-            }
-
-            // TODO: "ai.location.ip"
-            // TODO: Handle exception
-            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-
-            return envelope;
-        }
-
-        private MonitorBase GenerateTelemetryData(Activity activity)
-        {
-            MonitorBase telemetry = new MonitorBase();
-
-            var telemetryType = activity.GetTelemetryType();
-            telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
-            string url = GetHttpUrl(activity.Tags);
-
-            if (telemetryType == TelemetryType.Request)
-            {
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), activity.GetStatus().IsOk, activity.GetStatusCode())
+                if (async)
                 {
-                    Name = activity.DisplayName,
-                    Url = url,
-                    // TODO: Handle request.source.
-                };
-
-                // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(request.Properties, activity.Tags);
-
-                telemetry.BaseData = request;
-            }
-            else if (telemetryType == TelemetryType.Dependency)
-            {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
-                {
-                    Id = activity.Context.SpanId.ToHexString(),
-                    Success = activity.GetStatus().IsOk
-                };
-
-                // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
-
-                if (url != null)
-                {
-                    dependency.Data = url;
-                    dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    dependency.ResultCode = activity.GetStatusCode();
+                    response = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
                 }
-
-                // TODO: Handle dependency.target.
-                telemetry.BaseData = dependency;
+                else
+                {
+                    response = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                }
             }
-
-            return telemetry;
-        }
-
-        private static string GetHttpUrl(IEnumerable<KeyValuePair<string, string>> tags)
-        {
-            var httpTags = tags.Where(item => item.Key.StartsWith("http.", StringComparison.InvariantCulture))
-                               .ToDictionary(item => item.Key, item => item.Value);
-
-
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url);
-            if (url != null)
+            catch (Exception ex)
             {
-                return url;
+                // TODO: Log the exception to new event source. If we get a common logger we could just log exception to it.
+                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
             }
 
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost);
-
-            if (httpHost != null)
-            {
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                url = httpScheme + httpHost  + httpTarget;
-                return url;
-            }
-
-            // TODO: Follow spec - https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client
-
-            return url;
-        }
-
-        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
-        {
-            // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
-            {
-                destination.Add(tag);
-            }
+            return response == null ? 0 : response.Value.ItemsAccepted.GetValueOrDefault();
         }
     }
 }

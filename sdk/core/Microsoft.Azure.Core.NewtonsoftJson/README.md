@@ -1,7 +1,7 @@
-# Newtonsoft.Json implementation for Azure Core Experimental shared client library for .NET
+# Newtonsoft.Json support for Azure Core shared client library for .NET
 
-Azure.Core.Experimental contains types that are being evaluated and might eventually become part of Azure.Core.
-This library contains implementations dependent on Newtonsoft.Json, aka JSON.NET, for use with Azure.Core.Experimental.
+The [Azure.Core package][azure_core_package] contains types shared by all Azure SDK client libraries.
+This library contains converters dependent on the [Newtonsoft.Json package][newtonsoft_json_package] for use with Azure.Core.
 
 ## Getting started
 
@@ -45,5 +45,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FMicrosoft.Azure.Core.NewtonsoftJson%2FREADME.png)
 
+[azure_core_package]: https://www.nuget.org/packages/Azure.Core/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[newtonsoft_json_package]: https://www.nuget.org/packages/Newtonsoft.Json/

@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
 {
@@ -13,7 +12,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     /// </summary>
     public class ConnectionStringParser_BuildUriTests
     {
-        [Test]
+        [Fact]
         public void VerifyCanHandleExtraPeriods()
         {
             var result = ConnectionStringParser.TryBuildUri(
@@ -22,11 +21,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 suffix: ".applicationinsights.azure.com",
                 uri: out Uri uri);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.True(result);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
         }
 
-        [Test]
+        [Fact]
         public void VerifyGoodAddress_WithLocation()
         {
             var result = ConnectionStringParser.TryBuildUri(
@@ -35,11 +34,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 suffix: "applicationinsights.azure.com",
                 uri: out Uri uri);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.True(result);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
         }
 
-        [Test]
+        [Fact]
         public void VerifyGoodAddress_WithoutLocation()
         {
             var result = ConnectionStringParser.TryBuildUri(
@@ -48,11 +47,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 suffix: "applicationinsights.azure.com",
                 uri: out Uri uri);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual("https://dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.True(result);
+            Assert.Equal("https://dc.applicationinsights.azure.com/", uri.AbsoluteUri);
         }
 
-        [Test]
+        [Fact]
         public void VerifyGoodAddress_InvalidCharInLocation()
         {
             Assert.Throws<ArgumentException>(() =>
@@ -63,7 +62,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                     uri: out Uri uri));
         }
 
-        [Test]
+        [Fact]
         public void VerifyGoodAddress_CanHandleExtraSpaces()
         {
             var result = ConnectionStringParser.TryBuildUri(
@@ -72,8 +71,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 suffix: "   applicationinsights.azure.com   ",
                 uri: out Uri uri);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.True(result);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
         }
     }
 }
