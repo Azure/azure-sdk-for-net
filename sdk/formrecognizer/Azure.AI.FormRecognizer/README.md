@@ -178,7 +178,7 @@ foreach (FormPage page in formPages)
 ### Recognize Custom Forms
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
-[!NOTE] If you are uploading files to Azure Blob Storage progamatically before sending the URI to Form Recognizer, you will need to specify the Content-Type in the Blob Storage SDK like so:
+**Note:** If you are uploading files to Azure Blob Storage progamatically before sending the URI to Form Recognizer, you will need to specify the Content-Type in the Blob Storage SDK like so:
 
 ```
 blobHttpHeaders.ContentType = "image/jpeg";
