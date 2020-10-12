@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Azure.WebJobs.Host.TestCommon
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public static class TestConfigurationBuilderExtensions
     {

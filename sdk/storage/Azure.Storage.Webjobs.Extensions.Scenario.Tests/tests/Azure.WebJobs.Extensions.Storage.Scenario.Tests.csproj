@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>Microsoft.Azure.WebJobs.Host.EndToEndTests</AssemblyName>
-    <IsPackable>false</IsPackable>
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,12 +13,13 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.Memory" VersionOverride="4.5.4" />
-    <PackageReference Include="Azure.Core"/>
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Blobs\src\Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Common\tests\Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
-    <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Queues\src\Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,6 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using System.Linq;
@@ -219,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost(b =>
                     {
-                        b.AddAzureStorageBlobs().AddAzureStorageQueues();
+                        b.AddAzureStorageQueues();
                     })
                     .Build();
 

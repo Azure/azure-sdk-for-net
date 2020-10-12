@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.WebJobs.Host.TestCommon
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class ExpectManualCompletionLogger<TResult> : ILogger
     {

@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 

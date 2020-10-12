@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -487,7 +486,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b =>
+            {
+                b.AddAzureStorageQueues();
+                b.UseQueueService(queueServiceClient);
+            }, programType, setTaskSource);
         }
 
         private class BindToCloudQueueProgram

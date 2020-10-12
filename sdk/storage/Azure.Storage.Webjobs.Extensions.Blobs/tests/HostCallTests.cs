@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using Azure.Storage.Blobs;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
 using Azure.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -460,24 +460,30 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
+            await FunctionalTest.CallAsync(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), null, customExtensions);
         }
 
         private async Task CallAsync(Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
+            await FunctionalTest.CallAsync(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
 
         private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.CallAsync<TResult>(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
         private async Task<Exception> CallFailureAsync(Type programType, string methodName)
         {
-            return await FunctionalTest.CallFailureAsync(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, programType.GetMethod(methodName), null);
+            return await FunctionalTest.CallFailureAsync(b => ConfigureStorage(b), programType, programType.GetMethod(methodName), null);
+        }
+
+        private void ConfigureStorage(IWebJobsBuilder builder)
+        {
+            builder.AddAzureStorageBlobs();
+            builder.UseStorageServices(blobServiceClient, queueServiceClient);
         }
 
         private struct CustomDataValue

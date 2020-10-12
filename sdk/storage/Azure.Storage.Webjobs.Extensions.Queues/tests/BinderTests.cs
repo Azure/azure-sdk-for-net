@@ -7,6 +7,7 @@ using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Azure.WebJobs.Extensions.Storage.Queues.Tests;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -49,7 +50,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => {
+                b.AddAzureStorageQueues();
+                b.UseQueueService(queueServiceClient);
+            }, programType, setTaskSource);
         }
 
         private class BindToQueueTriggerViaIBinderProgram

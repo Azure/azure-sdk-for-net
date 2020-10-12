@@ -5,23 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     // $$$  Remove all this. See Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob for an example of what it should be.
-    internal class FunctionalTest
+    public class FunctionalTest
     {
         // $$$ Reconcile with TestJobHost.
 
-        internal static async Task<TResult> RunTriggerAsync<TResult>(
+        public static async Task<TResult> RunTriggerAsync<TResult>(
             Action<IWebJobsBuilder> configureWebJobsBuilderAction,
             Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource,
@@ -35,13 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
               .ConfigureLogging(b => b.AddProvider(new ExpectManualCompletionLoggerProvider<TResult>(src, signalOnFirst, ignoreFailureFunctions)))
               .ConfigureAppConfiguration(cb => cb.AddInMemoryCollection(settings))
-              .ConfigureDefaultTestHost(builder =>
-              {
-                  builder.AddAzureStorageBlobs().AddAzureStorageQueues();
-                  configureWebJobsBuilderAction.Invoke(builder);
-
-                  builder.Services.AddSingleton<IConfigureOptions<QueuesOptions>, FakeQueuesOptionsSetup>();
-              }, programType)
+              .ConfigureDefaultTestHost(builder => configureWebJobsBuilderAction.Invoke(builder), programType)
               .Build();
 
             try
@@ -82,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         // Runs the first triggered function and then returns.
         // Expected that this instance provided some side-effect (ie, wrote to storage)
         // that the caller can monitor.
-        internal static async Task RunTriggerAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Dictionary<string, string> settings = default)
+        public static async Task RunTriggerAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Dictionary<string, string> settings = default)
         {
             TaskCompletionSource<bool> src = new TaskCompletionSource<bool>();
             await RunTriggerAsync<bool>(
@@ -93,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 settings: settings);
         }
 
-        internal static async Task<Exception> RunTriggerFailureAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
+        public static async Task<Exception> RunTriggerFailureAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             try
             {
@@ -108,14 +99,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // Call the method, and expect a failure. Return the exception.
-        internal static async Task<Exception> CallFailureAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments)
+        public static async Task<Exception> CallFailureAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments)
         {
             var host = new HostBuilder()
-                .ConfigureDefaultTestHost(b =>
-                {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
-                    configureWebJobsBuilderAction.Invoke(b);
-                }, programType)
+                .ConfigureDefaultTestHost(b => configureWebJobsBuilderAction.Invoke(b), programType)
                 .Build();
 
             var jobHost = host.GetJobHost();
@@ -132,12 +119,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return null;
         }
 
-        internal static async Task CallAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments, params Type[] customExtensions)
+        public static async Task CallAsync(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, object arguments, params Type[] customExtensions)
         {
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                     configureWebJobsBuilderAction.Invoke(b);
 
                     foreach (var extension in customExtensions)
@@ -151,17 +137,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await jobHost.CallAsync(methodInfo, arguments);
         }
 
-        internal static async Task<TResult> CallAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
+        public static async Task<TResult> CallAsync<TResult>(Action<IWebJobsBuilder> configureWebJobsBuilderAction, Type programType, MethodInfo methodInfo, IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             TaskCompletionSource<TResult> src = new TaskCompletionSource<TResult>();
             setTaskSource(src);
 
             var host = new HostBuilder()
-              .ConfigureDefaultTestHost(builder =>
-              {
-                  builder.AddAzureStorageBlobs().AddAzureStorageQueues();
-                  configureWebJobsBuilderAction.Invoke(builder);
-              }, programType)
+              .ConfigureDefaultTestHost(builder => configureWebJobsBuilderAction.Invoke(builder), programType)
               .Build();
 
             var jobHost = host.GetJobHost();
