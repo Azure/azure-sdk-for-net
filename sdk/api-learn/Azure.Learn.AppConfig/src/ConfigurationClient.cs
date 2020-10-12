@@ -93,15 +93,70 @@ namespace Azure.Learn.AppConfig
         /// <summary>Conditionally retrieve a <see cref="ConfigurationSetting"/> from the configuration store if the setting has been changed since it was last retrieved.</summary>
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNull(setting, nameof(setting));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(setting.Key), setting.Key);
+            scope.Start();
+
+            try
+            {
+                var ifNoneMatch = onlyIfChanged switch
+                {
+                    true => FormatETag(setting.ETag),
+                    false => default
+                };
+                var result = _restClient.GetKeyValue(setting.Key, setting.Label, ifMatch: default, ifNoneMatch: ifNoneMatch, cancellationToken: cancellationToken);
+
+                return result.GetRawResponse().Status switch
+                {
+                    304 => Response.FromValue(setting, result.GetRawResponse()),
+                    _ => Response.FromValue(result.Value, result.GetRawResponse())
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>Conditionally retrieve a <see cref="ConfigurationSetting"/> from the configuration store if the setting has been changed since it was last retrieved.</summary>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNull(setting, nameof(setting));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(setting.Key), setting.Key);
+            scope.Start();
+
+            try
+            {
+                var ifNoneMatch = onlyIfChanged switch
+                {
+                    true => FormatETag(setting.ETag),
+                    false => default
+                };
+                var result = await _restClient.GetKeyValueAsync(setting.Key, setting.Label, ifMatch: default, ifNoneMatch: ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return result.GetRawResponse().Status switch
+                {
+                    304 => Response.FromValue(setting, result.GetRawResponse()),
+                    _ => Response.FromValue(result.Value, result.GetRawResponse())
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary>
+        /// A helper method to format an ETag value.
+        /// </summary>
+        /// <param name="etag">The ETag value to format.</param>
+        /// <returns>A formatted ETAg value.</returns>
+        private static string FormatETag(ETag etag)
+            => $"\"{etag}\"";
 
         // A helper method to construct the default scope based on the service endpoint.
         private static string GetDefaultScope(Uri uri)
