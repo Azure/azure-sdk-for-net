@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
-    using Models;
+    using Azure.Management.DigitalTwins.Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             DigitalTwinsEndpoint = new DigitalTwinsEndpointOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-01-preview";
+            ApiVersion = "2020-10-31";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

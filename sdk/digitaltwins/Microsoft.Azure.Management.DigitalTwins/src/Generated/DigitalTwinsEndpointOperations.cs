@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Models;
+    using Azure.Management.DigitalTwins.Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -885,6 +885,24 @@ namespace Microsoft.Azure.Management.DigitalTwins
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             // Deserialize Response
             if ((int)_statusCode == 202)

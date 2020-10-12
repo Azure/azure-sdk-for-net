@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Models;
+    using Azure.Management.DigitalTwins.Models;
     using System.Threading;
     using System.Threading.Tasks;
 
