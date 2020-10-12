@@ -19,10 +19,10 @@ param(
 . "${PSScriptRoot}\common.ps1"
 
 try {
-  AddIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+  Add-IssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
   -IssueNumber $IssueNumber -Comment $Comment -AuthToken $AuthToken
 }
 catch {
-  LogError "AddIssueComment failed with exception:`n$_"
+  LogError "Add-IssueComment failed with exception:`n$_"
   exit 1
 }

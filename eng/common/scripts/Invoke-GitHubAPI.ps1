@@ -1,13 +1,13 @@
 $GithubAPIBaseURI = "https://api.github.com/repos"
 
-function Get-Headers ($token) {
+function Get-GitHubHeaders ($token) {
   $headers = @{
     Authorization = "bearer $token"
   }
   return $headers
 }
 
-function InvokePost {
+function Invoke-GitHubAPIPost {
   param (
     [Parameter(Mandatory = $true)]
     $apiURI,
@@ -21,13 +21,13 @@ function InvokePost {
     -Method POST `
     -Body ($body | ConvertTo-Json) `
     -Uri $apiURI `
-    -Headers (Get-Headers -token $token) `
+    -Headers (Get-GitHubHeaders -token $token) `
     -MaximumRetryCount 3
 
   return $resp
 }
 
-function InvokePatch {
+function Invoke-GitHubAPIPatch {
   param (
     [Parameter(Mandatory = $true)]
     $apiURI,
@@ -41,13 +41,13 @@ function InvokePatch {
     -Method PATCH `
     -Body ($body | ConvertTo-Json) `
     -Uri $apiURI `
-    -Headers (Get-Headers -token $token) `
+    -Headers (Get-GitHubHeaders -token $token) `
     -MaximumRetryCount 3
 
   return $resp
 }
 
-function InvokeGet {
+function Invoke-GitHubAPIGet {
   param (
     [Parameter(Mandatory = $true)]
     $apiURI,
@@ -59,7 +59,7 @@ function InvokeGet {
     $resp = Invoke-RestMethod `
       -Method GET `
       -Uri $apiURI `
-      -Headers (Get-Headers -token $token) `
+      -Headers (Get-GitHubHeaders -token $token) `
       -MaximumRetryCount 3
   }
   else {
@@ -78,7 +78,7 @@ function SplitMembers ($membersString)
   return @($membersString.Split(",") | % { $_.Trim() } | ? { return $_ })
 }
 
-function ListPullRequests {
+function List-PullRequests {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -102,10 +102,10 @@ function ListPullRequests {
   if ($Sort) { $uri += "sort=$Sort&" }
   if ($Direction){ $uri += "direction=$Direction&" }
 
-  return InvokeGet -apiURI $uri
+  return Invoke-GitHubAPIGet -apiURI $uri
 }
 
-function AddIssueComment {
+function Add-IssueComment {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -125,11 +125,11 @@ function AddIssueComment {
     body = $Comment
   }
 
-  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
+  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # Will add labels to existing labels on the issue
-function AddIssueLabels {
+function Add-IssueLabels {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -144,17 +144,23 @@ function AddIssueLabels {
     $AuthToken
   )
 
+  if ($Labels.Trim().Length -eq 0)
+  {
+    throw "The 'Labels' parameter should not not be whitespace..`
+    You can use the 'Update-Issue' function if you plan to reset the labels"
+  }
+
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/labels"
   $labelAdditions = SplitMembers -membersString $Labels
   $parameters = @{
-    labels = $labelAdditions
+    labels = @($labelAdditions)
   }
 
-  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
+  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # Will add assignees to existing assignees on the issue
-function AddIssueAssignees {
+function Add-IssueAssignees {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -169,18 +175,24 @@ function AddIssueAssignees {
     $AuthToken
   )
 
+  if ($Assignees.Trim().Length -eq 0)
+  {
+    throw "The 'Assignees' parameter should not be whitespace.`
+    You can use the 'Update-Issue' function if you plan to reset the Assignees"
+  }
+
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/assignees"
   $assigneesAdditions = SplitMembers -membersString $Assignees
   $parameters = @{
-    assignees = $assigneesAdditions
+    assignees = @($assigneesAdditions)
   }
 
-  return InvokePost -apiURI $uri -body $parameters -token $AuthToken
+  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 # For labels and assignee pass comma delimited string, to replace existing labels or assignees.
 # Or pass white space " " to remove all labels or assignees
-function UpdateIssue {
+function Update-Issue {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -209,12 +221,12 @@ function UpdateIssue {
   if ($Milestone) { $parameters["milestone"] = $Milestone }
   if ($Labels) { 
     $labelAdditions = SplitMembers -membersString $Labels
-    $parameters["labels"] = $labelAdditions
+    $parameters["labels"] = @($labelAdditions)
   }
   if ($Assignees) { 
     $assigneesAdditions = SplitMembers -membersString $Assignees
-    $parameters["assignees"] = $assigneesAdditions
+    $parameters["assignees"] = @($assigneesAdditions)
   }
 
-  return InvokePatch -apiURI $uri -body $parameters -token $AuthToken
+  return Invoke-GitHubAPIPatch -apiURI $uri -body $parameters -token $AuthToken
 }

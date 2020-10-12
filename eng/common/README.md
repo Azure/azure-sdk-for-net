@@ -15,10 +15,12 @@ languages repos as they will be overwritten the next time an update is taken fro
 
 The 'Sync eng/common directory' PRs will be created in the language repositories when a pull request that touches the eng/common directory is submitted against the master branch. This will make it easier for changes to be tested in each individual language repo before merging the changes in the azure-sdk-tools repo. The workflow is explained below:
 
-1. Create a PR (**Tools PR**) in the `azure - sdk - tools` Repo with changes to eng/common directory.
+1. Create a PR (**Tools PR**) in the `azure-sdk-tools` repo with changes to eng/common directory.
 2. `azure-sdk-tools - sync - eng-common` pipeline is triggered for the **Tools PR**
-3. The  `azure-sdk-tools - sync - eng-common` pipeline queues test runs using the dotnet, js, java and python template pipelines. This help to test the recent changes in the **Tools PR**
+3. The  `azure-sdk-tools - sync - eng-common` pipeline queues test runs for template pipelines in various languages. These help you test your changes in the **Tools PR**.
 4. If there are changes in the **Tools PR** that will affect the release stage you should approve the release test pipelines by clicking the approval gate. The test (template) pipeline will automatically release the next eligible version without needing manual intervention for the versioning. Please approve your test releases as quickly as possible. A race condition may occur due to someone else queueing the pipeline and going all the way to release using your version while yours is still waiting. If this occurs manually rerun the pipeline that failed.
-5. Repeat step 1 - 4 by pushing new changes to your **Tools PR** Do this until you have satisfactory test runs all the way to release of the template package if necessary.
-6. Sign off on next stage of the sync pipeline using the approval gate. The CreateSyncPRs stage will create the sync PR in the various language repos. Before doing this you need to be satisfied with the testing from the previous steps. This stage will append the `auto-merge` label to the **Sync PRs** as well as the **Tools PR**.
-6. Go review and approve each of your **Sync PRs**. The merging will happen automatically.
+5.  If you make additional changes to your **Tools PR** repeat steps 1 - 4 until you have completed the necessary testing of your changes. This includes full releases of the template package, if necessary.
+6. Sign off on CreateSyncPRs stage of the sync pipeline using the approval gate. This stage will create the **Sync PRs** in the various language repos with the `auto-merge` label applied. A link to each of the **Sync PRs** will show up in the **Tools PR** for you to click and review.
+7. Go review and approve each of your **Sync PRs**. The merging will happen automatically.
+8. Sign off on VerifyAndMerge stage of the sync pipeline using the approval gate. This stage will merge any remaining open **Sync PRs** and also append `auto-merge` to the **Tools PR** so it will automatically merge once the pipeline finishes.
+7. Sign Off on the VerifyAndMerge stage. This will merge any remaining open **Sync PR** and also append `auto-merge` to the **Tools PR**.

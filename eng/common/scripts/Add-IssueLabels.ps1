@@ -19,10 +19,10 @@ param(
 . "${PSScriptRoot}\common.ps1"
 
 try {
-  AddIssueLabels -RepoOwner $RepoOwner -RepoName $RepoName `
+  Add-IssueLabels -RepoOwner $RepoOwner -RepoName $RepoName `
   -IssueNumber $IssueNumber -Labels $Labels -AuthToken $AuthToken
 }
 catch {
-  LogError "AddIssueLabels failed with exception:`n$_"
+  LogError "Add-IssueLabels failed with exception:`n$_"
   exit 1
 }
