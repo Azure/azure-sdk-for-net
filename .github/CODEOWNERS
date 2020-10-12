@@ -31,6 +31,25 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 
+# >>>>>>>>> Management Plane <<<<<<<<<<
+
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+
+# Reviewers to double check any API changes
+/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
+
+# Update AutoRest C#
+/eng/CodeGeneration.targets                     @pakrym @ShivangiReja
+
+
+# >>>>>>>>> Eng Sys <<<<<<<<<< 
+/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/mgmt/      @allenjzhang @m-nash @markcowl
+/**/tests.yml   @danieljurek
+/**/ci.yml      @mitchdenny
+
+
 # >>>>>>>>> Services <<<<<<<<<<
 
 # > Service: AAD
@@ -746,22 +765,3 @@
 # > Service: Web Apps
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
-
-
-# Management Plane
-/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
-/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
-
-# Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
-
-# Update AutoRest C#
-/eng/CodeGeneration.targets                     @pakrym @ShivangiReja
-
-###########
-# Eng Sys
-###########
-/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @allenjzhang @m-nash @markcowl
-/**/tests.yml   @danieljurek
-/**/ci.yml      @mitchdenny
