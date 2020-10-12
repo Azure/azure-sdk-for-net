@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
+        [Ignore("URL disabled until PR merges.")]
         public async Task RecognizeBusinessCardsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
