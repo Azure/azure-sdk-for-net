@@ -2,9 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
