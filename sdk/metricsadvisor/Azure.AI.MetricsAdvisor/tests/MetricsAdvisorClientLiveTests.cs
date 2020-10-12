@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -35,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         metricId,
                         new GetMetricSeriesDefinitionsOptions(Recording.UtcNow.AddYears(-5)) { TopCount = 2 }))
                     {
-                        Assert.That(metricDef.Dimension.Count, Is.Not.Zero);
+                        Assert.That(metricDef.SeriesKey.Dimension.Count, Is.Not.Zero);
 
                         // stop when we find at least one definition
                         if (++totalcount >= 1)
@@ -178,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 AlertConfigurationId,
                 new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
             {
-                Assert.That(alert.AlertId, Is.Not.Null);
+                Assert.That(alert.Id, Is.Not.Null);
 
                 // Just fetch 2 pages
                 if (++pages > 2)
@@ -283,7 +282,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var status in client.GetEnrichmentStatusesAsync(MetricId, new GetEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
+            await foreach (var status in client.GetMetricEnrichmentStatusesAsync(MetricId, new GetMetricEnrichmentStatusesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 2 }))
             {
                 Assert.That(status, Is.Not.Null);
 
@@ -342,17 +341,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
             FeedbackDimensionFilter dimensionFilter = new FeedbackDimensionFilter(
-                new Dictionary<string, string>
-                {
-                    {"Dim1", "Common Lime"},
-                    {"Dim2", "Ant"}
-                });
+                new DimensionKey(
+                    new Dictionary<string, string>
+                    {
+                        {"Dim1", "Common Lime"},
+                        {"Dim2", "Ant"}
+                    }));
             DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
             DateTimeOffset end = Recording.UtcNow;
 
             MetricAnomalyFeedback anomalyFeedback = new MetricAnomalyFeedback(MetricId, dimensionFilter, start, end, AnomalyValue.NotAnomaly);
             MetricChangePointFeedback changePointFeedback = new MetricChangePointFeedback(MetricId, dimensionFilter, start, end, ChangePointValue.NotChangePoint);
-            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, new PeriodFeedbackValue(PeriodType.AssignValue, 5));
+            MetricPeriodFeedback periodFeedback = new MetricPeriodFeedback(MetricId, dimensionFilter, PeriodType.AssignValue, 5);
             MetricCommentFeedback commentFeedback = new MetricCommentFeedback(MetricId, dimensionFilter, "my comment");
 
             var feedbacks = new List<MetricFeedback>

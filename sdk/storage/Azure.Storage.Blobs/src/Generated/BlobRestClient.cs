@@ -2376,8 +2376,8 @@ namespace Azure.Storage.Blobs
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
-            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and later.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and later.  Specifies the version of the deleted container to restore.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -2444,8 +2444,8 @@ namespace Azure.Storage.Blobs
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
-            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and later.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and later.  Specifies the version of the deleted container to restore.</param>
             /// <returns>The Container.RestoreAsync Message.</returns>
             internal static Azure.Core.HttpMessage RestoreAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,

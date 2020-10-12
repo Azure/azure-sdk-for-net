@@ -359,7 +359,7 @@ private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
 
     async Task processEventHandler(ProcessEventArgs eventArgs)
     {
-        Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+        Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
         return Task.CompletedTask;
     }
 

@@ -53,9 +53,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             Score = score;
             Description = description;
         }
-        /// <summary> score. </summary>
-        public double Score { get; }
-        /// <summary> description. </summary>
-        public string Description { get; }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Interlocked.Increment(ref sessionOpenEventCt);
                     byte[] state = GetRandomBuffer(100);
-                    await args.SetSessionStateAsync(state);
+                    await args.SetSessionStateAsync(new BinaryData(state));
                     sessions[args.SessionId] = state;
                 }
 
@@ -152,8 +152,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].SetResult(true);
                     sessions.TryRemove(args.SessionId, out byte[] state);
-                    byte[] getState = await args.GetSessionStateAsync();
-                    Assert.AreEqual(state, getState);
+                    BinaryData getState = await args.GetSessionStateAsync();
+                    Assert.AreEqual(state, getState.ToBytes().ToArray());
                 }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)

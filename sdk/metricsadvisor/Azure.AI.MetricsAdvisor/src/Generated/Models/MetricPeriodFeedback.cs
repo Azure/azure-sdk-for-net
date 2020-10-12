@@ -12,29 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The PeriodFeedback. </summary>
     public partial class MetricPeriodFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="valueInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="dimensionFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
-        public MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue valueInternal) : base(metricId, dimensionFilter)
-        {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
-            if (valueInternal == null)
-            {
-                throw new ArgumentNullException(nameof(valueInternal));
-            }
-
-            ValueInternal = valueInternal;
-            Type = FeedbackType.Period;
-        }
 
         /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
         /// <param name="type"> feedback type. </param>

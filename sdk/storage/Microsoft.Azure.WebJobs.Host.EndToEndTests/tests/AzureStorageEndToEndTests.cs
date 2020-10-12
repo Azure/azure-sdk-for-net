@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
@@ -14,18 +15,17 @@ using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     /// <summary>
     /// Various E2E tests that use only the public surface and the real Azure storage
     /// </summary>
-    public class AzureStorageEndToEndTests : IClassFixture<AzureStorageEndToEndTests.TestFixture>
+    public class AzureStorageEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private const string TestArtifactsPrefix = "e2etest";
         private const string ContainerName = TestArtifactsPrefix + "container%rnd%";
@@ -53,13 +53,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static string _lastMessageId;
         private static string _lastMessagePopReceipt;
 
-        public AzureStorageEndToEndTests(TestFixture fixture)
+        private static AzureStorageEndToEndTests.TestFixture _fixture;
+
+        [OneTimeSetUp]
+        public void SetUp()
         {
-            _queueServiceClient = fixture.QueueServiceClient;
-            _blobServiceClient = fixture.BlobServiceClient;
+            _fixture = new AzureStorageEndToEndTests.TestFixture(TestEnvironment);
+            _queueServiceClient = _fixture.QueueServiceClient;
+            _blobServiceClient = _fixture.BlobServiceClient;
         }
 
-#pragma warning disable xUnit1013 // Public method should be marked as test
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            _fixture.Dispose();
+        }
+
         /// <summary>
         /// Used to syncronize the application start and blob creation
         /// </summary>
@@ -161,9 +170,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await EndToEndTest(uploadBlobBeforeHostStart: false);
         }
 
-#pragma warning restore xUnit1013 // Public method should be marked as test
-
-        [LiveFact]
+        [Test]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
@@ -213,7 +220,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.True(signaled, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
         }
 
-        [Fact(Skip = "TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
+        [Test]
+        [Ignore("TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
         public async Task BadQueueMessageE2ETests()
         {
             // This test ensures that the host does not crash on a bad message (it previously did)
@@ -277,9 +285,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         // The message is in the second queue
                         var queue2 = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2));
 
-                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>(
+                        RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                             () => queue2.DeleteMessageAsync(_lastMessageId, _lastMessagePopReceipt));
-                        Assert.Equal("MessageNotFound", ex.ErrorCode);
+                        Assert.AreEqual("MessageNotFound", ex.ErrorCode);
                     }
                 }
                 var logs = loggerProvider.GetAllLogMessages();
@@ -290,11 +298,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             // find the raw string to compare it to the original
             Assert.NotNull(poisonMessage);
-            Assert.Equal(messageContent, poisonMessage.MessageText);
+            Assert.AreEqual(messageContent, poisonMessage.MessageText);
 
             // Make sure the functions were called correctly
-            Assert.Equal(1, _badMessage1Calls);
-            Assert.Equal(0, _badMessage2Calls);
+            Assert.AreEqual(1, _badMessage1Calls);
+            Assert.AreEqual(0, _badMessage2Calls);
 
             // Validate Logger
             var loggerErrors = loggerProvider.GetAllLogMessages().Where(l => l.Level == Microsoft.Extensions.Logging.LogLevel.Error);
@@ -358,7 +366,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestFixture : IDisposable
         {
-            public TestFixture()
+            public TestFixture(WebJobsTestEnvironment testEnvironment)
             {
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost<TestFixture>(b =>
@@ -367,10 +375,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })
                     .Build();
 
-                var provider = host.Services.GetService<StorageAccountProvider>();
-                var storageAccount = provider.GetHost();
-                this.QueueServiceClient = storageAccount.CreateQueueServiceClient();
-                this.BlobServiceClient = storageAccount.CreateBlobServiceClient();
+                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
+                this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 
             public QueueServiceClient QueueServiceClient

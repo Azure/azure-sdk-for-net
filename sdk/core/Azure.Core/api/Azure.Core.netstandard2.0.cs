@@ -8,6 +8,7 @@ namespace Azure
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static Azure.AsyncPageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -87,6 +88,7 @@ namespace Azure
         public abstract System.Collections.Generic.IEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static Azure.Pageable<T> FromPages(System.Collections.Generic.IEnumerable<Azure.Page<T>> pages) { throw null; }
         public virtual System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -455,6 +457,7 @@ namespace Azure.Core.Pipeline
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
+        public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Process(Azure.Core.HttpMessage message) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

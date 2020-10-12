@@ -13,20 +13,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The FeedbackDimensionFilter. </summary>
     public partial class FeedbackDimensionFilter
     {
-        /// <summary> Initializes a new instance of FeedbackDimensionFilter. </summary>
-        /// <param name="dimension"> metric dimension filter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimension"/> is null. </exception>
-        public FeedbackDimensionFilter(IDictionary<string, string> dimension)
-        {
-            if (dimension == null)
-            {
-                throw new ArgumentNullException(nameof(dimension));
-            }
-
-            Dimension = dimension;
-        }
-
-        /// <summary> metric dimension filter. </summary>
-        public IDictionary<string, string> Dimension { get; }
     }
 }

@@ -6,39 +6,41 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using Moq;
-using Xunit;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
+using Azure.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection(AzuriteCollection.Name)]
     public class InstanceTests
     {
         private const string QueueName = "input-instancetests";
-        private readonly StorageAccount account;
+        private QueueServiceClient queueServiceClient;
 
-        public InstanceTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            account = azuriteFixture.GetAccount();
-            account.CreateQueueServiceClient().GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_CanBeInstanceMethod()
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            await account.AddQueueMessageAsync(expectedGuid, QueueName);
+            await AddQueueMessageAsync(queueServiceClient, expectedGuid, QueueName);
 
             var prog = new InstanceProgram();
 
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceProgram>(prog, builder =>
                {
-                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                   .UseStorage(account);
+                   builder.AddAzureStorageQueues()
+                   .UseQueueService(queueServiceClient);
                })
                .Build();
 
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.MessageText);
+            Assert.AreEqual(expectedGuid, result.MessageText);
         }
 
         private class InstanceProgram : IProgramWithResult<QueueMessage>
@@ -60,19 +62,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_CanBeAsyncInstanceMethod()
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            await account.AddQueueMessageAsync(expectedGuid, QueueName);
+            await AddQueueMessageAsync(queueServiceClient, expectedGuid, QueueName);
 
             var prog = new InstanceAsyncProgram();
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceAsyncProgram>(prog, builder =>
                {
-                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
-                   .UseStorage(account);
+                   builder.AddAzureStorageQueues()
+                   .UseQueueService(queueServiceClient);
                })
                .Build();
 
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.MessageText);
+            Assert.AreEqual(expectedGuid, result.MessageText);
         }
 
         private class InstanceAsyncProgram : IProgramWithResult<QueueMessage>
@@ -96,16 +98,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ this test should apply to any trigger and be in the Unit tests.
-        [Fact]
+        [Test]
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
-            await account.AddQueueMessageAsync("ignore", QueueName);
+            await AddQueueMessageAsync(queueServiceClient, "ignore", QueueName);
 
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<DisposeInstanceProgram>(builder =>
                {
-                   builder.UseStorage(account);
+                   builder.AddAzureStorageQueues();
+                   builder.UseQueueService(queueServiceClient);
                })
                .Build();
 
@@ -129,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ Not really a queue test
-        [Fact]
+        [Test]
         public async Task Trigger_IfClassConstructorHasDependencies_CanUseCustomJobActivator()
         {
             // Arrange
@@ -144,12 +147,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                          .Returns(() => new InstanceCustomActivatorProgram(resultFactory));
             IJobActivator activator = activatorMock.Object;
 
-            await account.AddQueueMessageAsync("ignore", QueueName);
+            await AddQueueMessageAsync(queueServiceClient, "ignore", QueueName);
 
             IHost host = new HostBuilder()
               .ConfigureDefaultTestHost<InstanceCustomActivatorProgram>(builder =>
               {
-                  builder.UseStorage(account);
+                  builder.AddAzureStorageQueues();
+                  builder.UseQueueService(queueServiceClient);
               }, null, activator)
               .Build();
 
@@ -160,7 +164,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var result = await jobHost.RunTriggerAsync<string>(InstanceCustomActivatorProgram.TaskSource);
 
             // Assert
-            Assert.Same(expectedResult, result);
+            Assert.AreSame(expectedResult, result);
+        }
+
+        private static async Task AddQueueMessageAsync(QueueServiceClient client, string message, string queueName)
+        {
+            var queue = client.GetQueueClient(queueName);
+            await queue.CreateIfNotExistsAsync();
+            await queue.ClearMessagesAsync();
+            await queue.SendMessageAsync(message);
         }
 
         private class InstanceCustomActivatorProgram

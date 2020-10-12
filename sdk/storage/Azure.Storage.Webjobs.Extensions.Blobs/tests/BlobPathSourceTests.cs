@@ -5,21 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.WebJobs.Host.Blobs;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
 {
     public class BlobPathSourceTests
     {
-        [Fact]
+        [Test]
         public void TestToString()
         {
             IBlobPathSource path1 = BlobPathSource.Create(@"container/dir/subdir/{name}.csv");
             IBlobPathSource path2 = BlobPathSource.Create(@"container/dir/subdir/{name}.csv");
             IBlobPathSource path3 = BlobPathSource.Create(@"container/dir/subdir/other.csv");
 
-            Assert.Equal(path1.ToString(), path2.ToString());
-            Assert.NotEqual(path2.ToString(), path3.ToString());
+            Assert.AreEqual(path1.ToString(), path2.ToString());
+            Assert.AreNotEqual(path2.ToString(), path3.ToString());
         }
 
         private static IDictionary<string, string> Match(string a, string b)
@@ -45,84 +45,84 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             return matches;
         }
 
-        [Fact]
+        [Test]
         public void BlobPathSource_Throws_OnBackslash()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("container\\blob"));
-            Assert.Contains("Paths must be in the format 'container/blob'", exc.Message);
+            StringAssert.Contains("Paths must be in the format 'container/blob'", exc.Message);
         }
 
-        [Fact]
+        [Test]
         public void BlobPathSource_Throws_OnEmpty()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("/"));
-            Assert.Contains("Paths must be in the format 'container/blob'", exc.Message);
+            StringAssert.Contains("Paths must be in the format 'container/blob'", exc.Message);
         }
 
-        [Fact]
+        [Test]
         public void BlobPathSource_Throws_OnContainerResolves()
         {
             var exc = Assert.Throws<FormatException>(() => BlobPathSource.Create("container{resolve}/blob"));
-            Assert.Contains("Container paths cannot contain {resolve} tokens.", exc.Message);
+            StringAssert.Contains("Container paths cannot contain {resolve} tokens.", exc.Message);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod1()
         {
             var d = Match("container", "container/item");
             Assert.NotNull(d);
-            Assert.Equal(0, d.Count);
+            Assert.AreEqual(0, d.Count);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod2()
         {
             var d = Match(@"container/blob", @"container/blob");
             Assert.NotNull(d);
-            Assert.Equal(0, d.Count);
+            Assert.AreEqual(0, d.Count);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod3()
         {
             var d = Match(@"container/{name}.csv", @"container/foo.csv");
             Assert.NotNull(d);
-            Assert.Equal(1, d.Count);
-            Assert.Equal("foo", d["name"]);
+            Assert.AreEqual(1, d.Count);
+            Assert.AreEqual("foo", d["name"]);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod4()
         {
             // Test corner case where matching at end
             var d = Match(@"container/{name}", @"container/foo.csv");
             Assert.NotNull(d);
-            Assert.Equal(1, d.Count);
-            Assert.Equal("foo.csv", d["name"]);
+            Assert.AreEqual(1, d.Count);
+            Assert.AreEqual("foo.csv", d["name"]);
         }
 
 
-        [Fact]
+        [Test]
         public void TestMethodExtension()
         {
             // {name} is greedy when matching up to an extension.
             var d = Match(@"container/{name}.csv", @"container/foo.alpha.csv");
             Assert.NotNull(d);
-            Assert.Equal(1, d.Count);
-            Assert.Equal("foo.alpha", d["name"]);
+            Assert.AreEqual(1, d.Count);
+            Assert.AreEqual("foo.alpha", d["name"]);
         }
 
-        [Fact]
+        [Test]
         public void TestGreedy()
         {
             var d = Match(@"container/{a}.{b}", @"container/foo.alpha.beta.csv");
             Assert.NotNull(d);
-            Assert.Equal(2, d.Count);
-            Assert.Equal("foo.alpha.beta", d["a"]);
-            Assert.Equal("csv", d["b"]);
+            Assert.AreEqual(2, d.Count);
+            Assert.AreEqual("foo.alpha.beta", d["a"]);
+            Assert.AreEqual("csv", d["b"]);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod6()
         {
             // Test corner case where matching on last
@@ -130,27 +130,27 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Assert.Null(d);
         }
 
-        [Fact]
+        [Test]
         public void TestMethod5()
         {
             // Test corner case where matching on last
             var d = Match(@"container/{name}-{date}.csv", @"container/foo-Jan1st.csv");
             Assert.NotNull(d);
-            Assert.Equal(2, d.Count);
-            Assert.Equal("foo", d["name"]);
-            Assert.Equal("Jan1st", d["date"]);
+            Assert.AreEqual(2, d.Count);
+            Assert.AreEqual("foo", d["name"]);
+            Assert.AreEqual("Jan1st", d["date"]);
         }
 
-        [Fact]
+        [Test]
         public void GetNames()
         {
             var path = BlobPathSource.Create(@"container/{name}-{date}.csv");
             var d = path.ParameterNames;
             var names = d.ToArray();
 
-            Assert.Equal(2, names.Length);
-            Assert.Equal("name", names[0]);
-            Assert.Equal("date", names[1]);
+            Assert.AreEqual(2, names.Length);
+            Assert.AreEqual("name", names[0]);
+            Assert.AreEqual("date", names[1]);
         }
     }
 }
