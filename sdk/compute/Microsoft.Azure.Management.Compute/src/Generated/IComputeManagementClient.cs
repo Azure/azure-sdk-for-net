@@ -167,6 +167,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         IResourceSkusOperations ResourceSkus { get; }
