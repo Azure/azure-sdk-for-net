@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using Azure.Storage.Blobs;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
 using Azure.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
