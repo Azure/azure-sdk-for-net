@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VirtualMachineRunCommandsOperations operations.
+    /// VirtualMachineScaleSetVMRunCommandsOperations operations.
     /// </summary>
-    internal partial class VirtualMachineRunCommandsOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineRunCommandsOperations
+    internal partial class VirtualMachineScaleSetVMRunCommandsOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineScaleSetVMRunCommandsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineRunCommandsOperations class.
+        /// Initializes a new instance of the VirtualMachineScaleSetVMRunCommandsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal VirtualMachineRunCommandsOperations(ComputeManagementClient client)
+        internal VirtualMachineScaleSetVMRunCommandsOperations(ComputeManagementClient client)
         {
             if (client == null)
             {
@@ -51,407 +51,16 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all available run commands for a subscription in a location.
-        /// </summary>
-        /// <param name='location'>
-        /// The location upon which run commands is queried.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<RunCommandDocumentBase>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
-            }
-            if (location != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(location, "^[-\\w\\._]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "location", "^[-\\w\\._]+$");
-                }
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string apiVersion = "2020-06-01";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands").ToString();
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<RunCommandDocumentBase>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RunCommandDocumentBase>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets specific run command for a subscription in a location.
-        /// </summary>
-        /// <param name='location'>
-        /// The location upon which run commands is queried.
-        /// </param>
-        /// <param name='commandId'>
-        /// The command id.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<RunCommandDocument>> GetWithHttpMessagesAsync(string location, string commandId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
-            }
-            if (location != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(location, "^[-\\w\\._]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "location", "^[-\\w\\._]+$");
-                }
-            }
-            if (commandId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "commandId");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string apiVersion = "2020-06-01";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("commandId", commandId);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}").ToString();
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{commandId}", System.Uri.EscapeDataString(commandId));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RunCommandDocument>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RunCommandDocument>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// The operation to create or update the run command.
+        /// The operation to create or update the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be created or
-        /// updated.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -465,21 +74,24 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VirtualMachineRunCommand> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, runCommandName, runCommand, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VirtualMachineRunCommand> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, runCommandName, runCommand, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// The operation to update the run command.
+        /// The operation to update the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be updated.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -493,21 +105,24 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> UpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> UpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VirtualMachineRunCommand> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmName, runCommandName, runCommand, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VirtualMachineRunCommand> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, runCommandName, runCommand, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// The operation to delete the run command.
+        /// The operation to delete the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be deleted.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -518,21 +133,24 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, runCommandName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, runCommandName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// The operation to get the run command.
+        /// The operation to get the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine containing the run command.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -561,15 +179,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> GetByVirtualMachineWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vmName == null)
+            if (vmScaleSetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
             if (runCommandName == null)
             {
@@ -588,18 +210,20 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vmName", vmName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("runCommandName", runCommandName);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByVirtualMachine", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vmName}", System.Uri.EscapeDataString(vmName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{runCommandName}", System.Uri.EscapeDataString(runCommandName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -737,13 +361,17 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get all run commands of a Virtual Machine.
+        /// The operation to get all run commands of an instance in Virtual Machine
+        /// Scaleset.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine containing the run command.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply on the operation.
@@ -769,15 +397,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListByVirtualMachineWithHttpMessagesAsync(string resourceGroupName, string vmName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vmName == null)
+            if (vmScaleSetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
             if (Client.SubscriptionId == null)
             {
@@ -792,17 +424,19 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vmName", vmName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByVirtualMachine", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vmName}", System.Uri.EscapeDataString(vmName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (expand != null)
@@ -939,14 +573,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to create or update the run command.
+        /// The operation to create or update the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be created or
-        /// updated.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -975,15 +611,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vmName == null)
+            if (vmScaleSetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
             if (runCommandName == null)
             {
@@ -1010,7 +650,8 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vmName", vmName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("runCommandName", runCommandName);
                 tracingParameters.Add("runCommand", runCommand);
                 tracingParameters.Add("apiVersion", apiVersion);
@@ -1019,9 +660,10 @@ namespace Microsoft.Azure.Management.Compute
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vmName}", System.Uri.EscapeDataString(vmName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{runCommandName}", System.Uri.EscapeDataString(runCommandName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1179,13 +821,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to update the run command.
+        /// The operation to update the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be updated.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -1214,15 +859,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vmName == null)
+            if (vmScaleSetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
             if (runCommandName == null)
             {
@@ -1245,7 +894,8 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vmName", vmName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("runCommandName", runCommandName);
                 tracingParameters.Add("runCommand", runCommand);
                 tracingParameters.Add("apiVersion", apiVersion);
@@ -1254,9 +904,10 @@ namespace Microsoft.Azure.Management.Compute
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vmName}", System.Uri.EscapeDataString(vmName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{runCommandName}", System.Uri.EscapeDataString(runCommandName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1396,13 +1047,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete the run command.
+        /// The operation to delete the VMSS VM run command.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine where the run command should be deleted.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='runCommandName'>
         /// The name of the virtual machine run command.
@@ -1425,15 +1079,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vmName == null)
+            if (vmScaleSetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
             if (runCommandName == null)
             {
@@ -1452,7 +1110,8 @@ namespace Microsoft.Azure.Management.Compute
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vmName", vmName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("runCommandName", runCommandName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1460,9 +1119,10 @@ namespace Microsoft.Azure.Management.Compute
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vmName}", System.Uri.EscapeDataString(vmName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{runCommandName}", System.Uri.EscapeDataString(runCommandName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1578,7 +1238,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all available run commands for a subscription in a location.
+        /// The operation to get all run commands of an instance in Virtual Machine
+        /// Scaleset.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1604,7 +1265,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RunCommandDocumentBase>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1620,179 +1281,6 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<RunCommandDocumentBase>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RunCommandDocumentBase>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// The operation to get all run commands of a Virtual Machine.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListByVirtualMachineNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByVirtualMachineNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
