@@ -4,11 +4,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5f6c503d077ddc4395451743a4b66ce1-63ca33382f252e4f-00",
+        "traceparent": "00-74f91bd4c63f274ebbd900c0b964602a-2122313541372e44-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "7240ae92bc92f98808f09324ab76fe76",
         "x-ms-return-client-request-id": "true"
@@ -17,20 +18,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:27 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "70613720-cbc3-4507-b2ac-1444b5f76b3c",
+        "x-ms-activity-id": "3a041714-2b5b-42e6-a604-782e42e33ed4",
         "x-ms-client-request-id": [
           "7240ae92bc92f98808f09324ab76fe76",
           "7240ae92bc92f98808f09324ab76fe76"
         ],
-        "x-ms-request-id": "26798a4d-3bd8-4f69-a093-6640a18d3df4",
-        "x-ms-response-time-ms": "62"
+        "x-ms-request-id": "93f46b84-2c39-469b-850e-5ef772a2aae2",
+        "x-ms-response-time-ms": "85"
       },
       "ResponseBody": {
         "from": 0,
@@ -428,11 +429,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/0",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-27ca1e5e26164a4083b31823badd1560-25d979dbf7e04c45-00",
+        "traceparent": "00-1807a7f05664b74fb20146fb7e6f42b8-3987af45be4c5c47-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "ff6dea7ac3bdc068e1be241635596be7",
         "x-ms-return-client-request-id": "true"
@@ -441,14 +443,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:27 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "acbbbf3f-b038-497b-bd2b-def05acd05fa",
+        "x-ms-activity-id": "bb1bfef6-4b88-4bd0-ae8c-b63dd8538924",
         "x-ms-client-request-id": [
           "ff6dea7ac3bdc068e1be241635596be7",
           "ff6dea7ac3bdc068e1be241635596be7"
@@ -465,8 +467,8 @@
         "x-ms-job-submitted-by-name": "ca728363-7297-4e35-a9c3-c6400837883e",
         "x-ms-job-submitted-on": "12/13/2019 8:11:38 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "002db304-904d-419a-826f-38c48e10f454",
-        "x-ms-response-time-ms": "16"
+        "x-ms-request-id": "59918f9f-1b33-4f8f-986a-8852a7df8870",
+        "x-ms-response-time-ms": "30"
       },
       "ResponseBody": {
         "id": 0,
@@ -494,11 +496,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/1",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-09107bd7da7aee4bbeae462f16cd2150-71b9b1deb002524b-00",
+        "traceparent": "00-2e46a47489f78e4ea0bed7355ec8b402-99d603a9ad21b643-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "265d3e6a83edfa1a0db17e03ad38135a",
         "x-ms-return-client-request-id": "true"
@@ -507,14 +510,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:27 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "ff224f1a-2463-41d3-a8f7-6c3b01231642",
+        "x-ms-activity-id": "775f7aa4-f21b-46da-969d-21b9f1f14d95",
         "x-ms-client-request-id": [
           "265d3e6a83edfa1a0db17e03ad38135a",
           "265d3e6a83edfa1a0db17e03ad38135a"
@@ -531,8 +534,8 @@
         "x-ms-job-submitted-by-name": "ca728363-7297-4e35-a9c3-c6400837883e",
         "x-ms-job-submitted-on": "12/13/2019 8:12:11 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "f027a2c7-12e7-44e0-b785-dc99edde7474",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "da6e5d1e-8288-4193-9209-9e2ef66d0e39",
+        "x-ms-response-time-ms": "29"
       },
       "ResponseBody": {
         "id": 1,
@@ -560,11 +563,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bd58f653002c2f409bf8fc6210ce7be5-7eacd880f2bbec44-00",
+        "traceparent": "00-52b170d1c2dc4847b68c4f999f3cd227-f8ab8bd8e846664e-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "ecf737e64fd8cfe4467f90d39871c3ae",
         "x-ms-return-client-request-id": "true"
@@ -573,14 +577,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:28 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "4c9a0629-c3d9-4c21-acf3-fb8cdbd7799c",
+        "x-ms-activity-id": "dd9b178e-036d-4bbd-b5d6-53a2e7e865df",
         "x-ms-client-request-id": [
           "ecf737e64fd8cfe4467f90d39871c3ae",
           "ecf737e64fd8cfe4467f90d39871c3ae"
@@ -597,8 +601,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "12/25/2019 3:54:31 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "5a2e2d11-74df-42e7-a336-e04d11c088ba",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "29479477-29af-4d0e-8e7e-0efa1758ecfb",
+        "x-ms-response-time-ms": "28"
       },
       "ResponseBody": {
         "id": 3,
@@ -626,11 +630,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/4",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-794d4d56128f1e4a9fbd3a8e885ee137-3280fe9617be4b4e-00",
+        "traceparent": "00-903c2dcf3d3a2b4491a73256915a4a9d-0327ccb24fa3464a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "6dbaab85d819f789d073f20c446413a9",
         "x-ms-return-client-request-id": "true"
@@ -639,14 +644,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:28 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "1a2acea3-5c38-4099-9d35-21a7cf7a710b",
+        "x-ms-activity-id": "fa3ca835-dfe2-45d1-90b1-a630d78b0282",
         "x-ms-client-request-id": [
           "6dbaab85d819f789d073f20c446413a9",
           "6dbaab85d819f789d073f20c446413a9"
@@ -663,8 +668,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "12/25/2019 5:39:13 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "eed4bd50-e8d6-446c-aae1-3a4f0a58b338",
-        "x-ms-response-time-ms": "16"
+        "x-ms-request-id": "922e353d-6d88-4de3-ad28-9e2cf2caec9c",
+        "x-ms-response-time-ms": "30"
       },
       "ResponseBody": {
         "id": 4,
@@ -692,11 +697,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/5",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-47d4ebc81ccbff4193f29fffa3fe4a4a-d76c94aa51ad934a-00",
+        "traceparent": "00-eaf8abf97efaaa489b8fe4d133aba42a-7fba6d8cb3e82944-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "fe2fc9ab7f621b0e598de06df246619b",
         "x-ms-return-client-request-id": "true"
@@ -705,14 +711,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:28 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "20588c68-8c7c-4071-8625-5c7857d82da9",
+        "x-ms-activity-id": "16362a38-e59c-4d3e-84ce-a598187caaae",
         "x-ms-client-request-id": [
           "fe2fc9ab7f621b0e598de06df246619b",
           "fe2fc9ab7f621b0e598de06df246619b"
@@ -729,8 +735,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "12/25/2019 5:48:34 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "53262477-f066-41ce-95eb-958ecefbd581",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "908982b2-d87b-4e56-9c19-71582cd3ec43",
+        "x-ms-response-time-ms": "27"
       },
       "ResponseBody": {
         "id": 5,
@@ -751,11 +757,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/12",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-93c8bd7e08b69c40bcbbb6a4e420d72f-d781f9780b62da49-00",
+        "traceparent": "00-b0ed6a241cfc2d49939faa43c5b0028a-8e6d0d0c4bcd7646-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "017ecfeda57e0e41ae001c655cd78be1",
         "x-ms-return-client-request-id": "true"
@@ -764,14 +771,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:28 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "6342b5c8-8175-42b6-bdcb-a2bb9b059eea",
+        "x-ms-activity-id": "280b4c9e-13c2-4745-842d-dd08a21f892e",
         "x-ms-client-request-id": [
           "017ecfeda57e0e41ae001c655cd78be1",
           "017ecfeda57e0e41ae001c655cd78be1"
@@ -788,8 +795,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/10/2020 2:36:03 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "f91c46f0-4e66-431b-b74d-ee1c12e62663",
-        "x-ms-response-time-ms": "16"
+        "x-ms-request-id": "47261721-8c57-457a-be35-0584686ea45a",
+        "x-ms-response-time-ms": "27"
       },
       "ResponseBody": {
         "id": 12,
@@ -817,11 +824,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/13",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4d215e5cb41da24eb037a23729e64738-2959eb674a5d9a4e-00",
+        "traceparent": "00-28d430b6972b3b41aa677b7d07a718cd-8c2cb2a793172146-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "cf28e76bc541064c9c9f138bf71b0489",
         "x-ms-return-client-request-id": "true"
@@ -830,14 +838,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:29 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "b7fc449f-2c7a-4a37-b30f-4d7b9c8091e1",
+        "x-ms-activity-id": "f795c78e-53bd-4737-a918-2f1295b71887",
         "x-ms-client-request-id": [
           "cf28e76bc541064c9c9f138bf71b0489",
           "cf28e76bc541064c9c9f138bf71b0489"
@@ -854,8 +862,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/10/2020 3:35:41 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "34271399-22fa-4abb-a38c-dd0968fedcee",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "20342b4e-2a66-4ef2-a2c5-f1b8fd6714dc",
+        "x-ms-response-time-ms": "28"
       },
       "ResponseBody": {
         "id": 13,
@@ -883,11 +891,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/14",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-826bab9303903a4ab651b083cedadf4f-f7bff1482a9af54c-00",
+        "traceparent": "00-d481a4e5e57bc34d8af8b361bd5b6707-bf5484a53bd2334e-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "741f571111e6052b87214f6262a9be81",
         "x-ms-return-client-request-id": "true"
@@ -896,14 +905,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:29 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "668a417b-564e-438f-a3ae-b4132d56be09",
+        "x-ms-activity-id": "9c6e35e4-6c03-4224-b8de-c3789ab7b5f9",
         "x-ms-client-request-id": [
           "741f571111e6052b87214f6262a9be81",
           "741f571111e6052b87214f6262a9be81"
@@ -920,8 +929,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/10/2020 3:40:32 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "c4f47dad-d1ce-4471-8ede-a7a68dd3bd25",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "0968acd5-67a5-4641-8d41-29af366e41d7",
+        "x-ms-response-time-ms": "47"
       },
       "ResponseBody": {
         "id": 14,
@@ -949,11 +958,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/15",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0f7040916a17744fab4ab2a934926c3e-1cdae459421b6c47-00",
+        "traceparent": "00-f0ae4bebb9d2b9429b436852b621ee67-ce80653bab9d0a46-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "0b01fe02911e2759837765de92b51692",
         "x-ms-return-client-request-id": "true"
@@ -962,14 +972,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:11 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:29 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "786b7b60-e06b-4e6d-b0f2-cd866ecb4e3f",
+        "x-ms-activity-id": "db156acb-4e6e-4ca8-8d32-c562f81c6482",
         "x-ms-client-request-id": [
           "0b01fe02911e2759837765de92b51692",
           "0b01fe02911e2759837765de92b51692"
@@ -986,8 +996,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/10/2020 4:25:25 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "d32dbcf5-f039-46e3-a64b-b2679ef85ca7",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "7ffa9c88-d5da-40ab-9320-80ec4a1e02d8",
+        "x-ms-response-time-ms": "32"
       },
       "ResponseBody": {
         "id": 15,
@@ -1015,11 +1025,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/16",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-50057612bbd62e49bc65bea0bc413125-f577d48a30599f44-00",
+        "traceparent": "00-443a1dc3117d164cb0492cea58b47145-fdf15d8731c53d4f-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "045492fb16b85afbbb23482075e9a3f3",
         "x-ms-return-client-request-id": "true"
@@ -1028,14 +1039,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:29 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "24b636a5-2698-4ba1-bd99-bc66330d117c",
+        "x-ms-activity-id": "cc4ffff5-3608-46cf-931e-2f10dc30af10",
         "x-ms-client-request-id": [
           "045492fb16b85afbbb23482075e9a3f3",
           "045492fb16b85afbbb23482075e9a3f3"
@@ -1052,8 +1063,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/13/2020 2:47:05 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "fba462ea-71fa-4a68-8f36-670f56fc1bdf",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "93a9a970-3c36-4ed8-8e9c-365622b05c13",
+        "x-ms-response-time-ms": "27"
       },
       "ResponseBody": {
         "id": 16,
@@ -1081,11 +1092,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/17",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7a7f7387536b934c9c41815ab44d606f-ea14555a0ea66e42-00",
+        "traceparent": "00-2f4baedc64b53a4aa878e2ba36821812-c1e01dec8024f841-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "f98991e0f8197f6bfef7f06eab4c72d1",
         "x-ms-return-client-request-id": "true"
@@ -1094,14 +1106,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:31 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "d84e86f5-0e49-4db1-b8e4-4cbbec9bf432",
+        "x-ms-activity-id": "748f7501-15eb-4f6b-a664-1681691e760f",
         "x-ms-client-request-id": [
           "f98991e0f8197f6bfef7f06eab4c72d1",
           "f98991e0f8197f6bfef7f06eab4c72d1"
@@ -1118,8 +1130,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/14/2020 8:03:16 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "a4101d6d-96a7-4234-8246-d7c0d4081da2",
-        "x-ms-response-time-ms": "16"
+        "x-ms-request-id": "ce9e20f4-8f27-40b9-b916-d9fbf39cfffd",
+        "x-ms-response-time-ms": "30"
       },
       "ResponseBody": {
         "id": 17,
@@ -1147,11 +1159,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/18",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5d3b205312440f4d94498fa003476a2b-28577352ce8e064e-00",
+        "traceparent": "00-2262cbedffae394bbeff0f3bf8596e04-ca429925f07fea4c-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "d066bd0ab954ebc903a74ffb4938b199",
         "x-ms-return-client-request-id": "true"
@@ -1160,14 +1173,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:31 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "42267a93-ac5d-42d1-a331-83a04d54a2dd",
+        "x-ms-activity-id": "918b0755-d7a7-4664-b9e1-8590bde28e8d",
         "x-ms-client-request-id": [
           "d066bd0ab954ebc903a74ffb4938b199",
           "d066bd0ab954ebc903a74ffb4938b199"
@@ -1184,8 +1197,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/14/2020 8:23:00 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "ab8330a2-b1e8-49c5-b841-0a904d09f6b3",
-        "x-ms-response-time-ms": "14"
+        "x-ms-request-id": "4bebf813-3a09-4fd9-84c1-5f59ec39b23f",
+        "x-ms-response-time-ms": "29"
       },
       "ResponseBody": {
         "id": 18,
@@ -1213,11 +1226,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/19",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0184607571bf2f4194df98368ad17e52-fa86a95fd654234f-00",
+        "traceparent": "00-c31bd30bc0c90c4393c6644bd94d49f2-482536e1e0fcdc4a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "01fe72d41d2c027927d406c1258cae6f",
         "x-ms-return-client-request-id": "true"
@@ -1226,14 +1240,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:31 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "87209d79-c402-46fa-b0b7-5dcb69d38e55",
+        "x-ms-activity-id": "59c25c1f-3db5-4e7f-90ed-27ca93d12a77",
         "x-ms-client-request-id": [
           "01fe72d41d2c027927d406c1258cae6f",
           "01fe72d41d2c027927d406c1258cae6f"
@@ -1250,8 +1264,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/15/2020 1:21:44 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "c8db5cf1-214b-471b-b65d-5edf2e0540db",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "de975a25-0cc3-49cb-8550-236516eb1293",
+        "x-ms-response-time-ms": "29"
       },
       "ResponseBody": {
         "id": 19,
@@ -1279,11 +1293,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/20",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8efc437bac691c419f2b6549a6357df3-74f100ade3f5c148-00",
+        "traceparent": "00-341f1f66f55ca643aa25554332fb32b3-7ce8e0a4636b9341-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "b81576b0d383269ec89df672a96f35c5",
         "x-ms-return-client-request-id": "true"
@@ -1292,14 +1307,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:31 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "7eeb8b84-dfec-4050-a1d2-2202808627b3",
+        "x-ms-activity-id": "5a85e2f8-58d1-437b-87b6-9048bdd75cc4",
         "x-ms-client-request-id": [
           "b81576b0d383269ec89df672a96f35c5",
           "b81576b0d383269ec89df672a96f35c5"
@@ -1316,8 +1331,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/16/2020 2:08:56 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "5d990f27-9f41-4a8d-8652-85cf4c716ff7",
-        "x-ms-response-time-ms": "14"
+        "x-ms-request-id": "7f5e3383-60e5-474d-b777-d90674d4bfac",
+        "x-ms-response-time-ms": "26"
       },
       "ResponseBody": {
         "id": 20,
@@ -1345,11 +1360,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/21",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e84b28f8e6ff194893dd36edb134c96f-7bf20b8d2906ab4f-00",
+        "traceparent": "00-c4bdc94f06886c458c9caea26bd1192e-f5a2330e0f151d42-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "399a5745714deda54363a87fb307c676",
         "x-ms-return-client-request-id": "true"
@@ -1358,14 +1374,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:32 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "cb614234-c437-451f-9e57-7165b7b773f7",
+        "x-ms-activity-id": "f08c50f3-14c0-4c78-ab25-76bc52202ed2",
         "x-ms-client-request-id": [
           "399a5745714deda54363a87fb307c676",
           "399a5745714deda54363a87fb307c676"
@@ -1382,8 +1398,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/16/2020 2:21:04 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "ede96fd4-c43c-4d94-b845-91e9ce4ed8e6",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "90e6f315-1e5a-4585-8f77-fa3fa6174116",
+        "x-ms-response-time-ms": "27"
       },
       "ResponseBody": {
         "id": 21,
@@ -1411,11 +1427,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/22",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-da0964f26dd61b44a2c9235a8537bd8f-6a9f0926f1bca84d-00",
+        "traceparent": "00-eea3b5036fbb94458fb63337827d7805-8e5f567a0b3cd043-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "d34adff8f8230016d3d8398e260659b7",
         "x-ms-return-client-request-id": "true"
@@ -1424,14 +1441,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:32 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "02a46484-1cdb-4465-9ffe-34f360fad4e8",
+        "x-ms-activity-id": "dad8f935-1f63-4ae2-9503-f48744294210",
         "x-ms-client-request-id": [
           "d34adff8f8230016d3d8398e260659b7",
           "d34adff8f8230016d3d8398e260659b7"
@@ -1448,8 +1465,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/16/2020 2:23:53 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "6a124f6b-1b39-4731-9267-f22218785441",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "ef219c51-42a0-475d-91ae-280fd180e843",
+        "x-ms-response-time-ms": "30"
       },
       "ResponseBody": {
         "id": 22,
@@ -1477,11 +1494,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/23",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-73bacf5422dc8840beed1d7fee414121-4e5494520694a249-00",
+        "traceparent": "00-8a6ce6ddff7a1646bc322d2dab463acc-f2b79e05c31b6647-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "ce7b419f75f23f21d127741f2a1e73c0",
         "x-ms-return-client-request-id": "true"
@@ -1490,14 +1508,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:32 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "2304d690-cfc3-481a-a9be-4af8a5be43b2",
+        "x-ms-activity-id": "4c9d0dd2-c8e2-44a3-8c8c-cc1522fc9207",
         "x-ms-client-request-id": [
           "ce7b419f75f23f21d127741f2a1e73c0",
           "ce7b419f75f23f21d127741f2a1e73c0"
@@ -1514,8 +1532,8 @@
         "x-ms-job-submitted-by-name": "ca728363-7297-4e35-a9c3-c6400837883e",
         "x-ms-job-submitted-on": "1/16/2020 9:36:46 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "41155f5a-9bbd-4354-ba3f-0358304289fc",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "d1b10d88-e869-4e9f-b120-6d22415356da",
+        "x-ms-response-time-ms": "32"
       },
       "ResponseBody": {
         "id": 23,
@@ -1543,11 +1561,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/24",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9fc1d07bd5ac6843b5f3a6a6cf360bbd-8e2b21ea2ca73e4f-00",
+        "traceparent": "00-742c33d49e19b24ebd96808588898836-fe32c6d2a2fce242-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "c9797fd762244ca2409965753816c63d",
         "x-ms-return-client-request-id": "true"
@@ -1556,14 +1575,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:32 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "b1c2864b-6b6c-4775-bc56-98eede9d6e0c",
+        "x-ms-activity-id": "541b184e-2327-4fce-a57c-a4a6b75cdd5b",
         "x-ms-client-request-id": [
           "c9797fd762244ca2409965753816c63d",
           "c9797fd762244ca2409965753816c63d"
@@ -1579,8 +1598,8 @@
         "x-ms-job-submitted-by-name": "ca728363-7297-4e35-a9c3-c6400837883e",
         "x-ms-job-submitted-on": "1/16/2020 9:37:10 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "155f2007-03ea-4dee-b8cb-932330d69656",
-        "x-ms-response-time-ms": "14"
+        "x-ms-request-id": "340cb4c2-d2dd-42ae-98f0-c5aa32af4916",
+        "x-ms-response-time-ms": "28"
       },
       "ResponseBody": {
         "id": 24,
@@ -1594,11 +1613,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/25",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-57adc5ce623a8b4aa8b955e69d94249d-ffdc5cf0cac22c4d-00",
+        "traceparent": "00-53b07f61a0858c42a49b650f0d58d2cc-80acaecaade7ae4d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "71e0f00af78c8384be0b02fb84f6d5b5",
         "x-ms-return-client-request-id": "true"
@@ -1607,14 +1627,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:33 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "45fec20d-3ad7-4619-b612-66708abfa6f5",
+        "x-ms-activity-id": "8e94740a-2d26-413b-bb9a-6a77f397033e",
         "x-ms-client-request-id": [
           "71e0f00af78c8384be0b02fb84f6d5b5",
           "71e0f00af78c8384be0b02fb84f6d5b5"
@@ -1630,8 +1650,8 @@
         "x-ms-job-submitted-by-name": "ca728363-7297-4e35-a9c3-c6400837883e",
         "x-ms-job-submitted-on": "1/16/2020 9:37:54 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "d39689e3-4e18-4c5d-b9c4-35c7fd7c01f4",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "7d38c7a6-05c0-4dd0-8dbe-71c34dac2f47",
+        "x-ms-response-time-ms": "29"
       },
       "ResponseBody": {
         "id": 25,
@@ -1645,11 +1665,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/batches/26",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-765105f976ee0b4c8f8f25d6dbf823d3-4f25c79044073d43-00",
+        "traceparent": "00-cbcbeba5a7849746ba7bb719973c7d47-238f24e540f4cf40-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a7b77865908d3d939f2e8d580fac06ba",
         "x-ms-return-client-request-id": "true"
@@ -1658,14 +1679,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:12 GMT",
+        "Date": "Wed, 26 Aug 2020 05:54:33 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "afb10c25-989a-4410-84cf-35671bcad3ce",
+        "x-ms-activity-id": "ff462885-4e04-4180-b376-4ce545fd6cfe",
         "x-ms-client-request-id": [
           "a7b77865908d3d939f2e8d580fac06ba",
           "a7b77865908d3d939f2e8d580fac06ba"
@@ -1682,8 +1703,8 @@
         "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
         "x-ms-job-submitted-on": "1/19/2020 6:44:13 AM \u002B00:00",
         "x-ms-job-type": "SparkServiceBatch",
-        "x-ms-request-id": "4e21364b-83e9-46cb-8b2f-4a595ae4b170",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "62c18ce4-fa0d-4476-85ec-d8d3d399435c",
+        "x-ms-response-time-ms": "28"
       },
       "ResponseBody": {
         "id": 26,

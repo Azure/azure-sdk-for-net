@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
+
+using Azure.Core.Pipeline;
+
 using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
@@ -13,34 +14,34 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     public class AzureMonitorTraceExporter : ActivityExporter
     {
         private readonly AzureMonitorTransmitter AzureMonitorTransmitter;
+        private readonly AzureMonitorExporterOptions options;
+        private readonly string instrumentationKey;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
 
             this.AzureMonitorTransmitter = new AzureMonitorTransmitter(options);
         }
 
         /// <inheritdoc/>
-        public override async Task<ExportResult> ExportAsync(IEnumerable<Activity> batchActivity, CancellationToken cancellationToken)
+        public override ExportResult Export(in Batch<Activity> batch)
         {
-            if (batchActivity == null)
+            try
             {
-                throw new ArgumentNullException(nameof(batchActivity));
+                var telemetryItems = AzureMonitorConverter.Convert(batch, this.instrumentationKey);
+
+                // TODO: Handle return value, it can be converted as metrics.
+                // TODO: Validate CancellationToken and async pattern here.
+                this.AzureMonitorTransmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                return ExportResult.Success;
             }
-
-            // Handle return value, it can be converted as metrics.
-            await this.AzureMonitorTransmitter.AddBatchActivityAsync(batchActivity, cancellationToken).ConfigureAwait(false);
-            return ExportResult.Success;
-        }
-
-        /// <inheritdoc/>
-        public override Task ShutdownAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            catch (Exception ex)
+            {
+                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
+                return ExportResult.Failure;
+            }
         }
     }
 }

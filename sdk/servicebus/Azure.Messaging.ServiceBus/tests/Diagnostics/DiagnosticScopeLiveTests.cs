@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -52,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusReceiver receiver = null;
                 if (useSessions)
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 else
                 {
@@ -180,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.AreEqual(DiagnosticProperty.RenewSessionLockActivityName + ".Stop", renewStop.Key);
 
                     // set state
-                    var state = Encoding.UTF8.GetBytes("state");
+                    var state = new BinaryData("state");
                     await sessionReceiver.SetSessionStateAsync(state);
                     (string Key, object Value, DiagnosticListener) setStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.SetSessionStateActivityName + ".Start", setStateStart.Key);
@@ -197,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
-                    Assert.AreEqual(state, getState);
+                    Assert.AreEqual(state.ToBytes().ToArray(), getState.ToBytes().ToArray());
                     (string Key, object Value, DiagnosticListener) getStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.GetSessionStateActivityName + ".Start", getStateStart.Key);
                     Activity getStateActivity = (Activity)getStateStart.Value;
@@ -235,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
+                    Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
 
                     (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
                     Activity messageActivity = (Activity)startMessage.Value;
@@ -391,7 +390,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in msgs)
             {
-                Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
+                Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
                 (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
                 messageActivities.Add((Activity)startMessage.Value);
                 AssertCommonTags((Activity)startMessage.Value, sender.EntityPath, sender.FullyQualifiedNamespace);

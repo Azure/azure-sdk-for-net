@@ -13,6 +13,7 @@ namespace Azure.Identity
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
         private readonly string _clientSecret;
+        private readonly bool _includeX5CClaimHeader;
         private readonly ClientCertificateCredential.IX509Certificate2Provider _certificateProvider;
 
         /// <summary>
@@ -29,9 +30,10 @@ namespace Azure.Identity
             _clientSecret = clientSecret;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, ITokenCacheOptions cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
+            _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
         }
 
@@ -56,7 +58,8 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            return await client.AcquireTokenForClient(scopes).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+
+            return await client.AcquireTokenForClient(scopes).WithSendX5C(_includeX5CClaimHeader).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
     }
 }

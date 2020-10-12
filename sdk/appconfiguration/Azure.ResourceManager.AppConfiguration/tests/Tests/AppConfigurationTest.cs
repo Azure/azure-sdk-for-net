@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             // ConfigurationStoresOperations list by resourcegroup test
 
             var configurationStoreListByResourceGroupResult =await ConfigurationStoresOperations.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
-            Assert.IsTrue(operationListResult.Count >= 1);
+            Assert.IsTrue(configurationStoreListByResourceGroupResult.Count >= 1);
 
-            //ConfigurationStoresOperations list by test
-            var configurationStoresListResult = await ConfigurationStoresOperations.ListAsync(resourceGroupName).ToEnumerableAsync();
+            //ConfigurationStoresOperations list by subscription test
+            var configurationStoresListResult = await ConfigurationStoresOperations.ListAsync().ToEnumerableAsync();
             Assert.IsTrue(configurationStoresListResult.Count >= 1);
 
             //update ConfigurationStores_Update

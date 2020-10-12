@@ -49,7 +49,7 @@ namespace Azure.Core.TestFramework
                     {
                         _session = Load();
                     }
-                    catch (FileNotFoundException ex)
+                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                     {
                         throw new TestRecordingMismatchException(ex.Message, ex);
                     }
@@ -196,18 +196,6 @@ namespace Azure.Core.TestFramework
         public void Dispose()
         {
             Dispose(true);
-        }
-
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
-        {
-            clientOptions.Transport = CreateTransport(clientOptions.Transport);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // Not making the timeout zero so retry code still goes async
-                clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
-                clientOptions.Retry.Mode = RetryMode.Fixed;
-            }
-            return clientOptions;
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizeCustomFormsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operations"></param>
         /// <param name="diagnostics"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeCustomFormsOperation(ServiceRestClient operations, ClientDiagnostics diagnostics, string operationLocation)
+        internal RecognizeCustomFormsOperation(FormRecognizerRestClient operations, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = operations;
             _diagnostics = diagnostics;
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.Models
                     if (update.Value.Status == OperationStatus.Succeeded)
                     {
                         // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult, _modelId);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == OperationStatus.Failed)
@@ -235,29 +235,29 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult, string modelId)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?
-                ConvertUnsupervisedResult(analyzeResult) :
-                ConvertSupervisedResult(analyzeResult);
+                ConvertUnsupervisedResult(analyzeResult, modelId) :
+                ConvertSupervisedResult(analyzeResult, modelId);
         }
 
-        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult, string modelId)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
             {
-                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex));
+                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex, modelId));
             }
             return new RecognizedFormCollection(forms);
         }
 
-        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult)
+        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult, string modelId)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var documentResult in analyzeResult.DocumentResults)
             {
-                forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
+                forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults, modelId));
             }
             return new RecognizedFormCollection(forms);
         }

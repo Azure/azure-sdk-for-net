@@ -304,7 +304,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? Array.Empty<byte>() : source.Body.ToArray());
+            var bodyBytes = source.EventBody.ToBytes();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var message = AmqpMessage.Create(new Data { Value = body });
 
             if (source.Properties?.Count > 0)
@@ -323,6 +324,21 @@ namespace Azure.Messaging.EventHubs.Amqp
             if (!string.IsNullOrEmpty(partitionKey))
             {
                 message.MessageAnnotations.Map[AmqpProperty.PartitionKey] = partitionKey;
+            }
+
+            if (source.PendingPublishSequenceNumber.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = source.PendingPublishSequenceNumber;
+            }
+
+            if (source.PendingProducerGroupId.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = source.PendingProducerGroupId;
+            }
+
+            if (source.PendingProducerOwnerLevel.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = source.PendingProducerOwnerLevel;
             }
 
             return message;

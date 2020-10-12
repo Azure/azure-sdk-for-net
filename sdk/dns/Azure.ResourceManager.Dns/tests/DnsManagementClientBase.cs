@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Dns.Tests
         }
         protected void initNewRecord()
         {
+            ResourcesManagementClient = this.GetResourceManagementClient();
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Tests
         internal DnsManagementClient GetDnsManagementClient()
         {
             return CreateClient<DnsManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential, Recording.InstrumentClientOptions(new DnsManagementClientOptions()));
+                TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
         }
     }
 }

@@ -1,12 +1,12 @@
 # Microsoft.Azure.Synapse
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/30fcbd8d18834a432c031d252d735eb5bbcc02bf
+repo: https://github.com/Azure/azure-rest-api-specs/blob/036a9bba574b092c83a5d1b2fd9482d87e8fdc9d
 ```
 
 ``` yaml

@@ -21,6 +21,7 @@ namespace Azure.AI.TextAnalytics
             Text = entity.Text;
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
+            Offset = entity.Offset;
         }
 
         /// <summary>
@@ -50,5 +51,10 @@ namespace Azure.AI.TextAnalytics
         /// text substring matches this inferred entity.
         /// </summary>
         public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
+        /// </summary>
+        public int Offset { get; }
     }
 }

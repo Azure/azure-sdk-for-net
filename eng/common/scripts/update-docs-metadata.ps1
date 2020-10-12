@@ -17,6 +17,8 @@ param (
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
+$releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master"
+
 function GetMetaData($lang){
   switch ($lang) {
     "java" {
@@ -68,15 +70,18 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
     }
 
     $fileContent = $pkgInfo.ReadmeContent
-    $foundTitle = ""
 
     # only replace the version if the formatted header can be found
-    $headerContentMatches = (Select-String -InputObject $pkgInfo.ReadmeContent -Pattern 'Azure .+? (client|plugin|shared) library for (JavaScript|Java|Python|\.NET|C)')
-    if ($headerContentMatches) {
-      $foundTitle = $headerContentMatches.Matches[0]
-      $fileContent = $pkgInfo.ReadmeContent -replace $foundTitle, "$foundTitle - Version $($pkgInfo.PackageVersion) `n"
+    $titleRegex = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library for (?:JavaScript|Java|Python|\.NET|C)))"
+    $foundTitle = ""
+    if ($fileContent -match $titleRegex) {
+      $fileContent = $fileContent -replace $titleRegex, "`${0} - Version $($pkgInfo.PackageVersion) `n"
+      $foundTitle = $matches["filetitle"]
     }
-
+    # Replace github master link with release tag.
+    $ReplacementPattern = "`${1}$($pkgInfo.Tag)"
+    $fileContent = $fileContent -replace $releaseReplaceRegex, $ReplacementPattern
+  
     $header = "---`ntitle: $foundTitle`nkeywords: Azure, $lang, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $lang`nms.service: $service`n---`n"
 
     if ($fileContent) {

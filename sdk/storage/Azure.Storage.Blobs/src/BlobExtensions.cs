@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
                 IsLatestVersion = blobItemInternal.IsCurrentVersion,
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
-                    : null,
+                    : new Dictionary<string, string>(),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
@@ -149,7 +149,8 @@ namespace Azure.Storage.Blobs
                 TagCount = properties.TagCount,
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,
-                RehydratePriority = properties.RehydratePriority
+                RehydratePriority = properties.RehydratePriority,
+                LastAccessed = properties.LastAccessed
             };
 
         /// <summary>

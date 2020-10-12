@@ -80,8 +80,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -128,8 +128,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
@@ -245,17 +245,13 @@ namespace Azure.Data.Tables.Tests
 
             await service.SetPropertiesAsync(responseToChange).ConfigureAwait(false);
 
-            // Wait 20 sec if on Live mode to ensure properties are updated in the service
-            // Minimum time: Sync - 20 sec; Async - 12 sec
-
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
-
             // Get configured properties
+            // A delay is required to ensure properties are updated in the service
 
-            TableServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+            TableServiceProperties changedResponse = await RetryUntilExpectedResponse(
+                async () => await service.GetPropertiesAsync().ConfigureAwait(false),
+                result => result.Value.Logging.Read == responseToChange.Logging.Read,
+                15000).ConfigureAwait(false);
 
             // Test each property
 

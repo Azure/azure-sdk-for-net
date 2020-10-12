@@ -43,6 +43,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", test.Value);
         }
 
+        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorWorksForSamples(RecordedTestMode mode)
+        {
+            var test = new SampleTestClass();
+            Assert.AreEqual("1", test.Value);
+        }
+
+        [Theory]
+        [TestCase(RecordedTestMode.Live)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.None)]
+        public void ReadingRecordedValueInCtorWorksForLiveTests(RecordedTestMode mode)
+        {
+            var test = new LiveTestClass();
+            Assert.AreEqual("1", test.Value);
+        }
+
         [Test]
         public void ReadingRecordedValueOutsideRecordedTestWorks()
         {
@@ -79,6 +101,23 @@ namespace Azure.Core.Tests
             Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
         }
 
+        [Test]
+        public void RecordedOptionalVariableNotSanitizedIfMissing()
+        {
+            var tempFile = Path.GetTempFileName();
+            var env = new MockTestEnvironment();
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            env.Mode = RecordedTestMode.Record;
+            env.SetRecording(testRecording);
+
+            Assert.IsNull(env.MissingOptionalSecret);
+
+            testRecording.Dispose();
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+
+            Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
+        }
+
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
         {
             // To make NUnit happy
@@ -101,6 +140,26 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
+        private class LiveTestClass: LiveTestBase<MockTestEnvironment>
+        {
+            public LiveTestClass()
+            {
+                Value = TestEnvironment.RecordedValue;
+            }
+
+            public string Value { get; }
+        }
+
+        private class SampleTestClass: SamplesBase<MockTestEnvironment>
+        {
+            public SampleTestClass()
+            {
+                Value = TestEnvironment.RecordedValue;
+            }
+
+            public string Value { get; }
+        }
+
         private class MockTestEnvironment: TestEnvironment
         {
             public MockTestEnvironment(): base("core")
@@ -114,6 +173,7 @@ namespace Azure.Core.Tests
             public string Base64Secret => GetRecordedVariable("Base64Secret", option => option.IsSecret(SanitizedValue.Base64));
             public string DefaultSecret => GetRecordedVariable("DefaultSecret", option => option.IsSecret(SanitizedValue.Default));
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
+            public string MissingOptionalSecret => GetRecordedOptionalVariable("MissingOptionalSecret", option => option.IsSecret("INVALID"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
 
         }

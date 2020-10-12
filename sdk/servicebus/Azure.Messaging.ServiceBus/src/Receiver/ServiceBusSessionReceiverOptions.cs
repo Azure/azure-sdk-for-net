@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusSessionReceiverOptions
     {
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// Gets or sets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
@@ -32,15 +32,15 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
-        /// An optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
+        /// Gets or sets an optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
         /// the next available session returned from the service will be used.
         /// </summary>
-        public string SessionId { get; set; }
+        internal string SessionId { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

@@ -11,18 +11,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     public partial class MonitorDomain
     {
         /// <summary> Initializes a new instance of MonitorDomain. </summary>
-        public MonitorDomain()
+        /// <param name="version"> Schema version. </param>
+        public MonitorDomain(int version)
         {
+            Version = version;
         }
 
-        /// <summary> Initializes a new instance of MonitorDomain. </summary>
-        /// <param name="test"> Ignored value. </param>
-        internal MonitorDomain(string test)
-        {
-            Test = test;
-        }
-
-        /// <summary> Ignored value. </summary>
-        public string Test { get; set; }
+        /// <summary> Schema version. </summary>
+        public int Version { get; }
     }
 }

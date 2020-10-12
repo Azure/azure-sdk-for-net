@@ -33,14 +33,14 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.EntireDetectAsync(request);
+            var result = await client.DetectEntireSeriesAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedEntireResult.ExpectedValues, result.Value.ExpectedValues);
-            Assert.AreEqual(TestData.ExpectedEntireResult.UpperMargins, result.Value.UpperMargins);
-            Assert.AreEqual(TestData.ExpectedEntireResult.LowerMargins, result.Value.LowerMargins);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsAnomaly, result.Value.IsAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.LowerMargins, result.Value.LowerMargins);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.LastDetectAsync(request);
+            var result = await client.DetectLastPointAsync(request);
 
             Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
             Assert.AreEqual(false, result.Value.IsAnomaly);
@@ -73,7 +73,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            var result = await client.ChangePointDetectAsync(request);
+            var result = await client.DetectChangePointAsync(request);
 
             Assert.AreEqual(TestData.ExpectedChangePointResult.Period, result.Value.Period);
             Assert.AreEqual(TestData.ExpectedChangePointResult.IsChangePoint, result.Value.IsChangePoint);

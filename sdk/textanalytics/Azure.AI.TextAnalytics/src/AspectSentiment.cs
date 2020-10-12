@@ -17,11 +17,12 @@ namespace Azure.AI.TextAnalytics
     {
         private const double _neutralValue = 0d;
 
-        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore)
+        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
+            Offset = offset;
         }
 
         internal AspectSentiment(SentenceAspect sentenceAspect)
@@ -31,6 +32,7 @@ namespace Azure.AI.TextAnalytics
             Text = sentenceAspect.Text;
             ConfidenceScores = new SentimentConfidenceScores(sentenceAspect.ConfidenceScores.Positive, _neutralValue, sentenceAspect.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceAspect.Sentiment, ignoreCase: true);
+            Offset = sentenceAspect.Offset;
         }
 
         /// <summary>
@@ -50,5 +52,10 @@ namespace Azure.AI.TextAnalytics
         /// Higher values signify higher confidence.
         /// </summary>
         public SentimentConfidenceScores ConfidenceScores { get; }
+
+        /// <summary>
+        /// Gets the starting position (in UTF-16 code units) for the aspect text.
+        /// </summary>
+        public int Offset { get; }
     }
 }

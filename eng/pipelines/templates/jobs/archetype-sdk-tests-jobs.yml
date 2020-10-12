@@ -29,6 +29,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
 
 jobs:
   - ${{ each platform in parameters.Platforms }}:
@@ -55,17 +58,9 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
-        - task: UseDotNet@2
-          displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-          inputs:
-            packageType: runtime
-            version: "$(DotNetCoreRuntimeVersion)"
-
-        - task: UseDotNet@2
-          displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-          inputs:
-            packageType: sdk
-            version: "$(DotNetCoreSDKVersion)"
+        - ${{ each step in parameters.TestSetupSteps }}:
+          - ${{ each pair in step }}:
+              ${{ pair.key }}: ${{ pair.value }}
 
         - template: /eng/common/TestResources/deploy-test-resources.yml
           parameters:

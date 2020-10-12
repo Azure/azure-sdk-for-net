@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClient
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceRestClient ServiceClient;
+        internal readonly FormRecognizerRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         internal readonly ClientDiagnostics Diagnostics;
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
         /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        internal FormRecognizerClient(ClientDiagnostics diagnostics, ServiceRestClient serviceClient)
+        internal FormRecognizerClient(ClientDiagnostics diagnostics, FormRecognizerRestClient serviceClient)
         {
             Diagnostics = diagnostics;
             ServiceClient = serviceClient;
@@ -271,7 +271,7 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, default, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, default, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -336,7 +336,7 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale:default, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -368,7 +368,7 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: default, fileStream:sourcePath, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
