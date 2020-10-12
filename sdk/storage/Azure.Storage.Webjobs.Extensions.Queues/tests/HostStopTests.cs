@@ -6,38 +6,40 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using NUnit.Framework;
+using Azure.WebJobs.Extensions.Storage.Queues;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStopTests : IClassFixture<AzuriteFixture>
+    public class HostStopTests
     {
-        private const string QueueName = "input";
+        private const string QueueName = "input-hoststoptests";
         private static readonly TaskCompletionSource<object> _functionStarted = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<object> _stopHostCalled = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<bool> _testTaskSource = new TaskCompletionSource<bool>();
-        private readonly AzuriteFixture azuriteFixture;
+        private QueueServiceClient queueServiceClient;
 
-        public HostStopTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Stop_TriggersCancellationToken()
         {
-            StorageAccount account = azuriteFixture.GetAccount();
-            QueueClient queue = await CreateQueueAsync(account, QueueName);
+            QueueClient queue = await CreateQueueAsync(queueServiceClient, QueueName);
             await queue.SendMessageAsync("ignore");
 
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<CallbackCancellationTokenProgram>(c =>
                 {
                     c.AddAzureStorageBlobs().AddAzureStorageQueues();
-                    c.Services.AddSingleton<StorageAccountProvider>(_ => new FakeStorageAccountProvider(account));
+                    c.Services.AddSingleton<QueueServiceClientProvider>(_ => new FakeQueueServiceClientProvider(queueServiceClient));
                 })
                 .Build();
 
@@ -63,17 +65,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     await _testTaskSource.Task;
                 }
 
-                Assert.Equal(TaskStatus.RanToCompletion, _testTaskSource.Task.Status);
+                Assert.AreEqual(TaskStatus.RanToCompletion, _testTaskSource.Task.Status);
 
                 stopTask.WaitUntilCompleted(3 * 1000);
-                Assert.Equal(TaskStatus.RanToCompletion, stopTask.Status);
+                Assert.AreEqual(TaskStatus.RanToCompletion, stopTask.Status);
             }
         }
 
-        private static async Task<QueueClient> CreateQueueAsync(StorageAccount account, string queueName)
+        private static async Task<QueueClient> CreateQueueAsync(QueueServiceClient queueServiceClient, string queueName)
         {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }

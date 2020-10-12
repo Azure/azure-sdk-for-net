@@ -20,5 +20,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// Filter to apply to the documents in the source path for training.
         /// </summary>
         public TrainingFileFilter TrainingFileFilter { get; set; }
+
+        /// <summary>
+        /// An optional, user-defined name to associate with your model.
+        /// </summary>
+        public string ModelName { get; set; }
     }
 }

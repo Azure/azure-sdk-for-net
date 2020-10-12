@@ -476,7 +476,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            Response<BlobContentInfo> response = await blob.CreateAsync();
+            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
 
             // Act
             Response<BlobContentInfo> responseExists = await blob.CreateIfNotExistsAsync();
@@ -512,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             const int blobSize = Constants.KB;
             var data = GetRandomBuffer(blobSize);
 
@@ -541,7 +541,7 @@ namespace Azure.Storage.Blobs.Test
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
             var data = GetRandomBuffer(Constants.KB);
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             using var stream = new MemoryStream(data);
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Constants.KB);
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             using var stream = new MemoryStream(data);
@@ -581,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             // Act
@@ -603,7 +603,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Constants.KB);
 
             // Act
@@ -656,7 +656,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Arrange
                 AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
+                await blob.CreateIfNotExistsAsync();
                 var data = GetRandomBuffer(7);
                 parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                 parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
@@ -700,7 +700,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 var data = GetRandomBuffer(7);
                 // AppendBlob needs to exists for us to test CreateAsync() with access conditions
-                await blob.CreateAsync();
+                await blob.CreateIfNotExistsAsync();
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
                     parameters: parameters,
@@ -793,7 +793,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blobFaulty = InstrumentClient(containerFaulty.GetAppendBlobClient(blobName));
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
 
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             var data = GetRandomBuffer(blobSize);
             var progressBag = new System.Collections.Concurrent.ConcurrentBag<long>();
@@ -836,7 +836,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             const int blobSize = 4 * Constants.MB;
             var data = GetRandomBuffer(blobSize);
             TestProgress progress = new TestProgress();
@@ -917,11 +917,11 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
@@ -941,13 +941,13 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
                 destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
@@ -972,12 +972,12 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
@@ -1001,11 +1001,11 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Constants.KB, 2 * Constants.KB));
@@ -1032,11 +1032,11 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 await destBlob.AppendBlockFromUriAsync(
@@ -1058,11 +1058,11 @@ namespace Azure.Storage.Blobs.Test
             using (var stream = new MemoryStream(data))
             {
                 AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateAsync();
+                await sourceBlob.CreateIfNotExistsAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await destBlob.CreateAsync();
+                await destBlob.CreateIfNotExistsAsync();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1105,11 +1105,11 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream(data))
                 {
                     AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
+                    await sourceBlob.CreateIfNotExistsAsync();
                     await sourceBlob.AppendBlockAsync(stream);
 
                     AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
+                    await destBlob.CreateIfNotExistsAsync();
 
                     parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
                     parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
@@ -1160,11 +1160,11 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream(data))
                 {
                     AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                    await sourceBlob.CreateAsync();
+                    await sourceBlob.CreateIfNotExistsAsync();
                     await sourceBlob.AppendBlockAsync(stream);
 
                     AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                    await destBlob.CreateAsync();
+                    await destBlob.CreateIfNotExistsAsync();
 
                     parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
                     parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);

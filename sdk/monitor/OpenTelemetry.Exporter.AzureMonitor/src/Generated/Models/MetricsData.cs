@@ -19,20 +19,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <param name="version"> Schema version. </param>
         /// <param name="metrics"> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public MetricsData(int version, IEnumerable<MetricDataPoint> metrics)
+        public MetricsData(int version, IEnumerable<MetricDataPoint> metrics) : base(version)
         {
             if (metrics == null)
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            Version = version;
             Metrics = metrics.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </summary>
         public IList<MetricDataPoint> Metrics { get; }
         /// <summary> Collection of custom properties. </summary>

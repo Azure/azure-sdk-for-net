@@ -1,4 +1,4 @@
-# Performing a full key restore
+# Performing a selective key restore
 
 Using the `KeyVaultBackupClient`, you can restore a single key from backup by key name. The data source for a 
 selective key restore is a storage blob accessed using Shared Access Signature authentication. 

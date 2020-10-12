@@ -1965,8 +1965,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = querySqlExpression,
-                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(isInput: true),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
                     (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,

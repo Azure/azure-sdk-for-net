@@ -22,7 +22,7 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = InstrumentClient(
                 new SmsClient(
                     TestEnvironment.ConnectionString,
-                    Recording.InstrumentClientOptions(new SmsClientOptions())));
+                    InstrumentClientOptions(new SmsClientOptions())));
 
             #region Snippet:Azure_Communication_Sms_Tests_Troubleshooting
             try

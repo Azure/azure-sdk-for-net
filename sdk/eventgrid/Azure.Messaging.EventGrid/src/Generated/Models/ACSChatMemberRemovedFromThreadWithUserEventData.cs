@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="time"> The time at which the user was removed to the thread. </param>
         /// <param name="removedBy"> The MRI of the user who removed the user. </param>
         /// <param name="memberRemoved"> The details of the user who was removed. </param>
-        internal ACSChatMemberRemovedFromThreadWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version, DateTimeOffset? time, string removedBy, ACSChatThreadMemberProperties memberRemoved) : base(recipientId, transactionId, threadId, createTime, version)
+        internal ACSChatMemberRemovedFromThreadWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, DateTimeOffset? time, string removedBy, ACSChatThreadMemberProperties memberRemoved) : base(recipientId, transactionId, threadId, createTime, version)
         {
             Time = time;
             RemovedBy = removedBy;

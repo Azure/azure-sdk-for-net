@@ -71,46 +71,5 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatClient.DeleteChatThreadAsync(threadId);
 
         }
-
-        [Test]
-        public void GetAddRemoveMembers()
-        {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> threadCreator = communicationIdentityClient.CreateUser();
-            Response<CommunicationUser> threadMember2 = communicationIdentityClient.CreateUser();
-            Response<CommunicationUser> threadMember3 = communicationIdentityClient.CreateUser();
-
-            string userToken = communicationIdentityClient.IssueToken(threadCreator.Value, new[] { CommunicationTokenScope.Chat }).Value.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
-
-            ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
-
-            var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreator.Value.Id))
-            {
-                DisplayName = "UserDisplayName",
-                ShareHistoryTime = DateTime.MinValue
-            };
-            ChatThreadClient chatThreadClient = chatClient.CreateChatThread(topic: "Hello world!", members: new[] { chatThreadMember });
-
-            Pageable<ChatThreadMember> allMembers = chatThreadClient.GetMembers();
-            foreach (ChatThreadMember member in allMembers)
-            {
-                Console.WriteLine($"{member.User.Id}:{member.DisplayName}:{member.ShareHistoryTime}");
-            }
-
-            var members = new[]
-            {
-                new ChatThreadMember(threadCreator) { DisplayName ="display name thread creator"},
-                new ChatThreadMember(threadMember2) { DisplayName ="display name member 2"},
-                new ChatThreadMember(threadMember3) { DisplayName ="display name member 3"}
-            };
-            chatThreadClient.AddMembers(members);
-
-            chatThreadClient.RemoveMember(new CommunicationUser(threadMember2.Value.Id));
-
-            chatClient.DeleteChatThread(chatThreadClient.Id);
-        }
     }
 }

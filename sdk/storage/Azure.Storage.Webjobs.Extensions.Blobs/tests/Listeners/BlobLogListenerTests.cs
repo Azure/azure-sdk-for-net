@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
     public class BlobLogListenerTests
     {
-        [Fact]
+        [Test]
         public void GetPathsForValidBlobWrites_Returns_ValidBlobWritesOnly()
         {
             StorageAnalyticsLogEntry[] entries = new[]
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             IEnumerable<BlobPath> validPaths = BlobLogListener.GetPathsForValidBlobWrites(entries);
 
             BlobPath singlePath = validPaths.Single();
-            Assert.Equal("sample-container", singlePath.ContainerName);
-            Assert.Equal(@"""0x8D199A96CB71468""/sample-blob.txt", singlePath.BlobName);
+            Assert.AreEqual("sample-container", singlePath.ContainerName);
+            Assert.AreEqual(@"""0x8D199A96CB71468""/sample-blob.txt", singlePath.BlobName);
         }
     }
 }

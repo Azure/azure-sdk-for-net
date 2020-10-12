@@ -344,8 +344,8 @@ namespace Azure.Storage.Files.DataLake
 
             BlobQueryOptions blobQueryOptions = new BlobQueryOptions
             {
-                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(),
-                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(),
+                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(isInput: true),
+                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(isInput: false),
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 ProgressHandler = options.ProgressHandler
             };
@@ -358,39 +358,105 @@ namespace Azure.Storage.Files.DataLake
             return blobQueryOptions;
         }
 
-        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(this DataLakeQueryTextOptions textConfiguration)
+        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(
+            this DataLakeQueryTextOptions textConfiguration,
+            bool isInput)
         {
             if (textConfiguration == null)
             {
                 return null;
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextOptions))
+            if (textConfiguration is DataLakeQueryJsonTextOptions dataLakeQueryJsonTexasOptions)
             {
-                return ((DataLakeQueryJsonTextOptions)textConfiguration).ToBlobQueryJsonTextConfiguration();
+                return dataLakeQueryJsonTexasOptions.ToBlobQueryJsonTextConfiguration();
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextOptions))
+            if (textConfiguration is DataLakeQueryCsvTextOptions dataLakeQueryCsvTextOptions)
             {
-                return ((DataLakeQueryCsvTextOptions)textConfiguration).ToBlobQueryCsvTextConfiguration();
+                return dataLakeQueryCsvTextOptions.ToBlobQueryCsvTextConfiguration();
+            }
+
+            if (textConfiguration is DataLakeQueryArrowOptions dataLakeQueryArrowOptions)
+            {
+                if (isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.");
+                }
+
+                return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
             }
 
             throw new ArgumentException("Invalid text configuration type");
         }
 
-        internal static BlobQueryJsonTextOptions ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextOptions textConfiguration)
+        internal static BlobQueryJsonTextOptions ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextOptions options)
             => new BlobQueryJsonTextOptions
             {
-                RecordSeparator = textConfiguration.RecordSeparator
+                RecordSeparator = options.RecordSeparator
             };
 
-        internal static BlobQueryCsvTextOptions ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextOptions textConfiguration)
+        internal static BlobQueryCsvTextOptions ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextOptions options)
             => new BlobQueryCsvTextOptions
             {
-                ColumnSeparator = textConfiguration.ColumnSeparator,
-                QuotationCharacter = textConfiguration.QuotationCharacter,
-                EscapeCharacter = textConfiguration.EscapeCharacter,
-                HasHeaders = textConfiguration.HasHeaders
+                ColumnSeparator = options.ColumnSeparator,
+                QuotationCharacter = options.QuotationCharacter,
+                EscapeCharacter = options.EscapeCharacter,
+                HasHeaders = options.HasHeaders
+            };
+
+        internal static BlobQueryArrowOptions ToBlobQueryArrowOptions(this DataLakeQueryArrowOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryArrowOptions
+            {
+                Schema = options.Schema.ToBlobQueryArrowFields()
+            };
+        }
+
+        internal static IList<BlobQueryArrowField> ToBlobQueryArrowFields(this IList<DataLakeQueryArrowField> arrowFields)
+        {
+            if (arrowFields == null)
+            {
+                return null;
+            }
+
+            IList<BlobQueryArrowField> blobQueryArrowFields = new List<BlobQueryArrowField>();
+            arrowFields.ToList().ForEach(r => blobQueryArrowFields.Add(r.ToBlobQueryArrowField()));
+
+            return blobQueryArrowFields;
+        }
+
+        internal static BlobQueryArrowField ToBlobQueryArrowField(this DataLakeQueryArrowField arrowField)
+        {
+            if (arrowField == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryArrowField
+            {
+                Type = arrowField.Type.ToBlobQueryArrowFieldType(),
+                Name = arrowField.Name,
+                Precision = arrowField.Precision,
+                Scale = arrowField.Scale
+            };
+        }
+
+        internal static BlobQueryArrowFieldType ToBlobQueryArrowFieldType(this DataLakeQueryArrowFieldType fieldType)
+            => fieldType switch
+            {
+                DataLakeQueryArrowFieldType.Bool => BlobQueryArrowFieldType.Bool,
+                DataLakeQueryArrowFieldType.Decimal => BlobQueryArrowFieldType.Decimal,
+                DataLakeQueryArrowFieldType.Double => BlobQueryArrowFieldType.Double,
+                DataLakeQueryArrowFieldType.Int64 => BlobQueryArrowFieldType.Int64,
+                DataLakeQueryArrowFieldType.String => BlobQueryArrowFieldType.String,
+                DataLakeQueryArrowFieldType.Timestamp => BlobQueryArrowFieldType.Timestamp,
+                _ => default,
             };
 
         internal static DataLakeQueryError ToDataLakeQueryError(this BlobQueryError error)

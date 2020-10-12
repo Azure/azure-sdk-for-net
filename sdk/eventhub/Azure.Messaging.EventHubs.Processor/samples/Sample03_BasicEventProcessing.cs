@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                     // token be passed to any asynchronous operations that are awaited in this handler.
 
                     ++eventIndex;
-                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.EventBody.ToBytes().ToArray()) }");
                 }
                 catch (Exception ex)
                 {

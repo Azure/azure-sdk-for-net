@@ -5,19 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
@@ -27,18 +26,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>
     {
         private readonly BlobTriggerAttributeBindingProvider _triggerBinder;
-        private StorageAccountProvider _accountProvider;
+        private BlobServiceClientProvider _blobServiceClientProvider;
         private IContextGetter<IBlobWrittenWatcher> _blobWrittenWatcherGetter;
         private readonly INameResolver _nameResolver;
         private IConverterManager _converterManager;
 
-        public BlobsExtensionConfigProvider(StorageAccountProvider accountProvider,
+        public BlobsExtensionConfigProvider(
+            BlobServiceClientProvider blobServiceClientProvider,
             BlobTriggerAttributeBindingProvider triggerBinder,
             IContextGetter<IBlobWrittenWatcher> contextAccessor,
             INameResolver nameResolver,
             IConverterManager converterManager)
         {
-            _accountProvider = accountProvider;
+            _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
             _nameResolver = nameResolver;
@@ -62,39 +62,21 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             rule.AddOpenConverter<MultiBlobContext, IEnumerable<BlobCollectionType>>(typeof(BlobCollectionConverter<>), this);
 
             // BindToStream will also handle the custom Stream-->T converters.
-#pragma warning disable CS0618 // Type or member is obsolete
-            rule.SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
-                BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
+            rule.BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
 
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob.
-#pragma warning disable CS0618 // Type or member is obsolete
-            rule.SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
-                BindToInput<BlockBlobClient>((attr, cts) => CreateBlobReference<BlockBlobClient>(attr, cts));
+            rule.BindToInput<BlockBlobClient>((attr, cts) => CreateBlobReference<BlockBlobClient>(attr, cts));
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            rule.SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
-                BindToInput<PageBlobClient>((attr, cts) => CreateBlobReference<PageBlobClient>(attr, cts));
+            rule.BindToInput<PageBlobClient>((attr, cts) => CreateBlobReference<PageBlobClient>(attr, cts));
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            rule.SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
-                 BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
+            rule.BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            rule.SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
                 // TODO (kasobol-msft) figure out how to add binding to BlobClient.
-                BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
+            rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
 
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
-#pragma warning disable CS0618 // Type or member is obsolete
             rule.When("Access", FileAccess.Write).
-                SetPostResolveHook(ToBlobDescr).
-#pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<Stream>(ConvertToCloudBlobStreamAsync);
         }
 
@@ -256,8 +238,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         private async Task<Stream> ConvertToStreamAsync(BlobBaseClient input, CancellationToken cancellationToken)
         {
-            WatchableReadStream watchableStream = await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
-            return watchableStream;
+            return await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         // For describing InvokeStrings.
@@ -265,8 +246,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             var attrResolved = (BlobTriggerAttribute)attr;
 
-            var account = _accountProvider.Get(attrResolved.Connection);
-            var client = account.CreateBlobServiceClient();
+            var client = _blobServiceClientProvider.Get(attrResolved.Connection);
             BlobPath path = BlobPath.ParseAndValidate(input.Value);
             var container = client.GetBlobContainerClient(path.ContainerName);
             var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
@@ -300,8 +280,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         private BlobServiceClient GetClient(
          BlobAttribute blobAttribute)
         {
-            var account = _accountProvider.Get(blobAttribute.Connection, _nameResolver);
-            return account.CreateBlobServiceClient();
+            return _blobServiceClientProvider.Get(blobAttribute.Connection, _nameResolver);
         }
 
         private BlobContainerClient GetContainer(
@@ -336,51 +315,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 boundPath.BlobName, requestedType, cancellationToken).ConfigureAwait(false);
 
             return new BlobWithContainer<BlobBaseClient>(container, blob);
-        }
-        private ParameterDescriptor ToBlobDescr(BlobAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
-        {
-            // Resolve the connection string to get an account name.
-            var client = GetClient(attr);
-
-            var accountName = client.AccountName;
-
-            var resolved = nameResolver.ResolveWholeString(attr.BlobPath);
-
-            string containerName = resolved;
-            string blobName = null;
-            int split = resolved.IndexOf('/');
-            if (split > 0)
-            {
-                containerName = resolved.Substring(0, split);
-                blobName = resolved.Substring(split + 1);
-            }
-
-            FileAccess access = FileAccess.ReadWrite;
-            if (attr.Access.HasValue)
-            {
-                access = attr.Access.Value;
-            }
-            else
-            {
-                var type = parameter.ParameterType;
-                if (type.IsByRef || type == typeof(TextWriter))
-                {
-                    access = FileAccess.Write;
-                }
-                if (type == typeof(TextReader) || type == typeof(string) || type == typeof(byte[]))
-                {
-                    access = FileAccess.Read;
-                }
-            }
-
-            return new BlobParameterDescriptor
-            {
-                Name = parameter.Name,
-                AccountName = accountName,
-                ContainerName = containerName,
-                BlobName = blobName,
-                Access = access
-            };
         }
     }
 }

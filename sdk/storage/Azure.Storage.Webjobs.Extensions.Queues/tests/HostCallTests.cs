@@ -3,54 +3,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Newtonsoft.Json;
-using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
+using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
-    public class HostCallTests : IClassFixture<AzuriteFixture>
+    public class HostCallTests
     {
-        private const string QueueName = "input";
-        private const string OutputQueueName = "output";
-        private const int TestValue = Int32.MinValue;
+        private const string QueueName = "input-hostcalltests";
+        private const string OutputQueueName = "output-hostcalltests";
         private const string TestQueueMessage = "ignore";
-        private readonly AzuriteFixture azuriteFixture;
+        private QueueServiceClient queueServiceClient;
 
-        public HostCallTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
+            queueServiceClient.GetQueueClient(OutputQueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             // Arrange
-            var account = CreateFakeStorageAccount();
             IDictionary<string, object> arguments = new Dictionary<string, object>
             {
                 { "value", "15" }
             };
 
             // Act
-            int result = await CallAsync<int>(account, typeof(UnboundInt32Program), "Call", arguments,
+            int result = await CallAsync<int>(typeof(UnboundInt32Program), "Call", arguments,
                 (s) => UnboundInt32Program.TaskSource = s);
 
-            Assert.Equal(15, result);
+            Assert.AreEqual(15, result);
         }
 
         private class UnboundInt32Program
@@ -64,99 +60,89 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutPoco_CanCall()
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToOutPoco");
+            await CallAsync(typeof(QueueProgram), "BindToOutPoco");
 
             // Assert
-            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             AssertMessageSent(new PocoMessage { Value = "15" }, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToICollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToICollectorPoco");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToIAsyncCollectorPoco");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
+            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
 
             // Assert
-            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
             // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-            Assert.Equal("test1", sortedMessages[0].MessageText);
-            Assert.Equal("test2", sortedMessages[1].MessageText);
-            Assert.Equal("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].MessageText);
+            Assert.AreEqual("test2", sortedMessages[1].MessageText);
+            Assert.AreEqual("test3", sortedMessages[2].MessageText);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
-            var account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToICollectorByteArray");
+            await CallAsync(typeof(QueueProgram), "BindToICollectorByteArray");
 
             // Assert
-            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
-            Assert.Equal("test1", sortedMessages[0].MessageText);
-            Assert.Equal("test2", sortedMessages[1].MessageText);
-            Assert.Equal("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].MessageText);
+            Assert.AreEqual("test2", sortedMessages[1].MessageText);
+            Assert.AreEqual("test3", sortedMessages[2].MessageText);
         }
 
-        [Fact]
-        public async Task Queue_IfBoundToIAsyncCollectorInt_NotSupported()
+        [Test]
+        public void Queue_IfBoundToIAsyncCollectorInt_NotSupported()
         {
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            FunctionIndexingException ex = await Assert.ThrowsAsync<FunctionIndexingException>(() =>
+            FunctionIndexingException ex = Assert.ThrowsAsync<FunctionIndexingException>(() =>
             {
-                return CallAsync(account, typeof(QueueNotSupportedProgram), "BindToICollectorInt");
+                return CallAsync(typeof(QueueNotSupportedProgram), "BindToICollectorInt");
             });
 
             // Assert
-            Assert.Equal("Primitive types are not supported.", ex.InnerException.Message);
+            Assert.AreEqual("Primitive types are not supported.", ex.InnerException.Message);
         }
 
         private async Task TestEnqueueMultiplePocoMessages(string methodName)
         {
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(QueueProgram), methodName);
+            await CallAsync(typeof(QueueProgram), methodName);
 
             // Assert
-            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
-            Assert.Equal(3, messages.Count());
+            Assert.AreEqual(3, messages.Count());
             IEnumerable<QueueMessage> sortedMessages = messages.OrderBy((m) => m.MessageText);
             QueueMessage firstMessage = sortedMessages.ElementAt(0);
             QueueMessage secondMessage = sortedMessages.ElementAt(1);
@@ -166,44 +152,35 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(new PocoMessage { Value = "30" }, thirdMessage);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToIAsyncCollector_AddEnqueuesImmediately()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorEnqueuesImmediately");
+            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorEnqueuesImmediately");
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToCloudQueue_CanCall()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
+            QueueClient result = await CallAsync<QueueClient>(typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(QueueName, result.Name);
+            Assert.AreEqual(QueueName, result.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToCloudQueueAndQueueIsMissing_Creates()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
+            QueueClient result = await CallAsync<QueueClient>(typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(QueueName);
+            QueueClient queue = queueServiceClient.GetQueueClient(QueueName);
             Assert.True(await queue.ExistsAsync());
         }
 
@@ -217,70 +194,56 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Theory]
-        [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
-        [InlineData("FuncWithOutByteArray", TestQueueMessage)]
-        [InlineData("FuncWithOutString", TestQueueMessage)]
-        [InlineData("FuncWithICollector", TestQueueMessage)]
+        [TestCase("FuncWithOutCloudQueueMessage", TestQueueMessage)]
+        [TestCase("FuncWithOutByteArray", TestQueueMessage)]
+        [TestCase("FuncWithOutString", TestQueueMessage)]
+        [TestCase("FuncWithICollector", TestQueueMessage)]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_CreatesAndSends(string methodName, string expectedMessage)
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(MissingQueueProgram), methodName);
+            await CallAsync(typeof(MissingQueueProgram), methodName);
 
             // Assert
-            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(expectedMessage, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutPocoAndQueueIsMissing_CreatesAndSends()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
+            await CallAsync(typeof(MissingQueueProgram), "FuncWithOutT");
 
             // Assert
-            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(new PocoMessage { Value = TestQueueMessage }, queue);
         }
 
-        [Fact]
+        [Test]
         public async Task Queue_IfBoundToOutStructAndQueueIsMissing_CreatesAndSends()
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
+            await CallAsync(typeof(MissingQueueProgram), "FuncWithOutT");
 
             // Assert
-            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
 
-        [Theory]
-        [InlineData("FuncWithOutCloudQueueMessageNull")]
-        [InlineData("FuncWithOutByteArrayNull")]
-        [InlineData("FuncWithOutStringNull")]
-        [InlineData("FuncWithICollectorNoop")]
+        [TestCase("FuncWithOutCloudQueueMessageNull")]
+        [TestCase("FuncWithOutByteArrayNull")]
+        [TestCase("FuncWithOutStringNull")]
+        [TestCase("FuncWithICollectorNoop")]
         public async Task Queue_IfBoundToTypeAndQueueIsMissing_DoesNotCreate(string methodName)
         {
-            // Arrange
-            StorageAccount account = CreateFakeStorageAccount();
-
             // Act
-            await CallAsync(account, typeof(MissingQueueProgram), methodName);
+            await CallAsync(typeof(MissingQueueProgram), methodName);
 
             // Assert
-            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueClient queue = queueServiceClient.GetQueueClient(OutputQueueName);
             Assert.False(await queue.ExistsAsync());
         }
 
@@ -289,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(queue);
             QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
             Assert.NotNull(message);
-            Assert.Equal(expectedMessage, message.MessageText);
+            Assert.AreEqual(expectedMessage, message.MessageText);
         }
 
         private static void AssertMessageSent(PocoMessage expected, QueueClient queue)
@@ -332,41 +295,36 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 return;
             }
 
-            Assert.Equal(expected.Value, actual.Value);
+            Assert.AreEqual(expected.Value, actual.Value);
         }
 
         private static void AssertEqual(StructMessage expected, StructMessage actual)
         {
-            Assert.Equal(expected.Value, actual.Value);
+            Assert.AreEqual(expected.Value, actual.Value);
         }
 
-        private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
+        private async Task CallAsync(Type programType, string methodName, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), null, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), null, customExtensions);
         }
 
-        private static async Task CallAsync(StorageAccount account, Type programType, string methodName,
+        private async Task CallAsync(Type programType, string methodName,
             IDictionary<string, object> arguments, params Type[] customExtensions)
         {
-            await FunctionalTest.CallAsync(account, programType, programType.GetMethod(methodName), arguments, customExtensions);
+            await FunctionalTest.CallAsync(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, customExtensions);
         }
 
-        private static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, string methodName,
+        private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             IDictionary<string, object> arguments = null;
-            return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
+            return await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
-        private static async Task<TResult> CallAsync<TResult>(StorageAccount account, Type programType, string methodName,
+        private async Task<TResult> CallAsync<TResult>(Type programType, string methodName,
             IDictionary<string, object> arguments, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.CallAsync<TResult>(account, programType, programType.GetMethod(methodName), arguments, setTaskSource);
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return azuriteFixture.GetAccount();
+            return await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, programType.GetMethod(methodName), arguments, setTaskSource);
         }
 
         private struct CustomDataValue
@@ -436,7 +394,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 await collector.AddAsync(expectedContents);
                 QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 Assert.NotNull(message);
-                Assert.Equal(expectedContents, message.MessageText);
+                Assert.AreEqual(expectedContents, message.MessageText);
             }
         }
 
