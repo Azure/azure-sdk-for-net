@@ -39,7 +39,7 @@ BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sas
 Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupBlobUri = backupResult.Value;
+Uri backupFolderUri = backupResult.Value;
 ```
 
 ## Performing a full key restore
@@ -50,7 +50,7 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 
 ```C# Snippet:HelloFullRestoreAsync
 // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupBlobUri, sasToken);
+RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
 Response restoreResult = await restoreOperation.WaitForCompletionAsync();
