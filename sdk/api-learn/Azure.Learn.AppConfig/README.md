@@ -6,7 +6,7 @@ Use the guidelines in each section of this template to ensure consistency and re
 * All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
 * Example: `# Azure Batch client library for Python`
 
-# App Configuration Learn client library for .NET
+# Azure App Configuration Learn client library for .NET
 
 ## Getting started
 
