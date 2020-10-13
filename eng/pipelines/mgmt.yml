@@ -49,6 +49,7 @@ pr:
     - sdk/customproviders/Microsoft.Azure.Management.CustomProviders
     - sdk/databox/Microsoft.Azure.Management.DataBox
     - sdk/databoxedge/Microsoft.Azure.Management.DataBoxEdge
+    - sdk/datadog/Microsoft.Azure.Management.Datadog
     - sdk/datafactory/Microsoft.Azure.Management.DataFactory
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
