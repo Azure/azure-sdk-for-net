@@ -1,0 +1,31 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+trigger:
+  branches:
+    include:
+    - master
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/api-learn/
+
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/api-learn/
+    - eng/common/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: api-learn
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Learn.AppConfig
+      safeName: AzureTemplateAppConfig
