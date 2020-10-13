@@ -109,11 +109,18 @@ function List-PullRequests {
     [ValidateSet("created","updated","popularity","long-running")]
     $Sort,
     [ValidateSet("asc","desc")]
-    $Direction
+    $Direction,
+    [Parameter(DontShow)]
+    $PullRequestNumber
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls"
-  if ($State -or $Head -or $Base -or $Sort -or $Direction) { $uri += '?'}
+  if ($State -or $Head -or $Base -or $Sort -or $Direction) { 
+    $uri += '?'
+  }
+  elseif ($PullRequestNumber) {
+    $uri += "/${PullRequestNumber}"
+  }
   if ($State) { $uri += "state=$State&" }
   if ($Head) { $uri += "head=$Head&" }
   if ($Base) { $uri += "base=$Base&" }
@@ -142,6 +149,51 @@ function List-References {
   if ($Ref) { $uri += "$Ref" }
 
   return Invoke-GitHubAPIGet -apiURI $uri
+}
+
+function Get-PullRequest {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $PullRequestNumber
+  )
+
+  return List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -PullRequestNumber $PullRequestNumber
+}
+
+function Create-PullRequest {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $Title,
+    [Parameter(Mandatory = $true)]
+    $Head,
+    [Parameter(Mandatory = $true)]
+    $Base,
+    $Body=$Title,
+    [Boolean]$Maintainer_Can_Modify=$false,
+    [Boolean]$Draft=$false,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  $parameters = @{
+    title                 = $Title
+    head                  = $Head
+    base                  = $Base
+    body                  = $Body
+    maintainer_can_modify = $Maintainer_Can_Modify
+    $draft                = $Draft
+  }
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls"
+  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
 function Add-IssueComment {
@@ -229,6 +281,54 @@ function Add-IssueAssignees {
   return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
+function Request-PrReviewer {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $PrNumber,
+    $Users,
+    $Teams,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  if (!$users -and !$teams)
+  {
+    throw "You must specify either Users or Teams."
+    exit 1
+  }
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PrNumber/requested_reviewers"
+  $parameters = @{}
+
+  if ($Users) { 
+    if ($Users -is [array])
+    {
+      $parameters["reviewers"] = @($Users)
+    }
+    else {
+      $userAdditions = SplitMembers -membersString $Users
+      $parameters["reviewers"] = @($userAdditions)
+    }
+  }
+
+  if ($Teams) { 
+    if ($Teams -is [array])
+    {
+      $parameters["team_reviewers"] = @($Teams)
+    }
+    else {
+      $teamAdditions = SplitMembers -membersString $Teams
+      $parameters["team_reviewers"] = @($teamAdditions)
+    }
+  }
+
+  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token AuthToken
+}
+
 # For labels and assignee pass comma delimited string, to replace existing labels or assignees.
 # Or pass white space " " to remove all labels or assignees
 function Update-Issue {
@@ -245,9 +345,9 @@ function Update-Issue {
     [string]$State,
     [int]$Milestome,
     [ValidateNotNullOrEmpty()]
-    [string]$Labels,
+    $Labels,
     [ValidateNotNullOrEmpty()]
-    [string]$Assignees,
+    $Assignees,
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
@@ -258,13 +358,27 @@ function Update-Issue {
   if ($Body) { $parameters["body"] = $Body }
   if ($State) { $parameters["state"] = $State }
   if ($Milestone) { $parameters["milestone"] = $Milestone }
+
   if ($Labels) { 
-    $labelAdditions = SplitMembers -membersString $Labels
-    $parameters["labels"] = @($labelAdditions)
+    if ($Labels -is [array])
+    {
+      $parameters["labels"] = @($Labels)
+    }
+    else {
+      $labelAdditions = SplitMembers -membersString $Labels
+      $parameters["labels"] = @($labelAdditions)
+    }
   }
+
   if ($Assignees) { 
-    $assigneesAdditions = SplitMembers -membersString $Assignees
-    $parameters["assignees"] = @($assigneesAdditions)
+    if ($Assignees -is [array])
+    {
+      $parameters["labels"] = @($Assignees)
+    }
+    else {
+      $assigneesAdditions = SplitMembers -membersString $Assignees
+      $parameters["assignees"] = @($assigneesAdditions)
+    }
   }
 
   return Invoke-GitHubAPIPatch -apiURI $uri -body $parameters -token $AuthToken
