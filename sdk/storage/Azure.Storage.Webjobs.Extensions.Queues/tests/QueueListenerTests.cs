@@ -507,14 +507,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                     return expectedQueueProcessor;
                 });
 
-            // when storage host is "localhost" we invoke the processor factory even for
-            // host queues (this enables local test mocking)
-            processorFactoryInvoked = false;
-            queue = new QueueClient(new Uri(string.Format("https://localhost/{0}", HostQueueNames.GetHostQueueName("12345"))));
-            queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
-            Assert.True(processorFactoryInvoked);
-            Assert.AreSame(expectedQueueProcessor, queueProcessor);
-
             // create for application queue - expect processor factory to be invoked
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
