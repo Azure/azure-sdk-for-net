@@ -4,10 +4,6 @@
     <ProjectReference Include="..\tests\Azure.Learn.AppConfig.Tests.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.2.3" />
-  </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
