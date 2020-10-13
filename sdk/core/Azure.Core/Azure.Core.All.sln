@@ -173,14 +173,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Spa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Spark.Tests", "..\..\synapse\Azure.Analytics.Synapse.Spark\tests\Azure.Analytics.Synapse.Spark.Tests.csproj", "{CE8663D2-B3C6-42B4-9A62-9A0BA4707464}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Compute", "..\..\testcommon\Azure.Management.Compute.2019_12\src\Azure.Management.Compute.csproj", "{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Network", "..\..\testcommon\Azure.Management.Network.2020_04\src\Azure.Management.Network.csproj", "{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Resources", "..\..\testcommon\Azure.Management.Resources.2017_05\src\Azure.Management.Resources.csproj", "{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Storage", "..\..\testcommon\Azure.Management.Storage.2019_06\src\Azure.Management.Storage.csproj", "{85187149-00E3-4C3A-81D7-D42A61CB0381}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Administration", "..\..\keyvault\Azure.Security.KeyVault.Administration\src\Azure.Security.KeyVault.Administration.csproj", "{4D647887-E161-4DB5-9C92-E5930EF9CEBB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Administration.Tests", "..\..\keyvault\Azure.Security.KeyVault.Administration\tests\Azure.Security.KeyVault.Administration.Tests.csproj", "{5B2C4AF4-C83D-4FFD-9D9C-78F22FEC95E7}"
