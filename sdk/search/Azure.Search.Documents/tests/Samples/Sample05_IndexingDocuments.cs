@@ -121,6 +121,13 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 await WaitForDocumentCountAsync(searchClient, 1000);
 
+                // When using the free SKU, there may be enough load to prevent
+                // immediately replication to all replicas and we get back the
+                // wrong count. Wait another second before checking again. We
+                // may also upgrade to a basic SKU, but that will take longer
+                // to provision.
+                await DelayAsync(TimeSpan.FromSeconds(1));
+
                 // Check
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing2
                 Assert.AreEqual(1000, (int)await searchClient.GetDocumentCountAsync());
