@@ -10,36 +10,32 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Context of a QnA
+    /// To configure Answer span prediction feature.
     /// </summary>
-    public partial class QnADTOContext : ContextDTO
+    public partial class QueryDTOAnswerSpanRequest : AnswerSpanRequestDTO
     {
         /// <summary>
-        /// Initializes a new instance of the QnADTOContext class.
+        /// Initializes a new instance of the QueryDTOAnswerSpanRequest class.
         /// </summary>
-        public QnADTOContext()
+        public QueryDTOAnswerSpanRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QnADTOContext class.
+        /// Initializes a new instance of the QueryDTOAnswerSpanRequest class.
         /// </summary>
-        /// <param name="isContextOnly">To mark if a prompt is relevant only
-        /// with a previous question or not.
-        /// true - Do not include this QnA as search result for queries without
-        /// context
-        /// false - ignores context and includes this QnA in search
-        /// result</param>
-        /// <param name="prompts">List of prompts associated with the
-        /// answer.</param>
-        public QnADTOContext(bool? isContextOnly = default(bool?), IList<PromptDTO> prompts = default(IList<PromptDTO>))
-            : base(isContextOnly, prompts)
+        /// <param name="enable">Enable or Disable Answer Span
+        /// prediction.</param>
+        /// <param name="scoreThreshold">Minimum threshold score required to
+        /// include an answer span.</param>
+        /// <param name="topAnswersWithSpan">Number of Top answers to be
+        /// considered for span prediction.</param>
+        public QueryDTOAnswerSpanRequest(bool? enable = default(bool?), double? scoreThreshold = default(double?), int? topAnswersWithSpan = default(int?))
+            : base(enable, scoreThreshold, topAnswersWithSpan)
         {
             CustomInit();
         }

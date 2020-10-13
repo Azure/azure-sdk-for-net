@@ -47,7 +47,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// as the answer in any Q-A which has no extracted answer from the
         /// document but has a hierarchy. Required when
         /// EnableHierarchicalExtraction field is set to True.</param>
-        /// <param name="language">Language of the knowledgebase.</param>
+        /// <param name="language">Language of the knowledgebase. Please find
+        /// the list of supported languages &lt;a
+        /// href="https://aka.ms/qnamaker-languages#languages-supported"
+        /// target="_blank"&gt;here&lt;/a&gt;.</param>
         public CreateKbDTO(string name, IList<QnADTO> qnaList = default(IList<QnADTO>), IList<string> urls = default(IList<string>), IList<FileDTO> files = default(IList<FileDTO>), bool? enableHierarchicalExtraction = default(bool?), string defaultAnswerUsedForExtraction = default(string), string language = default(string))
         {
             Name = name;
@@ -106,7 +109,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public string DefaultAnswerUsedForExtraction { get; set; }
 
         /// <summary>
-        /// Gets or sets language of the knowledgebase.
+        /// Gets or sets language of the knowledgebase. Please find the list of
+        /// supported languages &amp;lt;a
+        /// href="https://aka.ms/qnamaker-languages#languages-supported"
+        /// target="_blank"&amp;gt;here&amp;lt;/a&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public string Language { get; set; }
@@ -122,6 +128,17 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 100);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
             }
             if (QnaList != null)
             {
@@ -141,6 +158,28 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                     {
                         element1.Validate();
                     }
+                }
+            }
+            if (DefaultAnswerUsedForExtraction != null)
+            {
+                if (DefaultAnswerUsedForExtraction.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswerUsedForExtraction", 300);
+                }
+                if (DefaultAnswerUsedForExtraction.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswerUsedForExtraction", 1);
+                }
+            }
+            if (Language != null)
+            {
+                if (Language.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Language", 100);
+                }
+                if (Language.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Language", 1);
                 }
             }
         }
