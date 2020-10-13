@@ -2,25 +2,27 @@ param(
   $RepoOwner,
   $RepoName,
   $BranchPrefix,
-  $WorkingDirectory,
   $AuthToken
 )
 
 . "${PSScriptRoot}\common.ps1"
 
-pushd $WorkingDirectory
-git clone https://github.com/$RepoOwner/$RepoName.git
-pushd $RepoName
-$syncBranches = git branch -r --list origin/$BranchPrefix* | % { $_ -replace "origin/", "" }
-
 LogDebug "Operating on Repo [ $RepoName ]"
-foreach ($branch in $syncBranches)
+try{
+  $branches = (List-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref "heads/$BranchPrefix").ref
+}
+catch {
+  LogError "List-References failed with exception:`n$_"
+  exit 1
+}
+
+foreach ($branch in $branches)
 {
   try {
-    $branchName = $branch.Trim()
+    $branchName = $branch.Replace("refs/heads/","")
     $head = "${RepoOwner}/${RepoName}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
-    $response = List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head -AuthToken $AuthToken
+    $pullRequests = List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
   }
   catch
   {
@@ -28,16 +30,19 @@ foreach ($branch in $syncBranches)
     exit 1
   }
 
-  if ($response.Count -eq 0)
+  "bvranch $branch"
+  "PR COunt $($pullRequests.Count)"
+
+
+  if ($pullRequests.Count -eq 0)
   {
     LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated Pull Request. Deleting Branch"
-    git push origin --delete $branchName
-    if ($lastExitCode -ne 0) {
-      Write-Host "Failed to delete branch [ $branchName ] in repo [ $RepoName ]"
+    try{
+      Delete-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref ($branch.Remove(0,5))
+    }
+    catch {
+      LogError "Delete-References failed with exception:`n$_"
       exit 1
     }
   }
 }
-
-popd
-popd
