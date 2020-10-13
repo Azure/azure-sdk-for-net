@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a36de8f6-5c4f-4232-94a1-be2c6ca1bbf0"
+          "f5d41cb8-4843-49a8-8a4a-5f800b1ef50e"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "e23d89fa-89a7-46b3-9ce9-77609884d853"
+          "31562266-5d2a-460a-a4ec-01cecd09ba01"
         ],
         "x-ms-correlation-request-id": [
-          "e23d89fa-89a7-46b3-9ce9-77609884d853"
+          "31562266-5d2a-460a-a4ec-01cecd09ba01"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191439Z:e23d89fa-89a7-46b3-9ce9-77609884d853"
+          "WESTUS2:20201013T194619Z:31562266-5d2a-460a-a4ec-01cecd09ba01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:38 GMT"
+          "Tue, 13 Oct 2020 19:46:19 GMT"
         ],
         "Content-Length": [
           "254"
@@ -73,7 +73,7 @@
       "RequestBody": "{\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f987c6b7-7468-4baf-aacb-c8294bc31f4d"
+          "18b8fb82-52c0-47f2-9e1f-7a24fab56dd5"
         ],
         "Accept-Language": [
           "en-US"
@@ -108,19 +108,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3e2fd4bc-c494-400a-b0ac-489914d51f6a"
+          "adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
         ],
         "x-ms-correlation-request-id": [
-          "3e2fd4bc-c494-400a-b0ac-489914d51f6a"
+          "adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191439Z:3e2fd4bc-c494-400a-b0ac-489914d51f6a"
+          "WESTUS2:20201013T194620Z:adbd0efd-7dd6-4150-b1ab-51f9681ba8f2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:39 GMT"
+          "Tue, 13 Oct 2020 19:46:19 GMT"
         ],
         "Content-Length": [
           "66"
@@ -142,7 +142,7 @@
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f66b71e7-e0c6-41d6-9030-daaab7de899e"
+          "c3d4b9c5-685e-4ace-83a0-58644510f2b1"
         ],
         "Accept-Language": [
           "en-US"
@@ -183,19 +183,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "da8c14b3-fb2b-4954-9770-83b53376c3ef"
+          "fc13b054-21c8-4cd4-8a0c-2672f02aef31"
         ],
         "x-ms-correlation-request-id": [
-          "da8c14b3-fb2b-4954-9770-83b53376c3ef"
+          "fc13b054-21c8-4cd4-8a0c-2672f02aef31"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191442Z:da8c14b3-fb2b-4954-9770-83b53376c3ef"
+          "WESTUS2:20201013T194621Z:fc13b054-21c8-4cd4-8a0c-2672f02aef31"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:41 GMT"
+          "Tue, 13 Oct 2020 19:46:20 GMT"
         ],
         "Content-Length": [
           "447"
@@ -207,7 +207,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdTime\": \"2020-10-12T19:14:41.4717719Z\",\r\n    \"lastUpdatedTime\": \"2020-10-12T19:14:41.4717719Z\",\r\n    \"hostName\": null\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"hostName\": null\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
       "StatusCode": 201
     },
     {
@@ -240,19 +240,19 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "04d0ffd9-fe08-4601-9216-141889fadaca"
+          "db882376-564e-4d55-b82a-f4b7c87a9c1d"
         ],
         "x-ms-correlation-request-id": [
-          "04d0ffd9-fe08-4601-9216-141889fadaca"
+          "db882376-564e-4d55-b82a-f4b7c87a9c1d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191452Z:04d0ffd9-fe08-4601-9216-141889fadaca"
+          "WESTUS2:20201013T194631Z:db882376-564e-4d55-b82a-f4b7c87a9c1d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:51 GMT"
+          "Tue, 13 Oct 2020 19:46:30 GMT"
         ],
         "Content-Length": [
           "489"
@@ -264,7 +264,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-12T19:14:41.4717719Z\",\r\n    \"lastUpdatedTime\": \"2020-10-12T19:14:49.9871434Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:29.3666493Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -274,7 +274,7 @@
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "735d4164-473a-4461-a8cb-366930cd88d6"
+          "618a0d94-11f9-4b93-b4b9-6e8cd1cbb20a"
         ],
         "Accept-Language": [
           "en-US"
@@ -309,22 +309,22 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "76ed452f-6338-4b33-adc2-c9df83cdec8b"
+          "9272e66b-dfa1-4bb4-848a-035f51888db1"
         ],
         "x-ms-correlation-request-id": [
-          "76ed452f-6338-4b33-adc2-c9df83cdec8b"
+          "9272e66b-dfa1-4bb4-848a-035f51888db1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191452Z:76ed452f-6338-4b33-adc2-c9df83cdec8b"
+          "WESTUS2:20201013T194631Z:9272e66b-dfa1-4bb4-848a-035f51888db1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:52 GMT"
+          "Tue, 13 Oct 2020 19:46:31 GMT"
         ],
         "Content-Length": [
-          "518"
+          "517"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -333,7 +333,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-12T19:14:41.4717719Z\",\r\n    \"lastUpdatedTime\": \"2020-10-12T19:14:52.7004077Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n  \"name\": \"DigitalTwinsSDK\",\r\n  \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n    \"lastUpdatedTime\": \"2020-10-13T19:46:31.508647Z\",\r\n    \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -343,7 +343,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7f0b25e4-9988-4642-a8ad-ec2d316350fd"
+          "48960526-5710-4a4d-9bc9-df0316488e1f"
         ],
         "Accept-Language": [
           "en-US"
@@ -372,19 +372,19 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "67795329-a5c3-4a94-9d5f-806637e31346"
+          "92ddeb13-3167-40ca-9da9-eadb2e74bffa"
         ],
         "x-ms-correlation-request-id": [
-          "67795329-a5c3-4a94-9d5f-806637e31346"
+          "92ddeb13-3167-40ca-9da9-eadb2e74bffa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191453Z:67795329-a5c3-4a94-9d5f-806637e31346"
+          "WESTUS2:20201013T194631Z:92ddeb13-3167-40ca-9da9-eadb2e74bffa"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:52 GMT"
+          "Tue, 13 Oct 2020 19:46:31 GMT"
         ],
         "Content-Length": [
           "530"
@@ -396,7 +396,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n      \"name\": \"DigitalTwinsSDK\",\r\n      \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdTime\": \"2020-10-12T19:14:41.4717719Z\",\r\n        \"lastUpdatedTime\": \"2020-10-12T19:14:52.7195686Z\",\r\n        \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a386d5ea-ea90-441a-8263-d816368c84a1/resourceGroups/DigitalTwinsSDKResourceGroup/providers/Microsoft.DigitalTwins/digitalTwinsInstances/DigitalTwinsSDK\",\r\n      \"name\": \"DigitalTwinsSDK\",\r\n      \"type\": \"Microsoft.DigitalTwins/digitalTwinsInstances\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdTime\": \"2020-10-13T19:46:20.8153775Z\",\r\n        \"lastUpdatedTime\": \"2020-10-13T19:46:31.5009305Z\",\r\n        \"hostName\": \"DigitalTwinsSDK.api.wus2.digitaltwins.azure.net\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -406,7 +406,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a4cdc2fe-d61d-429c-9ee3-57802b65b41e"
+          "8b43238d-9ecd-453d-8db1-9841a0484c81"
         ],
         "Accept-Language": [
           "en-US"
@@ -435,19 +435,19 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "f9a17728-5725-4f2f-afe5-bf5d8c764a0d"
+          "720654cc-384d-4216-9550-9d65c8da7b86"
         ],
         "x-ms-correlation-request-id": [
-          "f9a17728-5725-4f2f-afe5-bf5d8c764a0d"
+          "720654cc-384d-4216-9550-9d65c8da7b86"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191453Z:f9a17728-5725-4f2f-afe5-bf5d8c764a0d"
+          "WESTUS2:20201013T194632Z:720654cc-384d-4216-9550-9d65c8da7b86"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:53 GMT"
+          "Tue, 13 Oct 2020 19:46:31 GMT"
         ],
         "Content-Length": [
           "12767"
@@ -469,7 +469,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d5fefb7-4dc0-4463-86cc-4e1e7a390cd0"
+          "24a5fb0b-9ddc-4d59-9e76-f5249fb838d0"
         ],
         "Accept-Language": [
           "en-US"
@@ -504,19 +504,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "2d646def-7c5b-4f47-8d27-0723fcf3c376"
+          "0ec755a4-8503-42d5-910e-831b2412e3f3"
         ],
         "x-ms-correlation-request-id": [
-          "2d646def-7c5b-4f47-8d27-0723fcf3c376"
+          "0ec755a4-8503-42d5-910e-831b2412e3f3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201012T191454Z:2d646def-7c5b-4f47-8d27-0723fcf3c376"
+          "WESTUS2:20201013T194632Z:0ec755a4-8503-42d5-910e-831b2412e3f3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 12 Oct 2020 19:14:53 GMT"
+          "Tue, 13 Oct 2020 19:46:32 GMT"
         ],
         "Content-Length": [
           "420"

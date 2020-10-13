@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Azure.Management.DigitalTwins.Models;
+    using Models;
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
@@ -237,35 +237,6 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DigitalTwinsDescription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, DigitalTwinsDescription digitalTwinsCreate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Update metadata of DigitalTwinsInstance.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the
-        /// DigitalTwinsInstance.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the DigitalTwinsInstance.
-        /// </param>
-        /// <param name='tags'>
-        /// Instance tags
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<DigitalTwinsDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a DigitalTwinsInstance.
         /// </summary>

@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the DigitalTwinsEndpointResource
         /// class.
         /// </summary>
+        /// <param name="properties">DigitalTwinsInstance endpoint resource
+        /// properties.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">Extension resource name.</param>
         /// <param name="type">The resource type.</param>
-        /// <param name="properties">DigitalTwinsInstance endpoint resource
-        /// properties.</param>
-        public DigitalTwinsEndpointResource(string id = default(string), string name = default(string), string type = default(string), DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties))
+        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             Properties = properties;

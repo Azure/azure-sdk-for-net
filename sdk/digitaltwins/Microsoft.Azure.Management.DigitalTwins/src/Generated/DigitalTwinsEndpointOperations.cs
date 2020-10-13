@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Azure.Management.DigitalTwins.Models;
+    using Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -454,7 +454,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DigitalTwinsEndpointResource> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, endpointName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -522,7 +522,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -539,6 +539,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
             if (endpointName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
+            }
+            if (properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "properties");
             }
             DigitalTwinsEndpointResource endpointDescription = new DigitalTwinsEndpointResource();
             if (properties != null)

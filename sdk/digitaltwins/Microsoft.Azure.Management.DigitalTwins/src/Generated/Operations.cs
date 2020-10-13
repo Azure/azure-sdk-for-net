@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Azure.Management.DigitalTwins.Models;
+    using Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
