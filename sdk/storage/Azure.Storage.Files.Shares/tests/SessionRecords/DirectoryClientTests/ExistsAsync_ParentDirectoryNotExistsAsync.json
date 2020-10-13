@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "29239a27-5225-7cb9-d743-64420ef28d66",
         "x-ms-date": "Mon, 05 Oct 2020 14:47:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "29239a27-5225-7cb9-d743-64420ef28d66",
         "x-ms-request-id": "2f44c0bf-101a-0065-0f26-9b7486000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "f3e039f7-a499-ea25-ce2e-1d2c6244417e",
         "x-ms-date": "Mon, 05 Oct 2020 14:47:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "f3e039f7-a499-ea25-ce2e-1d2c6244417e",
         "x-ms-error-code": "ParentNotFound",
         "x-ms-request-id": "2f44c0c3-101a-0065-1126-9b7486000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EParentNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified parent path does not exist.\n",
@@ -83,7 +83,7 @@
         "x-ms-date": "Mon, 05 Oct 2020 14:47:41 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "92eec31e-68d8-7607-5402-7fa3784f112d",
         "x-ms-request-id": "2f44c0c5-101a-0065-1326-9b7486000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }
