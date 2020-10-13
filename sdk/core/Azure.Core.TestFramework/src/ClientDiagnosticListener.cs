@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace Azure.Core.Tests
 {
     public class ClientDiagnosticListener : IObserver<KeyValuePair<string, object>>, IObserver<DiagnosticListener>, IDisposable
     {
+        private readonly AsyncLocal<bool> _collect = new AsyncLocal<bool>();
         private readonly Func<string, bool> _sourceNameFilter;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
@@ -59,34 +61,42 @@ namespace Azure.Core.Tests
                         LinkedActivities = links.ToList()
                     };
 
+                    _collect.Value = true;
                     Scopes.Add(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
-                    var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    if (_collect.Value)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                        var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
+                        foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                         {
-                            producedDiagnosticScope.IsCompleted = true;
-                            return;
+                            if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                            {
+                                producedDiagnosticScope.IsCompleted = true;
+                                return;
+                            }
                         }
+
+                        throw new InvalidOperationException($"Event '{name}' was not started");
                     }
-                    throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
-                    var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    if (_collect.Value)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                        var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
+                        foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                         {
-                            if (producedDiagnosticScope.IsCompleted)
+                            if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                             {
-                                throw new InvalidOperationException("Scope should not be stopped when calling Failed");
-                            }
+                                if (producedDiagnosticScope.IsCompleted)
+                                {
+                                    throw new InvalidOperationException("Scope should not be stopped when calling Failed");
+                                }
 
-                            producedDiagnosticScope.Exception = (Exception)value.Value;
+                                producedDiagnosticScope.Exception = (Exception)value.Value;
+                            }
                         }
                     }
                 }
@@ -124,11 +134,14 @@ namespace Azure.Core.Tests
                 subscription.Dispose();
             }
 
-            foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+            if (_collect.Value)
             {
-                if (!producedDiagnosticScope.IsCompleted)
+                foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                 {
-                    throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
+                    if (!producedDiagnosticScope.IsCompleted)
+                    {
+                        throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
+                    }
                 }
             }
         }
