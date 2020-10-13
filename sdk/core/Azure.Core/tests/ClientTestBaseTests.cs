@@ -167,24 +167,29 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [AsyncOnly]
         [NonParallelizable]
         public async Task TasksValidateOwnScopes()
         {
             TestDiagnostics = true;
 
             TestClient client = InstrumentClient(new TestClient());
-            List<Task> tasks = new List<Task>();
 
-            for (int i = 0; i < 40; ++i)
+            var t1 = Task.Run(async () =>
             {
-                tasks.Add(client.MethodAAsync());
-                tasks.Add(client.MethodBAsync());
-                tasks.Add(client.MethodCAsync());
-                tasks.Add(client.MethodDAsync());
-            }
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodAAsync();
+                }
+            });
 
-            await Task.WhenAll(tasks);
+            var t2 = Task.Run(async () =>
+            {
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodBAsync();
+                }
+            });
+            await Task.WhenAll(t1, t2);
         }
 
         public class TestClient
@@ -262,8 +267,6 @@ namespace Azure.Core.Tests
             }
             public virtual Operations SubProperty => new Operations();
 
-            // For checking DaignsoticScope concurrency issues.
-            private readonly Random _random = new Random();
 
             public virtual string MethodA()
             {
@@ -278,7 +281,7 @@ namespace Azure.Core.Tests
                 using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
                 scope.Start();
 
-                await Task.Delay(_random.Next(10, 50));
+                await Task.Yield();
                 return nameof(MethodAAsync);
             }
 
@@ -295,41 +298,7 @@ namespace Azure.Core.Tests
                 using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodB)}");
                 scope.Start();
 
-                await Task.Delay(_random.Next(10, 50));
-                return nameof(MethodAAsync);
-            }
-
-            public virtual string MethodC()
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodC)}");
-                scope.Start();
-
-                return nameof(MethodC);
-            }
-
-            public virtual async Task<string> MethodCAsync()
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodC)}");
-                scope.Start();
-
-                await Task.Delay(_random.Next(10, 50));
-                return nameof(MethodAAsync);
-            }
-
-            public virtual string MethodD()
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodD)}");
-                scope.Start();
-
-                return nameof(MethodD);
-            }
-
-            public virtual async Task<string> MethodDAsync()
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodD)}");
-                scope.Start();
-
-                await Task.Delay(_random.Next(10, 50));
+                await Task.Yield();
                 return nameof(MethodAAsync);
             }
         }

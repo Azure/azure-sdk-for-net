@@ -12,21 +12,23 @@ namespace Azure.Core.Tests
 {
     public class ClientDiagnosticListener : IObserver<KeyValuePair<string, object>>, IObserver<DiagnosticListener>, IDisposable
     {
-        private readonly AsyncLocal<bool> _collect = new AsyncLocal<bool>();
         private readonly Func<string, bool> _sourceNameFilter;
+        private readonly AsyncLocal<bool> _collectThisStack;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
-        public ClientDiagnosticListener(string name)
+        public ClientDiagnosticListener(string name, bool asyncLocal = false): this(n => n == name, asyncLocal)
         {
-            _sourceNameFilter = n => n == name;
-            DiagnosticListener.AllListeners.Subscribe(this);
         }
 
-        public ClientDiagnosticListener(Func<string, bool> filter)
+        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false)
         {
+            if (asyncLocal)
+            {
+                _collectThisStack = new AsyncLocal<bool> { Value = true };
+            }
             _sourceNameFilter = filter;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
@@ -41,8 +43,13 @@ namespace Azure.Core.Tests
 
         public void OnNext(KeyValuePair<string, object> value)
         {
+            if (_collectThisStack?.Value == false) return;
+
             lock (Scopes)
             {
+                // Check for disposal
+                if (_subscriptions == null) return;
+
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
@@ -61,42 +68,34 @@ namespace Azure.Core.Tests
                         LinkedActivities = links.ToList()
                     };
 
-                    _collect.Value = true;
                     Scopes.Add(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
-                    if (_collect.Value)
+                    var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                        foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                         {
-                            if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
-                            {
-                                producedDiagnosticScope.IsCompleted = true;
-                                return;
-                            }
+                            producedDiagnosticScope.IsCompleted = true;
+                            return;
                         }
-
-                        throw new InvalidOperationException($"Event '{name}' was not started");
                     }
+                    throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
-                    if (_collect.Value)
+                    var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                        foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                         {
-                            if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                            if (producedDiagnosticScope.IsCompleted)
                             {
-                                if (producedDiagnosticScope.IsCompleted)
-                                {
-                                    throw new InvalidOperationException("Scope should not be stopped when calling Failed");
-                                }
-
-                                producedDiagnosticScope.Exception = (Exception)value.Value;
+                                throw new InvalidOperationException("Scope should not be stopped when calling Failed");
                             }
+
+                            producedDiagnosticScope.Exception = (Exception)value.Value;
                         }
                     }
                 }
@@ -123,7 +122,7 @@ namespace Azure.Core.Tests
             }
 
             List<IDisposable> subscriptions;
-            lock (_subscriptions)
+            lock (Scopes)
             {
                 subscriptions = _subscriptions;
                 _subscriptions = null;
@@ -134,14 +133,11 @@ namespace Azure.Core.Tests
                 subscription.Dispose();
             }
 
-            if (_collect.Value)
+            foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
-                foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                if (!producedDiagnosticScope.IsCompleted)
                 {
-                    if (!producedDiagnosticScope.IsCompleted)
-                    {
-                        throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
-                    }
+                    throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
                 }
             }
         }
