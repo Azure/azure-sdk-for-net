@@ -96,6 +96,11 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("data_base64"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataBase64 = property.Value.GetBytesFromBase64();
                     continue;
                 }
@@ -106,6 +111,11 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("time"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

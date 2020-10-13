@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<P2SVpnGateway> array = new List<P2SVpnGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

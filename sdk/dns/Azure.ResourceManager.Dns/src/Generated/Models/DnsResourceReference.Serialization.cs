@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 if (property.NameEquals("dnsResources"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -31,6 +36,11 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (property.NameEquals("targetResource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     targetResource = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }

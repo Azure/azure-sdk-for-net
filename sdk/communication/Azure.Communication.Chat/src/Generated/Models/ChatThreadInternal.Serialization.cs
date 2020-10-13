@@ -35,6 +35,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -45,6 +50,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("members"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ChatThreadMemberInternal> array = new List<ChatThreadMemberInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

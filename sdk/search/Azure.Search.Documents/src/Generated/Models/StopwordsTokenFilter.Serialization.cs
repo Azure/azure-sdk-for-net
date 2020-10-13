@@ -60,6 +60,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("stopwords"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -70,16 +75,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("stopwordsList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     stopwordsList = property.Value.GetString().ToStopwordsList();
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("removeTrailing"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     removeTrailing = property.Value.GetBoolean();
                     continue;
                 }

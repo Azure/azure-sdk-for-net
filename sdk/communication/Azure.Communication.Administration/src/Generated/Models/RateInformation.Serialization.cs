@@ -21,11 +21,21 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("monthlyRate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     monthlyRate = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("currencyType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currencyType = new CurrencyType(property.Value.GetString());
                     continue;
                 }

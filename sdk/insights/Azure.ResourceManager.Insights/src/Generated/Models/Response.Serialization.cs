@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("cost"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     cost = property.Value.GetInt32();
                     continue;
                 }
@@ -36,6 +41,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("interval"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     interval = property.Value.GetTimeSpan("P");
                     continue;
                 }

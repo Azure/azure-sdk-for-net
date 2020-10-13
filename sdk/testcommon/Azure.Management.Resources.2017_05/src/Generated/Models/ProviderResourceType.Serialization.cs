@@ -29,6 +29,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("locations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,6 +44,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("aliases"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AliasType> array = new List<AliasType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -49,6 +59,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -59,6 +74,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

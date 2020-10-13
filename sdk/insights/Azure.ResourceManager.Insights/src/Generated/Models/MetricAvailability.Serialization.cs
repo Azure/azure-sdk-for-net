@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("timeGrain"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("retention"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retention = property.Value.GetTimeSpan("P");
                     continue;
                 }

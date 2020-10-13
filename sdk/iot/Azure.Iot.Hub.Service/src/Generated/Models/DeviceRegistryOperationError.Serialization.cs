@@ -28,6 +28,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("errorCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     errorCode = new DeviceRegistryOperationErrorCode(property.Value.GetString());
                     continue;
                 }

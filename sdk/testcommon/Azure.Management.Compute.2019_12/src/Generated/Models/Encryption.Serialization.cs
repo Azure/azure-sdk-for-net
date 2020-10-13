@@ -41,6 +41,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new EncryptionType(property.Value.GetString());
                     continue;
                 }

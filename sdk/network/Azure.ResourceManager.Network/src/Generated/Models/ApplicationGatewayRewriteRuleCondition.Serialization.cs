@@ -58,11 +58,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("negate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     negate = property.Value.GetBoolean();
                     continue;
                 }

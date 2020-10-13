@@ -20,6 +20,11 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("keys"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<StorageAccountKey> array = new List<StorageAccountKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

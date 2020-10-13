@@ -172,25 +172,50 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("peeringType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             peeringType = new ExpressRoutePeeringType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             state = new ExpressRoutePeeringState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureASN"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             azureASN = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("peerASN"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             peerASN = property0.Value.GetInt64();
                             continue;
                         }
@@ -221,21 +246,41 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("vlanId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             vlanId = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("microsoftPeeringConfig"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("stats"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -251,21 +296,41 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("routeFilter"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             routeFilter = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnection"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             expressRouteConnection = ExpressRouteConnectionId.DeserializeExpressRouteConnectionId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ExpressRouteCircuitConnection> array = new List<ExpressRouteCircuitConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -276,6 +341,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("peeredConnections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<PeerExpressRouteCircuitConnection> array = new List<PeerExpressRouteCircuitConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

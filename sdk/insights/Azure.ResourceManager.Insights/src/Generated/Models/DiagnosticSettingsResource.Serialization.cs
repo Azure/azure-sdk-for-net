@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("storageAccountId"))
@@ -128,6 +133,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("metrics"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<MetricSettings> array = new List<MetricSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -138,6 +148,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("logs"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<LogSettings> array = new List<LogSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

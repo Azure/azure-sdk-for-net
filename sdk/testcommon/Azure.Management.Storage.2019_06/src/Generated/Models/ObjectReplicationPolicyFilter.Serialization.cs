@@ -42,6 +42,11 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("prefixMatch"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

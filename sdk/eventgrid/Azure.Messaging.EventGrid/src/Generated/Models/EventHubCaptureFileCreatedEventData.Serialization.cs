@@ -43,31 +43,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("sizeInBytes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sizeInBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("eventCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     eventCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("firstSequenceNumber"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     firstSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("lastSequenceNumber"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("firstEnqueueTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     firstEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastEnqueueTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

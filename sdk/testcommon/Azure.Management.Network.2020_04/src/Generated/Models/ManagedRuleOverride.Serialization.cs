@@ -38,6 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new ManagedRuleEnabledState(property.Value.GetString());
                     continue;
                 }
