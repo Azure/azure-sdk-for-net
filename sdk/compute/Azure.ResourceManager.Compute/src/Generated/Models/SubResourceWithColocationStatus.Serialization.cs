@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("colocationStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }

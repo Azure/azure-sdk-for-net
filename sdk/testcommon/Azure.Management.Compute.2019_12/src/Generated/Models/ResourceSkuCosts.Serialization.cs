@@ -26,6 +26,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("quantity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     quantity = property.Value.GetInt64();
                     continue;
                 }

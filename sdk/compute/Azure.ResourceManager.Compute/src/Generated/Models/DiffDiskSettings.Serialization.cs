@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("option"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     option = new DiffDiskOptions(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("placement"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     placement = new DiffDiskPlacement(property.Value.GetString());
                     continue;
                 }

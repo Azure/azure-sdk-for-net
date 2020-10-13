@@ -98,45 +98,90 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("allowVirtualNetworkAccess"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowVirtualNetworkAccess = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("allowForwardedTraffic"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowForwardedTraffic = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("allowGatewayTransit"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowGatewayTransit = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("useRemoteGateways"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             useRemoteGateways = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetwork"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             remoteVirtualNetwork = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteAddressSpace"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             peeringState = new VirtualNetworkPeeringState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

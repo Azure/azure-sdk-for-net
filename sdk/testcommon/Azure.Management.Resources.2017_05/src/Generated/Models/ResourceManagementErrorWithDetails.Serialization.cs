@@ -38,6 +38,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceManagementErrorWithDetails> array = new List<ResourceManagementErrorWithDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

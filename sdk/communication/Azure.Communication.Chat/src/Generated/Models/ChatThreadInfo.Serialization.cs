@@ -33,11 +33,21 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("isDeleted"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isDeleted = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("lastMessageReceivedOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastMessageReceivedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

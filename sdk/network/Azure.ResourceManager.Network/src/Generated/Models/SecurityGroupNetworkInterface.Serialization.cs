@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("securityRuleAssociations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value);
                     continue;
                 }

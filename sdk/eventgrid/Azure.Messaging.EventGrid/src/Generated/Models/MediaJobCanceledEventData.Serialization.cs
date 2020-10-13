@@ -23,6 +23,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaJobOutput> array = new List<MediaJobOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -33,16 +38,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("previousState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     previousState = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
                 if (property.NameEquals("correlationData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

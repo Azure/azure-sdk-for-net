@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("extensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualMachineScaleSetExtension> array = new List<VirtualMachineScaleSetExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

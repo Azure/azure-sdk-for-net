@@ -42,16 +42,31 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("routingChoice"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     routingChoice = new RoutingChoice(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publishMicrosoftEndpoints"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     publishMicrosoftEndpoints = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("publishInternetEndpoints"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     publishInternetEndpoints = property.Value.GetBoolean();
                     continue;
                 }

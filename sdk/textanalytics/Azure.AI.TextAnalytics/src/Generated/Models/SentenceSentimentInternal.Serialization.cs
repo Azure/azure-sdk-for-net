@@ -52,6 +52,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("aspects"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SentenceAspect> array = new List<SentenceAspect>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,6 +67,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("opinions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SentenceOpinion> array = new List<SentenceOpinion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

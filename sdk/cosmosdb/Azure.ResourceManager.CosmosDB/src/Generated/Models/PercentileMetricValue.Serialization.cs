@@ -32,66 +32,131 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("P10"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p10 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P25"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p25 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P50"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p50 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P75"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p75 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P90"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p90 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P95"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p95 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("P99"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     p99 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("_count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Count = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("average"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     average = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("maximum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maximum = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("minimum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimum = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("total"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     total = property.Value.GetDouble();
                     continue;
                 }

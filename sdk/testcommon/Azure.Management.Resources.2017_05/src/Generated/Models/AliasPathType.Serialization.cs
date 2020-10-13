@@ -26,6 +26,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

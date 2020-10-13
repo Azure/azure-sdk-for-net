@@ -22,21 +22,41 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("unit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unit = property.Value.GetString().ToUsageUnit();
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }

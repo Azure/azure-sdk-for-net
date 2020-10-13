@@ -27,6 +27,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("display"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }
@@ -37,10 +42,20 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("serviceSpecification"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property0.Value);
                             continue;
                         }

@@ -23,11 +23,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("unit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unit = new UnitType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = MetricName.DeserializeMetricName(property.Value);
                     continue;
                 }
@@ -38,11 +48,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentValue = property.Value.GetInt64();
                     continue;
                 }

@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("maxNumberOfReplicas"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxNumberOfReplicas = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }
