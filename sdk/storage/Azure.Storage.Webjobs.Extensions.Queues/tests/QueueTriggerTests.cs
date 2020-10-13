@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Azure.WebJobs.Extensions.Storage.Queues.Tests;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -684,19 +686,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => ConfigureQueues(b), programType, setTaskSource);
         }
 
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource, IEnumerable<string> ignoreFailureFunctions)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource, ignoreFailureFunctions);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b => ConfigureQueues(b), programType, setTaskSource, ignoreFailureFunctions);
         }
 
         private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => ConfigureQueues(b), programType, setTaskSource);
         }
 
         private async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
@@ -705,12 +707,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var method = programType.GetMethod("Run");
             Assert.NotNull(method);
 
-            var result = await FunctionalTest.CallAsync<TResult>(b => b.UseQueueService(queueServiceClient), programType, method, new Dictionary<string, object>
+            var result = await FunctionalTest.CallAsync<TResult>(b => ConfigureQueues(b), programType, method, new Dictionary<string, object>
             {
                 { "message", message }
             }, setTaskSource);
 
             return result;
+        }
+
+        private void ConfigureQueues(IWebJobsBuilder builder)
+        {
+            builder.AddAzureStorageQueues();
+            builder.Services.AddSingleton<IConfigureOptions<QueuesOptions>, FakeQueuesOptionsSetup>();
+            builder.UseQueueService(queueServiceClient);
         }
 
         private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)

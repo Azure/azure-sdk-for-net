@@ -56,7 +56,10 @@ namespace Azure.AI.FormRecognizer.Models
                 // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
+                // Issue https://github.com/Azure/azure-sdk-for-net/issues/15845
+                int page = fieldValue.Page.HasValue ? fieldValue.Page.Value : 1;
+
+                ValueData = new FieldData(boundingBox, page, fieldValue.Text, fieldElements);
             }
 
             Value = new FieldValue(fieldValue, readResults);

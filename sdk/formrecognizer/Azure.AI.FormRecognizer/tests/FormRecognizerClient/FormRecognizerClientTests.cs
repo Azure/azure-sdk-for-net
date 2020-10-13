@@ -47,6 +47,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
 
+        #region client
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
@@ -117,6 +118,10 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        #endregion
+
+        #region Recognize Content
+
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
         /// method.
@@ -172,6 +177,10 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
+        #endregion
+
+        #region Recognize Receipt
+
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
@@ -226,6 +235,53 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
+
+        #endregion
+
+        #region Recognize Business Cards
+
+        [Test]
+        public void StartRecognizeBusinessCardsRequiresTheFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeBusinessCardsAsync(null));
+        }
+
+        [Test]
+        public void StartRecognizeBusinessCardsRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var options = new RecognizeBusinessCardsOptions { ContentType = FormContentType.Pdf };
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeBusinessCardsAsync(stream, recognizeBusinessCardsOptions: options, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
+        public void StartRecognizeBusinessCardsFromUriRequiresTheFileUri()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(null));
+        }
+
+        [Test]
+        public void StartRecognizeBusinessCardsFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeBusinessCardsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+        }
+
+        #endregion
+
+        #region Recognize Custom Forms
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
@@ -347,5 +403,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
         }
+
+        #endregion
     }
 }

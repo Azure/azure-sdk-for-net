@@ -25,6 +25,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>An itemized en-US receipt.</summary>
         public const string ReceiptPng = "contoso-allinone.png";
 
+        /// <summary>A business card file.</summary>
+        public const string BusinessCardJpg = "businessCard.jpg";
+
+        /// <summary>A business card file.</summary>
+        public const string BusinessCardtPng = "businessCard.png";
+
         /// <summary>A basic invoice file.</summary>
         public const string InvoicePdf = "Invoice_1.pdf";
 
