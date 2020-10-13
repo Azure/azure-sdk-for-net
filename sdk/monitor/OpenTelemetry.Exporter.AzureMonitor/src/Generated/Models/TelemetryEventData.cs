@@ -18,21 +18,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <param name="version"> Schema version. </param>
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public TelemetryEventData(int version, string name)
+        public TelemetryEventData(int version, string name) : base(version)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Version = version;
             Name = name;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Schema version. </summary>
-        public int Version { get; }
         /// <summary> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </summary>
         public string Name { get; }
         /// <summary> Collection of custom properties. </summary>

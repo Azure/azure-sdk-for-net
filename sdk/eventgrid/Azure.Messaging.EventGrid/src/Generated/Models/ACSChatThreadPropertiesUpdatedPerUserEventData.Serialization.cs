@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> editTime = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<int> version = default;
+            Optional<long> version = default;
             Optional<string> recipientId = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("version"))
                 {
-                    version = property.Value.GetInt32();
+                    version = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("recipientId"))

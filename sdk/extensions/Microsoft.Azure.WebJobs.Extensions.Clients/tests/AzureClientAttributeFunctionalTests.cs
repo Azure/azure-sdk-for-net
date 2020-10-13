@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             var host = new HostBuilder()
                 .ConfigureServices(services => services.AddAzureClients(builder => builder
-                    .ConfigureDefaults(options => Recording.InstrumentClientOptions<ClientOptions>(options))
+                    .ConfigureDefaults(options => InstrumentClientOptions<ClientOptions>(options))
                     .UseCredential(TestEnvironment.Credential)))
                 .ConfigureAppConfiguration(config =>
                 {

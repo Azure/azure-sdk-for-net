@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatThreadInternal
+    internal partial class ChatThreadInternal
     {
         internal static ChatThreadInternal DeserializeChatThreadInternal(JsonElement element)
         {

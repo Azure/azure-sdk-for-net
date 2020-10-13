@@ -65,9 +65,11 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
+        /// If <see cref="ServiceBusSenderOptions.TransactionQueueOrTopicName"/> is set,
+        /// the message is sent to <see cref="EntityPath"/> via <see cref="TransactionEntityPath"/>;
+        /// null otherwise.
         /// </summary>
-        public string ViaEntityPath { get; }
+        public string TransactionEntityPath { get; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -122,13 +124,13 @@ namespace Azure.Messaging.ServiceBus
 
                 options = options?.Clone() ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
-                ViaEntityPath = options.ViaQueueOrTopicName;
+                TransactionEntityPath = options.TransactionQueueOrTopicName;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
-                    ViaEntityPath,
+                    TransactionEntityPath,
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);

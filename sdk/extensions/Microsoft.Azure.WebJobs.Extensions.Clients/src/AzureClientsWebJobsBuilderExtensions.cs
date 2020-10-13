@@ -29,8 +29,7 @@ namespace Microsoft.Extensions.Hosting
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            builder.Services.AddAzureClients(builder =>
-                builder.UseConfiguration(provider => new WebJobsConfiguration(provider.GetRequiredService<IConfiguration>())));
+            builder.Services.AddAzureClientsCore();
             builder.AddExtension<AzureClientsExtensionConfigProvider>();
 
             return builder;

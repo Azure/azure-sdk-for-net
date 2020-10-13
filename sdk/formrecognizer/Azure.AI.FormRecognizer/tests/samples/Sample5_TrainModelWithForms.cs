@@ -26,11 +26,13 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
 
             Console.WriteLine($"Custom Model Info:");
             Console.WriteLine($"    Model Id: {model.ModelId}");
+            Console.WriteLine($"    Model name: {model.ModelName}");
             Console.WriteLine($"    Model Status: {model.Status}");
+            Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
             Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
             Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
