@@ -9,16 +9,12 @@ using NUnit.Framework;
 
 namespace Azure.Learn.AppConfig.Samples
 {
-    public class Sample1_HelloWorld : RecordedTestBase<LearnAppConfigTestEnvironment>
+    public class Sample1_HelloWorld : SamplesBase<LearnAppConfigTestEnvironment>
     {
-        public Sample1_HelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Live)
-        {
-        }
-
         [Test]
         public void GetConfigurationSetting()
         {
-            string endpoint = "http://example.azconfig.io";
+            var endpoint = Environment.GetEnvironmentVariable("API-LEARN_ENDPOINT");
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             ConfigurationSetting color = client.GetConfigurationSetting("FontColor");

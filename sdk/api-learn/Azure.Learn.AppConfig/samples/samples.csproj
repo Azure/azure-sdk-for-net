@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Learn.AppConfig.csproj" />
+    <ProjectReference Include="..\tests\Azure.Learn.AppConfig.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
