@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of NetworkRuleSet resource.
+    /// Description of topic resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class NetworkRuleSet : Resource

@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Service Bus client
     /// </summary>
     public partial interface IServiceBusManagementClient : System.IDisposable
     {
@@ -48,11 +47,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -72,24 +66,24 @@ namespace Microsoft.Azure.Management.ServiceBus
 
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
         /// <summary>
-        /// Gets the IMigrationConfigsOperations.
+        /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
-        IMigrationConfigsOperations MigrationConfigs { get; }
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IQueuesOperations.
@@ -102,6 +96,31 @@ namespace Microsoft.Azure.Management.ServiceBus
         ITopicsOperations Topics { get; }
 
         /// <summary>
+        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// </summary>
+        IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
+
+        /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        IEventHubsOperations EventHubs { get; }
+
+        /// <summary>
+        /// Gets the IMigrationConfigsOperations.
+        /// </summary>
+        IMigrationConfigsOperations MigrationConfigs { get; }
+
+        /// <summary>
+        /// Gets the IPremiumMessagingRegionsOperations.
+        /// </summary>
+        IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; }
+
+        /// <summary>
+        /// Gets the IRegionsOperations.
+        /// </summary>
+        IRegionsOperations Regions { get; }
+
+        /// <summary>
         /// Gets the ISubscriptionsOperations.
         /// </summary>
         ISubscriptionsOperations Subscriptions { get; }
@@ -110,21 +129,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Gets the IRulesOperations.
         /// </summary>
         IRulesOperations Rules { get; }
-
-        /// <summary>
-        /// Gets the IRegionsOperations.
-        /// </summary>
-        IRegionsOperations Regions { get; }
-
-        /// <summary>
-        /// Gets the IPremiumMessagingRegionsOperations.
-        /// </summary>
-        IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; }
-
-        /// <summary>
-        /// Gets the IEventHubsOperations.
-        /// </summary>
-        IEventHubsOperations EventHubs { get; }
 
     }
 }

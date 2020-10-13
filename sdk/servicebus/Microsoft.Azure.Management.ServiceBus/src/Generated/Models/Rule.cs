@@ -87,5 +87,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "properties.correlationFilter")]
         public CorrelationFilter CorrelationFilter { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SqlFilter != null)
+            {
+                SqlFilter.Validate();
+            }
+        }
     }
 }

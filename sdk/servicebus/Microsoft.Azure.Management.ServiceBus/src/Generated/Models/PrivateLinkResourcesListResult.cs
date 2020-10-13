@@ -10,34 +10,36 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// AuthorizationRule properties.
+    /// Result of the List private link resources operation.
     /// </summary>
-    public partial class AuthorizationRuleProperties
+    public partial class PrivateLinkResourcesListResult
     {
         /// <summary>
-        /// Initializes a new instance of the AuthorizationRuleProperties
+        /// Initializes a new instance of the PrivateLinkResourcesListResult
         /// class.
         /// </summary>
-        public AuthorizationRuleProperties()
+        public PrivateLinkResourcesListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationRuleProperties
+        /// Initializes a new instance of the PrivateLinkResourcesListResult
         /// class.
         /// </summary>
-        /// <param name="rights">The rights associated with the rule.</param>
-        public AuthorizationRuleProperties(IList<AccessRights?> rights)
+        /// <param name="value">A collection of private link resources</param>
+        /// <param name="nextLink">A link for the next page of private link
+        /// resources.</param>
+        public PrivateLinkResourcesListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>), string nextLink = default(string))
         {
-            Rights = rights;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -47,23 +49,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the rights associated with the rule.
+        /// Gets or sets a collection of private link resources
         /// </summary>
-        [JsonProperty(PropertyName = "rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateLinkResource> Value { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets a link for the next page of private link resources.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Rights == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
-            }
-        }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
+
     }
 }
