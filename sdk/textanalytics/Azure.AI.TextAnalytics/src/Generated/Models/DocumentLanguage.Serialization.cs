@@ -17,8 +17,8 @@ namespace Azure.AI.TextAnalytics.Models
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
             string id = default;
-            DetectedLanguageInternal detectedLanguage = default;
-            IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
+            DetectedLanguage_internal detectedLanguage = default;
+            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,15 +29,15 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("detectedLanguage"))
                 {
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    detectedLanguage = DetectedLanguage_internal.DeserializeDetectedLanguage_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarningInternal> array = new List<TextAnalyticsWarningInternal>();
+                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarningInternal.DeserializeTextAnalyticsWarningInternal(item));
+                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
                     }
                     warnings = array;
                     continue;

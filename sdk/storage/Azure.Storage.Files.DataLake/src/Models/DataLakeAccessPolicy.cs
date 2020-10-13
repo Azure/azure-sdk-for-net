@@ -32,8 +32,8 @@ namespace Azure.Storage.Files.DataLake.Models
             get
             {
                 return PolicyStartsOn == default ?
-                    new DateTimeOffset() :
-                    PolicyStartsOn.Value;
+                    StartsOn :
+                    (DateTimeOffset)PolicyStartsOn;
             }
             set
             {
@@ -51,8 +51,8 @@ namespace Azure.Storage.Files.DataLake.Models
             get
             {
                 return PolicyExpiresOn == default ?
-                    new DateTimeOffset() :
-                    PolicyExpiresOn.Value;
+                    ExpiresOn :
+                    (DateTimeOffset)PolicyExpiresOn;
             }
             set
             {

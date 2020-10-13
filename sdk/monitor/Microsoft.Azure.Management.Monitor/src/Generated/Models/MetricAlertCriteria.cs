@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The rule criteria that defines the conditions of the alert rule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MetricAlertCriteria")]
     public partial class MetricAlertCriteria
     {
         /// <summary>

@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public FullBackupClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
-        [RecordedTest]
+        [Test]
         public async Task BackupAndRestore()
         {
             var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Start the restore.
             RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, "?" + SasToken, folderName, source.Token);
 
-            // Wait for completion of the LRO
+            // Wa
             var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
 
             Assert.That(source.IsCancellationRequested, Is.False);

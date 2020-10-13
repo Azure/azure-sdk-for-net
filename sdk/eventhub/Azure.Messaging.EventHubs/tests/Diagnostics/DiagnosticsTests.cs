@@ -98,6 +98,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = new MockConnection(endpoint, eventHubName);
             var batchTransportMock = new Mock<TransportEventBatch>();
 
+
             batchTransportMock
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
                 .Callback<EventData>(addedEvent => batchEvent = addedEvent)
@@ -106,10 +107,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventCount++;
                     return eventCount <= 1;
                 });
-
-            batchTransportMock
-                .Setup(m => m.Count)
-                .Returns(1);
 
             var transportMock = new Mock<TransportProducer>();
 
@@ -125,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             var batch = await producer.CreateBatchAsync();
-            Assert.That(batch.TryAdd(eventData), Is.True);
+            Assert.True(batch.TryAdd(eventData));
 
             await producer.SendAsync(batch);
             activity.Stop();
@@ -309,10 +306,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                     return hasSpace;
                 });
-
-            batchTransportMock
-                .Setup(m => m.Count)
-                .Returns(2);
 
             transportMock
                 .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))

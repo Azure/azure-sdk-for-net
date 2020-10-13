@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class KeyVaultServiceError
+    public partial class KeyVaultServiceError
     {
         internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element)
         {

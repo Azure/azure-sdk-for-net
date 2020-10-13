@@ -10,6 +10,7 @@ namespace Azure.Search.Documents.Tests.Models
 {
     public class LexicalAnalyzerNameTests
     {
+#if EXPERIMENTAL_FIELDBUILDER
         [Test]
         public void PropertiesEqualConstantFields()
         {
@@ -26,5 +27,6 @@ namespace Azure.Search.Documents.Tests.Models
             // Note: tested that declaring an extra property or field does fail the assert.
             CollectionAssert.AreEquivalent(properties, fields);
         }
+#endif
     }
 }

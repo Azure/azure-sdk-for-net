@@ -73,7 +73,6 @@ namespace Azure.Storage
 
         public const string SnapshotParameterName = "snapshot";
         public const string VersionIdParameterName = "versionid";
-        public const string ShareSnapshotParameterName = "sharesnapshot";
 
         public const string Https = "https";
         public const string Http = "http";

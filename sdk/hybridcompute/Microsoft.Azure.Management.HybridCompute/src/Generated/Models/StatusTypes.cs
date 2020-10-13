@@ -10,14 +10,57 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StatusTypes.
     /// </summary>
-    public static class StatusTypes
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StatusTypes
     {
-        public const string Connected = "Connected";
-        public const string Disconnected = "Disconnected";
-        public const string Error = "Error";
+        [EnumMember(Value = "Connected")]
+        Connected,
+        [EnumMember(Value = "Disconnected")]
+        Disconnected,
+        [EnumMember(Value = "Error")]
+        Error
+    }
+    internal static class StatusTypesEnumExtension
+    {
+        internal static string ToSerializedValue(this StatusTypes? value)
+        {
+            return value == null ? null : ((StatusTypes)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this StatusTypes value)
+        {
+            switch( value )
+            {
+                case StatusTypes.Connected:
+                    return "Connected";
+                case StatusTypes.Disconnected:
+                    return "Disconnected";
+                case StatusTypes.Error:
+                    return "Error";
+            }
+            return null;
+        }
+
+        internal static StatusTypes? ParseStatusTypes(this string value)
+        {
+            switch( value )
+            {
+                case "Connected":
+                    return StatusTypes.Connected;
+                case "Disconnected":
+                    return StatusTypes.Disconnected;
+                case "Error":
+                    return StatusTypes.Error;
+            }
+            return null;
+        }
     }
 }

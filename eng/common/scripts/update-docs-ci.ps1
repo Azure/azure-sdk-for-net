@@ -59,7 +59,7 @@ function UpdateParamsJsonPython($pkgs, $ciRepo, $locationInDocRepo){
   foreach ($releasingPkg in $pkgs) {
     if ($visibleInCI.ContainsKey($releasingPkg.PackageId)) {
       $packagesIndex = $visibleInCI[$releasingPkg.PackageId]
-      $existingPackageDef = $allJson.packages[$packagesIndex]
+      $existingPackageDef = $targetData[$packagesIndex]
 
       if ($releasingPkg.IsPrerelease) {
         if (-not $existingPackageDef.package_info.version) {

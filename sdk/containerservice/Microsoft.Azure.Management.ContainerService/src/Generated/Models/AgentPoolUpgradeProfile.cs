@@ -44,9 +44,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="type">Type of the agent pool upgrade profile.</param>
         /// <param name="upgrades">List of orchestrator types and versions
         /// available for upgrade.</param>
-        /// <param name="latestNodeImageVersion">LatestNodeImageVersion is the
-        /// latest AKS supported node image version.</param>
-        public AgentPoolUpgradeProfile(string kubernetesVersion, string osType, string id = default(string), string name = default(string), string type = default(string), IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default(IList<AgentPoolUpgradeProfilePropertiesUpgradesItem>), string latestNodeImageVersion = default(string))
+        public AgentPoolUpgradeProfile(string kubernetesVersion, string osType, string id = default(string), string name = default(string), string type = default(string), IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default(IList<AgentPoolUpgradeProfilePropertiesUpgradesItem>))
         {
             Id = id;
             Name = name;
@@ -54,7 +52,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             KubernetesVersion = kubernetesVersion;
             OsType = osType;
             Upgrades = upgrades;
-            LatestNodeImageVersion = latestNodeImageVersion;
             CustomInit();
         }
 
@@ -101,13 +98,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgrades")]
         public IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; set; }
-
-        /// <summary>
-        /// Gets or sets latestNodeImageVersion is the latest AKS supported
-        /// node image version.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.latestNodeImageVersion")]
-        public string LatestNodeImageVersion { get; set; }
 
         /// <summary>
         /// Validate the object.

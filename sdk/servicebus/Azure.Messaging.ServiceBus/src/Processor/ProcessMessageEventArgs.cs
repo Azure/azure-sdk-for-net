@@ -14,14 +14,14 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ProcessMessageEventArgs : EventArgs
     {
+
         /// <summary>
         /// The received message to be processed.
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
-        /// The processor's <see cref="System.Threading.CancellationToken"/> instance which will be
-        /// cancelled when <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
@@ -31,20 +31,24 @@ namespace Azure.Messaging.ServiceBus
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The message to be processed.</param>
-        /// <param name="receiver">The receiver instance that can be used to perform message settlement.</param>
-        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
-        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
-        /// </param>
-        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
+        /// <param name="message"></param>
+        /// <param name="receiver"></param>
+        /// <param name="cancellationToken"></param>
+        internal ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
         {
             Message = message;
             _receiver = receiver;
             CancellationToken = cancellationToken;
         }
 
-        ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
-        public virtual async Task AbandonMessageAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -54,8 +58,13 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        ///<inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
-        public virtual async Task CompleteMessageAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -66,8 +75,15 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
-        public virtual async Task DeadLetterMessageAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterErrorDescription"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
@@ -82,8 +98,14 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
-        public virtual async Task DeadLetterMessageAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -96,8 +118,14 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        ///<inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
-        public virtual async Task DeferMessageAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)

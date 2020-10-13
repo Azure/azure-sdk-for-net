@@ -22,17 +22,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
     public enum SkuName
     {
         /// <summary>
-        /// Data Box.
+        /// Databox.
         /// </summary>
         [EnumMember(Value = "DataBox")]
         DataBox,
         /// <summary>
-        /// Data Box Disk.
+        /// DataboxDisk.
         /// </summary>
         [EnumMember(Value = "DataBoxDisk")]
         DataBoxDisk,
         /// <summary>
-        /// Data Box Heavy.
+        /// DataboxHeavy.
         /// </summary>
         [EnumMember(Value = "DataBoxHeavy")]
         DataBoxHeavy

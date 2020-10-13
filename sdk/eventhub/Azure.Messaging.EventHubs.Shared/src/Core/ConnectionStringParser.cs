@@ -24,9 +24,6 @@ namespace Azure.Messaging.EventHubs.Core
         /// <summary>The token that identifies the value of a shared access key.</summary>
         private const string SharedAccessKeyValueToken = "SharedAccessKey";
 
-        /// <summary>The token that identifies the value of a shared access signature.</summary>
-        private const string SharedAccessSignatureToken = "SharedAccessSignature";
-
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
         private const char TokenValueSeparator = '=';
 
@@ -67,8 +64,7 @@ namespace Azure.Messaging.EventHubs.Core
                 EndpointToken: default(UriBuilder),
                 EventHubNameToken: default(string),
                 SharedAccessKeyNameToken: default(string),
-                SharedAccessKeyValueToken: default(string),
-                SharedAccessSignatureToken: default(string)
+                SharedAccessKeyValueToken: default(string)
             );
 
             while (currentPosition != -1)
@@ -144,10 +140,6 @@ namespace Azure.Messaging.EventHubs.Core
                     {
                         parsedValues.SharedAccessKeyValueToken = value;
                     }
-                    else if (string.Compare(SharedAccessSignatureToken, token, StringComparison.OrdinalIgnoreCase) == 0)
-                    {
-                        parsedValues.SharedAccessSignatureToken = value;
-                    }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
@@ -166,8 +158,7 @@ namespace Azure.Messaging.EventHubs.Core
                 parsedValues.EndpointToken?.Uri,
                 parsedValues.EventHubNameToken,
                 parsedValues.SharedAccessKeyNameToken,
-                parsedValues.SharedAccessKeyValueToken,
-                parsedValues.SharedAccessSignatureToken
+                parsedValues.SharedAccessKeyValueToken
             );
         }
     }

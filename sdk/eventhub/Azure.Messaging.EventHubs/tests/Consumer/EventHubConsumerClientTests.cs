@@ -524,7 +524,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new[] { "0", "1" }));
 
             mockConnection
-                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>()))
                 .Returns(transportConsumer);
 
             await using var enumerator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options).GetAsyncEnumerator();
@@ -538,8 +538,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    (uint)options.PrefetchCount,
-                    It.IsAny<long?>()),
+                    (uint)options.PrefetchCount),
                 Times.Once,
                 "The transport consumer should have been created with the configured prefetch count.");
         }
@@ -1259,7 +1258,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new[] { "0", "1" }));
 
             mockConnection
-                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Setup(conn => conn.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>()))
                 .Returns(transportConsumer);
 
             await using var enumerator = consumer.ReadEventsAsync(options).GetAsyncEnumerator();
@@ -1273,8 +1272,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    (uint)options.PrefetchCount,
-                    It.IsAny<long?>()),
+                    (uint)options.PrefetchCount),
                 Times.AtLeastOnce(),
                 "The transport consumer should have been created with the configured prefetch count.");
         }
@@ -2455,8 +2453,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                         EventHubsRetryPolicy retryPolicy,
                                                                         bool trackLastEnqueuedEventProperties = true,
                                                                         long? ownerLevel = default,
-                                                                        uint? prefetchCount = default,
-                                                                        long? prefetchSizeInBytes = default) => TransportConsumerFactory();
+                                                                        uint? prefetchCount = default) => TransportConsumerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,

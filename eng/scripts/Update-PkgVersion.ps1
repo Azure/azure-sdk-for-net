@@ -28,9 +28,6 @@ Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core
 Updating package version for Azure.Core with a specified verion
 Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5
 
-Updating package version for Azure.Core with a specified verion and release date
-Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5 -ReleaseDate "2020-05-01"
-
 Updating package version for Microsoft.Azure.CognitiveServices.AnomalyDetector
 Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft.Azure.CognitiveServices.AnomalyDetector -PackageDirName AnomalyDetector
 
@@ -45,8 +42,7 @@ Param (
   [Parameter(Mandatory=$True)]
   [string] $PackageName,
   [string] $PackageDirName,
-  [string] $NewVersionString,
-  [string] $ReleaseDate
+  [string] $NewVersionString
 )
 
 . ${PSScriptRoot}\..\common\scripts\SemVer.ps1
@@ -72,22 +68,16 @@ if ([System.String]::IsNullOrEmpty($NewVersionString)) {
 else {
   $packageSemVer = [AzureEngSemanticVersion]::new($NewVersionString)
 
-  & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $packageSemVer.ToString() -ChangeLogPath $changeLogPath -Unreleased $false -ReplaceVersion $true -ReleaseDate $ReleaseDate
+  & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $packageSemVer.ToString() -ChangeLogPath $changeLogPath -Unreleased $false -ReplaceVersion $true
 }
 
 Write-Host "New Version: ${packageSemVer}"
-
-# Allow the prerelease label to also be preview until all those ship as GA
-if ($packageSemVer.PrereleaseLabel -eq "preview") {
-  $packageSemVer.DefaultPrereleaseLabel = "preview"
-}
-
 if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
   Write-Error "Invalid prerelease label"
   exit 1
 }
 
-if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)) {
+if (!$packageOldSemVer.IsPrerelease) {
   if (!$propertyGroup.ApiCompatVersion) {
     $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
     $whitespace = $propertyGroup["Version"].PreviousSibling

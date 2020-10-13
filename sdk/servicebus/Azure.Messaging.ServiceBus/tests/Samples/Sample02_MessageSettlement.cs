@@ -143,10 +143,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await receiver.DeadLetterMessageAsync(receivedMessage);
 
                 // receive the dead lettered message with receiver scoped to the dead letter queue.
-                ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
-                {
-                    SubQueue = SubQueue.DeadLetter
-                });
+                ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
                 #endregion
                 Assert.IsNotNull(dlqMessage);

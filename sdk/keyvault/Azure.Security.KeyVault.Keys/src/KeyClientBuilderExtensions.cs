@@ -16,10 +16,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
-        /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
-        /// <param name="builder">The builder to extend.</param>
-        /// <param name="vaultUri">The URI to an Azure Key Vault, for example: https://my-vault.vault.azure.net</param>
-        /// <returns>An Azure client builder.</returns>
         public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -29,11 +25,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="KeyClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
-        /// <typeparam name="TConfiguration">The type of configuration to use for the client builder.</typeparam>
-        /// <param name="builder">The builder to extend.</param>
-        /// <param name="configuration">The configuration to use for the client builder.</param>
-        /// <returns>An Azure client builder.</returns>
         public static IAzureClientBuilder<KeyClient, KeyClientOptions> AddKeyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -43,10 +34,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
-        /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
-        /// <param name="builder">The builder to extend.</param>
-        /// <param name="vaultUri">The URI to a specific key in an Azure Key Vault, for example: https://my-vault.vault.azure.net/keys/my-key</param>
-        /// <returns>An Azure client builder.</returns>
         public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -56,11 +43,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="KeyClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
-        /// <typeparam name="TConfiguration">The type of configuration to use for the client builder.</typeparam>
-        /// <param name="builder">The builder to extend.</param>
-        /// <param name="configuration">The configuration to use for the client builder.</param>
-        /// <returns>An Azure client builder.</returns>
         public static IAzureClientBuilder<CryptographyClient, CryptographyClientOptions> AddCryptographyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

@@ -16,12 +16,12 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// Optional standard HTTP header properties that can be set for the
-        /// new block blob.
+        /// new append blob.
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
         /// <summary>
-        /// Optional custom metadata to set for this block blob.
+        /// Optional custom metadata to set for this append blob.
         /// </summary>
         public Metadata Metadata { get; set; }
 

@@ -15,16 +15,16 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyVaultRoleAssignment>> value = default;
+            Optional<IReadOnlyList<RoleAssignment>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<KeyVaultRoleAssignment> array = new List<KeyVaultRoleAssignment>();
+                    List<RoleAssignment> array = new List<RoleAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(item));
+                        array.Add(RoleAssignment.DeserializeRoleAssignment(item));
                     }
                     value = array;
                     continue;

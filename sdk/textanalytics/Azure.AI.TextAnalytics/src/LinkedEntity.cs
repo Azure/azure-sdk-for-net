@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -13,10 +12,9 @@ namespace Azure.AI.TextAnalytics
     /// name of the entity used in the data source.  Note that the formal name
     /// may be different from the exact text match in the input document.
     /// </summary>
-    [CodeGenModel("LinkedEntity")]
-    public readonly partial struct LinkedEntity
+    public readonly struct LinkedEntity
     {
-        internal LinkedEntity(string name, IEnumerable<LinkedEntityMatch> matches, string language, string dataSourceEntityId, Uri url, string dataSource, string bingEntitySearchApiId)
+        internal LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
             Name = name;
             DataSourceEntityId = dataSourceEntityId;
@@ -24,7 +22,6 @@ namespace Azure.AI.TextAnalytics
             DataSource = dataSource;
             Url = url;
             Matches = matches;
-            BingEntitySearchApiId = bingEntitySearchApiId;
         }
 
         /// <summary>
@@ -35,7 +32,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the unique identifier of the entity in the data source.
         /// </summary>
-        [CodeGenMember("Id")]
         public string DataSourceEntityId { get; }
 
         /// <summary>
@@ -51,7 +47,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the URL that identifies the linked entity's entry in the data source.
         /// </summary>
-        [CodeGenMember("Url")]
         public Uri Url { get; }
 
         /// <summary>
@@ -59,12 +54,5 @@ namespace Azure.AI.TextAnalytics
         /// to this linked entity.
         /// </summary>
         public IEnumerable<LinkedEntityMatch> Matches { get; }
-
-        /// <summary> Bing Entity Search API unique identifier of the recognized entity.
-        /// Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
-        /// This property is only available for v3.1-preview.2 and up.
-        /// </summary>
-        [CodeGenMember("BingId")]
-        public string BingEntitySearchApiId { get; }
     }
 }

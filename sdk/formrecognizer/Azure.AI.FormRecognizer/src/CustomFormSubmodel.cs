@@ -10,12 +10,6 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CustomFormSubmodel
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomFormSubmodel"/> class.
-        /// </summary>
-        /// <param name="formType">The type of form this submodel recognizes.</param>
-        /// <param name="accuracy">The mean of the accuracies of this model's <see cref="CustomFormModelField"/> instances.</param>
-        /// <param name="fields">A dictionary of the fields that this submodel will recognize from the input document.</param>
         internal CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
         {
             FormType = formType;

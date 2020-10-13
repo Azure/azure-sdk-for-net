@@ -127,14 +127,14 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
         /// parameters to the
-        /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
         /// method.
         /// </para>
         /// </remarks>
@@ -176,14 +176,14 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
         /// parameters to the
-        /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
         /// method.
         /// </para>
         /// </remarks>
@@ -227,14 +227,14 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
         /// parameters to the
-        /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
         /// method.
         /// </para>
         /// </remarks>
@@ -279,14 +279,14 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
+        /// paging using the <c cref="SearchParameters.Top">Top</c> and <c cref="SearchParameters.Skip">Skip</c>
         /// parameters to the
-        /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
+        /// <c cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)">Search</c>
         /// method.
         /// </para>
         /// </remarks>
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when some of the indexing actions failed, but other actions succeeded and modified the state of
         /// the index. This can happen when the Search Service is under heavy indexing load. It is important to
         /// explicitly catch this exception and check its
-        /// <see cref="IndexBatchException.IndexingResults" /> property. This property reports the status
+        /// <c cref="IndexBatchException.IndexingResults">IndexResult</c> property. This property reports the status
         /// of each indexing action in the batch, making it possible to determine the state of the index after a
         /// partial failure.
         /// </exception>
@@ -526,7 +526,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when some of the indexing actions failed, but other actions succeeded and modified the state of
         /// the index. This can happen when the Search Service is under heavy indexing load. It is important to
         /// explicitly catch this exception and check its
-        /// <see cref="IndexBatchException.IndexingResults" /> property. This property reports the status
+        /// <c cref="IndexBatchException.IndexingResults">IndexResult</c> property. This property reports the status
         /// of each indexing action in the batch, making it possible to determine the state of the index after a
         /// partial failure.
         /// </exception>
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when some of the indexing actions failed, but other actions succeeded and modified the state of
         /// the index. This can happen when the Search Service is under heavy indexing load. It is important to
         /// explicitly catch this exception and check its
-        /// <see cref="IndexBatchException.IndexingResults" /> property. This property reports the status
+        /// <c cref="IndexBatchException.IndexingResults">IndexResult</c> property. This property reports the status
         /// of each indexing action in the batch, making it possible to determine the state of the index after a
         /// partial failure.
         /// </exception>
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Search
         /// Thrown when some of the indexing actions failed, but other actions succeeded and modified the state of
         /// the index. This can happen when the Search Service is under heavy indexing load. It is important to
         /// explicitly catch this exception and check its
-        /// <see cref="IndexBatchException.IndexingResults" /> property. This property reports the status
+        /// <c cref="IndexBatchException.IndexingResults">IndexResult</c> property. This property reports the status
         /// of each indexing action in the batch, making it possible to determine the state of the index after a
         /// partial failure.
         /// </exception>
@@ -667,7 +667,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
@@ -714,7 +714,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
@@ -764,7 +764,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
@@ -815,7 +815,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>

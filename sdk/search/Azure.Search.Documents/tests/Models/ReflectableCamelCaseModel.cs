@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Text.Json.Serialization;
+#if !EXPERIMENTAL_FIELDBUILDER
+using Azure.Search.Documents.Samples;
+#endif
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -10,12 +13,18 @@ using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
 namespace Azure.Search.Documents.Tests
 {
+#if !EXPERIMENTAL_FIELDBUILDER
+    [SerializePropertyNamesAsCamelCase]
+#endif
     public class ReflectableInnerCamelCaseModel
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
     }
 
+#if !EXPERIMENTAL_FIELDBUILDER
+    [SerializePropertyNamesAsCamelCase]
+#endif
     public class ReflectableCamelCaseModel
     {
         [KeyField]

@@ -86,10 +86,6 @@ namespace Azure.Core.Pipeline
                 httpClientHandler.Proxy = webProxy;
             }
 
-#if NETFRAMEWORK
-            ServicePointHelpers.SetLimits(httpClientHandler);
-#endif
-
             return new HttpClient(httpClientHandler);
         }
 

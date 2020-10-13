@@ -29,5 +29,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
             }
             return sanitized;
         }
+        public override string SanitizeVariable(string variableName, string environmentVariableValue)
+        {
+            if (variableName == ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)
+            {
+                return Regex.Replace(environmentVariableValue, "SharedAccessKey=.*", "SharedAccessKey=Kg==");
+            }
+            else
+            {
+                return base.SanitizeVariable(variableName, environmentVariableValue);
+            }
+        }
     }
 }

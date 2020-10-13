@@ -31,5 +31,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         [CodeGenMember("IncludeSubFolders")]
         public bool IncludeSubfolders { get; set; } = false;
+
     }
 }

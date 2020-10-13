@@ -35,17 +35,12 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length))
+                message.Request.Content.TryComputeLength(out long length) &&
+                length > 0)
             {
-                // Set a Content-Length header if TryComputeLength succeeds.
-                message.Request.Headers.SetValue("Content-Length", length.ToString());
-
-                if (length > 0)
+                using (MemoryStream stream = new MemoryStream((int)length))
                 {
-                    using (MemoryStream stream = new MemoryStream((int)length))
-                    {
-                        message.Request.Content.WriteTo(stream, message.CancellationToken);
-                    }
+                    message.Request.Content.WriteTo(stream, message.CancellationToken);
                 }
             }
 
@@ -68,17 +63,12 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream asynchronously
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length))
+                message.Request.Content.TryComputeLength(out long length) &&
+                length > 0)
             {
-                // Set a Content-Length header if TryComputeLength succeeds.
-                message.Request.Headers.SetValue("Content-Length", length.ToString());
-
-                if (length > 0)
+                using (MemoryStream stream = new MemoryStream((int)length))
                 {
-                    using (MemoryStream stream = new MemoryStream((int)length))
-                    {
-                        await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
-                    }
+                    await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
                 }
             }
 

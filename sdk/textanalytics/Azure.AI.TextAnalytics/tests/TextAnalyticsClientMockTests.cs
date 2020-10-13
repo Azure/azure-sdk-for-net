@@ -6,9 +6,8 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -37,66 +36,44 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesResultsSorted_NoErrors()
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
+            var mockResults = new List<RecognizeEntitiesResult>()
+            {
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("1", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
                         {
-                            ""id"": ""1"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
                         },
+                        new List<TextAnalyticsWarning>()
+                    )),
+
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
                         {
-                            ""id"": ""2"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-02-01""
-                }"));
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
+            };
+            var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
+                new TextDocumentBatchStatistics(2, 2, 0, 2),
+                "modelVersion");
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
+            mockResponse.SetContent(SerializationHelpers.Serialize(mockResultCollection, SerializeRecognizeEntitiesResultCollection));
 
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(mockResponse);
+            TextAnalyticsClient client = CreateTestClient(mockTransport);
 
             var documents = new List<TextDocumentInput>()
             {
-                new TextDocumentInput("1", "Microsoft was founded"),
-                new TextDocumentInput("2", "Microsoft was founded"),
+                new TextDocumentInput("1", "TextDocument1"),
+                new TextDocumentInput("2", "TextDocument2"),
             };
 
             var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
@@ -109,84 +86,40 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesResultsSorted_WithErrors()
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
+            var mockResults = new List<RecognizeEntitiesResult>()
+            {
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
                         {
-                            ""id"": ""2"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
                         },
+                        new List<TextAnalyticsWarning>()
+                    )),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("3", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
                         {
-                            ""id"": ""3"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [
-                        {
-                            ""id"": ""4"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
-                                }
-                            }
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
                         },
-                        {
-                            ""id"": ""5"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
-                                }
-                            }
-                        }
-                    ],
-                    ""modelVersion"": ""2020-02-01""
-                }"));
+                        new List<TextAnalyticsWarning>()
+                    )),
+                new RecognizeEntitiesResult("4", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
+                new RecognizeEntitiesResult("5", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
+            };
+            var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
+                new TextDocumentBatchStatistics(2, 2, 2, 2),
+                "modelVersion");
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
+            mockResponse.SetContent(SerializationHelpers.Serialize(mockResultCollection, SerializeRecognizeEntitiesResultCollection));
 
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(mockResponse);
+            TextAnalyticsClient client = CreateTestClient(mockTransport);
 
             var documents = new List<TextDocumentInput>()
             {
@@ -205,462 +138,69 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("3", resultCollection[3].Id);
         }
 
-        [Test]
-        public async Task DetectedLanguageNullName()
+        private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
         {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            json.WriteStartObject();
+            json.WriteStartArray("documents");
+            if (resultCollection.FirstOrDefault(r => r.Entities.Count > 0) != default)
+            {
+                foreach (var result in resultCollection)
                 {
-                    ""documents"": [
+                    if (!result.HasError)
                     {
-                        ""id"": ""1"",
-                        ""detectedLanguage"": {
-                            ""name"": null,
-                            ""iso6391Name"": ""en"",
-                            ""confidenceScore"": 1
-                            },
-                            ""warnings"": []
+                        json.WriteStartObject();
+                        json.WriteString("id", result.Id);
+                        json.WriteStartArray("entities");
+                        foreach (var entity in result.Entities)
+                        {
+                            json.WriteStartObject();
+                            json.WriteString("text", entity.Text);
+                            json.WriteString("category", JsonSerializer.Serialize(entity.Category));
+                            json.WriteString("subcategory", JsonSerializer.Serialize(entity.SubCategory));
+                            json.WriteNumber("confidenceScore", entity.ConfidenceScore);
+                            json.WriteEndObject();
                         }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -07-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<DetectLanguageInput>
-            {
-                new DetectLanguageInput("1", "Hello world")
-                {
-                     CountryHint = "us",
+                        json.WriteEndArray();
+                        json.WriteStartArray("warnings");
+                        foreach (var warning in result.Entities.Warnings)
+                        {
+                            json.WriteStartObject();
+                            json.WriteString("code", warning.WarningCode.ToString());
+                            json.WriteString("message", warning.Message);
+                            json.WriteEndObject();
+                        }
+                        json.WriteEndArray();
+                        json.WriteEndObject();
+                    }
                 }
-            };
+            }
+            json.WriteEndArray();
 
-            DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
-
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
-        }
-
-        [Test]
-        public async Task DetectedLanguageNullIso6391Name()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            json.WriteStartArray("errors");
+            if (resultCollection.FirstOrDefault(r => r.HasError) != default)
+            {
+                foreach (var result in resultCollection)
                 {
-                    ""documents"": [
+                    if (result.HasError)
                     {
-                        ""id"": ""1"",
-                        ""detectedLanguage"": {
-                            ""name"": ""English"",
-                            ""iso6391Name"": null,
-                            ""confidenceScore"": 1
-                            },
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -07-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<DetectLanguageInput>
-            {
-                new DetectLanguageInput("1", "Hello world")
-                {
-                     CountryHint = "us",
+                        json.WriteStartObject();
+                        json.WriteString("id", result.Id);
+                        json.WriteStartObject("error");
+                        json.WriteStartObject("innererror");
+                        json.WriteString("code", result.Error.ErrorCode.ToString());
+                        json.WriteString("message", result.Error.Message);
+                        json.WriteEndObject();
+                        json.WriteEndObject();
+                        json.WriteEndObject();
+                    }
                 }
-            };
+            }
+            json.WriteEndArray();
 
-            DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
+            json.WriteString("modelVersion", resultCollection.ModelVersion);
+            json.WriteEndObject();
 
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
-        }
-
-        // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
-        // We want to verify behavior is the same after code auto generated.
-        [Test]
-        public async Task AnalyzeSentimentNullText()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
-                                ""sentiment"": ""neutral"",
-                                    ""confidenceScores"": {
-                                    ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": null
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
-
-            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
-        }
-
-        [Test]
-        public void AnalyzeSentimentNotSupportedSentenceSentiment()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
-                                ""sentiment"": ""confusion"",
-                                    ""confidenceScores"": {
-                                    ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": ""today is a hot day""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.AnalyzeSentimentAsync("today is a hot day"));
-        }
-
-        [Test]
-        public async Task AnalyzeSentimentMixedSentenceSentiment()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
-                                ""sentiment"": ""mixed"",
-                                    ""confidenceScores"": {
-                                    ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": ""today is a hot day""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
-
-            Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
-        }
-
-        [Test]
-        public async Task AnalyzeSentimentOpinionInOtherSentence()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""positive"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.5,
-                                ""neutral"": 0.0,
-                                ""negative"": 0.5
-                            },
-                            ""sentences"": [
-                                {
-                                    ""sentiment"": ""positive"",
-                                    ""confidenceScores"": {
-                                        ""positive"": 1.0,
-                                        ""neutral"": 0.0,
-                                        ""negative"": 0.0
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 30,
-                                    ""text"": ""The park was clean."",
-                                    ""aspects"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 1.0,
-                                                ""negative"": 0.0
-                                            },
-                                            ""offset"": 4,
-                                            ""length"": 4,
-                                            ""text"": ""park"",
-                                            ""relations"": [
-                                                {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    ""opinions"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 1.0,
-                                                ""negative"": 0.0
-                                            },
-                                            ""offset"": 13,
-                                            ""length"": 5,
-                                            ""text"": ""clean"",
-                                            ""isNegated"": false
-                                        }
-                                    ]
-                                },
-                                {
-                                    ""sentiment"": ""positive"",
-                                    ""confidenceScores"": {
-                                        ""positive"": 0.0,
-                                        ""neutral"": 0.0,
-                                        ""negative"": 1.0
-                                    },
-                                    ""offset"": 31,
-                                    ""length"": 23,
-                                    ""text"": ""It was clean."",
-                                    ""aspects"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 0.0,
-                                                ""negative"": 1.0
-                                            },
-                                            ""offset"": 35,
-                                            ""length"": 4,
-                                            ""text"": ""park"",
-                                            ""relations"": [
-                                                {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    ""opinions"": []
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-04-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
-
-            MinedOpinion minedOpinionS1 = response.Sentences.ElementAt(0).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS1.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS1.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS1.Opinions.FirstOrDefault().Text);
-
-            MinedOpinion minedOpinionS2 = response.Sentences.ElementAt(1).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS2.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS2.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS2.Opinions.FirstOrDefault().Text);
-        }
-
-        [Test]
-        public async Task RecognizeEntitiesNullCategory()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""entities"": [
-                                {
-                                ""text"": ""Microsoft"",
-                                    ""category"": null,
-                                    ""offset"": 0,
-                                    ""length"": 9,
-                                    ""confidenceScore"": 0.81
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            CategorizedEntityCollection response = await client.RecognizeEntitiesAsync("Microsoft was founded");
-
-            Assert.IsNotNull(response.FirstOrDefault().Category);
-        }
-
-        [Test]
-        public async Task RecognizeLinkedEntitiesNullText()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": null,
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-02-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = "Microsoft was founded";
-
-            LinkedEntityCollection response = await client.RecognizeLinkedEntitiesAsync(documents);
-
-            Assert.AreEqual(string.Empty, response.FirstOrDefault().Matches.FirstOrDefault().Text);
-        }
-
-        [Test]
-        public async Task DeserializeTextAnalyticsError()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-                {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""keyPhrases"": [],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [
-                        {
-                            ""id"": ""1"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
-                                }
-                            }
-                        }
-                    ],
-                    ""modelVersion"": ""2020-07-01""
-                }"));
-
-            var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = stream;
-
-            var mockTransport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>()
-            {
-                "Something smells",
-                ""
-            };
-
-            ExtractKeyPhrasesResultCollection result = await client.ExtractKeyPhrasesBatchAsync(documents);
-            var resultError = result[1];
-            Assert.IsTrue(resultError.HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
-            Assert.AreEqual("Document text is empty.", resultError.Error.Message);
+            // TODO: add statistics if needed
         }
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -35,11 +34,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="dcAccessSecurityCode">Dc Access Security Code for
         /// Customer Managed Shipping</param>
-        /// <param name="error">Error while fetching the secrets.</param>
         /// <param name="podSecrets">Contains the list of secret objects for a
         /// job.</param>
-        public DataboxJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), CloudError error = default(CloudError), IList<DataBoxSecret> podSecrets = default(IList<DataBoxSecret>))
-            : base(dcAccessSecurityCode, error)
+        public DataboxJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), IList<DataBoxSecret> podSecrets = default(IList<DataBoxSecret>))
+            : base(dcAccessSecurityCode)
         {
             PodSecrets = podSecrets;
             CustomInit();

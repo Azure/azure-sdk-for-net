@@ -32,27 +32,6 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormPage"/> class.
-        /// </summary>
-        /// <param name="pageNumber">The 1-based page number in the input document.</param>
-        /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
-        /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
-        /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
-        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
-        /// <param name="lines">A list of recognized lines of text.</param>
-        /// <param name="tables">A list of recognized tables contained in this page.</param>
-        internal FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
-        {
-            PageNumber = pageNumber;
-            Width = width;
-            Height = height;
-            TextAngle = textAngle;
-            Unit = unit;
-            Lines = lines;
-            Tables = tables;
-        }
-
-        /// <summary>
         /// The 1-based page number in the input document.
         /// </summary>
         public int PageNumber { get; }
@@ -73,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
         public float Height { get; }
 
         /// <summary>
-        /// The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is
+        /// The unit used by the width, height and <see cref="BoundingBox"/> properties. For images, the unit is
         /// &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.
         /// </summary>
         public LengthUnit Unit { get; }
@@ -88,7 +67,7 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<FormLine> Lines { get; }
 
         /// <summary>
-        /// A list of recognized tables contained in this page.
+        /// A list of extracted tables contained in a page.
         /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
 

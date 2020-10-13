@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -81,6 +82,16 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("deviceScope");
                 writer.WriteStringValue(DeviceScope);
             }
+            if (Optional.IsCollectionDefined(ParentScopes))
+            {
+                writer.WritePropertyName("parentScopes");
+                writer.WriteStartArray();
+                foreach (var item in ParentScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -99,6 +110,7 @@ namespace Azure.Iot.Hub.Service.Models
             Optional<AuthenticationMechanism> authentication = default;
             Optional<DeviceCapabilities> capabilities = default;
             Optional<string> deviceScope = default;
+            Optional<IList<string>> parentScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
@@ -166,8 +178,18 @@ namespace Azure.Iot.Hub.Service.Models
                     deviceScope = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("parentScopes"))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    parentScopes = array;
+                    continue;
+                }
             }
-            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value);
+            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value, Optional.ToList(parentScopes));
         }
     }
 }

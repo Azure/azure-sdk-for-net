@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static SentenceOpinion DeserializeSentenceOpinion(JsonElement element)
         {
-            string sentiment = default;
+            SentenceOpinionSentiment sentiment = default;
             AspectConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString();
+                    sentiment = new SentenceOpinionSentiment(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))

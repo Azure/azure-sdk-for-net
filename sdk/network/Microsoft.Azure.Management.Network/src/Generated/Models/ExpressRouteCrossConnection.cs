@@ -104,16 +104,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? STag { get; private set; }
 
         /// <summary>
-        /// Gets the peering location of the ExpressRoute circuit.
+        /// Gets or sets the peering location of the ExpressRoute circuit.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringLocation")]
-        public string PeeringLocation { get; private set; }
+        public string PeeringLocation { get; set; }
 
         /// <summary>
-        /// Gets the circuit bandwidth In Mbps.
+        /// Gets or sets the circuit bandwidth In Mbps.
         /// </summary>
         [JsonProperty(PropertyName = "properties.bandwidthInMbps")]
-        public int? BandwidthInMbps { get; private set; }
+        public int? BandwidthInMbps { get; set; }
 
         /// <summary>
         /// Gets or sets the ExpressRouteCircuit.

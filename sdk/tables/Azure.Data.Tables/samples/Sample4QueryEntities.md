@@ -14,8 +14,8 @@ var tableClient = serviceClient.GetTableClient(tableName);
 
 ```C# Snippet:TablesSample1CreateTableClient
 tableClient = new TableClient(
-    new Uri(storageUri),
     tableName,
+    new Uri(storageUri),
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
@@ -31,7 +31,6 @@ Here is a query returning a collection of dictionary `TableEntity` objects that 
 Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
 // Iterate the <see cref="Pageable"> to access all queried entities.
-
 foreach (TableEntity qEntity in queryResultsFilter)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -43,11 +42,10 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ### LINQ expression
 Here is a query returning a collection of the strongly-typed `OfficeSupplyEntity` objects that cost at least $6.00.
 
-To define the strongly-typed class, refer to the sample on [creating classes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md).
+To define the strongly-typed class, refer to the sample on [creating classes](Sample2CreateDeleteEntities.md).
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 // Use the <see cref="TableClient"> to query the table using a filter expression.
-
 double priceCutOff = 6.00;
 Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 ```
@@ -56,7 +54,7 @@ Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEn
 To query entities and obtain specific properties, call `Query`, specify the desired entity return type, and pass in an `IEnumerable` populated with the names of properties you would like to retrieve.
 
 ```C# Snippet:TablesSample4QueryEntitiesSelect
-Pageable<TableEntity> queryResultsSelect = tableClient.Query<TableEntity>(select: new List<string>() { "Product", "Price" });
+Pageable<TableEntity> queryResultsSelect = tableClient.Query<TableEntity>(select: new List<string>() { "Product", "Price"});
 ```
 
 ## Query entities with `maxPerPage`
@@ -68,7 +66,6 @@ To query entities by page, call `Query`, specify the desired entity return type,
 Pageable<TableEntity> queryResultsMaxPerPage = tableClient.Query<TableEntity>(maxPerPage: 10);
 
 // Iterate the <see cref="Pageable"> by page.
-
 foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
 {
     Console.WriteLine("This is a new page!");

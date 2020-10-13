@@ -11,12 +11,6 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public readonly struct KeyType : IEquatable<KeyType>
     {
-        internal const string EcValue = "EC";
-        internal const string EcHsmValue = "EC-HSM";
-        internal const string RsaValue = "RSA";
-        internal const string RsaHsmValue = "RSA-HSM";
-        internal const string OctValue = "oct";
-
         private readonly string _value;
 
         /// <summary>
@@ -31,27 +25,27 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// An Elliptic Curve Cryptographic (ECC) algorithm.
         /// </summary>
-        public static KeyType Ec { get; } = new KeyType(EcValue);
+        public static KeyType Ec { get; } = new KeyType("EC");
 
         /// <summary>
         /// An Elliptic Curve Cryptographic (ECC) algorithm backed by HSM.
         /// </summary>
-        public static KeyType EcHsm { get; } = new KeyType(EcHsmValue);
+        public static KeyType EcHsm { get; } = new KeyType("EC-HSM");
 
         /// <summary>
         /// An RSA cryptographic algorithm.
         /// </summary>
-        public static KeyType Rsa { get; } = new KeyType(RsaValue);
+        public static KeyType Rsa { get; } = new KeyType("RSA");
 
         /// <summary>
         /// An RSA cryptographic algorithm backed by HSM.
         /// </summary>
-        public static KeyType RsaHsm { get; } = new KeyType(RsaHsmValue);
+        public static KeyType RsaHsm { get; } = new KeyType("RSA-HSM");
 
         /// <summary>
         /// An AES cryptographic algorithm.
         /// </summary>
-        public static KeyType Oct { get; } = new KeyType(OctValue);
+        public static KeyType Oct { get; } = new KeyType("oct");
 
         /// <summary>
         /// Determines if two <see cref="KeyType"/> values are the same.

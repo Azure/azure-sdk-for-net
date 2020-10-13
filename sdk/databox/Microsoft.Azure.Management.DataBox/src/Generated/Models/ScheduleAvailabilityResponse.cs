@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Schedule availability for given sku in a region.
+    /// Schedule availability response for given sku in a region.
     /// </summary>
     public partial class ScheduleAvailabilityResponse
     {

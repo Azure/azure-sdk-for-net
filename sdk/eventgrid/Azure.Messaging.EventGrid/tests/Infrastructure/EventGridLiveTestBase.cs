@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventGrid.Tests
     {
         public EventGridLiveTestBase(bool isAsync) : base(isAsync/*, RecordedTestMode.Record*/)
         {
-            Sanitizer = new RecordedTestSanitizer();
+            Sanitizer = new EventGridRecordedTestSanitizer();
             Sanitizer.SanitizedHeaders.Add(Constants.SasKeyName);
             Sanitizer.SanitizedHeaders.Add(Constants.SasTokenName);
         }

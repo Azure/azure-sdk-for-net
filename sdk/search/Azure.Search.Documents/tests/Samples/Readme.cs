@@ -192,6 +192,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }
 
+#if EXPERIMENTAL_FIELDBUILDER // This won't condition the README.md file, which will require manual effort.
         [Test]
         [SyncOnly]
         public async Task CreateIndex()
@@ -228,6 +229,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             resources.IndexName = index.Name;
         }
+#endif
 
         [Test]
         [SyncOnly]

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppJsonParseFailure,
             MsiMissingToken,
             MsiAppServicesIncorrectRequest,
-            MsiAzureVmImdsTimeout,
+            MsiAzureVmTimeout,
             MsiUnresponsive,
             MsiThrottled,
             MsiTransientServerError
@@ -41,23 +41,20 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
         private readonly MsiTestType _msiTestType;
 
-        private const string _azureVmImdsInstanceEndpoint = "http://169.254.169.254/metadata/instance";
-        private const string _azureVmImdsTokenEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
-
         internal MockMsi(MsiTestType msiTestType)
         {
             _msiTestType = msiTestType;
         }
 
         /// <summary>
-        /// Returns a response based on the response type.
+        /// Returns a response based on the response type. 
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // HitCount is updated when this method gets called. This allows for testing of cache and retry logic.
+            // HitCount is updated when this method gets called. This allows for testing of cache and retry logic. 
             HitCount++;
 
             HttpResponseMessage responseMessage = null;
@@ -141,20 +138,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
 
-                case MsiTestType.MsiAzureVmImdsTimeout:
-                    if (request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsInstanceEndpoint))
+                case MsiTestType.MsiAzureVmTimeout:
+                    var start = DateTime.Now;
+                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
                     {
-                        var start = DateTime.Now;
-                        while (DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
+                        if (cancellationToken.IsCancellationRequested)
                         {
-                            if (cancellationToken.IsCancellationRequested)
-                            {
-                                throw new TaskCanceledException();
-                            }
+                            throw new TaskCanceledException();
                         }
-                        throw new Exception("Test fail");
                     }
-                    break;
+                    throw new Exception("Test fail");
 
                 case MsiTestType.MsiUnresponsive:
                 case MsiTestType.MsiThrottled:
@@ -174,20 +167,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                         // give error based on test type
                         if (_msiTestType == MsiTestType.MsiUnresponsive)
                         {
-                            if (request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsInstanceEndpoint))
-                            {
-                                responseMessage = new HttpResponseMessage
-                                {
-                                    Content = new StringContent(TokenHelper.GetInstanceMetadataResponse(),
-                                    Encoding.UTF8,
-                                    Constants.JsonContentType)
-                                };
-                            }
-                            else if (Environment.GetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv) != null
-                                || request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsTokenEndpoint))
-                            {
-                                throw new HttpRequestException();
-                            }
+                            throw new HttpRequestException();
                         }
                         else
                         {

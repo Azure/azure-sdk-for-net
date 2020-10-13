@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.HybridCompute
         IMachinesOperations Machines { get; }
 
         /// <summary>
-        /// Gets the IMachineExtensionsOperations.
-        /// </summary>
-        IMachineExtensionsOperations MachineExtensions { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

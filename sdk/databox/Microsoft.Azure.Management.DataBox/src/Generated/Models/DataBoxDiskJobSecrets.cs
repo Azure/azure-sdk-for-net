@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -35,14 +34,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="dcAccessSecurityCode">Dc Access Security Code for
         /// Customer Managed Shipping</param>
-        /// <param name="error">Error while fetching the secrets.</param>
         /// <param name="diskSecrets">Contains the list of secrets object for
         /// that device.</param>
         /// <param name="passKey">PassKey for the disk Job.</param>
         /// <param name="isPasskeyUserDefined">Whether passkey was provided by
         /// user.</param>
-        public DataBoxDiskJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), CloudError error = default(CloudError), IList<DiskSecret> diskSecrets = default(IList<DiskSecret>), string passKey = default(string), bool? isPasskeyUserDefined = default(bool?))
-            : base(dcAccessSecurityCode, error)
+        public DataBoxDiskJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), IList<DiskSecret> diskSecrets = default(IList<DiskSecret>), string passKey = default(string), bool? isPasskeyUserDefined = default(bool?))
+            : base(dcAccessSecurityCode)
         {
             DiskSecrets = diskSecrets;
             PassKey = passKey;

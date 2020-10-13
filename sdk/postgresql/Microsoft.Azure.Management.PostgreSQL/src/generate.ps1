@@ -1,2 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "postgresql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\postgresql\Generated"
-Start-AutoRestCodeGeneration -ResourceProvider "postgresql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\postgresqlflexibleservers\Generated" -ConfigFileTag "package-2020-02-14-privatepreview" -Namespace "Microsoft.Azure.Management.PostgreSQL.FlexibleServers"
+Start-AutoRestCodeGeneration -ResourceProvider "postgresql/resource-manager" -AutoRestVersion "v2"

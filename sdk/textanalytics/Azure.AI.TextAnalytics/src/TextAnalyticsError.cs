@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Text Analytics Error.
     /// </summary>
-    public readonly struct TextAnalyticsError
+    public struct TextAnalyticsError
     {
         internal TextAnalyticsError(string code, string message, string target = null)
         {

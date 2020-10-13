@@ -44,21 +44,6 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizedForm"/> class.
-        /// </summary>
-        /// <param name="formType">The type of form the model identified the submitted form to be.</param>
-        /// <param name="pageRange">The range of pages this form spans.</param>
-        /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
-        /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
-        internal RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages)
-        {
-            FormType = formType;
-            PageRange = pageRange;
-            Fields = fields;
-            Pages = pages;
-        }
-
-        /// <summary>
         /// The type of form the model identified the submitted form to be.
         /// </summary>
         // Convert clusterId to a string (ex. "FormType1").

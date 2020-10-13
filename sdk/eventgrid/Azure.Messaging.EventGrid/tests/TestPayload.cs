@@ -15,8 +15,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Age = age;
         }
 
-        public TestPayload() { }
-
         public string Name { get; set; }
         public int Age { get; set; }
     }

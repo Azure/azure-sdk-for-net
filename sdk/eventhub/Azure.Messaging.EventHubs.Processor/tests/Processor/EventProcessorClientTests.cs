@@ -123,7 +123,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval),  $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
                 Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval),  $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
                 Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount),  $"The prefetch count is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes),  $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
             }
 
             var clientOptions = new EventProcessorClientOptions
@@ -132,9 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
                Identifier = "OMG, HAI!",
                MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true,
-               PrefetchCount = 5,
-               PrefetchSizeInBytes = 500
+               TrackLastEnqueuedEventProperties = true
             };
 
             var expectedOptions = InvokeCreateOptions(clientOptions);
@@ -1411,8 +1408,7 @@ namespace Azure.Messaging.EventHubs.Tests
                MaximumWaitTime = TimeSpan.FromDays(54),
                TrackLastEnqueuedEventProperties = true,
                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
-               PrefetchCount = 9990,
-               PrefetchSizeInBytes = 400
+               PrefetchCount = 9990
             };
 
             var defaultOptions = new EventProcessorOptions();
@@ -1428,7 +1424,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
             Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
             Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
-            Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
 
             Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
             Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(defaultOptions.LoadBalancingUpdateInterval), "The load balancing interval should not have been set.");

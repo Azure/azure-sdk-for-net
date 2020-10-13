@@ -58,7 +58,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createRoleAssignmentOptions);
             request.Content = content;
@@ -141,7 +140,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 request.Headers.Add("x-ms-continuation", continuationToken);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -214,7 +212,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendPath(roleAssignmentId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -283,7 +280,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendPath(roleAssignmentId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -343,7 +339,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendPath("/rbac/getMyAssignedRoles", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -407,7 +402,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendPath("/rbac/roles", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -462,7 +456,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendPath(roleId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -529,7 +522,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

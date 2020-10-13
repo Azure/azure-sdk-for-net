@@ -18,17 +18,17 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Name = name;
 
-            FieldBoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new FieldBoundingBox(field.Key.BoundingBox);
+            BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
             IReadOnlyList<FormElement> labelFormElement = field.Key.Elements != null
                 ? ConvertTextReferences(field.Key.Elements, readResults)
                 : new List<FormElement>();
-            LabelData = new FieldData(labelBoundingBox, pageNumber, field.Key.Text, labelFormElement);
+            LabelData = new FieldData(field.Key.Text, pageNumber, labelBoundingBox, labelFormElement);
 
-            FieldBoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new FieldBoundingBox(field.Value.BoundingBox);
+            BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
             IReadOnlyList<FormElement> valueFormElement = field.Value.Elements != null
                 ? ConvertTextReferences(field.Value.Elements, readResults)
                 : new List<FormElement>();
-            ValueData = new FieldData(valueBoundingBox, pageNumber, field.Value.Text, valueFormElement);
+            ValueData = new FieldData(field.Value.Text, pageNumber, valueBoundingBox, valueFormElement);
 
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
@@ -51,32 +51,15 @@ namespace Azure.AI.FormRecognizer.Models
             }
             else
             {
-                IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
+                IReadOnlyList<FormElement> FormElement = ConvertTextReferences(fieldValue.Elements, readResults);
 
                 // TODO: FormEnum<T> ?
-                FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
+                BoundingBox boundingBox = new BoundingBox(fieldValue.BoundingBox);
 
-                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
+                ValueData = new FieldData(fieldValue.Text, fieldValue.Page.Value, boundingBox, FormElement);
             }
 
             Value = new FieldValue(fieldValue, readResults);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormField"/> class.
-        /// </summary>
-        /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
-        /// <param name="labelData">Contains the text, bounding box and content of the label of the field in the form.</param>
-        /// <param name="valueData">Contains the text, bounding box and content of the value of the field in the form.</param>
-        /// <param name="value">The strongly-typed value of this field.</param>
-        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        internal FormField(string name, FieldData labelData, FieldData valueData, FieldValue value, float confidence)
-        {
-            Name = name;
-            LabelData = labelData;
-            ValueData = valueData;
-            Value = value;
-            Confidence = confidence;
         }
 
         /// <summary>

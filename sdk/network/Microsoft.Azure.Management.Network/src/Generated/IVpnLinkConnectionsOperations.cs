@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network
         /// wan vpn gateway vpn connection.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the vpn gateway.
+        /// The resource group name of the VpnGateway.
         /// </param>
         /// <param name='gatewayName'>
         /// The name of the gateway.

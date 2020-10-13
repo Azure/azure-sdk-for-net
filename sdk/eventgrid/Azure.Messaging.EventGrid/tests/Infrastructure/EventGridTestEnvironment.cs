@@ -26,15 +26,15 @@ namespace Azure.Messaging.EventGrid.Tests
 
 
         public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
-        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
+        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName);
 
         public string DomainHost => GetRecordedVariable(DomainEndpointEnvironmentVariableName);
-        public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
+        public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName);
 
         public string CloudEventTopicHost => GetRecordedVariable(CloudEventTopicEndpointEnvironmentVariableName);
-        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
+        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName);
 
         public string CustomEventTopicHost => GetRecordedVariable(CustomEventTopicEndpointEnvironmentVariableName);
-        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
+        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName);
     }
 }

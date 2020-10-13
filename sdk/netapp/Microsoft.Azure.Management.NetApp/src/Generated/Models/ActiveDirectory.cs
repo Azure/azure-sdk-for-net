@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// within the Windows Active Directory</param>
         /// <param name="site">The Active Directory site the service will limit
         /// Domain Controller discovery to</param>
-        /// <param name="backupOperators">Users to be added to the Built-in
-        /// Backup Operator active directory group. A list of unique usernames
-        /// without domain specifier</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>))
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -61,7 +56,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             SmbServerName = smbServerName;
             OrganizationalUnit = organizationalUnit;
             Site = site;
-            BackupOperators = backupOperators;
             CustomInit();
         }
 
@@ -129,14 +123,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "site")]
         public string Site { get; set; }
-
-        /// <summary>
-        /// Gets or sets users to be added to the Built-in Backup Operator
-        /// active directory group. A list of unique usernames without domain
-        /// specifier
-        /// </summary>
-        [JsonProperty(PropertyName = "backupOperators")]
-        public IList<string> BackupOperators { get; set; }
 
     }
 }

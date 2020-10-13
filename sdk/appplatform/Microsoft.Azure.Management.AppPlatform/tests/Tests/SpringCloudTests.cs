@@ -19,14 +19,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
                 string rgName = CreateName("appplatform-sdk-test-rg");
                 string serviceName = CreateName("appplatform-sdk-test-asc");
                 string appName = CreateName("appplatform-sdk-test-app");
-                string deploymentName = CreateName("default");
 
                 CreateResourceGroup(context, rgName);
                 ServiceResource service = CreateService(context, rgName, serviceName);
                 Assert.NotNull(service);
-
-                AppResource app = CreateApp(context, rgName, serviceName, appName, deploymentName);
-                Assert.NotNull(app);
 
                 DeleteService(context, rgName, serviceName);
                 AssertNoService(context, rgName);
@@ -46,7 +42,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
                 });
         }
 
-        private void DeleteResourceGroup(MockContext context, string rgName)
+        private void DeleteResourceGroup(MockContext context, String rgName)
         {
             ResourceManagementClient client = GetResourceManagementClient(context);
             client.ResourceGroups.Delete(rgName);
@@ -60,36 +56,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
                 serviceName,
                 new ServiceResource(type: "Microsoft.AppPlatform/Spring", location: "eastus")
             );
-        }
-
-        private AppResource CreateApp(MockContext context, string rgName, string serviceName, string appName, string deploymentName)
-        {
-            AppPlatformManagementClient client = GetSpringManagementClient(context);
-            AppResource app = client.Apps.CreateOrUpdate(
-                rgName,
-                serviceName,
-                appName,
-                new AppResource()
-            );
-            DeploymentResource deployment = client.Deployments.CreateOrUpdate(
-                rgName,
-                serviceName,
-                app.Name,
-                deploymentName,
-                new DeploymentResource(
-                    properties: new DeploymentResourceProperties(
-                        source: new UserSourceInfo(
-                            relativePath: "<default>",
-                            type: "Jar"
-            ))));
-            return client.Apps.Update(
-                rgName,
-                serviceName,
-                appName,
-                new AppResource(
-                    properties: new AppResourceProperties(
-                        activeDeploymentName: deployment.Name
-            )));
         }
 
         private void DeleteService(MockContext context, string rgName, string serviceName)
@@ -110,7 +76,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
             return client.Services.List(rgName);
         }
 
-        private string CreateName(string prefix) => TestUtilities.GenerateName(prefix);
+        private String CreateName(String prefix) => TestUtilities.GenerateName(prefix);
 
         private ResourceManagementClient GetResourceManagementClient(MockContext context)
         {

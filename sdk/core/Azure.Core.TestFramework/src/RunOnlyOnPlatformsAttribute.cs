@@ -17,7 +17,6 @@ namespace Azure.Core.TestFramework
         public bool Linux { get; set; }
         public bool OSX { get; set; }
         public bool Windows { get; set; }
-        public string[] ContainerNames { get; set; }
 
         public void ApplyToTest(Test test)
         {
@@ -31,7 +30,6 @@ namespace Azure.Core.TestFramework
         private bool CanRunOnPlatform() =>
             Linux && RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
             OSX && RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ||
-            Windows && RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ||
-            ContainerNames != default && ContainerNames.Contains(Environment.GetEnvironmentVariable("DOCKER_CONTAINER_NAME"));
+            Windows && RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     }
 }

@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// The sentiment confidence scores, by sentiment.
     /// </summary>
-    [CodeGenModel("SentimentConfidenceScorePerLabel")]
-    public partial class SentimentConfidenceScores
+    public class SentimentConfidenceScores
     {
         internal SentimentConfidenceScores(double positive, double neutral, double negative)
         {

@@ -8,11 +8,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 
-namespace Azure
+namespace Azure.Core
 {
     /// <summary>
     /// A lightweight abstraction for a payload of bytes. This type integrates with <see cref="ObjectSerializer"/>
@@ -20,7 +19,7 @@ namespace Azure
     ///
     /// The ownership model of the underlying bytes varies depending on how the instance is constructed:
     ///
-    /// If created using the static factory method, <see cref="FromBytes(ReadOnlyMemory{byte})"/>,
+    /// If created using the static factory method, <see cref="FromMemory(ReadOnlyMemory{byte})"/>,
     /// the passed in bytes will be wrapped, rather than copied. This is useful in scenarios where performance
     /// is critical and/or ownership of the bytes is controlled completely by the consumer, thereby allowing the
     /// enforcement of whatever ownership model is needed.
@@ -38,15 +37,13 @@ namespace Azure
 
         private static readonly UTF8Encoding s_encoding = new UTF8Encoding(false);
 
-        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
-
         /// <summary>
         /// The backing store for the <see cref="BinaryData"/> instance.
         /// </summary>
-        internal ReadOnlyMemory<byte> Bytes { get; }
+        public ReadOnlyMemory<byte> Bytes { get; }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by making a copy
+        /// Creates a binary data instance by making a copy
         /// of the passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
@@ -56,63 +53,16 @@ namespace Azure
         }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the
-        /// passed in array of bytes.
-        /// </summary>
-        /// <param name="data">Byte data.</param>
-        public BinaryData(byte[] data)
-        {
-            Bytes = data;
-        }
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object to Json
-        /// using <see cref="JsonObjectSerializer"/>.
-        /// </summary>
-        ///
-        /// <param name="jsonSerializable">The object that will be serialized to Json using
-        /// <see cref="JsonObjectSerializer"/>.</param>
-        /// <param name="type">The type of the data. If not specified, <see cref="object.GetType"/> will
-        /// be used to determine the type.</param>
-        ///
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public BinaryData(object jsonSerializable, Type? type = default)
-            : this(jsonSerializable, s_jsonSerializer, type)
-        {
-        }
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object
-        /// using the provided <see cref="ObjectSerializer"/>. If no <see cref="ObjectSerializer"/>
-        /// is specified, <see cref="JsonObjectSerializer"/> will be used.
-        /// </summary>
-        ///
-        /// <param name="serializable">The data that will be serialized.</param>
-        /// <param name="serializer">The serializer to serialize the data.</param>
-        /// <param name="type">The type of the data. If not specified, <see cref="object.GetType"/> will
-        /// be used to determine the type.</param>
-        ///
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public BinaryData(object serializable, ObjectSerializer serializer, Type? type = default)
-        {
-            using var memoryStream = new MemoryStream();
-            serializer ??= s_jsonSerializer;
-            serializer.Serialize(memoryStream, serializable, type ?? serializable?.GetType() ?? typeof(object), CancellationToken.None);
-            Bytes = memoryStream.ToArray();
-        }
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the
+        /// Creates a binary data instance by wrapping the
         /// passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
-        public BinaryData(ReadOnlyMemory<byte> data)
+        private BinaryData(ReadOnlyMemory<byte> data)
         {
             Bytes = data;
         }
-
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance from a string by converting
+        /// Creates a binary data instance from a string by converting
         /// the string to bytes using UTF-8 encoding.
         /// </summary>
         /// <param name="data">The string data.</param>
@@ -124,43 +74,16 @@ namespace Azure
         }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the passed in
+        /// Creates a binary data instance by wrapping the passed in
         /// <see cref="ReadOnlyMemory{Byte}"/>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromBytes(ReadOnlyMemory<byte> data) =>
+        public static BinaryData FromMemory(ReadOnlyMemory<byte> data) =>
             new BinaryData(data);
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by copying the passed in
-        /// <see cref="ReadOnlySpan{Byte}"/>.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromBytes(ReadOnlySpan<byte> data) =>
-            new BinaryData(data);
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the passed in
-        /// byte array.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromBytes(byte[] data) =>
-            new BinaryData(data);
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance using the passed in string.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromString(string data) =>
-            new BinaryData(data);
-
-        /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance from the specified stream.
-        /// The passed in stream is not disposed by this method.
+        /// Creates a binary data instance from the specified stream.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
@@ -168,8 +91,7 @@ namespace Azure
             FromStreamAsync(stream, false).EnsureCompleted();
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance from the specified stream.
-        /// The passed in stream is not disposed by this method.
+        /// Creates a binary data instance from the specified stream.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
@@ -202,77 +124,69 @@ namespace Azure
                 {
                     stream.CopyTo(memoryStream);
                 }
-                return new BinaryData((ReadOnlyMemory<byte>)memoryStream.ToArray());
+                return new BinaryData((ReadOnlyMemory<byte>) memoryStream.ToArray());
             }
         }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object using
+        /// Creates a BinaryData instance from the specified data using
         /// the <see cref="JsonObjectSerializer"/>.
         /// </summary>
-        ///
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="jsonSerializable">The data to use.</param>
+        /// <param name="data">The data to use.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
-        ///
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromObject<T>(
-            T jsonSerializable,
+        public static BinaryData Serialize<T>(
+            T data,
             CancellationToken cancellationToken = default) =>
-            FromObject<T>(jsonSerializable, s_jsonSerializer, cancellationToken);
+            Serialize<T>(data, new JsonObjectSerializer(), cancellationToken);
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object using
-        /// the <see cref="JsonObjectSerializer"/>.
+        /// Creates a BinaryData instance from the specified data
+        /// using the <see cref="JsonObjectSerializer"/>.
         /// </summary>
-        ///
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="jsonSerializable">The data to use.</param>
+        /// <param name="data">The data to use.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
-        ///
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async ValueTask<BinaryData> FromObjectAsync<T>(
-            T jsonSerializable,
+        public static async Task<BinaryData> SerializeAsync<T>(
+            T data,
             CancellationToken cancellationToken = default) =>
-            await FromObjectInternalAsync<T>(jsonSerializable, s_jsonSerializer, true, cancellationToken).ConfigureAwait(false);
+            await SerializeInternalAsync<T>(data, new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object using
+        /// Creates a BinaryData instance from the specified data using
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
-        ///
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="serializable">The data to use.</param>
+        /// <param name="data">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
-        ///
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromObject<T>(
-            T serializable,
+        public static BinaryData Serialize<T>(
+            T data,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
-            FromObjectInternalAsync<T>(serializable, serializer, false, cancellationToken).EnsureCompleted();
+            SerializeInternalAsync<T>(data, serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object using
+        /// Creates a BinaryData instance from the specified data using
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
-        ///
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="serializable">The data to use.</param>
+        /// <param name="data">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
-        ///
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async ValueTask<BinaryData> FromObjectAsync<T>(
-            T serializable,
+        public static async Task<BinaryData> SerializeAsync<T>(
+            T data,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
-            await FromObjectInternalAsync<T>(serializable, serializer, true, cancellationToken).ConfigureAwait(false);
+            await SerializeInternalAsync<T>(data, serializer, true, cancellationToken).ConfigureAwait(false);
 
-        private static async ValueTask<BinaryData> FromObjectInternalAsync<T>(
+        private static async Task<BinaryData> SerializeInternalAsync<T>(
             T data,
             ObjectSerializer serializer,
             bool async,
@@ -288,14 +202,13 @@ namespace Azure
             {
                 serializer.Serialize(memoryStream, data, typeof(T), cancellationToken);
             }
-            return new BinaryData((ReadOnlyMemory<byte>)memoryStream.ToArray());
+            return new BinaryData((ReadOnlyMemory<byte>) memoryStream.ToArray());
         }
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to a string using UTF-8.
+        /// Converts the BinaryData to a string using UTF-8.
         /// </summary>
-        /// <returns>The string representation of the <see cref="BinaryData"/> using UTF-8
-        /// to decode the bytes.</returns>
+        /// <returns>The string representation of the data.</returns>
         public override string ToString()
         {
             if (MemoryMarshal.TryGetArray(
@@ -308,21 +221,14 @@ namespace Azure
         }
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to a read-only stream.
+        /// Converts the BinaryData to a stream.
         /// </summary>
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream() =>
             new ReadOnlyMemoryStream(Bytes);
 
         /// <summary>
-        /// Gets the <see cref="BinaryData"/> as <see cref="ReadOnlyMemory{Byte}"/>.
-        /// </summary>
-        /// <returns><see cref="BinaryData"/> as bytes.</returns>
-        public ReadOnlyMemory<byte> ToBytes() =>
-            Bytes;
-
-        /// <summary>
-        /// Converts the <see cref="BinaryData"/> to the specified type using
+        /// Converts the BinaryData to the specified type using
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
@@ -331,11 +237,11 @@ namespace Azure
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T ToObject<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
-            ToObjectInternalAsync<T>(serializer, false, cancellationToken).EnsureCompleted();
+        public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            DeserializeInternalAsync<T>(serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to the specified type using the
+        /// Converts the BinaryData to the specified type using the
         /// <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
@@ -344,22 +250,22 @@ namespace Azure
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
-        public async ValueTask<T> ToObjectAsync<T>(CancellationToken cancellationToken = default) =>
-            await ToObjectInternalAsync<T>(s_jsonSerializer, true, cancellationToken).ConfigureAwait(false);
+        public async ValueTask<T> DeserializeAsync<T>(CancellationToken cancellationToken = default) =>
+            await DeserializeInternalAsync<T>(new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to the specified type using the
+        /// Converts the BinaryData to the specified type using the
         /// <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T ToObject<T>(CancellationToken cancellationToken = default) =>
-            ToObjectInternalAsync<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
+        public T Deserialize<T>(CancellationToken cancellationToken = default) =>
+            DeserializeInternalAsync<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to the specified type using the
+        /// Converts the BinaryData to the specified type using the
         /// provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
@@ -367,15 +273,13 @@ namespace Azure
         /// <param name="serializer">The serializer to use
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
-        /// <returns>
-        /// The data cast to the specified type. If the cast cannot
-        /// be performed, an <see cref="InvalidCastException"/> will be
-        /// thrown.
-        /// </returns>
-        public async ValueTask<T> ToObjectAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
-            await ToObjectInternalAsync<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+        ///<returns>The data cast to the specified type. If the cast cannot
+        ///be performed, an <see cref="InvalidCastException"/> will be
+        ///thrown.</returns>
+        public async ValueTask<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            await DeserializeInternalAsync<T>(serializer, true, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask<T> ToObjectInternalAsync<T>(
+        private async ValueTask<T> DeserializeInternalAsync<T>(
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
@@ -404,10 +308,10 @@ namespace Azure
             data.Bytes;
 
         /// <summary>
-        /// Two <see cref="BinaryData"/> objects are equal if the memory regions point to the same array and have the
-        /// same length. The method does not check to see if the contents are equal.
+        /// Two BinaryData objects are equal if the memory regions point to the same array and have the same length.
+        /// The method does not check to see if the contents are equal.
         /// </summary>
-        /// <param name="obj">The <see cref="BinaryData"/> to compare.</param>
+        /// <param name="obj">The BinaryData to compare.</param>
         /// <returns>true if the current instance and other are equal; otherwise, false.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)

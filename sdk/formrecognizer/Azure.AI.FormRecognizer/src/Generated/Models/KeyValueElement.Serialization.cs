@@ -15,17 +15,11 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static KeyValueElement DeserializeKeyValueElement(JsonElement element)
         {
-            Optional<KeyValueType> type = default;
             string text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
             Optional<IReadOnlyList<string>> elements = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
-                {
-                    type = new KeyValueType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("text"))
                 {
                     text = property.Value.GetString();
@@ -62,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Optional.ToNullable(type), text, Optional.ToList(boundingBox), Optional.ToList(elements));
+            return new KeyValueElement(text, Optional.ToList(boundingBox), Optional.ToList(elements));
         }
     }
 }

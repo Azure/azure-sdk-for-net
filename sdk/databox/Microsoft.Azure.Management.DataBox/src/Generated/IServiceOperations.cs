@@ -25,6 +25,32 @@ namespace Microsoft.Azure.Management.DataBox
     {
         /// <summary>
         /// This method provides the list of available skus for the given
+        /// subscription and location.
+        /// </summary>
+        /// <param name='location'>
+        /// The location of the resource
+        /// </param>
+        /// <param name='availableSkuRequest'>
+        /// Filters for showing the available skus.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SkuInformation>>> ListAvailableSkusWithHttpMessagesAsync(string location, AvailableSkuRequest availableSkuRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This method provides the list of available skus for the given
         /// subscription, resource group and location.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -42,7 +68,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -53,7 +79,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// </exception>
         Task<AzureOperationResponse<IPage<SkuInformation>>> ListAvailableSkusByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, AvailableSkuRequest availableSkuRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed]. This
+        /// [DEPRECATED NOTICE: This operation will soon be removed] This
         /// method validates the customer shipping address and provide
         /// alternate addresses if any.
         /// </summary>
@@ -69,7 +95,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -99,7 +125,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -125,7 +151,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -137,7 +163,7 @@ namespace Microsoft.Azure.Management.DataBox
         Task<AzureOperationResponse<ValidationResponse>> ValidateInputsWithHttpMessagesAsync(string location, ValidationRequest validationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This API provides configuration details specific to given
-        /// region/location at Subscription level.
+        /// region/location.
         /// </summary>
         /// <param name='location'>
         /// The location of the resource
@@ -154,7 +180,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -165,20 +191,11 @@ namespace Microsoft.Azure.Management.DataBox
         /// </exception>
         Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationWithHttpMessagesAsync(string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// This API provides configuration details specific to given
-        /// region/location at Resource group level.
+        /// This method provides the list of available skus for the given
+        /// subscription and location.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The Resource Group Name
-        /// </param>
-        /// <param name='location'>
-        /// The location of the resource
-        /// </param>
-        /// <param name='scheduleAvailabilityRequest'>
-        /// Request body to get the availability for scheduling orders.
-        /// </param>
-        /// <param name='transportAvailabilityRequest'>
-        /// Request body to get the transport availability for given sku.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -186,7 +203,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -195,7 +212,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SkuInformation>>> ListAvailableSkusNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This method provides the list of available skus for the given
         /// subscription, resource group and location.
@@ -209,7 +226,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

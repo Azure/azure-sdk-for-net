@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,6 +17,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
         public DeviceIdentity()
         {
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
@@ -31,7 +34,8 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="authentication"> The authentication mechanism used by the device. </param>
         /// <param name="capabilities"> The set of capabilities of the device. For example, if this device is an edge device or not. </param>
         /// <param name="deviceScope"> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </param>
-        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope)
+        /// <param name="parentScopes"> The scopes of the upper level edge devices if applicable. Only available for edge devices. </param>
+        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             DeviceId = deviceId;
             GenerationId = generationId;
@@ -46,6 +50,7 @@ namespace Azure.Iot.Hub.Service.Models
             Authentication = authentication;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
+            ParentScopes = parentScopes;
         }
 
         /// <summary> The unique identifier of the device. </summary>
@@ -74,5 +79,7 @@ namespace Azure.Iot.Hub.Service.Models
         public DeviceCapabilities Capabilities { get; set; }
         /// <summary> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </summary>
         public string DeviceScope { get; set; }
+        /// <summary> The scopes of the upper level edge devices if applicable. Only available for edge devices. </summary>
+        public IList<string> ParentScopes { get; }
     }
 }

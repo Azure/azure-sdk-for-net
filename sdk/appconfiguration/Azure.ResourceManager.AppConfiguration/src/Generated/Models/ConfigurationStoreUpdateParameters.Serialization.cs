@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

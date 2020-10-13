@@ -140,6 +140,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
+                        sessionId: SessionId,
                         isSessionReceiver: isSessionReceiver),
                 link => CloseLink(link));
 
@@ -164,6 +165,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ReceiveMode receiveMode,
+            string sessionId,
             bool isSessionReceiver)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
@@ -175,33 +177,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout: timeout,
                     prefetchCount: prefetchCount,
                     receiveMode: receiveMode,
-                    sessionId: SessionId,
+                    sessionId: sessionId,
                     isSessionReceiver: isSessionReceiver,
                     cancellationToken: CancellationToken.None).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
+                    // Refresh the session lock value in case we have reconnected a link.
+                    // SessionId need not be refreshed here as we do not allow reconnecting
+                    // a receiver instance to a different session.
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
                         AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks) ?
                         new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                         : DateTime.MinValue;
-
-                        var source = (Source)link.Settings.Source;
-                        if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
-                        {
-                            link.Session.SafeClose();
-                            throw new ServiceBusException(true, Resources.SessionFilterMissing);
-                        }
-
-                        if (string.IsNullOrWhiteSpace(tempSessionId))
-                        {
-                            link.Session.SafeClose();
-                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
-                        }
-                        // This will only have changed if sessionId was left blank when constructing the session
-                        // receiver.
-                        SessionId = tempSessionId;
                 }
-                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier, SessionId);
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier);
                 link.Closed += OnReceiverLinkClosed;
                 return link;
             }
@@ -1291,6 +1280,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                link = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
                _connectionScope,
                cancellationToken).ConfigureAwait(false);
+
+            if (_isSessionReceiver)
+            {
+                var source = (Source)link.Settings.Source;
+                if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
+                {
+                    link.Session.SafeClose();
+                    throw new ServiceBusException(true, Resources.SessionFilterMissing);
+                }
+
+                if (string.IsNullOrWhiteSpace(tempSessionId))
+                {
+                    link.Session.SafeClose();
+                    throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                }
+                SessionId = tempSessionId;
+            }
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>

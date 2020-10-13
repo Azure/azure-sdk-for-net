@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
@@ -19,7 +18,6 @@ namespace Azure.AI.FormRecognizer.Models
             CustomFormModelInfo modelInfo = default;
             Optional<KeysResult> keys = default;
             Optional<TrainResult> trainResult = default;
-            Optional<IReadOnlyList<TrainResult>> composedTrainResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
@@ -37,18 +35,8 @@ namespace Azure.AI.FormRecognizer.Models
                     trainResult = TrainResult.DeserializeTrainResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("composedTrainResults"))
-                {
-                    List<TrainResult> array = new List<TrainResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TrainResult.DeserializeTrainResult(item));
-                    }
-                    composedTrainResults = array;
-                    continue;
-                }
             }
-            return new Model(modelInfo, keys.Value, trainResult.Value, Optional.ToList(composedTrainResults));
+            return new Model(modelInfo, keys.Value, trainResult.Value);
         }
     }
 }

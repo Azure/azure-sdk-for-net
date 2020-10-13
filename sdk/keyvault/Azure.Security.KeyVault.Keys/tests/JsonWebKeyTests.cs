@@ -15,13 +15,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public class JsonWebKeyTests
     {
         [Test]
-        public void EmptyKeyOps()
-        {
-            JsonWebKey jwk = new JsonWebKey(null);
-            Assert.IsEmpty(jwk.KeyOps);
-        }
-
-        [Test]
         public void AesDefaultsKeyOps()
         {
             using Aes aes = Aes.Create();

@@ -21,26 +21,28 @@ namespace Azure.Iot.Hub.Service
         private readonly QueryRestClient _queryRestClient;
         private readonly StatisticsRestClient _statisticsRestClient;
         private readonly ConfigurationRestClient _configurationRestClient;
-        private readonly JobsRestClient _jobsRestClient;
-        private readonly BulkRegistryRestClient _bulkRegistryRestClient;
+
+        // IoT Hub service currently does not support OAuth tokens, so they do not have their authorization scopes defined.
+        // This value will need to be correctly populated once OAuth token support is available.
+        private static readonly string[] s_authorizationScopes = new[] { "" };
 
         /// <summary>
-        /// Client to perform actions on a device.
+        /// place holder for Devices.
         /// </summary>
         public virtual DevicesClient Devices { get; private set; }
 
         /// <summary>
-        /// Client to perform actions on a module.
+        /// place holder for Modules.
         /// </summary>
         public virtual ModulesClient Modules { get; private set; }
 
         /// <summary>
-        /// Client to get statistics.
+        /// place holder for Statistics.
         /// </summary>
         public virtual StatisticsClient Statistics { get; private set; }
 
         /// <summary>
-        /// Client for automatic device management.
+        /// place holder for Configurations.
         /// </summary>
         public virtual ConfigurationsClient Configurations { get; private set; }
 
@@ -55,13 +57,10 @@ namespace Azure.Iot.Hub.Service
         public virtual FilesClient Files { get; private set; }
 
         /// <summary>
-        /// Client to start jobs.
+        /// place holder for Jobs
         /// </summary>
         public virtual JobsClient Jobs { get; private set; }
 
-        /// <summary>
-        /// Client to perform queries on twins.
-        /// </summary>
         public virtual QueryClient Query { get; private set; }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace Azure.Iot.Hub.Service
             options ??= new IotHubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            options.AddPolicy(new SasTokenAuthenticationPolicy(credential), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, s_authorizationScopes), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
@@ -148,22 +147,20 @@ namespace Azure.Iot.Hub.Service
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _jobsRestClient = new JobsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _bulkRegistryRestClient = new BulkRegistryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
 
             // Note that the devices and modules subclient take a reference to the Query convenience layer client. This
             // is because they each expose a helper function that uses the query client for listing twins. By passing in
             // the convenience layer query client rather than the protocol layer query client, we minimize rewriting the
             // same pagination logic that now exists only in the query convenience layer client.
             Query = new QueryClient(_queryRestClient);
-            Devices = new DevicesClient(_devicesRestClient, Query, _bulkRegistryRestClient);
-            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, Query, _bulkRegistryRestClient);
+            Devices = new DevicesClient(_devicesRestClient, Query);
+            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, Query);
             Statistics = new StatisticsClient(_statisticsRestClient);
             Configurations = new ConfigurationsClient(_configurationRestClient);
 
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
-            Jobs = new JobsClient(_jobsRestClient);
+            Jobs = new JobsClient();
         }
 
         private static IotHubSasCredential SetEndpointToIotHubSasCredential(Uri endpoint, IotHubSasCredential credential)

@@ -272,12 +272,8 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventData TryAddCalledWith = null;
 
             public override long MaximumSizeInBytes { get; } = 200;
-
             public override long SizeInBytes { get; } = 100;
-
-            public override bool ReserveSpaceForSequenceNumber { get; } = true;
-
-            public override int Count { get; } = 400;
+            public override int Count { get; } = 300;
 
             public override void Clear() => ClearInvoked = true;
 

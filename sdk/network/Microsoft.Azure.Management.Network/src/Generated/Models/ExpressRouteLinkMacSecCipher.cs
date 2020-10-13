@@ -16,9 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public static class ExpressRouteLinkMacSecCipher
     {
-        public const string GcmAes256 = "GcmAes256";
-        public const string GcmAes128 = "GcmAes128";
-        public const string GcmAesXpn128 = "GcmAesXpn128";
-        public const string GcmAesXpn256 = "GcmAesXpn256";
+        public const string GcmAes128 = "gcm-aes-128";
+        public const string GcmAes256 = "gcm-aes-256";
     }
 }

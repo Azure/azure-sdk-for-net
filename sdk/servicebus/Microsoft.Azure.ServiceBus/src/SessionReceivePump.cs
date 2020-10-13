@@ -11,16 +11,15 @@ namespace Microsoft.Azure.ServiceBus
 
     sealed class SessionReceivePump
     {
-        public readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
-        public readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
-        public readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string clientId;
         readonly ISessionClient client;
         readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
+        readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string endpoint;
         readonly string entityPath;
         readonly CancellationToken pumpCancellationToken;
-        readonly CancellationToken runningTaskCancellationToken;
+        readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
+        readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public SessionReceivePump(string clientId,
@@ -29,8 +28,7 @@ namespace Microsoft.Azure.ServiceBus
             SessionHandlerOptions sessionHandlerOptions,
             Func<IMessageSession, Message, CancellationToken, Task> callback,
             Uri endpoint,
-            CancellationToken pumpToken,
-            CancellationToken runningTaskToken)
+            CancellationToken token)
         {
             this.client = client ?? throw new ArgumentException(nameof(client));
             this.clientId = clientId;
@@ -39,8 +37,7 @@ namespace Microsoft.Azure.ServiceBus
             this.userOnSessionCallback = callback;
             this.endpoint = endpoint.Authority;
             this.entityPath = client.EntityPath;
-            this.pumpCancellationToken = pumpToken;
-            this.runningTaskCancellationToken = runningTaskToken;
+            this.pumpCancellationToken = token;
             this.maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentSessions);
             this.maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
             this.diagnosticSource = new ServiceBusDiagnosticSource(client.EntityPath, endpoint);
@@ -232,7 +229,7 @@ namespace Microsoft.Azure.ServiceBus
                         var callbackExceptionOccurred = false;
                         try
                         {
-                            processTask = this.userOnSessionCallback(session, message, this.runningTaskCancellationToken);
+                            processTask = this.userOnSessionCallback(session, message, this.pumpCancellationToken);
                             await processTask.ConfigureAwait(false);
                         }
                         catch (Exception exception)

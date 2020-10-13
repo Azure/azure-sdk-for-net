@@ -1,8 +1,5 @@
 # Release History
 
-## 3.0.0-preview.3 (Unreleased)
-
-
 ## 3.0.0-preview.2 (2020-08-14)
 - Rename spark job sdk's test method.
 - Add descriptions for sparkjob related definitions to make it clear.

@@ -11,8 +11,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
     public class DataBatchTests : ClientTestBase
     {
-        private readonly Random random = new Random();
-    
         /// <summary>
         /// Utilizes EventDataBatch to send messages as the messages are batched up to max batch size.
         /// </summary>
@@ -81,14 +79,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
-                var partitionSender = default(PartitionSender);
-
+                var partitionSender = ehClient.CreatePartitionSender("0");
                 try
                 {
-                    var partitions = await GetPartitionsAsync(ehClient);
-                    var partitionId = partitions[this.random.Next(partitions.Length)];                    
-                    partitionSender = ehClient.CreatePartitionSender(partitionId);
-                    
                     var batchOptions = new BatchOptions()
                     {
                         PartitionKey = "this is the partition key"

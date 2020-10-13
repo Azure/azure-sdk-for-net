@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Iot.Hub.Service.Authentication;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Iot.Hub.Service.Tests
@@ -81,7 +82,7 @@ namespace Azure.Iot.Hub.Service.Tests
             };
 
             string initialToken = credential.GetToken(ctx, cts.Token).Token;
-            await Task.Delay(2000).ConfigureAwait(false);
+            await Task.Delay(2000);
             string newToken = credential.GetToken(ctx, cts.Token).Token;
 
             // Assert
@@ -103,7 +104,7 @@ namespace Azure.Iot.Hub.Service.Tests
             };
 
             string initialToken = credential.GetToken(ctx, cts.Token).Token;
-            await Task.Delay(2000).ConfigureAwait(false);
+            await Task.Delay(2000);
             string newToken = credential.GetToken(ctx, cts.Token).Token;
 
             // Assert

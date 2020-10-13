@@ -8,15 +8,12 @@ namespace Azure.Core.Tests
 {
     public class ETagTests
     {
-        [Theory]
-        [TestCase("tag")]
-        [TestCase("\"tag\"")]
-        [TestCase("W/\"weakETag\"")]
-        public void StringRoundtrips(string value)
+        [Test]
+        public void StringRoundtrips()
         {
-            var eTag = new ETag(value);
-            Assert.AreSame(value, eTag.ToString());
-            Assert.AreSame(value, eTag.ToString("G"));
+            var s = "tag";
+            var eTag = new ETag(s);
+            Assert.AreSame(s, eTag.ToString());
         }
 
         [Test]
@@ -80,49 +77,26 @@ namespace Azure.Core.Tests
             Assert.True(eTag.Equals((object)new ETag(null)));
         }
 
-        [Theory]
-        [TestCase("lalala")]
-        [TestCase("\"lalala")]
-        [TestCase("lalala\"")]
-        [TestCase("W/\"lalala")]
-        [TestCase("W/lalala\"")]
-        public void ThrowsForEtagsWithoutQuotes(string value)
+        [Test]
+        public void ThrowsForEtagsWithoutQuotes()
         {
-            Assert.Throws<ArgumentException>(() => ETag.Parse(value));
+            Assert.Throws<ArgumentException>(() => ETag.Parse("lalala"));
+        }
+
+        [Test]
+        public void ThrowsForParseWeakEtag()
+        {
+            Assert.Throws<NotSupportedException>(() => ETag.Parse("W/\"lalala\""));
         }
 
         [Theory]
         [TestCase("*", "*")]
         [TestCase("\"A\"", "A")]
         [TestCase("\"\"", "")]
-        [TestCase("W/\"weakETag\"", "W/\"weakETag\"")]
         public void ParsesEtag(string value, string expectedValue)
         {
             ETag tag = ETag.Parse(value);
             Assert.AreEqual(expectedValue, tag.ToString());
-            Assert.AreEqual(expectedValue, tag.ToString("G"));
-        }
-
-        [Theory]
-        [TestCase("*", "*")]
-        [TestCase("\"A\"", "\"A\"")]
-        [TestCase("\"\"", "\"\"")]
-        [TestCase("W/\"weakETag\"", "W/\"weakETag\"")]
-        public void ParsesEtagToFormattedString(string value, string expectedValue)
-        {
-            ETag tag = ETag.Parse(value);
-            Assert.AreEqual(expectedValue, tag.ToString("H"));
-        }
-
-        [Theory]
-        [TestCase("A")]
-        [TestCase(null)]
-        [TestCase("g")]
-        [TestCase("h")]
-        public void InvalidFormatThrows(string format)
-        {
-            ETag tag  = new ETag("foo");
-            Assert.Throws<ArgumentException>(() => tag.ToString(format));
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            throw new TestRecordingMismatchException(GenerateException(request, bestScoreEntry));
+            throw new InvalidOperationException(GenerateException(request, bestScoreEntry));
         }
 
         private int CompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
@@ -261,11 +261,15 @@ namespace Azure.Core.TestFramework
             return string.Join(",", values);
         }
 
-        private string[] RenormalizeContentHeaders(string[] values)
+        private string[] RenormalizeSemicolons(string[] values)
         {
-            return new[] { string.Join(", ",
-                values.Select(value =>
-                    string.Join("; ", value.Split(';').Select(part => part.Trim())))) };
+            string[] outputs = new string[values.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                outputs[i] = string.Join("; ", values[i].Split(';').Select(part => part.Trim()));
+            }
+
+            return outputs;
         }
 
         private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders, StringBuilder descriptionBuilder = null)
@@ -287,8 +291,8 @@ namespace Azure.Core.TestFramework
                     // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
                     if (_normalizedHeaders.Contains(headerName))
                     {
-                        requestHeaderValues = RenormalizeContentHeaders(requestHeaderValues);
-                        entryHeaderValues = RenormalizeContentHeaders(entryHeaderValues);
+                        requestHeaderValues = RenormalizeSemicolons(requestHeaderValues);
+                        entryHeaderValues = RenormalizeSemicolons(entryHeaderValues);
                     }
 
                     remaining.Remove(headerName);

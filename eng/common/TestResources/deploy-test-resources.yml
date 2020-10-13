@@ -12,8 +12,8 @@ parameters:
 #   "TenantId": "<tenant id>",
 #   "TestApplicationId": "<test app id>",
 #   "TestApplicationSecret": "<test app secret>",
-#   "ProvisionerApplicationId": "<provisioner app id>",
-#   "ProvisionerApplicationSecret": "<provisioner app secret>",
+#   "ProvisionerApplicationId": "<provisoner app id>",
+#   "ProvisionerApplicationSecret": "<provisoner app secert>",
 #   "Environment": "AzureCloud | AzureGov | AzureChina | <other environment>"
 # }
 

@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Administration;
+using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -29,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
             string replyToSessionId = default,
             TimeSpan timeToLive = default,
             string correlationId = default,
-            string subject = default,
+            string label = default,
             string to = default,
             string contentType = default,
             string replyTo = default,
@@ -43,163 +41,56 @@ namespace Azure.Messaging.ServiceBus
             long enqueuedSequenceNumber = default,
             DateTimeOffset enqueuedTime = default)
         {
-            var amqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
-            amqpMessage.Properties.CorrelationId = correlationId;
-            amqpMessage.Properties.Subject = subject;
-            amqpMessage.Properties.To = to;
-            amqpMessage.Properties.ContentType = contentType;
-            amqpMessage.Properties.ReplyTo = replyTo;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
-
+            var sentMessage = new ServiceBusMessage
+            {
+                Body = body,
+                CorrelationId = correlationId,
+                Label = label,
+                To = to,
+                ContentType = contentType,
+                ReplyTo = replyTo,
+                ScheduledEnqueueTime = scheduledEnqueueTime
+            };
             if (messageId != default)
             {
-                amqpMessage.Properties.MessageId = messageId;
+                sentMessage.MessageId = messageId;
             }
             if (partitionKey != default)
             {
-                amqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = partitionKey;
+                sentMessage.PartitionKey = partitionKey;
             }
             if (viaPartitionKey != default)
             {
-                amqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = viaPartitionKey;
+                sentMessage.ViaPartitionKey = viaPartitionKey;
             }
             if (sessionId != default)
             {
-                amqpMessage.Properties.GroupId = sessionId;
+                sentMessage.SessionId = sessionId;
             }
             if (replyToSessionId != default)
             {
-                amqpMessage.Properties.ReplyToGroupId = replyToSessionId;
+                sentMessage.ReplyToSessionId = replyToSessionId;
             }
             if (timeToLive != default)
             {
-                amqpMessage.Header.TimeToLive = timeToLive;
+                sentMessage.TimeToLive = timeToLive;
             }
             if (properties != default)
             {
-                amqpMessage.ApplicationProperties = properties;
+                sentMessage.Properties = properties;
             }
-            amqpMessage.Header.DeliveryCount = (uint)deliveryCount;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = sequenceNumber;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
 
-            return new ServiceBusReceivedMessage(amqpMessage)
+            return new ServiceBusReceivedMessage
             {
+                SentMessage = sentMessage,
                 LockTokenGuid = lockTokenGuid,
+                DeliveryCount = deliveryCount,
+                LockedUntil = lockedUntil,
+                SequenceNumber = sequenceNumber,
+                DeadLetterSource = deadLetterSource,
+                EnqueuedSequenceNumber = enqueuedSequenceNumber,
+                EnqueuedTime = enqueuedTime
             };
         }
-
-        /// <summary>
-        /// Creates a new <see cref="QueueProperties"/> instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static QueueProperties QueueProperties(
-            string name,
-            TimeSpan lockDuration = default,
-            long maxSizeInMegabytes = default,
-            bool requiresDuplicateDetection = default,
-            bool requiresSession = default,
-            TimeSpan defaultMessageTimeToLive = default,
-            TimeSpan autoDeleteOnIdle = default,
-            bool deadLetteringOnMessageExpiration = default,
-            TimeSpan duplicateDetectionHistoryTimeWindow = default,
-            int maxDeliveryCount = default,
-            bool enableBatchedOperations = default,
-            EntityStatus status = default,
-            string forwardTo = default,
-            string forwardDeadLetteredMessagesTo = default,
-            string userMetadata = default) =>
-            new QueueProperties(name)
-            {
-                LockDuration = lockDuration,
-                MaxSizeInMegabytes = maxSizeInMegabytes,
-                RequiresDuplicateDetection = requiresDuplicateDetection,
-                RequiresSession = requiresSession,
-                DefaultMessageTimeToLive = defaultMessageTimeToLive,
-                AutoDeleteOnIdle = autoDeleteOnIdle,
-                DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
-                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
-                MaxDeliveryCount = maxDeliveryCount,
-                EnableBatchedOperations = enableBatchedOperations,
-                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
-                Status = status,
-                ForwardTo = forwardTo,
-                ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
-                UserMetadata = userMetadata
-            };
-
-        /// <summary>
-        /// Creates a new <see cref="TopicProperties"/> instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TopicProperties TopicProperties(
-            string name,
-            long maxSizeInMegabytes = default,
-            bool requiresDuplicateDetection = default,
-            TimeSpan defaultMessageTimeToLive = default,
-            TimeSpan autoDeleteOnIdle = default,
-            TimeSpan duplicateDetectionHistoryTimeWindow = default,
-            bool enableBatchedOperations = default,
-            EntityStatus status = default) =>
-            new TopicProperties(name)
-            {
-                MaxSizeInMegabytes = maxSizeInMegabytes,
-                RequiresDuplicateDetection = requiresDuplicateDetection,
-                DefaultMessageTimeToLive = defaultMessageTimeToLive,
-                AutoDeleteOnIdle = autoDeleteOnIdle,
-                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
-                EnableBatchedOperations = enableBatchedOperations,
-                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
-                Status = status,
-            };
-
-        /// <summary>
-        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SubscriptionProperties SubscriptionProperties(
-            string topicName,
-            string subscriptionName,
-            TimeSpan lockDuration = default,
-            bool requiresSession = default,
-            TimeSpan defaultMessageTimeToLive = default,
-            TimeSpan autoDeleteOnIdle = default,
-            bool deadLetteringOnMessageExpiration = default,
-            int maxDeliveryCount = default,
-            bool enableBatchedOperations = default,
-            EntityStatus status = default,
-            string forwardTo = default,
-            string forwardDeadLetteredMessagesTo = default,
-            string userMetadata = default) =>
-            new SubscriptionProperties(topicName, subscriptionName)
-            {
-                LockDuration = lockDuration,
-                RequiresSession = requiresSession,
-                DefaultMessageTimeToLive = defaultMessageTimeToLive,
-                AutoDeleteOnIdle = autoDeleteOnIdle,
-                DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
-                MaxDeliveryCount = maxDeliveryCount,
-                EnableBatchedOperations = enableBatchedOperations,
-                Status = status,
-                ForwardTo = forwardTo,
-                ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
-                UserMetadata = userMetadata
-            };
-
-        /// <summary>
-        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RuleProperties RuleProperties(
-            string name,
-            RuleFilter filter = default,
-            RuleAction action = default) =>
-            new RuleProperties(name, filter)
-            {
-                Action = action
-            };
     }
 }

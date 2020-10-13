@@ -707,7 +707,6 @@ namespace Azure.Data.Tables
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -829,7 +828,6 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("If-Match", ifMatch);
-            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -1060,7 +1058,6 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
-            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 

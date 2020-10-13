@@ -4,8 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Plugins
 {
@@ -39,18 +37,18 @@ namespace Azure.Messaging.ServiceBus.Plugins
 #pragma warning disable CA1822 // Mark members as static
         protected void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
-            message.AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { body });
+            message.SentMessage.Body = body;
         }
 
         /// <summary>
-        /// Set a key/value pair on the <see cref="ServiceBusReceivedMessage.ApplicationProperties"/>.
+        /// Set a key/value pair on the <see cref="ServiceBusReceivedMessage.Properties"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="key">The key to add or update the value of.</param>
         /// <param name="value">The value to set for the associated key.</param>
         protected void SetUserProperty(ServiceBusReceivedMessage message, string key, object value)
         {
-            message.AmqpMessage.ApplicationProperties[key] = value;
+            message.SentMessage.Properties[key] = value;
         }
 
         /// <summary>
@@ -63,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetContentType(ServiceBusReceivedMessage message, string contentType)
         {
-            message.AmqpMessage.Properties.ContentType = contentType;
+            message.SentMessage.ContentType = contentType;
         }
 
         /// <summary>
@@ -75,18 +73,18 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetCorrelationId(ServiceBusReceivedMessage message, string correlationId)
         {
-            message.AmqpMessage.Properties.CorrelationId = correlationId;
+            message.SentMessage.CorrelationId = correlationId;
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.Subject"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.Label"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="label">The label to set on the message.</param>
 
         protected void SetLabel(ServiceBusReceivedMessage message, string label)
         {
-            message.AmqpMessage.Properties.Subject = label;
+            message.SentMessage.Label = label;
         }
 
         /// <summary>
@@ -97,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetMessageId(ServiceBusReceivedMessage message, string messageId)
         {
-            message.AmqpMessage.Properties.MessageId = messageId;
+            message.SentMessage.MessageId = messageId;
         }
 
         /// <summary>
@@ -108,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetPartitionKey(ServiceBusReceivedMessage message, string partitionKey)
         {
-            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = partitionKey;
+            message.SentMessage.PartitionKey = partitionKey;
         }
 
         /// <summary>
@@ -119,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetReplyTo(ServiceBusReceivedMessage message, string replyTo)
         {
-            message.AmqpMessage.Properties.ReplyTo = replyTo;
+            message.SentMessage.ReplyTo = replyTo;
         }
 
         /// <summary>
@@ -130,7 +128,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetReplyToSessionId(ServiceBusReceivedMessage message, string replyToSessionId)
         {
-            message.AmqpMessage.Properties.ReplyToGroupId = replyToSessionId;
+            message.SentMessage.ReplyToSessionId = replyToSessionId;
         }
 
         /// <summary>
@@ -140,7 +138,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="sessionId">The session ID to set on the message.</param>
         protected void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
         {
-            message.AmqpMessage.Properties.GroupId = sessionId;
+            message.SentMessage.SessionId = sessionId;
         }
 
         /// <summary>
@@ -150,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="scheduledEnqueueTime">The scheduled enqueue time to set on the message.</param>
         protected void SetScheduledEnqueueTime(ServiceBusReceivedMessage message, DateTimeOffset scheduledEnqueueTime)
         {
-            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
+            message.SentMessage.ScheduledEnqueueTime = scheduledEnqueueTime;
         }
 
         /// <summary>
@@ -161,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetTimeToLive(ServiceBusReceivedMessage message, TimeSpan timeToLive)
         {
-            message.AmqpMessage.Header.TimeToLive = timeToLive;
+            message.SentMessage.TimeToLive = timeToLive;
         }
 
         /// <summary>
@@ -171,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="to">The to value to set on the message.</param>
         protected void SetTo(ServiceBusReceivedMessage message, string to)
         {
-            message.AmqpMessage.Properties.To = to;
+            message.SentMessage.To = to;
         }
 
         /// <summary>
@@ -181,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
         protected void SetViaPartitionKey(ServiceBusReceivedMessage message, string viaPartitionKey)
         {
-            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = viaPartitionKey;
+            message.SentMessage.ViaPartitionKey = viaPartitionKey;
         }
 #pragma warning restore CA1822 // Mark members as static
     }

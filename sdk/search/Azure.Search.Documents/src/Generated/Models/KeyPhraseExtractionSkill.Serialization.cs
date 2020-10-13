@@ -18,15 +18,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                if (DefaultLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultLanguageCode");
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultLanguageCode");
-                }
+                writer.WritePropertyName("defaultLanguageCode");
+                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(MaxKeyPhraseCount))
             {
@@ -76,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KeyPhraseExtractionSkill DeserializeKeyPhraseExtractionSkill(JsonElement element)
         {
-            Optional<KeyPhraseExtractionSkillLanguage?> defaultLanguageCode = default;
+            Optional<KeyPhraseExtractionSkillLanguage> defaultLanguageCode = default;
             Optional<int?> maxKeyPhraseCount = default;
             string odataType = default;
             Optional<string> name = default;
@@ -88,11 +81,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultLanguageCode = null;
-                        continue;
-                    }
                     defaultLanguageCode = new KeyPhraseExtractionSkillLanguage(property.Value.GetString());
                     continue;
                 }

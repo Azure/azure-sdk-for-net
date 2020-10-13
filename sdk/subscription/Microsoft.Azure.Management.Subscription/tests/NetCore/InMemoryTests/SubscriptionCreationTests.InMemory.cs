@@ -45,22 +45,19 @@ namespace ResourceGroups.Tests
             };
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-
-            var putAliasRequest = new PutAliasRequest()
+            var testPrincipal = new AdPrincipal(Guid.NewGuid().ToString());
+            var body = new SubscriptionCreationParameters()
             {
-                Properties = new PutAliasRequestProperties()
-                {
-                    DisplayName = "TestSub",
-                    Workload = Workload.Production,
-                    BillingScope = ""
-                }
+                OfferType = "MS-AZR-0017P",
+                DisplayName = "My Azure Subscription Name",
+                Owners = new List<AdPrincipal> () { testPrincipal }
             };
-
             var subscriptionResult = await GetSubscriptionClient(handler)
-                .Alias.CreateWithHttpMessagesAsync(Guid.NewGuid().ToString(), putAliasRequest);
+                .Subscription.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(Guid.NewGuid().ToString(), body);
             Assert.NotNull(subscriptionResult);
             Assert.NotNull(subscriptionResult.Response);
             Assert.True(subscriptionResult.Response.IsSuccessStatusCode);
+            Assert.Equal(subscriptionResult.Body.SubscriptionLink, SubscriptionLink);
         }
     }
 }

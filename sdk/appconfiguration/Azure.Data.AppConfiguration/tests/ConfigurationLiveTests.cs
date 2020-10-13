@@ -18,6 +18,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new ConfigurationRecordedTestSanitizer();
             Matcher = new ConfigurationRecordMatcher();
         }
 

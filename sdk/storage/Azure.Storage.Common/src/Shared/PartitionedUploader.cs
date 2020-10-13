@@ -157,13 +157,6 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(content));
             }
 
-            Errors.VerifyStreamPosition(content, nameof(content));
-
-            if (content.CanSeek && content.Position > 0)
-            {
-                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
-            }
-
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
             // some strategies are unavailable if we don't know the stream length, and some can still work
@@ -257,7 +250,9 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
-                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
+                /* Streamed partitions only work if we can seek the stream; we need retries on
+                 * individual uploads.
+                 */
                 GetNextStreamPartition partitionGetter = content.CanSeek
                             ? (GetNextStreamPartition)GetStreamedPartitionInternal
                             : /*   redundant cast   */GetBufferedPartitionInternal;
@@ -465,7 +460,7 @@ namespace Azure.Storage
             {
                 if (content.CanSeek)
                 {
-                    return content.Length - content.Position;
+                    return content.Length;
                 }
             }
             catch (NotSupportedException)

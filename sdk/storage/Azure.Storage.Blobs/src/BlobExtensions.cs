@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
                 IsLatestVersion = blobItemInternal.IsCurrentVersion,
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
-                    : new Dictionary<string, string>(),
+                    : null,
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)

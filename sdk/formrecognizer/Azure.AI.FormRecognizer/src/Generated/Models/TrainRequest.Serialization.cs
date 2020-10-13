@@ -27,11 +27,6 @@ namespace Azure.AI.FormRecognizer.Models
                 writer.WritePropertyName("useLabelFile");
                 writer.WriteBooleanValue(UseLabelFile.Value);
             }
-            if (Optional.IsDefined(ModelName))
-            {
-                writer.WritePropertyName("modelName");
-                writer.WriteStringValue(ModelName);
-            }
             writer.WriteEndObject();
         }
     }

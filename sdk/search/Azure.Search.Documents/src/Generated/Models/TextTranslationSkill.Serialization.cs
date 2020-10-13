@@ -20,15 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
             if (Optional.IsDefined(DefaultFromLanguageCode))
             {
-                if (DefaultFromLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultFromLanguageCode");
-                    writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultFromLanguageCode");
-                }
+                writer.WritePropertyName("defaultFromLanguageCode");
+                writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(SuggestedFrom))
             {
@@ -79,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static TextTranslationSkill DeserializeTextTranslationSkill(JsonElement element)
         {
             TextTranslationSkillLanguage defaultToLanguageCode = default;
-            Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
+            Optional<TextTranslationSkillLanguage> defaultFromLanguageCode = default;
             Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
             string odataType = default;
             Optional<string> name = default;
@@ -96,11 +89,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("defaultFromLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultFromLanguageCode = null;
-                        continue;
-                    }
                     defaultFromLanguageCode = new TextTranslationSkillLanguage(property.Value.GetString());
                     continue;
                 }

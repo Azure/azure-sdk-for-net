@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.Core.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -13,21 +12,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageExtensions
     {
-        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
-        {
-            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
-        }
-
-        private static IEnumerable<Data> AsAmqpData(this IEnumerable<BinaryData> binaryData)
-        {
-            foreach (BinaryData data in binaryData)
-            {
-                yield return new Data
-                {
-                    Value = new ArraySegment<byte>(data.ToBytes().IsEmpty ? Array.Empty<byte>() : data.ToBytes().ToArray())
-                };
-            }
-        }
+        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message) =>
+            AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(message.Body.Bytes.IsEmpty ? Array.Empty<byte>() : message.Body.Bytes.ToArray()) });
 
         private static byte[] GetByteArray(this Data data)
         {
@@ -51,78 +37,63 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        public static IList<BinaryData> GetDataViaDataBody(this AmqpMessage message)
+        private static IEnumerable<byte[]> GetDataViaDataBody(AmqpMessage message)
         {
-            IList<BinaryData> dataList = new List<BinaryData>();
             foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
             {
-                dataList.Add(BinaryData.FromBytes(data.GetByteArray()));
+                byte[] bytes = data.GetByteArray();
+                if (bytes != null)
+                {
+                    yield return bytes;
+                }
             }
-            return dataList;
         }
 
         // Returns via the out parameter the flattened collection of bytes.
         // A majority of the time, data will only contain 1 element.
         // The method is optimized for this situation to return the pre-existing array.
-        public static BinaryData ConvertAndFlattenData(this IEnumerable<BinaryData> dataList)
+        private static byte[] ConvertAndFlattenData(IEnumerable<byte[]> data)
         {
-            var writer = new ArrayBufferWriter<byte>();
-            Memory<byte> memory;
-            foreach (BinaryData data in dataList)
+            byte[] flattened = null;
+            List<byte> flattenedList = null;
+            var dataCount = 0;
+            foreach (byte[] byteArray in data)
             {
-                ReadOnlyMemory<byte> bytes = data.ToBytes();
-                memory = writer.GetMemory(bytes.Length);
-                bytes.CopyTo(memory);
-                writer.Advance(bytes.Length);
+                // Only the first array is needed if it is the only valid array.
+                // This should be the case 99% of the time.
+                if (dataCount == 0)
+                {
+                    flattened = byteArray;
+                }
+                else
+                {
+                    // We defer creating this list since this case will rarely happen.
+                    flattenedList ??= new List<byte>(flattened!);
+                    flattenedList.AddRange(byteArray);
+                }
+
+                dataCount++;
             }
-            if (writer.WrittenCount == 0)
+
+            if (dataCount > 1)
             {
-                return new BinaryData();
+                flattened = flattenedList!.ToArray();
             }
-            return BinaryData.FromBytes(writer.WrittenMemory);
+
+            return flattened;
         }
 
-        public static string GetPartitionKey(this AmqpAnnotatedMessage message)
-        {
-            if (message.MessageAnnotations.TryGetValue(
-                    AmqpMessageConstants.PartitionKeyName,
-                    out object val))
-            {
-                return (string)val;
-            }
-            return default;
-        }
+        private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data) =>
+            new ServiceBusMessage(BinaryData.FromMemory(ConvertAndFlattenData(data) ?? ReadOnlyMemory<byte>.Empty));
 
-        public static string GetViaPartitionKey(this AmqpAnnotatedMessage message)
+        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
         {
-            if (message.MessageAnnotations.TryGetValue(
-                    AmqpMessageConstants.ViaPartitionKeyName,
-                    out object val))
+            if ((message.BodyType & SectionFlag.Data) != 0 && message.DataBody != null)
             {
-                return (string)val;
+                return new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(GetDataViaDataBody(message)) };
             }
-            return default;
-        }
 
-        public static TimeSpan GetTimeToLive(this AmqpAnnotatedMessage message)
-        {
-            TimeSpan? ttl = message.Header.TimeToLive;
-            if (ttl == default)
-            {
-                return TimeSpan.MaxValue;
-            }
-            return ttl.Value;
-        }
-
-        public static DateTimeOffset GetScheduledEnqueueTime(this AmqpAnnotatedMessage message)
-        {
-            if (message.MessageAnnotations.TryGetValue(
-                    AmqpMessageConstants.ScheduledEnqueueTimeUtcName,
-                    out object val))
-            {
-                return (DateTime)val;
-            }
-            return default;
+            return new ServiceBusReceivedMessage();
         }
     }
 }

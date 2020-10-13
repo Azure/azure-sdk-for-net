@@ -55,7 +55,6 @@ namespace Azure.Security.KeyVault.Administration
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -134,7 +133,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendRaw(vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -101,11 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        /// <param name="tier">Performance tier of the disk (e.g, P4, S10) as
-        /// described here:
-        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
-        /// Does not apply to Ultra disks.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string))
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -131,7 +127,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             ShareInfo = shareInfo;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
-            Tier = tier;
             CustomInit();
         }
 
@@ -263,12 +258,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public long? DiskMBpsReadOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the state of the disk. Possible values include:
-        /// 'Unattached', 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
+        /// Gets the state of the disk. Possible values include: 'Unattached',
+        /// 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
         /// 'ActiveUpload'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskState")]
-        public string DiskState { get; set; }
+        public string DiskState { get; private set; }
 
         /// <summary>
         /// Gets or sets encryption property can be used to encrypt data at
@@ -306,15 +301,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskAccessId")]
         public string DiskAccessId { get; set; }
-
-        /// <summary>
-        /// Gets or sets performance tier of the disk (e.g, P4, S10) as
-        /// described here:
-        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
-        /// Does not apply to Ultra disks.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tier")]
-        public string Tier { get; set; }
 
         /// <summary>
         /// Validate the object.

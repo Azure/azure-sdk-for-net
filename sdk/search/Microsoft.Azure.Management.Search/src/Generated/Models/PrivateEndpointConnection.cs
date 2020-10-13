@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.Management.Search.Models
     /// Describes an existing Private Endpoint connection to the Azure
     /// Cognitive Search service.
     /// </summary>
-    public partial class PrivateEndpointConnection : Resource
+    public partial class PrivateEndpointConnection : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
@@ -30,18 +32,20 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="id">The ID of the private endpoint connection. This
+        /// can be used with the Azure Resource Manager to link resources
+        /// together.</param>
+        /// <param name="name">The name of the private endpoint
+        /// connection.</param>
+        /// <param name="type">The resource type.</param>
         /// <param name="properties">Describes the properties of an existing
         /// Private Endpoint connection to the Azure Cognitive Search
         /// service.</param>
         public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointConnectionProperties properties = default(PrivateEndpointConnectionProperties))
-            : base(id, name, type)
         {
+            Id = id;
+            Name = name;
+            Type = type;
             Properties = properties;
             CustomInit();
         }
@@ -50,6 +54,25 @@ namespace Microsoft.Azure.Management.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the ID of the private endpoint connection. This can be used
+        /// with the Azure Resource Manager to link resources together.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the private endpoint connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets describes the properties of an existing Private

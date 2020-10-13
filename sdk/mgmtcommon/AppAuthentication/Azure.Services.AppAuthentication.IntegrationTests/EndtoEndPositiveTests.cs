@@ -173,11 +173,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         /// <param name="certIdentifierType"></param>
         /// <returns></returns>
         [Theory]
-        [InlineData(CertIdentifierType.KeyVaultCertificateSecretIdentifier, false)]
-        [InlineData(CertIdentifierType.KeyVaultCertificateSecretIdentifier, true)]
+        [InlineData(CertIdentifierType.KeyVaultCertificateSecretIdentifier)]
         [InlineData(CertIdentifierType.SubjectName)]
         [InlineData(CertIdentifierType.Thumbprint)]
-        private async Task GetTokenUsingServicePrincipalWithCertTest(CertIdentifierType certIdentifierType, bool useUserAssignedMsi = false)
+        private async Task GetTokenUsingServicePrincipalWithCertTest(CertIdentifierType certIdentifierType)
         {
             string testCertUrl = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
 
@@ -209,9 +208,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                     connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
                     break;
                 case CertIdentifierType.KeyVaultCertificateSecretIdentifier:
-                    connectionString = useUserAssignedMsi
-                        ? $"RunAs=App;AppId={app.AppId};KeyVaultCertificateSecretIdentifier={testCertUrl};KeyVaultUserAssignedManagedIdentityId={Constants.TestUserAssignedManagedIdentityId}" //TODO: figure out real MSI to use here. Also, does the test really use MSI or does it rely on the fallback?
-                        : $"RunAs=App;AppId={app.AppId};KeyVaultCertificateSecretIdentifier={testCertUrl};";
+                    connectionString = $"RunAs=App;AppId={app.AppId};KeyVaultCertificateSecretIdentifier={testCertUrl};";
                     break;
             }
 

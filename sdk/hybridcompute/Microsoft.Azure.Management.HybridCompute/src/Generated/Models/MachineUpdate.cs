@@ -38,13 +38,14 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <param name="type">The identity type.</param>
         /// <param name="principalId">The identity's principal id.</param>
         /// <param name="tenantId">The identity's tenant id.</param>
-        public MachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), string principalId = default(string), string tenantId = default(string), LocationData locationData = default(LocationData))
+        /// <param name="physicalLocation">Resource's Physical Location</param>
+        public MachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), string principalId = default(string), string tenantId = default(string), string physicalLocation = default(string))
             : base(tags)
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
-            LocationData = locationData;
+            PhysicalLocation = physicalLocation;
             CustomInit();
         }
 
@@ -72,22 +73,10 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public string TenantId { get; private set; }
 
         /// <summary>
+        /// Gets or sets resource's Physical Location
         /// </summary>
-        [JsonProperty(PropertyName = "properties.locationData")]
-        public LocationData LocationData { get; set; }
+        [JsonProperty(PropertyName = "properties.physicalLocation")]
+        public string PhysicalLocation { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LocationData != null)
-            {
-                LocationData.Validate();
-            }
-        }
     }
 }

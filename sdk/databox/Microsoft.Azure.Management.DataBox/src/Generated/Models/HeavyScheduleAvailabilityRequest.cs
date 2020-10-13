@@ -32,13 +32,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the HeavyScheduleAvailabilityRequest
         /// class.
         /// </summary>
-        /// <param name="storageLocation">Location for data transfer. For
-        /// locations check:
+        /// <param name="storageLocation">Location for data transfer.
+        /// For locations check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
-        /// <param name="country">Country in which storage location should be
-        /// supported.</param>
-        public HeavyScheduleAvailabilityRequest(string storageLocation, string country = default(string))
-            : base(storageLocation, country)
+        public HeavyScheduleAvailabilityRequest(string storageLocation)
+            : base(storageLocation)
         {
             CustomInit();
         }

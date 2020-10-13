@@ -91,10 +91,5 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         IAgentPoolsOperations AgentPools { get; }
 
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
     }
 }

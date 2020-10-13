@@ -21,9 +21,6 @@ namespace Azure.Core
             return new ConnectionString(ParseSegments(connectionString, segmentSeparator, keywordValueSeparator), segmentSeparator, keywordValueSeparator);
         }
 
-        public static ConnectionString Empty(string segmentSeparator = ";", string keywordValueSeparator = "=") =>
-            new ConnectionString(new Dictionary<string, string>(), segmentSeparator, keywordValueSeparator);
-
         private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keywordValueSeparator)
         {
             _pairs = pairs;
@@ -37,12 +34,6 @@ namespace Azure.Core
         public string? GetNonRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : null;
 
-        public bool TryGetSegmentValue(string keyword, out string value) =>
-            _pairs.TryGetValue(keyword, out value);
-
-        public bool ContainsSegmentKey(string keyword) =>
-            _pairs.ContainsKey(keyword);
-
         public void Replace(string keyword, string value)
         {
             if (_pairs.ContainsKey(keyword))
@@ -51,16 +42,8 @@ namespace Azure.Core
             }
         }
 
-        public void Add(string keyword, string value) =>
-            _pairs.Add(keyword, value);
-
         public override string ToString()
         {
-            if (_pairs.Count == 0)
-            {
-                return string.Empty;
-            }
-
             var stringBuilder = new StringBuilder();
             var isFirst = true;
             foreach (KeyValuePair<string, string> pair in _pairs)

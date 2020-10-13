@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="status">Validation status of subscription permission
         /// to create job. Possible values include: 'Valid', 'Invalid',
         /// 'Skipped'</param>
-        public SubscriptionIsAllowedToCreateJobValidationResponseProperties(CloudError error = default(CloudError), ValidationStatus? status = default(ValidationStatus?))
+        public SubscriptionIsAllowedToCreateJobValidationResponseProperties(Error error = default(Error), ValidationStatus? status = default(ValidationStatus?))
             : base(error)
         {
             Status = status;

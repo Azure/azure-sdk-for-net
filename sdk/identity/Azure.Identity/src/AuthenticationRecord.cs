@@ -45,9 +45,10 @@ namespace Azure.Identity
 
         internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
         {
+
             Username = username;
             Authority = authority;
-            AccountId = BuildAccountIdFromString(homeAccountId);
+            AccountId = new AccountId(homeAccountId);
             TenantId = tenantId;
             ClientId = clientId;
         }
@@ -175,7 +176,7 @@ namespace Azure.Identity
                         authProfile.Authority = prop.Value.GetString();
                         break;
                     case HomeAccountIdPropertyName:
-                        authProfile.AccountId = BuildAccountIdFromString(prop.Value.GetString());
+                        authProfile.AccountId = new AccountId(prop.Value.GetString());
                         break;
                     case TenantIdPropertyName:
                         authProfile.TenantId = prop.Value.GetString();
@@ -187,23 +188,6 @@ namespace Azure.Identity
             }
 
             return authProfile;
-        }
-
-        private static AccountId BuildAccountIdFromString(string homeAccountId)
-        {
-            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
-            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
-            var homeAccountSegments = homeAccountId.Split('.');
-            AccountId accountId;
-            if (homeAccountSegments.Length == 2)
-            {
-                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
-            }
-            else
-            {
-                accountId = new AccountId(homeAccountId);
-            }
-            return accountId;
         }
     }
 }

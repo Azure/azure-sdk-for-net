@@ -12,15 +12,17 @@ namespace Azure.Data.Tables.Tests
         }
 
         // Storage Tables
-        public const string DefaultStorageSuffix = "core.windows.net";
-        public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_PRIMARY_STORAGE_ACCOUNT_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public const string PrimaryStorageKeyEnvironmentVariableName = "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY";
+        private const string StorageUriFormat = "https://{0}.table.core.windows.net";
+        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryStorageKeyEnvironmentVariableName);
         public string StorageAccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
-        public string StorageUri => $"https://{StorageAccountName}.table.{StorageEndpointSuffix ?? DefaultStorageSuffix}";
+        public string StorageUri => string.Format(StorageUriFormat, StorageAccountName);
 
         // Cosmos Tables
-        public string CosmosEndpointSuffix => GetRecordedOptionalVariable("COSMOS_TABLES_ENDPOINT_SUFFIX") ?? "cosmos.azure.com";
-        public string PrimaryCosmosAccountKey => GetRecordedVariable("TABLES_PRIMARY_COSMOS_ACCOUNT_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public const string PrimaryCosmosKeyEnvironmentVariableName = "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY";
+        private const string CosmosUriFormat = "https://{0}.table.cosmos.azure.com";
+        public string PrimaryCosmosAccountKey => GetRecordedVariable(PrimaryCosmosKeyEnvironmentVariableName);
         public string CosmosAccountName => GetRecordedVariable("TABLES_COSMOS_ACCOUNT_NAME");
-        public string CosmosUri => $"https://{CosmosAccountName}.table.{CosmosEndpointSuffix}";
+        public string CosmosUri => string.Format(CosmosUriFormat, CosmosAccountName);
     }
 }

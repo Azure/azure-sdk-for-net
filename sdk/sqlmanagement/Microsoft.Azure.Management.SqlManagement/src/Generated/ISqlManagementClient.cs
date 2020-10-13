@@ -203,6 +203,16 @@ namespace Microsoft.Azure.Management.Sql
         ISyncAgentsOperations SyncAgents { get; }
 
         /// <summary>
+        /// Gets the ISyncGroupsOperations.
+        /// </summary>
+        ISyncGroupsOperations SyncGroups { get; }
+
+        /// <summary>
+        /// Gets the ISyncMembersOperations.
+        /// </summary>
+        ISyncMembersOperations SyncMembers { get; }
+
+        /// <summary>
         /// Gets the ISubscriptionUsagesOperations.
         /// </summary>
         ISubscriptionUsagesOperations SubscriptionUsages { get; }
@@ -393,6 +403,11 @@ namespace Microsoft.Azure.Management.Sql
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
 
         /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
+
+        /// <summary>
         /// Gets the ITdeCertificatesOperations.
         /// </summary>
         ITdeCertificatesOperations TdeCertificates { get; }
@@ -443,6 +458,11 @@ namespace Microsoft.Azure.Management.Sql
         IUsagesOperations Usages { get; }
 
         /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
@@ -473,46 +493,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; }
 
         /// <summary>
-        /// Gets the IWorkloadGroupsOperations.
-        /// </summary>
-        IWorkloadGroupsOperations WorkloadGroups { get; }
-
-        /// <summary>
-        /// Gets the IWorkloadClassifiersOperations.
-        /// </summary>
-        IWorkloadClassifiersOperations WorkloadClassifiers { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceOperations.
-        /// </summary>
-        IManagedInstanceOperations ManagedInstanceOperations { get; }
-
-        /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
-        /// </summary>
-        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
-
-        /// <summary>
-        /// Gets the ISyncGroupsOperations.
-        /// </summary>
-        ISyncGroupsOperations SyncGroups { get; }
-
-        /// <summary>
-        /// Gets the ISyncMembersOperations.
-        /// </summary>
-        ISyncMembersOperations SyncMembers { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
-
-        /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
@@ -523,19 +503,14 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
+        /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
-        IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
+        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
-        /// Gets the IImportExportOperations.
+        /// Gets the IManagedInstanceOperations.
         /// </summary>
-        IImportExportOperations ImportExport { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
-        /// </summary>
-        IManagedInstanceAzureADOnlyAuthenticationsOperations ManagedInstanceAzureADOnlyAuthentications { get; }
+        IManagedInstanceOperations ManagedInstanceOperations { get; }
 
     }
 }

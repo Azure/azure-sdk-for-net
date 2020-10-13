@@ -16,7 +16,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "cli123";
+        const string databaseAccountName = "db9934";
 
         const string databaseName = "databaseName";
         const string databaseName2 = "databaseName2";
@@ -57,9 +57,12 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location>()
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>()
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                 };
 

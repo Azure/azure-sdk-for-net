@@ -65,7 +65,6 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", digitalTwinModelsListOptions.MaxItemCount.Value);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -140,7 +139,6 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -222,7 +220,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json-patch+json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
@@ -245,7 +242,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -320,7 +316,6 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", digitalTwinModelsListOptions.MaxItemCount.Value);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

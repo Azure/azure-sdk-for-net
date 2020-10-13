@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.RuleManager
@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                     Filter = new CorrelationRuleFilter
                     {
                         CorrelationId = "correlationId",
-                        Subject = "label",
+                        Label = "label",
                         MessageId = "messageId",
                         Properties =
                             {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 var correlationRuleFilter = correlationRule.Filter as CorrelationRuleFilter;
                 Assert.NotNull(correlationRuleFilter);
                 Assert.AreEqual("correlationId", correlationRuleFilter.CorrelationId);
-                Assert.AreEqual("label", correlationRuleFilter.Subject);
+                Assert.AreEqual("label", correlationRuleFilter.Label);
                 Assert.AreEqual("messageId", correlationRuleFilter.MessageId);
                 Assert.AreEqual("replyTo", correlationRuleFilter.ReplyTo);
                 Assert.AreEqual("replyToSessionId", correlationRuleFilter.ReplyToSessionId);
@@ -100,13 +100,13 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 await ruleManager.AddRuleAsync(new RuleProperties
                 {
-                    Filter = new CorrelationRuleFilter { Subject = "yellow" },
+                    Filter = new CorrelationRuleFilter { Label = "yellow" },
                     Name = "CorrelationRuleFilter"
                 });
 
                 Assert.That(async () => await ruleManager.AddRuleAsync(new RuleProperties
                 {
-                    Filter = new CorrelationRuleFilter { Subject = "red" },
+                    Filter = new CorrelationRuleFilter { Label = "red" },
                     Name = "CorrelationRuleFilter"
                 }), Throws.InstanceOf<ServiceBusException>());
             }
@@ -233,7 +233,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 await ruleManager.AddRuleAsync(new RuleProperties
                 {
-                    Filter = new CorrelationRuleFilter { Subject = "red" },
+                    Filter = new CorrelationRuleFilter { Label = "red" },
                     Name = "CorrelationMsgPropertyRule"
                 });
 
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                     expectedOrders);
                 foreach (var message in receivedMessages)
                 {
-                    Assert.AreEqual("high", message.ApplicationProperties["priority"], "Priority of the receivedMessage is different than expected");
+                    Assert.AreEqual("high", message.Properties["priority"], "Priority of the receivedMessage is different than expected");
                 }
             }
         }
@@ -438,7 +438,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                     expectedOrders);
                 foreach (var message in receivedMessages)
                 {
-                    Assert.AreEqual("high", message.ApplicationProperties["priority"], "Priority of the receivedMessage is different than expected");
+                    Assert.AreEqual("high", message.Properties["priority"], "Priority of the receivedMessage is different than expected");
                 }
             }
         }
@@ -540,8 +540,8 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 var message = new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(Orders[i])))
                 {
                     CorrelationId = Orders[i].Priority,
-                    Subject = Orders[i].Color,
-                    ApplicationProperties =
+                    Label = Orders[i].Color,
+                    Properties =
                 {
                     { "color", Orders[i].Color },
                     { "quantity", Orders[i].Quantity },
@@ -568,7 +568,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 {
                     receivedMessages.Add(item);
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Color, item.Subject);
+                    Assert.AreEqual(messageEnum.Current.Color, item.Label);
                     remainingMessages--;
                 }
             }

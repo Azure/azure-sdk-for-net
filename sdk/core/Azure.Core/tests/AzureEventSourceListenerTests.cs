@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Diagnostics;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -70,15 +71,6 @@ namespace Azure.Core.Tests
                             "other = 5", message);
         }
 
-        [Test]
-        public void FormatsUnformattableMessageAsKeyValues()
-        {
-            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogUnformattableMessage("a message"));
-            Assert.AreEqual("LogUnformattableMessage" + Environment.NewLine +
-                            nameof(e.Message) + " = Logging {1}" + Environment.NewLine +
-                            "payload = a message", message);
-        }
-
         private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate)
         {
             var invocations = new List<(EventWrittenEventArgs, string)>();
@@ -116,12 +108,6 @@ namespace Azure.Core.Tests
             public void LogWithByteArray(byte[] b)
             {
                 WriteEvent(3, b);
-            }
-
-            [Event(4, Message = "Logging {1}", Level = EventLevel.Critical)]
-            public void LogUnformattableMessage(string payload)
-            {
-                WriteEvent(4, payload);
             }
         }
     }

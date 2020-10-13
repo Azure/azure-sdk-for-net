@@ -8,9 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
-using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Management;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -21,10 +20,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageConverter
     {
-        /// <summary>
-        /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
-        /// </summary>
-        private const int GuidSizeInBytes = 16;
+        private const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
+        private const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
+        private const string SequenceNumberName = "x-opt-sequence-number";
+        private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
+        private const string LockedUntilName = "x-opt-locked-until";
+        private const string PartitionKeyName = "x-opt-partition-key";
+        private const string PartitionIdName = "x-opt-partition-id";
+        private const string ViaPartitionKeyName = "x-opt-via-partition-key";
+        private const string DeadLetterSourceName = "x-opt-deadletter-source";
+        private const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
+        private const string UriName = AmqpConstants.Vendor + ":uri";
+        private const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
+        private const int GuidSize = 16;
 
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
@@ -107,13 +115,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (firstMessage?.PartitionKey != null)
             {
-                batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName] =
+                batchEnvelope.MessageAnnotations.Map[AmqpMessageConverter.PartitionKeyName] =
                     firstMessage.PartitionKey;
             }
 
             if (firstMessage?.ViaPartitionKey != null)
             {
-                batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] =
+                batchEnvelope.MessageAnnotations.Map[AmqpMessageConverter.ViaPartitionKeyName] =
                     firstMessage.ViaPartitionKey;
             }
 
@@ -148,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
-            amqpMessage.Properties.Subject = sbMessage.Subject;
+            amqpMessage.Properties.Subject = sbMessage.Label;
             amqpMessage.Properties.To = sbMessage.To;
             amqpMessage.Properties.ReplyTo = sbMessage.ReplyTo;
             amqpMessage.Properties.GroupId = sbMessage.SessionId;
@@ -171,27 +179,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((sbMessage.ScheduledEnqueueTime != null) && sbMessage.ScheduledEnqueueTime > DateTimeOffset.MinValue)
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
+                amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
             }
 
             if (sbMessage.PartitionKey != null)
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.PartitionKeyName, sbMessage.PartitionKey);
+                amqpMessage.MessageAnnotations.Map.Add(PartitionKeyName, sbMessage.PartitionKey);
             }
 
             if (sbMessage.ViaPartitionKey != null)
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ViaPartitionKeyName, sbMessage.ViaPartitionKey);
+                amqpMessage.MessageAnnotations.Map.Add(ViaPartitionKeyName, sbMessage.ViaPartitionKey);
             }
 
-            if (sbMessage.ApplicationProperties != null && sbMessage.ApplicationProperties.Count > 0)
+            if (sbMessage.Properties != null && sbMessage.Properties.Count > 0)
             {
                 if (amqpMessage.ApplicationProperties == null)
                 {
                     amqpMessage.ApplicationProperties = new ApplicationProperties();
                 }
 
-                foreach (var pair in sbMessage.ApplicationProperties)
+                foreach (var pair in sbMessage.Properties)
                 {
                     if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                     {
@@ -210,29 +218,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
-            AmqpAnnotatedMessage annotatedMessage;
 
-            if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
-            {
-                annotatedMessage = new AmqpAnnotatedMessage(amqpMessage.GetDataViaDataBody());
-            }
-            else
-            {
-                annotatedMessage = new AmqpAnnotatedMessage(new BinaryData[] { new BinaryData(Array.Empty<byte>())});
-            }
-            ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
-
-            SectionFlag sections = amqpMessage.Sections;
+            ServiceBusReceivedMessage sbMessage = amqpMessage.ToServiceBusReceivedMessage();
+            var sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {
                 if (amqpMessage.Header.Ttl != null)
                 {
-                    annotatedMessage.Header.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
+                    sbMessage.SentMessage.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
                 }
 
                 if (amqpMessage.Header.DeliveryCount != null)
                 {
-                    annotatedMessage.Header.DeliveryCount = isPeeked ? (amqpMessage.Header.DeliveryCount.Value) : (amqpMessage.Header.DeliveryCount.Value + 1);
+                    sbMessage.DeliveryCount = isPeeked ? (int)(amqpMessage.Header.DeliveryCount.Value) : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
                 }
             }
 
@@ -240,42 +238,42 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (amqpMessage.Properties.MessageId != null)
                 {
-                    annotatedMessage.Properties.MessageId = amqpMessage.Properties.MessageId.ToString();
+                    sbMessage.SentMessage.MessageId = amqpMessage.Properties.MessageId.ToString();
                 }
 
                 if (amqpMessage.Properties.CorrelationId != null)
                 {
-                    annotatedMessage.Properties.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
+                    sbMessage.SentMessage.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
                 }
 
                 if (amqpMessage.Properties.ContentType.Value != null)
                 {
-                    annotatedMessage.Properties.ContentType = amqpMessage.Properties.ContentType.Value;
+                    sbMessage.SentMessage.ContentType = amqpMessage.Properties.ContentType.Value;
                 }
 
                 if (amqpMessage.Properties.Subject != null)
                 {
-                    annotatedMessage.Properties.Subject = amqpMessage.Properties.Subject;
+                    sbMessage.SentMessage.Label = amqpMessage.Properties.Subject;
                 }
 
                 if (amqpMessage.Properties.To != null)
                 {
-                    annotatedMessage.Properties.To = amqpMessage.Properties.To.ToString();
+                    sbMessage.SentMessage.To = amqpMessage.Properties.To.ToString();
                 }
 
                 if (amqpMessage.Properties.ReplyTo != null)
                 {
-                    annotatedMessage.Properties.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
+                    sbMessage.SentMessage.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
                 }
 
                 if (amqpMessage.Properties.GroupId != null)
                 {
-                    annotatedMessage.Properties.GroupId = amqpMessage.Properties.GroupId;
+                    sbMessage.SentMessage.SessionId = amqpMessage.Properties.GroupId;
                 }
 
                 if (amqpMessage.Properties.ReplyToGroupId != null)
                 {
-                    annotatedMessage.Properties.ReplyToGroupId = amqpMessage.Properties.ReplyToGroupId;
+                    sbMessage.SentMessage.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
                 }
             }
 
@@ -287,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                     {
-                        annotatedMessage.ApplicationProperties[pair.Key.ToString()] = netObject;
+                        sbMessage.SentMessage.Properties[pair.Key.ToString()] = netObject;
                     }
                 }
             }
@@ -299,49 +297,48 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     var key = pair.Key.ToString();
                     switch (key)
                     {
-                        case AmqpMessageConstants.EnqueuedTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = (DateTime)pair.Value;
+                        case EnqueuedTimeUtcName:
+                            sbMessage.EnqueuedTime = (DateTime)pair.Value;
                             break;
-                        case AmqpMessageConstants.ScheduledEnqueueTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = (DateTime)pair.Value;
+                        case ScheduledEnqueueTimeUtcName:
+                            sbMessage.SentMessage.ScheduledEnqueueTime = (DateTime)pair.Value;
                             break;
-                        case AmqpMessageConstants.SequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = (long)pair.Value;
+                        case SequenceNumberName:
+                            sbMessage.SequenceNumber = (long)pair.Value;
                             break;
-                        case AmqpMessageConstants.EnqueueSequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = (long)pair.Value;
+                        case EnqueueSequenceNumberName:
+                            sbMessage.EnqueuedSequenceNumber = (long)pair.Value;
                             break;
-                        case AmqpMessageConstants.LockedUntilName:
-                            DateTimeOffset lockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
+                        case LockedUntilName:
+                            sbMessage.LockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
                                 DateTimeOffset.MaxValue : (DateTime)pair.Value;
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;
                             break;
-                        case AmqpMessageConstants.PartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = (string)pair.Value;
+                        case PartitionKeyName:
+                            sbMessage.SentMessage.PartitionKey = (string)pair.Value;
                             break;
-                        case AmqpMessageConstants.PartitionIdName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionIdName] = (short)pair.Value;
+                        case PartitionIdName:
+                            sbMessage.PartitionId = (short)pair.Value;
                             break;
-                        case AmqpMessageConstants.ViaPartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = (string)pair.Value;
+                        case ViaPartitionKeyName:
+                            sbMessage.SentMessage.ViaPartitionKey = (string)pair.Value;
                             break;
-                        case AmqpMessageConstants.DeadLetterSourceName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = (string)pair.Value;
+                        case DeadLetterSourceName:
+                            sbMessage.DeadLetterSource = (string)pair.Value;
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {
-                                annotatedMessage.MessageAnnotations[key] = netObject;
+                                sbMessage.SentMessage.Properties[key] = netObject;
                             }
                             break;
                     }
                 }
             }
 
-            if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
+            if (amqpMessage.DeliveryTag.Count == GuidSize)
             {
-                var guidBuffer = new byte[GuidSizeInBytes];
-                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSizeInBytes);
+                var guidBuffer = new byte[GuidSize];
+                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSize);
                 sbMessage.LockTokenGuid = new Guid(guidBuffer);
             }
 
@@ -419,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         MessageId = amqpCorrelationFilter.MessageId,
                         To = amqpCorrelationFilter.To,
                         ReplyTo = amqpCorrelationFilter.ReplyTo,
-                        Subject = amqpCorrelationFilter.Subject,
+                        Label = amqpCorrelationFilter.Label,
                         SessionId = amqpCorrelationFilter.SessionId,
                         ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
                         ContentType = amqpCorrelationFilter.ContentType
@@ -498,13 +495,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     break;
                 case PropertyValueType.Uri:
-                    amqpObject = new DescribedType((AmqpSymbol)AmqpMessageConstants.UriName, ((Uri)netObject).AbsoluteUri);
+                    amqpObject = new DescribedType((AmqpSymbol)UriName, ((Uri)netObject).AbsoluteUri);
                     break;
                 case PropertyValueType.DateTimeOffset:
-                    amqpObject = new DescribedType((AmqpSymbol)AmqpMessageConstants.DateTimeOffsetName, ((DateTimeOffset)netObject).UtcTicks);
+                    amqpObject = new DescribedType((AmqpSymbol)DateTimeOffsetName, ((DateTimeOffset)netObject).UtcTicks);
                     break;
                 case PropertyValueType.TimeSpan:
-                    amqpObject = new DescribedType((AmqpSymbol)AmqpMessageConstants.TimeSpanName, ((TimeSpan)netObject).Ticks);
+                    amqpObject = new DescribedType((AmqpSymbol)TimeSpanName, ((TimeSpan)netObject).Ticks);
                     break;
                 case PropertyValueType.Unknown:
                     if (netObject is Stream netObjectAsStream)
@@ -589,15 +586,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         if (amqpObjectAsDescribedType.Descriptor is AmqpSymbol)
                         {
                             var amqpSymbol = (AmqpSymbol)amqpObjectAsDescribedType.Descriptor;
-                            if (amqpSymbol.Equals((AmqpSymbol)AmqpMessageConstants.UriName))
+                            if (amqpSymbol.Equals((AmqpSymbol)UriName))
                             {
                                 netObject = new Uri((string)amqpObjectAsDescribedType.Value);
                             }
-                            else if (amqpSymbol.Equals((AmqpSymbol)AmqpMessageConstants.TimeSpanName))
+                            else if (amqpSymbol.Equals((AmqpSymbol)TimeSpanName))
                             {
                                 netObject = new TimeSpan((long)amqpObjectAsDescribedType.Value);
                             }
-                            else if (amqpSymbol.Equals((AmqpSymbol)AmqpMessageConstants.DateTimeOffsetName))
+                            else if (amqpSymbol.Equals((AmqpSymbol)DateTimeOffsetName))
                             {
                                 netObject = new DateTimeOffset(new DateTime((long)amqpObjectAsDescribedType.Value, DateTimeKind.Utc));
                             }
@@ -671,7 +668,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
                 [ManagementConstants.Properties.To] = correlationRuleFilter.To,
                 [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
-                [ManagementConstants.Properties.Label] = correlationRuleFilter.Subject,
+                [ManagementConstants.Properties.Label] = correlationRuleFilter.Label,
                 [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
                 [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
                 [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType

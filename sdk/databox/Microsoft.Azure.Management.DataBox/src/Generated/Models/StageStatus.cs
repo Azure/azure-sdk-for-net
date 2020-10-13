@@ -55,17 +55,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Stage has succeeded with errors.
         /// </summary>
         [EnumMember(Value = "SucceededWithErrors")]
-        SucceededWithErrors,
-        /// <summary>
-        /// Stage is stuck until customer takes some action.
-        /// </summary>
-        [EnumMember(Value = "WaitingForCustomerAction")]
-        WaitingForCustomerAction,
-        /// <summary>
-        /// Stage has succeeded with warnings.
-        /// </summary>
-        [EnumMember(Value = "SucceededWithWarnings")]
-        SucceededWithWarnings
+        SucceededWithErrors
     }
     internal static class StageStatusEnumExtension
     {
@@ -92,10 +82,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "Cancelling";
                 case StageStatus.SucceededWithErrors:
                     return "SucceededWithErrors";
-                case StageStatus.WaitingForCustomerAction:
-                    return "WaitingForCustomerAction";
-                case StageStatus.SucceededWithWarnings:
-                    return "SucceededWithWarnings";
             }
             return null;
         }
@@ -118,10 +104,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return StageStatus.Cancelling;
                 case "SucceededWithErrors":
                     return StageStatus.SucceededWithErrors;
-                case "WaitingForCustomerAction":
-                    return StageStatus.WaitingForCustomerAction;
-                case "SucceededWithWarnings":
-                    return StageStatus.SucceededWithWarnings;
             }
             return null;
         }

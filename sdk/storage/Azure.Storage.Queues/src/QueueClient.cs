@@ -1721,7 +1721,6 @@ namespace Azure.Storage.Queues
             ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1753,7 +1752,6 @@ namespace Azure.Storage.Queues
             await ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1772,9 +1770,6 @@ namespace Azure.Storage.Queues
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
         /// </param>
-        /// <param name="operationName">
-        /// Operation name for diagnostic logging.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1787,7 +1782,6 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueMessage[]>> ReceiveMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
-            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1809,7 +1803,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: operationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1841,164 +1835,7 @@ namespace Azure.Storage.Queues
                 }
             }
         }
-
         #endregion ReceiveMessages
-
-        #region ReceiveMessage
-
-        /// <summary>
-        /// Receives one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <param name="visibilityTimeout">
-        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual Response<QueueMessage> ReceiveMessage(
-            TimeSpan? visibilityTimeout = default,
-            CancellationToken cancellationToken = default) =>
-            ReceiveMessageInternal(
-                visibilityTimeout,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Retrieves one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <param name="visibilityTimeout">
-        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual async Task<Response<QueueMessage>> ReceiveMessageAsync(
-            TimeSpan? visibilityTimeout = default,
-            CancellationToken cancellationToken = default) =>
-            await ReceiveMessageInternal(
-                visibilityTimeout,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Retrieves one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <param name="visibilityTimeout">
-        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        private async Task<Response<QueueMessage>> ReceiveMessageInternal(
-            TimeSpan? visibilityTimeout,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            var response = await ReceiveMessagesInternal(
-                1,
-                visibilityTimeout,
-                $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
-                async,
-                cancellationToken).ConfigureAwait(false);
-            var queueMessage = response.Value.FirstOrDefault();
-            var rawResponse = response.GetRawResponse();
-            return Response.FromValue(queueMessage, rawResponse);
-        }
-        #endregion ReceiveMessage
-
-        #region PeekMessage
-        /// <summary>
-        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
-        /// Peek Messages</see>.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
-        /// </returns>
-        public virtual Response<PeekedMessage> PeekMessage(
-            CancellationToken cancellationToken = default) =>
-            PeekMessageInternal(
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
-        /// Peek Messages</see>.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
-        /// </returns>
-        public virtual async Task<Response<PeekedMessage>> PeekMessageAsync(
-            CancellationToken cancellationToken = default) =>
-            await PeekMessageInternal(
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
-        /// Peek Messages</see>.
-        /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
-        /// </returns>
-        private async Task<Response<PeekedMessage>> PeekMessageInternal(
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            var response = await PeekMessagesInternal(1, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", async, cancellationToken).ConfigureAwait(false);
-            var message = response.Value.FirstOrDefault();
-            var rawResonse = response.GetRawResponse();
-            return Response.FromValue(message, rawResonse);
-        }
-        #endregion PeekMessage
 
         #region PeekMessages
         /// <summary>
@@ -2023,7 +1860,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
                 maxMessages,
-                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2050,7 +1886,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
                 maxMessages,
-                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2066,9 +1901,6 @@ namespace Azure.Storage.Queues
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
-        /// <param name="operationName">
-        /// Operation name for diagnostic logging.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2080,7 +1912,6 @@ namespace Azure.Storage.Queues
         /// </returns>
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
-            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2100,7 +1931,7 @@ namespace Azure.Storage.Queues
                         version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: operationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -2391,17 +2222,12 @@ namespace Azure.Storage.Queues
                         ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
                         : messageText;
-                    QueueSendMessage queueSendMessage = null;
-                    if (messageText != default)
-                    {
-                        queueSendMessage = new QueueSendMessage { MessageText = messageText };
-                    }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
                         ClientDiagnostics,
                         Pipeline,
                         uri,
-                        message: queueSendMessage,
+                        message: new QueueSendMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         version: Version.ToVersionString(),

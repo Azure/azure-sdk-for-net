@@ -8,9 +8,15 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Text Analytics Warning.
     /// </summary>
-    public readonly struct TextAnalyticsWarning
+    public struct TextAnalyticsWarning
     {
-        internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
+        internal TextAnalyticsWarning(string code, string message)
+        {
+            WarningCode = code;
+            Message = message;
+        }
+
+        internal TextAnalyticsWarning(TextAnalyticsWarning_internal warning)
         {
             WarningCode = warning.Code;
             Message = warning.Message;

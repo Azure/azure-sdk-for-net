@@ -1820,8 +1820,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(leaseId)}: {leaseId}\n");
                 try
                 {
-                    Errors.VerifyStreamPosition(content, nameof(content));
-
                     Response<PathAppendDataResult> response = await DataLakeRestClient.Path.AppendDataAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
@@ -1829,7 +1827,7 @@ namespace Azure.Storage.Files.DataLake
                         body: content,
                         version: Version.ToVersionString(),
                         position: offset,
-                        contentLength: content?.Length - content?.Position ?? 0,
+                        contentLength: content?.Length ?? 0,
                         transactionalContentHash: contentHash,
                         leaseId: leaseId,
                         async: async,
@@ -2042,7 +2040,7 @@ namespace Azure.Storage.Files.DataLake
         /// flush operation completes successfully, the service raises a file change notification with a property indicating that
         /// this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the
         /// file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that
-        /// the file stream has been closed.
+        /// the file stream has been closed."
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -3110,7 +3108,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 return StagedUploadInternal(
                     stream,
@@ -3226,7 +3224,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeFileUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 return await StagedUploadInternal(
                     stream,
@@ -3438,7 +3436,7 @@ namespace Azure.Storage.Files.DataLake
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 return await StagedUploadInternal(
                     stream,
@@ -3710,86 +3708,6 @@ namespace Azure.Storage.Files.DataLake
         /// Opens a stream for reading from the file.  The stream will only download
         /// the file as the stream is read from.
         /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// Returns a stream that will download the file as the stream
-        /// is read from.
-        /// </returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Stream OpenRead(
-#pragma warning restore AZC0015 // Unexpected client method return type.
-            DataLakeOpenReadOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
-            try
-            {
-                scope.Start();
-                return _blockBlobClient.OpenRead(
-                    options.ToBlobOpenReadOptions(),
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Opens a stream for reading from the file.  The stream will only download
-        /// the file as the stream is read from.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// Returns a stream that will download the file as the stream
-        /// is read from.
-        /// </returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Stream> OpenReadAsync(
-#pragma warning restore AZC0015 // Unexpected client method return type.
-            DataLakeOpenReadOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
-            try
-            {
-                scope.Start();
-                return await _blockBlobClient.OpenReadAsync(
-                options.ToBlobOpenReadOptions(),
-                cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Opens a stream for reading from the file.  The stream will only download
-        /// the file as the stream is read from.
-        /// </summary>
         /// <param name="position">
         /// The position within the file to begin the stream.
         /// Defaults to the beginning of the file.
@@ -3810,7 +3728,6 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3863,7 +3780,6 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3898,7 +3814,6 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3951,7 +3866,6 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -4136,8 +4050,7 @@ namespace Azure.Storage.Files.DataLake
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler,
-                    closeEvent: options?.Close);
+                    progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)
             {
@@ -4151,7 +4064,7 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion OpenWrite
 
-        #region PartitionedUploader
+        #region PartitionedUplaoder
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
@@ -4182,8 +4095,6 @@ namespace Azure.Storage.Files.DataLake
                     if (args?.Conditions != null)
                         args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
 
-                    long newPosition = stream.Length - stream.Position;
-
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -4196,9 +4107,9 @@ namespace Azure.Storage.Files.DataLake
 
                     // Flush data
                     return await client.FlushInternal(
-                        position: newPosition,
+                        position: stream.Length,
                         retainUncommittedData: default,
-                        close: args.Close,
+                        close: default,
                         args.HttpHeaders,
                         args.Conditions,
                         async,
@@ -4210,7 +4121,7 @@ namespace Azure.Storage.Files.DataLake
                         stream,
                         offset,
                         contentHash: default,
-                        args?.Conditions?.LeaseId,
+                        args.Conditions.LeaseId,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
@@ -4225,7 +4136,7 @@ namespace Azure.Storage.Files.DataLake
                     return await client.FlushInternal(
                         offset + size,
                         retainUncommittedData: default,
-                        close: args.Close,
+                        close: default,
                         httpHeaders: args.HttpHeaders,
                         conditions: args.Conditions,
                         async,

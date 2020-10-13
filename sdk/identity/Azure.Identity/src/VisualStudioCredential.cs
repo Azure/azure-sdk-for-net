@@ -64,11 +64,6 @@ namespace Azure.Identity
 
             try
             {
-                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
-                {
-                    throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
-                }
-
                 var tokenProviderPath = GetTokenProviderPath();
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
@@ -125,9 +120,9 @@ namespace Azure.Identity
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
-                catch (Exception exception) when (!(exception is OperationCanceledException))
+                catch (Exception exception)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    exceptions.Add(exception);
                 }
             }
 
@@ -192,35 +187,24 @@ namespace Azure.Identity
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
-            try
+            using JsonDocument document = JsonDocument.Parse(content);
+
+            JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
+
+            var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
+            for (int i = 0; i < providers.Length; i++)
             {
-                using JsonDocument document = JsonDocument.Parse(content);
+                JsonElement providerElement = providersElement[i];
 
-                JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
+                var path = providerElement.GetProperty("Path").GetString();
+                var preference = providerElement.GetProperty("Preference").GetInt32();
+                var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
 
-                var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
-                for (int i = 0; i < providers.Length; i++)
-                {
-                    JsonElement providerElement = providersElement[i];
-
-                    var path = providerElement.GetProperty("Path").GetString();
-                    var preference = providerElement.GetProperty("Preference").GetInt32();
-                    var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
-
-                    providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
-                }
-
-                Array.Sort(providers);
-                return providers;
+                providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
             }
-            catch (JsonException exception)
-            {
-                throw new CredentialUnavailableException($"File found at \"{tokenProviderPath}\" isn't a valid JSON file", exception);
-            }
-            catch (Exception exception)
-            {
-                throw new CredentialUnavailableException($"JSON file found at \"{tokenProviderPath}\" has invalid schema.", exception);
-            }
+
+            Array.Sort(providers);
+            return providers;
         }
 
         private string GetTokenProviderContent(string tokenProviderPath)

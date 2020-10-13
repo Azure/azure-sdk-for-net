@@ -58,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 getComponentResponse.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
 
                 // Patch component
-                Response updateComponentResponse = await client
+                Response<string> updateComponentResponse = await client
                     .UpdateComponentAsync(
                         roomWithWifiTwinId,
                         wifiComponentName,
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     .ConfigureAwait(false);
 
                 // The response to the Patch request should be 204 (No content)
-                updateComponentResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
+                updateComponentResponse.GetRawResponse().Status.Should().Be((int)HttpStatusCode.NoContent);
             }
             finally
             {

@@ -77,16 +77,6 @@ namespace Microsoft.Azure.Management.AppPlatform
         IServicesOperations Services { get; }
 
         /// <summary>
-        /// Gets the IConfigServersOperations.
-        /// </summary>
-        IConfigServersOperations ConfigServers { get; }
-
-        /// <summary>
-        /// Gets the IMonitoringSettingsOperations.
-        /// </summary>
-        IMonitoringSettingsOperations MonitoringSettings { get; }
-
-        /// <summary>
         /// Gets the IAppsOperations.
         /// </summary>
         IAppsOperations Apps { get; }
@@ -97,16 +87,6 @@ namespace Microsoft.Azure.Management.AppPlatform
         IBindingsOperations Bindings { get; }
 
         /// <summary>
-        /// Gets the ICertificatesOperations.
-        /// </summary>
-        ICertificatesOperations Certificates { get; }
-
-        /// <summary>
-        /// Gets the ICustomDomainsOperations.
-        /// </summary>
-        ICustomDomainsOperations CustomDomains { get; }
-
-        /// <summary>
         /// Gets the IDeploymentsOperations.
         /// </summary>
         IDeploymentsOperations Deployments { get; }
@@ -115,11 +95,6 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the ISkusOperations.
-        /// </summary>
-        ISkusOperations Skus { get; }
 
     }
 }

@@ -27,9 +27,9 @@ namespace Azure.Identity.Tests.Mock
             _factory = factory;
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        public override Task<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
-            return new ValueTask<AuthenticationResult>(_factory(scopes));
+            return Task.FromResult(_factory(scopes));
         }
     }
 }

@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Search
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for each request.
+        /// The API version to use for each request. The current version is
+        /// 2019-10-01-Preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -360,7 +361,7 @@ namespace Microsoft.Azure.Management.Search
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             SharedPrivateLinkResources = new SharedPrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-08-01";
+            ApiVersion = "2020-03-13";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -53,7 +53,6 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/statistics/devices", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -107,7 +106,6 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/statistics/service", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

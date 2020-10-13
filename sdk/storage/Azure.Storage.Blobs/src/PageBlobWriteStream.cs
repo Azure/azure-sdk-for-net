@@ -86,6 +86,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
             }
+            _position += count;
         }
 
         protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)

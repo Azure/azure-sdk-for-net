@@ -20,7 +20,7 @@
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
-# PRLabel: %App Configuration
+# PRLabel: %AzConfig
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
 # PRLabel: %Batch
@@ -31,13 +31,13 @@
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                  @serkantkaraca @jsquire
+/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
@@ -57,14 +57,10 @@
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
 # PRLabel: %Storage
-/sdk/storage/                                   @tg-msft
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
-
-# PRLabel: %EngSys
-/sdk/template/                                  @Azure/azure-sdk-eng
 
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                             @annelo-msft @maririos
@@ -72,18 +68,14 @@
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
-# PRLabel: %Monitor - Exporter
-/sdk/monitor/OpenTelemetry.*/                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
-
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
-/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/*Management*/                               @allenjzhang
 
 # Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
 
 # Update AutoRest C#
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja
@@ -92,6 +84,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @allenjzhang @m-nash @markcowl
+/eng/mgmt/      @allenjzhang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

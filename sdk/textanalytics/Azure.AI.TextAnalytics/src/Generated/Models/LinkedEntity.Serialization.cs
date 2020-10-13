@@ -5,24 +5,22 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial struct LinkedEntity
+    internal partial class LinkedEntity
     {
         internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
         {
             string name = default;
-            IEnumerable<LinkedEntityMatch> matches = default;
+            IReadOnlyList<Match> matches = default;
             string language = default;
             Optional<string> id = default;
-            Uri url = default;
+            string url = default;
             string dataSource = default;
-            Optional<string> bingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -32,10 +30,10 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("matches"))
                 {
-                    List<LinkedEntityMatch> array = new List<LinkedEntityMatch>();
+                    List<Match> array = new List<Match>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedEntityMatch.DeserializeLinkedEntityMatch(item));
+                        array.Add(Match.DeserializeMatch(item));
                     }
                     matches = array;
                     continue;
@@ -52,7 +50,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dataSource"))
@@ -60,13 +58,8 @@ namespace Azure.AI.TextAnalytics
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bingId"))
-                {
-                    bingId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
+            return new LinkedEntity(name, matches, language, id.Value, url, dataSource);
         }
     }
 }

@@ -77,7 +77,6 @@ namespace Azure.Storage
             Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
             Func<ETag?, TRequestConditions> createRequestConditionsFunc,
             Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
-            long initialLenght,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
@@ -91,7 +90,7 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = 0;
             _requestConditions = requestConditions;
-            _length = initialLenght;
+            _length = -1;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
         }
 
@@ -136,7 +135,7 @@ namespace Azure.Storage
 
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength)
+            if (_bufferPosition == 0 || _bufferPosition == _buffer.Length)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
@@ -153,7 +152,6 @@ namespace Azure.Storage
             Array.Copy(_buffer, _bufferPosition, buffer, offset, bytesToWrite);
 
             _position += bytesToWrite;
-            _bufferPosition += bytesToWrite;
 
             return bytesToWrite;
         }
@@ -170,43 +168,26 @@ namespace Azure.Storage
 
             using Stream networkStream = response.Value.Content;
 
-            // The number of bytes we just downloaded.
-            long downloadSize = GetResponseRange(response.GetRawResponse()).Length.Value;
-
-            // The number of bytes we copied in the last loop.
             int copiedBytes;
 
-            // Bytes we have copied so far.
-            int totalCopiedBytes = 0;
-
-            // Bytes remaining to copy.  It is save to truncate the long because we asked for a max of int _buffer size bytes.
-            int remainingBytes = (int)downloadSize;
-
-            do
+            if (async)
             {
-                if (async)
-                {
-                    copiedBytes = await networkStream.ReadAsync(
-                        buffer: _buffer,
-                        offset: totalCopiedBytes,
-                        count: remainingBytes,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    copiedBytes = networkStream.Read(
-                        buffer: _buffer,
-                        offset: totalCopiedBytes,
-                        count: remainingBytes);
-                }
-
-                totalCopiedBytes += copiedBytes;
-                remainingBytes -= copiedBytes;
+                copiedBytes = await networkStream.ReadAsync(
+                    buffer: _buffer,
+                    offset: 0,
+                    count: _buffer.Length,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-            while (copiedBytes != 0);
+            else
+            {
+                copiedBytes = networkStream.Read(
+                    buffer: _buffer,
+                    offset: 0,
+                    count: _buffer.Length);
+            }
 
             _bufferPosition = 0;
-            _bufferLength = totalCopiedBytes;
+            _bufferLength = copiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
 
             // Set _requestConditions If-Match if we are not allowing the blob to be modified.
@@ -215,7 +196,7 @@ namespace Azure.Storage
                 _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
             }
 
-            return totalCopiedBytes;
+            return response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
         }
 
         private static void ValidateReadParameters(byte[] buffer, int offset, int count)
@@ -278,25 +259,6 @@ namespace Azure.Storage
 
             string[] split = lengthString.Split('/');
             return Convert.ToInt64(split[1], CultureInfo.InvariantCulture);
-        }
-
-        private static HttpRange GetResponseRange(Response response)
-        {
-            response.Headers.TryGetValue("Content-Range", out string rangeString);
-
-            if (rangeString == null)
-            {
-                throw new InvalidOperationException("Content-Range header is missing on download response.");
-            }
-
-            string[] split = rangeString.Split('/');
-            string[] rangeSplit = split[0].Split('-');
-            string[] firstbyteSplit = rangeSplit[0].Split(' ');
-
-            long firstByte = Convert.ToInt64(firstbyteSplit[1], CultureInfo.InvariantCulture);
-            long lastByte = Convert.ToInt64(rangeSplit[1], CultureInfo.InvariantCulture);
-
-            return new HttpRange(firstByte, lastByte - firstByte + 1);
         }
 
         public override bool CanRead => true;

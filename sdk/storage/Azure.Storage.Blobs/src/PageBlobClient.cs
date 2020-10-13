@@ -1083,16 +1083,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content?.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
+                    var range = new HttpRange(offset, content?.Length ?? null);
 
                     return await BlobRestClient.PageBlob.UploadPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: (content?.Length - content?.Position) ?? 0,
+                        contentLength: content?.Length ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         timeout: default,
@@ -3114,7 +3113,23 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            return client.GetPageBlobClientCore(blobName);
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new PageBlobClient(
+                blobUriBuilder.ToUri(),
+                client.Pipeline,
+                client.Version,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey,
+                client.EncryptionScope);
         }
     }
 }

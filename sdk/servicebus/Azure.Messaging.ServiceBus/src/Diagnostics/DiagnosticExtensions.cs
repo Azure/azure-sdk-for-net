@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
-                    AddLinkedDiagnostics(scope, message.AmqpMessage.ApplicationProperties);
+                    AddLinkedDiagnostics(scope, message.SentMessage.Properties);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 foreach (ServiceBusMessage message in messages)
                 {
-                    AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                    AddLinkedDiagnostics(scope, message.Properties);
                 }
             }
         }

@@ -24,10 +24,9 @@
 
 Param(
     [string] $SpecsRepoFork = "Azure",
-    [string] $SpecsRepoBranch = "master",
-    [string] $Tag = ""
+    [string] $SpecsRepoBranch = "master"
 )
 
 "$PSScriptRoot\..\..\Install-BuildTools.ps1"
 
-Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
+Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch

@@ -18,27 +18,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                if (DefaultLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultLanguageCode");
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultLanguageCode");
-                }
+                writer.WritePropertyName("defaultLanguageCode");
+                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(ShouldDetectOrientation))
             {
-                if (ShouldDetectOrientation != null)
-                {
-                    writer.WritePropertyName("detectOrientation");
-                    writer.WriteBooleanValue(ShouldDetectOrientation.Value);
-                }
-                else
-                {
-                    writer.WriteNull("detectOrientation");
-                }
+                writer.WritePropertyName("detectOrientation");
+                writer.WriteBooleanValue(ShouldDetectOrientation.Value);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -76,8 +62,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static OcrSkill DeserializeOcrSkill(JsonElement element)
         {
-            Optional<OcrSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> detectOrientation = default;
+            Optional<OcrSkillLanguage> defaultLanguageCode = default;
+            Optional<bool> detectOrientation = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -88,21 +74,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultLanguageCode = null;
-                        continue;
-                    }
                     defaultLanguageCode = new OcrSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("detectOrientation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        detectOrientation = null;
-                        continue;
-                    }
                     detectOrientation = property.Value.GetBoolean();
                     continue;
                 }

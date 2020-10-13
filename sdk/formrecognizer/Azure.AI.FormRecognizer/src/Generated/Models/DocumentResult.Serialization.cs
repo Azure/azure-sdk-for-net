@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,20 +16,13 @@ namespace Azure.AI.FormRecognizer.Models
         internal static DocumentResult DeserializeDocumentResult(JsonElement element)
         {
             string docType = default;
-            Optional<Guid> modelId = default;
             IReadOnlyList<int> pageRange = default;
-            Optional<float> docTypeConfidence = default;
             IReadOnlyDictionary<string, FieldValue_internal> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"))
                 {
                     docType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("modelId"))
-                {
-                    modelId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("pageRange"))
@@ -41,11 +33,6 @@ namespace Azure.AI.FormRecognizer.Models
                         array.Add(item.GetInt32());
                     }
                     pageRange = array;
-                    continue;
-                }
-                if (property.NameEquals("docTypeConfidence"))
-                {
-                    docTypeConfidence = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("fields"))
@@ -66,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new DocumentResult(docType, Optional.ToNullable(modelId), pageRange, Optional.ToNullable(docTypeConfidence), fields);
+            return new DocumentResult(docType, pageRange, fields);
         }
     }
 }

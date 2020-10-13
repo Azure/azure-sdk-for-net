@@ -49,7 +49,8 @@ namespace Microsoft.Azure.Management.Search
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for each request.
+        /// The API version to use for each request. The current version is
+        /// 2019-10-01-Preview.
         /// </summary>
         string ApiVersion { get; }
 

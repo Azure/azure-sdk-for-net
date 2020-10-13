@@ -28,7 +28,9 @@ namespace Microsoft.Azure.Management.Search.Models
         [EnumMember(Value = "Rejected")]
         Rejected,
         [EnumMember(Value = "Disconnected")]
-        Disconnected
+        Disconnected,
+        [EnumMember(Value = "Timeout")]
+        Timeout
     }
     internal static class SharedPrivateLinkResourceStatusEnumExtension
     {
@@ -49,6 +51,8 @@ namespace Microsoft.Azure.Management.Search.Models
                     return "Rejected";
                 case SharedPrivateLinkResourceStatus.Disconnected:
                     return "Disconnected";
+                case SharedPrivateLinkResourceStatus.Timeout:
+                    return "Timeout";
             }
             return null;
         }
@@ -65,6 +69,8 @@ namespace Microsoft.Azure.Management.Search.Models
                     return SharedPrivateLinkResourceStatus.Rejected;
                 case "Disconnected":
                     return SharedPrivateLinkResourceStatus.Disconnected;
+                case "Timeout":
+                    return SharedPrivateLinkResourceStatus.Timeout;
             }
             return null;
         }

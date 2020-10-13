@@ -155,6 +155,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         IGremlinResourcesOperations GremlinResources { get; }
 
         /// <summary>
+        /// Gets the IRestorableDatabaseAccountsOperations.
+        /// </summary>
+        IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; }
+
+        /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         INotebookWorkspacesOperations NotebookWorkspaces { get; }

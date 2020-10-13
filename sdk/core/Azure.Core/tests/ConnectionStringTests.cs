@@ -61,27 +61,7 @@ namespace Azure.Core.Tests
         {
             var connectionString = ConnectionString.Parse("x=y");
             Assert.AreEqual("y", connectionString.GetRequired("x"));
-            Assert.Throws<InvalidOperationException>(() => connectionString.GetRequired("notpresent"));
-        }
-
-        [Test]
-        public void TryGetSegmentValue()
-        {
-            var connectionString = ConnectionString.Parse("x=y");
-            Assert.That(connectionString.TryGetSegmentValue("x", out var value));
-            Assert.That(value, Is.EqualTo("y"));
-            Assert.That(connectionString.TryGetSegmentValue("notpresent", out _), Is.False);
-        }
-
-        [Test]
-        public void Add()
-        {
-            var connectionString = ConnectionString.Parse("x=y");
-            Assert.AreEqual("y", connectionString.GetRequired("x"));
-            Assert.Throws<InvalidOperationException>(() => connectionString.GetRequired("notpresent"));
-
-            connectionString.Add("notpresent", "someValue");
-            Assert.DoesNotThrow(() => connectionString.GetRequired("notpresent"));
+            Assert.Throws<InvalidOperationException>(() => connectionString.GetRequired("y"));
         }
 
         [Test]
@@ -101,14 +81,6 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("z", connectionString.GetNonRequired("x"));
             Assert.AreEqual(null, connectionString.GetNonRequired("y"));
-        }
-
-        [Test]
-        public void EmtptyProducesEmptyString()
-        {
-            var connectionSring = ConnectionString.Empty();
-
-            Assert.That(connectionSring.ToString(), Is.EqualTo(string.Empty));
         }
     }
 }

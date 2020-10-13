@@ -9,7 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
+#endif
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
@@ -48,11 +50,13 @@ namespace Azure.Search.Documents
         /// </summary>
         public virtual string IndexName { get; }
 
+#if EXPERIMENTAL_SERIALIZER
         /// <summary>
         /// Gets an <see cref="ObjectSerializer"/> that can be used to
         /// customize the serialization of strongly typed models.
         /// </summary>
         private ObjectSerializer Serializer { get; }
+#endif
 
         /// <summary>
         /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
@@ -166,7 +170,9 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             IndexName = indexName;
+#if EXPERIMENTAL_SERIALIZER
             Serializer = options.Serializer;
+#endif
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
             Version = options.Version;
@@ -208,7 +214,9 @@ namespace Azure.Search.Documents
         internal SearchClient(
             Uri endpoint,
             string indexName,
+#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
+#endif
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             SearchClientOptions.ServiceVersion version)
@@ -225,7 +233,9 @@ namespace Azure.Search.Documents
 
             Endpoint = endpoint;
             IndexName = indexName;
+#if EXPERIMENTAL_SERIALIZER
             Serializer = serializer;
+#endif
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
             Version = version;
@@ -592,7 +602,9 @@ namespace Azure.Search.Documents
                     case 200:
                     {
                         T value = await message.Response.ContentStream.DeserializeAsync<T>(
+#if EXPERIMENTAL_SERIALIZER
                             Serializer,
+#endif
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -777,7 +789,9 @@ namespace Azure.Search.Documents
                         // Deserialize the results
                         SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
                             message.Response.ContentStream,
+#if EXPERIMENTAL_SERIALIZER
                             Serializer,
+#endif
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -947,7 +961,9 @@ namespace Azure.Search.Documents
                     {
                         SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
                             message.Response.ContentStream,
+#if EXPERIMENTAL_SERIALIZER
                             Serializer,
+#endif
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
@@ -1222,7 +1238,9 @@ namespace Azure.Search.Documents
                     Utf8JsonRequestContent content = new Utf8JsonRequestContent();
                     await batch.SerializeAsync(
                         content.JsonWriter,
+#if EXPERIMENTAL_SERIALIZER
                         Serializer,
+#endif
                         JsonSerialization.SerializerOptions,
                         async,
                         cancellationToken)

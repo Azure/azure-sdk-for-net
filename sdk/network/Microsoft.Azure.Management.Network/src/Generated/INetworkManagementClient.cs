@@ -126,11 +126,6 @@ namespace Microsoft.Azure.Management.Network
         IBastionHostsOperations BastionHosts { get; }
 
         /// <summary>
-        /// Gets the ICustomIPPrefixesOperations.
-        /// </summary>
-        ICustomIPPrefixesOperations CustomIPPrefixes { get; }
-
-        /// <summary>
         /// Gets the IDdosCustomPoliciesOperations.
         /// </summary>
         IDdosCustomPoliciesOperations DdosCustomPolicies { get; }
@@ -139,11 +134,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         IDdosProtectionPlansOperations DdosProtectionPlans { get; }
-
-        /// <summary>
-        /// Gets the IDscpConfigurationOperations.
-        /// </summary>
-        IDscpConfigurationOperations DscpConfiguration { get; }
 
         /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
@@ -324,11 +314,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualApplianceSkusOperations.
         /// </summary>
         IVirtualApplianceSkusOperations VirtualApplianceSkus { get; }
-
-        /// <summary>
-        /// Gets the IInboundSecurityRuleOperations.
-        /// </summary>
-        IInboundSecurityRuleOperations InboundSecurityRule { get; }
 
         /// <summary>
         /// Gets the INetworkWatchersOperations.

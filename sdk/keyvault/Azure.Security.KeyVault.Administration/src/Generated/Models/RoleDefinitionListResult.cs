@@ -16,20 +16,20 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         internal RoleDefinitionListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultRoleDefinition>();
+            Value = new ChangeTrackingList<RoleDefinition>();
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         /// <param name="value"> Role definition list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleDefinitionListResult(IReadOnlyList<KeyVaultRoleDefinition> value, string nextLink)
+        internal RoleDefinitionListResult(IReadOnlyList<RoleDefinition> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Role definition list. </summary>
-        public IReadOnlyList<KeyVaultRoleDefinition> Value { get; }
+        public IReadOnlyList<RoleDefinition> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

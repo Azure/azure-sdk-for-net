@@ -1028,8 +1028,7 @@ namespace Azure.Messaging.EventHubs
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties,
                 LoadBalancingStrategy = clientOptions.LoadBalancingStrategy,
-                PrefetchCount = clientOptions.PrefetchCount,
-                PrefetchSizeInBytes = clientOptions.PrefetchSizeInBytes
+                PrefetchCount = clientOptions.PrefetchCount
             };
         }
 

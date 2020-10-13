@@ -22,7 +22,6 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1CreateClient
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
-
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -30,14 +29,12 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1CreateTable
             // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-
             TableItem table = serviceClient.CreateTable(tableName);
             Console.WriteLine($"The created table's name is {table.TableName}.");
             #endregion
 
             #region Snippet:TablesSample1DeleteTable
             // Deletes the table made previously.
-
             serviceClient.DeleteTable(tableName);
             #endregion
 
@@ -48,8 +45,8 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1CreateTableClient
             tableClient = new TableClient(
-                new Uri(storageUri),
                 tableName,
+                new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
             #endregion
 

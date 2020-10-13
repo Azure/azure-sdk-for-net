@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9adda101-db09-4d6d-96c2-f9fd92f56fd8"
+          "3fa6ae28-90d8-417f-9107-eab4819c453e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.28928.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20161.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,10 +27,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b817574e-f762-428a-b1cb-89ec0cde0bef"
+          "3f1ad6fc-3f42-4f4d-84c4-949b6d53ce2e"
         ],
         "x-ms-client-request-id": [
-          "9adda101-db09-4d6d-96c2-f9fd92f56fd8"
+          "3fa6ae28-90d8-417f-9107-eab4819c453e"
         ],
         "OData-Version": [
           "4.0"
@@ -39,7 +39,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/10.0"
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -48,19 +48,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11996"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "a666c753-341a-4171-846e-27989029d71a"
+          "8b4611a4-a031-4d8f-bb43-b52b89251651"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233430Z:a666c753-341a-4171-846e-27989029d71a"
+          "WESTUS:20200714T015742Z:8b4611a4-a031-4d8f-bb43-b52b89251651"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:30 GMT"
+          "Tue, 14 Jul 2020 01:57:41 GMT"
         ],
         "Content-Length": [
           "15513"

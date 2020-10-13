@@ -50,7 +50,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (azureStorageBlobContainerUri != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -120,7 +119,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,7 +197,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -269,7 +266,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -350,7 +346,6 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
                 var content = new Utf8JsonRequestContent();

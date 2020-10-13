@@ -9,14 +9,14 @@ namespace Azure.AI.FormRecognizer.Models
     public struct FormPageRange
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormPageRange"/> structure.
+        /// Initializes a new instance of the <see cref="FormPageRange"/> struct.
         /// </summary>
-        /// <param name="firstPageNumber">The first page number of the range.</param>
-        /// <param name="lastPageNumber">The last page number of the range.</param>
-        internal FormPageRange(int firstPageNumber, int lastPageNumber)
+        /// <param name="first">The first page number of the range.</param>
+        /// <param name="last">The last page number of the range.</param>
+        internal FormPageRange(int first, int last)
         {
-            FirstPageNumber = firstPageNumber;
-            LastPageNumber = lastPageNumber;
+            FirstPageNumber = first;
+            LastPageNumber = last;
         }
 
         /// <summary>

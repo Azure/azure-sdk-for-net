@@ -21,8 +21,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientTests(bool isAsync)
-            : base(isAsync)
+        public FormTrainingClientTests(bool isAsync) : base(isAsync)
         {
         }
 

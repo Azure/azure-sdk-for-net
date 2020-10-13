@@ -42,8 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            var operation = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
-            NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            var createdNotebook = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
             #endregion
         }
 

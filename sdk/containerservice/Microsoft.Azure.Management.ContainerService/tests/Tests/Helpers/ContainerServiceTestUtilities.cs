@@ -19,7 +19,7 @@ namespace ContainerService.Tests
         internal const string DnsPrefix = "aksdotnetsdk";
         internal const string ResourceGroupPrefix = "aks-dotnet-sdk-RG-";
         internal const string AgentPoolProfileName = "aksagent";
-        internal const string VMSize = "Standard_D2s_v3";
+        internal const string VMSize = "Standard_A2";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -86,8 +86,7 @@ namespace ContainerService.Tests
                 {
                     Name = AgentPoolProfileName,
                     VmSize = VMSize,
-                    Count = 1,
-                    Mode = "System"
+                    Count = 1
                 }
             };
 

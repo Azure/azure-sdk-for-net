@@ -33,13 +33,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// shipping.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
-        /// <param name="keyEncryptionKey">Key encryption key for the
-        /// job.</param>
-        public UpdateJobDetails(ContactDetails contactDetails = default(ContactDetails), ShippingAddress shippingAddress = default(ShippingAddress), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey))
+        public UpdateJobDetails(ContactDetails contactDetails = default(ContactDetails), ShippingAddress shippingAddress = default(ShippingAddress))
         {
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
-            KeyEncryptionKey = keyEncryptionKey;
             CustomInit();
         }
 
@@ -61,12 +58,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public ShippingAddress ShippingAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets key encryption key for the job.
-        /// </summary>
-        [JsonProperty(PropertyName = "keyEncryptionKey")]
-        public KeyEncryptionKey KeyEncryptionKey { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -81,10 +72,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ShippingAddress != null)
             {
                 ShippingAddress.Validate();
-            }
-            if (KeyEncryptionKey != null)
-            {
-                KeyEncryptionKey.Validate();
             }
         }
     }

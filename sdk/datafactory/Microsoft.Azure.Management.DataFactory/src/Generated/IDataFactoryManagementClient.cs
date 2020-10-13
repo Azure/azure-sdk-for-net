@@ -145,15 +145,5 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </summary>
         IDataFlowDebugSessionOperations DataFlowDebugSession { get; }
 
-        /// <summary>
-        /// Gets the IManagedVirtualNetworksOperations.
-        /// </summary>
-        IManagedVirtualNetworksOperations ManagedVirtualNetworks { get; }
-
-        /// <summary>
-        /// Gets the IManagedPrivateEndpointsOperations.
-        /// </summary>
-        IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; }
-
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +13,9 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a single receiver instance that multiple threads spawned by the
-    /// <see cref="ServiceBusProcessor"/> may be using to receive and process messages.
-    /// The manager will delegate to the user provided callbacks and handle automatic
-    /// locking of messages.
+    /// Represents a single receiver instance that multiple threads spawned by the ServiceBusProcessor
+    /// may be using to receive and process messages. The manager will delegate to the user provided
+    /// callbacks and handle automatic locking of messages.
     /// </summary>
     internal class ReceiverManager
     {
@@ -69,8 +69,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -170,17 +169,7 @@ namespace Azure.Messaging.ServiceBus
 
                 errorSource = ServiceBusErrorSource.UserCallback;
 
-                try
-                {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(_identifier, message.SequenceNumber);
-                    await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(_identifier, message.SequenceNumber);
-                }
-                catch (Exception ex)
-                {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(_identifier, message.SequenceNumber, ex.ToString());
-                    throw;
-                }
+                await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
 
                 if (Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     _processorOptions.AutoComplete &&
@@ -280,7 +269,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    if (Receiver.IsClosed)
+                    if (Receiver.IsDisposed)
                     {
                         break;
                     }

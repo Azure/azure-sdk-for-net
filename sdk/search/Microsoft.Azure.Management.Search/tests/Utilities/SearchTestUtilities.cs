@@ -20,11 +20,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             return TestUtilities.GenerateName(prefix: "azs-");
         }
 
-        public static string GenerateStorageAccountName()
-        {
-            return TestUtilities.GenerateName(prefix: "azsstorage");
-        }
-
         public static string GenerateName()
         {
             return TestUtilities.GenerateName();

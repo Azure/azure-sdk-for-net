@@ -78,14 +78,7 @@ namespace Azure.Security.KeyVault.Keys
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonWebKey"/> class with the given key operations.
-        /// </summary>
-        /// <param name="keyOps">
-        /// A list of supported <see cref="KeyOperation"/> values.
-        /// If null, no operations will be permitted and subsequent cryptography operations may fail.
-        /// </param>
-        public JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
         {
             _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);

@@ -466,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    PartitionReceiverOptions options) =>
-            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount, options.PrefetchSizeInBytes);
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
 
         /// <summary>
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.

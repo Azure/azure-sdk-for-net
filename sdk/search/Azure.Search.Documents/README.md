@@ -129,7 +129,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 ```
 
 You can paste that into a new console app,
-[install the Azure.Search.Documents package](#install-the-package), add a
+[install the Azure.Search.Documents package](#Install-the-package), add a
 `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
@@ -445,7 +445,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/
+[samples]: samples/
 [search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
