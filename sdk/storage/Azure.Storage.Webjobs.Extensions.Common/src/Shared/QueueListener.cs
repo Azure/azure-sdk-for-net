@@ -390,7 +390,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             QueueProcessor queueProcessor = null;
             if (HostQueueNames.IsHostQueue(queue.Name) &&
-                string.Compare(queue.Uri.Host, "localhost", StringComparison.OrdinalIgnoreCase) != 0)
+                string.Compare(queue.Uri.Host, "localhost", StringComparison.OrdinalIgnoreCase) != 0 &&
+                !queueProcessorFactory.GetType().Name.Contains("SharedBlobQueueProcessorFactory"))
             {
                 // We only delegate to the processor factory for application queues,
                 // not our built in control queues
