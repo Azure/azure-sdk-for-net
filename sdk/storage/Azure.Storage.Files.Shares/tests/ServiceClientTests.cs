@@ -265,7 +265,7 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
-            ShareSetPropertyOptions options = new ShareSetPropertyOptions
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
             {
                 AccessTier = ShareAccessTier.Hot
             };

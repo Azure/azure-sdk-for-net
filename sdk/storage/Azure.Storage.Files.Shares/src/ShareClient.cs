@@ -1645,7 +1645,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> SetProperties(
-            ShareSetPropertyOptions options,
+            ShareSetPropertiesOptions options,
             CancellationToken cancellationToken = default) =>
             SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
@@ -1679,7 +1679,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> SetPropertiesAsync(
-            ShareSetPropertyOptions options,
+            ShareSetPropertiesOptions options,
             CancellationToken cancellationToken = default) =>
             await SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,

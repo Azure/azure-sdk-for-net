@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     ///
     /// </summary>
-    public class ShareSetPropertyOptions
+    public class ShareSetPropertiesOptions
     {
         /// <summary>
         /// Optional, the maximum size to set on the share in GB.
