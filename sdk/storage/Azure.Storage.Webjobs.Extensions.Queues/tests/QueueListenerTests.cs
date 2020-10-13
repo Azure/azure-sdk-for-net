@@ -496,7 +496,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
                     Assert.AreSame(queue, mockProcessorContext.Queue);
                     Assert.AreSame(poisonQueue, mockProcessorContext.PoisonQueue);
-                    Assert.AreEqual(queueConfig.MaxDequeueCount, mockProcessorContext.MaxDequeueCount);
+                    Assert.AreEqual(queueConfig.MaxDequeueCount, mockProcessorContext.Options.MaxDequeueCount);
                     Assert.NotNull(mockProcessorContext.Logger);
 
                     processorFactoryContext = mockProcessorContext;

@@ -68,11 +68,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, options);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
-            Assert.AreEqual(options.BatchSize, localProcessor.BatchSize);
-            Assert.AreEqual(options.MaxDequeueCount, localProcessor.MaxDequeueCount);
-            Assert.AreEqual(options.NewBatchThreshold, localProcessor.NewBatchThreshold);
-            Assert.AreEqual(options.VisibilityTimeout, localProcessor.VisibilityTimeout);
-            Assert.AreEqual(options.MaxPollingInterval, localProcessor.MaxPollingInterval);
+            Assert.AreEqual(options.BatchSize, localProcessor.QueuesOptions.BatchSize);
+            Assert.AreEqual(options.MaxDequeueCount, localProcessor.QueuesOptions.MaxDequeueCount);
+            Assert.AreEqual(options.NewBatchThreshold, localProcessor.QueuesOptions.NewBatchThreshold);
+            Assert.AreEqual(options.VisibilityTimeout, localProcessor.QueuesOptions.VisibilityTimeout);
+            Assert.AreEqual(options.MaxPollingInterval, localProcessor.QueuesOptions.MaxPollingInterval);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await _queue.SendMessageAsync(messageContent);
 
             FunctionResult result = new FunctionResult(false);
-            for (int i = 0; i < context.MaxDequeueCount; i++)
+            for (int i = 0; i < context.Options.MaxDequeueCount; i++)
             {
                 message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 await localProcessor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             string messageContent = Guid.NewGuid().ToString();
             await _queue.SendMessageAsync(messageContent);
             QueueMessage messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            for (int i = 0; i < context.MaxDequeueCount; i++)
+            for (int i = 0; i < context.Options.MaxDequeueCount; i++)
             {
                 await _queue.UpdateMessageAsync(messageFromCloud.MessageId, messageFromCloud.PopReceipt, visibilityTimeout: TimeSpan.FromMilliseconds(0));
                 messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();

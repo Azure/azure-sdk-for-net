@@ -58,11 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     public partial class QueueProcessor
     {
         public QueueProcessor(Microsoft.Azure.WebJobs.Host.Queues.QueueProcessorFactoryContext context) { }
-        public int BatchSize { get { throw null; } protected set { } }
-        public int MaxDequeueCount { get { throw null; } protected set { } }
-        public System.TimeSpan MaxPollingInterval { get { throw null; } protected set { } }
-        public int NewBatchThreshold { get { throw null; } protected set { } }
-        public System.TimeSpan VisibilityTimeout { get { throw null; } protected set { } }
+        public Microsoft.Azure.WebJobs.Host.QueuesOptions QueuesOptions { get { throw null; } }
         public event System.EventHandler<Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs> MessageAddedToPoisonQueue { add { } remove { } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -75,14 +71,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     {
         public QueueProcessorFactoryContext(Azure.Storage.Queues.QueueClient queue, Microsoft.Extensions.Logging.ILoggerFactory loggerFactory, Azure.Storage.Queues.QueueClient poisonQueue = null) { }
         public QueueProcessorFactoryContext(Azure.Storage.Queues.QueueClient queue, Microsoft.Extensions.Logging.ILoggerFactory loggerFactory, Microsoft.Azure.WebJobs.Host.QueuesOptions options, Azure.Storage.Queues.QueueClient poisonQueue = null) { }
-        public int BatchSize { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILogger Logger { get { throw null; } }
-        public int MaxDequeueCount { get { throw null; } set { } }
-        public System.TimeSpan MaxPollingInterval { get { throw null; } set { } }
-        public int NewBatchThreshold { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.Host.QueuesOptions Options { get { throw null; } }
         public Azure.Storage.Queues.QueueClient PoisonQueue { get { throw null; } }
         public Azure.Storage.Queues.QueueClient Queue { get { throw null; } }
-        public System.TimeSpan VisibilityTimeout { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Hosting

@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = _sharedWatcher != null ? OnMessageAddedToPoisonQueue : (EventHandler<PoisonMessageEventArgs>)null;
             _queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, poisonMessageEventHandler);
 
-            TimeSpan maximumInterval = _queueProcessor.MaxPollingInterval;
+            TimeSpan maximumInterval = _queueProcessor.QueuesOptions.MaxPollingInterval;
             if (maxPollingInterval.HasValue && maximumInterval > maxPollingInterval.Value)
             {
                 // enforce the maximum polling interval if specified
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     {
                         sw = Stopwatch.StartNew();
 
-                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.QueuesOptions.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
                         batch = response.Value;
 
                         int count = batch?.Count() ?? -1;
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
         private async Task WaitForNewBatchThreshold()
         {
-            while (_processing.Count > _queueProcessor.NewBatchThreshold)
+            while (_processing.Count > _queueProcessor.QueuesOptions.NewBatchThreshold)
             {
                 Task processed = await Task.WhenAny(_processing).ConfigureAwait(false);
                 _processing.Remove(processed);

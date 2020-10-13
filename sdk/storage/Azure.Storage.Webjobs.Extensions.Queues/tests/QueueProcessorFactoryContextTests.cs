@@ -27,10 +27,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.AreSame(poisonQueue, context.PoisonQueue);
             Assert.NotNull(context.Logger);
 
-            Assert.AreEqual(queuesOptions.BatchSize, context.BatchSize);
-            Assert.AreEqual(queuesOptions.NewBatchThreshold, context.NewBatchThreshold);
-            Assert.AreEqual(queuesOptions.MaxDequeueCount, context.MaxDequeueCount);
-            Assert.AreEqual(queuesOptions.MaxPollingInterval, context.MaxPollingInterval);
+            Assert.AreEqual(queuesOptions.BatchSize, context.Options.BatchSize);
+            Assert.AreEqual(queuesOptions.NewBatchThreshold, context.Options.NewBatchThreshold);
+            Assert.AreEqual(queuesOptions.MaxDequeueCount, context.Options.MaxDequeueCount);
+            Assert.AreEqual(queuesOptions.MaxPollingInterval, context.Options.MaxPollingInterval);
         }
     }
 }

@@ -33,15 +33,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
         /// <param name="options">The queue configuration.</param>
         /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
-        // TODO (kasobol-msft) this was internal before check this.
+        // TODO (kasobol-msft) this was internal - hide after decoupling blobs.
         public QueueProcessorFactoryContext(QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions options, QueueClient poisonQueue = null)
             : this(queue, loggerFactory, poisonQueue)
         {
-            BatchSize = options.BatchSize;
-            MaxDequeueCount = options.MaxDequeueCount;
-            NewBatchThreshold = options.NewBatchThreshold;
-            VisibilityTimeout = options.VisibilityTimeout;
-            MaxPollingInterval = options.MaxPollingInterval;
+            Options = options;
         }
 
         /// <summary>
@@ -61,31 +57,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         public ILogger Logger { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of queue messages to retrieve and process in parallel (per job method).
+        /// TODO.
         /// </summary>
-        public int BatchSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of times to try processing a message before moving
-        /// it to the poison queue (if a poison queue is configured for the queue).
-        /// </summary>
-        public int MaxDequeueCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets the threshold at which a new batch of messages will be fetched.
-        /// </summary>
-        public int NewBatchThreshold { get; set; }
-
-        /// <summary>
-        /// Gets or sets the longest period of time to wait before checking for a message to arrive when a queue remains
-        /// empty.
-        /// </summary>
-        public TimeSpan MaxPollingInterval { get; set; }
-
-        /// <summary>
-        /// Gets or sets the message visibility that will be used for messages that
-        /// fail processing.
-        /// </summary>
-        public TimeSpan VisibilityTimeout { get; set; }
+        public QueuesOptions Options { get; private set; }
     }
 }
