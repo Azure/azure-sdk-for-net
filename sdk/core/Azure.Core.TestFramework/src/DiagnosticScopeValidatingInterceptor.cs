@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
                 var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
-                using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
+                using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
                 invocation.Proceed();
 
                 bool expectFailure = false;
