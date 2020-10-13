@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("aggregationType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     aggregationType = new AggregationType(property.Value.GetString());
                     continue;
                 }
@@ -62,6 +67,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

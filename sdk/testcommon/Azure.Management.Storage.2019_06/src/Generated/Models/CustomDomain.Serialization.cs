@@ -38,6 +38,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("useSubDomainName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     useSubDomainName = property.Value.GetBoolean();
                     continue;
                 }

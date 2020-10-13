@@ -38,6 +38,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("innerErrors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

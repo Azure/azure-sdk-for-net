@@ -99,6 +99,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("configuration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     configuration = Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(property.Value);
                     continue;
                 }

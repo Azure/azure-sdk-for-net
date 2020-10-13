@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("types"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SpatialType> array = new List<SpatialType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

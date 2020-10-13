@@ -30,6 +30,11 @@ namespace Azure.Management.Network.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = new NatGatewaySkuName(property.Value.GetString());
                     continue;
                 }

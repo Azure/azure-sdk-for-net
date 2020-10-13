@@ -29,16 +29,31 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("capabilitiesUpdateStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capabilitiesUpdateStatus = new CapabilitiesUpdateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("phoneNumberCapabilitiesUpdates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, NumberUpdateCapabilities> dictionary = new Dictionary<string, NumberUpdateCapabilities>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

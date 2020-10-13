@@ -72,6 +72,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("policyId"))
@@ -81,6 +86,11 @@ namespace Azure.Management.Storage.Models
                         }
                         if (property0.NameEquals("enabledTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enabledTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -96,6 +106,11 @@ namespace Azure.Management.Storage.Models
                         }
                         if (property0.NameEquals("rules"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ObjectReplicationPolicyRule> array = new List<ObjectReplicationPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

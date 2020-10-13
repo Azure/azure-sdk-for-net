@@ -22,6 +22,11 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new BlobRestoreProgressStatus(property.Value.GetString());
                     continue;
                 }
@@ -37,6 +42,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     parameters = BlobRestoreParameters.DeserializeBlobRestoreParameters(property.Value);
                     continue;
                 }

@@ -56,11 +56,21 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("bypass"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     bypass = new Bypass(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkRules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,6 +81,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("ipRules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IPRule> array = new List<IPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

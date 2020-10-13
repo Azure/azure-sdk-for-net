@@ -158,6 +158,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("fieldMappings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -168,6 +173,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("outputFieldMappings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

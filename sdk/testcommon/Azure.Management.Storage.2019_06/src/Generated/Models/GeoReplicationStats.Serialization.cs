@@ -22,16 +22,31 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new GeoReplicationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastSyncTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("canFailover"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     canFailover = property.Value.GetBoolean();
                     continue;
                 }

@@ -32,11 +32,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("changeValueAbsolute"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     changeValueAbsolute = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("changeValueRelative"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     changeValueRelative = property.Value.GetDouble();
                     continue;
                 }

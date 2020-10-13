@@ -22,11 +22,21 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("isSuccessful"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isSuccessful = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeviceRegistryOperationError> array = new List<DeviceRegistryOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -37,6 +47,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("warnings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeviceRegistryOperationWarning> array = new List<DeviceRegistryOperationWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

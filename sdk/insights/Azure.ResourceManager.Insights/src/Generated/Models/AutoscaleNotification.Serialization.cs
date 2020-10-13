@@ -50,11 +50,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("email"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     email = EmailNotification.DeserializeEmailNotification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("webhooks"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<WebhookNotification> array = new List<WebhookNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

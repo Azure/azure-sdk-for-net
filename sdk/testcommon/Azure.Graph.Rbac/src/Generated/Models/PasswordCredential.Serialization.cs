@@ -63,11 +63,21 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("startDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -83,6 +93,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("customKeyIdentifier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     customKeyIdentifier = property.Value.GetBytesFromBase64();
                     continue;
                 }

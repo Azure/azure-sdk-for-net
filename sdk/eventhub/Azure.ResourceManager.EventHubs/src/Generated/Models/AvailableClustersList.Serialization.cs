@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AvailableCluster> array = new List<AvailableCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

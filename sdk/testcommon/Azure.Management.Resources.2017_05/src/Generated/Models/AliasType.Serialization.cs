@@ -26,6 +26,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("paths"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AliasPathType> array = new List<AliasPathType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -52,11 +52,21 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("language"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     language = new Language(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lines"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TextLine> array = new List<TextLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -67,6 +77,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("selectionMarks"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SelectionMark> array = new List<SelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

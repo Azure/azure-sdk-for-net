@@ -19,6 +19,11 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);
                     continue;
                 }

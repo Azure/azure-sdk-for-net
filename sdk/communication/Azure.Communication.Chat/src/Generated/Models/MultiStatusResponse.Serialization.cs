@@ -20,6 +20,11 @@ namespace Azure.Communication.Chat
             {
                 if (property.NameEquals("multipleStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IndividualStatusResponse> array = new List<IndividualStatusResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

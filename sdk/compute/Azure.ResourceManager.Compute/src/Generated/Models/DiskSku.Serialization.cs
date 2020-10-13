@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = new DiskStorageAccountTypes(property.Value.GetString());
                     continue;
                 }

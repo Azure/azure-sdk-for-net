@@ -48,6 +48,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -63,6 +68,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("fillGapWithZero"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }

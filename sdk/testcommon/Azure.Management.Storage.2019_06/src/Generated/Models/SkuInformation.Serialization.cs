@@ -31,6 +31,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("tier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tier = property.Value.GetString().ToSkuTier();
                     continue;
                 }
@@ -41,11 +46,21 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("kind"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kind = new Kind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,6 +71,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SKUCapability> array = new List<SKUCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -66,6 +86,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("restrictions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Restriction> array = new List<Restriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

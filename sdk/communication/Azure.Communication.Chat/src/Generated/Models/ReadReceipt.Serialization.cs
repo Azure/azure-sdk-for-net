@@ -32,6 +32,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("readOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     readOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

@@ -73,6 +73,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("functions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -83,6 +88,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("functionAggregation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     functionAggregation = property.Value.GetString().ToScoringFunctionAggregation();
                     continue;
                 }

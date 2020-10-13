@@ -23,16 +23,31 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("networkInterfaceAssociation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnetAssociation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultSecurityRules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -43,6 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("effectiveSecurityRules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

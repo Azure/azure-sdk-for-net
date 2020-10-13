@@ -56,21 +56,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("rejectType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rejectType = new PolybaseSettingsRejectType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rejectValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rejectValue = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rejectSampleValue = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("useTypeDefault"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     useTypeDefault = property.Value.GetObject();
                     continue;
                 }

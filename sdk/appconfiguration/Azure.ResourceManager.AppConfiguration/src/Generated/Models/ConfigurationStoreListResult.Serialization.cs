@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ConfigurationStore> array = new List<ConfigurationStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

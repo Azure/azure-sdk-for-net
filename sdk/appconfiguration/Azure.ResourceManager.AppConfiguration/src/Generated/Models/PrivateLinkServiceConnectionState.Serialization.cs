@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new ConnectionStatus(property.Value.GetString());
                     continue;
                 }
@@ -47,6 +52,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("actionsRequired"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     actionsRequired = new ActionsRequired(property.Value.GetString());
                     continue;
                 }

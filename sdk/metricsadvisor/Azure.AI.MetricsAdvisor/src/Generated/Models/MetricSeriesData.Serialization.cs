@@ -23,11 +23,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("id"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     id = MetricSeriesDefinition.DeserializeMetricSeriesDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timestampList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -38,6 +48,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("valueList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

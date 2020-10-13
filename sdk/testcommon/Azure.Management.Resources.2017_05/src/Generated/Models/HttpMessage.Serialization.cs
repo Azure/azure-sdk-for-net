@@ -19,6 +19,11 @@ namespace Azure.Management.Resources.Models
             {
                 if (property.NameEquals("content"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     content = property.Value.GetObject();
                     continue;
                 }

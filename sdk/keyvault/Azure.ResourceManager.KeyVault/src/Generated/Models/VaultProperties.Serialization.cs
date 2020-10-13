@@ -102,6 +102,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("accessPolicies"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,41 +122,81 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("enabledForDeployment"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabledForDeployment = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enabledForDiskEncryption"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabledForDiskEncryption = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enabledForTemplateDeployment"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabledForTemplateDeployment = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableSoftDelete"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enableSoftDelete = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("createMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createMode = property.Value.GetString().ToCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enablePurgeProtection = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("networkAcls"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PrivateEndpointConnectionItem> array = new List<PrivateEndpointConnectionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

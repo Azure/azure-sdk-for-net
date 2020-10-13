@@ -150,11 +150,21 @@ namespace Azure.Search.Documents
             {
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -185,6 +195,11 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("minimumCoverage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimumCoverage = property.Value.GetDouble();
                     continue;
                 }
@@ -195,11 +210,21 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("queryType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     queryType = property.Value.GetString().ToSearchQueryType();
                     continue;
                 }
                 if (property.NameEquals("scoringStatistics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scoringStatistics = property.Value.GetString().ToScoringStatistics();
                     continue;
                 }
@@ -210,6 +235,11 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("scoringParameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -235,6 +265,11 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("searchMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     searchMode = property.Value.GetString().ToSearchMode();
                     continue;
                 }
@@ -245,11 +280,21 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("skip"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skip = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("top"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     top = property.Value.GetInt32();
                     continue;
                 }

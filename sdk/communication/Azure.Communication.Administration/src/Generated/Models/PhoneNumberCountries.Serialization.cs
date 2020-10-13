@@ -21,6 +21,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("countries"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PhoneNumberCountry> array = new List<PhoneNumberCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

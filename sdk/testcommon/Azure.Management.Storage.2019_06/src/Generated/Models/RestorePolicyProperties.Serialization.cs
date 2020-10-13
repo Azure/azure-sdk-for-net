@@ -40,11 +40,21 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("days"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     days = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("lastEnabledTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

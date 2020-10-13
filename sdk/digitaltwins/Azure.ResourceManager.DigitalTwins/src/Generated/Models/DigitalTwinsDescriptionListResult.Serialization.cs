@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DigitalTwinsDescription> array = new List<DigitalTwinsDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

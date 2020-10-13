@@ -61,11 +61,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("expand"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     expand = property.Value.GetBoolean();
                     continue;
                 }

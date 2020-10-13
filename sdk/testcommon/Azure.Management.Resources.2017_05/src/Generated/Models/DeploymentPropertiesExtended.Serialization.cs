@@ -42,16 +42,31 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     outputs = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("providers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Provider> array = new List<Provider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,6 +77,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("dependencies"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Dependency> array = new List<Dependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -72,31 +92,61 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("template"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     template = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("templateLink"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     templateLink = TemplateLink.DeserializeTemplateLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     parameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parametersLink"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     parametersLink = ParametersLink.DeserializeParametersLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     mode = property.Value.GetString().ToDeploymentMode();
                     continue;
                 }
                 if (property.NameEquals("debugSetting"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
                     continue;
                 }

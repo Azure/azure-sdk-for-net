@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("allocatableVMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

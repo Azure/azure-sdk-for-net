@@ -36,6 +36,11 @@ namespace Azure.Management.Network.Models
             {
                 if (property.NameEquals("statusCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statusCode = new ApplicationGatewayCustomErrorStatusCode(property.Value.GetString());
                     continue;
                 }

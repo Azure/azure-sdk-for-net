@@ -60,6 +60,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("lowercase"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lowercase = property.Value.GetBoolean();
                     continue;
                 }
@@ -75,6 +80,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("stopwords"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

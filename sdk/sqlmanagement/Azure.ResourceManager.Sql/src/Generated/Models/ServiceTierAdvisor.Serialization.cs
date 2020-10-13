@@ -66,45 +66,90 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("observationPeriodStart"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             observationPeriodStart = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("observationPeriodEnd"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             observationPeriodEnd = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("activeTimeRatio"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             activeTimeRatio = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("minDtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             minDtu = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("avgDtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             avgDtu = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("maxDtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxDtu = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("maxSizeInGB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxSizeInGB = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("serviceLevelObjectiveUsageMetrics"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SloUsageMetric> array = new List<SloUsageMetric>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -120,6 +165,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("currentServiceLevelObjectiveId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             currentServiceLevelObjectiveId = property0.Value.GetGuid();
                             continue;
                         }
@@ -130,6 +180,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("usageBasedRecommendationServiceLevelObjectiveId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             usageBasedRecommendationServiceLevelObjectiveId = property0.Value.GetGuid();
                             continue;
                         }
@@ -140,6 +195,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("databaseSizeBasedRecommendationServiceLevelObjectiveId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseSizeBasedRecommendationServiceLevelObjectiveId = property0.Value.GetGuid();
                             continue;
                         }
@@ -150,6 +210,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("disasterPlanBasedRecommendationServiceLevelObjectiveId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             disasterPlanBasedRecommendationServiceLevelObjectiveId = property0.Value.GetGuid();
                             continue;
                         }
@@ -160,11 +225,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("overallRecommendationServiceLevelObjectiveId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             overallRecommendationServiceLevelObjectiveId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("confidence"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             confidence = property0.Value.GetDouble();
                             continue;
                         }

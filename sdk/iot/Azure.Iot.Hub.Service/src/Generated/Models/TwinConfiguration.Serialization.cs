@@ -108,6 +108,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("labels"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -118,6 +123,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("content"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     content = ConfigurationContent.DeserializeConfigurationContent(property.Value);
                     continue;
                 }
@@ -128,26 +138,51 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("createdTimeUtc"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedTimeUtc"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("systemMetrics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemMetrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
