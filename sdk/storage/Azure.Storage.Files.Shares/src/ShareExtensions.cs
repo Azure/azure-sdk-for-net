@@ -38,5 +38,21 @@ namespace Azure.Storage.Files.Shares
 
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
+
+        internal static string ToShareEnableProtocolsString(this ShareEnabledProtocols? shareEnabledProtocols)
+        {
+            if (shareEnabledProtocols == null)
+            {
+                return null;
+            }
+
+            return shareEnabledProtocols switch
+                {
+                    ShareEnabledProtocols.Smb => Constants.File.SmbProtocol,
+                    ShareEnabledProtocols.Nfs => Constants.File.NfsProtocol,
+                    _ => throw new ArgumentException($"Unknown share protocol: {shareEnabledProtocols}"),
+                };
+        }
+
     }
 }

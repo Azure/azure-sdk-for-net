@@ -492,6 +492,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
+            /// <param name="enabledProtocols">Protocols to enable on the share.</param>
+            /// <param name="rootSquash">Root squash to set on the share.  Only valid for NFS shares.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -505,6 +507,8 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quotaInGB = default,
                 Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
+                string enabledProtocols = default,
+                Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default,
                 bool async = true,
                 string operationName = "ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -521,7 +525,9 @@ namespace Azure.Storage.Files.Shares
                         timeout,
                         metadata,
                         quotaInGB,
-                        accessTier))
+                        accessTier,
+                        enabledProtocols,
+                        rootSquash))
                     {
                         if (async)
                         {
@@ -560,6 +566,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
+            /// <param name="enabledProtocols">Protocols to enable on the share.</param>
+            /// <param name="rootSquash">Root squash to set on the share.  Only valid for NFS shares.</param>
             /// <returns>The Share.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -568,7 +576,9 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quotaInGB = default,
-                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default)
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
+                string enabledProtocols = default,
+                Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -600,6 +610,8 @@ namespace Azure.Storage.Files.Shares
                 }
                 if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (accessTier != null) { _request.Headers.SetValue("x-ms-access-tier", accessTier.ToString()); }
+                if (enabledProtocols != null) { _request.Headers.SetValue("x-ms-enabled-protocols", enabledProtocols); }
+                if (rootSquash != null) { _request.Headers.SetValue("x-ms-root-squash", rootSquash.Value.ToString()); }
 
                 return _message;
             }
@@ -840,6 +852,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-access-tier-transition-state", out _header))
                         {
                             _value.AccessTierTransitionState = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-enabled-protocols", out _header))
+                        {
+                            _value.EnabledProtocols = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-root-squash", out _header))
+                        {
+                            _value.RootSquash = (Azure.Storage.Files.Shares.Models.ShareRootSquash)System.Enum.Parse(typeof(Azure.Storage.Files.Shares.Models.ShareRootSquash), _header, false);
                         }
 
                         // Create the response
@@ -2367,6 +2387,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="rootSquash">Root squash to set on the share.  Only valid for NFS shares.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -2380,6 +2401,7 @@ namespace Azure.Storage.Files.Shares
                 int? quotaInGB = default,
                 Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
                 string leaseId = default,
+                Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default,
                 bool async = true,
                 string operationName = "ShareClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -2396,7 +2418,8 @@ namespace Azure.Storage.Files.Shares
                         timeout,
                         quotaInGB,
                         accessTier,
-                        leaseId))
+                        leaseId,
+                        rootSquash))
                     {
                         if (async)
                         {
@@ -2435,6 +2458,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="rootSquash">Root squash to set on the share.  Only valid for NFS shares.</param>
             /// <returns>The Share.SetPropertiesAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2443,7 +2467,8 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 int? quotaInGB = default,
                 Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
-                string leaseId = default)
+                string leaseId = default,
+                Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -2471,6 +2496,7 @@ namespace Azure.Storage.Files.Shares
                 if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (accessTier != null) { _request.Headers.SetValue("x-ms-access-tier", accessTier.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (rootSquash != null) { _request.Headers.SetValue("x-ms-root-squash", rootSquash.Value.ToString()); }
 
                 return _message;
             }
@@ -8460,7 +8486,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// include
         /// </summary>
-        Include
+        Include,
+
+        /// <summary>
+        /// include-leased
+        /// </summary>
+        IncludeLeased
     }
 }
 
@@ -8475,6 +8506,7 @@ namespace Azure.Storage.Files.Shares
                 return value switch
                 {
                     Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType.Include => "include",
+                    Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType.IncludeLeased => "include-leased",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType value.")
                 };
             }
@@ -8484,6 +8516,7 @@ namespace Azure.Storage.Files.Shares
                 return value switch
                 {
                     "include" => Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType.Include,
+                    "include-leased" => Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType.IncludeLeased,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType value.")
                 };
             }
@@ -11373,6 +11406,16 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareLeaseDuration? LeaseDuration { get; internal set; }
 
         /// <summary>
+        /// EnabledProtocols
+        /// </summary>
+        public string EnabledProtocols { get; internal set; }
+
+        /// <summary>
+        /// RootSquash
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareRootSquash? RootSquash { get; internal set; }
+
+        /// <summary>
         /// QuotaInGB
         /// </summary>
         public int? QuotaInGB { get; internal set; }
@@ -11482,6 +11525,16 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseDuration(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("EnabledProtocols", ""));
+            if (_child != null)
+            {
+                _value.EnabledProtocols = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RootSquash", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.RootSquash = (Azure.Storage.Files.Shares.Models.ShareRootSquash)System.Enum.Parse(typeof(Azure.Storage.Files.Shares.Models.ShareRootSquash), _child.Value, false);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
@@ -11512,7 +11565,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
         public static ShareProperties ShareProperties(
-            string accessTier = default,
+            System.DateTimeOffset? accessTierChangeTime = default,
             System.DateTimeOffset? lastModified = default,
             int? provisionedIops = default,
             int? provisionedIngressMBps = default,
@@ -11520,18 +11573,20 @@ namespace Azure.Storage.Files.Shares.Models
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
             System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
+            string accessTier = default,
             Azure.ETag? eTag = default,
-            System.DateTimeOffset? accessTierChangeTime = default,
             string accessTierTransitionState = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default,
+            string enabledProtocols = default,
+            Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new ShareProperties()
             {
-                AccessTier = accessTier,
+                AccessTierChangeTime = accessTierChangeTime,
                 LastModified = lastModified,
                 ProvisionedIops = provisionedIops,
                 ProvisionedIngressMBps = provisionedIngressMBps,
@@ -11539,12 +11594,14 @@ namespace Azure.Storage.Files.Shares.Models
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
                 DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
                 ETag = eTag,
-                AccessTierChangeTime = accessTierChangeTime,
                 AccessTierTransitionState = accessTierTransitionState,
                 LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
+                EnabledProtocols = enabledProtocols,
+                RootSquash = rootSquash,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,
             };
@@ -11704,6 +11761,32 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class ShareRetentionPolicy
+
+#region enum ShareRootSquash
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Root squash to set on the share.  Only valid for NFS shares.
+    /// </summary>
+    public enum ShareRootSquash
+    {
+        /// <summary>
+        /// NoRootSquash
+        /// </summary>
+        NoRootSquash,
+
+        /// <summary>
+        /// RootSquash
+        /// </summary>
+        RootSquash,
+
+        /// <summary>
+        /// AllSquash
+        /// </summary>
+        AllSquash
+    }
+}
+#endregion enum ShareRootSquash
 
 #region class ShareServiceProperties
 namespace Azure.Storage.Files.Shares.Models

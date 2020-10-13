@@ -229,6 +229,9 @@ namespace Azure.Storage
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
 
+            public const string SmbProtocol = "SMB";
+            public const string NfsProtocol = "NFS";
+
             internal static class Lease
             {
                 /// <summary>

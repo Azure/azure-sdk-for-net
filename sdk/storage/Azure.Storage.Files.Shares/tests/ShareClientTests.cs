@@ -314,6 +314,36 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task CreateAsync_EnableProtocolAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash,
+                QuotaInGB = 1
+            };
+
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                await share.GetPropertiesAsync();
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [Test]
         public async Task GetPermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();

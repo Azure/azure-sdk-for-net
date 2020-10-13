@@ -683,6 +683,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -729,6 +731,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -780,6 +784,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -831,6 +837,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
