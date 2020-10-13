@@ -1410,7 +1410,7 @@ namespace Azure.Storage.Files.Shares
                     // This is for backwards compatibility.  Perviously, ShareClient.Delete() took a bool includSnapshots parameter.s
                     else if ((includeSnapshots == null || includeSnapshots == true) && shareSnapshotsDeleteOption == null)
                     {
-                        shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeLeased;
+                        shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.Include;
                     }
 
                     return await FileRestClient.Share.DeleteAsync(
@@ -1419,7 +1419,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
-                        deleteSnapshots: shareSnapshotsDeleteOption,
+                        deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

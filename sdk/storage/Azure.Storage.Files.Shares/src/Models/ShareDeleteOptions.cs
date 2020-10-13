@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public ShareDeleteOptions()
         {
-            ShareSnapshotsDeleteOption = Models.ShareSnapshotsDeleteOption.IncludeLeased;
+            ShareSnapshotsDeleteOption = Models.ShareSnapshotsDeleteOption.Include;
         }
     }
 }

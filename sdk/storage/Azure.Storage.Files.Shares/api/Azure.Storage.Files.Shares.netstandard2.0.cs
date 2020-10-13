@@ -851,7 +851,7 @@ namespace Azure.Storage.Files.Shares.Models
     public enum ShareSnapshotsDeleteOption
     {
         Include = 0,
-        IncludeLeased = 1,
+        IncludeWithLeased = 1,
     }
     [System.FlagsAttribute]
     public enum ShareStates

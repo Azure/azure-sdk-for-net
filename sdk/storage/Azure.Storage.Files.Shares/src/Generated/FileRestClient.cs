@@ -884,7 +884,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 string sharesnapshot = default,
                 int? timeout = default,
-                Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption? deleteSnapshots = default,
+                Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal? deleteSnapshots = default,
                 string leaseId = default,
                 bool async = true,
                 string operationName = "ShareClient.Delete",
@@ -948,7 +948,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 string sharesnapshot = default,
                 int? timeout = default,
-                Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption? deleteSnapshots = default,
+                Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal? deleteSnapshots = default,
                 string leaseId = default)
             {
                 // Validation
@@ -12010,13 +12010,13 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class ShareSnapshotInfo
 
-#region enum ShareSnapshotsDeleteOption
+#region enum ShareSnapshotsDeleteOptionInternal
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// Specifies the option include to delete the base share and all of its snapshots.
     /// </summary>
-    public enum ShareSnapshotsDeleteOption
+    internal enum ShareSnapshotsDeleteOptionInternal
     {
         /// <summary>
         /// include
@@ -12036,29 +12036,29 @@ namespace Azure.Storage.Files.Shares
     {
         public static partial class Serialization
         {
-            public static string ToString(Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption value)
+            public static string ToString(Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal value)
             {
                 return value switch
                 {
-                    Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption.Include => "include",
-                    Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption.IncludeLeased => "include-leased",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption value.")
+                    Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal.Include => "include",
+                    Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal.IncludeLeased => "include-leased",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal value.")
                 };
             }
 
-            public static Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption ParseShareSnapshotsDeleteOption(string value)
+            public static Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal ParseShareSnapshotsDeleteOptionInternal(string value)
             {
                 return value switch
                 {
-                    "include" => Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption.Include,
-                    "include-leased" => Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption.IncludeLeased,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOption value.")
+                    "include" => Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal.Include,
+                    "include-leased" => Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal.IncludeLeased,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ShareSnapshotsDeleteOptionInternal value.")
                 };
             }
         }
     }
 }
-#endregion enum ShareSnapshotsDeleteOption
+#endregion enum ShareSnapshotsDeleteOptionInternal
 
 #region class ShareStatistics
 namespace Azure.Storage.Files.Shares.Models

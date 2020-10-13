@@ -1318,7 +1318,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             ShareDeleteOptions options = new ShareDeleteOptions()
             {
-                ShareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeLeased
+                ShareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeWithLeased
             };
             await share.DeleteAsync(options);
 
