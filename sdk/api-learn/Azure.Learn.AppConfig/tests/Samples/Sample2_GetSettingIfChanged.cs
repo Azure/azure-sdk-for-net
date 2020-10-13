@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -41,8 +42,24 @@ namespace Azure.Learn.AppConfig.Samples
 
         public async Task UpdateCacheAsync(ConfigurationClient client, Dictionary<string, ConfigurationSetting> cache)
         {
-            cache["FontColor"] = await client.GetConfigurationSettingAsync(cache["FontColor"], onlyIfChanged: true);
-            cache["GreetingText"] = await client.GetConfigurationSettingAsync(cache["GreetingText"], onlyIfChanged: true);
+            Response<ConfigurationSetting> response = await client.GetConfigurationSettingAsync(cache["FontColor"], onlyIfChanged: true);
+            if (response.GetRawResponse().Status == (int)HttpStatusCode.NotModified)
+            {
+                Console.WriteLine("ConfigurationSetting 'FontColor' has not changed since it was cached.");
+            }
+            else
+            {
+                cache["FontColor"] = response.Value;
+            }
+            response = await client.GetConfigurationSettingAsync(cache["GreetingText"], onlyIfChanged: true);
+            if (response.GetRawResponse().Status == (int)HttpStatusCode.NotModified)
+            {
+                Console.WriteLine("ConfigurationSetting 'GreetingText' has not changed since it was cached.");
+            }
+            else
+            {
+                cache["GreetingText"] = response.Value;
+            }
         }
 
         public void PrintGreeting(Dictionary<string, ConfigurationSetting> cache)

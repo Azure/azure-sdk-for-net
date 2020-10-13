@@ -109,7 +109,7 @@ namespace Azure.Learn.AppConfig
 
                 return result.GetRawResponse().Status switch
                 {
-                    304 => Response.FromValue(setting, result.GetRawResponse()),
+                    304 => new NoBodyResponse<ConfigurationSetting>(result.GetRawResponse()),
                     _ => Response.FromValue(result.Value, result.GetRawResponse())
                 };
             }
@@ -139,7 +139,7 @@ namespace Azure.Learn.AppConfig
 
                 return result.GetRawResponse().Status switch
                 {
-                    304 => Response.FromValue(setting, result.GetRawResponse()),
+                    304 => new NoBodyResponse<ConfigurationSetting>(result.GetRawResponse()),
                     _ => Response.FromValue(result.Value, result.GetRawResponse())
                 };
             }
