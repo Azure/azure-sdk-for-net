@@ -1169,32 +1169,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public async Task SetAccessTierAsync()
+        public async Task SetPropertiesAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                QuotaInGB = 5,
+                AccessTier = ShareAccessTier.Hot
+            };
+
             // Act
-            await share.SetAccessTierAsync(ShareAccessTier.Hot);
+            await share.SetPropertiesAsync(options);
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
             Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
+            Assert.AreEqual(5, response.Value.QuotaInGB);
             Assert.IsNotNull(response.Value.AccessTierChangeTime);
         }
 
         [Test]
-        public async Task SetAccessTierAsync_Error()
+        public async Task SetPropertiesAsync_Error()
         {
             // Arrange
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                QuotaInGB = 5,
+                AccessTier = ShareAccessTier.Hot
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.SetAccessTierAsync(ShareAccessTier.Hot),
+                share.SetPropertiesAsync(options),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
