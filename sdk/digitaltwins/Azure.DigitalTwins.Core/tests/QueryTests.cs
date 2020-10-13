@@ -68,5 +68,67 @@ namespace Azure.DigitalTwins.Core.Tests
                 }
             }
         }
+
+        [Test]
+        public async Task Query_PaginationWorks()
+        {
+            DigitalTwinsClient client = GetClient();
+            int pageSize = 5;
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // Create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // Create a room twin, with property "IsOccupied": true
+                string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+
+                for (int i = 0; i < pageSize + 1; i++)
+                {
+                    string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+                    await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                }
+
+                string queryString = "SELECT * FROM digitaltwins";
+
+                // act
+                var options = new QueryTwinsOptions();
+                options.MaxItemsPerPage = pageSize;
+                AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, options);
+
+                // assert
+                // Test that page size hint works, and that all returned pages either have the page size hint amount of
+                // elements, or have no continuation token (signaling that it is the last page)
+                int pageCount = 0;
+                await foreach (Page<string> page in asyncPageableResponse.AsPages())
+                {
+                    pageCount++;
+                    if (page.ContinuationToken != null)
+                    {
+                        page.Values.Count.Should().Be(pageSize, "Unexpected page size for a non-terminal page");
+                    }
+                }
+
+                pageCount.Should().BeGreaterThan(1, "Expected more than one page of query results");
+            }
+            finally
+            {
+                // clean up
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
     }
 }
