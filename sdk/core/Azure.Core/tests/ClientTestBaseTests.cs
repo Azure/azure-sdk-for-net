@@ -167,6 +167,8 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [AsyncOnly]
+        [NonParallelizable]
         public async Task TasksValidateOwnScopes()
         {
             TestDiagnostics = true;
