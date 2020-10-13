@@ -107,7 +107,7 @@ namespace Azure.Core.Tests
             List<IDisposable> subscriptions = _subscriptions;
             if (_sourceNameFilter(value.Name) && subscriptions != null)
             {
-                lock (subscriptions)
+                lock (Scopes)
                 {
                     subscriptions.Add(value.Subscribe(this));
                 }
