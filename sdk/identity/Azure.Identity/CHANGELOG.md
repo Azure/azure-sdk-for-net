@@ -8,6 +8,7 @@
   - Removed class `ClientSecretCredentialOptions` and `ClientSecretCredential` constructor overloads accepting this type
   - Removed class `UsernamePasswordCredentialOptions` and `UsernamePasswordCredential` constructor overloads accepting this type
   - Removed properties `EnablePersistentCache` and `AllowUnprotectedCache` from `ClientCertificateCredentialOptions`, `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
+  - Removed properties `AuthenticationRecord` and `DisableAutomaticAuthentication` from `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`, `InteractiveBrowserCredential` and `UsernamePasswordCredential`
 
