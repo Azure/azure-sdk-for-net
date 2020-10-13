@@ -16,4 +16,10 @@
     <TargetFramework>$(SdkTargetFx)</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
