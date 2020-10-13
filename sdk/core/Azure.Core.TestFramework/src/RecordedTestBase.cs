@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.Core.TestFramework
 {
@@ -78,7 +80,41 @@ namespace Azure.Core.TestFramework
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+
+            var path = TestContext.CurrentContext.TestDirectory;
+            var newpath = path.Substring(0, path.IndexOf("artifacts")) + "sdk";
+
+            // check if Track 1 or Track 2
+            int firstIndex = path.IndexOf("bin\\") + "bin\\".Length;
+            int lastIndex = path.LastIndexOf(".Tests");
+            var testname = path.Substring(firstIndex, lastIndex - firstIndex);
+            var rpname = "";
+            if (testname[0] == 'A') //Track 2
+            {
+                int rpnamefirstindex = testname.IndexOf("ResourceManager.") + "ResourceManager.".Length;
+                rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
+                rpname.Replace(".", "-");
+            }
+            else //Track 1
+            {
+                int rpnamefirstindex = testname.IndexOf("Management.") + "Management.".Length;
+                rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
+                rpname.Replace(".", "-");
+            }
+            var directories = Directory.GetDirectories(newpath);
+            for (int i = 0; i < directories.Length; i++)
+            {
+                int directoryIndex = directories[i].IndexOf("sdk\\") + "sdk\\".Length;
+                directories[i] = directories[i].Substring(directoryIndex, directories[i].Length - directoryIndex);
+            }
+            var rpexists = directories.Contains(rpname);
+            if (!rpexists)
+            {
+                throw new Exception();
+            }
+            newpath += "\\" + rpname + "\\";
+            newpath += testname + "\\tests\\";
+            return Path.Combine(newpath,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
