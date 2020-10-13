@@ -1,66 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/qnamaker/knowledgebases/8758c6af-fa29-4e03-a517-9c36927f558f/generateAnswer",
-      "EncodedRequestUri": "L3FuYW1ha2VyL2tub3dsZWRnZWJhc2VzLzg3NThjNmFmLWZhMjktNGUwMy1hNTE3LTljMzY5MjdmNTU4Zi9nZW5lcmF0ZUFuc3dlcg==",
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/0667a3c4-fd61-4f13-9ada-a7fc0e257112/generateAnswer",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzA2NjdhM2M0LWZkNjEtNGYxMy05YWRhLWE3ZmMwZTI1NzExMi9nZW5lcmF0ZUFuc3dlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"question\": \"good afternoon\"\r\n}",
+      "RequestBody": "{\r\n  \"question\": \"hi there\",\r\n  \"top\": 10,\r\n  \"isTest\": true,\r\n  \"context\": {\r\n    \"previousQnaId\": -1,\r\n    \"previousUserQuery\": \"\"\r\n  },\r\n  \"answerSpanRequest\": {\r\n    \"enable\": true,\r\n    \"scoreThreshold\": 10.0,\r\n    \"topAnswersWithSpan\": 3\r\n  }\r\n}",
       "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "7942ed8406a748309d63728b2b7f7378"
+        ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerRuntimeClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "36"
+          "251"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
         ],
-        "Pragma": [
-          "no-cache"
+        "x-envoy-upstream-service-time": [
+          "8444"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "apim-request-id": [
+          "2155a9a4-7084-4cb3-8c0d-c81d917c13a0"
         ],
-        "Server": [
-          "Kestrel"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:57fe7dc2-cca1-4cfc-98d1-5f1f2f34f969"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Strict-Transport-Security": [
-          "max-age=31536000"
-        ],
-        "Set-Cookie": [
-          "ARRAffinity=7adbf14d8e75f98367e830cf2e4b1f04857993258b74780366c7f67db243f6f5;Path=/;HttpOnly;Domain=paidtestbot.azurewebsites.net"
-        ],
         "Date": [
-          "Mon, 08 Jul 2019 11:40:27 GMT"
+          "Tue, 13 Oct 2020 13:33:23 GMT"
+        ],
+        "Content-Length": [
+          "2908"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"Good Afternoon !\"\r\n      ],\r\n      \"answer\": \"Good Afternoon! I hope you are doing well\",\r\n      \"score\": 100.0,\r\n      \"id\": 191,\r\n      \"source\": \"out.txt\",\r\n      \"metadata\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    }\r\n  ],\r\n  \"debugInfo\": null\r\n}",
+      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"answer\": \"hi. good morning\",\r\n      \"score\": 99.0,\r\n      \"id\": 1,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"forenoon\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"answerSpan\": {\r\n        \"text\": \"\",\r\n        \"score\": 99.6,\r\n        \"startIndex\": 0,\r\n        \"endIndex\": 0\r\n      }\r\n    },\r\n    {\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"answer\": \"hello. good evening. How's the day?\",\r\n      \"score\": 99.0,\r\n      \"id\": 4,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"evening\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"answerSpan\": {\r\n        \"text\": \"good evening.\",\r\n        \"score\": 58.25,\r\n        \"startIndex\": 7,\r\n        \"endIndex\": 20\r\n      }\r\n    },\r\n    {\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"answer\": \"hello. good morning. Had lunch?\",\r\n      \"score\": 99.0,\r\n      \"id\": 3,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"afternoon\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"answerSpan\": {\r\n        \"text\": \"good morning.\",\r\n        \"score\": 68.5,\r\n        \"startIndex\": 7,\r\n        \"endIndex\": 20\r\n      }\r\n    },\r\n    {\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"answer\": \"hello. good morning\",\r\n      \"score\": 99.0,\r\n      \"id\": 2,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"morning\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    },\r\n    {\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"answer\": \"hello. good night\",\r\n      \"score\": 99.0,\r\n      \"id\": 5,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"night\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    },\r\n    {\r\n      \"questions\": [\r\n        \"hi there, tell me about yourself\"\r\n      ],\r\n      \"answer\": \"Well, I am a **bot** who can answer your questions. I expected a 'how are you?'. But most of my users never ask how I am. You may try any other question. And, I am pretty sure, I wil not disappoint you. I seem to be talkative but there are algorithms which shut me up with their short answers built on MRC.\",\r\n      \"score\": 28.91,\r\n      \"id\": 6,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [\r\n        {\r\n          \"name\": \"timeoftheday\",\r\n          \"value\": \"morning\"\r\n        }\r\n      ],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    }\r\n  ],\r\n  \"activeLearningEnabled\": true\r\n}",
       "StatusCode": 200
     }
   ],
