@@ -73,20 +73,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
 
-        internal StorageManagementClient GetStorageManagementClient()
-        {
-            return CreateClient<StorageManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
-        }
-
-        internal NetworkManagementClient GetNetworkManagementClient()
-        {
-            return CreateClient<NetworkManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
-        }
-
         public async Task<string> GetLocation()
         {
             return await GetFirstUsableLocationAsync(ResourceProvidersOperations, "Microsoft.EventHub", "namespaces");
