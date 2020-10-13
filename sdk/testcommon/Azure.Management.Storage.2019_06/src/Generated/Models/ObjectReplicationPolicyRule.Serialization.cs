@@ -57,6 +57,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("filters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value);
                     continue;
                 }

@@ -1934,7 +1934,6 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task GetRangeListDiffAsync()
         {
             // Arrange
@@ -1979,7 +1978,6 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task GetRangeListDiffAsync_Error()
         {
             // Arrange

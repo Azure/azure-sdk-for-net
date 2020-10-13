@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("zones"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -190,6 +195,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -200,10 +210,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("applicationRuleCollections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFirewallApplicationRuleCollection> array = new List<AzureFirewallApplicationRuleCollection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -214,6 +234,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("natRuleCollections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFirewallNatRuleCollection> array = new List<AzureFirewallNatRuleCollection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -224,6 +249,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("networkRuleCollections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFirewallNetworkRuleCollection> array = new List<AzureFirewallNetworkRuleCollection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -234,6 +264,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipConfigurations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFirewallIPConfiguration> array = new List<AzureFirewallIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -244,36 +279,71 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("managementIpConfiguration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             managementIpConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("threatIntelMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             threatIntelMode = new AzureFirewallThreatIntelMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualHub"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             virtualHub = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             firewallPolicy = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hubIpAddresses"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             hubIpAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipGroups"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFirewallIpGroups> array = new List<AzureFirewallIpGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -284,11 +354,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("sku"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalProperties"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {

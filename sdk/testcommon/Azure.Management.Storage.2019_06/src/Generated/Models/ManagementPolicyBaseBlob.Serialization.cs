@@ -42,16 +42,31 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("tierToCool"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("delete"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }

@@ -31,6 +31,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("permissions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     permissions = property.Value.GetString().ToKeyPermission();
                     continue;
                 }

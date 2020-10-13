@@ -44,11 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("day"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     day = property.Value.GetString().ToDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("occurrence"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     occurrence = property.Value.GetInt32();
                     continue;
                 }

@@ -36,11 +36,21 @@ namespace Azure.Management.Compute.Models
             {
                 if (property.NameEquals("vCPUs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vCPUs = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memory"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     memory = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }

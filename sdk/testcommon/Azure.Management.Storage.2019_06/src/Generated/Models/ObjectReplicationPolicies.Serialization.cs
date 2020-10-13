@@ -20,6 +20,11 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ObjectReplicationPolicy> array = new List<ObjectReplicationPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

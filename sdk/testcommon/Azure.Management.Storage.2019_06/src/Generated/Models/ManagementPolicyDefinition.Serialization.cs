@@ -38,6 +38,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("filters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);
                     continue;
                 }

@@ -21,6 +21,11 @@ namespace Azure.Management.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeploymentExtended> array = new List<DeploymentExtended>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

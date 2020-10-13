@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NetworkInterfaceIPConfiguration> array = new List<NetworkInterfaceIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

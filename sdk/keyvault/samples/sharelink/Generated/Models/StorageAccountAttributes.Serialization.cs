@@ -35,26 +35,51 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 if (property.NameEquals("enabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("created"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     created = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("updated"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     updated = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("recoverableDays"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     recoverableDays = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("recoveryLevel"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     recoveryLevel = new DeletionRecoveryLevel(property.Value.GetString());
                     continue;
                 }
