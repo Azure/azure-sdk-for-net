@@ -40,7 +40,7 @@ namespace Azure.Management.EventHub.Tests
         {
             var location = GetLocation();
             var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations,location.Result, resourceGroup);
+            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location.Result, resourceGroup);
 
             // Prepare Storage Account
             var accountName = Recording.GenerateAssetName("sdktestaccount");
@@ -48,9 +48,10 @@ namespace Azure.Management.EventHub.Tests
                     new ResourceManager.Storage.Models.Sku("Standard_LRS"),
                     Kind.StorageV2,
                     "eastus2"
-                    ) {
-                        AccessTier = AccessTier.Hot
-                    };
+                    )
+            {
+                AccessTier = AccessTier.Hot
+            };
             await WaitForCompletionAsync(await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroup, accountName, storageAccountCreateParameters));
 
             // Create NameSpace
@@ -95,13 +96,13 @@ namespace Azure.Management.EventHub.Tests
             //Get the created EventHub
             var getEventHubResponse = await EventHubsOperations.GetAsync(resourceGroup, namespaceName, eventhubName);
             Assert.NotNull(getEventHubResponse.Value);
-            Assert.AreEqual(EntityStatus.Active,getEventHubResponse.Value.Status);
+            Assert.AreEqual(EntityStatus.Active, getEventHubResponse.Value.Status);
             Assert.AreEqual(getEventHubResponse.Value.Name, eventhubName);
             //Get all Event Hubs for a given NameSpace
             var getListEventHubResponse = EventHubsOperations.ListByNamespaceAsync(resourceGroup, namespaceName);
             var list = await getListEventHubResponse.ToEnumerableAsync();
             Assert.NotNull(getListEventHubResponse);
-            Assert.True(list.Count()>=1);
+            Assert.True(list.Count() >= 1);
             // Update the EventHub
             getEventHubResponse.Value.CaptureDescription.IntervalInSeconds = 130;
             getEventHubResponse.Value.CaptureDescription.SizeLimitInBytes = 10485900;

@@ -17,8 +17,8 @@ namespace CosmosDB.Tests.ScenarioTests
         const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db2048";
+        const string resourceGroupName = "yalin-rg-test001";
+        const string databaseAccountName = "testdb-001";
 
         const string tableName = "tableName2527";
         const string tableName2 = "tableName22527";

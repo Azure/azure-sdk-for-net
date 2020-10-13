@@ -33,18 +33,5 @@ namespace Azure.AI.MetricsAdvisor.Models
             LatestSuccessTimestamp = latestSuccessTimestamp;
             LatestActiveTimestamp = latestActiveTimestamp;
         }
-
-        /// <summary>
-        /// the timestamp of lastest success ingestion job.
-        /// 
-        /// null indicates not available.
-        /// </summary>
-        public DateTimeOffset? LatestSuccessTimestamp { get; }
-        /// <summary>
-        /// the timestamp of lastest ingestion job with status update.
-        /// 
-        /// null indicates not available.
-        /// </summary>
-        public DateTimeOffset? LatestActiveTimestamp { get; }
     }
 }

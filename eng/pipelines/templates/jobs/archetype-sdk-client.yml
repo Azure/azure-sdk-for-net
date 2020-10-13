@@ -33,7 +33,8 @@ jobs:
           versionSpec: '3.6'
       - script: >-
           dotnet pack eng/service.proj -warnaserror
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeTests=false
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
@@ -89,7 +90,7 @@ jobs:
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
+          arguments: -ServiceDirectory ${{parameters.ServiceDirectory}}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -138,7 +139,7 @@ jobs:
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:ServiceDirectory=${{parameters.ServiceToTest}} /p:IncludeSrc=false /p:IncludeSamples=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:

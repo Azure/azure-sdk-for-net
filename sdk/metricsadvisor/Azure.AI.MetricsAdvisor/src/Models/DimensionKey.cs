@@ -4,17 +4,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
+    /// Maps dimension column names of a <see cref="DataFeed"/> to values. If values are assigned
+    /// to all possible column names, this <see cref="DimensionKey"/> uniquely identifies a time
+    /// series within a metric. However, if only a subset of column names is assigned, this instance
+    /// uniquely identifies a group of time series instead.
     /// </summary>
     [CodeGenModel("DimensionGroupIdentity")]
     [CodeGenSuppress("DimensionKey", typeof(IDictionary<string, string>))]
     public partial class DimensionKey : IEquatable<DimensionKey>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DimensionKey"/> class.
         /// </summary>
         public DimensionKey()
         {
@@ -37,22 +43,58 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal IDictionary<string, string> Dimension { get; }
 
         /// <summary>
+        /// Determines if two <see cref="DimensionKey"/> values are the same.
         /// </summary>
+        /// <param name="left">The first value of comparison.</param>
+        /// <param name="right">The second value of comparison.</param>
+        /// <returns><c>true</c> if the <see cref="DimensionKey"/> instances represent the same dimension. Otherwise, <c>false</c>.</returns>
         public static bool operator ==(DimensionKey left, DimensionKey right) => left.Equals(right);
 
         /// <summary>
+        /// Determines if two <see cref="DimensionKey"/> values are not the same.
         /// </summary>
+        /// <param name="left">The first value of comparison.</param>
+        /// <param name="right">The second value of comparison.</param>
+        /// <returns><c>true</c> if the <see cref="DimensionKey"/> instances represent different dimensions. Otherwise, <c>false</c>.</returns>
         public static bool operator !=(DimensionKey left, DimensionKey right) => !left.Equals(right);
 
         /// <summary>
+        /// Adds a new dimension column value to this <see cref="DimensionKey"/>.
         /// </summary>
-        public void AddDimensionColumn(string dimensionColumnName, string dimensionColumnValue) =>
+        /// <param name="dimensionColumnName">The name of the dimension column.</param>
+        /// <param name="dimensionColumnValue">The value of the dimension column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionColumnName"/> or <paramref name="dimensionColumnValue"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionColumnName"/> or <paramref name="dimensionColumnValue"/> is empty; or the dimension column was already present in the <see cref="DimensionKey"/>.</exception>
+        public void AddDimensionColumn(string dimensionColumnName, string dimensionColumnValue)
+        {
+            Argument.AssertNotNullOrEmpty(dimensionColumnName, nameof(dimensionColumnName));
+            Argument.AssertNotNullOrEmpty(dimensionColumnValue, nameof(dimensionColumnValue));
+
             Dimension.Add(dimensionColumnName, dimensionColumnValue);
+        }
 
         /// <summary>
+        /// Removes a new dimension column from this <see cref="DimensionKey"/>.
         /// </summary>
-        public void RemoveDimensionColumn(string dimensionColumnName) =>
-            Dimension.Remove(dimensionColumnName);
+        /// <param name="dimensionColumnName">The name of the dimension column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionColumnName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionColumnName"/> is empty; or the dimension column was not present in the <see cref="DimensionKey"/>.</exception>
+        public void RemoveDimensionColumn(string dimensionColumnName)
+        {
+            Argument.AssertNotNullOrEmpty(dimensionColumnName, nameof(dimensionColumnName));
+
+            if (!Dimension.Remove(dimensionColumnName))
+            {
+                throw new ArgumentException($"Column {dimensionColumnName} was not present in this dimension key.", nameof(dimensionColumnName));
+            }
+        }
+
+        /// <summary>
+        /// Converts this <see cref="DimensionKey"/> instance into a <see cref="Dictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <returns>An equivalent <see cref="Dictionary{TKey, TValue}"/>.</returns>
+        public Dictionary<string, string> AsDictionary() =>
+            Dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         /// <inheritdoc />
         public bool Equals(DimensionKey other)
@@ -83,7 +125,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode() => Dimension.GetHashCode();
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
         internal DimensionKey Clone() => new DimensionKey(Dimension);

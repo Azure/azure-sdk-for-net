@@ -43,24 +43,6 @@ namespace Microsoft.Azure.WebJobs.Host
         public string Format() { throw null; }
     }
 }
-namespace Microsoft.Azure.WebJobs.Host.Protocols
-{
-    public partial class QueueParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.ParameterDescriptor
-    {
-        public QueueParameterDescriptor() { }
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public System.IO.FileAccess Access { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string QueueName { get { throw null; } set { } }
-    }
-    public partial class QueueTriggerParameterDescriptor : Microsoft.Azure.WebJobs.Host.Protocols.TriggerParameterDescriptor
-    {
-        public QueueTriggerParameterDescriptor() { }
-        public string AccountName { get { throw null; } set { } }
-        public string QueueName { get { throw null; } set { } }
-        public override string GetTriggerReason(System.Collections.Generic.IDictionary<string, string> arguments) { throw null; }
-    }
-}
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
     public partial interface IQueueProcessorFactory

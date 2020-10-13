@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class DataFeedMissingDataPointFillSettings
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedMissingDataPointFillSettings"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedMissingDataPointFillSettings"/> class.
         /// </summary>
         public DataFeedMissingDataPointFillSettings()
         {

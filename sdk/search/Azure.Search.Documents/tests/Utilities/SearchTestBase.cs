@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>
@@ -251,6 +251,36 @@ namespace Azure.Search.Documents.Tests
                 // Exponentially increase the delay to mitigate server throttling.
                 delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
             }
+        }
+
+        /// <summary>
+        /// Wait until the document count for a given search index has crosssed
+        /// a minimum value.  This only does simple linear retries for a fixed
+        /// number of attempts.
+        /// </summary>
+        /// <param name="searchClient">Client for the index.</param>
+        /// <param name="minimumCount">Minimum document count to verify indexing.</param>
+        /// <param name="attempts">Maximum number of attempts to retry.</param>
+        /// <param name="delay">Delay between attempts.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForDocumentCountAsync(
+            SearchClient searchClient,
+            int minimumCount,
+            int attempts = 3,
+            TimeSpan? delay = null)
+        {
+            delay ??= TimeSpan.FromSeconds(1);
+            int count = 0;
+            for (int i = 0; i < attempts; i++)
+            {
+                count = (int)await searchClient.GetDocumentCountAsync();
+                if (count >= minimumCount)
+                {
+                    return;
+                }
+                await DelayAsync(delay);
+            }
+            Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
         }
     }
 }

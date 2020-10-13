@@ -56,7 +56,21 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             return CreateClient<EventHubsManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new EventHubsManagementClientOptions()));
+                InstrumentClientOptions(new EventHubsManagementClientOptions()));
+        }
+
+        internal StorageManagementClient GetStorageManagementClient()
+        {
+            return CreateClient<StorageManagementClient>(this.SubscriptionId,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new StorageManagementClientOptions()));
+        }
+
+        internal NetworkManagementClient GetNetworkManagementClient()
+        {
+            return CreateClient<NetworkManagementClient>(this.SubscriptionId,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
 
         internal StorageManagementClient GetStorageManagementClient()

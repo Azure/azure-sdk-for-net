@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,6 +77,36 @@ namespace Azure.Search.Documents.Indexes
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(credential);
             _version = options.Version;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="serializer">An optional customized serializer to use for search documents.</param>
+        /// <param name="pipeline">The authenticated <see cref="HttpPipeline"/> used for sending requests to the Search Service.</param>
+        /// <param name="diagnostics">The <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used to provide tracing support for the client library.</param>
+        /// <param name="version">The REST API version of the Search Service to use when making requests.</param>
+        internal SearchIndexClient(
+            Uri endpoint,
+            ObjectSerializer serializer,
+            HttpPipeline pipeline,
+            ClientDiagnostics diagnostics,
+            SearchClientOptions.ServiceVersion version)
+        {
+            Debug.Assert(endpoint != null);
+            Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));
+            Debug.Assert(pipeline != null);
+            Debug.Assert(diagnostics != null);
+            Debug.Assert(
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
+                version <= SearchClientOptions.LatestVersion);
+
+            Endpoint = endpoint;
+            _serializer = serializer;
+            _clientDiagnostics = diagnostics;
+            _pipeline = pipeline;
+            _version = version;
         }
 
         /// <summary>

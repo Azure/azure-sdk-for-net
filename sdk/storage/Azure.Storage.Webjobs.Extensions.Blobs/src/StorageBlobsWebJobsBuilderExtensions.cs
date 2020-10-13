@@ -3,7 +3,9 @@
 
 using System;
 using Azure.Core;
+using Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
@@ -12,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -30,9 +33,7 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
-            // add webjobs to user agent for all storage calls
-            DiagnosticsOptions.DefaultApplicationId = "AzureWebJobs";
-
+            builder.Services.AddAzureClientsCore();
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO (kasobol-msft) figure out if this is needed in extension and if so if it's needed in both blobs and queues?
@@ -44,9 +45,8 @@ namespace Microsoft.Extensions.Hosting
             // $$$ Remove this, should be done via DI // TODO (kasobol-msft) check this
             builder.Services.TryAddSingleton<ISharedContextProvider, SharedContextProvider>();
 
-            builder.Services.TryAddSingleton<StorageAccountProvider>();
-            // TODO (kasobol-msft) find replacement, related to connection pool
-            // builder.Services.TryAddSingleton<IDelegatingHandlerProvider, DefaultDelegatingHandlerProvider>();
+            builder.Services.TryAddSingleton<BlobServiceClientProvider>();
+            builder.Services.TryAddSingleton<QueueServiceClientProvider>();
 
             builder.Services.TryAddSingleton<IContextSetter<IBlobWrittenWatcher>>((p) => new ContextAccessor<IBlobWrittenWatcher>());
             builder.Services.TryAddSingleton((p) => p.GetService<IContextSetter<IBlobWrittenWatcher>>() as IContextGetter<IBlobWrittenWatcher>);

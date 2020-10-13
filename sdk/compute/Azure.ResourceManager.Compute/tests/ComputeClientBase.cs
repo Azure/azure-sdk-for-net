@@ -134,19 +134,19 @@ namespace Azure.ResourceManager
         {
             return CreateClient<ComputeManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new ComputeManagementClientOptions()));
+                InstrumentClientOptions(new ComputeManagementClientOptions()));
         }
         internal NetworkManagementClient GetNetworkManagementClient()
         {
             return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
         internal StorageManagementClient GetStorageManagementClient()
         {
             return CreateClient<StorageManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
+                InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
         public void WaitSeconds(int seconds)

@@ -17,11 +17,8 @@ namespace Azure.DigitalTwins.Core
             writer.WriteStartObject();
             writer.WritePropertyName("endpointName");
             writer.WriteStringValue(EndpointName);
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter");
-                writer.WriteStringValue(Filter);
-            }
+            writer.WritePropertyName("filter");
+            writer.WriteStringValue(Filter);
             writer.WriteEndObject();
         }
 
@@ -29,7 +26,7 @@ namespace Azure.DigitalTwins.Core
         {
             Optional<string> id = default;
             string endpointName = default;
-            Optional<string> filter = default;
+            string filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -48,7 +45,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new EventRoute(id.Value, endpointName, filter.Value);
+            return new EventRoute(id.Value, endpointName, filter);
         }
     }
 }

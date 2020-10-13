@@ -6,15 +6,19 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
+    /// <summary>
+    /// Feedback indicating that the point was incorrectly labeled by the service.
+    /// You can specify whether a point should or shouldn't be an anomaly.
+    /// </summary>
     [CodeGenModel("AnomalyFeedback")]
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of AnomalyFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
         /// <param name="startTime"> The start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> The end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="value"> The value for the feedback. </param>
+        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="value"> The <see cref="Models.AnomalyValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyValue value) : base(metricId, dimensionFilter)
         {
@@ -30,12 +34,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Type = FeedbackType.Anomaly;
         }
 
-        /// <summary> Initializes a new instance of AnomalyFeedback. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="value"> . </param>
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
+        /// <param name="metricId"> The metric unique id. </param>
+        /// <param name="dimensionFilter"> The dimension filter. </param>
+        /// <param name="startTime"> The start timestamp of feedback timerange. </param>
+        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="value"> The <see cref="AnomalyFeedbackValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
         {
@@ -51,7 +55,22 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The anomaly value.
+        /// The start timestamp of feedback time range.
+        /// </summary>
+        public DateTimeOffset StartTime { get; set; }
+
+        /// <summary>
+        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
+        /// </summary>
+        public DateTimeOffset EndTime { get; set; }
+
+        /// <summary>
+        /// The corresponding anomaly detection configuration of this feedback.
+        /// </summary>
+        public string AnomalyDetectionConfigurationId { get; set; }
+
+        /// <summary>
+        /// The <see cref="Models.AnomalyValue"/> for the feedback.
         /// </summary>
         public AnomalyValue AnomalyValue { get => ValueInternal.AnomalyValue; }
 
@@ -61,6 +80,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The anomaly detection configuration snapshot.
         /// </summary>
-        public MetricAnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
+        public AnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
     }
 }

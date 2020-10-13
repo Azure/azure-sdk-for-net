@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> the value of fill missing point for anomaly detection. </summary>
         public double? FillMissingPointValue { get; set; }
         /// <summary> data feed access mode, default is Private. </summary>
-        public AccessMode? ViewMode { get; set; }
+        public DataFeedAccessMode? ViewMode { get; set; }
         /// <summary> the query user is one of data feed administrator or not. </summary>
         public bool? IsAdmin { get; }
         /// <summary> data feed creator. </summary>

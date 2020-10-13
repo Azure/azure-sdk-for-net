@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.ResourceManager.EventHubs.Models;
@@ -72,10 +71,10 @@ namespace Azure.Management.EventHub.Tests
                 DelayInTest(5);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
+            Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState, StringComparer.CurrentCultureIgnoreCase.ToString());
             Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location, StringComparer.CurrentCultureIgnoreCase.ToString());
 
-            var netWorkRuleSet =await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName,
+            var netWorkRuleSet = await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName,
                 new NetworkRuleSet()
                 {
                     DefaultAction = DefaultAction.Deny,
