@@ -18,13 +18,16 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EndpointSettings operations.
+    /// Operations operations.
     /// </summary>
-    public partial interface IEndpointSettings
+    public partial interface IOperations
     {
         /// <summary>
-        /// Gets endpoint settings for an endpoint.
+        /// Gets details of a specific long running operation.
         /// </summary>
+        /// <param name='operationId'>
+        /// Operation id.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -40,25 +43,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EndpointSettingsDTO>> GetSettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates endpoint settings for an endpoint.
-        /// </summary>
-        /// <param name='endpointSettingsPayload'>
-        /// Post body of the request.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> UpdateSettingsWithHttpMessagesAsync(EndpointSettingsDTO endpointSettingsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Operation,OperationsGetDetailsHeaders>> GetDetailsWithHttpMessagesAsync(string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

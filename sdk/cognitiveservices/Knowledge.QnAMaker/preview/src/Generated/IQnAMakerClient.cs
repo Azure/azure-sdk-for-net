@@ -35,7 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 
         /// <summary>
         /// Supported Cognitive Services endpoint (e.g., https://&lt;
-        /// qnamaker-resource-name&gt; .api.cognitiveservices.azure.com).
+        /// qnamaker-resource-name &gt;.api.cognitiveservices.azure.com).
         /// </summary>
         string Endpoint { get; set; }
 

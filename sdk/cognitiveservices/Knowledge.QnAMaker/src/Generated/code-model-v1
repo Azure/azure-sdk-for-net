@@ -94,7 +94,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "MetadataDTO",
      "originalLocations": [
@@ -530,7 +530,7 @@
                "4.0"
               ],
               "filename": [
-               "mem:///129?oai3.shaken.json"
+               "mem:///146?oai3.shaken.json"
               ],
               "name": "QnADTO",
               "originalLocations": [
@@ -553,7 +553,7 @@
               "4.0"
              ],
              "filename": [
-              "mem:///129?oai3.shaken.json"
+              "mem:///146?oai3.shaken.json"
              ],
              "name": "PromptDTO-qna",
              "originalLocations": [
@@ -619,7 +619,7 @@
            "4.0"
           ],
           "filename": [
-           "mem:///129?oai3.shaken.json"
+           "mem:///146?oai3.shaken.json"
           ],
           "name": "PromptDTO",
           "originalLocations": [
@@ -651,7 +651,7 @@
        "4.0"
       ],
       "filename": [
-       "mem:///129?oai3.shaken.json"
+       "mem:///146?oai3.shaken.json"
       ],
       "name": "ContextDTO",
       "originalLocations": [
@@ -674,7 +674,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QnADTO-context",
      "originalLocations": [
@@ -730,7 +730,7 @@
          "4.0"
         ],
         "filename": [
-         "mem:///129?oai3.shaken.json"
+         "mem:///146?oai3.shaken.json"
         ],
         "name": "ErrorCodeType",
         "originalLocations": [
@@ -1069,7 +1069,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "InnerErrorModel",
          "originalLocations": [
@@ -1095,7 +1095,7 @@
        "4.0"
       ],
       "filename": [
-       "mem:///129?oai3.shaken.json"
+       "mem:///146?oai3.shaken.json"
       ],
       "name": "Error",
       "originalLocations": [
@@ -1118,7 +1118,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "ErrorResponse-error",
      "originalLocations": [
@@ -1179,7 +1179,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "ErrorResponse",
      "originalLocations": [
@@ -1292,7 +1292,7 @@
        "4.0"
       ],
       "filename": [
-       "mem:///129?oai3.shaken.json"
+       "mem:///146?oai3.shaken.json"
       ],
       "name": "QueryContextDTO",
       "originalLocations": [
@@ -1315,7 +1315,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QueryDTO-context",
      "originalLocations": [
@@ -1459,7 +1459,7 @@
      "documentation": {
       "$id": "199",
       "fixed": false,
-      "raw": "Unique identifier for the user."
+      "raw": "Unique identifier for the user. Optional parameter for telemetry. For more information, refer <a href=\"http://aka.ms/qnamaker-analytics#user-traffic\" target=\"blank\">Analytics and Telemetry</a>."
      },
      "isRequired": false,
      "isConstant": false,
@@ -1682,7 +1682,7 @@
         "4.0"
        ],
        "filename": [
-        "mem:///129?oai3.shaken.json"
+        "mem:///146?oai3.shaken.json"
        ],
        "name": "StrictFiltersCompoundOperationType",
        "originalLocations": [
@@ -1754,7 +1754,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QueryDTO",
      "originalLocations": [
@@ -1787,7 +1787,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QnASearchResult-context",
      "originalLocations": [
@@ -2081,7 +2081,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QnASearchResult",
      "originalLocations": [
@@ -2148,7 +2148,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "QnASearchResultList",
      "originalLocations": [
@@ -2289,7 +2289,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "FeedbackRecordDTO",
      "originalLocations": [
@@ -2356,7 +2356,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "FeedbackRecordsDTO",
      "originalLocations": [
@@ -2406,7 +2406,7 @@
        "4.0"
       ],
       "filename": [
-       "mem:///129?oai3.shaken.json"
+       "mem:///146?oai3.shaken.json"
       ],
       "name": "RuntimeEndpoint",
       "originalLocations": [
@@ -2520,7 +2520,7 @@
       "4.0"
      ],
      "filename": [
-      "mem:///129?oai3.shaken.json"
+      "mem:///146?oai3.shaken.json"
      ],
      "name": "KbId",
      "originalLocations": [
@@ -2583,7 +2583,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "KbId",
          "originalLocations": [
@@ -2632,7 +2632,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "paths·kqllak·knowledgebases-kbid-generateanswer·post·requestbody",
          "originalLocations": [
@@ -2683,7 +2683,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "paths·1ag94u1·knowledgebases-kbid-generateanswer·post·responses·200",
          "originalLocations": [
@@ -2706,7 +2706,7 @@
          "4.0"
         ],
         "filename": [
-         "mem:///129?oai3.shaken.json"
+         "mem:///146?oai3.shaken.json"
         ],
         "name": "paths·2qg083·knowledgebases-kbid-generateanswer·post·responses·default",
         "originalLocations": [
@@ -2827,7 +2827,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "KbId",
          "originalLocations": [
@@ -2876,7 +2876,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "paths·1p0wnwz·knowledgebases-kbid-train·post·requestbody",
          "originalLocations": [
@@ -2924,7 +2924,7 @@
           "4.0"
          ],
          "filename": [
-          "mem:///129?oai3.shaken.json"
+          "mem:///146?oai3.shaken.json"
          ],
          "name": "paths·2l7fj6·knowledgebases-kbid-train·post·responses·204",
          "originalLocations": [
@@ -2947,7 +2947,7 @@
          "4.0"
         ],
         "filename": [
-         "mem:///129?oai3.shaken.json"
+         "mem:///146?oai3.shaken.json"
         ],
         "name": "paths·1v30x2q·knowledgebases-kbid-train·post·responses·default",
         "originalLocations": [

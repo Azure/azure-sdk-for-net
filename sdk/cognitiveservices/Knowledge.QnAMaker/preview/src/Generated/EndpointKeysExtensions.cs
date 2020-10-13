@@ -15,12 +15,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for EndpointSettings.
+    /// Extension methods for EndpointKeys.
     /// </summary>
-    public static partial class EndpointSettingsExtensions
+    public static partial class EndpointKeysExtensions
     {
             /// <summary>
-            /// Gets endpoint settings for an endpoint.
+            /// Gets endpoint keys for an endpoint
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -28,29 +28,32 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EndpointSettingsDTO> GetSettingsAsync(this IEndpointSettings operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EndpointKeysDTO> GetKeysAsync(this IEndpointKeys operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSettingsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetKeysWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates endpoint settings for an endpoint.
+            /// Re-generates an endpoint key.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointSettingsPayload'>
-            /// Post body of the request.
+            /// <param name='keyType'>
+            /// Type of Key
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSettingsAsync(this IEndpointSettings operations, EndpointSettingsDTO endpointSettingsPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EndpointKeysDTO> RefreshKeysAsync(this IEndpointKeys operations, string keyType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSettingsWithHttpMessagesAsync(endpointSettingsPayload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.RefreshKeysWithHttpMessagesAsync(keyType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

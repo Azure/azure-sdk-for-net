@@ -18,12 +18,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EndpointSettings operations.
+    /// EndpointKeys operations.
     /// </summary>
-    public partial interface IEndpointSettings
+    public partial interface IEndpointKeys
     {
         /// <summary>
-        /// Gets endpoint settings for an endpoint.
+        /// Gets endpoint keys for an endpoint
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -40,12 +40,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EndpointSettingsDTO>> GetSettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EndpointKeysDTO>> GetKeysWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates endpoint settings for an endpoint.
+        /// Re-generates an endpoint key.
         /// </summary>
-        /// <param name='endpointSettingsPayload'>
-        /// Post body of the request.
+        /// <param name='keyType'>
+        /// Type of Key
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,9 +56,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateSettingsWithHttpMessagesAsync(EndpointSettingsDTO endpointSettingsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EndpointKeysDTO>> RefreshKeysWithHttpMessagesAsync(string keyType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
