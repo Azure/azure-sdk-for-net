@@ -56,20 +56,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("restorePointType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             restorePointType = property0.Value.GetString().ToRestorePointType();
                             continue;
                         }
                         if (property0.NameEquals("earliestRestoreDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("restorePointCreationDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             restorePointCreationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }

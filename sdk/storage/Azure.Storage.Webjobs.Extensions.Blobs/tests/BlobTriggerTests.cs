@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Azure.Storage.Blobs;
@@ -12,7 +11,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
-using Azure.WebJobs.Extensions.Storage.Blobs;
 using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -113,7 +111,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerAsync<TResult>(b => b.UseStorageServices(blobServiceClient, queueServiceClient), programType, setTaskSource);
+            return await FunctionalTest.RunTriggerAsync<TResult>(b =>
+            {
+                b.AddAzureStorageBlobs();
+                b.UseStorageServices(blobServiceClient, queueServiceClient);
+            }, programType, setTaskSource);
         }
     }
 }

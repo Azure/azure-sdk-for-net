@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("toBeExportedForShoebox"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     toBeExportedForShoebox = property.Value.GetBoolean();
                     continue;
                 }

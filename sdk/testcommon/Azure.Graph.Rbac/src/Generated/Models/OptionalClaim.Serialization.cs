@@ -58,11 +58,21 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("essential"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     essential = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("additionalProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     additionalProperties = property.Value.GetObject();
                     continue;
                 }

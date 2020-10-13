@@ -24,16 +24,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unit = new PerformanceLevelUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedPerDatabaseMinPerformanceLevels"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ElasticPoolPerDatabaseMinPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -44,6 +59,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

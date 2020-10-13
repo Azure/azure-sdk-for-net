@@ -31,6 +31,11 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 if (property.NameEquals("innererror"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     innererror = DeserializeError(property.Value);
                     continue;
                 }
