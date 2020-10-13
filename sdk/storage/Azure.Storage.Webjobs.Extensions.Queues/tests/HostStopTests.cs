@@ -3,7 +3,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Azure.Storage.Queues;
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<CallbackCancellationTokenProgram>(c =>
                 {
-                    c.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    c.AddAzureStorageQueues();
                     c.Services.AddSingleton<QueueServiceClientProvider>(_ => new FakeQueueServiceClientProvider(queueServiceClient));
                 })
                 .Build();

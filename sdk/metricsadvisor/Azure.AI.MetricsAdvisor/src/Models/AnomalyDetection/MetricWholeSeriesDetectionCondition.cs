@@ -25,13 +25,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         [CodeGenMember("ConditionOperator")]
         public DetectionConditionsOperator? CrossConditionsOperator { get; set; }
 
-        // TODODOCS.
         /// <summary>
+        /// Configures anomaly detection using multiple machine learning algorithms.
         /// </summary>
         public SmartDetectionCondition SmartDetectionCondition { get; set; }
 
         /// <summary>
         /// Sets fixed upper and/or lower bounds to specify the range in which data points are expected to be.
+        /// Values outside of upper or lower bounds are anomalies.
         /// </summary>
         public HardThresholdCondition HardThresholdCondition { get; set; }
 

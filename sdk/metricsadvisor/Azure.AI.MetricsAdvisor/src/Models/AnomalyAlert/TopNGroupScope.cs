@@ -5,8 +5,10 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    // TODODOCS: this whole class needs clarification.
     /// <summary>
+    /// Alerts will only be triggered for anomalies in the top N series.
+    /// Use <see cref="Top"/> to specify the number of timestamps to take into account, and <see cref="MinimumTopCount"/>
+    /// to specify how many anomalies must be in them to send the alert.
     /// </summary>
     public partial class TopNGroupScope
     {
@@ -27,14 +29,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The number of timestamps to take into account.
         /// </summary>
         public int Top { get; }
 
         /// <summary>
+        /// The number of items a period contains.
         /// </summary>
         public int Period { get; }
 
         /// <summary>
+        /// The number of anomalies that must be in the specified <see cref="Top"/> number of timestamps to send an alert.
         /// </summary>
         [CodeGenMember("MinTopCount")]
         public int MinimumTopCount { get; }

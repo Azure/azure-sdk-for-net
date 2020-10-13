@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,6 @@
     using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.FileStaging;
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
-    using Microsoft.Rest;
     using TestResources;
     using IntegrationTestUtilities;
     using Microsoft.Rest.Azure;
@@ -64,7 +63,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestOMJobSpecAndRelease()
         {
-            Action test = () =>
+            void test()
             {
                 StagingStorageAccount stagingCreds = TestUtilities.GetStorageCredentialsFromEnvironment();
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
@@ -104,8 +103,10 @@
                             JobPreparationTask prep = new JobPreparationTask(JobPrepCommandLine);
                             unboundJobSchedule.JobSpecification.JobPreparationTask = prep;
 
-                            List<EnvironmentSetting> prepEnvSettings = new List<EnvironmentSetting>();
-                            prepEnvSettings.Add(JobPrepEnvSettingOM);
+                            List<EnvironmentSetting> prepEnvSettings = new List<EnvironmentSetting>
+                            {
+                                JobPrepEnvSettingOM
+                            };
                             prep.EnvironmentSettings = prepEnvSettings;
 
                             prep.Id = JobPrepId;
@@ -133,8 +134,10 @@
                             JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
                             unboundJobSchedule.JobSpecification.JobReleaseTask = relTask;
 
-                            List<EnvironmentSetting> relEnvSettings = new List<EnvironmentSetting>();
-                            relEnvSettings.Add(JobRelEnvSettingOM);
+                            List<EnvironmentSetting> relEnvSettings = new List<EnvironmentSetting>
+                            {
+                                JobRelEnvSettingOM
+                            };
                             relTask.EnvironmentSettings = relEnvSettings;
 
                             relTask.MaxWallClockTime = JobRelMaxWallClockTime;
@@ -157,9 +160,10 @@
 
                         // set JobCommonEnvSettings
                         {
-                            List<EnvironmentSetting> jobCommonES = new List<EnvironmentSetting>();
-
-                            jobCommonES.Add(JobCommonEnvSettingOM);
+                            List<EnvironmentSetting> jobCommonES = new List<EnvironmentSetting>
+                            {
+                                JobCommonEnvSettingOM
+                            };
 
                             unboundJobSchedule.JobSpecification.CommonEnvironmentSettings = jobCommonES;
                         }
@@ -235,7 +239,7 @@
                     TestUtilities.DeleteJobScheduleIfExistsAsync(client, jsId).Wait();
                 }
 
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -249,7 +253,7 @@
         public void TestOMJobPrepReleaseRunOnNaiveComputeNode()
         {
             string jobId = "TestOMJobPrepReleaseRunOnNaiveComputeNode-" + TestUtilities.GetMyName();
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 try
@@ -298,7 +302,7 @@
                     // cleanup
                     TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -310,7 +314,7 @@
         {
             string jobId = "TestOMJobPrepSchedulingError-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
 
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 try
@@ -381,7 +385,7 @@
                     // cleanup
                     client.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -392,7 +396,7 @@
         public void TestOMJobReleaseSchedulingError()
         {
             string jobId = "TestOMJobReleaseSchedulingError-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
-            Action test = () =>
+            void test()
             {
                 using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 try
@@ -502,7 +506,7 @@
                 {
                     client.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -817,8 +821,10 @@
             FileToStage wordsDotText = new FileToStage(Resources.LocalWordsDotText, stagingCreds);                // use "default" mapping to base name of local file
 
             // add in the files to stage
-            myTask.FilesToStage = new List<IFileStagingProvider>();
-            myTask.FilesToStage.Add(wordsDotText);
+            myTask.FilesToStage = new List<IFileStagingProvider>
+            {
+                wordsDotText
+            };
 
             // trigger file staging
             myTask.StageFiles();

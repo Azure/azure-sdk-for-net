@@ -39,14 +39,14 @@ Along with some log messages, this will output environment variables based on
 your current shell like in the following example:
 
 ```powershell
-$env:AZURE_TENANT_ID = '<<secret>>'
-$env:AZURE_CLIENT_ID = '<<secret>>'
-$env:AZURE_CLIENT_SECRET = '<<secret>>'
-$env:AZURE_SUBSCRIPTION_ID = 'YOUR SUBSCRIPTION ID'
-$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
-$env:AZURE_LOCATION = 'westus2'
-$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
-$env:AZURE_SEARCH_STORAGE_KEY = '<<secret>>'
+${env:AZURE_TENANT_ID} = '<<secret>>'
+${env:AZURE_CLIENT_ID} = '<<secret>>'
+${env:AZURE_CLIENT_SECRET} = '<<secret>>'
+${env:AZURE_SUBSCRIPTION_ID} = 'YOUR SUBSCRIPTION ID'
+${env:AZURE_RESOURCE_GROUP} = 'rg-myusername'
+${env:AZURE_LOCATION} = 'westus2'
+${env:AZURE_SEARCH_STORAGE_NAME} = 'myusernamestg'
+${env:AZURE_SEARCH_STORAGE_KEY} = '<<secret>>'
 ```
 
 For security reasons we do not set these environment variables automatically
@@ -62,14 +62,14 @@ applications started outside the terminal, you could copy and paste the
 following commands:
 
 ```powershell
-setx AZURE_TENANT_ID $env:AZURE_TENANT_ID
-setx AZURE_CLIENT_ID $env:AZURE_CLIENT_ID
-setx AZURE_CLIENT_SECRET $env:AZURE_CLIENT_SECRET
-setx AZURE_SUBSCRIPTION_ID $env:AZURE_SUBSCRIPTION_ID
-setx AZURE_RESOURCE_GROUP $env:AZURE_RESOURCE_GROUP
-setx AZURE_LOCATION $env:AZURE_LOCATION
-setx AZURE_SEARCH_STORAGE_NAME $env:AZURE_SEARCH_STORAGE_NAME
-setx AZURE_SEARCH_STORAGE_KEY $env:AZURE_SEARCH_STORAGE_KEY
+setx AZURE_TENANT_ID ${env:AZURE_TENANT_ID}
+setx AZURE_CLIENT_ID ${env:AZURE_CLIENT_ID}
+setx AZURE_CLIENT_SECRET ${env:AZURE_CLIENT_SECRET}
+setx AZURE_SUBSCRIPTION_ID ${env:AZURE_SUBSCRIPTION_ID}
+setx AZURE_RESOURCE_GROUP ${env:AZURE_RESOURCE_GROUP}
+setx AZURE_LOCATION ${env:AZURE_LOCATION}
+setx AZURE_SEARCH_STORAGE_NAME ${env:AZURE_SEARCH_STORAGE_NAME}
+setx AZURE_SEARCH_STORAGE_KEY ${env:AZURE_SEARCH_STORAGE_KEY}
 ```
 
 After running or recording live tests, if you do not plan on further testing

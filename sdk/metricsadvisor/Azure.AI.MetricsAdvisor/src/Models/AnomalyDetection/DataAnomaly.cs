@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             ModifiedTime = modifiedTime;
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
-            AnomalyStatus = property.AnomalyStatus;
+            Status = property.AnomalyStatus;
         }
 
         /// <summary>
@@ -55,13 +55,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public AnomalySeverity Severity { get; }
 
-        // TODO: how can the service tell when an anomaly has been resolved? What criteria is used?
         /// <summary>
         /// The status of the issue that caused this <see cref="DataAnomaly"/>. This property is only populated
         /// when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/> or
         /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync"/>.
         /// </summary>
-        public AnomalyStatus? AnomalyStatus { get; }
+        [CodeGenMember("AnomalyStatus")]
+        public AnomalyStatus? Status { get; }
 
         /// <summary>
         /// The timestamp, in UTC, of the data point that generated this anomaly, as described by the

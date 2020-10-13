@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    builder.AddAzureStorageBlobs();
                 })
                 .Build();
 
@@ -73,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs().AddAzureStorageQueues();
+                    builder.AddAzureStorageBlobs();
                 })
                 .Build();
 

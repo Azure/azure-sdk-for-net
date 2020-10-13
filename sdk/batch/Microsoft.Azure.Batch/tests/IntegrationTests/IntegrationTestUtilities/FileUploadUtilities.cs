@@ -4,7 +4,6 @@
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Microsoft.Azure.Batch;
 using Microsoft.Azure.Batch.FileStaging;
@@ -294,8 +293,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             };
 
             sasBuilder.SetPermissions(permissions);
-            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri);
-            builder.Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials);
+            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri) { Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials) };
             string fullSas = builder.ToString();
             return fullSas;
         }

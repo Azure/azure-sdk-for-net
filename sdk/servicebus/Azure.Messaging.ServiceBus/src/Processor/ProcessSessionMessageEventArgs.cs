@@ -62,13 +62,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
-        public virtual async Task<byte[]> GetSessionStateAsync(
+        public virtual async Task<BinaryData> GetSessionStateAsync(
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.GetSessionStateAsync(cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc cref="ServiceBusSessionReceiver.SetSessionStateAsync(byte[], CancellationToken)"/>
+        /// <inheritdoc cref="ServiceBusSessionReceiver.SetSessionStateAsync(BinaryData, CancellationToken)"/>
         public virtual async Task SetSessionStateAsync(
-            byte[] sessionState,
+            BinaryData sessionState,
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 

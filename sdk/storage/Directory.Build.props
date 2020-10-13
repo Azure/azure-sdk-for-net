@@ -6,10 +6,6 @@
     <IsWebjobsProject>true</IsWebjobsProject>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>
-  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs.Host.TestCommon'))">
-    <IsTestProject>false</IsTestProject>
-    <IsTestSupportProject>true</IsTestSupportProject>
-  </PropertyGroup>
   
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   
@@ -84,5 +80,6 @@
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
     <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
     <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
+    <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>
   </PropertyGroup>
 </Project>
