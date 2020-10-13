@@ -115,8 +115,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 _sharedWatcher = sharedWatcher;
             }
 
-            EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = _sharedWatcher != null ? OnMessageAddedToPoisonQueue : (EventHandler<PoisonMessageEventArgs>)null;
-            _queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, poisonMessageEventHandler);
+            _queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, _sharedWatcher);
 
             TimeSpan maximumInterval = _queueProcessor.QueuesOptions.MaxPollingInterval;
             if (maxPollingInterval.HasValue && maximumInterval > maxPollingInterval.Value)
@@ -356,13 +355,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        private void OnMessageAddedToPoisonQueue(object sender, PoisonMessageEventArgs e)
-        {
-            // TODO: this is assuming that the poison queue is in the same
-            // storage account
-            _sharedWatcher.Notify(e.PoisonQueue.Name);
-        }
-
         private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(QueueClient queue,
             QueueMessage message, TimeSpan visibilityTimeout,
             IWebJobsExceptionHandler exceptionHandler)
@@ -384,7 +376,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         }
 
         internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
-            QueuesOptions queuesOptions, EventHandler<PoisonMessageEventArgs> poisonQueueMessageAddedHandler)
+            QueuesOptions queuesOptions, IMessageEnqueuedWatcher sharedWatcher)
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
 
@@ -403,9 +395,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 queueProcessor = queueProcessorFactory.Create(context);
             }
 
-            if (poisonQueueMessageAddedHandler != null)
+            if (sharedWatcher != null)
             {
-                queueProcessor.MessageAddedToPoisonQueue += poisonQueueMessageAddedHandler;
+                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
+                {
+                    sharedWatcher.Notify(e.PoisonQueue.Name);
+                };
+                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
             }
 
             return queueProcessor;

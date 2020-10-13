@@ -469,9 +469,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Test]
         public void CreateQueueProcessor_CreatesProcessorCorrectly()
         {
-            QueueClient poisonQueue = null;
+            QueueClient poisonQueue = Mock.Of<QueueClient>();
             bool poisonMessageHandlerInvoked = false;
-            EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (sender, e) => { poisonMessageHandlerInvoked = true; };
+            Mock<IMessageEnqueuedWatcher> watcherMock = new Mock<IMessageEnqueuedWatcher>();
+            watcherMock.Setup(x => x.Notify(It.IsAny<string>())).Callback(() => poisonMessageHandlerInvoked = true);
             Mock<IQueueProcessorFactory> mockQueueProcessorFactory = new Mock<IQueueProcessorFactory>(MockBehavior.Strict);
             QueuesOptions queueConfig = new QueuesOptions
             {
@@ -482,7 +483,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             // create for a host queue - don't expect custom factory to be invoked
             QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
-            QueueProcessor queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
+            QueueProcessor queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object);
             Assert.False(processorFactoryInvoked);
             Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
@@ -511,7 +512,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
             queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
-            queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
+            queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object);
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
