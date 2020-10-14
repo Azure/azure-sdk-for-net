@@ -59,6 +59,11 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyOperation Import { get; } = new KeyOperation("import");
 
         /// <summary>
+        /// Gets a value that indicates the key can be exported using the <see cref="KeyClient.ExportKeyAsync(string, string, string, System.Threading.CancellationToken)"/> or <see cref="KeyClient.ExportKey(string, string, string, System.Threading.CancellationToken)"/> methods.
+        /// </summary>
+        public static KeyOperation Export { get; } = new KeyOperation("export");
+
+        /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="KeyOperation"/> to compare.</param>

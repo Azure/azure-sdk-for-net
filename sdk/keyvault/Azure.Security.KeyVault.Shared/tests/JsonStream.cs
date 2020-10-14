@@ -29,6 +29,8 @@ namespace Azure.Security.KeyVault.Tests
 
         public void Dispose() => _buffer.Dispose();
 
+        public void Reset() => _buffer.Seek(0, SeekOrigin.Begin);
+
         public override string ToString() => Encoding.UTF8.GetString(_buffer.GetBuffer(), 0, (int)_buffer.Length);
 
         public void WriteObject(IJsonSerializable @object, JsonWriterOptions options = default)
