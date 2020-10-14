@@ -13,8 +13,7 @@ namespace AzureEventSourceListenerEventHubsLogging
 
     public static class Program
     {
-        //private const string connectionString = "Endpoint=sb://github-azure-11763.servicebus.windows.net/;SharedAccessKeyName=consoleapp;SharedAccessKey=f4A5gwyS83Uop/Ib57+iHxOEH9i30wQYotkaMPR14iw=;EntityPath=eventhub11763";
-        //private const string eventHubName = "eventhub11763";
+        
         public static async Task<int> Main(string[] args)
         {
             var connectionString = default(string);
