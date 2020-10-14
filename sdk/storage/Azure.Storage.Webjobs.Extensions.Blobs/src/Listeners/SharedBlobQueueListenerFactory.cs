@@ -68,8 +68,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
             var queueProcessorFactory = new SharedBlobQueueProcessorFactory(triggerExecutor, _hostBlobTriggerQueue, _loggerFactory, _queueOptions, defaultPoisonQueue);
+            var queueProcessor = QueueListener.CreateQueueProcessor(_hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, queueProcessorFactory, _queueOptions, _sharedQueueWatcher);
             IListener listener = new QueueListener(_hostBlobTriggerQueue, defaultPoisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _sharedQueueWatcher, _queueOptions, queueProcessorFactory, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
+                _sharedQueueWatcher, _queueOptions, queueProcessor, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
 
             return new SharedBlobQueueListener(listener, triggerExecutor);
         }

@@ -62,7 +62,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
-            Mock<IQueueProcessorFactory> mockQueueProcessorFactory = new Mock<IQueueProcessorFactory>(MockBehavior.Strict);
             QueuesOptions queuesOptions = new QueuesOptions();
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_mockQueue.Object, _loggerFactory, queuesOptions);
 
@@ -72,9 +71,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 MaxDequeueCount = 5
             };
 
-            mockQueueProcessorFactory.Setup(p => p.Create(It.IsAny<QueueProcessorFactoryContext>())).Returns(_mockQueueProcessor.Object);
-
-            _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, mockExceptionDispatcher.Object, _loggerFactory, null, queueConfig, mockQueueProcessorFactory.Object, new FunctionDescriptor { Id = "TestFunction" });
+            _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, mockExceptionDispatcher.Object, _loggerFactory, null, queueConfig, _mockQueueProcessor.Object, new FunctionDescriptor { Id = "TestFunction" });
             _queueMessage = QueuesModelFactory.QueueMessage("TestId", "TestPopReceipt", "TestMessage", 0);
         }
 
@@ -92,8 +89,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             var queuesOptions = new QueuesOptions();
             Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
+            var queueProcessor = QueueListener.CreateQueueProcessor(Fixture.Queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             QueueListener listener = new QueueListener(Fixture.Queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, queuesOptions, queueProcessorFactory, new FunctionDescriptor { Id = "TestFunction" });
+                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
 
             var metrics = await listener.GetMetricsAsync();
 
@@ -398,9 +396,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await queue.SendMessageAsync(messageContent);
             QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
+            var queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, NullLoggerFactory.Instance, queueProcessorFactory, queuesOptions, null);
 
             QueueListener listener = new QueueListener(queue, poisonQueue, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                NullLoggerFactory.Instance, null, queuesOptions, queueProcessorFactory, new FunctionDescriptor { Id = "TestFunction" });
+                NullLoggerFactory.Instance, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
 
             mockTriggerExecutor
                 .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None))
@@ -437,8 +436,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await queue.SendMessageAsync(messageContent);
             QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
 
+            var queuesOptions = new QueuesOptions();
+            var queueProcessorFactory = new DefaultQueueProcessorFactory();
+            var queueProcessor = QueueListener.CreateQueueProcessor(queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             QueueListener listener = new QueueListener(queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, new QueuesOptions(), new DefaultQueueProcessorFactory(), new FunctionDescriptor { Id = "TestFunction" });
+                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
 
             listener.MinimumVisibilityRenewalInterval = TimeSpan.FromSeconds(1);
 

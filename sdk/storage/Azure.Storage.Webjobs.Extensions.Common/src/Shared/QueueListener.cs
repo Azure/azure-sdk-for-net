@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             ILoggerFactory loggerFactory,
             SharedQueueWatcher sharedWatcher,
             QueuesOptions queueOptions,
-            IQueueProcessorFactory queueProcessorFactory,
+            QueueProcessor queueProcessor,
             FunctionDescriptor functionDescriptor,
             string functionId = null,
             TimeSpan? maxPollingInterval = null)
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 throw new ArgumentNullException(nameof(queueOptions));
             }
 
-            if (queueProcessorFactory == null)
+            if (queueProcessor == null)
             {
-                throw new ArgumentNullException(nameof(queueProcessorFactory));
+                throw new ArgumentNullException(nameof(queueProcessor));
             }
 
             if (loggerFactory == null)
@@ -115,7 +115,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 _sharedWatcher = sharedWatcher;
             }
 
-            _queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, _sharedWatcher);
+            // TODO (kasobol-msft) remove this
+            //_queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, _sharedWatcher);
+            _queueProcessor = queueProcessor;
 
             TimeSpan maximumInterval = _queueProcessor.QueuesOptions.MaxPollingInterval;
             if (maxPollingInterval.HasValue && maximumInterval > maxPollingInterval.Value)

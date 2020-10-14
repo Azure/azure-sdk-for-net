@@ -112,14 +112,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 _callback = callback
             };
 
-            IListener listener = new QueueListener(Convert(queue),
-                poisonQueue: Convert(poisonQueue),
+            var queueClient = Convert(queue);
+            var poisonQueueClient = Convert(poisonQueue);
+            var queueProcessor = QueueListener.CreateQueueProcessor(queueClient, poisonQueueClient, _loggerFactory, _queueProcessorFactory, _queueOptions, _sharedWatcher);
+            IListener listener = new QueueListener(queueClient,
+                poisonQueue: poisonQueueClient,
                 triggerExecutor: wrapper,
                 exceptionHandler: _exceptionHandler,
                 loggerFactory: _loggerFactory,
                 sharedWatcher: _sharedWatcher,
                 queueOptions: _queueOptions,
-                queueProcessorFactory: _queueProcessorFactory,
+                queueProcessor: queueProcessor,
                 functionDescriptor: new FunctionDescriptor { Id = SharedLoadBalancerQueueListenerFunctionId },
                 maxPollingInterval: maxPollingInterval);
 
