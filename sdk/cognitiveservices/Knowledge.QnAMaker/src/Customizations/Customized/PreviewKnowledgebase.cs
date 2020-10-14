@@ -17,6 +17,8 @@
     /// </summary>
     public partial class Knowledgebase : IServiceOperations<QnAMakerClient>, IKnowledgebase
     {
+        Task<HttpOperationResponse<QnASearchResultList>> GenerateAnswerWithHttpMessagesAsync() => GenerateAnswerWithHttpMessagesAsync(default, default, default, default);
+
         /// <summary>
         /// GenerateAnswer call to query knowledgebase (QnA Maker Managed).
         /// </summary>
@@ -183,6 +185,8 @@
             }
             return _result;
         }
+
+        Task<HttpOperationResponse> TrainWithHttpMessagesAsync() => TrainWithHttpMessagesAsync(default, default, default, default);
 
         /// <summary>
         /// Train call to add suggestions to knowledgebase (QnAMaker Managed).
