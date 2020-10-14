@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("fields");
             writer.WriteStartArray();
-            foreach (var item in Fields)
+            foreach (var item in _fields)
             {
                 writer.WriteObjectValue(item);
             }
