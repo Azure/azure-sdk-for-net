@@ -13,10 +13,10 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareDeleteOptions
     {
         /// <summary>
-        /// A value indicating whether to delete a share's snapshots in addition
+        /// A value indicating whether to delete a share's snapshots or leased snapshots in addition
         /// to the share itself.
         /// </summary>
-        public bool IncludeSnapshots { get; set; }
+        public ShareSnapshotsDeleteOption? ShareSnapshotsDeleteOption { get; set; }
 
         /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public ShareDeleteOptions()
         {
-            IncludeSnapshots = true;
+            ShareSnapshotsDeleteOption = Models.ShareSnapshotsDeleteOption.Include;
         }
     }
 }

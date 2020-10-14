@@ -855,6 +855,88 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareName">
         /// The name of the share to delete.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DeleteShare(
+            string shareName,
+            ShareDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetShareClient(shareName).DeleteInternal(
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
+                conditions: options?.Conditions,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteShareAsync(
+            string shareName,
+            ShareDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetShareClient(shareName)
+                .DeleteInternal(
+                    includeSnapshots: default,
+                    shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
+                    conditions: options?.Conditions,
+                    async: true,
+                    cancellationToken,
+                    operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// Currently, this method will always delete snapshots.
+        /// There's no way to specify a separate value for x-ms-delete-snapshots.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to delete.
+        /// </param>
         /// <param name="includeSnapshots">
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
@@ -870,12 +952,14 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteShare(
             string shareName,
             bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             GetShareClient(shareName).DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: false,
                 cancellationToken,
@@ -910,6 +994,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             bool includeSnapshots = true,
@@ -917,6 +1002,7 @@ namespace Azure.Storage.Files.Shares
             await GetShareClient(shareName)
                 .DeleteInternal(
                     includeSnapshots,
+                    shareSnapshotsDeleteOption: default,
                     conditions: default,
                     async: true,
                     cancellationToken,

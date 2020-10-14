@@ -38,5 +38,19 @@ namespace Azure.Storage.Files.Shares
 
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
+
+        internal static ShareSnapshotsDeleteOptionInternal? ToShareSnapshotsDeleteOptionInternal(this ShareSnapshotsDeleteOption? option)
+        {
+            if (option == null)
+            {
+                return null;
+            }
+            return option switch
+            {
+                ShareSnapshotsDeleteOption.Include => ShareSnapshotsDeleteOptionInternal.Include,
+                ShareSnapshotsDeleteOption.IncludeWithLeased => ShareSnapshotsDeleteOptionInternal.IncludeLeased,
+                _ => throw new ArgumentException($"Invalid {nameof(ShareSnapshotsDeleteOption)}: {option}"),
+            };
+        }
     }
 }
