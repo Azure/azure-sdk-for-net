@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         private readonly List<Task> _processing = new List<Task>();
         private readonly object _stopWaitingTaskSourceLock = new object();
         private readonly QueuesOptions _queueOptions;
-        private readonly QueueProcessor _queueProcessor;
+        private readonly IQueueProcessor _queueProcessor;
         private readonly TimeSpan _visibilityTimeout;
         private readonly ILogger<QueueListener> _logger;
         private readonly FunctionDescriptor _functionDescriptor;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             ILoggerFactory loggerFactory,
             SharedQueueWatcher sharedWatcher,
             QueuesOptions queueOptions,
-            QueueProcessor queueProcessor,
+            IQueueProcessor queueProcessor,
             FunctionDescriptor functionDescriptor,
             string functionId = null,
             TimeSpan? maxPollingInterval = null)
@@ -397,6 +397,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 queueProcessor = queueProcessorFactory.Create(context);
             }
 
+            RegisterSharedWatcherWithQueueProcessor(queueProcessor, sharedWatcher);
+
+            return queueProcessor;
+        }
+
+        internal static void RegisterSharedWatcherWithQueueProcessor(IQueueProcessor queueProcessor, IMessageEnqueuedWatcher sharedWatcher)
+        {
             if (sharedWatcher != null)
             {
                 EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
@@ -405,8 +412,19 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 };
                 queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
             }
+        }
 
-            return queueProcessor;
+        // TODO (kasobol-msft) remove this later in favor of above one.
+        internal static void RegisterSharedWatcherWithQueueProcessor(QueueProcessor queueProcessor, IMessageEnqueuedWatcher sharedWatcher)
+        {
+            if (sharedWatcher != null)
+            {
+                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
+                {
+                    sharedWatcher.Notify(e.PoisonQueue.Name);
+                };
+                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
+            }
         }
 
         public ScaleMonitorDescriptor Descriptor

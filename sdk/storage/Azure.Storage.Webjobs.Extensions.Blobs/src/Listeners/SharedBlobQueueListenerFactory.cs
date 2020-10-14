@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
@@ -14,6 +13,7 @@ using Newtonsoft.Json;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Logging;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -67,8 +67,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
-            var queueProcessorFactory = new SharedBlobQueueProcessorFactory(triggerExecutor, _hostBlobTriggerQueue, _loggerFactory, _queueOptions, defaultPoisonQueue);
-            var queueProcessor = QueueListener.CreateQueueProcessor(_hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, queueProcessorFactory, _queueOptions, _sharedQueueWatcher);
+           var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue,
+                _loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("Queue")), _queueOptions);
+            QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedQueueWatcher);
             IListener listener = new QueueListener(_hostBlobTriggerQueue, defaultPoisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
                 _sharedQueueWatcher, _queueOptions, queueProcessor, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
 
@@ -78,13 +79,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// <summary>
         /// Custom queue processor for the shared blob queue.
         /// </summary>
-        private class SharedBlobQueueProcessor : QueueProcessor
+        private class SharedBlobQueueProcessor : DefaultQueueProcessor
         {
             private BlobQueueTriggerExecutor _executor;
 
-            public SharedBlobQueueProcessor(QueueProcessorFactoryContext context, BlobQueueTriggerExecutor executor) : base(context)
-            {
-                _executor = executor;
+            public SharedBlobQueueProcessor(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, QueueClient poisonQueue, ILogger logger, QueuesOptions queuesOptions)
+                : base(queue, poisonQueue, logger, queuesOptions) {
+                _executor = triggerExecutor;
             }
 
             protected override Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
@@ -113,30 +114,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 }
 
                 return null;
-            }
-        }
-
-        private class SharedBlobQueueProcessorFactory : IQueueProcessorFactory
-        {
-            private readonly BlobQueueTriggerExecutor _triggerExecutor;
-            private readonly QueueClient _queue;
-            private readonly ILoggerFactory _loggerFactory;
-            private readonly QueuesOptions _options;
-            private readonly QueueClient _poisonQueue;
-
-            public SharedBlobQueueProcessorFactory(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions queuesOptions, QueueClient poisonQueue)
-            {
-                _triggerExecutor = triggerExecutor;
-                _queue = queue;
-                _loggerFactory = loggerFactory;
-                _options = queuesOptions;
-                _poisonQueue = poisonQueue;
-            }
-
-            public QueueProcessor Create(QueueProcessorFactoryContext context)
-            {
-                context = new QueueProcessorFactoryContext(_queue, _loggerFactory, _options, _poisonQueue);
-                return new SharedBlobQueueProcessor(context, _triggerExecutor);
             }
         }
     }

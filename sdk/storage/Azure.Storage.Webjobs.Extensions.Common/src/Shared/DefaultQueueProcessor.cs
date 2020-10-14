@@ -1,49 +1,31 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues;
-using Azure;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
-    /// <summary>
-    /// This class defines a strategy used for processing queue messages.
-    /// </summary>
-    /// <remarks>
-    /// Custom <see cref="QueueProcessor"/> implementations can be registered by implementing
-    /// a custom <see cref="IQueueProcessorFactory"/>.
-    /// </remarks>
-    public class QueueProcessor : IQueueProcessor
+    internal class DefaultQueueProcessor : IQueueProcessor
     {
         private readonly QueueClient _queue;
         private readonly QueueClient _poisonQueue;
         private readonly ILogger _logger;
 
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="context">The factory context.</param>
-        public QueueProcessor(QueueProcessorFactoryContext context)
+        public DefaultQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILogger logger, QueuesOptions queuesOptions)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            _queue = context.Queue;
-            _poisonQueue = context.PoisonQueue;
-            _logger = context.Logger;
-
-            QueuesOptions = context.Options;
+            _queue = queue;
+            _poisonQueue = poisonQueue;
+            _logger = logger;
+            QueuesOptions = queuesOptions;
         }
 
         /// <summary>
@@ -51,9 +33,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         public event EventHandler<PoisonMessageEventArgs> MessageAddedToPoisonQueue;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
         public QueuesOptions QueuesOptions { get; private set; }
 
         /// <summary>
@@ -87,9 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         public virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
         {
             if (result.Succeeded)
             {

@@ -20,6 +20,7 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
@@ -114,7 +115,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             var queueClient = Convert(queue);
             var poisonQueueClient = Convert(poisonQueue);
-            var queueProcessor = QueueListener.CreateQueueProcessor(queueClient, poisonQueueClient, _loggerFactory, _queueProcessorFactory, _queueOptions, _sharedWatcher);
+            var queueProcessor = new DefaultQueueProcessor(queueClient, poisonQueueClient,
+                _loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("Queue")), _queueOptions);
+            QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedWatcher);
             IListener listener = new QueueListener(queueClient,
                 poisonQueue: poisonQueueClient,
                 triggerExecutor: wrapper,
