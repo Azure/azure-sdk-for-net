@@ -52,6 +52,17 @@ namespace Azure.Identity
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
             return await client.AcquireTokenSilent(scopes, account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        {
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            // if the user specified a TenantId when they created the client we want to authenticate to that tenant.
+            // otherwise we should authenticate with the tenant specified by the authentication record since that's the tenant the
+            // user authenticated to originally.
+            return await client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
+                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
+                .ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+        }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
         {

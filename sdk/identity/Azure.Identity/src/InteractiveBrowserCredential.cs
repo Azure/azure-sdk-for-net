@@ -181,7 +181,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

@@ -85,5 +85,23 @@ namespace Azure.Identity.Tests
 
             Assert.NotNull(token.Token);
         }
+
+        [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        // This test should be run with an MSA account to validate that the refresh for MSA accounts works properly
+        public async Task AuthenticateWithMSAWithSubsequentSilentRefresh()
+        {
+            var cred = new InteractiveBrowserCredential();
+
+            // this should pop browser
+            var authRecord = await cred.AuthenticateAsync();
+
+            Assert.NotNull(authRecord);
+
+            // this should not pop browser
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+
+            Assert.NotNull(token.Token);
+        }
     }
 }
