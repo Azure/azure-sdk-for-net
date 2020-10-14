@@ -1,0 +1,278 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest?api-version=2019-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvblJ1bGVzL2RjclNka1VwZGF0ZVRlc3Q/YXBpLXZlcnNpb249MjAxOS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dataSources\": {\r\n      \"performanceCounters\": [\r\n        {\r\n          \"streams\": [\r\n            \"Microsoft-InsightsMetrics\"\r\n          ],\r\n          \"scheduledTransferPeriod\": \"PT1M\",\r\n          \"samplingFrequencyInSeconds\": 10,\r\n          \"counterSpecifiers\": [\r\n            \"\\\\Memory\\\\% Committed Bytes In Use\",\r\n            \"\\\\Memory\\\\Available Bytes\",\r\n            \"\\\\Network Interface(*)\\\\Bytes Received/sec\"\r\n          ],\r\n          \"name\": \"perfCounterDataSource1\"\r\n        }\r\n      ]\r\n    },\r\n    \"destinations\": {\r\n      \"azureMonitorMetrics\": {\r\n        \"name\": \"ammDestination\"\r\n      }\r\n    },\r\n    \"dataFlows\": [\r\n      {\r\n        \"streams\": [\r\n          \"Microsoft-InsightsMetrics\"\r\n        ],\r\n        \"destinations\": [\r\n          \"ammDestination\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "922"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "59"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "97ade7cb-d664-462a-8619-74b188853351"
+        ],
+        "x-ms-correlation-request-id": [
+          "97ade7cb-d664-462a-8619-74b188853351"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20201012T214819Z:97ade7cb-d664-462a-8619-74b188853351"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 12 Oct 2020 21:48:19 GMT"
+        ],
+        "Content-Length": [
+          "918"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dcr-5da7ff8931b14b5c906be20efc52390b\",\r\n    \"dataSources\": {\r\n      \"performanceCounters\": [\r\n        {\r\n          \"streams\": [\r\n            \"Microsoft-InsightsMetrics\"\r\n          ],\r\n          \"scheduledTransferPeriod\": \"PT1M\",\r\n          \"samplingFrequencyInSeconds\": 10,\r\n          \"counterSpecifiers\": [\r\n            \"\\\\Memory\\\\% Committed Bytes In Use\",\r\n            \"\\\\Memory\\\\Available Bytes\",\r\n            \"\\\\Network Interface(*)\\\\Bytes Received/sec\"\r\n          ],\r\n          \"name\": \"perfCounterDataSource1\"\r\n        }\r\n      ]\r\n    },\r\n    \"destinations\": {\r\n      \"azureMonitorMetrics\": {\r\n        \"name\": \"ammDestination\"\r\n      }\r\n    },\r\n    \"dataFlows\": [\r\n      {\r\n        \"streams\": [\r\n          \"Microsoft-InsightsMetrics\"\r\n        ],\r\n        \"destinations\": [\r\n          \"ammDestination\"\r\n        ]\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest\",\r\n  \"name\": \"dcrSdkUpdateTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionRules\",\r\n  \"etag\": \"\\\"09009b18-0000-0100-0000-5f84cf220000\\\"\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest?api-version=2019-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvblJ1bGVzL2RjclNka1VwZGF0ZVRlc3Q/YXBpLXZlcnNpb249MjAxOS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"tags\": {\r\n    \"TagUpdated\": \"ValueUpdate\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "55"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "58"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "d1c17a40-bfbe-4c9d-ba81-a538368c30c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "d1c17a40-bfbe-4c9d-ba81-a538368c30c2"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20201012T214820Z:d1c17a40-bfbe-4c9d-ba81-a538368c30c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 12 Oct 2020 21:48:20 GMT"
+        ],
+        "Content-Length": [
+          "905"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dcr-5da7ff8931b14b5c906be20efc52390b\",\r\n    \"dataSources\": {\r\n      \"performanceCounters\": [\r\n        {\r\n          \"streams\": [\r\n            \"Microsoft-InsightsMetrics\"\r\n          ],\r\n          \"scheduledTransferPeriod\": \"PT1M\",\r\n          \"samplingFrequencyInSeconds\": 10,\r\n          \"counterSpecifiers\": [\r\n            \"\\\\Memory\\\\% Committed Bytes In Use\",\r\n            \"\\\\Memory\\\\Available Bytes\",\r\n            \"\\\\Network Interface(*)\\\\Bytes Received/sec\"\r\n          ],\r\n          \"name\": \"perfCounterDataSource1\"\r\n        }\r\n      ]\r\n    },\r\n    \"destinations\": {\r\n      \"azureMonitorMetrics\": {\r\n        \"name\": \"ammDestination\"\r\n      }\r\n    },\r\n    \"dataFlows\": [\r\n      {\r\n        \"streams\": [\r\n          \"Microsoft-InsightsMetrics\"\r\n        ],\r\n        \"destinations\": [\r\n          \"ammDestination\"\r\n        ]\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"TagUpdated\": \"ValueUpdate\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest\",\r\n  \"name\": \"dcrSdkUpdateTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionRules\",\r\n  \"etag\": \"\\\"09009d18-0000-0100-0000-5f84cf240000\\\"\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules?api-version=2019-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvblJ1bGVzP2FwaS12ZXJzaW9uPTIwMTktMTEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "133bc45c-be75-4f7d-bc25-a7a2c7e805df"
+        ],
+        "x-ms-correlation-request-id": [
+          "133bc45c-be75-4f7d-bc25-a7a2c7e805df"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20201012T214820Z:133bc45c-be75-4f7d-bc25-a7a2c7e805df"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 12 Oct 2020 21:48:20 GMT"
+        ],
+        "Content-Length": [
+          "933"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dcr-5da7ff8931b14b5c906be20efc52390b\",\r\n        \"dataSources\": {\r\n          \"performanceCounters\": [\r\n            {\r\n              \"streams\": [\r\n                \"Microsoft-InsightsMetrics\"\r\n              ],\r\n              \"scheduledTransferPeriod\": \"PT1M\",\r\n              \"samplingFrequencyInSeconds\": 10,\r\n              \"counterSpecifiers\": [\r\n                \"\\\\Memory\\\\% Committed Bytes In Use\",\r\n                \"\\\\Memory\\\\Available Bytes\",\r\n                \"\\\\Network Interface(*)\\\\Bytes Received/sec\"\r\n              ],\r\n              \"name\": \"perfCounterDataSource1\"\r\n            }\r\n          ]\r\n        },\r\n        \"destinations\": {\r\n          \"azureMonitorMetrics\": {\r\n            \"name\": \"ammDestination\"\r\n          }\r\n        },\r\n        \"dataFlows\": [\r\n          {\r\n            \"streams\": [\r\n              \"Microsoft-InsightsMetrics\"\r\n            ],\r\n            \"destinations\": [\r\n              \"ammDestination\"\r\n            ]\r\n          }\r\n        ],\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"East US\",\r\n      \"tags\": {\r\n        \"TagUpdated\": \"ValueUpdate\"\r\n      },\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest\",\r\n      \"name\": \"dcrSdkUpdateTest\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionRules\",\r\n      \"etag\": \"\\\"09009d18-0000-0100-0000-5f84cf240000\\\"\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionRules/dcrSdkUpdateTest?api-version=2019-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvblJ1bGVzL2RjclNka1VwZGF0ZVRlc3Q/YXBpLXZlcnNpb249MjAxOS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2019-11-01-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "757d9654-0958-4d26-b646-f2f023ff29c8"
+        ],
+        "x-ms-correlation-request-id": [
+          "757d9654-0958-4d26-b646-f2f023ff29c8"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20201012T214821Z:757d9654-0958-4d26-b646-f2f023ff29c8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 12 Oct 2020 21:48:21 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "63ca8f08-4d36-47a1-9467-03282553ad6b"
+  }
+}
