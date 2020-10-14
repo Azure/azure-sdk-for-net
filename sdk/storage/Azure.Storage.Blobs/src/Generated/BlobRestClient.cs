@@ -12963,6 +12963,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
@@ -12997,6 +13002,11 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
+                System.DateTimeOffset? sourceIfModifiedSince = default,
+                System.DateTimeOffset? sourceIfUnmodifiedSince = default,
+                Azure.ETag? sourceIfMatch = default,
+                Azure.ETag? sourceIfNoneMatch = default,
+                string sourceIfTags = default,
                 string requestId = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default,
@@ -13035,6 +13045,11 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         ifTags,
+                        sourceIfModifiedSince,
+                        sourceIfUnmodifiedSince,
+                        sourceIfMatch,
+                        sourceIfNoneMatch,
+                        sourceIfTags,
                         requestId,
                         blobTagsString,
                         copySourceBlobProperties))
@@ -13094,6 +13109,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="copySourceBlobProperties">Optional, default is true.  Indicates if properties from the source blob should be copied.</param>
@@ -13124,6 +13144,11 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
+                System.DateTimeOffset? sourceIfModifiedSince = default,
+                System.DateTimeOffset? sourceIfUnmodifiedSince = default,
+                Azure.ETag? sourceIfMatch = default,
+                Azure.ETag? sourceIfNoneMatch = default,
+                string sourceIfTags = default,
                 string requestId = default,
                 string blobTagsString = default,
                 bool? copySourceBlobProperties = default)
@@ -13180,6 +13205,11 @@ namespace Azure.Storage.Blobs
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
+                if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
+                if (sourceIfNoneMatch != null) { _request.Headers.SetValue("x-ms-source-if-none-match", sourceIfNoneMatch.Value.ToString()); }
+                if (sourceIfTags != null) { _request.Headers.SetValue("x-ms-source-if-tags", sourceIfTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
                 if (copySourceBlobProperties != null) {
@@ -13238,6 +13268,20 @@ namespace Azure.Storage.Blobs
 
                         // Create the response
                         return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
+                        {
+                            _value.ErrorCode = _header;
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {

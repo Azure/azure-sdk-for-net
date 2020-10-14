@@ -2292,7 +2292,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(options.HttpHeaders)}: {options?.HttpHeaders}\n" +
-                    $"{nameof(options.Conditions)}: {options?.Conditions}");
+                    $"{nameof(options.DestinationConditions)}: {options?.DestinationConditions}");
                 try
                 {
                     return await BlobRestClient.BlockBlob.PutBlobFromUrlAsync(
@@ -2309,19 +2309,25 @@ namespace Azure.Storage.Blobs.Specialized
                         blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
                         blobContentHash: options?.HttpHeaders?.ContentHash,
                         blobCacheControl: options?.HttpHeaders?.CacheControl,
-                        metadata: options?.Metadata,
-                        leaseId: options?.Conditions?.LeaseId,
+                        // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                        // metadata: options?.Metadata,
+                        leaseId: options?.DestinationConditions?.LeaseId,
                         blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         encryptionScope: EncryptionScope,
                         tier: options?.AccessTier,
-                        ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                        ifMatch: options?.Conditions?.IfMatch,
-                        ifNoneMatch: options?.Conditions?.IfNoneMatch,
-                        ifTags: options?.Conditions?.TagConditions,
+                        ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                        ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                        ifMatch: options?.DestinationConditions?.IfMatch,
+                        ifNoneMatch: options?.DestinationConditions?.IfNoneMatch,
+                        ifTags: options?.DestinationConditions?.TagConditions,
+                        sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                        sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                        sourceIfMatch: options?.SourceConditions?.IfMatch,
+                        sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch,
+                        sourceIfTags: options?.SourceConditions?.TagConditions,
                         requestId: default,
                         blobTagsString: options?.Tags?.ToTagsString(),
                         copySourceBlobProperties: options?.CopySourceBlobPropertiesOption == BlobCopySourceBlobPropertiesOption.Overwrite ? false : true,

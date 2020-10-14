@@ -24,10 +24,11 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
-        /// <summary>
-        /// Optional custom metadata to set for this append blob.
-        /// </summary>
-        public Metadata Metadata { get; set; }
+        // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+        ///// <summary>
+        ///// Optional custom metadata to set for this append blob.
+        ///// </summary>
+        //public Metadata Metadata { get; set; }
 
         /// <summary>
         /// Options tags to set for this block blob.
@@ -36,9 +37,15 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the upload of this Block Blob.
+        /// conditions on the copyig of data to this Block Blob.
         /// </summary>
-        public BlobRequestConditions Conditions { get; set; }
+        public BlobRequestConditions DestinationConditions { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the copying of data from this source blob.
+        /// </summary>
+        public BlobRequestConditions SourceConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="AccessTier"/> to set on the
