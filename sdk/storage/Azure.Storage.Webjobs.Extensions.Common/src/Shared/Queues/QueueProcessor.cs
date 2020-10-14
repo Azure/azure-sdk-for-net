@@ -66,9 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>True if the message processing should continue, false otherwise.</returns>
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         public virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
         {
             if (message.DequeueCount > QueuesOptions.MaxDequeueCount)
             {
@@ -90,9 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         public virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
         {
             if (result.Succeeded)
             {

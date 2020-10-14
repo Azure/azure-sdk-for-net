@@ -58,7 +58,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     public partial class QueueProcessor
     {
         public QueueProcessor(Microsoft.Azure.WebJobs.Host.Queues.QueueProcessorFactoryContext context) { }
-        public Microsoft.Azure.WebJobs.Host.QueuesOptions QueuesOptions { get { throw null; } }
         public event System.EventHandler<Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs> MessageAddedToPoisonQueue { add { } remove { } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
