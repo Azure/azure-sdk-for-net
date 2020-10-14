@@ -13,7 +13,7 @@ param (
 
 try
 {
-    $pullRequest = Get-PullRequest -RepoOwner $RepoOwner -RepoName $RepoName -PullRequestNumber $PullRequestNumber
+    $pullRequest = Get-GithubPullRequest -RepoOwner $RepoOwner -RepoName $RepoName -PullRequestNumber $PullRequestNumber
     Write-Host "##vso[task.setvariable variable=System.PullRequest.Creator;]$($pullRequest.user.login)"
 }
 catch
