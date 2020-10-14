@@ -81,7 +81,7 @@ steps:
       -AuthToken "$(azuresdk-github-pat)"
       -PRTitle "${{ parameters.PRTitle }}"
       -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
-      -PRLabels "${{ parameters.PRLabels}}"
+      -PRLabels "${{ parameters.PRLabels }}"
       -UserReviewers "${{ parameters.GHReviewersVariable }}"
       -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
       -Assignees "${{ parameters.GHAssignessVariable }}"
