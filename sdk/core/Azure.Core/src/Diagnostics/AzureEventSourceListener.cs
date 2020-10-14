@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Globalization;
-using System.Threading;
 using Azure.Core.Shared;
 
 namespace Azure.Core.Diagnostics
@@ -38,6 +37,7 @@ namespace Azure.Core.Diagnostics
         public AzureEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
         {
             _log = log ?? throw new ArgumentNullException(nameof(log));
+
             _level = level;
 
             foreach (EventSource eventSource in _eventSources)
