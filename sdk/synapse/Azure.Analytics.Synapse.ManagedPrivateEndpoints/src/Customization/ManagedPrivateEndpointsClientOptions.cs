@@ -4,21 +4,21 @@
 using Azure.Core;
 using System;
 
-namespace Azure.Analytics.Synapse.Monitoring
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
     /// <summary>
-    /// The options for <see cref="MonitoringClient"/>.
+    /// The options for <see cref="ManagedPrivateEndpointsClient"/>.
     /// </summary>
-    public class MonitoringClientOptions : ClientOptions
+    public class ManagedPrivateEndpointsClientOptions : ClientOptions
     {
         private const ServiceVersion Latest = ServiceVersion.V2019_11_01_preview;
 
-        internal static MonitoringClientOptions Default { get; } = new MonitoringClientOptions();
+        internal static ManagedPrivateEndpointsClientOptions Default { get; } = new ManagedPrivateEndpointsClientOptions();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MonitoringClientOptions"/>.
+        /// Initializes a new instance of the <see cref="ManagedPrivateEndpointsClientOptions"/>.
         /// </summary>
-        public MonitoringClientOptions(ServiceVersion serviceVersion = Latest)
+        public ManagedPrivateEndpointsClientOptions(ServiceVersion serviceVersion = Latest)
         {
             VersionString = serviceVersion switch
             {

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     public partial class ManagedPrivateEndpointProperties : IUtf8JsonSerializable
     {
@@ -59,11 +59,21 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
                 }
                 if (property.NameEquals("connectionState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isReserved"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isReserved = property.Value.GetBoolean();
                     continue;
                 }

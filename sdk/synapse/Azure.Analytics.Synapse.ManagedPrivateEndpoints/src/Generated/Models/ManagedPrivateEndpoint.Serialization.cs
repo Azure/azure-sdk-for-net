@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     public partial class ManagedPrivateEndpoint
     {
@@ -37,6 +37,11 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     properties = ManagedPrivateEndpointProperties.DeserializeManagedPrivateEndpointProperties(property.Value);
                     continue;
                 }

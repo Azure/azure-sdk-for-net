@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Analytics.Synapse.Monitoring;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.IO;
 
-namespace Azure.Analytics.Synapse.Tests.Monitoring
+namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
 {
     [NonParallelizable]
-    public abstract class MonitoringClientTestBase : RecordedTestBase<SynapseTestEnvironment>
+    public abstract class ManagedPrivateEndpointsClientTestBase : RecordedTestBase<SynapseTestEnvironment>
     {
-        public MonitoringClient MonitoringClient { get; set; }
+        public ManagedPrivateEndpointsClient ManagedPrivateEndpointsClient { get; set; }
 
-        protected MonitoringClientTestBase(bool isAsync) : base(isAsync)
+        protected ManagedPrivateEndpointsClientTestBase(bool isAsync) : base(isAsync)
         {
 #if DEBUG
             SaveDebugRecordingsOnFailure = true;
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
         {
             base.StartTestRecording();
 
-            MonitoringClient = CreateMonitoringClient();
+            ManagedPrivateEndpointsClient = CreateManagedPrivateEndpointsClient();
         }
 
         public override void StopTestRecording()
@@ -46,13 +46,13 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        internal MonitoringClient CreateMonitoringClient(TestRecording recording = null)
+        internal ManagedPrivateEndpointsClient CreateManagedPrivateEndpointsClient(TestRecording recording = null)
         {
             recording ??= Recording;
-            return InstrumentClient(new MonitoringClient(
+            return InstrumentClient(new ManagedPrivateEndpointsClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new MonitoringClientOptions())));
+                InstrumentClientOptions(new ManagedPrivateEndpointsClientOptions())));
         }
     }
 }

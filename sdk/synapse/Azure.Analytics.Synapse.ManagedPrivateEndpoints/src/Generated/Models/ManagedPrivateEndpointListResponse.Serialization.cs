@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     public partial class ManagedPrivateEndpointListResponse
     {
@@ -21,6 +21,11 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedPrivateEndpoint> array = new List<ManagedPrivateEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

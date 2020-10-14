@@ -9,11 +9,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.ManagedVirtualNetwork.Models;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
     /// <summary> The ManagedPrivateEndpoints service client. </summary>
     public partial class ManagedPrivateEndpointsClient
