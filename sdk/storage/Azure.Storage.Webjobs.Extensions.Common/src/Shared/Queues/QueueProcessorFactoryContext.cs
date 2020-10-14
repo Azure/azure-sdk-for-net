@@ -8,10 +8,14 @@ using System;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
+#if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
     /// <summary>
     /// Provides context input for <see cref="IQueueProcessorFactory"/>.
     /// </summary>
     public partial class QueueProcessorFactoryContext
+#else
+    internal partial class QueueProcessorFactoryContext
+#endif
     {
         /// <summary>
         /// Constructs a new instance.

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         private readonly List<Task> _processing = new List<Task>();
         private readonly object _stopWaitingTaskSourceLock = new object();
         private readonly QueuesOptions _queueOptions;
-        private readonly IQueueProcessor _queueProcessor;
+        private readonly QueueProcessor _queueProcessor;
         private readonly TimeSpan _visibilityTimeout;
         private readonly ILogger<QueueListener> _logger;
         private readonly FunctionDescriptor _functionDescriptor;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             ILoggerFactory loggerFactory,
             SharedQueueWatcher sharedWatcher,
             QueuesOptions queueOptions,
-            IQueueProcessor queueProcessor,
+            QueueProcessor queueProcessor,
             FunctionDescriptor functionDescriptor,
             string functionId = null,
             TimeSpan? maxPollingInterval = null)
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 maximumInterval = maxPollingInterval.Value;
             }
 
-            _delayStrategy = new RandomizedExponentialBackoffStrategy(SharedQueuePollingIntervals.Minimum, maximumInterval);
+            _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();
@@ -377,44 +377,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
-            QueuesOptions queuesOptions, IMessageEnqueuedWatcher sharedWatcher)
-        {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
-
-            QueueProcessor queueProcessor = null;
-            // TODO (kasobol-msft) remove SharedBlobQueueProcessorFactory hack.
-            if (HostQueueNames.IsHostQueue(queue.Name) &&
-                !queueProcessorFactory.GetType().Name.Contains("SharedBlobQueueProcessorFactory"))
-            {
-                // We only delegate to the processor factory for application queues,
-                // not our built in control queues
-                // We bypass this check for local testing though
-                queueProcessor = new QueueProcessor(context);
-            }
-            else
-            {
-                queueProcessor = queueProcessorFactory.Create(context);
-            }
-
-            RegisterSharedWatcherWithQueueProcessor(queueProcessor, sharedWatcher);
-
-            return queueProcessor;
-        }
-
-        internal static void RegisterSharedWatcherWithQueueProcessor(IQueueProcessor queueProcessor, IMessageEnqueuedWatcher sharedWatcher)
-        {
-            if (sharedWatcher != null)
-            {
-                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
-                {
-                    sharedWatcher.Notify(e.PoisonQueue.Name);
-                };
-                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
-            }
-        }
-
-        // TODO (kasobol-msft) remove this later in favor of above one.
         internal static void RegisterSharedWatcherWithQueueProcessor(QueueProcessor queueProcessor, IMessageEnqueuedWatcher sharedWatcher)
         {
             if (sharedWatcher != null)

@@ -14,6 +14,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Azure.WebJobs.Host.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -67,8 +68,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
-           var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue,
-                _loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("Queue")), _queueOptions);
+           var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, _queueOptions);
             QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedQueueWatcher);
             IListener listener = new QueueListener(_hostBlobTriggerQueue, defaultPoisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
                 _sharedQueueWatcher, _queueOptions, queueProcessor, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
@@ -79,12 +79,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// <summary>
         /// Custom queue processor for the shared blob queue.
         /// </summary>
-        private class SharedBlobQueueProcessor : DefaultQueueProcessor
+        private class SharedBlobQueueProcessor : QueueProcessor
         {
             private BlobQueueTriggerExecutor _executor;
 
-            public SharedBlobQueueProcessor(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, QueueClient poisonQueue, ILogger logger, QueuesOptions queuesOptions)
-                : base(queue, poisonQueue, logger, queuesOptions) {
+            public SharedBlobQueueProcessor(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, QueuesOptions queuesOptions)
+                : base(new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue)) {
                 _executor = triggerExecutor;
             }
 

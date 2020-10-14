@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             var queuesOptions = new QueuesOptions();
             Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
-            var queueProcessor = QueueListener.CreateQueueProcessor(Fixture.Queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
+            var queueProcessor = QueueListenerFactory.CreateQueueProcessor(Fixture.Queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             QueueListener listener = new QueueListener(Fixture.Queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
 
@@ -396,7 +396,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await queue.SendMessageAsync(messageContent);
             QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
-            var queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, NullLoggerFactory.Instance, queueProcessorFactory, queuesOptions, null);
+            var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, NullLoggerFactory.Instance, queueProcessorFactory, queuesOptions, null);
 
             QueueListener listener = new QueueListener(queue, poisonQueue, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 NullLoggerFactory.Instance, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
@@ -438,7 +438,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             var queuesOptions = new QueuesOptions();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
-            var queueProcessor = QueueListener.CreateQueueProcessor(queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
+            var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             QueueListener listener = new QueueListener(queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
 
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             // create for a host queue - don't expect custom factory to be invoked
             QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
-            QueueProcessor queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object);
+            QueueProcessor queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.False(processorFactoryInvoked);
             Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
             queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
-            queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object);
+            queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             // if poison message watcher not specified, event not subscribed to
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
-            queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null);
+            queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
