@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -2717,6 +2719,131 @@ namespace Azure.Storage.Blobs.Test
                     e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
             }
         }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task PutBlobFromUrlAsync()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            // Set source blob properties
+            BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders
+            {
+                CacheControl = constants.CacheControl,
+                ContentDisposition = constants.ContentDisposition,
+                ContentEncoding = constants.ContentEncoding,
+                ContentLanguage = constants.ContentLanguage,
+                ContentType = constants.ContentType
+            };
+
+            await sourceBlob.SetHttpHeadersAsync(blobHttpHeaders);
+
+            // Act
+            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri);
+
+            // Assert
+
+            // Validate source and destination blob content matches
+            Response<BlobDownloadInfo> result = await destBlob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+
+            // Validate source and desintation BlobHttpHeaders match
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
+            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
+            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task PutBlobFromUrlAsync_Error()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.PutBlobFromUrlAsync(sourceBlob.Uri),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task PutBlobFromUrlAsync_OverwiteSourceBlobProperties()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            Metadata metadata = BuildMetadata();
+            Tags tags = BuildTags();
+            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            {
+                CopySourceBlobPropertiesOption = BlobCopySourceBlobPropertiesOption.Overwrite,
+                HttpHeaders = new BlobHttpHeaders
+                {
+                    CacheControl = constants.CacheControl,
+                    ContentDisposition = constants.ContentDisposition,
+                    ContentEncoding = constants.ContentEncoding,
+                    ContentLanguage = constants.ContentLanguage,
+                    ContentType = constants.ContentType
+                },
+                Metadata = metadata,
+                Tags = tags,
+                AccessTier = AccessTier.Hot
+            };
+
+            // Act
+            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+
+            // Assert
+
+            // Validate source and destination blob content matches
+            Response<BlobDownloadInfo> result = await destBlob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+
+            // Validate source and desintation BlobHttpHeaders match
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
+            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
+            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+            Assert.AreEqual(tags.Count, response.Value.TagCount);
+            Assert.AreEqual(AccessTier.Hot.ToString(), response.Value.AccessTier);
+        }
+
+        //TODO conditions unit test
+
+        //TODO conditions failed unit tests
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
