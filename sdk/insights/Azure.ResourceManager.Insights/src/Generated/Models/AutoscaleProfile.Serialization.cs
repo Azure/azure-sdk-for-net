@@ -71,11 +71,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("fixedDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fixedDate = TimeWindow.DeserializeTimeWindow(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recurrence"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     recurrence = Recurrence.DeserializeRecurrence(property.Value);
                     continue;
                 }

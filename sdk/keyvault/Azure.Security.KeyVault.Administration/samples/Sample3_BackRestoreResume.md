@@ -21,7 +21,7 @@ BackupOperation backupOperation = new BackupOperation(client, backupOperationId)
 Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupBlobUri = backupResult.Value;
+Uri backupFolderUri = backupResult.Value;
 ```
 
 ## Checking status of a full key restore operation

@@ -58,6 +58,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("idToken"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,6 +73,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("accessToken"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -78,6 +88,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("samlToken"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

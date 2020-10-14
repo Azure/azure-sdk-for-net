@@ -21,11 +21,21 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             {
                 if (property.NameEquals("index"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     index = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("statusCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }

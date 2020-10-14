@@ -41,6 +41,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("valueInMbps"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     valueInMbps = property.Value.GetInt32();
                     continue;
                 }

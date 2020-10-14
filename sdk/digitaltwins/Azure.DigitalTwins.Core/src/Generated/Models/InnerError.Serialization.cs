@@ -25,6 +25,11 @@ namespace Azure.DigitalTwins.Core
                 }
                 if (property.NameEquals("innererror"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     innererror = DeserializeInnerError(property.Value);
                     continue;
                 }

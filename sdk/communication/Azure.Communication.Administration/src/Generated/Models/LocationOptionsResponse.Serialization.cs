@@ -19,6 +19,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("locationOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     locationOptions = LocationOptions.DeserializeLocationOptions(property.Value);
                     continue;
                 }

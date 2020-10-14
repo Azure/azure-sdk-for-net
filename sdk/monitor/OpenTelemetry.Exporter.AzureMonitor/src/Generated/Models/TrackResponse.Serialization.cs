@@ -22,16 +22,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             {
                 if (property.NameEquals("itemsReceived"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     itemsReceived = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("itemsAccepted"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     itemsAccepted = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

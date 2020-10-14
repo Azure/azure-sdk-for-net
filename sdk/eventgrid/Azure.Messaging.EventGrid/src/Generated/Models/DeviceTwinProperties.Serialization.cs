@@ -20,11 +20,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("metadata"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metadata = DeviceTwinMetadata.DeserializeDeviceTwinMetadata(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     version = property.Value.GetSingle();
                     continue;
                 }
