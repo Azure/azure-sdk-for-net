@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core.Tests
             DigitalTwinsClient client = GetClient();
 
             // act
-            Func<Task> act = async () => await client.GetModelAsync("urn:doesnotexist:fakemodel:1000").ConfigureAwait(false);
+            Func<Task> act = async () => await client.GetModelAsync("dtmi:doesnotexist:fakemodel;1000").ConfigureAwait(false);
 
             // assert
             act.Should().Throw<RequestFailedException>()

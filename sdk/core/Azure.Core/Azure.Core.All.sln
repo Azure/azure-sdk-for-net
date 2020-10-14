@@ -173,14 +173,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Spa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Spark.Tests", "..\..\synapse\Azure.Analytics.Synapse.Spark\tests\Azure.Analytics.Synapse.Spark.Tests.csproj", "{CE8663D2-B3C6-42B4-9A62-9A0BA4707464}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Compute", "..\..\testcommon\Azure.Management.Compute.2019_12\src\Azure.Management.Compute.csproj", "{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Network", "..\..\testcommon\Azure.Management.Network.2020_04\src\Azure.Management.Network.csproj", "{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Resources", "..\..\testcommon\Azure.Management.Resources.2017_05\src\Azure.Management.Resources.csproj", "{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Management.Storage", "..\..\testcommon\Azure.Management.Storage.2019_06\src\Azure.Management.Storage.csproj", "{85187149-00E3-4C3A-81D7-D42A61CB0381}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Administration", "..\..\keyvault\Azure.Security.KeyVault.Administration\src\Azure.Security.KeyVault.Administration.csproj", "{4D647887-E161-4DB5-9C92-E5930EF9CEBB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Administration.Tests", "..\..\keyvault\Azure.Security.KeyVault.Administration\tests\Azure.Security.KeyVault.Administration.Tests.csproj", "{5B2C4AF4-C83D-4FFD-9D9C-78F22FEC95E7}"
@@ -250,6 +242,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.Tests", "..\..\monitor\OpenTelemetry.Exporter.AzureMonitor\tests\OpenTelemetry.Exporter.AzureMonitor.UnitTest\OpenTelemetry.Exporter.AzureMonitor.Tests.csproj", "{BD291E22-BE9A-4D9F-B32A-685DEE36EE1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink", "..\..\keyvault\samples\sharelink\ShareLink.csproj", "{28B02839-0F22-40F2-9A80-C4384881A54F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj", "{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj", "{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -1764,6 +1764,22 @@ Global
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x64.Build.0 = Release|Any CPU
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x86.ActiveCfg = Release|Any CPU
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x86.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

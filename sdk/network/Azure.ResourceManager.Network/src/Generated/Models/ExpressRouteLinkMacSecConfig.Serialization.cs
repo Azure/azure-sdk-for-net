@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("cipher"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     cipher = new ExpressRouteLinkMacSecCipher(property.Value.GetString());
                     continue;
                 }

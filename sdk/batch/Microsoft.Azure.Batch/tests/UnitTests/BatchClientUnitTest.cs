@@ -46,10 +46,8 @@ namespace Azure.Batch.Unit.Tests
 
             using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler) { BatchUrl = @"https://foo.microsoft.test" })
             {
-                using (var client = BatchClient.Open(restClient))
-                {
-                    await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
-                }
+                using var client = BatchClient.Open(restClient);
+                await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
             }
 
             Assert.Equal("foo", capturedRequest.Headers.Authorization.Parameter);
@@ -67,17 +65,16 @@ namespace Azure.Batch.Unit.Tests
                 return Task.FromResult("foo");
             }));
 
-            using (var restClient = new BatchServiceClient(
+            using var restClient = new BatchServiceClient(
                 tokenCredentials,
-                new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted))) { BatchUrl = @"https://foo.microsoft.test" })
-            {
-                var client = BatchClient.Open(restClient);
+                new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted)))
+            { BatchUrl = @"https://foo.microsoft.test" };
+            var client = BatchClient.Open(restClient);
 
-                await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
-                Assert.Equal(1, count);
-                await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
-                Assert.Equal(2, count);
-            }
+            await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
+            Assert.Equal(1, count);
+            await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
+            Assert.Equal(2, count);
         }
 
         [Fact]
@@ -95,10 +92,8 @@ namespace Azure.Batch.Unit.Tests
 
             using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler) { BatchUrl = @"https://foo.microsoft.test" })
             {
-                using (var client = BatchClient.Open(restClient))
-                {
-                    await client.PoolOperations.DeletePoolAsync("bar");
-                }
+                using var client = BatchClient.Open(restClient);
+                await client.PoolOperations.DeletePoolAsync("bar");
             }
 
             Assert.Equal("foo", capturedRequest.Headers.Authorization.Parameter);

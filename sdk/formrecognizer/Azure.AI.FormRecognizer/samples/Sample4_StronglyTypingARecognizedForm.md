@@ -1,6 +1,6 @@
 # Strongly-typing a recognized form
 
-This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The output from the `StartRecognizeReceipts` method will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields' names and types.
+This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The output from the `StartRecognizeReceipts` method will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields, names and types.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 

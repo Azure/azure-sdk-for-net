@@ -4,292 +4,35 @@
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/databaseAccounts?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200917.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "e9be43ba205af16f7d4fa93e3f3a86ea",
+        "x-ms-client-request-id": "bbfc27050b31d46c95d0b6a67ba2f464",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "19225",
+        "Content-Length": "12369",
         "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/databaseAccounts?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 17 Sep 2020 21:47:09 GMT",
+        "Date": "Fri, 25 Sep 2020 01:34:00 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a9e6a1c1-df6c-4d8c-afda-f19696f8b011",
+        "x-ms-correlation-request-id": "fa9f9f41-a43b-4e02-84fa-95068ede96a9",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10913",
-        "x-ms-request-id": "a9e6a1c1-df6c-4d8c-afda-f19696f8b011",
-        "x-ms-routing-request-id": "WESTUS2:20200917T214710Z:a9e6a1c1-df6c-4d8c-afda-f19696f8b011"
+        "x-ms-ratelimit-remaining-subscription-reads": "10218",
+        "x-ms-request-id": "fa9f9f41-a43b-4e02-84fa-95068ede96a9",
+        "x-ms-routing-request-id": "WESTUS2:20200925T013401Z:fa9f9f41-a43b-4e02-84fa-95068ede96a9"
       },
       "ResponseBody": {
         "value": [
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6023/providers/Microsoft.DocumentDB/databaseAccounts/amecassandratest091520201509244hzd",
-            "name": "amecassandratest091520201509244hzd",
-            "location": "West US",
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "kind": "GlobalDocumentDB",
-            "tags": {},
-            "systemData": {
-              "createdAt": "2020-09-15T22:28:53.105752Z"
-            },
-            "properties": {
-              "provisioningState": "Succeeded",
-              "documentEndpoint": "https://amecassandratest091520201509244hzd.documents.azure.com:443/",
-              "cassandraEndpoint": "https://amecassandratest091520201509244hzd.cassandra.cosmos.azure.com:443/",
-              "publicNetworkAccess": "Enabled",
-              "enableAutomaticFailover": false,
-              "enableMultipleWriteLocations": false,
-              "enablePartitionKeyMonitor": false,
-              "isVirtualNetworkFilterEnabled": false,
-              "virtualNetworkRules": [],
-              "EnabledApiTypes": "Cassandra",
-              "disableKeyBasedMetadataWriteAccess": false,
-              "enableFreeTier": false,
-              "enableAnalyticalStorage": false,
-              "instanceId": "310709d5-a17e-42af-a61a-7417240dbca1",
-              "createMode": "Default",
-              "databaseAccountOfferType": "Standard",
-              "consistencyPolicy": {
-                "defaultConsistencyLevel": "Eventual",
-                "maxIntervalInSeconds": 5,
-                "maxStalenessPrefix": 100
-              },
-              "configurationOverrides": {},
-              "writeLocations": [
-                {
-                  "id": "amecassandratest091520201509244hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201509244hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "readLocations": [
-                {
-                  "id": "amecassandratest091520201509244hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201509244hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "locations": [
-                {
-                  "id": "amecassandratest091520201509244hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201509244hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "failoverPolicies": [
-                {
-                  "id": "amecassandratest091520201509244hzd-westus",
-                  "locationName": "West US",
-                  "failoverPriority": 0
-                }
-              ],
-              "cors": [],
-              "capabilities": [
-                {
-                  "name": "EnableCassandra"
-                }
-              ],
-              "ipRules": [],
-              "backupPolicy": {
-                "type": "Periodic",
-                "periodicModeProperties": {
-                  "backupIntervalInMinutes": 240,
-                  "backupRetentionIntervalInHours": 8
-                }
-              }
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6023/providers/Microsoft.DocumentDB/databaseAccounts/amecassandratest091520201515144hzd",
-            "name": "amecassandratest091520201515144hzd",
-            "location": "West US",
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "kind": "GlobalDocumentDB",
-            "tags": {},
-            "systemData": {
-              "createdAt": "2020-09-15T22:33:25.6935593Z"
-            },
-            "properties": {
-              "provisioningState": "Succeeded",
-              "documentEndpoint": "https://amecassandratest091520201515144hzd.documents.azure.com:443/",
-              "cassandraEndpoint": "https://amecassandratest091520201515144hzd.cassandra.cosmos.azure.com:443/",
-              "publicNetworkAccess": "Enabled",
-              "enableAutomaticFailover": false,
-              "enableMultipleWriteLocations": false,
-              "enablePartitionKeyMonitor": false,
-              "isVirtualNetworkFilterEnabled": false,
-              "virtualNetworkRules": [],
-              "EnabledApiTypes": "Cassandra",
-              "disableKeyBasedMetadataWriteAccess": false,
-              "enableFreeTier": false,
-              "enableAnalyticalStorage": false,
-              "instanceId": "dfbbd28f-029c-457b-ab23-f1b66877b03b",
-              "createMode": "Default",
-              "databaseAccountOfferType": "Standard",
-              "consistencyPolicy": {
-                "defaultConsistencyLevel": "Eventual",
-                "maxIntervalInSeconds": 5,
-                "maxStalenessPrefix": 100
-              },
-              "configurationOverrides": {},
-              "writeLocations": [
-                {
-                  "id": "amecassandratest091520201515144hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201515144hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "readLocations": [
-                {
-                  "id": "amecassandratest091520201515144hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201515144hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "locations": [
-                {
-                  "id": "amecassandratest091520201515144hzd-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest091520201515144hzd-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "failoverPolicies": [
-                {
-                  "id": "amecassandratest091520201515144hzd-westus",
-                  "locationName": "West US",
-                  "failoverPriority": 0
-                }
-              ],
-              "cors": [],
-              "capabilities": [
-                {
-                  "name": "EnableCassandra"
-                }
-              ],
-              "ipRules": [],
-              "backupPolicy": {
-                "type": "Periodic",
-                "periodicModeProperties": {
-                  "backupIntervalInMinutes": 240,
-                  "backupRetentionIntervalInHours": 8
-                }
-              }
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-8918/providers/Microsoft.DocumentDB/databaseAccounts/amecassandratest9664",
-            "name": "amecassandratest9664",
-            "location": "West US",
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "kind": "GlobalDocumentDB",
-            "tags": {},
-            "systemData": {
-              "createdAt": "2020-09-16T01:00:34.6355242Z"
-            },
-            "properties": {
-              "provisioningState": "Succeeded",
-              "documentEndpoint": "https://amecassandratest9664.documents.azure.com:443/",
-              "cassandraEndpoint": "https://amecassandratest9664.cassandra.cosmos.azure.com:443/",
-              "publicNetworkAccess": "Enabled",
-              "enableAutomaticFailover": false,
-              "enableMultipleWriteLocations": false,
-              "enablePartitionKeyMonitor": false,
-              "isVirtualNetworkFilterEnabled": false,
-              "virtualNetworkRules": [],
-              "EnabledApiTypes": "Cassandra",
-              "disableKeyBasedMetadataWriteAccess": false,
-              "enableFreeTier": false,
-              "enableAnalyticalStorage": false,
-              "instanceId": "b45cbe9d-32d1-44f8-9ba8-6f2631c9c615",
-              "createMode": "Default",
-              "databaseAccountOfferType": "Standard",
-              "consistencyPolicy": {
-                "defaultConsistencyLevel": "Eventual",
-                "maxIntervalInSeconds": 5,
-                "maxStalenessPrefix": 100
-              },
-              "configurationOverrides": {},
-              "writeLocations": [
-                {
-                  "id": "amecassandratest9664-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest9664-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "readLocations": [
-                {
-                  "id": "amecassandratest9664-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest9664-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "locations": [
-                {
-                  "id": "amecassandratest9664-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://amecassandratest9664-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "failoverPolicies": [
-                {
-                  "id": "amecassandratest9664-westus",
-                  "locationName": "West US",
-                  "failoverPriority": 0
-                }
-              ],
-              "cors": [],
-              "capabilities": [
-                {
-                  "name": "EnableCassandra"
-                }
-              ],
-              "ipRules": [],
-              "backupPolicy": {
-                "type": "Periodic",
-                "periodicModeProperties": {
-                  "backupIntervalInMinutes": 240,
-                  "backupRetentionIntervalInHours": 8
-                }
-              }
-            }
-          },
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/yalin-rg/providers/Microsoft.DocumentDB/databaseAccounts/db-001",
             "name": "db-001",
@@ -577,98 +320,7 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/yalin-rg-test001/providers/Microsoft.DocumentDB/databaseAccounts/db4933",
-            "name": "db4933",
-            "location": "West US",
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "kind": "MongoDB",
-            "tags": {},
-            "systemData": {
-              "createdAt": "2020-09-16T23:48:47.1833014Z"
-            },
-            "properties": {
-              "provisioningState": "Succeeded",
-              "documentEndpoint": "https://db4933.documents.azure.com:443/",
-              "mongoEndpoint": "https://db4933.mongo.cosmos.azure.com:443/",
-              "publicNetworkAccess": "Enabled",
-              "enableAutomaticFailover": false,
-              "enableMultipleWriteLocations": false,
-              "enablePartitionKeyMonitor": false,
-              "isVirtualNetworkFilterEnabled": false,
-              "virtualNetworkRules": [],
-              "EnabledApiTypes": "MongoDB",
-              "disableKeyBasedMetadataWriteAccess": false,
-              "enableFreeTier": false,
-              "enableAnalyticalStorage": false,
-              "instanceId": "53e85888-eb44-453a-8438-224cd49ca61e",
-              "createMode": "Default",
-              "databaseAccountOfferType": "Standard",
-              "consistencyPolicy": {
-                "defaultConsistencyLevel": "Session",
-                "maxIntervalInSeconds": 5,
-                "maxStalenessPrefix": 100
-              },
-              "apiProperties": {
-                "serverVersion": "3.6"
-              },
-              "configurationOverrides": {
-                "EnableBsonSchema": "True"
-              },
-              "writeLocations": [
-                {
-                  "id": "db4933-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://db4933-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "readLocations": [
-                {
-                  "id": "db4933-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://db4933-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "locations": [
-                {
-                  "id": "db4933-westus",
-                  "locationName": "West US",
-                  "documentEndpoint": "https://db4933-westus.documents.azure.com:443/",
-                  "provisioningState": "Succeeded",
-                  "failoverPriority": 0,
-                  "isZoneRedundant": false
-                }
-              ],
-              "failoverPolicies": [
-                {
-                  "id": "db4933-westus",
-                  "locationName": "West US",
-                  "failoverPriority": 0
-                }
-              ],
-              "cors": [],
-              "capabilities": [
-                {
-                  "name": "EnableMongo"
-                }
-              ],
-              "ipRules": [],
-              "backupPolicy": {
-                "type": "Periodic",
-                "periodicModeProperties": {
-                  "backupIntervalInMinutes": 240,
-                  "backupRetentionIntervalInHours": 8
-                }
-              }
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7867/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
             "name": "db4937",
             "location": "West US",
             "type": "Microsoft.DocumentDB/databaseAccounts",
@@ -678,7 +330,7 @@
               "key4": "value4"
             },
             "systemData": {
-              "createdAt": "2020-09-17T21:39:12.5746544Z"
+              "createdAt": "2020-09-25T01:30:43.6664714Z"
             },
             "properties": {
               "provisioningState": "Succeeded",
@@ -693,7 +345,7 @@
               "disableKeyBasedMetadataWriteAccess": true,
               "enableFreeTier": false,
               "enableAnalyticalStorage": false,
-              "instanceId": "bb9c1fd2-b7d4-4ffc-8385-1cc7f22a0366",
+              "instanceId": "d02532e6-183d-4b51-9209-400df075c79e",
               "createMode": "Default",
               "databaseAccountOfferType": "Standard",
               "consistencyPolicy": {
@@ -840,21 +492,103 @@
                 }
               }
             }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/yalin-rg-test001/providers/Microsoft.DocumentDB/databaseAccounts/testdb12345",
+            "name": "testdb12345",
+            "location": "East US",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "GlobalDocumentDB",
+            "tags": {},
+            "systemData": {
+              "createdAt": "2020-09-23T05:15:03.9312992Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "documentEndpoint": "https://testdb12345.documents.azure.com:443/",
+              "publicNetworkAccess": "Enabled",
+              "enableAutomaticFailover": false,
+              "enableMultipleWriteLocations": false,
+              "enablePartitionKeyMonitor": false,
+              "isVirtualNetworkFilterEnabled": false,
+              "virtualNetworkRules": [],
+              "EnabledApiTypes": "Sql",
+              "disableKeyBasedMetadataWriteAccess": false,
+              "enableFreeTier": false,
+              "enableAnalyticalStorage": false,
+              "instanceId": "06e08ea1-d823-42fa-93c1-e2a864d6a294",
+              "createMode": "Default",
+              "databaseAccountOfferType": "Standard",
+              "consistencyPolicy": {
+                "defaultConsistencyLevel": "Session",
+                "maxIntervalInSeconds": 5,
+                "maxStalenessPrefix": 100
+              },
+              "configurationOverrides": {},
+              "writeLocations": [
+                {
+                  "id": "testdb12345-eastus",
+                  "locationName": "East US",
+                  "documentEndpoint": "https://testdb12345-eastus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "readLocations": [
+                {
+                  "id": "testdb12345-eastus",
+                  "locationName": "East US",
+                  "documentEndpoint": "https://testdb12345-eastus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "locations": [
+                {
+                  "id": "testdb12345-eastus",
+                  "locationName": "East US",
+                  "documentEndpoint": "https://testdb12345-eastus.documents.azure.com:443/",
+                  "provisioningState": "Succeeded",
+                  "failoverPriority": 0,
+                  "isZoneRedundant": false
+                }
+              ],
+              "failoverPolicies": [
+                {
+                  "id": "testdb12345-eastus",
+                  "locationName": "East US",
+                  "failoverPriority": 0
+                }
+              ],
+              "cors": [],
+              "capabilities": [],
+              "ipRules": [],
+              "backupPolicy": {
+                "type": "Periodic",
+                "periodicModeProperties": {
+                  "backupIntervalInMinutes": 240,
+                  "backupRetentionIntervalInHours": 8
+                }
+              }
+            }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7867/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e36358ef04f7d84d9eda7779467ed781-beff9fa984cc534c-00",
+        "traceparent": "00-63613e1b9b8ebd46b48ec5a151db2d52-69da8bb730bfa941-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200917.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "c9365efb3015b72f25972bdeec6c6297",
+        "x-ms-client-request-id": "01262dd1949c12eb29a9ff78c8259608",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -862,21 +596,21 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "2032",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7867/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 17 Sep 2020 21:47:09 GMT",
+        "Date": "Fri, 25 Sep 2020 01:34:01 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "37c11e36-437b-41ac-9bb7-10c381ae5853",
+        "x-ms-correlation-request-id": "c89b2c64-b196-49f6-8fef-46ef2994460b",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10912",
-        "x-ms-request-id": "37c11e36-437b-41ac-9bb7-10c381ae5853",
-        "x-ms-routing-request-id": "WESTUS2:20200917T214710Z:37c11e36-437b-41ac-9bb7-10c381ae5853"
+        "x-ms-ratelimit-remaining-subscription-reads": "10217",
+        "x-ms-request-id": "c89b2c64-b196-49f6-8fef-46ef2994460b",
+        "x-ms-routing-request-id": "WESTUS2:20200925T013401Z:c89b2c64-b196-49f6-8fef-46ef2994460b"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7867/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
         "name": "db4937",
         "location": "West US",
         "type": "Microsoft.DocumentDB/databaseAccounts",
@@ -886,7 +620,7 @@
           "key4": "value4"
         },
         "systemData": {
-          "createdAt": "2020-09-17T21:39:12.5746544Z"
+          "createdAt": "2020-09-25T01:30:43.6664714Z"
         },
         "properties": {
           "provisioningState": "Succeeded",
@@ -901,7 +635,7 @@
           "disableKeyBasedMetadataWriteAccess": true,
           "enableFreeTier": false,
           "enableAnalyticalStorage": false,
-          "instanceId": "bb9c1fd2-b7d4-4ffc-8385-1cc7f22a0366",
+          "instanceId": "d02532e6-183d-4b51-9209-400df075c79e",
           "createMode": "Default",
           "databaseAccountOfferType": "Standard",
           "consistencyPolicy": {
@@ -971,6 +705,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1403627746"
+    "RandomSeed": "1184234086"
   }
 }

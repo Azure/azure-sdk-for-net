@@ -1,8 +1,20 @@
 # Release History
 
 ## 3.1.0-beta.1 (Unreleased)
+
+### Breaking changes
 - It defaults to the latest supported API version, which currently is `2.1-preview.1`.
-Note that new functionality hasn't been implemented in the client library.
+
+### New Features
+- Added support for pre-built business card recognition.
+- Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
+- Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
+- Added property `ModelName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
+- Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
+- Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
+- Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
 
 ## 3.0.0 (2020-08-20)
 

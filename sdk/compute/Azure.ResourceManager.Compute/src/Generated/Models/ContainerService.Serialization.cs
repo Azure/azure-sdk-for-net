@@ -120,6 +120,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -130,6 +135,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
@@ -139,26 +149,51 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("orchestratorProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             orchestratorProfile = ContainerServiceOrchestratorProfile.DeserializeContainerServiceOrchestratorProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             customProfile = ContainerServiceCustomProfile.DeserializeContainerServiceCustomProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             servicePrincipalProfile = ContainerServicePrincipalProfile.DeserializeContainerServicePrincipalProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("masterProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             masterProfile = ContainerServiceMasterProfile.DeserializeContainerServiceMasterProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolProfiles"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ContainerServiceAgentPoolProfile> array = new List<ContainerServiceAgentPoolProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -169,16 +204,31 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("windowsProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             windowsProfile = ContainerServiceWindowsProfile.DeserializeContainerServiceWindowsProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linuxProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             linuxProfile = ContainerServiceLinuxProfile.DeserializeContainerServiceLinuxProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             diagnosticsProfile = ContainerServiceDiagnosticsProfile.DeserializeContainerServiceDiagnosticsProfile(property0.Value);
                             continue;
                         }

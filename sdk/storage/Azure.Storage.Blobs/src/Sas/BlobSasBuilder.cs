@@ -222,7 +222,7 @@ namespace Azure.Storage.Sas
             {
                 rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
                     permissions: rawPermissions,
-                    validPermissionsInOrder: s_validPermissionsInOrder);
+                    validPermissionsInOrder: Constants.Sas.ValidPermissionsInOrder);
             }
 
             SetPermissions(rawPermissions);
@@ -236,21 +236,6 @@ namespace Azure.Storage.Sas
         {
             Permissions = rawPermissions;
         }
-
-        private static readonly List<char> s_validPermissionsInOrder = new List<char>
-        {
-            Constants.Sas.Permissions.Read,
-            Constants.Sas.Permissions.Add,
-            Constants.Sas.Permissions.Create,
-            Constants.Sas.Permissions.Write,
-            Constants.Sas.Permissions.Delete,
-            Constants.Sas.Permissions.DeleteBlobVersion,
-            Constants.Sas.Permissions.List,
-            Constants.Sas.Permissions.Tag,
-            Constants.Sas.Permissions.Update,
-            Constants.Sas.Permissions.Process,
-            Constants.Sas.Permissions.FilterByTags,
-        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -349,6 +334,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                null, // PreauthorizedAgentObjectId
+                null, // AgentObjectId
+                null, // CorrelationId
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,

@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Training
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             Optional<string> modelName = default;
-            Optional<Attributes> attributes = default;
+            Optional<CustomFormModelProperties> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"))
@@ -50,7 +50,12 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("attributes"))
                 {
-                    attributes = Training.Attributes.DeserializeAttributes(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    attributes = CustomFormModelProperties.DeserializeCustomFormModelProperties(property.Value);
                     continue;
                 }
             }

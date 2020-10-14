@@ -58,19 +58,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 await sender.SendMessageAsync(new ServiceBusMessage("my message") { SessionId = "sessionId" });
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 var state = Encoding.UTF8.GetBytes("some state");
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await receiver.CompleteMessageAsync(receivedMessage);
-                    await receiver.SetSessionStateAsync(state);
+                    await receiver.SetSessionStateAsync(new BinaryData(state));
                     ts.Complete();
                 }
                 #endregion
                 var bytes = await receiver.GetSessionStateAsync();
-                Assert.AreEqual(state, bytes);
+                Assert.AreEqual(state, bytes.ToBytes().ToArray());
             };
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
                 {
-                    ViaQueueOrTopicName = queueA
+                    TransactionQueueOrTopicName = queueA
                 });
 
                 ServiceBusReceiver receiverA = client.CreateReceiver(queueA);

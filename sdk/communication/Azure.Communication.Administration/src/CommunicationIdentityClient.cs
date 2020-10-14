@@ -36,8 +36,7 @@ namespace Azure.Communication.Administration
             RestClient = new CommunicationIdentityRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipline(connectionString),
-                connectionString.GetRequired("endpoint"),
-                options.ApiVersion);
+                connectionString.GetRequired("endpoint"));
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
