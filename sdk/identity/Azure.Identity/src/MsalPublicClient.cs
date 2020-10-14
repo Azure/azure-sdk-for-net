@@ -52,6 +52,11 @@ namespace Azure.Identity
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
             return await client.AcquireTokenSilent(scopes, account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        {
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenSilent(scopes, (AuthenticationAccount)record).WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, record.TenantId).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+        }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
