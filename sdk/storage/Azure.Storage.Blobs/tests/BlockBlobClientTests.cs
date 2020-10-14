@@ -2744,17 +2744,14 @@ namespace Azure.Storage.Blobs.Test
             };
 
             Metadata metadata = BuildMetadata();
-            Tags tags = BuildTags();
 
             BlobUploadOptions uploadOptions = new BlobUploadOptions
             {
                 HttpHeaders = blobHttpHeaders,
-                Metadata = metadata,
-                Tags = tags
+                Metadata = metadata
             };
 
             await sourceBlob.UploadAsync(stream, uploadOptions);
-
 
             // Act
             await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri);
@@ -2776,7 +2773,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
             AssertDictionaryEquality(metadata, response.Value.Metadata);
-            Assert.AreEqual(2, response.Value.TagCount);
         }
 
         [Test]
