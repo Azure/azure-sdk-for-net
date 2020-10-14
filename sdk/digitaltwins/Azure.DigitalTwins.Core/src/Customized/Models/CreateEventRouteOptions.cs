@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
-    [CodeGenModel("EventRouteAddOptions")]
+    [CodeGenModel("EventRoutesAddOptions")]
     public partial class CreateEventRouteOptions
     {
         // This class declaration changes the namespace; do not remove.

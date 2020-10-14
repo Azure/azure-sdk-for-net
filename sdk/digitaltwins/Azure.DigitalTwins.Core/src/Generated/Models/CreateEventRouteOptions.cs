@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class EventRoutesAddOptions
+    public partial class CreateEventRouteOptions
     {
-        /// <summary> Initializes a new instance of EventRoutesAddOptions. </summary>
-        public EventRoutesAddOptions()
+        /// <summary> Initializes a new instance of CreateEventRouteOptions. </summary>
+        public CreateEventRouteOptions()
         {
         }
 

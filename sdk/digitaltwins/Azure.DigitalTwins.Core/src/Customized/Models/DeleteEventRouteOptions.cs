@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
-    [CodeGenModel("EventRouteDeleteOptions")]
+    [CodeGenModel("EventRoutesDeleteOptions")]
     public partial class DeleteEventRouteOptions
     {
         // This class declaration changes the namespace; do not remove.
