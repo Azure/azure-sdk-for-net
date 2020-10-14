@@ -11,12 +11,10 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// properties related to servicebus.
+    /// Properties related to ServiceBus.
     /// </summary>
     [Newtonsoft.Json.JsonObject("ServiceBus")]
     public partial class ServiceBus : DigitalTwinsEndpointResourceProperties
@@ -33,17 +31,19 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the ServiceBus class.
         /// </summary>
         /// <param name="primaryConnectionString">PrimaryConnectionString of
-        /// the endpoint. Will be obfuscated during read</param>
-        /// <param name="secondaryConnectionString">SecondaryConnectionString
-        /// of the endpoint. Will be obfuscated during read</param>
+        /// the endpoint. Will be obfuscated during read.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        public ServiceBus(string primaryConnectionString, string secondaryConnectionString, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(provisioningState, createdTime, tags)
+        /// <param name="deadLetterSecret">Dead letter storage secret. Will be
+        /// obfuscated during read.</param>
+        /// <param name="secondaryConnectionString">SecondaryConnectionString
+        /// of the endpoint. Will be obfuscated during read.</param>
+        public ServiceBus(string primaryConnectionString, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string deadLetterSecret = default(string), string secondaryConnectionString = default(string))
+            : base(provisioningState, createdTime, deadLetterSecret)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
@@ -57,14 +57,14 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets or sets primaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// obfuscated during read.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets secondaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// obfuscated during read.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
         public string SecondaryConnectionString { get; set; }

@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='properties'>
             /// DigitalTwinsInstance endpoint resource properties.
             /// </param>
-            public static DigitalTwinsEndpointResource CreateOrUpdate(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties))
+            public static DigitalTwinsEndpointResource CreateOrUpdate(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, endpointName, properties).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DigitalTwinsEndpointResource> CreateOrUpdateAsync(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DigitalTwinsEndpointResource> CreateOrUpdateAsync(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, endpointName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='properties'>
             /// DigitalTwinsInstance endpoint resource properties.
             /// </param>
-            public static DigitalTwinsEndpointResource BeginCreateOrUpdate(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties))
+            public static DigitalTwinsEndpointResource BeginCreateOrUpdate(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, endpointName, properties).GetAwaiter().GetResult();
             }
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DigitalTwinsEndpointResource> BeginCreateOrUpdateAsync(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DigitalTwinsEndpointResource> BeginCreateOrUpdateAsync(this IDigitalTwinsEndpointOperations operations, string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, endpointName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
