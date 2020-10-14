@@ -1,3 +1,3 @@
-## 1.0.0-preview.1 (Unreleased)
+## 0.10.1 (2020-10-14)
 
-
+- Release non-preview version
