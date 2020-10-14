@@ -47,13 +47,6 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
             Tags = tags;
             CustomInit();
         }
-        /// <summary>
-        /// Static constructor for DigitalTwinsResource class.
-        /// </summary>
-        static DigitalTwinsResource()
-        {
-            Sku = new DigitalTwinsSkuInfo();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
@@ -89,13 +82,6 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// This property is reserved for future use, and will be
-        /// ignored/omitted
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public static DigitalTwinsSkuInfo Sku { get; private set; }
 
     }
 }
