@@ -722,7 +722,7 @@ namespace Azure.Data.Tables
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
-        /// An <see cref="IEnumerable{T}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
         /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -756,7 +756,7 @@ namespace Azure.Data.Tables
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
-        /// An <see cref="IEnumerable{T}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
         /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -790,7 +790,7 @@ namespace Azure.Data.Tables
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
-        /// An <see cref="IEnumerable{T}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
         /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -851,7 +851,7 @@ namespace Azure.Data.Tables
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
-        /// An <see cref="IEnumerable{T}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
         /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -981,7 +981,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(CancellationToken cancellationToken = default)
         {
@@ -1000,7 +1000,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(CancellationToken cancellationToken = default)
         {
@@ -1020,7 +1020,7 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
@@ -1039,7 +1039,7 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
@@ -1057,7 +1057,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates an Odata filter query string from the provided expression.
+        /// Creates an OData filter query string from the provided expression.
         /// </summary>
         /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
         /// <param name="filter">A filter expression.</param>
