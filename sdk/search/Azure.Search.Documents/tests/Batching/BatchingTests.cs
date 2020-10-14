@@ -598,38 +598,7 @@ namespace Azure.Search.Documents.Tests
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
         }
 
-        /*
-        System.InvalidOperationException : 'SearchClient.IndexDocuments' scope is not completed
-        Stack trace
-           at Azure.Core.Tests.ClientDiagnosticListener.Dispose() in D:\a\1\s\sdk\core\Azure.Core.TestFramework\src\ClientDiagnosticListener.cs:line 131
-           at Azure.Core.TestFramework.DiagnosticScopeValidatingInterceptor.Intercept(IInvocation invocation) in D:\a\1\s\sdk\core\Azure.Core.TestFramework\src\DiagnosticScopeValidatingInterceptor.cs:line 68
-           at Castle.DynamicProxy.AbstractInvocation.Proceed()
-           at Castle.Proxies.SearchClientProxy.GetDocumentCountAsync(CancellationToken cancellationToken)
-           at Azure.Search.Documents.Tests.SearchTestBase.<WaitForDocumentCountAsync>d__10.MoveNext() in D:\a\1\s\sdk\search\Azure.Search.Documents\tests\Utilities\SearchTestBase.cs:line 276
-        --- End of stack trace from previous location where exception was thrown ---
-           at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-           at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-           at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
-           at Azure.Search.Documents.Tests.BatchingTests.<AutoFlushInterval_FullBatch>d__25.MoveNext() in D:\a\1\s\sdk\search\Azure.Search.Documents\tests\Batching\BatchingTests.cs:line 624
-        --- End of stack trace from previous location where exception was thrown ---
-           at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-           at Azure.Search.Documents.Tests.BatchingTests.<AutoFlushInterval_FullBatch>d__25.MoveNext() in D:\a\1\s\sdk\search\Azure.Search.Documents\tests\Batching\BatchingTests.cs:line 624
-        --- End of stack trace from previous location where exception was thrown ---
-           at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-           at Azure.Search.Documents.Tests.BatchingTests.<AutoFlushInterval_FullBatch>d__25.MoveNext() in D:\a\1\s\sdk\search\Azure.Search.Documents\tests\Batching\BatchingTests.cs:line 624
-        --- End of stack trace from previous location where exception was thrown ---
-           at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-           at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-           at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()
-           at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaitable)
-           at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)
-           at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)
-           at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)
-           at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.<>c__DisplayClass1_0.<Execute>b__0()
-           at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-        */
         [Test]
-        [Ignore("TODO: Need to investigate why this the scope isn't completing")]
         public async Task AutoFlushInterval_FullBatch()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);

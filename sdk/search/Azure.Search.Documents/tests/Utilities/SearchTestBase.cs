@@ -254,7 +254,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Wait until the document count for a given search index has crosssed
+        /// Wait until the document count for a given search index has crossed
         /// a minimum value.  This only does simple linear retries for a fixed
         /// number of attempts.
         /// </summary>
@@ -276,6 +276,13 @@ namespace Azure.Search.Documents.Tests
                 count = (int)await searchClient.GetDocumentCountAsync();
                 if (count >= minimumCount)
                 {
+                    // When using the free SKU, there may be enough load to prevent
+                    // immediately replication to all replicas and we get back the
+                    // wrong count. Wait a bit longer before checking again. We may
+                    // also upgrade to a basic SKU, but that will take longer to
+                    // provision.
+                    await DelayAsync(delay);
+
                     return;
                 }
                 await DelayAsync(delay);
