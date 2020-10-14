@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.Learn.Computation.Samples
 {
-    public class Sample1_HelloWorld : SamplesBase<ComputationClientTestEnvironment>
+    public class Sample1_HelloWorld : SamplesBase<LearnComputationTestEnvironment>
     {
     }
 }
