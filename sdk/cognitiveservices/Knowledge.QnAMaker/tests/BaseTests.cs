@@ -35,12 +35,21 @@ namespace QnAMaker.Tests
 
             return client;
         }
-
         protected IQnAMakerRuntimeClient GetQnAMakerRuntimeClient(DelegatingHandler handler)
         {
             IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials(QnAMakerEndpointKey), handlers: handler)
             {
                 RuntimeEndpoint = "https://myqnamakerapp.azurewebsites.net"
+            };
+
+            return client;
+        }
+
+        protected IQnAMakerRuntimeClient GetQnAMakerPreviewRuntimeClient(DelegatingHandler handler)
+        {
+            IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), isPreview: true, handlers: handler)
+            {
+                RuntimeEndpoint = "https://australiaeast.api.cognitive.microsoft.com"
             };
 
             return client;
