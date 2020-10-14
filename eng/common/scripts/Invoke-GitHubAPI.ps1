@@ -47,6 +47,24 @@ function Invoke-GitHubAPIPatch {
   return $resp
 }
 
+function Invoke-GitHubAPIDelete {
+  param (
+    [Parameter(Mandatory = $true)]
+    $apiURI,
+    [Parameter(Mandatory = $true)]
+    $token
+  )
+
+  $resp = Invoke-RestMethod `
+    -Method DELETE `
+    -Uri $apiURI `
+    -Headers (Get-GitHubHeaders -token $token) `
+    -MaximumRetryCount 3
+
+  return $resp
+}
+
+
 function Invoke-GitHubAPIGet {
   param (
     [Parameter(Mandatory = $true)]
@@ -101,6 +119,27 @@ function List-PullRequests {
   if ($Base) { $uri += "base=$Base&" }
   if ($Sort) { $uri += "sort=$Sort&" }
   if ($Direction){ $uri += "direction=$Direction&" }
+
+  return Invoke-GitHubAPIGet -apiURI $uri
+}
+
+# 
+<#
+.PARAMETER Ref
+Ref to search for
+Pass 'heads/<branchame> ,tags/<tag name>, or nothing
+#>
+function List-References {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    $Ref
+  )
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/git/matching-refs/"
+  if ($Ref) { $uri += "$Ref" }
 
   return Invoke-GitHubAPIGet -apiURI $uri
 }
@@ -229,4 +268,27 @@ function Update-Issue {
   }
 
   return Invoke-GitHubAPIPatch -apiURI $uri -body $parameters -token $AuthToken
+}
+
+function Delete-References {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $Ref,
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  if ($Ref.Trim().Length -eq 0)
+  {
+    throw "You must supply a valid 'Ref' Parameter to 'Delete-Reference'."
+  }
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/git/refs/$Ref"
+
+  return Invoke-GitHubAPIDelete -apiURI $uri -token $AuthToken
 }
