@@ -191,7 +191,7 @@ namespace Azure.Identity
                     .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                _record = new AuthenticationRecord(result, _clientId);
+                _record = new AuthenticationTokenRecord(result, _clientId);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

@@ -73,7 +73,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, "1950a258-227b-4e31-a9cf-717495945fc2", null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
 
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
@@ -142,9 +142,9 @@ namespace Azure.Identity
             List<IAccount> filteredAccounts = accounts.Where(a =>
                 // if _username is specified it must match the account
                 (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
-                &&
-                //if _tenantId is specified it must match the account
-                (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                //&&
+                ////if _tenantId is specified it must match the account
+                //(string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
             ).ToList();
 
             if (filteredAccounts.Count != 1)

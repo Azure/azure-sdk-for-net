@@ -106,7 +106,7 @@ namespace Azure.Identity
                 {
                     AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    _record = new AuthenticationRecord(result, _clientId);
+                    _record = new AuthenticationTokenRecord(result, _clientId);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
