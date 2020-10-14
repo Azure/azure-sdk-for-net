@@ -1307,6 +1307,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DeleteAsync_IncludeLeasedSnapshots()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await share.CreateIfNotExistsAsync(quotaInGB: 1);
+
+            // Create a snapshot
+            Response<ShareSnapshotInfo> snapshotResponse0 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient0 = share.WithSnapshot(snapshotResponse0.Value.Snapshot);
+
+            // Create another snapshot
+            Response<ShareSnapshotInfo> snapshotResponse1 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient1 = share.WithSnapshot(snapshotResponse1.Value.Snapshot);
+
+            // Lease 2nd snapshot
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShareClient1.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync(duration);
+
+            // Act
+            ShareDeleteOptions options = new ShareDeleteOptions()
+            {
+                ShareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeWithLeased
+            };
+            await share.DeleteAsync(options);
+
+            // Assert
+            Response<bool> shareExists = await share.ExistsAsync();
+            Response<bool> snapshot0Exists = await snapshotShareClient0.ExistsAsync();
+            Response<bool> snapshot1Exists = await snapshotShareClient1.ExistsAsync();
+
+            Assert.IsFalse(shareExists);
+            Assert.IsFalse(snapshot0Exists);
+            Assert.IsFalse(snapshot1Exists);
+        }
+
+        [Test]
         public async Task DeleteAsync_Snapshot()
         {
             // Arrange
