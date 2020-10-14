@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.13.0
+###  Feature Additions
+- Added publicNetworkAccess property to datafactory
+
 ## Version 4.12.0
 ###  Feature Additions
 - Added logLevel/enableReliableLogging to LogStorageSettings
