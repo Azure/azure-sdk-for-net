@@ -90,13 +90,29 @@ function Invoke-GitHubAPIGet {
   return $resp
 }
 
-function SplitMembers ($membersString)
+function Split-GitHubAPIParameterMembers ($membersString)
 {
   if (!$membersString) { return $null }
   return @($membersString.Split(",") | % { $_.Trim() } | ? { return $_ })
 }
 
-function List-PullRequests {
+function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers=$false)
+{
+  if ($members) { 
+    if ($members -is [array])
+    {
+      $parameters[$parameterName] = @($members)
+    }
+    elseif (![System.String]::IsNullOrWhiteSpace($members) -or $allowEmptyMembers) {
+      $memberAdditions = Split-GitHubAPIParameterMembers -membersString $members
+      $parameters[$parameterName] = @($memberAdditions)
+    }
+  }
+
+  return $parameters
+}
+
+function List-GithubPullRequests {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -118,9 +134,6 @@ function List-PullRequests {
   if ($State -or $Head -or $Base -or $Sort -or $Direction) { 
     $uri += '?'
   }
-  elseif ($PullRequestNumber) {
-    $uri += "/${PullRequestNumber}"
-  }
   if ($State) { $uri += "state=$State&" }
   if ($Head) { $uri += "head=$Head&" }
   if ($Base) { $uri += "base=$Base&" }
@@ -136,7 +149,7 @@ function List-PullRequests {
 Ref to search for
 Pass 'heads/<branchame> ,tags/<tag name>, or nothing
 #>
-function List-References {
+function List-GithubSourceReferences  {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -151,7 +164,7 @@ function List-References {
   return Invoke-GitHubAPIGet -apiURI $uri
 }
 
-function Get-PullRequest {
+function Get-GithubPullRequest {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -161,10 +174,11 @@ function Get-PullRequest {
     $PullRequestNumber
   )
 
-  return List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -PullRequestNumber $PullRequestNumber
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PullRequestNumber"
+  return Invoke-GitHubAPIGet -apiURI $uri
 }
 
-function Create-PullRequest {
+function Create-GithubPullRequest {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -189,14 +203,14 @@ function Create-PullRequest {
     base                  = $Base
     body                  = $Body
     maintainer_can_modify = $Maintainer_Can_Modify
-    $draft                = $Draft
+    draft                = $Draft
   }
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls"
   return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
-function Add-IssueComment {
+function Add-GithubIssueComment {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -220,7 +234,7 @@ function Add-IssueComment {
 }
 
 # Will add labels to existing labels on the issue
-function Add-IssueLabels {
+function Add-GithubIssueLabels {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -242,7 +256,7 @@ function Add-IssueLabels {
   }
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/labels"
-  $labelAdditions = SplitMembers -membersString $Labels
+  $labelAdditions = Split-GitHubAPIParameterMembers -membersString $Labels
   $parameters = @{
     labels = @($labelAdditions)
   }
@@ -251,7 +265,7 @@ function Add-IssueLabels {
 }
 
 # Will add assignees to existing assignees on the issue
-function Add-IssueAssignees {
+function Add-GithubIssueAssignees {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -273,7 +287,7 @@ function Add-IssueAssignees {
   }
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/assignees"
-  $assigneesAdditions = SplitMembers -membersString $Assignees
+  $assigneesAdditions = Split-GitHubAPIParameterMembers -membersString $Assignees
   $parameters = @{
     assignees = @($assigneesAdditions)
   }
@@ -281,7 +295,7 @@ function Add-IssueAssignees {
   return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
 }
 
-function Request-PrReviewer {
+function Request-GithubPrReviewers {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -295,43 +309,28 @@ function Request-PrReviewer {
     $AuthToken
   )
 
-  if (!$users -and !$teams)
-  {
-    throw "You must specify either Users or Teams."
-    exit 1
-  }
-
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PrNumber/requested_reviewers"
   $parameters = @{}
 
-  if ($Users) { 
-    if ($Users -is [array])
-    {
-      $parameters["reviewers"] = @($Users)
-    }
-    else {
-      $userAdditions = SplitMembers -membersString $Users
-      $parameters["reviewers"] = @($userAdditions)
-    }
+  if ($Users) {
+    $parameters = Set-GitHubAPIParameters -members $Users -parameterName "reviewers"` -parameters $parameters
   }
 
-  if ($Teams) { 
-    if ($Teams -is [array])
-    {
-      $parameters["team_reviewers"] = @($Teams)
-    }
-    else {
-      $teamAdditions = SplitMembers -membersString $Teams
-      $parameters["team_reviewers"] = @($teamAdditions)
-    }
+  if ($Teams) {
+    $parameters = Set-GitHubAPIParameters -members $Teams -parameterName "team_reviewers" -parameters $parameters
   }
 
-  return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token AuthToken
+  if ($parameters.Count -gt 0) {
+    return Invoke-GitHubAPIPost -apiURI $uri -body $parameters -token $AuthToken
+  }
+  else {
+    throw "Did not fire request because of empty body."
+  }
 }
 
 # For labels and assignee pass comma delimited string, to replace existing labels or assignees.
 # Or pass white space " " to remove all labels or assignees
-function Update-Issue {
+function Update-GithubIssue {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -344,9 +343,7 @@ function Update-Issue {
     [ValidateSet("open","closed")]
     [string]$State,
     [int]$Milestome,
-    [ValidateNotNullOrEmpty()]
     $Labels,
-    [ValidateNotNullOrEmpty()]
     $Assignees,
     [Parameter(Mandatory = $true)]
     $AuthToken
@@ -359,32 +356,25 @@ function Update-Issue {
   if ($State) { $parameters["state"] = $State }
   if ($Milestone) { $parameters["milestone"] = $Milestone }
 
-  if ($Labels) { 
-    if ($Labels -is [array])
-    {
-      $parameters["labels"] = @($Labels)
-    }
-    else {
-      $labelAdditions = SplitMembers -membersString $Labels
-      $parameters["labels"] = @($labelAdditions)
-    }
+  if ($Labels) {
+    $parameters = Set-GitHubAPIParameters -members $Labels -parameterName "labels"`
+    -parameters $parameters -allowEmptyMembers $true
   }
 
-  if ($Assignees) { 
-    if ($Assignees -is [array])
-    {
-      $parameters["labels"] = @($Assignees)
-    }
-    else {
-      $assigneesAdditions = SplitMembers -membersString $Assignees
-      $parameters["assignees"] = @($assigneesAdditions)
-    }
+  if ($Assignees) {
+    $parameters = Set-GitHubAPIParameters -members $Assignees -parameterName "assignees"`
+    -parameters $parameters -allowEmptyMembers $true
   }
 
-  return Invoke-GitHubAPIPatch -apiURI $uri -body $parameters -token $AuthToken
+  if ($parameters.Count -gt 0) {
+    return Invoke-GitHubAPIPatch -apiURI $uri -body $parameters -token $AuthToken
+  }
+  else {
+    throw "Did not fire request because of empty body."
+  }
 }
 
-function Delete-References {
+function Delete-GithubSourceReferences  {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
@@ -399,7 +389,7 @@ function Delete-References {
 
   if ($Ref.Trim().Length -eq 0)
   {
-    throw "You must supply a valid 'Ref' Parameter to 'Delete-Reference'."
+    throw "You must supply a valid 'Ref' Parameter to 'Delete-GithubSourceReferences'."
   }
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/git/refs/$Ref"

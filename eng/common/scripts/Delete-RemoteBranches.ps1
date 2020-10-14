@@ -9,10 +9,10 @@ param(
 
 LogDebug "Operating on Repo [ $RepoName ]"
 try{
-  $branches = (List-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref "heads/$BranchPrefix").ref
+  $branches = (List-GithubSourceReferences -RepoOwner $RepoOwner -RepoName $RepoName -Ref "heads/$BranchPrefix").ref
 }
 catch {
-  LogError "List-References failed with exception:`n$_"
+  LogError "List-GithubSourceReferences failed with exception:`n$_"
   exit 1
 }
 
@@ -22,11 +22,11 @@ foreach ($branch in $branches)
     $branchName = $branch.Replace("refs/heads/","")
     $head = "${RepoOwner}/${RepoName}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
-    $pullRequests = List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
+    $pullRequests = List-GithubPullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
   }
   catch
   {
-    LogError "List-PullRequests failed with exception:`n$_"
+    LogError "List-GithubPullRequests failed with exception:`n$_"
     exit 1
   }
 
@@ -34,10 +34,10 @@ foreach ($branch in $branches)
   {
     LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated Pull Request. Deleting Branch"
     try{
-      Delete-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref ($branch.Remove(0,5)) -AuthToken $AuthToken
+      Delete-GithubSourceReferences -RepoOwner $RepoOwner -RepoName $RepoName -Ref ($branch.Remove(0,5)) -AuthToken $AuthToken
     }
     catch {
-      LogError "Delete-References failed with exception:`n$_"
+      LogError "Delete-GithubSourceReferences failed with exception:`n$_"
       exit 1
     }
   }
