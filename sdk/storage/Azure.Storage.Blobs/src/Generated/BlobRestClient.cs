@@ -13227,10 +13227,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.VersionId = _header;
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
-                        {
-                            _value.IsServerEncrypted = bool.Parse(_header);
-                        }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
