@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests.Mock
 
             correlationId ??= Guid.NewGuid();
 
-            return new AuthenticationResult(accessToken, isExtendedLifeTimeToken.Value, uniqueId, expiresOn.Value, extendedExpiresOn.Value, tenantId, account, idToken, scopes, correlationId.Value);
+            return new AuthenticationResult(accessToken, isExtendedLifeTimeToken.Value, uniqueId, expiresOn.Value, extendedExpiresOn.Value, tenantId, account, idToken, scopes, correlationId.Value, (AuthenticationResultMetadata)null);
         }
     }
 }
