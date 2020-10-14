@@ -35,5 +35,15 @@ namespace QnAMaker.Tests
 
             return client;
         }
+
+        protected IQnAMakerClient GetQnAMakerPreviewClient(DelegatingHandler handler)
+        {
+            IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), isPreview: true, handlers: handler)
+            {
+                Endpoint = "https://australiaeast.api.cognitive.microsoft.com"
+            };
+
+            return client;
+        }
     }
 }
