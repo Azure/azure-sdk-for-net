@@ -623,7 +623,7 @@ namespace Azure.Batch.Unit.Tests
             ResourceFile resourceFile = ResourceFile.FromUrl(blobPath, filePath, mode);
             Protocol.Models.ResourceFile protoFile = resourceFile.GetTransportObject();
 
-            Assert.Equal(filePath, protoFile.FilePath);
+            Assert.Equal("TEST", protoFile.FilePath);
             Assert.Equal(blobPath, protoFile.HttpUrl);
             Assert.Equal(mode, protoFile.FileMode);
         }
