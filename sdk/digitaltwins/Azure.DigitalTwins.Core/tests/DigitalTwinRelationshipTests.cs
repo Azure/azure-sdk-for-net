@@ -18,6 +18,12 @@ namespace Azure.DigitalTwins.Core.Tests
         private const string CoolsRelationship = "cools";
         private const string CooledByRelationship = "cooledBy";
 
+        // Relationships list operation default max item count is 10. We create 31 to make sure we will get over 3 pages of response.
+        // Ideally, service team would let us set max items per page when listing, but that isn't a feature yet
+        private const int bulkRelationshipCount = 31;
+
+        private const int defaultRelationshipPageSize = 10;
+
         public DigitalTwinRelationshipTests(bool isAsync)
            : base(isAsync)
         {
@@ -221,6 +227,117 @@ namespace Azure.DigitalTwins.Core.Tests
                 };
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
+            }
+            finally
+            {
+                // clean up
+                try
+                {
+                    await Task
+                        .WhenAll(
+                            client.DeleteDigitalTwinAsync(floorTwinId),
+                            client.DeleteDigitalTwinAsync(roomTwinId),
+                            client.DeleteDigitalTwinAsync(hvacTwinId),
+                            client.DeleteModelAsync(hvacModelId),
+                            client.DeleteModelAsync(floorModelId),
+                            client.DeleteModelAsync(roomModelId))
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        public async Task Relationships_PaginationWorks()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+            string hvacModelId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.HvacModelIdPrefix).ConfigureAwait(false);
+
+            string floorTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.FloorTwinIdPrefix).ConfigureAwait(false);
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string hvacTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.HvacTwinIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // create floor, room and hvac model
+                string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+
+                // create floor twin
+                string floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
+                await client.CreateDigitalTwinAsync(floorTwinId, floorTwin).ConfigureAwait(false);
+
+                // Create room twin
+                string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                string floorContainsRoomPayload = TestAssetsHelper.GetRelationshipWithPropertyPayload(roomTwinId, ContainsRelationship, "isAccessRestricted", true);
+                string floorTwinContainedInRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, ContainedInRelationship);
+
+                // For the sake of test simplicity, we'll just add multiple relationships from the same floor to the same room.
+                for (int i = 0; i < bulkRelationshipCount; i++)
+                {
+                    var floorContainsRoomRelationshipId = $"FloorToRoomRelationship-{GetRandom()}";
+
+                    // create Relationship from Floor -> Room
+                    await client
+                        .CreateRelationshipAsync(
+                            floorTwinId,
+                            floorContainsRoomRelationshipId,
+                            floorContainsRoomPayload)
+                        .ConfigureAwait(false);
+                }
+
+                // For the sake of test simplicity, we'll just add multiple relationships from the same room to the same floor.
+                for (int i = 0; i < bulkRelationshipCount; i++)
+                {
+                    var roomContainedInFloorRelationshipId = $"RoomToFloorRelationship-{GetRandom()}";
+
+                    // create Relationship from Room -> Floor
+                    await client
+                    .CreateRelationshipAsync(
+                        roomTwinId,
+                        roomContainedInFloorRelationshipId,
+                        floorTwinContainedInRelationshipPayload)
+                    .ConfigureAwait(false);
+                }
+
+                // LIST incoming relationships by page
+                AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(floorTwinId);
+
+                int incomingRelationshipPageCount = 0;
+                await foreach (Page<IncomingRelationship> incomingRelationshipPage in incomingRelationships.AsPages())
+                {
+                    incomingRelationshipPageCount++;
+                    if (incomingRelationshipPage.ContinuationToken != null)
+                    {
+                        incomingRelationshipPage.Values.Count.Should().Be(defaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
+                    }
+                }
+
+                incomingRelationshipPageCount.Should().BeGreaterThan(1, "Expected more than one page of incoming relationships");
+
+                // LIST outgoing relationships by page
+                AsyncPageable<string> outgoingRelationships = client.GetRelationshipsAsync(floorTwinId);
+
+                int outgoingRelationshipPageCount = 0;
+                await foreach (Page<string> outgoingRelationshipPage in outgoingRelationships.AsPages())
+                {
+                    outgoingRelationshipPageCount++;
+                    if (outgoingRelationshipPage.ContinuationToken != null)
+                    {
+                        outgoingRelationshipPage.Values.Count.Should().Be(defaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
+                    }
+                }
+
+                outgoingRelationshipPageCount.Should().BeGreaterThan(1, "Expected more than one page of outgoing relationships");
             }
             finally
             {
