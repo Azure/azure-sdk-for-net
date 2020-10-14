@@ -95,7 +95,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string queryString = "SELECT * FROM digitaltwins";
 
                 // act
-                var options = new QueryTwinsOptions();
+                var options = new QueryOptions();
                 options.MaxItemsPerPage = pageSize;
                 AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, options);
 

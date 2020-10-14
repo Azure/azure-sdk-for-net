@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetByIdRequest(string id, DigitalTwinsGetByIdOptions digitalTwinsGetByIdOptions)
+        internal HttpMessage CreateGetByIdRequest(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string id, DigitalTwinsDeleteOptions digitalTwinsDeleteOptions)
+        internal HttpMessage CreateDeleteRequest(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, DigitalTwinsDeleteOptions digitalTwinsDeleteOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -143,7 +143,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Delete(string id, DigitalTwinsDeleteOptions digitalTwinsDeleteOptions = null, CancellationToken cancellationToken = default)
+        public Response Delete(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -161,7 +161,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> patchDocument, DigitalTwinsUpdateOptions digitalTwinsUpdateOptions)
+        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,7 +197,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateGetRelationshipByIdRequest(string id, string relationshipId, DigitalTwinsGetRelationshipByIdOptions digitalTwinsGetRelationshipByIdOptions)
+        internal HttpMessage CreateGetRelationshipByIdRequest(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,7 +222,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions)
+        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -252,7 +252,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateDeleteRelationshipRequest(string id, string relationshipId, DigitalTwinsDeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions)
+        internal HttpMessage CreateDeleteRelationshipRequest(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -298,7 +298,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsDeleteRelationshipOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
-        public async Task<Response> DeleteRelationshipAsync(string id, string relationshipId, DigitalTwinsDeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteRelationshipAsync(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -337,7 +337,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsDeleteRelationshipOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
-        public Response DeleteRelationship(string id, string relationshipId, DigitalTwinsDeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions = null, CancellationToken cancellationToken = default)
+        public Response DeleteRelationship(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -359,7 +359,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, IEnumerable<object> patchDocument, DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
+        internal HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -397,7 +397,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateListRelationshipsRequest(string id, string relationshipName, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions)
+        internal HttpMessage CreateListRelationshipsRequest(string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,7 +439,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<RelationshipCollection>> ListRelationshipsAsync(string id, string relationshipName = null, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipCollection>> ListRelationshipsAsync(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -476,7 +476,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<RelationshipCollection> ListRelationships(string id, string relationshipName = null, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public Response<RelationshipCollection> ListRelationships(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -499,7 +499,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateListIncomingRelationshipsRequest(string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
+        internal HttpMessage CreateListIncomingRelationshipsRequest(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -536,7 +536,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListIncomingRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsAsync(string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsAsync(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -572,7 +572,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListIncomingRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<IncomingRelationshipCollection> ListIncomingRelationships(string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public Response<IncomingRelationshipCollection> ListIncomingRelationships(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -595,7 +595,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateSendTelemetryRequest(string id, string messageId, object telemetry, string telemetrySourceTime, DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions)
+        internal HttpMessage CreateSendTelemetryRequest(string id, string messageId, object telemetry, string telemetrySourceTime, PublishTelemetryOptions digitalTwinsSendTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -628,7 +628,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string messageId, object telemetry, string telemetrySourceTime, DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
+        internal HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string messageId, object telemetry, string telemetrySourceTime, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -663,7 +663,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateGetComponentRequest(string id, string componentPath, DigitalTwinsGetComponentOptions digitalTwinsGetComponentOptions)
+        internal HttpMessage CreateGetComponentRequest(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -688,7 +688,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions)
+        internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -726,7 +726,7 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        internal HttpMessage CreateListRelationshipsNextPageRequest(string nextLink, string id, string relationshipName, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions)
+        internal HttpMessage CreateListRelationshipsNextPageRequest(string nextLink, string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -762,7 +762,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public async Task<Response<RelationshipCollection>> ListRelationshipsNextPageAsync(string nextLink, string id, string relationshipName = null, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipCollection>> ListRelationshipsNextPageAsync(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -804,7 +804,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public Response<RelationshipCollection> ListRelationshipsNextPage(string nextLink, string id, string relationshipName = null, DigitalTwinsListRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public Response<RelationshipCollection> ListRelationshipsNextPage(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -831,7 +831,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateListIncomingRelationshipsNextPageRequest(string nextLink, string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
+        internal HttpMessage CreateListIncomingRelationshipsNextPageRequest(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -866,7 +866,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListIncomingRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsNextPageAsync(string nextLink, string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsNextPageAsync(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -907,7 +907,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsListIncomingRelationshipsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public Response<IncomingRelationshipCollection> ListIncomingRelationshipsNextPage(string nextLink, string id, DigitalTwinsListIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
+        public Response<IncomingRelationshipCollection> ListIncomingRelationshipsNextPage(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

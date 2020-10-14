@@ -47,7 +47,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
 
                 // Act - Test publishing telemetry to a digital twin.
-                var telemetryOptions = new DigitalTwinsSendTelemetryOptions()
+                var telemetryOptions = new PublishTelemetryOptions()
                 {
                     TimeStamp = default
                 };
@@ -57,7 +57,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
                 // Act - Test publishing telemetry to a component in a digital twin.
-                var componentTelemetryOptions = new DigitalTwinsSendComponentTelemetryOptions()
+                var componentTelemetryOptions = new PublishComponentTelemetryOptions()
                 {
                     TimeStamp = default
                 };
