@@ -17,8 +17,8 @@ namespace Azure.Core
     /// </summary>
     public class JsonPatchDocument
     {
-        private ObjectSerializer _serializer;
-        private Collection<JsonPatchOperation> Operations { get; }
+        private readonly ObjectSerializer _serializer;
+        private readonly Collection<JsonPatchOperation> _operations;
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonPatchDocument"/> that uses <see cref="JsonObjectSerializer"/> as the default serializer.
@@ -33,7 +33,7 @@ namespace Azure.Core
         /// <param name="serializer">The <see cref="ObjectSerializer"/> instance to use for value serialization.</param>
         public JsonPatchDocument(ObjectSerializer serializer)
         {
-            Operations = new Collection<JsonPatchOperation>();
+            _operations = new Collection<JsonPatchOperation>();
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Core
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>
         public void AppendAddRaw(string path, string rawJsonValue)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, rawJsonValue));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, rawJsonValue));
         }
 
         /// <summary>
@@ -52,10 +52,9 @@ namespace Azure.Core
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="value">The value to add to the path.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        public void AppendAdd<T>(string path, T value, CancellationToken cancellationToken = default)
+        public void AppendAdd<T>(string path, T value)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, Serialize(value, cancellationToken)));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Add, path, null, Serialize(value)));
         }
 
         /// <summary>
@@ -65,17 +64,16 @@ namespace Azure.Core
         /// <param name="rawJsonValue">The raw JSON value to replace with.</param>
         public void AppendReplaceRaw(string path, string rawJsonValue)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, rawJsonValue));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, rawJsonValue));
         }
         /// <summary>
         /// Appends a "replace" operation to this <see cref="JsonPatchDocument"/>.
         /// </summary>
         /// <param name="path">The path to replace.</param>
         /// <param name="value">The value to replace with.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        public void AppendReplace<T>(string path, T value, CancellationToken cancellationToken = default)
+        public void AppendReplace<T>(string path, T value)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, Serialize(value, cancellationToken)));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Replace, path, null, Serialize(value)));
         }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace Azure.Core
         /// <param name="path">The path to copy to.</param>
         public void AppendCopy(string from, string path)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Copy, path, from, null));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Copy, path, from, null));
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace Azure.Core
         /// <param name="path">The path to move to.</param>
         public void AppendMove(string from, string path)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Move, path, from, null));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Move, path, from, null));
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace Azure.Core
         /// <param name="path">The path to remove.</param>
         public void AppendRemove(string path)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Remove, path, null, null));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Remove, path, null, null));
         }
 
         /// <summary>
@@ -114,7 +112,7 @@ namespace Azure.Core
         /// <param name="rawJsonValue">The raw JSON value to test against.</param>
         public void AppendTestRaw(string path, string rawJsonValue)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, rawJsonValue));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, rawJsonValue));
         }
 
         /// <summary>
@@ -122,10 +120,9 @@ namespace Azure.Core
         /// </summary>
         /// <param name="path">The path to test.</param>
         /// <param name="value">The value to replace with.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        public void AppendTest<T>(string path, T value, CancellationToken cancellationToken = default)
+        public void AppendTest<T>(string path, T value)
         {
-            Operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, Serialize(value, cancellationToken)));
+            _operations.Add(new JsonPatchOperation(JsonPatchOperationKind.Test, path, null, Serialize(value)));
         }
 
         /// <summary>
@@ -142,10 +139,16 @@ namespace Azure.Core
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
-        private void WriteTo(Utf8JsonWriter writer)
+        /// <summary>
+        /// Writes the document to a <see cref="Utf8JsonWriter"/> in JSON Path format.
+        /// </summary>
+        /// <param name="writer">The <see cref="Utf8JsonWriter"/> instance to write this document to</param>
+#pragma warning disable AZC0014 // do not expose Json types in public APIs
+        public void WriteTo(Utf8JsonWriter writer)
+#pragma warning restore AZC0014
         {
             writer.WriteStartArray();
-            foreach (var operation in Operations)
+            foreach (var operation in _operations)
             {
                 writer.WriteStartObject();
                 writer.WriteString("op", operation.Kind.ToString());
@@ -165,10 +168,10 @@ namespace Azure.Core
             writer.WriteEndArray();
         }
 
-        private string Serialize<T>(T value, CancellationToken cancellationToken)
+        private string Serialize<T>(T value)
         {
             using MemoryStream memoryStream = new MemoryStream();
-            _serializer.Serialize(memoryStream, value, typeof(T), cancellationToken);
+            _serializer.Serialize(memoryStream, value, typeof(T), default);
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
     }
