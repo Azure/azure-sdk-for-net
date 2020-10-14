@@ -82,25 +82,50 @@ namespace Azure.Core.TestFramework
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
             var path = TestContext.CurrentContext.TestDirectory;
-            var newpath = path.Substring(0, path.IndexOf("artifacts")) + "sdk";
+            var indexartifacts = path.IndexOf("artifacts");
+            if (indexartifacts == -1)
+            {
+                return Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "SessionRecords",
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
+                fileName);
+            }
+            var newpath = path.Substring(0, indexartifacts) + "sdk";
 
             // check if Track 1 or Track 2
-            int firstIndex = path.IndexOf("bin\\") + "bin\\".Length;
+            int firstIndex = path.IndexOf("bin\\");
             int lastIndex = path.LastIndexOf(".Tests");
+            if (firstIndex == -1 || lastIndex == -1)
+            {
+                return Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "SessionRecords",
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
+                fileName);
+            }
+
+            firstIndex += "bin\\".Length;
             var testname = path.Substring(firstIndex, lastIndex - firstIndex);
             var rpname = "";
-            if (testname[0] == 'A') //Track 2
+
+            if (testname.Substring(0,5) == "Azure") //Track 2
             {
                 int rpnamefirstindex = testname.IndexOf("ResourceManager.") + "ResourceManager.".Length;
                 rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
                 rpname.Replace(".", "-");
             }
-            else //Track 1
+            else if (testname.Substring(0,9) == "Management") //Track 1
             {
                 int rpnamefirstindex = testname.IndexOf("Management.") + "Management.".Length;
                 rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
                 rpname.Replace(".", "-");
             }
+            else {
+                return Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "SessionRecords",
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
+                fileName);
+            }
+
             var directories = Directory.GetDirectories(newpath);
             for (int i = 0; i < directories.Length; i++)
             {
@@ -112,8 +137,8 @@ namespace Azure.Core.TestFramework
             {
                 throw new Exception();
             }
-            newpath += "\\" + rpname + "\\";
-            newpath += testname + "\\tests\\";
+
+            newpath += "\\" + rpname + "\\" + testname + "\\tests\\";
             return Path.Combine(newpath,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
