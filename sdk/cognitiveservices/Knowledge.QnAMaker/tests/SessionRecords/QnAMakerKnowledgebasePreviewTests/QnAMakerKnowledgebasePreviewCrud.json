@@ -1,0 +1,957 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/create",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzL2NyZWF0ZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"testqna\",\r\n  \"qnaList\": [\r\n    {\r\n      \"answer\": \"hello\",\r\n      \"questions\": [\r\n        \"hi\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "132"
+        ]
+      },
+      "ResponseHeaders": {
+        "Location": [
+          "/operations/707462a7-f8a2-453e-b596-ba26363479aa"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "1716"
+        ],
+        "apim-request-id": [
+          "6cfd3b6a-bae5-4715-a56b-8b99a7852101"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:34 GMT"
+        ],
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"NotStarted\",\r\n  \"createdTimestamp\": \"2020-10-14T08:28:35.0627291Z\",\r\n  \"lastActionTimestamp\": \"2020-10-14T08:28:35.0627291Z\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "16"
+        ],
+        "apim-request-id": [
+          "3458a825-1201-47de-b092-cfd489aca7c8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:37 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "3d5dadc0-5522-4f82-9799-4e7a1d7b79b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:38 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "8cf742a8-1307-4293-adc6-81ca0ac58ac1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:39 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "743d6bc0-0de9-4168-97c3-b756ac4c6ffc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:40 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "ef99a5a3-9c92-4591-9a81-478f9407bbf2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:41 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "f299260f-226d-4b20-b35f-5ade615d1a3e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:43 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "544cbb57-ad1e-4997-86d3-8551416dd7dd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:45 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "8"
+        ],
+        "apim-request-id": [
+          "76d9876c-5625-4161-8324-6160ed42136c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:46 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:36+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/707462a7-f8a2-453e-b596-ba26363479aa",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNzA3NDYyYTctZjhhMi00NTNlLWI1OTYtYmEyNjM2MzQ3OWFh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "4cebe6c5-ac9b-456e-8262-4f664cddbbbb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:47 GMT"
+        ],
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Succeeded\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:35+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:47+05:30\",\r\n  \"resourceLocation\": \"/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"707462a7-f8a2-453e-b596-ba26363479aa\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzFkZjg2NWQ4LTM5NjgtNGE4OC04YmJiLTQwZDcxNWRmMzZjYg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "11"
+        ],
+        "apim-request-id": [
+          "d25a0c25-4386-44e3-bf85-be9ee83433a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:47 GMT"
+        ],
+        "Content-Length": [
+          "505"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"1df865d8-3968-4a88-8bbb-40d715df36cb\",\r\n  \"hostName\": \"http://svc--runtimeweb.qnamaker-runtime.svc.cluster.local\",\r\n  \"lastAccessedTimestamp\": \"2020-10-14T08:28:38Z\",\r\n  \"lastChangedTimestamp\": \"2020-10-14T08:28:38Z\",\r\n  \"name\": \"testqna\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"urls\": [],\r\n  \"sources\": [\r\n    \"Editorial\"\r\n  ],\r\n  \"language\": \"English\",\r\n  \"enableHierarchicalExtraction\": false,\r\n  \"createdTimestamp\": \"2020-10-14T08:28:38Z\",\r\n  \"defaultAnswer\": \"No good match found in KB\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb/Test/qna",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzFkZjg2NWQ4LTM5NjgtNGE4OC04YmJiLTQwZDcxNWRmMzZjYi9UZXN0L3FuYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "3351"
+        ],
+        "apim-request-id": [
+          "a934cf22-e319-49ff-b594-dbcffc7598a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:51 GMT"
+        ],
+        "Content-Length": [
+          "359"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"qnaDocuments\": [\r\n    {\r\n      \"id\": 1,\r\n      \"answer\": \"hello\",\r\n      \"source\": \"Editorial\",\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"metadata\": [],\r\n      \"alternateQuestionClusters\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"lastUpdatedTimestampUTC\": \"2020-10-14T13:58:40.383+05:30\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb/Test/qna",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzFkZjg2NWQ4LTM5NjgtNGE4OC04YmJiLTQwZDcxNWRmMzZjYi9UZXN0L3FuYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "790"
+        ],
+        "apim-request-id": [
+          "3c0de9af-ab80-4e32-a799-4ef490b70f9b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:58 GMT"
+        ],
+        "Content-Length": [
+          "695"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"qnaDocuments\": [\r\n    {\r\n      \"id\": 1,\r\n      \"answer\": \"hello\",\r\n      \"source\": \"Editorial\",\r\n      \"questions\": [\r\n        \"hi\"\r\n      ],\r\n      \"metadata\": [],\r\n      \"alternateQuestionClusters\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"lastUpdatedTimestampUTC\": \"2020-10-14T13:58:40.383+05:30\"\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"answer\": \"goodbye\",\r\n      \"source\": \"Editorial\",\r\n      \"questions\": [\r\n        \"bye\"\r\n      ],\r\n      \"metadata\": [],\r\n      \"alternateQuestionClusters\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"lastUpdatedTimestampUTC\": \"2020-10-14T13:58:55.545+05:30\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzFkZjg2NWQ4LTM5NjgtNGE4OC04YmJiLTQwZDcxNWRmMzZjYg==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"add\": {\r\n    \"qnaList\": [\r\n      {\r\n        \"answer\": \"goodbye\",\r\n        \"questions\": [\r\n          \"bye\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "146"
+        ]
+      },
+      "ResponseHeaders": {
+        "Location": [
+          "/operations/580849f6-074e-41b9-9b34-42f65c10a0f1"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "60"
+        ],
+        "apim-request-id": [
+          "ab92a9d1-f377-453e-b0ee-1f9c73c712f6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:51 GMT"
+        ],
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"NotStarted\",\r\n  \"createdTimestamp\": \"2020-10-14T08:28:52.0882503Z\",\r\n  \"lastActionTimestamp\": \"2020-10-14T08:28:52.0882503Z\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/580849f6-074e-41b9-9b34-42f65c10a0f1",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNTgwODQ5ZjYtMDc0ZS00MWI5LTliMzQtNDJmNjVjMTBhMGYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "2e89c79e-8dc3-480a-b9c1-f9589aa55e72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:52 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/580849f6-074e-41b9-9b34-42f65c10a0f1",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNTgwODQ5ZjYtMDc0ZS00MWI5LTliMzQtNDJmNjVjMTBhMGYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "46"
+        ],
+        "apim-request-id": [
+          "2534f17a-4ba7-405b-8212-92cffe8a9dec"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:54 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/580849f6-074e-41b9-9b34-42f65c10a0f1",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNTgwODQ5ZjYtMDc0ZS00MWI5LTliMzQtNDJmNjVjMTBhMGYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "f1963153-bea7-4b39-8858-bf18decd12c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:55 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/580849f6-074e-41b9-9b34-42f65c10a0f1",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNTgwODQ5ZjYtMDc0ZS00MWI5LTliMzQtNDJmNjVjMTBhMGYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Retry-After": [
+          "00:00:30"
+        ],
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "8b8cc68b-d65e-4616-8546-5ae069f1daa4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:56 GMT"
+        ],
+        "Content-Length": [
+          "243"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Running\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/operations/580849f6-074e-41b9-9b34-42f65c10a0f1",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL29wZXJhdGlvbnMvNTgwODQ5ZjYtMDc0ZS00MWI5LTliMzQtNDJmNjVjMTBhMGYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "6"
+        ],
+        "apim-request-id": [
+          "8c855fd2-95f5-4be0-893d-4c99c09274f1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:28:58 GMT"
+        ],
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operationState\": \"Succeeded\",\r\n  \"createdTimestamp\": \"2020-10-14T13:58:52+05:30\",\r\n  \"lastActionTimestamp\": \"2020-10-14T13:58:57+05:30\",\r\n  \"resourceLocation\": \"/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb\",\r\n  \"userId\": \"50c22b7204fd4ef8bf9ed68e837abedb\",\r\n  \"operationId\": \"580849f6-074e-41b9-9b34-42f65c10a0f1\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/1df865d8-3968-4a88-8bbb-40d715df36cb",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzFkZjg2NWQ4LTM5NjgtNGE4OC04YmJiLTQwZDcxNWRmMzZjYg==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "c692f6f64dd54468b25eefd0c6c67c71"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29220.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.QnAMakerV2.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "8205"
+        ],
+        "apim-request-id": [
+          "b0ed617e-f75c-4434-9f34-fd0d1b8af009"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 08:29:06 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
