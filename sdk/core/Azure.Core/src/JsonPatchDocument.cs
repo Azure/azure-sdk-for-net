@@ -10,7 +10,7 @@ using System.Threading;
 using Azure.Core.JsonPatch;
 using Azure.Core.Serialization;
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// Represents a JSON Patch document.

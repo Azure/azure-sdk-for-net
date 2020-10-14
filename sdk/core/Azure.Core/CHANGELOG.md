@@ -4,6 +4,7 @@
 
 ### Added
 - The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `JsonPatchDocument` type.
 
 ## 1.5.1 (2020-10-01)
 
