@@ -70,13 +70,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
 
             QueueProcessor queueProcessor = null;
-            // TODO (kasobol-msft) remove SharedBlobQueueProcessorFactory hack.
-            if (HostQueueNames.IsHostQueue(queue.Name) &&
-                !queueProcessorFactory.GetType().Name.Contains("SharedBlobQueueProcessorFactory"))
+            if (HostQueueNames.IsHostQueue(queue.Name))
             {
                 // We only delegate to the processor factory for application queues,
                 // not our built in control queues
-                // We bypass this check for local testing though
                 queueProcessor = new QueueProcessor(context);
             }
             else
