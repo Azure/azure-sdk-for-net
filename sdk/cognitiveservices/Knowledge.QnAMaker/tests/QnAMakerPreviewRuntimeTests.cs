@@ -9,24 +9,31 @@ using Xunit;
 
 namespace QnAMaker.Tests
 {
-    public class QnAMakerRuntimeTests: BaseTests
+    public class QnAMakerPreviewRuntimeTests : BaseTests
     {
         [Fact]
-        public void QnAMakerRuntimeGenerateAnswerTest()
+        public void QnAMakerPreviewRuntimeGenerateAnswerTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "QnAMakerRuntimeGenerateAnswerTest");
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerPreviewRuntimeGenerateAnswerTest");
 
-                var client = GetQnAMakerRuntimeClient(HttpMockServer.CreateInstance());
+                var client = GetQnAMakerPreviewClient(HttpMockServer.CreateInstance());
                 var queryDTO = new QueryDTO();
-                queryDTO.Question = "hi";
+                queryDTO.Question = "new question";
                 queryDTO.IsTest = true;
                 //queryDTO.StrictFiltersCompoundOperationType = StrictFiltersCompoundOperationType.OR;
                 //queryDTO.StrictFilters = new List<MetadataDTO>();
                 //queryDTO.StrictFilters.Add(new MetadataDTO("question", "good afternoon"));
                 //queryDTO.StrictFilters.Add(new MetadataDTO("question", "good morning"));
-                var answer = client.Runtime.GenerateAnswerAsync("07b5a7c3-0119-44b1-a32a-4912205d6217", queryDTO).Result;
+                queryDTO.AnswerSpanRequest = new QueryDTOAnswerSpanRequest
+                {
+                    Enable = true,
+                    TopAnswersWithSpan = 3,
+                    ScoreThreshold = 10.0
+                };
+
+                var answer = client.Knowledgebase.GenerateAnswerAsync("192233e1-0ec8-44dc-8285-57a541b7c79c", queryDTO).Result;
                 Assert.Equal(1, answer.Answers.Count);
                 Assert.Equal(100, answer.Answers[0].Score);
             }

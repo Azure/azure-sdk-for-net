@@ -7,13 +7,13 @@
       "RequestBody": "{\r\n  \"wordAlterations\": [\r\n    {\r\n      \"alterations\": [\r\n        \"qnamaker\",\r\n        \"qna maker\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          ""
+          "7afcaa16ba1747328eb7a77de8316445"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,20 +23,20 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 22 Nov 2018 11:31:43 GMT"
+        "x-envoy-upstream-service-time": [
+          "714"
+        ],
+        "apim-request-id": [
+          "9ef8b9e8-0685-4927-a272-32ffd9a11193"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "apim-request-id": [
-          "9da9a3e5-ef07-4006-88b4-189e2566570c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
+        "Date": [
+          "Wed, 14 Oct 2020 10:12:27 GMT"
         ],
         "Content-Length": [
           "0"
@@ -52,33 +52,33 @@
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          ""
+          "7afcaa16ba1747328eb7a77de8316445"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 22 Nov 2018 11:31:43 GMT"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "197"
         ],
         "apim-request-id": [
-          "22dab7e1-fb34-418c-9a46-9e498228b409"
+          "e54f3f85-4ee1-44c6-84a8-f120a81a109f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 10:12:29 GMT"
+        ],
         "Content-Length": [
-          "122"
+          "113"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

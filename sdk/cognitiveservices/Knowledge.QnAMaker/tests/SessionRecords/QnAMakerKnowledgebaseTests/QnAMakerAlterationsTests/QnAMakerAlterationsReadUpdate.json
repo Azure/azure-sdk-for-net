@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/qnamaker/v5.0-preview.1/alterations",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2FsdGVyYXRpb25z",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"wordAlterations\": [\r\n    {\r\n      \"alterations\": [\r\n        \"qnamaker\",\r\n        \"qna maker\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "7942ed8406a748309d63728b2b7f7378"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4220.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "122"
+        ]
+      },
+      "ResponseHeaders": {
+        "apim-request-id": [
+          "6e01b240-63ba-4198-961e-0eb64c1401f6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 13 Oct 2020 11:47:03 GMT"
+        ],
+        "Content-Length": [
+          "56"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"404\",\r\n    \"message\": \"Resource not found\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

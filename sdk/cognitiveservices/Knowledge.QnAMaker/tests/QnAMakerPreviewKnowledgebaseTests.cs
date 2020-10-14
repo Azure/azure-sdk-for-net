@@ -10,15 +10,15 @@ using Xunit;
 
 namespace QnAMaker.Tests
 {
-    public class QnAMakerKnowledgebaseTests: BaseTests
+    public class QnAMakerPreviewKnowledgebaseTests : BaseTests
     {
         [Fact]
-        public void QnAMakerKnowledgebaseCrud()
+        public void QnAMakerPreviewKnowledgebaseCrud()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "QnAMakerKnowledgebaseCrud");
-                IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerPreviewKnowledgebaseCrud");
+                IQnAMakerClient client = GetQnAMakerPreviewClient(HttpMockServer.CreateInstance());
 
                 // Create
                 var createOp = client.Knowledgebase.CreateAsync(new CreateKbDTO { Name = "testqna", QnaList = new List<QnADTO> { new QnADTO { Questions = new List<string> { "hi" }, Answer = "hello" } } }).Result;

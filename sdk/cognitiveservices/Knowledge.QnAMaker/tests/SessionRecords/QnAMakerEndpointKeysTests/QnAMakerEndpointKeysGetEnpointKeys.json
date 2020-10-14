@@ -7,39 +7,39 @@
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          ""
+          "7afcaa16ba1747328eb7a77de8316445"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 22 Nov 2018 09:36:19 GMT"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "346"
         ],
         "apim-request-id": [
-          "18e34d0e-d33f-4be0-b13f-b5afd2b83755"
+          "ddb6b720-0a44-410c-8b3c-8a5670ba3029"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 14 Oct 2020 10:12:59 GMT"
+        ],
         "Content-Length": [
-          "200"
+          "222"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryEndpointKey\": \"087bdae3-a4d0-4ae7-afdc-9d86d913e738\",\r\n  \"secondaryEndpointKey\": \"07c5ac2a-4eed-4804-af12-844d055240dc\",\r\n  \"installedVersion\": \"4.2.0\",\r\n  \"lastStableVersion\": \"4.2.0\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryEndpointKey\": \"9e0f6780-def9-4f40-ab87-7493951c2c50\",\r\n  \"secondaryEndpointKey\": \"313c263a-8544-4179-8a26-2daa9e65a4c2\",\r\n  \"installedVersion\": \"5.45.0\",\r\n  \"lastStableVersion\": \"5.45.0\",\r\n  \"language\": \"English\"\r\n}",
       "StatusCode": 200
     }
   ],
