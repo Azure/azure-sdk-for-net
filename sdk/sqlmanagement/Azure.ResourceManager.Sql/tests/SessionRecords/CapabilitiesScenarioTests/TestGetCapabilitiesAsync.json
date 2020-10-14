@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f69021a9c010784aacc344e3bf4eabdd-94a4af5a9bf02847-00",
+        "traceparent": "00-e3cca3da9595004ba0f9d1f573032eec-1c881a17b99dac4c-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20200923.1",
-          "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+          "azsdk-net-ResourceManager.Sql/1.0.0-alpha.20201006.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "46e7bef87807aa42083abaa46fc130e0",
+        "x-ms-client-request-id": "0a7429ea243167c1c7c82830afedfdeb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,16 +20,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "821729",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Sep 2020 22:26:03 GMT",
+        "Date": "Tue, 06 Oct 2020 22:34:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d537d73f-c42d-43a3-bdd7-096a11a2d693",
+        "x-ms-correlation-request-id": "09936965-cc92-401e-9208-c26f18a074e5",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "bc55197b-908f-4ff6-9786-3aae545cb604",
-        "x-ms-routing-request-id": "WESTUS2:20200923T222604Z:d537d73f-c42d-43a3-bdd7-096a11a2d693"
+        "x-ms-request-id": "ae1fe88b-c0aa-43a2-b5ba-5da5507323ae",
+        "x-ms-routing-request-id": "WESTUS2:20201006T223439Z:09936965-cc92-401e-9208-c26f18a074e5"
       },
       "ResponseBody": {
         "name": "West US 2",
@@ -66379,7 +66379,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "401778838",
+    "RandomSeed": "1527513249",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

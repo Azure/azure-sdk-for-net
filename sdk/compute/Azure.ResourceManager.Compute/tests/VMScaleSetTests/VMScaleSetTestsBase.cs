@@ -8,17 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 //using Newtonsoft.Json.Linq;
 using CM = Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class VMScaleSetTestsBase :VMTestBase
+    public class VMScaleSetTestsBase : VMTestBase
     {
         public VMScaleSetTestsBase(bool isAsync)
         : base(isAsync)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected VirtualMachineScaleSetExtension GetVmssServiceFabricExtension()
         {
             VirtualMachineScaleSetExtension sfExtension = new VirtualMachineScaleSetExtension(
-                null, "vmsssfext01", "ServiceFabricNode", null, "Microsoft.Azure.ServiceFabric", null,"1.0",true,"{}","{}",null,null);
+                null, "vmsssfext01", "ServiceFabricNode", null, "Microsoft.Azure.ServiceFabric", null, "1.0", true, "{}", "{}", null, null);
 
             return sfExtension;
         }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmScaleSet = new VirtualMachineScaleSet(m_location)
             {
                 Location = m_location,
-                Tags ={ { "RG", "rg" }, { "testTag", "1" } },
+                Tags = { { "RG", "rg" }, { "testTag", "1" } },
                 Sku = new CM.Sku()
                 {
                     Capacity = 2,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 osDisk.Caching = CachingTypes.ReadOnly;
                 osDisk.DiffDiskSettings = new DiffDiskSettings
                 {
-                    Option ="Local",
+                    Option = "Local",
                     //TODO the value of "Placement" may not be given
                     //Placement = DiffDiskPlacement.CacheDisk
                 };
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId);
 
-            return (createOrUpdateResponse,inputVMScaleSet);
+            return (createOrUpdateResponse, inputVMScaleSet);
         }
 
 

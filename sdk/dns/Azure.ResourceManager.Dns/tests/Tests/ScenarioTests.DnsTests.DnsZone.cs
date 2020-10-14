@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Dns.Tests;
 

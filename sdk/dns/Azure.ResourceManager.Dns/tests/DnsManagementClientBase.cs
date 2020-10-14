@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Dns.Tests

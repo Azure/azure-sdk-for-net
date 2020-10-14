@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Compute.Models.Sku;
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore ("this case need to be tested by compute team")]
+        [Ignore("this case need to be tested by compute team")]
         public async Task TestVMScaleSetPatchOperations()
         {
             EnsureClientsInitialized(DefaultLocation);
