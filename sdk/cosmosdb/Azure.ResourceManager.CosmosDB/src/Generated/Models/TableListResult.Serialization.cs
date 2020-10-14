@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TableGetResults> array = new List<TableGetResults>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

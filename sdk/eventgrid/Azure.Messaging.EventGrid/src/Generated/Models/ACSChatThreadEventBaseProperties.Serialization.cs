@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal static ACSChatThreadEventBaseProperties DeserializeACSChatThreadEventBaseProperties(JsonElement element)
         {
             Optional<DateTimeOffset> createTime = default;
-            Optional<int> version = default;
+            Optional<long> version = default;
             Optional<string> recipientId = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
@@ -24,12 +24,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("createTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    version = property.Value.GetInt32();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    version = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("recipientId"))

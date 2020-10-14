@@ -6,30 +6,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Xunit;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using NUnit.Framework;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
-    public class ScanContainersStrategyTests : IClassFixture<AzuriteFixture>
+    public class ScanContainersStrategyTests
     {
-        private readonly AzuriteFixture azuriteFixture;
+        private const string ContainerName = "container-scancontainersstrategytests";
+        private BlobServiceClient blobServiceClient;
 
-        public ScanContainersStrategyTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            blobServiceClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient();
+            blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task TestBlobListener()
         {
-            const string containerName = "container";
-            var account = CreateFakeStorageAccount();
-            var blobServiceClient = account.CreateBlobServiceClient();
-            var container = blobServiceClient.GetBlobContainerClient(containerName);
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             IBlobListenerStrategy product = new ScanContainersStrategy();
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             product.Register(blobServiceClient, container, executor);
@@ -50,11 +49,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             executor.ExecuteLambda = (b) =>
             {
                 count++;
-                Assert.Equal(expectedBlobName, b.Name);
+                Assert.AreEqual(expectedBlobName, b.Name);
                 return true;
             };
             product.Execute();
-            Assert.Equal(1, count);
+            Assert.AreEqual(1, count);
 
             // Now run again; shouldn't show up.
             executor.ExecuteLambda = (_) =>
@@ -62,11 +61,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
                 throw new InvalidOperationException("shouldn't retrigger the same blob");
             };
             product.Execute();
-        }
-
-        private StorageAccount CreateFakeStorageAccount()
-        {
-            return azuriteFixture.GetAccount();
         }
 
         private class LambdaBlobTriggerExecutor : ITriggerExecutor<BlobTriggerExecutorContext>

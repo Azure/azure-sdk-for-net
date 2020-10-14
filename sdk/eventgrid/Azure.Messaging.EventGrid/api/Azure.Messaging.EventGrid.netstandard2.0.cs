@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid
     public partial class EventGridPublisherClientOptions : Azure.Core.ClientOptions
     {
         public EventGridPublisherClientOptions(Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { }
-        public Azure.Core.Serialization.ObjectSerializer DataSerializer { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SenderDisplayName { get { throw null; } }
         public string SenderId { get { throw null; } }
         public string Type { get { throw null; } }
-        public int? Version { get { throw null; } }
+        public long? Version { get { throw null; } }
     }
     public partial class ACSChatMessageReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatMessageEventBaseProperties
     {
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal ACSChatThreadEventBaseProperties() { }
         public System.DateTimeOffset? CreateTime { get { throw null; } }
-        public int? Version { get { throw null; } }
+        public long? Version { get { throw null; } }
     }
     public partial class ACSChatThreadMemberProperties
     {
@@ -153,31 +153,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DeletedBy { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
-    public partial class AcssmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties
     {
-        internal AcssmsDeliveryAttemptProperties() { }
+        internal AcsSmsDeliveryAttemptProperties() { }
         public int? SegmentsFailed { get { throw null; } }
         public int? SegmentsSucceeded { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class AcssmsDeliveryReportReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    public partial class AcsSmsDeliveryReportReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties
     {
-        internal AcssmsDeliveryReportReceivedEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcssmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
+        internal AcsSmsDeliveryReportReceivedEventData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
         public string DeliveryStatus { get { throw null; } }
         public string DeliveryStatusDetails { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
     }
-    public partial class AcssmsEventBaseProperties
+    public partial class AcsSmsEventBaseProperties
     {
-        internal AcssmsEventBaseProperties() { }
+        internal AcsSmsEventBaseProperties() { }
         public string From { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string To { get { throw null; } }
     }
-    public partial class AcssmsReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    public partial class AcsSmsReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsSmsEventBaseProperties
     {
-        internal AcssmsReceivedEventData() { }
+        internal AcsSmsReceivedEventData() { }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
     }
@@ -439,6 +439,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class IotHubDeviceTelemetryEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceTelemetryEventProperties
     {
         internal IotHubDeviceTelemetryEventData() { }
+    }
+    public partial class KeyVaultAccessPolicyChangedEventData
+    {
+        internal KeyVaultAccessPolicyChangedEventData() { }
+        public float? Exp { get { throw null; } }
+        public string Id { get { throw null; } }
+        public float? Nbf { get { throw null; } }
+        public string ObjectName { get { throw null; } }
+        public string ObjectType { get { throw null; } }
+        public string VaultName { get { throw null; } }
+        public string Version { get { throw null; } }
     }
     public partial class KeyVaultCertificateExpiredEventData
     {

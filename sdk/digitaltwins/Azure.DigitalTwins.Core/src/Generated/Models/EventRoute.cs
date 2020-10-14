@@ -14,15 +14,21 @@ namespace Azure.DigitalTwins.Core
     {
         /// <summary> Initializes a new instance of EventRoute. </summary>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public EventRoute(string endpointName)
+        /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="filter"/> is null. </exception>
+        public EventRoute(string endpointName, string filter)
         {
             if (endpointName == null)
             {
                 throw new ArgumentNullException(nameof(endpointName));
             }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             EndpointName = endpointName;
+            Filter = filter;
         }
 
         /// <summary> Initializes a new instance of EventRoute. </summary>

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnConnectionDuration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vpnConnectionDuration = property.Value.GetInt64();
                     continue;
                 }
@@ -60,31 +65,61 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("maxBandwidth"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxBandwidth = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("egressPacketsTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     egressPacketsTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("egressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     egressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("ingressPacketsTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ingressPacketsTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("ingressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ingressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxPacketsPerSecond"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxPacketsPerSecond = property.Value.GetInt64();
                     continue;
                 }

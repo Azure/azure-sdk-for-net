@@ -19,7 +19,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryUri,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
         private const string SchemaContent = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";

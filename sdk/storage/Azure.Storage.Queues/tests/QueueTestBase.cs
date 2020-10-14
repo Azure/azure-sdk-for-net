@@ -52,7 +52,7 @@ namespace Azure.Storage.Queues.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
@@ -219,7 +219,7 @@ namespace Azure.Storage.Queues.Tests
 
             public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
             {
-                await queue.CreateAsync(metadata: metadata);
+                await queue.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingQueue(queue);
             }
 
@@ -234,7 +234,7 @@ namespace Azure.Storage.Queues.Tests
                 {
                     try
                     {
-                        await Queue.DeleteAsync();
+                        await Queue.DeleteIfExistsAsync();
                         Queue = null;
                     }
                     catch
@@ -258,6 +258,54 @@ namespace Azure.Storage.Queues.Tests
                             ExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "raup"
                         }
+                }
+            };
+
+        public QueueServiceProperties GetQueueServiceProperties() =>
+            new QueueServiceProperties()
+            {
+                Logging = new QueueAnalyticsLogging()
+                {
+                    Version = "1.0",
+                    Read = false,
+                    Write = false,
+                    Delete = false,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = false
+                    }
+                },
+                HourMetrics = new QueueMetrics()
+                {
+                    Version = "1.0",
+                    Enabled = true,
+                    IncludeApis = true,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = true,
+                        Days = 7
+                    }
+                },
+                MinuteMetrics = new QueueMetrics()
+                {
+                    Version = "1.0",
+                    Enabled = false,
+                    RetentionPolicy = new QueueRetentionPolicy()
+                    {
+                        Enabled = true,
+                        Days = 7
+                    }
+                },
+                Cors = new[]
+                {
+                    new QueueCorsRule()
+                    {
+                        AllowedOrigins = "http://www.contoso.com,http://www.fabrikam.com",
+                        AllowedMethods = "GET,PUT",
+                        MaxAgeInSeconds = 500,
+                        ExposedHeaders = "x-ms-meta-customheader,x-ms-meta-data*",
+                        AllowedHeaders = "x-ms-meta-customheader,x-ms-meta-target*"
+                    }
                 }
             };
     }

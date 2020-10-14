@@ -20,29 +20,22 @@ namespace Azure.Communication.Administration
     internal partial class CommunicationIdentityRestClient
     {
         private string endpoint;
-        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of CommunicationIdentityRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Auth and Identity endpoint. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-07-20-preview2")
+        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
             this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -55,7 +48,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/identities", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-07-20-preview2", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -110,7 +103,7 @@ namespace Azure.Communication.Administration
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-07-20-preview2", true);
             request.Uri = uri;
             return message;
         }
@@ -168,7 +161,7 @@ namespace Azure.Communication.Administration
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-07-20-preview2", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new CommunicationIdentityUpdateRequest()
@@ -237,7 +230,7 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/token", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2020-07-20-preview2", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");

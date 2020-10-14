@@ -20,11 +20,21 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("payload"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     payload = property.Value.GetObject();
                     continue;
                 }

@@ -6,55 +6,54 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Xunit;
+using Azure.WebJobs.Extensions.Storage.Queues.Tests;
+using Microsoft.Extensions.Hosting;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BinderTests : IClassFixture<AzuriteFixture>
+    public class BinderTests
     {
-        private const string QueueName = "input";
-        private readonly AzuriteFixture azuriteFixture;
+        private const string QueueName = "input-bindertests";
+        private QueueServiceClient queueServiceClient;
 
-        public BinderTests(AzuriteFixture azuriteFixture)
+        [SetUp]
+        public void SetUp()
         {
-            this.azuriteFixture = azuriteFixture;
+            queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
+            queueServiceClient.GetQueueClient(QueueName).DeleteIfExists();
         }
 
-        [Fact]
+        [Test]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange
             const string expectedContents = "abc";
-            var account = CreateFakeStorageAccount();
-            QueueClient queue = CreateQueue(account, QueueName);
+            QueueClient queue = CreateQueue(queueServiceClient, QueueName);
             await queue.SendMessageAsync(expectedContents);
 
             // Act
-            Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerViaIBinderProgram),
+            Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerViaIBinderProgram),
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
+            Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
         }
 
-        private StorageAccount CreateFakeStorageAccount()
+        private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)
         {
-            return azuriteFixture.GetAccount();
-        }
-
-        private static QueueClient CreateQueue(StorageAccount account, string queueName)
-        {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
+            var queue = queueServiceClient.GetQueueClient(queueName);
             queue.CreateIfNotExists();
             return queue;
         }
 
-        private static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType,
+        private async Task<Exception> RunTriggerFailureAsync<TResult>(Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            return await FunctionalTest.RunTriggerFailureAsync<TResult>(account, programType, setTaskSource);
+            return await FunctionalTest.RunTriggerFailureAsync<TResult>(b => {
+                b.AddAzureStorageQueues();
+                b.UseQueueService(queueServiceClient);
+            }, programType, setTaskSource);
         }
 
         private class BindToQueueTriggerViaIBinderProgram

@@ -42,16 +42,31 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("symmetricKey"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     symmetricKey = SymmetricKey.DeserializeSymmetricKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x509Thumbprint"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new AuthenticationMechanismType(property.Value.GetString());
                     continue;
                 }

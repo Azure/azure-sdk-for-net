@@ -44,11 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("kernelspec"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language_info"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);
                     continue;
                 }

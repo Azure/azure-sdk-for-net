@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> A member of the chat thread. </summary>
-    public partial class ChatThreadMemberInternal
+    internal partial class ChatThreadMemberInternal
     {
         /// <summary> Initializes a new instance of ChatThreadMemberInternal. </summary>
         /// <param name="id"> The id of the chat thread member in the format `8:acs:ResourceId_AcsUserId`. </param>

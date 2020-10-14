@@ -4,15 +4,15 @@
 using System;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Newtonsoft.Json.Linq;
-using Xunit;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
     public class QueueCausalityManagerTests
     {
-        [Fact]
+        [Test]
         public void SetOwner_IfEmptyOwner_DoesNotAddOwner()
         {
             // Arrange
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             AssertOwnerIsNull(jobject.ToString());
         }
 
-        [Fact]
+        [Test]
         public void SetOwner_IfValidOwner_AddsOwner()
         {
             // Arrange
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             AssertOwnerEqual(g, jobject.ToString());
         }
 
-        [Fact]
+        [Test]
         public void SetOwner_IfUnsupportedValueType_Throws()
         {
             // Arrange
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             ExceptionAssert.ThrowsArgumentNull(() => QueueCausalityManager.SetOwner(g, jobject), "token");
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageIsNotValidString_ReturnsNull()
         {
             QueueMessage message = CreateMessage("invalid");
@@ -62,31 +62,31 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             TestOwnerIsNull(message);
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageIsNotValidJsonObject_ReturnsNull()
         {
             TestOwnerIsNull("non-json");
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageDoesNotHaveOwnerProperty_ReturnsNull()
         {
             TestOwnerIsNull("{'nonparent':null}");
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageOwnerIsNotString_ReturnsNull()
         {
             TestOwnerIsNull("{'$AzureWebJobsParentId':null}");
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageOwnerIsNotGuid_ReturnsNull()
         {
             TestOwnerIsNull("{'$AzureWebJobsParentId':'abc'}");
         }
 
-        [Fact]
+        [Test]
         public void GetOwner_IfMessageOwnerIsGuid_ReturnsThatGuid()
         {
             Guid expected = Guid.NewGuid();
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         private static void AssertOwnerEqual(Guid expectedOwner, string message)
         {
             Guid? owner = GetOwner(message);
-            Assert.Equal(expectedOwner, owner);
+            Assert.AreEqual(expectedOwner, owner);
         }
 
         private static void TestOwnerEqual(Guid expectedOwner, string message)
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Guid? owner = GetOwner(message);
 
             // Assert
-            Assert.Equal(expectedOwner, owner);
+            Assert.AreEqual(expectedOwner, owner);
         }
 
         private static void TestOwnerIsNull(string message)
