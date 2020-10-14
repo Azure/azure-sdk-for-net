@@ -305,6 +305,30 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListSharesSegmentAsync_EnabledProtocolsAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash,
+                QuotaInGB = 1
+            };
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.AreEqual("NFS", shareItem.Properties.EnabledProtocols);
+            Assert.AreEqual(ShareRootSquash.AllSquash, shareItem.Properties.RootSquash);
+        }
+
+        [Test]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();

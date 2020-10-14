@@ -315,11 +315,11 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task CreateAsync_EnableProtocolAndRootSquash()
+        public async Task CreateAsync_EnabledProtocolsAndRootSquash()
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
@@ -328,14 +328,16 @@ namespace Azure.Storage.Files.Shares.Test
                 QuotaInGB = 1
             };
 
-
             try
             {
                 // Act
                 await share.CreateAsync(options);
 
                 // Assert
-                await share.GetPropertiesAsync();
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(1, response.Value.QuotaInGB);
+                Assert.AreEqual("NFS", response.Value.EnabledProtocols);
+                Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
             }
             finally
             {
@@ -1220,6 +1222,33 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
             Assert.AreEqual(5, response.Value.QuotaInGB);
             Assert.IsNotNull(response.Value.AccessTierChangeTime);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetPropertiesAsync_RootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions createOptions = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs
+            };
+            await share.CreateAsync(createOptions);
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                RootSquash = ShareRootSquash.AllSquash
+            };
+
+            // Act
+            await share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
         }
 
         [Test]
