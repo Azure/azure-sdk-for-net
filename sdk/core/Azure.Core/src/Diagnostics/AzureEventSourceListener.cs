@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Globalization;
+using System.Threading;
 using Azure.Core.Shared;
 
 namespace Azure.Core.Diagnostics
@@ -37,7 +38,6 @@ namespace Azure.Core.Diagnostics
         public AzureEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
         {
             _log = log ?? throw new ArgumentNullException(nameof(log));
-
             _level = level;
 
             foreach (EventSource eventSource in _eventSources)
@@ -73,7 +73,9 @@ namespace Azure.Core.Diagnostics
                 return;
             }
 
-            _log(eventData, EventSourceEventFormatting.Format(eventData));
+            // There is a very tight race during the AzureEventSourceListener creation where EnableEvents was called
+            // and the thread producing events not observing the `_log` field assignment
+            _log?.Invoke(eventData, EventSourceEventFormatting.Format(eventData));
         }
 
         /// <summary>
