@@ -188,18 +188,24 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait for events to become available, if no events can be read from the prefetch queue.  If not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty set is returned.</returns>
         ///
-        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
+        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumEventCount,
                                                                           TimeSpan? maximumWaitTime,
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
-            Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
+            Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
             var receivedEventCount = 0;
             var failedAttemptCount = 0;
@@ -232,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         var messagesReceived = await Task.Factory.FromAsync
                         (
-                            (callback, state) => link.BeginReceiveMessages(maximumMessageCount, waitTime, callback, state),
+                            (callback, state) => link.BeginReceiveMessages(maximumEventCount, waitTime, callback, state),
                             (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
                             TaskCreationOptions.RunContinuationsAsynchronously
                         ).ConfigureAwait(false);
