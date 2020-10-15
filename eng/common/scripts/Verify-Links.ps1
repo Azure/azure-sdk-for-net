@@ -191,7 +191,7 @@ function CheckLink ([System.Uri]$linkUri)
         if ($null -ne $statusCode) {
           Write-Host "[$statusCode] while requesting $linkUri"
         }
-        else {
+        elseif (!$linkUri.ToString().StartsWith("#")) {
           Write-Host "Exception while requesting $linkUri"
           Write-Host $_.Exception.ToString()
         }
