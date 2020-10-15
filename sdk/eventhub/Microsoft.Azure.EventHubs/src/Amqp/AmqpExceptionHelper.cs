@@ -134,7 +134,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             retriableException = null;
 
             // InvalidOperationException with 'connection is closing' message from AMQP layer is retriable.
-            if (exception is OperationCanceledException && exception.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != - 1)
+            if (exception is InvalidOperationException && exception.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != - 1)
             {
                 retriableException = new EventHubsException(true, exception);
             }
