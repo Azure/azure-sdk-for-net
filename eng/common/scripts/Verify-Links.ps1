@@ -203,7 +203,7 @@ function CheckLink ([System.Uri]$linkUri)
     $link = $linkUri.ToString()
     # Check if the url is relative links, suppress the archor link validation.
     if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
-      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
       $linkValid = $false
     }
     # Check if the url is anchor link has any uppercase.
