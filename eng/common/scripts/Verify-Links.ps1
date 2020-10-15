@@ -24,7 +24,7 @@ param (
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 # Regex of the locale keywords.
 $locale = "/en-us/"
-$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
@@ -137,7 +137,7 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 function CheckLink ([System.Uri]$linkUri)
 {
   if(!$linkUri.ToString().Trim()) {
-    LogWarning "Found Empty link. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+    LogWarning "Found Empty link. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
     return $false
   }
   if ($checkedLinks.ContainsKey($linkUri)) { 
@@ -156,7 +156,7 @@ function CheckLink ([System.Uri]$linkUri)
       $linkValid = $false
     }
   }
-  else {
+  elseif($linkUri.IsAbsoluteUri) {
     try {
       $headRequestSucceeded = $true
       try {
@@ -191,7 +191,7 @@ function CheckLink ([System.Uri]$linkUri)
         if ($null -ne $statusCode) {
           Write-Host "[$statusCode] while requesting $linkUri"
         }
-        elseif (!$linkUri.ToString().StartsWith("#")) {
+        else {
           Write-Host "Exception while requesting $linkUri"
           Write-Host $_.Exception.ToString()
         }
@@ -220,6 +220,23 @@ function CheckLink ([System.Uri]$linkUri)
 
   $checkedLinks[$linkUri] = $linkValid
   return $linkValid
+}
+
+function LogWebRequestErrorMessage([int]$statusCode) {
+  if ($statusCode -in $errorStatusCodes) {
+    LogWarning "[$statusCode] broken link $linkUri"
+    return $false
+  }
+  else {
+    if ($null -ne $statusCode) {
+      Write-Host "[$statusCode] while requesting $linkUri"
+    }
+    else {
+      Write-Host "Exception while requesting $linkUri"
+      Write-Host $_.Exception.ToString()
+    }
+  }
+  return $true
 }
 
 function ReplaceGithubLink([string]$originLink) {
