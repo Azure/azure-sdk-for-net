@@ -129,7 +129,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             return new EventHubsException(true, message);
         }
 
-        public static bool TryConvertToRetriableException(Exception exception, out EventHubsException retriableException)
+        public static bool TryTranslateToRetriableException(Exception exception, out EventHubsException retriableException)
         {
             retriableException = null;
 

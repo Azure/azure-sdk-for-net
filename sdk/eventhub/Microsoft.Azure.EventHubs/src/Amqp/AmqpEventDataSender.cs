@@ -83,7 +83,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
                         }
                         catch (Exception ex)
                         {
-                            if (AmqpExceptionHelper.TryConvertToRetriableException(ex, out var retriableEx))
+                            if (AmqpExceptionHelper.TryTranslateToRetriableException(ex, out var retriableEx))
                             {
                                 throw retriableEx;
                             }
