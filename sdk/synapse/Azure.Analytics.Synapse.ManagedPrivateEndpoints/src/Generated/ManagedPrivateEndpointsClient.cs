@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpointProperties properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
             scope.Start();
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpoint> Create(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpointProperties properties, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedPrivateEndpoint> Create(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
             scope.Start();

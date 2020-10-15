@@ -11,7 +11,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     public partial class ManagedPrivateEndpoint
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
-        internal ManagedPrivateEndpoint()
+        public ManagedPrivateEndpoint()
         {
         }
 
@@ -35,6 +35,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <summary> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </summary>
         public string Type { get; }
         /// <summary> Managed private endpoint properties. </summary>
-        public ManagedPrivateEndpointProperties Properties { get; }
+        public ManagedPrivateEndpointProperties Properties { get; set; }
     }
 }

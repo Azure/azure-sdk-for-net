@@ -10,8 +10,19 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpoint
+    public partial class ManagedPrivateEndpoint : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ManagedPrivateEndpoint DeserializeManagedPrivateEndpoint(JsonElement element)
         {
             Optional<string> id = default;

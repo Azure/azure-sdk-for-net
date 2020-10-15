@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
@@ -24,20 +27,42 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
         {
         }
 
-        //[Test]
-        //public async Task TestListSparkApplications()
-        //{
-        //    SparkJobListViewResponse sparkJobList = await MonitoringClient.GetSparkJobListAsync();
-        //    Assert.NotNull(sparkJobList);
-        //    CollectionAssert.IsNotEmpty(sparkJobList.SparkJobs);
-        //}
+        [Test]
+        public async Task TestManagedPrivateEndpoints()
+        {
+            // Create managed a private endpoint
+            string managedVnetName = "default";
+            string managedPrivateEndpointName = Recording.GenerateId("myPrivateEndpoint", 21);
+            string fakedStorageAccountName = Recording.GenerateId("myStorageAccount", 21);
+            string privateLinkResourceId = $"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/{fakedStorageAccountName}";
+            string groupId = "blob";
+            ManagedPrivateEndpoint managedPrivateEndpoint = await ManagedPrivateEndpointsClient.CreateAsync(managedVnetName, managedPrivateEndpointName, new ManagedPrivateEndpoint
+            {
+                Properties = new ManagedPrivateEndpointProperties
+                {
+                    PrivateLinkResourceId = privateLinkResourceId,
+                    GroupId = groupId
+                }
+            });
+            Assert.NotNull(managedPrivateEndpoint);
+            Assert.AreEqual(managedPrivateEndpointName, managedPrivateEndpoint.Name);
+            Assert.AreEqual(privateLinkResourceId, managedPrivateEndpoint.Properties.PrivateLinkResourceId);
+            Assert.AreEqual(groupId, managedPrivateEndpoint.Properties.GroupId);
 
-        //[Test]
-        //public async Task TestSqlQuery()
-        //{
-        //    SqlQueryStringDataModel sqlQuery = await MonitoringClient.GetSqlJobQueryStringAsync();
-        //    Assert.NotNull(sqlQuery);
-        //    Assert.IsNotNull(sqlQuery.Query);
-        //}
+            // List managed private endpoints
+            List<ManagedPrivateEndpoint> privateEndpoints = await ManagedPrivateEndpointsClient.ListAsync(managedVnetName).ToEnumerableAsync();
+            Assert.NotNull(privateEndpoints);
+            CollectionAssert.IsNotEmpty(privateEndpoints);
+            Assert.IsTrue(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName));
+
+            // Get managed private endpoint
+            ManagedPrivateEndpoint privateEndpoint = await ManagedPrivateEndpointsClient.GetAsync(managedVnetName, managedPrivateEndpointName);
+            Assert.AreEqual(managedPrivateEndpointName, privateEndpoint.Name);
+
+            // Delete managed private endpoint
+            await ManagedPrivateEndpointsClient.DeleteAsync(managedVnetName, managedPrivateEndpointName);
+            privateEndpoints = await ManagedPrivateEndpointsClient.ListAsync(managedVnetName).ToEnumerableAsync();
+            Assert.IsFalse(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName));
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     /// </summary>
     public class ManagedPrivateEndpointsClientOptions : ClientOptions
     {
-        private const ServiceVersion Latest = ServiceVersion.V2019_11_01_preview;
+        private const ServiceVersion Latest = ServiceVersion.V2019_06_01_preview;
 
         internal static ManagedPrivateEndpointsClientOptions Default { get; } = new ManagedPrivateEndpointsClientOptions();
 
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         {
             VersionString = serviceVersion switch
             {
-                ServiceVersion.V2019_11_01_preview => "2019-11-01-preview",
+                ServiceVersion.V2019_06_01_preview => "2019-06-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
             };
         }
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             /// The 2019-06-01-preview of the template service.
             /// </summary>
 #pragma warning disable CA1707
-            V2019_11_01_preview = 1
+            V2019_06_01_preview = 1
 #pragma warning restore CA1707
         }
     }
