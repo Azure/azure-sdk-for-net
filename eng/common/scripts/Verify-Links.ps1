@@ -208,7 +208,7 @@ function CheckLink ([System.Uri]$linkUri)
     }
     # Check if the url is anchor link has any uppercase.
     if ($link -cmatch '#[^?]*[A-Z]') {
-      LogWarning "Please lower case your anchor links. $linkUri"
+      LogWarning "Please lower case your anchor tags (i.e. anything after '#' in your link '$linkUri'. Check here for more information: https://aka.ms/azsdk/guideline/links"
       $linkValid = $false
     }
      # Check if link uri includes locale info.
