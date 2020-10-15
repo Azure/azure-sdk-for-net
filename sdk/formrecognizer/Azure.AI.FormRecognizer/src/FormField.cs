@@ -56,10 +56,9 @@ namespace Azure.AI.FormRecognizer.Models
                 // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                // Issue https://github.com/Azure/azure-sdk-for-net/issues/15845
-                int page = fieldValue.Page.HasValue ? fieldValue.Page.Value : 1;
+                int fieldPage = fieldValue.Page.HasValue ? fieldValue.Page.Value : CalculatePage(fieldValue);
 
-                ValueData = new FieldData(boundingBox, page, fieldValue.Text, fieldElements);
+                ValueData = new FieldData(boundingBox, fieldPage, fieldValue.Text, fieldElements);
             }
 
             Value = new FieldValue(fieldValue, readResults);
@@ -162,6 +161,30 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+        }
+
+        /// <summary>
+        /// Business Cards pre-built model doesn't return a page number for the `ContactNames` field.
+        /// This function looks into the FieldValue_internal to see if it corresponds to
+        /// `ContactNames` and verifies that the page value before returning it.
+        /// </summary>
+        /// <returns>Page value if the field is `ContactNames` for Business cards. If not, defaults to 1.</returns>
+        private static int CalculatePage(FieldValue_internal field)
+        {
+            int page = 1;
+            if (field.Type == FieldValueType.Dictionary)
+            {
+                IReadOnlyDictionary<string, FieldValue_internal> possibleContactNamesField = field.ValueObject;
+                if (possibleContactNamesField.Count == 2 && possibleContactNamesField.ContainsKey("FirstName")
+                    && possibleContactNamesField.ContainsKey("LastName"))
+                {
+                    if (possibleContactNamesField["FirstName"].Page == possibleContactNamesField["LastName"].Page)
+                    {
+                        page = possibleContactNamesField["FirstName"].Page.Value;
+                    }
+                }
+            }
+            return page;
         }
     }
 }
