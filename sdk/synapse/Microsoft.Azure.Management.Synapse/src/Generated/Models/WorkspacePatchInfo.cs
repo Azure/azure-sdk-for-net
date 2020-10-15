@@ -36,13 +36,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="tags">Resource tags</param>
         /// <param name="identity">The identity of the workspace</param>
+        /// <param name="managedVirtualNetworkSettings">Managed Virtual Network
+        /// Settings</param>
         /// <param name="sqlAdministratorLoginPassword">SQL administrator login
         /// password</param>
         /// <param name="provisioningState">Resource provisioning state</param>
-        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), string provisioningState = default(string))
+        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), WorkspacePatchInfoManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(WorkspacePatchInfoManagedVirtualNetworkSettings), string sqlAdministratorLoginPassword = default(string), string provisioningState = default(string))
         {
             Tags = tags;
             Identity = identity;
+            ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
             SqlAdministratorLoginPassword = sqlAdministratorLoginPassword;
             ProvisioningState = provisioningState;
             CustomInit();
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public ManagedIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed Virtual Network Settings
+        /// </summary>
+        [JsonProperty(PropertyName = "managedVirtualNetworkSettings")]
+        public WorkspacePatchInfoManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
 
         /// <summary>
         /// Gets or sets SQL administrator login password
