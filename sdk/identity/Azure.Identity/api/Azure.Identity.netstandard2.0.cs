@@ -24,11 +24,6 @@ namespace Azure.Identity
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
         public Azure.Core.TokenRequestContext TokenRequestContext { get { throw null; } }
     }
-    public partial class AuthenticationTokenRecord : Azure.Identity.AuthenticationRecord
-    {
-        internal AuthenticationTokenRecord() { }
-        public Azure.Core.AccessToken AccessToken { get { throw null; } set { } }
-    }
     public partial class AuthorizationCodeCredential : Azure.Core.TokenCredential
     {
         protected AuthorizationCodeCredential() { }
@@ -221,6 +216,8 @@ namespace Azure.Identity
         public SharedTokenCacheCredentialOptions() { }
         public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCache tokenCache) { }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public bool EnableGuestTenantAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCache TokenCache { get { throw null; } }
         public string Username { get { throw null; } set { } }
