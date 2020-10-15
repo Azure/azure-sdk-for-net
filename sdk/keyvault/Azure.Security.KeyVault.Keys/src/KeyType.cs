@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Keys
         internal const string RsaValue = "RSA";
         internal const string RsaHsmValue = "RSA-HSM";
         internal const string OctValue = "oct";
+        internal const string OctHsmValue = "oct-HSM";
 
         private readonly string _value;
 
@@ -52,6 +53,11 @@ namespace Azure.Security.KeyVault.Keys
         /// An AES cryptographic algorithm.
         /// </summary>
         public static KeyType Oct { get; } = new KeyType(OctValue);
+
+        /// <summary>
+        /// An AES cryptographic algorithm backed by HSM.
+        /// </summary>
+        public static KeyType OctHsm { get; } = new KeyType(OctHsmValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyType"/> values are the same.

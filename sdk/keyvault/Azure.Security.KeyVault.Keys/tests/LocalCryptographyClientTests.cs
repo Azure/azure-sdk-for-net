@@ -385,6 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return new JsonWebKey(RSA.Create(), includePrivateParameters, keyOps);
 
                 case KeyType.OctValue:
+                case KeyType.OctHsmValue:
                     return new JsonWebKey(Aes.Create(), keyOps);
 
                 default:
