@@ -358,7 +358,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// await client.GetComponentAsync(basicDtId, SamplesConstants.componentName);
+        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
