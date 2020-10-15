@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
+        /// <param name="powerState">Represents the Power State of the
+        /// cluster</param>
         /// <param name="maxAgentPools">The max number of agent pools for the
         /// managed cluster.</param>
         /// <param name="kubernetesVersion">Version of Kubernetes specified
@@ -83,10 +85,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="identity">The identity of the managed cluster, if
         /// configured.</param>
         /// <param name="sku">The managed cluster SKU.</param>
-        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), int? maxAgentPools = default(int?), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), string privateFQDN = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterWindowsProfile windowsProfile = default(ManagedClusterWindowsProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), bool? enablePodSecurityPolicy = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), ManagedClusterPropertiesAutoScalerProfile autoScalerProfile = default(ManagedClusterPropertiesAutoScalerProfile), ManagedClusterAPIServerAccessProfile apiServerAccessProfile = default(ManagedClusterAPIServerAccessProfile), string diskEncryptionSetID = default(string), IDictionary<string, ManagedClusterPropertiesIdentityProfileValue> identityProfile = default(IDictionary<string, ManagedClusterPropertiesIdentityProfileValue>), ManagedClusterIdentity identity = default(ManagedClusterIdentity), ManagedClusterSKU sku = default(ManagedClusterSKU))
+        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), PowerState powerState = default(PowerState), int? maxAgentPools = default(int?), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), string privateFQDN = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterWindowsProfile windowsProfile = default(ManagedClusterWindowsProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), bool? enablePodSecurityPolicy = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), ManagedClusterPropertiesAutoScalerProfile autoScalerProfile = default(ManagedClusterPropertiesAutoScalerProfile), ManagedClusterAPIServerAccessProfile apiServerAccessProfile = default(ManagedClusterAPIServerAccessProfile), string diskEncryptionSetID = default(string), IDictionary<string, ManagedClusterPropertiesIdentityProfileValue> identityProfile = default(IDictionary<string, ManagedClusterPropertiesIdentityProfileValue>), ManagedClusterIdentity identity = default(ManagedClusterIdentity), ManagedClusterSKU sku = default(ManagedClusterSKU))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
+            PowerState = powerState;
             MaxAgentPools = maxAgentPools;
             KubernetesVersion = kubernetesVersion;
             DnsPrefix = dnsPrefix;
@@ -122,6 +125,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets represents the Power State of the cluster
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.powerState")]
+        public PowerState PowerState { get; private set; }
 
         /// <summary>
         /// Gets the max number of agent pools for the managed cluster.
