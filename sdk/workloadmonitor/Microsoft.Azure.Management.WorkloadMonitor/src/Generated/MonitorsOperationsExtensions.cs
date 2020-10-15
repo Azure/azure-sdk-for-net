@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='expand'>
             /// ex: $expand=evidence,configuration
             /// </param>
-            public static IPage<Models.Monitor> List(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string))
+            public static IPage<Monitor> List(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string))
             {
                 return operations.ListAsync(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, filter, expand).GetAwaiter().GetResult();
             }
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Models.Monitor>> ListAsync(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Monitor>> ListAsync(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, filter, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='expand'>
             /// ex: $expand=evidence,configuration
             /// </param>
-            public static Models.Monitor Get(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string))
+            public static Monitor Get(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string))
             {
                 return operations.GetAsync(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, monitorId, expand).GetAwaiter().GetResult();
             }
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Models.Monitor> GetAsync(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Monitor> GetAsync(this IMonitorsOperations operations, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, monitorId, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Models.Monitor> ListNext(this IMonitorsOperations operations, string nextPageLink)
+            public static IPage<Monitor> ListNext(this IMonitorsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Models.Monitor>> ListNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Monitor>> ListNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Models.Monitor>>> ListWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Monitor>>> ListWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the current status of a monitor of a resource.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Models.Monitor>> GetWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Monitor>> GetWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get history of a monitor of a resource (with optional filter).
         /// </summary>
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Models.Monitor>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Monitor>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get history of a monitor of a resource (with optional filter).
         /// </summary>
