@@ -85,6 +85,13 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorContainsRoomPayload)
                     .ConfigureAwait(false);
 
+                await client
+                    .CreateRelationshipAsync(
+                        floorTwinId,
+                        floorContainsRoomRelationshipId,
+                        floorContainsRoomPayload)
+                    .ConfigureAwait(false);
+
                 // create Relationship from Floor -> Hvac
                 await client
                     .CreateRelationshipAsync(
