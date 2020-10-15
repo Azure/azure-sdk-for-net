@@ -67,6 +67,7 @@ jobs:
         inputs:
           versionSpec: "3.6"
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
         parameters:
           Directory: ''
           Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- *.md)
