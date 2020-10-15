@@ -50,16 +50,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("computeType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     computeType = new DataFlowComputeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("coreCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("timeToLive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeToLive = property.Value.GetInt32();
                     continue;
                 }

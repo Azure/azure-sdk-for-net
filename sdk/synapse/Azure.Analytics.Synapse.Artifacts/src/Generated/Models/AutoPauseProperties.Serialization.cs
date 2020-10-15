@@ -36,11 +36,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("delayInMinutes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     delayInMinutes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("enabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }

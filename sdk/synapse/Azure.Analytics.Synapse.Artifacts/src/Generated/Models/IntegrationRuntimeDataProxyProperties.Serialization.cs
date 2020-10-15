@@ -42,11 +42,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("connectVia"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectVia = EntityReference.DeserializeEntityReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
                     continue;
                 }

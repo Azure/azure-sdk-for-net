@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<DayOfWeek> array = new List<DayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToDayOfWeek());

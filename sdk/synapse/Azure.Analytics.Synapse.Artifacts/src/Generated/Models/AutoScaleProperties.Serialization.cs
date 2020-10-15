@@ -42,16 +42,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("minNodeCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minNodeCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("enabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("maxNodeCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxNodeCount = property.Value.GetInt32();
                     continue;
                 }
