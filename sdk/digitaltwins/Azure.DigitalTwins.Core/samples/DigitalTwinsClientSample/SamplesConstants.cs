@@ -94,7 +94,7 @@ namespace Azure.DigitalTwins.Core.Samples
             }";
 
         /// <summary>
-        /// Path for component.
+        /// Name for component.
         /// </summary>
         public const string ComponentName = "Component1";
 
