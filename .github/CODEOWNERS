@@ -78,7 +78,7 @@
 
 # > Service: ARM - Core
 # ServiceLabel: %ARM - Core %Service Attention
-#/<NotInRepo>/            @armleads-azure
+/sdk/core/Azure.Core           @armleads-azure
 
 # > Service: ARM - Managed Applications
 # ServiceLabel: %ARM - Managed Applications %Service Attention
@@ -296,7 +296,7 @@
 
 # > Service: Cosmos
 # ServiceLabel: %Cosmos %Service Attention
-#/<NotInRepo>/            @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
+/sdk/cosmosdb/          @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
 
 # > Service: Cost Management
 # ServiceLabel: %Cost Management %Service Attention
@@ -430,7 +430,7 @@
 
 # > Service: Lab Services
 # ServiceLabel: %Lab Services %Service Attention
-#/<NotInRepo>/            @Tanmayeekamath
+sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
 
 # > Service: Logic App
 # ServiceLabel: %Logic App %Service Attention
@@ -482,7 +482,7 @@
 
 # > Service: Monitor
 # ServiceLabel: %Monitor %Service Attention
-#/<NotInRepo>/            @SameergMS @dadunl
+sdk/monitor/           @SameergMS @dadunl
 
 # > Service: Monitor - ApplicationInsights
 # PRLabel: %Monitor - ApplicationInsights
@@ -528,7 +528,7 @@
 
 # > Service: Network
 # ServiceLabel: %Network %Service Attention
-#/<NotInRepo>/            @aznetsuppgithub
+sdk/network/           @aznetsuppgithub
 
 # > Service: Network - Application Gateway
 # ServiceLabel: %Network - Application Gateway %Service Attention
@@ -540,7 +540,7 @@
 
 # > Service: Network - CDN
 # ServiceLabel: %Network - CDN %Service Attention
-#/<NotInRepo>/            @cdnfdsuppgithub
+sdk/cdn/Microsoft.Azure.Management.Cdn/         @cdnfdsuppgithub
 
 # > Service: Network - DDOS Protection
 # ServiceLabel: %Network - DDOS Protection %Service Attention
@@ -576,7 +576,7 @@
 
 # > Service: Network - DNS
 # ServiceLabel: %Network - DNS %Service Attention
-#/<NotInRepo>/            @dnssuppgithub
+sdk/dns/            @dnssuppgithub
 
 # > Service: Network - Network Virtual Appliance
 # ServiceLabel: %Network - Network Virtual Appliance %Service Attention
@@ -584,7 +584,7 @@
 
 # > Service: Network - Traffic Manager
 # ServiceLabel: %Network - Traffic Manager %Service Attention
-#/<NotInRepo>/            @tmsuppgithub
+sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsuppgithub
 
 # > Service: Network - Virtual WAN
 # ServiceLabel: %Network - Virtual WAN %Service Attention
@@ -692,7 +692,7 @@
 
 # > Service: SQL - VM
 # ServiceLabel: %SQL - VM %Service Attention
-#/<NotInRepo>/            @azureSQLGitHub
+/sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine/            @azureSQLGitHub
 
 # > Service: SQL - Backup & Restore
 # ServiceLabel: %SQL - Backup & Restore %Service Attention
