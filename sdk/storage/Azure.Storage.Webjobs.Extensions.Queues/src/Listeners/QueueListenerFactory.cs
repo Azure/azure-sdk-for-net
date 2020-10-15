@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
             QueuesOptions queuesOptions, IMessageEnqueuedWatcher sharedWatcher)
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue);
 
             QueueProcessor queueProcessor = null;
             if (HostQueueNames.IsHostQueue(queue.Name))

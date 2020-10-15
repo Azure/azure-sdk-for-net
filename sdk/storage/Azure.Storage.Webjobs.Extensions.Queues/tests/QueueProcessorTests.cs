@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             _poisonQueue = _fixture.PoisonQueue;
 
             _queuesOptions = new QueuesOptions();
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions);
             _processor = new QueueProcessor(context);
         }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 VisibilityTimeout = TimeSpan.FromSeconds(30),
                 MaxPollingInterval = TimeSpan.FromSeconds(15)
             };
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, options);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, options);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             Assert.AreEqual(options.BatchSize, localProcessor.QueuesOptions.BatchSize);
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Test]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 })
                 .ReturnsAsync(Response.FromValue(QueuesModelFactory.UpdateReceipt("x", DateTimeOffset.UtcNow.AddMinutes(5)), null));
 
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queueClientMock.Object, null, queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(queueClientMock.Object, null, queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             string messageContent = Guid.NewGuid().ToString();
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Test]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             private BlobQueueTriggerExecutor _executor;
 
             public SharedBlobQueueProcessor(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, QueuesOptions queuesOptions)
-                : base(new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue)) {
+                : base(new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue)) {
                 _executor = triggerExecutor;
             }
 

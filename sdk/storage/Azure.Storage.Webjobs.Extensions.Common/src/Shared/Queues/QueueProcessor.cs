@@ -34,19 +34,19 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        /// <param name="context">The factory context.</param>
-        public QueueProcessor(QueueProcessorFactoryContext context)
+        /// <param name="queueProcessorOptions">The options.</param>
+        internal protected QueueProcessor(QueueProcessorOptions queueProcessorOptions)
         {
-            if (context == null)
+            if (queueProcessorOptions == null)
             {
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException(nameof(queueProcessorOptions));
             }
 
-            _queue = context.Queue;
-            _poisonQueue = context.PoisonQueue;
-            _logger = context.Logger;
+            _queue = queueProcessorOptions.Queue;
+            _poisonQueue = queueProcessorOptions.PoisonQueue;
+            _logger = queueProcessorOptions.Logger;
 
-            QueuesOptions = context.Options;
+            QueuesOptions = queueProcessorOptions.Options;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>True if the message processing should continue, false otherwise.</returns>
-        public virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        internal protected virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             if (message.DequeueCount > QueuesOptions.MaxDequeueCount)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        public virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
+        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result.Succeeded)
             {

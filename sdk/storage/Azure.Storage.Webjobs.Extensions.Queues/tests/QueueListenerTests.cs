@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
             QueuesOptions queuesOptions = new QueuesOptions();
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_mockQueue.Object, _loggerFactory, queuesOptions);
+            QueueProcessorOptions context = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, queuesOptions);
 
             _mockQueueProcessor = new Mock<QueueProcessor>(MockBehavior.Strict, context);
             QueuesOptions queueConfig = new QueuesOptions
@@ -491,9 +491,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
-            QueueProcessorFactoryContext processorFactoryContext = null;
-            mockQueueProcessorFactory.Setup(p => p.Create(It.IsAny<QueueProcessorFactoryContext>()))
-                .Callback<QueueProcessorFactoryContext>((mockProcessorContext) =>
+            QueueProcessorOptions processorFactoryContext = null;
+            mockQueueProcessorFactory.Setup(p => p.Create(It.IsAny<QueueProcessorOptions>()))
+                .Callback<QueueProcessorOptions>((mockProcessorContext) =>
                 {
                     processorFactoryInvoked = true;
 

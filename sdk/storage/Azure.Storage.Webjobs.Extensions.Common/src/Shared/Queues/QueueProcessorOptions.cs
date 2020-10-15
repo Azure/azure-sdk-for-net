@@ -10,11 +10,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 {
 #if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
     /// <summary>
-    /// Provides context input for <see cref="IQueueProcessorFactory"/>.
+    /// Provides options input for creating<see cref="QueueProcessor"/>.
     /// </summary>
-    public partial class QueueProcessorFactoryContext
+    public partial class QueueProcessorOptions
 #else
-    internal partial class QueueProcessorFactoryContext
+    internal partial class QueueProcessorOptions
 #endif
     {
         /// <summary>
@@ -22,25 +22,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="queue">TODO.</param>
         /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
+        /// <param name="options">The queue configuration.</param>
         /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
-        public QueueProcessorFactoryContext(QueueClient queue, ILoggerFactory loggerFactory, QueueClient poisonQueue = null)
+        internal QueueProcessorOptions(QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions options, QueueClient poisonQueue = null)
         {
             Queue = queue ?? throw new ArgumentNullException(nameof(queue));
             PoisonQueue = poisonQueue;
             Logger = loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("Queue"));
-        }
-
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="queue">TODO.</param>
-        /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
-        /// <param name="options">The queue configuration.</param>
-        /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
-        // TODO (kasobol-msft) this was internal - hide after decoupling blobs.
-        public QueueProcessorFactoryContext(QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions options, QueueClient poisonQueue = null)
-            : this(queue, loggerFactory, poisonQueue)
-        {
             Options = options;
         }
 

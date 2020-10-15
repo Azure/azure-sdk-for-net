@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             var queueClient = Convert(queue);
             var poisonQueueClient = Convert(poisonQueue);
-            var queueProcessor = new QueueProcessor(new QueueProcessorFactoryContext(queueClient, _loggerFactory, _queueOptions, poisonQueueClient));
+            var queueProcessor = new QueueProcessor(new QueueProcessorOptions(queueClient, _loggerFactory, _queueOptions, poisonQueueClient));
             QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedWatcher);
             IListener listener = new QueueListener(queueClient,
                 poisonQueue: poisonQueueClient,

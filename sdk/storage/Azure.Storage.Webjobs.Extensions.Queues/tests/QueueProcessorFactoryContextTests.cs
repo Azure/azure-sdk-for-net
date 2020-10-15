@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueProcessorFactoryContextTests
+    public class QueueProcessorOptionsTests
     {
         [Test]
         public void Constructor_DefaultsValues()
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             loggerFactory.AddProvider(new TestLoggerProvider());
             QueuesOptions queuesOptions = new QueuesOptions();
 
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue);
 
             Assert.AreSame(queue, context.Queue);
             Assert.AreSame(poisonQueue, context.PoisonQueue);
