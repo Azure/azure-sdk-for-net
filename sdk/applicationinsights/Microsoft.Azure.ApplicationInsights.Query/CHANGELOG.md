@@ -1,4 +1,4 @@
-## 0.9.1 (2020-10-14)
+## 1.0.0 (2020-10-15)
 
 - Release non-preview version
 - Bug fix: custom measurements not deserialized from response https://github.com/Azure/azure-sdk-for-net/issues/15524
