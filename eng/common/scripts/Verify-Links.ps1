@@ -222,22 +222,6 @@ function CheckLink ([System.Uri]$linkUri)
   return $linkValid
 }
 
-function LogWebRequestErrorMessage([int]$statusCode) {
-  if ($statusCode -in $errorStatusCodes) {
-    LogWarning "[$statusCode] broken link $linkUri"
-    return $false
-  }
-  else {
-    if ($null -ne $statusCode) {
-      Write-Host "[$statusCode] while requesting $linkUri"
-    }
-    else {
-      Write-Host "Exception while requesting $linkUri"
-      Write-Host $_.Exception.ToString()
-    }
-  }
-  return $true
-}
 
 function ReplaceGithubLink([string]$originLink) {
   if (!$branchReplacementName) {
