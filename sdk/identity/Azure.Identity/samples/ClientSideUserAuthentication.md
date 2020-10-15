@@ -22,7 +22,7 @@ As code uses the `SecretClient` in the above sample, the `InteractiveBrowserCred
 For terminal clients without an available web browser, or clients with limited UI capabilities the `DeviceCodeCredential` provides the ability to authenticate any client using a device code. The next sample shows authenticating a `BlobClient` using the `DeviceCodeCredential`.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_SimpleDeviceCode
-var credential = new DeviceCodeCredential((deviceCodeInfo, _) => { Console.WriteLine(deviceCodeInfo.Message); return Task.CompletedTask; });
+var credential = new DeviceCodeCredential();
 
 var client = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
 ```
