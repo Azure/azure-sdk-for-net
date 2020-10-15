@@ -156,7 +156,7 @@ function CheckLink ([System.Uri]$linkUri)
       $linkValid = $false
     }
   }
-  elseif($linkUri.IsAbsoluteUri) {
+  elseif ($linkUri.IsAbsoluteUri) {
     try {
       $headRequestSucceeded = $true
       try {
