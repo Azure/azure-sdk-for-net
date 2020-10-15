@@ -4,7 +4,7 @@
 using Azure.Core;
 using System;
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.ManagedVirtualNetwork
 {
     /// <summary>
     /// The options for <see cref="ManagedPrivateEndpointsClient"/>.

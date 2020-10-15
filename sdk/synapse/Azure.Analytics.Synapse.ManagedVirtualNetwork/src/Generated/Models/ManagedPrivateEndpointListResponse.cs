@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
+namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
 {
     /// <summary> A list of managed private endpoints. </summary>
     public partial class ManagedPrivateEndpointListResponse

@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.ManagedVirtualNetwork
 {
     public partial class ManagedPrivateEndpointsClient
     {

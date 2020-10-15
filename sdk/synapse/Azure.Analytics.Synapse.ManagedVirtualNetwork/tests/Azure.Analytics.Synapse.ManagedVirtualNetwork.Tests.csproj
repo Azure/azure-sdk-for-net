@@ -17,6 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Analytics.Synapse.ManagedPrivateEndpoints.csproj" />
+    <ProjectReference Include="..\src\Azure.Analytics.Synapse.ManagedVirtualNetwork.csproj" />
   </ItemGroup>
 </Project>

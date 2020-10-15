@@ -4,11 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
+using Azure.Analytics.Synapse.ManagedVirtualNetwork.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.Tests.ManagedVirtualNetwork
 {
     /// <summary>
     /// The suite of tests for the <see cref="ManagedPrivateEndpointsClient"/> class.
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
         [Test]
         public async Task TestManagedPrivateEndpoints()
         {
-            // Create managed a private endpoint
+            // Create a managed private endpoint
             string managedVnetName = "default";
             string managedPrivateEndpointName = Recording.GenerateId("myPrivateEndpoint", 21);
             string fakedStorageAccountName = Recording.GenerateId("myStorageAccount", 21);

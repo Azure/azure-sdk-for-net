@@ -4,6 +4,10 @@ This directory contains the open source subset of the .NET SDK. For documentatio
 
 Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
 
+Managed private endpoints are private endpoints created in the Managed workspace Microsoft Azure Virtual Network establishing a private link to Azure resources. Azure Synapse manages these private endpoints on your behalf.
+
+The Azure Synapse Analytics managed virtual network client library enables programmatically managing private endpoints.
+
 ## Getting started
 
 The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
@@ -35,7 +39,7 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [MonitoringClient][monitoring_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [ManagedPrivateEndpointClient][managed_priate_endpoint_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
@@ -47,30 +51,54 @@ Install-Package Azure.Identity
 
 ## Key concepts
 
-### MonitoringClient
-With a `MonitoringClient` you can get list of Spark applications or SQL OD/DW query for the workspace.
+### ManagedPrivateEndpointClient
+With a `ManagedPrivateEndpointClient` you can get private endpoints from the workspace, create new private endpoint and delete private endpoints.
 
 ## Examples
-The Azure.Analytics.Synapse.Monitoring package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics monitoring related tasks:
+The Azure.Analytics.Synapse.ManagedVirtualNetwork package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics monitoring related tasks:
 
-### Monitoring examples
-* [Get list of Spark applications](#get-list-of-spark-applications)
-* [Get SQL query](#get-sql-query)
+### Private endpoints examples
+* [Create a private endpoint](#create-a-private-endpoint)
+* [Retrieve a private endpoint](#retrieve-a-private-endpoint)
+* [List private endpoints](#list-private-endpoints)
+* [Delete a private endpoint](#delete-a-private-endpoint)
 
-### Get list of Spark applications
+### Create a private endpoint
 
-`GetSparkJobList` gets a list of spark applications for the workspace.
-
-```C# Snippet:GetSparkJobList
-SparkJobListViewResponse sparkJobList = MonitoringClient.GetSparkJobList();
+```C# Snippet:Create a managed private endpoint
+string managedVnetName = "default";
+string managedPrivateEndpointName = "myPrivateEndpoint";
+string fakedStorageAccountName = "myStorageAccount";
+string privateLinkResourceId = $"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/{fakedStorageAccountName}";
+string groupId = "blob";
+client.Create(managedVnetName, managedPrivateEndpointName, new ManagedPrivateEndpoint
+{
+    Properties = new ManagedPrivateEndpointProperties
+    {
+        PrivateLinkResourceId = privateLinkResourceId,
+        GroupId = groupId
+    }
+});
 ```
 
-### Get SQl query
+### Retrieve a private endpoint
 
-`GetSqlJobQueryString` gets the SQL OD/DW query
+```C# Snippet:Retrieve a managed private endpoint
+ManagedPrivateEndpoint retrievedPrivateEndpoint = client.Get(managedVnetName, managedPrivateEndpointName);
+Console.WriteLine(retrievedPrivateEndpoint.Id);
+```
 
-```C# Snippet:
-SqlQueryStringDataModel sqlQuery = MonitoringClient.GetSqlJobQueryString();
+### List private endpoints
+
+```C# Snippet:List managed private endpoints
+ManagedPrivateEndpoint retrievedPrivateEndpoint = client.Get(managedVnetName, managedPrivateEndpointName);
+Console.WriteLine(retrievedPrivateEndpoint.Id);
+```
+
+### Delete a private endpoint
+
+```C# Snippet:Delete a managed private endpoint
+client.Delete(managedVnetName, managedPrivateEndpointName);
 ```
 
 ## To build

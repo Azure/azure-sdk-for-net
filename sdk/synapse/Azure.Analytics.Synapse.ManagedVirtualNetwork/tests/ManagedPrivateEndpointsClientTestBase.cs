@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
+using Azure.Analytics.Synapse.ManagedVirtualNetwork;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.IO;
 
-namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.Tests.ManagedVirtualNetwork
 {
     [NonParallelizable]
     public abstract class ManagedPrivateEndpointsClientTestBase : RecordedTestBase<SynapseTestEnvironment>

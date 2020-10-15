@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
+namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
 {
     public partial class ManagedPrivateEndpointProperties : IUtf8JsonSerializable
     {

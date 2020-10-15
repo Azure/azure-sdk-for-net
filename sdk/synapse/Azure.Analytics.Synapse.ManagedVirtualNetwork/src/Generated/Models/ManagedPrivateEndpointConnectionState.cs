@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
+namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
 {
     /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointConnectionState
