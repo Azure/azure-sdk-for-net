@@ -822,6 +822,54 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
+        [Test]
+        [TestCase("en-US")]
+        [TestCase("")]
+        public async Task StartRecognizeReceiptsWithSupportedLocale(string locale)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeReceiptsOptions()
+            {
+                IncludeFieldElements = true,
+                Locale = locale
+            };
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var receipt = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                receipt,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.Greater(receipt.Fields.Count, 0);
+
+            var receiptPage = receipt.Pages.Single();
+
+            Assert.Greater(receiptPage.Lines.Count, 0);
+            Assert.AreEqual(0, receiptPage.SelectionMarks.Count);
+            Assert.AreEqual(0, receiptPage.Tables.Count);
+        }
+
+        [Test]
+        public void StartRecognizeReceiptsWithWrongLocale()
+        {
+            var client = CreateFormRecognizerClient();
+
+            var receiptUri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(receiptUri, new RecognizeReceiptsOptions() { Locale = "not-locale" }));
+            Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+        }
+
         #endregion
 
         #region StartRecognizeBusinessCards
