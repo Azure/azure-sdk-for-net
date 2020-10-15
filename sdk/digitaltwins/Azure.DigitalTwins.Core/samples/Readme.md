@@ -300,7 +300,7 @@ Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 Get a component by providing name of a component and Id of digital twin to which it belongs.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
 Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 ```
 

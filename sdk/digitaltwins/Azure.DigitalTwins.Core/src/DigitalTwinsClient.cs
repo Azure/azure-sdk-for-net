@@ -343,10 +343,10 @@ namespace Azure.DigitalTwins.Core
         /// Gets a component on a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being retrieved.</param>
+        /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -354,27 +354,27 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentPath, GetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponentAsync(digitalTwinId, componentPath, options, cancellationToken);
+            return _dtRestClient.GetComponentAsync(digitalTwinId, componentName, options, cancellationToken);
         }
 
         /// <summary>
         /// Gets a component on a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being retrieved.</param>
+        /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -382,21 +382,21 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <seealso cref="GetComponentAsync(string, string, GetComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> GetComponent(string digitalTwinId, string componentPath, GetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetComponent(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponent(digitalTwinId, componentPath, options, cancellationToken);
+            return _dtRestClient.GetComponent(digitalTwinId, componentName, options, cancellationToken);
         }
 
         /// <summary>
         /// Updates properties of a component on a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being modified.</param>
+        /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -409,7 +409,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
         /// // Update Component1 by replacing the property ComponentProp1 value,
@@ -421,16 +421,16 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentPath, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, jsonPatch, options, cancellationToken);
+            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
         }
 
         /// <summary>
         /// Updates properties of a component on a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being modified.</param>
+        /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -440,16 +440,16 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <seealso cref="UpdateComponentAsync(string, string, string, UpdateComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateComponent(string digitalTwinId, string componentPath, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateComponent(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, jsonPatch, options, cancellationToken);
+            return _dtRestClient.UpdateComponent(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
         }
 
         /// <summary>
