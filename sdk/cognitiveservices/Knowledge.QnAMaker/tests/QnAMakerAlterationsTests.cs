@@ -11,7 +11,7 @@ namespace QnAMaker.Tests
 {
     public class QnAMakerAlterationsTests: BaseTests
     {
-        [Fact(Skip="https://github.com/Azure/azure-sdk-for-net/issues/6210")]
+        [Fact]
         public void QnAMakerAlterationsReadUpdate()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
