@@ -207,7 +207,7 @@ function CheckLink ([System.Uri]$linkUri)
       $linkValid = $false
     }
     # Check if the url is anchor link has any uppercase.
-    if ($link.Contains("#") -and ($link -cmatch '#.*[A-Z][^?]')) {
+    if ($link -cmatch '#[^?]*[A-Z]') {
       LogWarning "Please lower case your anchor links. $linkUri"
       $linkValid = $false
     }
