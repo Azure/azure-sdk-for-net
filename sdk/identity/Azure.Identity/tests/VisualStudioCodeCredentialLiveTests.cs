@@ -22,6 +22,7 @@ namespace Azure.Identity.Tests
             Matcher.ExcludeHeaders.Add("x-client-OS");
             Matcher.ExcludeHeaders.Add("x-client-SKU");
             Matcher.ExcludeHeaders.Add("x-client-CPU");
+            Matcher.ExcludeHeaders.Add("x-client-Ver");
 
             Sanitizer = new IdentityRecordedTestSanitizer();
         }

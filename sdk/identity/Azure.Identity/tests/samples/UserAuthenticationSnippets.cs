@@ -22,7 +22,7 @@ namespace Azure.Identity.Samples
         public void Identity_ClientSideUserAuthentication_SimpleDeviceCode()
         {
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleDeviceCode
-            var credential = new DeviceCodeCredential((deviceCodeInfo, _) => { Console.WriteLine(deviceCodeInfo.Message); return Task.CompletedTask; });
+            var credential = new DeviceCodeCredential();
 
             var client = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
             #endregion

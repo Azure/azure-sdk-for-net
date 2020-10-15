@@ -9,6 +9,11 @@ namespace Azure.Identity
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
+        /// The client id of the application registration used to authenticate users in the cache.
+        /// </summary>
+        public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
+
+        /// <summary>
         /// Specifies the preferred authentication account username, or UPN, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
@@ -19,6 +24,11 @@ namespace Azure.Identity
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// When set to true the <see cref="SharedTokenCacheCredential"/> can be used to authenticate to tenants other than the home tenant, requiring <see cref="Username"/> and <see cref="TenantId"/> also to be specified as well.
+        /// </summary>
+        public bool EnableGuestTenantAuthentication { get; set; }
 
         /// <summary>
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication with an interactive credential, such as the <see cref="InteractiveBrowserCredential"/> or <see cref="DeviceCodeCredential"/>.

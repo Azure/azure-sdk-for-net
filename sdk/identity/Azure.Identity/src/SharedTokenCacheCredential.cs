@@ -28,6 +28,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
+        private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
         /// <summary>
@@ -69,11 +70,13 @@ namespace Azure.Identity
 
             _username = username;
 
+            _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
+
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, "1950a258-227b-4e31-a9cf-717495945fc2", null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
 
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
@@ -141,10 +144,10 @@ namespace Azure.Identity
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
                 // if _username is specified it must match the account
-                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
-                //&&
-                ////if _tenantId is specified it must match the account
-                //(string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                ((string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0))
+                &&
+                // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                (_skipTenantValidation || (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0))
             ).ToList();
 
             if (filteredAccounts.Count != 1)
