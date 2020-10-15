@@ -487,7 +487,7 @@ sdk/monitor/           @SameergMS @dadunl
 # > Service: Monitor - ApplicationInsights
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
-/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni @azmonapplicationinsights
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divyajay @geneh @alongafni @azmonapplicationinsights
 
 # > Service: Monitor - Autoscale
 # ServiceLabel: %Monitor - Autoscale %Service Attention
@@ -605,7 +605,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # > Service: Operational Insights
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
-/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni @AzmonLogA
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divyajay @geneh @alongafni @AzmonLogA
 
 # > Service: Policy
 # ServiceLabel: %Policy %Service Attention
