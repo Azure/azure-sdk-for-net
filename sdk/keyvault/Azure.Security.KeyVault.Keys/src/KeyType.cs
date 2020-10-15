@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyType Ec { get; } = new KeyType(EcValue);
 
         /// <summary>
-        /// An Elliptic Curve Cryptographic (ECC) algorithm backed by HSM.
+        /// An Elliptic Curve Cryptographic (ECC) algorithm backed by a Hardware Security Module (HSM).
         /// </summary>
         public static KeyType EcHsm { get; } = new KeyType(EcHsmValue);
 
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyType Rsa { get; } = new KeyType(RsaValue);
 
         /// <summary>
-        /// An RSA cryptographic algorithm backed by HSM.
+        /// An RSA cryptographic algorithm backed by a Hardware Security Module (HSM).
         /// </summary>
         public static KeyType RsaHsm { get; } = new KeyType(RsaHsmValue);
 
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyType Oct { get; } = new KeyType(OctValue);
 
         /// <summary>
-        /// An AES cryptographic algorithm backed by HSM.
+        /// An AES cryptographic algorithm backed by a Hardware Security Module (HSM).
         /// </summary>
         public static KeyType OctHsm { get; } = new KeyType(OctHsmValue);
 

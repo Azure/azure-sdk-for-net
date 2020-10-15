@@ -15,6 +15,15 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string Rsa15Value = "RSA1_5";
         internal const string RsaOaepValue = "RSA-OAEP";
         internal const string RsaOaep256Value = "RSA-OAEP-256";
+        internal const string A128GcmValue = "A128GCM";
+        internal const string A192GcmValue = "A192GCM";
+        internal const string A256GcmValue = "A256GCM";
+        internal const string A128CbcValue = "A128CBC";
+        internal const string A192CbcValue = "A192CBC";
+        internal const string A256CbcValue = "A256CBC";
+        internal const string A128CbcPadValue = "A128CBCPAD";
+        internal const string A192CbcPadValue = "A192CBCPAD";
+        internal const string A256CbcPadValue = "A256CBCPAD";
 
         private readonly string _value;
 
@@ -41,6 +50,51 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets an RSA-OAEP256 <see cref="EncryptionAlgorithm"/>.
         /// </summary>
         public static EncryptionAlgorithm RsaOaep256 { get; } = new EncryptionAlgorithm(RsaOaep256Value);
+
+        /// <summary>
+        /// Gets a 128-bit AES-GCM <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A128Gcm { get; } = new EncryptionAlgorithm(A128GcmValue);
+
+        /// <summary>
+        /// Gets a 192-bit AES-GCM <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A192Gcm { get; } = new EncryptionAlgorithm(A192GcmValue);
+
+        /// <summary>
+        /// Gets a 256-bit AES-GCM <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A256Gcm { get; } = new EncryptionAlgorithm(A256GcmValue);
+
+        /// <summary>
+        /// Gets a 128-bit AES-CBC <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A128Cbc { get; } = new EncryptionAlgorithm(A128CbcValue);
+
+        /// <summary>
+        /// Gets a 192-bit AES-CBC <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A192Cbc { get; } = new EncryptionAlgorithm(A192CbcValue);
+
+        /// <summary>
+        /// Gets a 256-bit AES-CBC <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm A256Cbc { get; } = new EncryptionAlgorithm(A256CbcValue);
+
+        /// <summary>
+        /// Gets a 128-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
+        /// </summary>
+        public static EncryptionAlgorithm A128CbcPad { get; } = new EncryptionAlgorithm(A128CbcPadValue);
+
+        /// <summary>
+        /// Gets a 192-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
+        /// </summary>
+        public static EncryptionAlgorithm A192CbcPad { get; } = new EncryptionAlgorithm(A192CbcPadValue);
+
+        /// <summary>
+        /// Gets a 256-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
+        /// </summary>
+        public static EncryptionAlgorithm A256CbcPad { get; } = new EncryptionAlgorithm(A256CbcPadValue);
 
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are the same.
@@ -85,5 +139,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             RsaOaep256Value => RSAEncryptionPadding.OaepSHA256,
             _ => null,
         };
+
+        internal bool RequiresIv()
+        {
+            switch (_value)
+            {
+                case A128GcmValue:
+                case A192GcmValue:
+                case A256GcmValue:
+                case A128CbcValue:
+                case A192CbcValue:
+                case A256CbcValue:
+                case A128CbcPadValue:
+                case A192CbcPadValue:
+                case A256CbcPadValue:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
     }
 }

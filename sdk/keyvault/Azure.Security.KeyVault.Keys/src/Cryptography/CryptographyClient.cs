@@ -139,22 +139,58 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual string KeyId => _keyId.ToString();
 
         /// <summary>
-        /// Encrypts the specified plain text.
+        /// Encrypts the specified plaintext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
         /// <param name="plaintext">The data to encrypt.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
-        /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
+        /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
+            await EncryptAsync(algorithm, new EncryptOptions(plaintext), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Encrypts the specified plaintext.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
+        /// <param name="plaintext">The data to encrypt.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// An <see cref="EncryptResult"/> containing the encrypted data
+        /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
+            Encrypt(algorithm, new EncryptOptions(plaintext), cancellationToken);
+
+        /// <summary>
+        /// Encrypts plaintext.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
+        /// <param name="options">An <see cref="EncryptOptions"/> containing the data to encrypt and other options for <paramref name="algorithm"/>-dependent encryption.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// An <see cref="EncryptResult"/> containing the encrypted data
+        /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
@@ -171,7 +207,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     try
                     {
-                        result = await _provider.EncryptAsync(algorithm, plaintext, cancellationToken).ConfigureAwait(false);
+                        result = await _provider.EncryptAsync(algorithm, options, cancellationToken).ConfigureAwait(false);
                     }
                     catch (CryptographicException ex) when (_provider.ShouldRemote)
                     {
@@ -182,7 +218,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 if (result is null)
                 {
-                    result = await _remoteProvider.EncryptAsync(algorithm, plaintext, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.EncryptAsync(algorithm, options, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -195,22 +231,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Encrypts the specified plain text.
+        /// Encrypts plaintext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
-        /// <param name="plaintext">The data to encrypt.</param>
+        /// <param name="options">An <see cref="EncryptOptions"/> containing the data to encrypt and other options for <paramref name="algorithm"/>-dependent encryption.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
-        /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
+        /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
+        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
@@ -227,7 +265,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     try
                     {
-                        result = _provider.Encrypt(algorithm, plaintext, cancellationToken);
+                        result = _provider.Encrypt(algorithm, options, cancellationToken);
                     }
                     catch (CryptographicException ex) when (_provider.ShouldRemote)
                     {
@@ -237,7 +275,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 if (result is null)
                 {
-                    result = _remoteProvider.Encrypt(algorithm, plaintext, cancellationToken);
+                    result = _remoteProvider.Encrypt(algorithm, options, cancellationToken);
                 }
 
                 return result;
@@ -250,7 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Decrypts the specified cipher text.
+        /// Decrypts the specified ciphertext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
         /// <param name="ciphertext">The encrypted data to decrypt.</param>
@@ -263,9 +301,45 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
+            await DecryptAsync(algorithm, new DecryptOptions(ciphertext), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Decrypts ciphertext.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
+        /// <param name="ciphertext">The encrypted data to decrypt.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
+        /// along with information regarding the algorithm and key used to decrypt it.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
+            Decrypt(algorithm, new DecryptOptions(ciphertext), cancellationToken);
+
+        /// <summary>
+        /// Decrypts ciphertext.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
+        /// <param name="options">A <see cref="DecryptOptions"/> containing the data to decrypt and other options for <paramref name="algorithm"/>-dependent decryption.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
+        /// along with information regarding the algorithm and key used to decrypt it.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, DecryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
@@ -282,7 +356,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     try
                     {
-                        result = await _provider.DecryptAsync(algorithm, ciphertext, cancellationToken).ConfigureAwait(false);
+                        result = await _provider.DecryptAsync(algorithm, options, cancellationToken).ConfigureAwait(false);
                     }
                     catch (CryptographicException ex) when (_provider.ShouldRemote)
                     {
@@ -293,7 +367,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 if (result is null)
                 {
-                    result = await _remoteProvider.DecryptAsync(algorithm, ciphertext, cancellationToken).ConfigureAwait(false);
+                    result = await _remoteProvider.DecryptAsync(algorithm, options, cancellationToken).ConfigureAwait(false);
                 }
 
                 return result;
@@ -306,22 +380,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Decrypts the specified cipher text.
+        /// Decrypts the specified ciphertext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
-        /// <param name="ciphertext">The encrypted data to decrypt.</param>
+        /// <param name="options">A <see cref="DecryptOptions"/> containing the data to decrypt and other options for <paramref name="algorithm"/>-dependent decryption.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, DecryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
@@ -338,7 +414,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     try
                     {
-                        result = _provider.Decrypt(algorithm, ciphertext, cancellationToken);
+                        result = _provider.Decrypt(algorithm, options, cancellationToken);
                     }
                     catch (CryptographicException ex) when (_provider.ShouldRemote)
                     {
@@ -348,7 +424,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 if (result is null)
                 {
-                    result = _remoteProvider.Decrypt(algorithm, ciphertext, cancellationToken);
+                    result = _remoteProvider.Decrypt(algorithm, options, cancellationToken);
                 }
 
                 return result;

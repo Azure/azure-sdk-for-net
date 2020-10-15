@@ -26,9 +26,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(plaintext, nameof(plaintext));
+            Argument.AssertNotNull(options, nameof(options));
 
             ThrowIfTimeInvalid();
 
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            byte[] ciphertext = Encrypt(plaintext, padding);
+            byte[] ciphertext = Encrypt(options.Plaintext, padding);
             EncryptResult result = null;
 
             if (ciphertext != null)
@@ -55,9 +55,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, DecryptOptions options, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
+            Argument.AssertNotNull(options, nameof(options));
 
             if (MustRemote)
             {
@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
-            byte[] plaintext = Decrypt(ciphertext, padding);
+            byte[] plaintext = Decrypt(options.Ciphertext, padding);
             DecryptResult result = null;
 
             if (plaintext != null)

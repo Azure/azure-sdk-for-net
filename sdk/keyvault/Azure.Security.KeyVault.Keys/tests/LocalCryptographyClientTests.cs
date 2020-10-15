@@ -108,8 +108,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep, encrypted.Ciphertext));
         }
 
+        // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
-        public async Task EncryptDecryptRoundtrip([EnumValues(Exclude = new[] { nameof(EncryptionAlgorithm.RsaOaep256) })] EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundtrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep))] EncryptionAlgorithm algorithm)
         {
             JsonWebKey jwk = CreateKey(KeyType.Rsa, includePrivateParameters: true);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
