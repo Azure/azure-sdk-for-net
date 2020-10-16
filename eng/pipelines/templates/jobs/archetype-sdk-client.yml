@@ -70,7 +70,7 @@ jobs:
           template: /eng/common/pipelines/templates/steps/verify-links.yml
           parameters:
             Directory: ''
-            Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- *.md)
+            Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- '*.md')
             CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
