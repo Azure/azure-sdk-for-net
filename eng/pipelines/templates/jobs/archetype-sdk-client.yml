@@ -66,10 +66,12 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
-          CheckLinkGuidance: $true
+      - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        - template: /eng/common/pipelines/templates/steps/verify-links.yml
+          parameters:
+            Directory: ''
+            Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- '*.md')
+            CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
