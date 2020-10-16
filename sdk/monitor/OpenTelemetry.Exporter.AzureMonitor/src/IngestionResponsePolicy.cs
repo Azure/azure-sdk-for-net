@@ -38,26 +38,26 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             switch (httpStatus)
             {
-                case 200:
+                case ResponseStatusCodes.Success:
                     itemsAccepted = telemetryItems.Count();
                     break;
-                case 400:
-                case 429:
-                case 439:
-                    // Parse retry-after header
-                    // Send Messages To Storage
-                    break;
-                case 500:
-                case 502:
-                case 503:
-                case 504:
-                    // Send Messages To Storage
-                    break;
-                case 206:
+                case ResponseStatusCodes.PartialSuccess:
                     // Parse retry-after header
                     // Send Failed Messages To Storage
                     break;
-                case null:
+                case ResponseStatusCodes.RequestTimeout:
+                case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                case ResponseStatusCodes.ResponseCodeTooManyRequestsOverExtendedTime:
+                    // Parse retry-after header
+                    // Send Messages To Storage
+                    break;
+                case ResponseStatusCodes.InternalServerError:
+                case ResponseStatusCodes.BadGateway:
+                case ResponseStatusCodes.ServiceUnavailable:
+                case ResponseStatusCodes.GatewayTimeout:
+                    // Send Messages To Storage
+                    break;
+                case null: // UnknownNetworkError
                     // No HttpMessage. Send TelemetryItems To Storage
                     break;
                 default:
@@ -75,21 +75,22 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             switch (httpStatus)
             {
-                case 200:
+                case ResponseStatusCodes.Success:
                     itemsAccepted = GetItemsAccepted(message);
                     break;
-                case 429:
-                case 439:
-                case 500:
-                case 502:
-                case 503:
-                case 504:
-                case null:
+                case ResponseStatusCodes.PartialSuccess:
+                    // Send Failed Messages To Storage
+                    break;
+                case ResponseStatusCodes.RequestTimeout:
+                case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                case ResponseStatusCodes.ResponseCodeTooManyRequestsOverExtendedTime:
+                case ResponseStatusCodes.InternalServerError:
+                case ResponseStatusCodes.BadGateway:
+                case ResponseStatusCodes.ServiceUnavailable:
+                case ResponseStatusCodes.GatewayTimeout:
+                case null: // UnknownNetworkError
                     itemsAccepted = 0;
                     // Request body is already in storage. No need to store again.
-                    break;
-                case 206:
-                    // Send Failed Messages To Storage
                     break;
                 default:
                     // Log Non-Retriable Status and don't retry or store;
