@@ -106,6 +106,7 @@ namespace Azure.Core.Pipeline
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
             request.Proxy = _proxy;
+            // disable buffering as the content stream is re-playable and we don't want to allocate extra buffers
             request.AllowWriteStreamBuffering = false;
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
