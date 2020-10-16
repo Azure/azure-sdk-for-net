@@ -173,7 +173,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a digital twin asynchronously.
+        /// Creates a digital twin asynchronously. If the provided digital twin Id is already in use, then this will attempt to replace the existing digital twin
+        /// with the provided digital twin.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
@@ -215,7 +216,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a digital twin synchronously.
+        /// Creates a digital twin synchronously. If the provided digital twin Id is already in use, then this will attempt to replace the existing digital twin
+        /// with the provided digital twin.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
@@ -819,7 +821,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a relationship on a digital twin asynchronously.
+        /// Creates a relationship on a digital twin asynchronously. If the provided relationship Id is already in use, this will attempt to replace the
+        /// existing relationship with the provided relationship.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship which is being created.</param>
@@ -864,7 +867,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a relationship on a digital twin synchronously.
+        /// Creates a relationship on a digital twin synchronously. If the provided relationship Id is already in use, this will attempt to replace the
+        /// existing relationship with the provided relationship.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
@@ -1620,7 +1624,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates an event route asynchronously.
+        /// Creates an event route asynchronously. If the provided event route Id is already in use, then this will attempt to replace the existing
+        /// event route with the provided event route.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
@@ -1651,7 +1656,8 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates an event route synchronously.
+        /// Creates an event route synchronously. If the provided event route Id is already in use, then this will attempt to replace the existing
+        /// event route with the provided event route.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
