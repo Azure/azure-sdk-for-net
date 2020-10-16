@@ -14,13 +14,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         private readonly FieldValue_internal _fieldValue;
         private readonly IReadOnlyList<ReadResult> _readResults;
+        private readonly bool _isBusinessCard;
 
         internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
+            : this(fieldValue, readResults, false) { }
+
+        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults, bool isBusinessCard)
             : this()
         {
             ValueType = fieldValue.Type;
             _fieldValue = fieldValue;
             _readResults = readResults;
+            _isBusinessCard = isBusinessCard;
         }
 
         /// <summary>
@@ -334,7 +339,9 @@ namespace Azure.AI.FormRecognizer.Models
             List<FormField> fieldList = new List<FormField>();
             foreach (var fieldValue in _fieldValue.ValueArray)
             {
-                fieldList.Add(new FormField(null, fieldValue, _readResults));
+                // Business card has a special condition on how to calculate pages
+                // so we need to tell the FormField that it is from BusinessCards
+                fieldList.Add(new FormField(null, fieldValue, _readResults, _isBusinessCard));
             }
 
             return fieldList;
