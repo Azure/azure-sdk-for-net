@@ -103,13 +103,14 @@ namespace Azure.Core.Tests
                 {
                     contentLength = context.Request.ContentLength.Value;
                 });
-            var maxValue = 2147483592;
+
+            var requestContentLength = long.MaxValue;
             var transport = GetTransport();
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Uri.Reset(testServer.Address);
             request.Content = RequestContent.Create(new byte[10]);
-            request.Headers.Add("Content-Length", maxValue.ToString());
+            request.Headers.Add("Content-Length", requestContentLength.ToString());
 
             try
             {
@@ -120,8 +121,7 @@ namespace Azure.Core.Tests
                 // Sending the request would fail because of length mismatch
             }
 
-            Assert.AreEqual(maxValue, contentLength);
-            await Task.CompletedTask;
+            Assert.AreEqual(requestContentLength, requestContentLength);
         }
 
         [Test]
