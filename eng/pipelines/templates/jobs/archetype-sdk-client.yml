@@ -108,7 +108,7 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSVmImage: "ubuntu-18.04"
+          OSVmImage: "ubuntu-18.04" 
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
