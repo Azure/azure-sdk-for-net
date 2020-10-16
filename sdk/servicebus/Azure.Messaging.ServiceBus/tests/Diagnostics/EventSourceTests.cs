@@ -195,7 +195,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     log => log.ScheduleMessagesStart(
                         sender.Identifier,
                         1,
-                        scheduleTime.ToString(CultureInfo.InvariantCulture)),
+                        It.IsAny<string>()),
                 Times.Once);
             mockLogger
                 .Verify(
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     log => log.ScheduleMessagesStart(
                         sender.Identifier,
                         1,
-                        scheduleTime.ToString(CultureInfo.InvariantCulture)),
+                        It.IsAny<string>()),
                 Times.Once);
             mockLogger
                 .Verify(
