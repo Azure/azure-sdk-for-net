@@ -828,7 +828,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "File not on Github") ]
+        [TestCase(false) ]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -885,6 +885,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var contactNames = form.Fields["ContactNames"].Value.AsList();
             Assert.AreEqual(1, contactNames.Count);
             Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+            Assert.AreEqual(1, contactNames.FirstOrDefault().ValueData.PageNumber);
 
             var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
@@ -934,7 +935,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "File not on Github")]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -991,6 +992,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var contactNames = form.Fields["ContactNames"].Value.AsList();
             Assert.AreEqual(1, contactNames.Count);
             Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+            Assert.AreEqual(1, contactNames.FirstOrDefault().ValueData.PageNumber);
 
             var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
@@ -1091,6 +1093,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(0, blankPage.Lines.Count);
             Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
         [Test]
@@ -1119,6 +1122,68 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(invalidUri));
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore ="File not on Github")]
+        public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions() { IncludeFieldElements = true };
+            RecognizeBusinessCardsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessMultipage);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessMultipage);
+                operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(2, recognizedForms.Count);
+
+            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
+            {
+                var recognizedForm = recognizedForms[formIndex];
+                var expectedPageNumber = formIndex + 1;
+
+                Assert.NotNull(recognizedForm);
+
+                ValidatePrebuiltForm(
+                    recognizedForm,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
+
+                // Basic sanity test to make sure pages are ordered correctly.
+                Assert.IsTrue(recognizedForm.Fields.ContainsKey("Emails"));
+                FormField sampleFields = recognizedForm.Fields["Emails"];
+                Assert.AreEqual(FieldValueType.List, sampleFields.Value.ValueType);
+                var field = sampleFields.Value.AsList().Single();
+
+                if (formIndex == 0)
+                {
+                    Assert.AreEqual("johnsinger@contoso.com", field.ValueData.Text);
+                }
+                else if (formIndex == 1)
+                {
+                    Assert.AreEqual("avery.smith@contoso.com", field.ValueData.Text);
+                }
+
+                // Check for ContactNames.Page value
+                Assert.IsTrue(recognizedForm.Fields.ContainsKey("ContactNames"));
+                FormField contactNameField = recognizedForm.Fields["ContactNames"].Value.AsList().Single();
+                Assert.AreEqual(formIndex + 1, contactNameField.ValueData.PageNumber);
+            }
         }
 
         #endregion

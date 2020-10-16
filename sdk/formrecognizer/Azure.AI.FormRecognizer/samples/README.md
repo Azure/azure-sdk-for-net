@@ -22,7 +22,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - [Recognize form content](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample1_RecognizeFormContent.md)
 - [Recognize custom forms](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeCustomForms.md)
 - [Recognize receipts](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeReceipts.md)
-- [Recognize business cards](https://github.com/maririos/azure-sdk-for-net/blob/businesscards/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample9_RecognizeBusinessCards.md)
+- [Recognize business cards](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample9_RecognizeBusinessCards.md)
 - [Train a model](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md)
 - [Manage custom models](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_ManageCustomModels.md)
 

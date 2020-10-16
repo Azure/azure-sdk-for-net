@@ -239,8 +239,8 @@ using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
 
 To see the full example source files, see:
 
-* [Recognize business cards from URI](https://github.com/maririos/azure-sdk-for-net/blob/businesscards/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromUri.cs)
-* [Recognize business cards from file](https://github.com/maririos/azure-sdk-for-net/blob/businesscards/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromFile.cs)
+* [Recognize business cards from URI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromUri.cs)
+* [Recognize business cards from file](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample12_RecognizeBusinessCardsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
