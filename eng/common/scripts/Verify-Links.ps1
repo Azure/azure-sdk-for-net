@@ -222,7 +222,6 @@ function CheckLink ([System.Uri]$linkUri)
   return $linkValid
 }
 
-
 function ReplaceGithubLink([string]$originLink) {
   if (!$branchReplacementName) {
     return $originLink
