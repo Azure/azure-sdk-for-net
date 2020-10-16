@@ -23,7 +23,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             message.SetProperty("TelemetryItems", body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return message.TryGetProperty("ItemsAccepted", out var itemsAccepted) ? (int)itemsAccepted : 0;
+            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }
 
         internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
@@ -31,7 +31,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             using var message = CreateTrackRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return message.TryGetProperty("ItemsAccepted", out var itemsAccepted) ? (int)itemsAccepted : 0;
+            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }
 
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
