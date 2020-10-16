@@ -128,9 +128,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 switch (activityType)
                 {
                     case PartBType.Http:
-                        url = activity.Kind == ActivityKind.Server ? HttpHelper.GetUrl(partBTags) : AzureMonitorConverter.GetMessagingUrl(partBTags);
-                        statusCode = HttpHelper.GetHttpStatusCode(partBTags);
-                        success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                        url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(partBTags) : AzureMonitorConverter.GetMessagingUrl(partBTags);
+                        statusCode = GetHttpStatusCode(partBTags);
+                        success = GetSuccessFromHttpStatusCode(statusCode);
                         break;
                     case PartBType.Azure:
                         ComponentHelper.ExtractComponentProperties(partBTags, activity.Kind, out _, out source);
@@ -157,12 +157,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 switch (activityType)
                 {
                     case PartBType.Http:
-                        dependency.Data = HttpHelper.GetUrl(partBTags);
-                        dependency.Target = HttpHelper.GetHost(partBTags);
+                        dependency.Data = UrlHelper.GetUrl(partBTags);
+                        dependency.Target = GetHost(partBTags);
                         dependency.Type = RemoteDependencyConstants.HTTP;
-                        var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
+                        var statusCode = GetHttpStatusCode(partBTags);
                         dependency.ResultCode = statusCode;
-                        dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                        dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
                         break;
                     case PartBType.Azure:
                         ComponentHelper.ExtractComponentProperties(partBTags, activity.Kind, out var type, out var target);
@@ -193,6 +193,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private static bool GetSuccessFromHttpStatusCode(string statusCode)
         {
             return statusCode == "200" || statusCode == "Ok";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetHost(Dictionary<string, string> tags)
+        {
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
+            {
+                return host;
+            }
+
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
