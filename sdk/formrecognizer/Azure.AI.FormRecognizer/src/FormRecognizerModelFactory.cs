@@ -250,7 +250,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithSelectionMarkValueType(FormSelectionMarkState value) =>
+        public static FieldValue FieldValueWithSelectionMarkValueType(SelectionMarkState value) =>
             new FieldValue(value);
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <param name="state">Selection mark state value.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormSelectionMark"/> instance for mocking.</returns>
-        public static FormSelectionMark FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, FormSelectionMarkState state) =>
+        public static FormSelectionMark FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, SelectionMarkState state) =>
             new FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
 
         /// <summary>
