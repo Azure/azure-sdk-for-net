@@ -181,6 +181,30 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeReceiptsSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
         #endregion
 
         #region Recognize Business Cards
@@ -248,6 +272,30 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.True(requestBody.Contains(encodedUriString));
                 Assert.False(requestBody.Contains(decodedUriString));
             }
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeBusinessCardsSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businesscards/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
         }
 
         #endregion
