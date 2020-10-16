@@ -41,6 +41,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
+            // TODO: Batch<Activity> batchActivity = new Batch<Activity>() creates a null entry with no activity.
+            // Verify in OTel SDK and remove check.
             if (batchActivity.GetEnumerator().Current != null)
             {
                 foreach (var activity in batchActivity)

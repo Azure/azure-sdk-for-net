@@ -13,7 +13,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private CultureInfo originalUICulture = Thread.CurrentThread.CurrentUICulture;
 
         [Fact]
-        public void ExtractsStackTraceWithInvariantCultureToHelpOurTelemetryToolsMatchSimilarErrorsReportedByOSsWithDifferentLanguages()
+        public void ExtractsStackTraceWithInvariantCultureMatchesErrorsReportedByOSsWithDifferentLanguages()
         {
             CultureInfo stackTraceCulture = null;
             var exception = new StubException();
