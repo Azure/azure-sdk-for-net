@@ -4,7 +4,6 @@
 
 This repository is for active development of the Azure SDK for .NET. For consumers of the SDK we recommend visiting our [public developer docs](https://docs.microsoft.com/dotnet/azure/) or our versioned [developer docs](https://azure.github.io/azure-sdk-for-net).
 
-
 ## Getting started
 
 To get started with a library, see the README.md file located in the library's project folder. You can find these library folders grouped by service in the /sdk directory.
