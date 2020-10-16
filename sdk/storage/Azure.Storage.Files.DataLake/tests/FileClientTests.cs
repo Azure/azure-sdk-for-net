@@ -1800,7 +1800,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-
         [Test]
         public async Task FlushDataAsync()
         {
