@@ -4,6 +4,7 @@
 - Fixed bug where ShareDirectoryClient.Exists() and ShareFileClient.Exists() would thrown an exception when the directory or file's parent directory didn't exist.
 - Added seekability to ShareFileClient.OpenRead().
 - Renamed ShareClient.SetTier() -> ShareClient.SetProperties().  SetProperties() can be used to set both Share Tier and Share Quota.
+- Changed ShareDeleteOptions.IncludeSnapshots -> .ShareSnapshotsDeleteOption, and added option to also delete Share Snapshots that have been leased.
 - Added additional info to exception messages.
 
 ## 12.5.0-preview.1 (2020-09-30)

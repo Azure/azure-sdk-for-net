@@ -61,7 +61,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 .ToString();
 
             var transmitter = typeof(AzureMonitorTraceExporter)
-                .GetField("AzureMonitorTransmitter", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("Transmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)

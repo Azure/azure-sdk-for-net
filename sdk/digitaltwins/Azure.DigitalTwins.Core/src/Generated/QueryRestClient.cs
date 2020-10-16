@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryTwinsOptions queryTwinsOptions)
+        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="queryTwinsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, QueryTwinsOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, QueryOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {
@@ -123,7 +123,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="queryTwinsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, QueryTwinsOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, QueryOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {

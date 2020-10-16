@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core
     {
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<string> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<string> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<string> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        internal Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<string> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -88,7 +88,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal async Task<Response> UpdateAsync(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateAsync(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -120,7 +120,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response Update(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal Response Update(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.DigitalTwins.Core
 
         // The strings are already json, so we do not want them to be serialized.
         // Instead, the payloads need to be concatenated into a json array.
-        private HttpMessage CreateAddRequest(IEnumerable<string> models, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions)
+        private HttpMessage CreateAddRequest(IEnumerable<string> models, CreateModelsOptions digitalTwinModelsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.DigitalTwins.Core
 
         // The strings are already json, so we do not want them to be serialized.
         // Instead, the payloads need to be concatenated into a json array.
-        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions)
+        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -46,7 +46,7 @@ namespace Azure.DigitalTwins.Core.Tests
             eventRouteId.Should().Be(getEventRouteResult.Id);
 
             // Test GetEventRoutes
-            var eventRoutesListOptions = new EventRoutesListOptions();
+            var eventRoutesListOptions = new GetEventRoutesOptions();
             AsyncPageable<EventRoute> eventRouteList = client.GetEventRoutesAsync(eventRoutesListOptions);
             bool eventRouteFoundInList = false;
             await foreach (EventRoute eventRouteListEntry in eventRouteList)
