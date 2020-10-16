@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The Live Event endpoint.
+    /// The live event endpoint.
     /// </summary>
     public partial class LiveEventEndpoint
     {
