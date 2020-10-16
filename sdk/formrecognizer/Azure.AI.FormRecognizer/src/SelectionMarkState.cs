@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// State of a selection mark.
+    /// State of a selection mark. i.e. Selected or Unselected.
     /// </summary>
     [CodeGenModel("SelectionMarkState")]
-    public enum FormSelectionMarkState
+    public enum SelectionMarkState
     {
         /// <summary>
         /// Value is selected.

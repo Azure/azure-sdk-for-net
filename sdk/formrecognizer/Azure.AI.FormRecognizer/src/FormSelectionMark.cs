@@ -9,13 +9,13 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormSelectionMark : FormElement
     {
         internal FormSelectionMark(SelectionMark selectionMark, int pageNumber)
-            : base(new FieldBoundingBox(selectionMark.BoundingBox), pageNumber, selectionMark.State.ToString())
+            : base(new FieldBoundingBox(selectionMark.BoundingBox), pageNumber)
         {
             Confidence = selectionMark.Confidence;
             State = selectionMark.State;
         }
 
-        internal FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, FormSelectionMarkState state)
+        internal FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, SelectionMarkState state)
             : base(boundingBox, pageNumber, text)
         {
             Confidence = confidence;
@@ -30,6 +30,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Selection mark state value.
         /// </summary>
-        public FormSelectionMarkState State { get; }
+        public SelectionMarkState State { get; }
     }
 }

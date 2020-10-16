@@ -9,6 +9,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public abstract class FormElement
     {
+        internal FormElement(FieldBoundingBox boundingBox, int pageNumber)
+            : this(boundingBox, pageNumber, default) { }
+
         internal FormElement(FieldBoundingBox boundingBox, int pageNumber, string text)
         {
             BoundingBox = boundingBox;

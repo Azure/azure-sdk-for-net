@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        internal SelectionMark(IEnumerable<float> boundingBox, float confidence, FormSelectionMarkState state)
+        internal SelectionMark(IEnumerable<float> boundingBox, float confidence, SelectionMarkState state)
         {
             if (boundingBox == null)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
-        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, FormSelectionMarkState state)
+        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
@@ -47,6 +47,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Confidence value. </summary>
         public float Confidence { get; }
         /// <summary> State of the selection mark. </summary>
-        public FormSelectionMarkState State { get; }
+        public SelectionMarkState State { get; }
     }
 }
