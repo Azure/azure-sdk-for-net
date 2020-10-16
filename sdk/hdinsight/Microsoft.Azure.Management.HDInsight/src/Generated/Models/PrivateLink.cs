@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
 {
 
     /// <summary>
-    /// Defines values for OutboundOnlyPublicNetworkAccessType.
+    /// Defines values for PrivateLink.
     /// </summary>
-    public static class OutboundOnlyPublicNetworkAccessType
+    public static class PrivateLink
     {
-        public const string PublicLoadBalancer = "PublicLoadBalancer";
-        public const string UDR = "UDR";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
