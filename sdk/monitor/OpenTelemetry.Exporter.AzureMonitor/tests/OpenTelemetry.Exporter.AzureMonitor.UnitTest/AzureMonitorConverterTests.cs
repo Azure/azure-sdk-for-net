@@ -109,13 +109,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         }
 
         [Fact]
-        public void Convert_EmptyBatchActivityReturnsEmptyList()
-        {
-            Batch<Activity> batch = new Batch<Activity>();
-            Assert.Empty(AzureMonitorConverter.Convert(batch, null));
-        }
-
-        [Fact]
         public void GeneratePartAEnvelope_DefaultActivity()
         {
             var activity = CreateTestActivity();
