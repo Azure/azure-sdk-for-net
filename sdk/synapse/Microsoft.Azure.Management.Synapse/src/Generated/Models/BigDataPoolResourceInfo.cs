@@ -59,16 +59,18 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// pool.</param>
         /// <param name="libraryRequirements">Library version
         /// requirements</param>
+        /// <param name="sparkConfigProperties">Spark configuration file to
+        /// specify additional properties</param>
         /// <param name="sparkVersion">The Apache Spark version.</param>
         /// <param name="defaultSparkLogFolder">The default folder where Spark
         /// logs will be written.</param>
         /// <param name="nodeSize">The level of compute power that each node in
         /// the Big Data pool has. Possible values include: 'None', 'Small',
-        /// 'Medium', 'Large', 'XLarge', 'XXLarge'</param>
+        /// 'Medium', 'Large', 'XLarge', 'XXLarge', 'XXXLarge'</param>
         /// <param name="nodeSizeFamily">The kind of nodes that the Big Data
         /// pool provides. Possible values include: 'None',
         /// 'MemoryOptimized'</param>
-        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string))
+        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), LibraryRequirements sparkConfigProperties = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             SparkEventsFolder = sparkEventsFolder;
             NodeCount = nodeCount;
             LibraryRequirements = libraryRequirements;
+            SparkConfigProperties = sparkConfigProperties;
             SparkVersion = sparkVersion;
             DefaultSparkLogFolder = defaultSparkLogFolder;
             NodeSize = nodeSize;
@@ -140,6 +143,13 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public LibraryRequirements LibraryRequirements { get; set; }
 
         /// <summary>
+        /// Gets or sets spark configuration file to specify additional
+        /// properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sparkConfigProperties")]
+        public LibraryRequirements SparkConfigProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets the Apache Spark version.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sparkVersion")]
@@ -154,7 +164,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Gets or sets the level of compute power that each node in the Big
         /// Data pool has. Possible values include: 'None', 'Small', 'Medium',
-        /// 'Large', 'XLarge', 'XXLarge'
+        /// 'Large', 'XLarge', 'XXLarge', 'XXXLarge'
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeSize")]
         public string NodeSize { get; set; }
