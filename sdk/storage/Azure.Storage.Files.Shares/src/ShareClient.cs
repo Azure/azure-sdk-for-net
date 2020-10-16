@@ -905,7 +905,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 includeSnapshots: default,
@@ -936,7 +936,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 includeSnapshots: default,
@@ -971,8 +971,8 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<bool> DeleteIfExists(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 includeSnapshots,
                 shareSnapshotsDeleteOption: default,
@@ -1006,8 +1006,8 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 includeSnapshots,
                 shareSnapshotsDeleteOption: default,
@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 includeSnapshots: default,
@@ -1271,7 +1271,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 includeSnapshots: default,
@@ -1306,7 +1306,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 includeSnapshots,
@@ -1341,7 +1341,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 includeSnapshots,

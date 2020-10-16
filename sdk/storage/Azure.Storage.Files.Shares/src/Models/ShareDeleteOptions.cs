@@ -23,13 +23,5 @@ namespace Azure.Storage.Files.Shares.Models
         /// on deleting the share.
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public ShareDeleteOptions()
-        {
-            ShareSnapshotsDeleteOption = Models.ShareSnapshotsDeleteOption.Include;
-        }
     }
 }
