@@ -3,8 +3,12 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
+<<<<<<< HEAD
 - Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 - Recognize Business Card - Recognize and extract common fields from business cards, using a pre-trained business cards model.
+=======
+- Recognize Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
+>>>>>>> locale tests
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -103,7 +107,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 
  - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
  - Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
- - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
+ - Recognizing common fields from receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
 - Recognizing common fields from business cards, using a pre-trained business cards model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Business Cards](#recognize-business-cards).
 
 ### FormTrainingClient
@@ -207,12 +211,13 @@ foreach (RecognizedForm form in forms)
 ```
 
 ### Recognize Receipts
-Recognize data from US sales receipts using a prebuilt model. Receipt fields recognized by the service can be found [here][service_recognize_receipt_fields].
+Recognize data from sales receipts using a prebuilt model. Receipt fields recognized by the service can be found [here][service_recognize_receipt_fields].
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
-    RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream).WaitForCompletionAsync();
+    var options = new RecognizeReceiptsOptions() { Locale = "en-US" };
+    RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream, options).WaitForCompletionAsync();
 
     // To see the list of the supported fields returned by service and its corresponding types, consult:
     // https://aka.ms/formrecognizer/receiptfields
@@ -300,7 +305,8 @@ Recognize data from business cards using a prebuilt model. Business card fields 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
 using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
 {
-    RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream).WaitForCompletionAsync();
+    var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
+    RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
 
     // To see the list of the supported fields returned by service and its corresponding types, consult:
     // https://aka.ms/formrecognizer/businesscardfields

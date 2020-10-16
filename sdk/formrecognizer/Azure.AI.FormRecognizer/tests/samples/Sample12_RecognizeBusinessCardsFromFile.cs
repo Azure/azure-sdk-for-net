@@ -27,7 +27,8 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
             using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
             {
-                RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream).WaitForCompletionAsync();
+                var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
+                RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
 
                 // To see the list of the supported fields returned by service and its corresponding types, consult:
                 // https://aka.ms/formrecognizer/businesscardfields
