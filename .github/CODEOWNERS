@@ -78,7 +78,7 @@
 
 # > Service: ARM - Core
 # ServiceLabel: %ARM - Core %Service Attention
-/sdk/core/Azure.Core           @armleads-azure
+#/<NotInRepo>/           @armleads-azure
 
 # > Service: ARM - Managed Applications
 # ServiceLabel: %ARM - Managed Applications %Service Attention
