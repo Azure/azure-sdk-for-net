@@ -383,41 +383,31 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Need to get an approved file to test")]
-        public async Task StartRecognizeContentWithSelectionMarks()
+        [TestCase(true)]
+        [TestCase(false, Ignore = "File not yet in Github")]
+        public async Task StartRecognizeContentWithSelectionMarks(bool useStream)
         {
             var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
-            using (Recording.DisableRequestBodyRecording())
+            if (useStream)
             {
-                operation = await client.StartRecognizeContentAsync(stream);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeContentAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
+                operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
             await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
-
-            Assert.AreEqual(5, formPage.SelectionMarks.Count);
-
-            var selectionMarks = formPage.SelectionMarks.ToList();
-
-            var expectedState = new string[5]
-            {
-                "Selected",
-                "Selected",
-                "Unselected",
-                "Unselected",
-                "Unselected",
-            };
-
-            for (var i = 0; i < selectionMarks.Count; i++)
-            {
-                Assert.AreEqual(expectedState[i], selectionMarks[i].State.ToString());
-                Assert.AreEqual(expectedState[i], selectionMarks[i].Text);
-            }
 
             ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
         }
@@ -1304,7 +1294,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("Need to get an approved file to test")]
         public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -1332,7 +1321,7 @@ namespace Azure.AI.FormRecognizer.Tests
             // Testing that we shuffle things around correctly so checking only once per property.
             Assert.IsNotEmpty(form.FormType);
             Assert.IsNotNull(form.Fields);
-            var name = "Checkbox_Paramedic Subscription_Amount Enclosed";
+            var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(form.Fields[name]);
             Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
             Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
@@ -1866,8 +1855,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedPageNumber, selectionMark.PageNumber);
                 Assert.NotNull(selectionMark.BoundingBox.Points);
                 Assert.AreEqual(4, selectionMark.BoundingBox.Points.Length);
-                Assert.NotNull(selectionMark.Text);
-                Assert.That(selectionMark.Text, Is.EqualTo("Selected").Or.EqualTo("Unselected"));
+                Assert.IsNull(selectionMark.Text);
                 Assert.NotNull(selectionMark.State);
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
