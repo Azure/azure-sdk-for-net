@@ -106,11 +106,12 @@ namespace Azure.Core.Pipeline
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
             request.Proxy = _proxy;
+
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
-                    request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    request.ContentLength = long.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
@@ -180,6 +181,12 @@ namespace Azure.Core.Pipeline
                 request.Headers.Add(messageRequestHeader.Name, messageRequestHeader.Value);
             }
 
+            if (request.ContentLength != -1)
+            {
+                // disable buffering when the content length is known
+                // as the content stream is re-playable and we don't want to allocate extra buffers
+                request.AllowWriteStreamBuffering = false;
+            }
             return request;
         }
 

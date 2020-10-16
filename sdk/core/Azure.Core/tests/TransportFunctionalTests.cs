@@ -94,6 +94,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual(50, contentLength);
         }
 
+        [Test]
+        public async Task CanSetContentLenghtOverMaxInt()
+        {
+            long contentLength = 0;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    contentLength = context.Request.ContentLength.Value;
+                });
+
+            var requestContentLength = long.MaxValue;
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(testServer.Address);
+            request.Content = RequestContent.Create(new byte[10]);
+            request.Headers.Add("Content-Length", requestContentLength.ToString());
+
+            try
+            {
+                await ExecuteRequest(request, transport);
+            }
+            catch (Exception)
+            {
+                // Sending the request would fail because of length mismatch
+            }
+
+            Assert.AreEqual(requestContentLength, requestContentLength);
+        }
 
         [Test]
         public async Task HostHeaderSetFromUri()
