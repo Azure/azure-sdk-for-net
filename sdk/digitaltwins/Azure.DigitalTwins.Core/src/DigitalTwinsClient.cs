@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -140,7 +139,7 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetDigitalTwinAsync(string digitalTwinId, DigitalTwinsGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> GetDigitalTwinAsync(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetByIdAsync(digitalTwinId, options, cancellationToken);
         }
@@ -168,13 +167,14 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        public virtual Response<string> GetDigitalTwin(string digitalTwinId, DigitalTwinsGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetDigitalTwin(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetById(digitalTwinId, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates a digital twin asynchronously.
+        /// Creates a digital twin asynchronously. If the provided digital twin Id is already in use, then this will attempt to replace the existing digital twin
+        /// with the provided digital twin.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
@@ -210,13 +210,14 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created digital twin &apos;{customDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, DigitalTwinsAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.AddAsync(digitalTwinId, digitalTwin, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates a digital twin synchronously.
+        /// Creates a digital twin synchronously. If the provided digital twin Id is already in use, then this will attempt to replace the existing digital twin
+        /// with the provided digital twin.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
@@ -232,7 +233,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Response<string> CreateDigitalTwin(string digitalTwinId, string digitalTwin, DigitalTwinsAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateDigitalTwin(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.Add(digitalTwinId, digitalTwin, options, cancellationToken);
         }
@@ -262,7 +263,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted digital twin &apos;{digitalTwinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, DigitalTwinsDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, DeleteDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.DeleteAsync(digitalTwinId, options, cancellationToken);
         }
@@ -288,7 +289,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        public virtual Response DeleteDigitalTwin(string digitalTwinId, DigitalTwinsDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteDigitalTwin(string digitalTwinId, DeleteDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.Delete(digitalTwinId, options, cancellationToken);
         }
@@ -310,7 +311,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatch"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, string jsonPatch, DigitalTwinsUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, string jsonPatch, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.UpdateAsync(digitalTwinId, jsonPatch, options, cancellationToken);
         }
@@ -332,10 +333,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatch"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateDigitalTwinAsync(string, string, DigitalTwinsUpdateOptions, CancellationToken)">
+        /// <seealso cref="UpdateDigitalTwinAsync(string, string, UpdateDigitalTwinOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateDigitalTwin(string digitalTwinId, string jsonPatch, DigitalTwinsUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateDigitalTwin(string digitalTwinId, string jsonPatch, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.Update(digitalTwinId, jsonPatch, options, cancellationToken);
         }
@@ -344,10 +345,10 @@ namespace Azure.DigitalTwins.Core
         /// Gets a component on a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being retrieved.</param>
+        /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -355,27 +356,27 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentPath, DigitalTwinsGetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponentAsync(digitalTwinId, componentPath, options, cancellationToken);
+            return _dtRestClient.GetComponentAsync(digitalTwinId, componentName, options, cancellationToken);
         }
 
         /// <summary>
         /// Gets a component on a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being retrieved.</param>
+        /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -383,21 +384,21 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetComponentAsync(string, string, DigitalTwinsGetComponentOptions, CancellationToken)">
+        /// <seealso cref="GetComponentAsync(string, string, GetComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> GetComponent(string digitalTwinId, string componentPath, DigitalTwinsGetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetComponent(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponent(digitalTwinId, componentPath, options, cancellationToken);
+            return _dtRestClient.GetComponent(digitalTwinId, componentName, options, cancellationToken);
         }
 
         /// <summary>
         /// Updates properties of a component on a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being modified.</param>
+        /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -410,7 +411,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
         /// // Update Component1 by replacing the property ComponentProp1 value,
@@ -422,16 +423,16 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentPath, string jsonPatch, DigitalTwinsUpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, jsonPatch, options, cancellationToken);
+            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
         }
 
         /// <summary>
         /// Updates properties of a component on a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="componentPath">The component being modified.</param>
+        /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -441,16 +442,16 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="UpdateComponentAsync(string, string, string, DigitalTwinsUpdateComponentOptions, CancellationToken)">
+        /// <seealso cref="UpdateComponentAsync(string, string, string, UpdateComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateComponent(string digitalTwinId, string componentPath, string jsonPatch, DigitalTwinsUpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateComponent(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, jsonPatch, options, cancellationToken);
+            return _dtRestClient.UpdateComponent(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
         }
 
         /// <summary>
@@ -490,7 +491,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, DigitalTwinsListRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
@@ -549,10 +550,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetRelationshipsAsync(string, string, DigitalTwinsListRelationshipsOptions, CancellationToken)">
+        /// <seealso cref="GetRelationshipsAsync(string, string, GetRelationshipsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, DigitalTwinsListRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
@@ -620,7 +621,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, DigitalTwinsListIncomingRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, GetIncomingRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<IncomingRelationship>> FirstPageFunc(int? pageSizeHint)
             {
@@ -673,10 +674,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetIncomingRelationshipsAsync(string, DigitalTwinsListIncomingRelationshipsOptions, CancellationToken)">
+        /// <seealso cref="GetIncomingRelationshipsAsync(string, GetIncomingRelationshipsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<IncomingRelationship> GetIncomingRelationships(string digitalTwinId, DigitalTwinsListIncomingRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<IncomingRelationship> GetIncomingRelationships(string digitalTwinId, GetIncomingRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             Page<IncomingRelationship> FirstPageFunc(int? pageSizeHint)
             {
@@ -742,7 +743,7 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;Prop2: {getCustomRelationship.Prop2}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetRelationshipAsync(string digitalTwinId, string relationshipId, DigitalTwinsGetRelationshipByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> GetRelationshipAsync(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetRelationshipByIdAsync(digitalTwinId, relationshipId, options, cancellationToken);
         }
@@ -764,10 +765,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetRelationshipAsync(string, string, DigitalTwinsGetRelationshipByIdOptions, CancellationToken)">
+        /// <seealso cref="GetRelationshipAsync(string, string, GetRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> GetRelationship(string digitalTwinId, string relationshipId, DigitalTwinsGetRelationshipByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetRelationship(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetRelationshipById(digitalTwinId, relationshipId, options, cancellationToken);
         }
@@ -789,7 +790,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, DigitalTwinsDeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, DeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, options, cancellationToken);
         }
@@ -811,16 +812,17 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteRelationshipAsync(string, string, DigitalTwinsDeleteRelationshipOptions, CancellationToken)">
+        /// <seealso cref="DeleteRelationshipAsync(string, string, DeleteRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, DigitalTwinsDeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, DeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates a relationship on a digital twin asynchronously.
+        /// Creates a relationship on a digital twin asynchronously. If the provided relationship Id is already in use, this will attempt to replace the
+        /// existing relationship with the provided relationship.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship which is being created.</param>
@@ -859,13 +861,14 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created a digital twin relationship &apos;floorBuildingRelationshipId&apos; from twin &apos;floorTwinId&apos; to twin &apos;buildingTwinId&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, DigitalTwinsAddRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, relationship, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates a relationship on a digital twin synchronously.
+        /// Creates a relationship on a digital twin synchronously. If the provided relationship Id is already in use, this will attempt to replace the
+        /// existing relationship with the provided relationship.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
@@ -887,10 +890,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateRelationshipAsync(string, string, string, DigitalTwinsAddRelationshipOptions, CancellationToken)">
+        /// <seealso cref="CreateRelationshipAsync(string, string, string, CreateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, DigitalTwinsAddRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.AddRelationship(digitalTwinId, relationshipId, relationship, options, cancellationToken);
         }
@@ -913,7 +916,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string jsonPatch, DigitalTwinsUpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string jsonPatch, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
         }
@@ -936,10 +939,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateRelationshipAsync(string, string, string, DigitalTwinsUpdateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="UpdateRelationshipAsync(string, string, string, UpdateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, string jsonPatch, DigitalTwinsUpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, string jsonPatch, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
         }
@@ -1079,7 +1082,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, DigitalTwinModelsGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, GetModelOptions options = null, CancellationToken cancellationToken = default)
         {
             // The GetModel API will include the model definition in its response by default.
             return _dtModelsRestClient.GetByIdAsync(modelId, IncludeModelDefinition, options, cancellationToken);
@@ -1101,10 +1104,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetModelAsync(string, DigitalTwinModelsGetByIdOptions, CancellationToken)">
+        /// <seealso cref="GetModelAsync(string, GetModelOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<DigitalTwinsModelData> GetModel(string modelId, DigitalTwinModelsGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsModelData> GetModel(string modelId, GetModelOptions options = null, CancellationToken cancellationToken = default)
         {
             // The GetModel API will include the model definition in its response by default.
             return _dtModelsRestClient.GetById(modelId, IncludeModelDefinition, options, cancellationToken);
@@ -1146,7 +1149,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DecommissionModelAsync(string modelId, DigitalTwinModelsUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DecommissionModelAsync(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.UpdateAsync(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }
@@ -1174,10 +1177,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DecommissionModelAsync(string, DigitalTwinModelsUpdateOptions, CancellationToken)">
+        /// <seealso cref="DecommissionModelAsync(string, UpdateModelOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DecommissionModel(string modelId, DigitalTwinModelsUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DecommissionModel(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.Update(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }
@@ -1209,7 +1212,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> models, DigitalTwinModelsAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> models, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<IReadOnlyList<DigitalTwinsModelData>> response = await _dtModelsRestClient.AddAsync(models, options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
@@ -1236,10 +1239,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="CreateModelsAsync(IEnumerable{string}, DigitalTwinModelsAddOptions, CancellationToken)">
+        /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CreateModelsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> models, DigitalTwinModelsAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> models, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<IReadOnlyList<DigitalTwinsModelData>> response = _dtModelsRestClient.Add(models, options, cancellationToken);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
@@ -1284,7 +1287,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteModelAsync(string modelId, DigitalTwinModelsDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteModelAsync(string modelId, DeleteModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.DeleteAsync(modelId, options, cancellationToken);
         }
@@ -1315,10 +1318,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteModelAsync(string, DigitalTwinModelsDeleteOptions, CancellationToken)">
+        /// <seealso cref="DeleteModelAsync(string, DeleteModelOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DeleteModel(string modelId, DigitalTwinModelsDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteModel(string modelId, DeleteModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.Delete(modelId, options, cancellationToken);
         }
@@ -1352,7 +1355,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<string> QueryAsync(string query, QueryTwinsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> QueryAsync(string query, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
             // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
@@ -1415,10 +1418,10 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// A basic query for all digital twins: SELECT * FROM digitalTwins.
         /// </example>
-        /// <seealso cref="QueryAsync(string, QueryTwinsOptions, CancellationToken)">
+        /// <seealso cref="QueryAsync(string, QueryOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<string> Query(string query, QueryTwinsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<string> Query(string query, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
             // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
@@ -1486,7 +1489,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<EventRoute> GetEventRoutesAsync(EventRoutesListOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventRoute> GetEventRoutesAsync(GetEventRoutesOptions options = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventRoute>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1535,10 +1538,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="GetEventRoutesAsync(EventRoutesListOptions, CancellationToken)">
+        /// <seealso cref="GetEventRoutesAsync(GetEventRoutesOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<EventRoute> GetEventRoutes(EventRoutesListOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventRoute> GetEventRoutes(GetEventRoutesOptions options = null, CancellationToken cancellationToken = default)
         {
             Page<EventRoute> FirstPageFunc(int? pageSizeHint)
             {
@@ -1591,7 +1594,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response<EventRoute>> GetEventRouteAsync(string eventRouteId, EventRoutesGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<EventRoute>> GetEventRouteAsync(string eventRouteId, GetEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.GetByIdAsync(eventRouteId, options, cancellationToken);
         }
@@ -1612,16 +1615,17 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetEventRouteAsync(string, EventRoutesGetByIdOptions, CancellationToken)">
+        /// <seealso cref="GetEventRouteAsync(string, GetEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<EventRoute> GetEventRoute(string eventRouteId, EventRoutesGetByIdOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<EventRoute> GetEventRoute(string eventRouteId, GetEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.GetById(eventRouteId, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates an event route asynchronously.
+        /// Creates an event route asynchronously. If the provided event route Id is already in use, then this will attempt to replace the existing
+        /// event route with the provided event route.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
@@ -1646,13 +1650,14 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, EventRoute eventRoute, EventRoutesAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, EventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, options, cancellationToken);
         }
 
         /// <summary>
-        /// Creates an event route synchronously.
+        /// Creates an event route synchronously. If the provided event route Id is already in use, then this will attempt to replace the existing
+        /// event route with the provided event route.
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
@@ -1668,10 +1673,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateEventRouteAsync(string, EventRoute, EventRoutesAddOptions, CancellationToken)">
+        /// <seealso cref="CreateEventRouteAsync(string, EventRoute, CreateEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response CreateEventRoute(string eventRouteId, EventRoute eventRoute, EventRoutesAddOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response CreateEventRoute(string eventRouteId, EventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.Add(eventRouteId, eventRoute, options, cancellationToken);
         }
@@ -1698,7 +1703,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteEventRouteAsync(string eventRouteId, EventRoutesDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteEventRouteAsync(string eventRouteId, DeleteEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.DeleteAsync(eventRouteId, options, cancellationToken);
         }
@@ -1719,10 +1724,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteEventRouteAsync(string, EventRoutesDeleteOptions, CancellationToken)">
+        /// <seealso cref="DeleteEventRouteAsync(string, DeleteEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DeleteEventRoute(string eventRouteId, EventRoutesDeleteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteEventRoute(string eventRouteId, DeleteEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.Delete(eventRouteId, options, cancellationToken);
         }
@@ -1754,7 +1759,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, DigitalTwinsSendTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, PublishTelemetryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1786,10 +1791,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishTelemetryAsync(string, string, string, DigitalTwinsSendTelemetryOptions, CancellationToken)">
+        /// <seealso cref="PublishTelemetryAsync(string, string, string, PublishTelemetryOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, DigitalTwinsSendTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, PublishTelemetryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1836,7 +1841,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published component telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, DigitalTwinsSendComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, PublishComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1869,10 +1874,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, DigitalTwinsSendComponentTelemetryOptions, CancellationToken)">
+        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, PublishComponentTelemetryOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response PublishComponentTelemetry(string digitalTwinId, string componentName, string messageId, string payload, DigitalTwinsSendComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response PublishComponentTelemetry(string digitalTwinId, string componentName, string messageId, string payload, PublishComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
 
@@ -49,6 +50,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
         }
 
+        [Fact]
+        public void AzureMonitorExporter_BadArgs()
+        {
+            TracerProviderBuilder builder = null;
+            Assert.Throws<ArgumentNullException>(() => builder.AddAzureMonitorTraceExporter());
+        }
+
         private void GetInternalFields(AzureMonitorTraceExporter exporter, out string ikey, out string endpoint)
         {
             // TODO: NEED A BETTER APPROACH FOR TESTING. WE DECIDED AGAINST MAKING FIELDS "internal".
@@ -61,7 +69,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 .ToString();
 
             var transmitter = typeof(AzureMonitorTraceExporter)
-                .GetField("AzureMonitorTransmitter", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("Transmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)
