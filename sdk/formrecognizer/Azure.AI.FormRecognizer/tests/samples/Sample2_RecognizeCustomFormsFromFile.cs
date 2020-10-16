@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.SelectionMarkBlobContainerSasUrl;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
             // Firstly, create a trained model we can use to recognize the custom form. Please note that
             // models can also be trained using a graphical user interface such as the Form Recognizer
@@ -27,19 +27,13 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
+            CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
 
             // Proceed with the custom form recognition.
-            var options = new FormRecognizerClientOptions()
-            {
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = true
-                }
-            };
-            FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey), options);
 
-            string formFilePath = FormRecognizerTestEnvironment.CreatePath("selectionMarkForm.pdf");
+            FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
             string modelId = model.ModelId;
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
