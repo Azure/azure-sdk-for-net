@@ -106,11 +106,12 @@ namespace Azure.Core.Pipeline
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
             request.Proxy = _proxy;
+            request.AllowWriteStreamBuffering = false;
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
-                    request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    request.ContentLength = long.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
