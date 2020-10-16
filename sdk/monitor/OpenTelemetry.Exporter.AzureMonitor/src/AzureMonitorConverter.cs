@@ -122,9 +122,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
-                var statusCode = GetHttpStatusCode(partBTags);
-                var success = GetSuccessFromHttpStatusCode(statusCode);
+                var url = activity.Kind == ActivityKind.Server ? HttpHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
+                var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
+                var success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
@@ -133,8 +133,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 };
 
                 // TODO: Handle activity.TagObjects, extract well-known tags
-                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
-
+                AddPropertiesToTelemetry(request.Properties, PartCTags);
                 telemetry.BaseData = request;
             }
             else if (telemetryType == TelemetryType.Dependency)
@@ -149,14 +148,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                 if (activityType == PartBType.Http)
                 {
-                    dependency.Data = UrlHelper.GetUrl(partBTags);
+                    dependency.Data = HttpHelper.GetUrl(partBTags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    var statusCode = GetHttpStatusCode(partBTags);
+                    var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
                     dependency.ResultCode = statusCode;
-                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
+                    dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
                 }
 
                 // TODO: Handle dependency.target.
+                AddPropertiesToTelemetry(dependency.Properties, PartCTags);
                 telemetry.BaseData = dependency;
             }
 
@@ -164,33 +164,21 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetHttpStatusCode(Dictionary<string, string> tags)
+        internal static string GetMessagingUrl(Dictionary<string, string> tags)
         {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url))
             {
-                return status;
+                return url;
             }
 
-            return "0";
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool GetSuccessFromHttpStatusCode(string statusCode)
-        {
-            return statusCode == "200" || statusCode == "Ok";
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetMessagingUrl(Dictionary<string, string> tags)
-        {
-            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
-            return url;
-        }
-
-        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
+        internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> PartCTags)
         {
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
+            foreach (var tag in PartCTags)
             {
                 destination.Add(tag);
             }
