@@ -31,9 +31,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
-            // Prevent Azure Monitor's HTTP operations from being instrumented.
-            using var scope = SuppressInstrumentationScope.Begin();
-
             if (cancellationToken.IsCancellationRequested)
             {
                 return 0;
