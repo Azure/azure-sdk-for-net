@@ -44,7 +44,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 
                 Task.Run(() =>
                 {
-                    using var source = new ActivitySource("Samples.SampleServer");
+                    using var source = new ActivitySource("Demo.DemoServer");
 
                     while (this.listener.IsListening)
                     {
@@ -109,7 +109,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 
                 this.requestTask = Task.Run(async () =>
                     {
-                        using var source = new ActivitySource("Samples.SampleClient");
+                        using var source = new ActivitySource("Demo.DemoClient");
                         using var client = new HttpClient();
 
                         var count = 1;

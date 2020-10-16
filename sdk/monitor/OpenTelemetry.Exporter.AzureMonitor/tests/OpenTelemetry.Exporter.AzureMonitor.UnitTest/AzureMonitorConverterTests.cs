@@ -145,6 +145,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
+        // TODO: GeneratePartAEnvelope_WithActivityParent
+
         private static Activity CreateTestActivity(
             bool setAttributes = true,
             Dictionary<string, object> additionalAttributes = null,
