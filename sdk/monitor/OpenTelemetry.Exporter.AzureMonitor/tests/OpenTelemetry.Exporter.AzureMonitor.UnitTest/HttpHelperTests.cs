@@ -6,46 +6,46 @@ using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    public class UrlHelperTests
+    public class HttpHelperTests
     {
         [Fact]
         public void GetUrl_Null()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>());
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>());
             Assert.Null(url);
         }
 
         [Fact]
         public void GetUrl_HttpUrl_NullOrEmpty()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = null });
+            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = null });
             Assert.Null(url);
-            url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = string.Empty });
+            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = string.Empty });
             Assert.Null(url);
         }
 
         [Fact]
         public void GetUrl_HttpScheme_NullOrEmpty()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = null });
+            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = null });
             Assert.Null(url);
-            url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = string.Empty });
+            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = string.Empty });
             Assert.Null(url);
         }
 
         [Fact]
         public void GetUrl_HttpHost_NullOrEmpty()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null });
+            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null });
             Assert.Null(url);
-            url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = string.Empty });
+            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = string.Empty });
             Assert.Null(url);
         }
 
         [Fact]
         public void GetUrl_With_HttpScheme_And_Null_HttpHost()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
                       { [SemanticConventions.AttributeHttpScheme] = "https",
                         [SemanticConventions.AttributeHttpHost] = null});
 
@@ -55,7 +55,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_NetPeerName_NullOrEmpty()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerName] = null,
@@ -64,7 +64,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Null(url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerName] = string.Empty,
@@ -73,7 +73,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Null(url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerName] = "netpeername",
@@ -86,7 +86,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_NetPeerIP_NullOrEmpty()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerIp] = null,
@@ -95,7 +95,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Null(url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerIp] = string.Empty,
@@ -104,7 +104,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Null(url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerIp] = "127.0.0.1",
@@ -117,7 +117,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_HttpPort_NullEmptyOrDefault()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -126,7 +126,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("https://localhost", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "http",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -135,7 +135,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("http://localhost", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -148,7 +148,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_HttpPort_RandomPort_With_HttpTarget()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -157,7 +157,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("https://localhost:8888", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "http",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -167,7 +167,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("http://localhost/test", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -177,7 +177,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("https://localhost/test", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -191,7 +191,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_NetPeerIP_Success()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerIp] = "10.0.0.1",
@@ -200,7 +200,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("https://10.0.0.1:443", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerIp] = "10.0.0.1",
@@ -214,7 +214,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_NetPeerName_Success()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerName] = "localhost",
@@ -223,7 +223,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("https://localhost:443", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeNetPeerName] = "localhost",
@@ -237,14 +237,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_HttpHost_Success()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string>
+            var url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpHost] = "localhost",
             });
 
             Assert.Equal("localhost", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = "8888",
@@ -252,7 +252,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("localhost:8888", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = "8080",
@@ -261,7 +261,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("localhost:8080/test", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = null,
@@ -270,7 +270,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             Assert.Equal("localhost", url);
 
-            url = UrlHelper.GetUrl(new Dictionary<string, string>
+            url = HttpHelper.GetUrl(new Dictionary<string, string>
             {
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = string.Empty,
@@ -283,10 +283,51 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_HttpUrl_Success()
         {
-            var url = UrlHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = "https://www.wiki.com" });
+            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = "https://www.wiki.com" });
             Assert.Equal("https://www.wiki.com", url);
         }
 
         // TODO: Order of precedence.
+
+        [Fact]
+        public void GetHttpStatusCode_Success()
+        {
+            Assert.Equal("200", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "200" }));
+            Assert.Equal("Ok", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "Ok" }));
+            Assert.Equal("500", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "500" }));
+            Assert.Null(HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = null }));
+        }
+
+        [Fact]
+        public void GetHttpStatusCode_Failure()
+        {
+            Assert.Equal("0", HttpHelper.GetHttpStatusCode(null));
+            Assert.Equal("0", HttpHelper.GetHttpStatusCode(new Dictionary<string, string>()));
+        }
+
+        [Fact]
+        public void GetSuccessFromHttpStatusCode_Success()
+        {
+            Assert.True(HttpHelper.GetSuccessFromHttpStatusCode("200"));
+            Assert.True(HttpHelper.GetSuccessFromHttpStatusCode("Ok"));
+        }
+
+        [Fact]
+        public void GetSuccessFromHttpStatusCode_Failure()
+        {
+            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(null));
+            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(string.Empty));
+            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("500"));
+            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("0"));
+        }
+
+        [Fact]
+        public void GetHostTests()
+        {
+            Assert.Equal("test", HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = "test" }));
+            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null }));
+            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string>()));
+            Assert.Null(HttpHelper.GetHost(null));
+        }
     }
 }

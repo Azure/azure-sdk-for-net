@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal class UrlHelper
+    internal class HttpHelper
     {
         private const string SchemePostfix = "://";
         private const string Colon = ":";
@@ -67,6 +67,34 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             return string.IsNullOrWhiteSpace(url) ? null : url;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetHttpStatusCode(Dictionary<string, string> tags)
+        {
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
+            {
+                return status;
+            }
+
+            return "0";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static bool GetSuccessFromHttpStatusCode(string statusCode)
+        {
+            return statusCode == "200" || statusCode == "Ok";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetHost(Dictionary<string, string> tags)
+        {
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
+            {
+                return host;
+            }
+
+            return null;
         }
     }
 }

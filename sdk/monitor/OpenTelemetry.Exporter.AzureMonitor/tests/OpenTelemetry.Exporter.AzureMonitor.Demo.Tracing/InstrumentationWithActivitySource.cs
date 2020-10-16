@@ -44,7 +44,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 
                 Task.Run(() =>
                 {
-                    using var source = new ActivitySource("Samples.SampleServer");
+                    using var source = new ActivitySource("Demo.DemoServer");
 
                     while (this.listener.IsListening)
                     {
@@ -63,19 +63,19 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                                 activity?.SetTag($"http.header.{headerKey}", headerValue);
                             }
 
-                            activity?.SetTag("http.url", context.Request.Url.AbsolutePath);
+                            activity?.SetTag("http.url", context.Request.Url.ToString());
                             activity?.SetTag("http.host", context.Request.Url.Host);
 
                             string requestContent;
-                            using (var childSpan = source.StartActivity("ReadStream", ActivityKind.Consumer))
                             using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                             {
                                 requestContent = reader.ReadToEnd();
-                                childSpan.AddEvent(new ActivityEvent("StreamReader.ReadToEnd"));
+                                activity.AddEvent(new ActivityEvent("StreamReader.ReadToEnd"));
                             }
 
                             activity?.SetTag("request.content", requestContent);
                             activity?.SetTag("request.length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
+                            activity?.SetTag("http.status_code", $"{context.Response.StatusCode:D}");
 
                             var echo = Encoding.UTF8.GetBytes("echo: " + requestContent);
                             context.Response.ContentEncoding = Encoding.UTF8;
@@ -109,7 +109,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 
                 this.requestTask = Task.Run(async () =>
                     {
-                        using var source = new ActivitySource("Samples.SampleClient");
+                        using var source = new ActivitySource("Demo.DemoClient");
                         using var client = new HttpClient();
 
                         var count = 1;
@@ -122,9 +122,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                                 count++;
 
                                 activity?.AddEvent(new ActivityEvent("PostAsync:Started"));
-#pragma warning disable CA2234 // Pass system uri objects instead of strings
                                 using var response = await client.PostAsync(url, content, cancellationToken).ConfigureAwait(false);
-#pragma warning restore CA2234 // Pass system uri objects instead of strings
                                 activity?.AddEvent(new ActivityEvent("PostAsync:Ended"));
 
                                 activity?.SetTag("http.url", url);

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
 
@@ -47,6 +48,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var testEndpoint = "https://www.bing.com/";
 
             Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
+        }
+
+        [Fact]
+        public void AzureMonitorExporter_BadArgs()
+        {
+            TracerProviderBuilder builder = null;
+            Assert.Throws<ArgumentNullException>(() => builder.AddAzureMonitorTraceExporter());
         }
 
         private void GetInternalFields(AzureMonitorTraceExporter exporter, out string ikey, out string endpoint)

@@ -32,6 +32,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {
+            // Prevent Azure Monitor's HTTP operations from being instrumented.
+            using var scope = SuppressInstrumentationScope.Begin();
+
             try
             {
                 var telemetryItems = AzureMonitorConverter.Convert(batch, this.instrumentationKey);

@@ -134,5 +134,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public const string AttributeMessagingPayloadSize = "messaging.message_payload_size_bytes";
         public const string AttributeMessagingPayloadCompressedSize = "messaging.message_payload_compressed_size_bytes";
         public const string AttributeMessagingOperation = "messaging.operation";
+
+        public const string AttributeEndpointAddress = "peer.address";
+        public const string AttributeMessageBusDestination = "message_bus.destination";
+
+        public const string AttributeAzureNameSpace = "az.namespace";
     }
 }
