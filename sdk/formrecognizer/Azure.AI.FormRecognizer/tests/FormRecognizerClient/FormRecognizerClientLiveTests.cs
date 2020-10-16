@@ -1182,7 +1182,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 // Check for ContactNames.Page value
                 Assert.IsTrue(recognizedForm.Fields.ContainsKey("ContactNames"));
                 FormField contactNameField = recognizedForm.Fields["ContactNames"].Value.AsList().Single();
-                Assert.AreEqual(formIndex+1, contactNameField.ValueData.PageNumber);
+                Assert.AreEqual(formIndex + 1, contactNameField.ValueData.PageNumber);
             }
         }
 

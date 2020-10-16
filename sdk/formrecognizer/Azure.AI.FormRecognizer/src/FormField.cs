@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
-        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults, bool isBusinessCard = default)
         {
             Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
@@ -56,12 +56,12 @@ namespace Azure.AI.FormRecognizer.Models
                 // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                int fieldPage = fieldValue.Page.HasValue ? fieldValue.Page.Value : CalculatePage(fieldValue);
+                int fieldPage = isBusinessCard ? CalculatePage(fieldValue) : fieldValue.Page.Value;
 
                 ValueData = new FieldData(boundingBox, fieldPage, fieldValue.Text, fieldElements);
             }
 
-            Value = new FieldValue(fieldValue, readResults);
+            Value = new FieldValue(fieldValue, readResults, isBusinessCard);
         }
 
         /// <summary>
