@@ -20,6 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     /// </summary>
     internal static class AzureMonitorConverter
     {
+        private const int Version2 = 2; // The ingestion schema version
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "RequestData",
@@ -136,7 +137,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                         break;
                 }
 
-                RequestData request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
+                RequestData request = new RequestData(Version2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
@@ -148,7 +149,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
+                var dependency = new RemoteDependencyData(Version2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
                     Id = activity.Context.SpanId.ToHexString()
                 };
