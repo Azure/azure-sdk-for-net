@@ -3,12 +3,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize Form Content - Recognize and extract tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
-<<<<<<< HEAD
-- Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
-- Recognize Business Card - Recognize and extract common fields from business cards, using a pre-trained business cards model.
-=======
 - Recognize Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
->>>>>>> locale tests
+- Recognize Business Card - Recognize and extract common fields from business cards, using a pre-trained business cards model.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 

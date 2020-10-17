@@ -384,7 +384,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "File not yet in Github")]
+        [TestCase(false)]
         public async Task StartRecognizeContentWithSelectionMarks(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -400,7 +400,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.FormSelectionMarks);
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -1164,7 +1164,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore ="File not on Github")]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
