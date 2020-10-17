@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Media.LiveVideoAnalyt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Tests", "tests\Azure.Template.Tests.csproj", "{33D63B09-7C80-439B-8A8D-BC345110C908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Media.Live.VideoAnalytics.Edge.Tests", "tests\Azure.Media.Live.VideoAnalytics.Edge.Tests.csproj", "{33D63B09-7C80-439B-8A8D-BC345110C908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
