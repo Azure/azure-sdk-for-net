@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Instances of Event represent structured event records that can be grouped and searched by their properties. Event data item also creates a metric of event count by name. </summary>
     public partial class TelemetryEventData : MonitorDomain

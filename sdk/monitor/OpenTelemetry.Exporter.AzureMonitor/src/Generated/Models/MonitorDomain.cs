@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The abstract common base of all domains. </summary>
     public partial class MonitorDomain

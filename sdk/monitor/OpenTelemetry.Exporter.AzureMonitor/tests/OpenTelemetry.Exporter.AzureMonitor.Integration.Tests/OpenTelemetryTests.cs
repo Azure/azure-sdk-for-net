@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
 
 using Xunit;
 using Xunit.Abstractions;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 {
     public class OpenTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup>>
     {

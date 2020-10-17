@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The error details. </summary>
     public partial class TelemetryErrorDetails

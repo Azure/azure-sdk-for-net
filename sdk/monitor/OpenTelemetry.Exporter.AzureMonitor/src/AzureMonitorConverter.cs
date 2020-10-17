@@ -8,11 +8,13 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-using OpenTelemetry.Exporter.AzureMonitor.Models;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
+
+using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// This class is responsible for converting an OpenTelemetry <see cref="Batch{T}"/> of <see cref="Activity"/>

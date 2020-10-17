@@ -4,7 +4,7 @@
 using OpenTelemetry.Trace;
 using System;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// test

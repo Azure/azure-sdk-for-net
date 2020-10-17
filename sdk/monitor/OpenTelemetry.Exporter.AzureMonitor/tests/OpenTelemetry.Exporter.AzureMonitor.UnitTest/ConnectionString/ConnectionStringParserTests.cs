@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.ConnectionString
 {
     public class ConnectionStringParserTests
     {

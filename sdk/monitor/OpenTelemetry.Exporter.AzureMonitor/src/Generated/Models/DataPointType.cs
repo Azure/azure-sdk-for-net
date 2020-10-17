@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Type of the metric data measurement. </summary>
     public readonly partial struct DataPointType : IEquatable<DataPointType>

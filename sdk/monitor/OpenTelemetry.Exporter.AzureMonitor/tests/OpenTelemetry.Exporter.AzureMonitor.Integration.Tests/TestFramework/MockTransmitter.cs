@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using OpenTelemetry.Exporter.AzureMonitor.Models;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
     public class MockTransmitter : ITransmitter
     {

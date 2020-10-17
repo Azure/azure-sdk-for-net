@@ -29,7 +29,7 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/OpenTelemetry.Exporter.AzureMonitor/tests/OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing/DemoTrace.cs) for a complete demo.
 
 ```csharp
-using OpenTelemetry.Exporter.AzureMonitor;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Trace;
 
 OpenTelemetry.Sdk.CreateTracerProviderBuilder()

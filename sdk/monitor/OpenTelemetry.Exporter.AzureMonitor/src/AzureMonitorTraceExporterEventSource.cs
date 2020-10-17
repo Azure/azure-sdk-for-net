@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.Tracing;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorTraceExporterEventSource : EventSource

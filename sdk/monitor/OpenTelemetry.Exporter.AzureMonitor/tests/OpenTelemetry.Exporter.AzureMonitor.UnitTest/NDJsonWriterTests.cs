@@ -4,7 +4,7 @@
 using System.Text;
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Tests
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class NDJsonWriterTests
     {

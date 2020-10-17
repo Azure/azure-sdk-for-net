@@ -4,7 +4,10 @@
 using System;
 using System.Linq;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
+// This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
+using AzureCoreConnectionString = Azure.Core.ConnectionString;
+
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.ConnectionString
 {
     internal static class ConnectionStringParser
     {
@@ -31,7 +34,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                     throw new ArgumentOutOfRangeException(nameof(connectionString), $"Values greater than {Constants.ConnectionStringMaxLength} characters are not allowed.");
                 }
 
-                var connString = Azure.Core.ConnectionString.Parse(connectionString);
+                var connString = AzureCoreConnectionString.Parse(connectionString);
                 instrumentationKey = connString.GetInstrumentationKey();
                 ingestionEndpoint = connString.GetIngestionEndpoint();
             }
@@ -42,7 +45,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
             }
         }
 
-        internal static string GetInstrumentationKey(this Azure.Core.ConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
+        internal static string GetInstrumentationKey(this AzureCoreConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
 
         /// <summary>
         /// Evaluate connection string and return the requested endpoint.
@@ -54,7 +57,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         ///     3. use default endpoint (location is ignored)
         /// This behavior is required by the Connection String Specification.
         /// </remarks>
-        internal static string GetIngestionEndpoint(this Azure.Core.ConnectionString connectionString)
+        internal static string GetIngestionEndpoint(this AzureCoreConnectionString connectionString)
         {
             // Passing the user input values through the Uri constructor will verify that we've built a valid endpoint.
             Uri uri;
@@ -116,9 +119,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         /// <summary>
-        /// This method wraps <see cref="Azure.Core.ConnectionString.GetNonRequired(string)"/> in a null check.
+        /// This method wraps <see cref="AzureCoreConnectionString.GetNonRequired(string)"/> in a null check.
         /// </summary>
-        internal static bool TryGetNonRequiredValue(this Azure.Core.ConnectionString connectionString, string key, out string value)
+        internal static bool TryGetNonRequiredValue(this AzureCoreConnectionString connectionString, string key, out string value)
         {
             value = connectionString.GetNonRequired(key);
             return value != null;

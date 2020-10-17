@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// Constants for semantic attribute names outlined by the OpenTelemetry specifications.

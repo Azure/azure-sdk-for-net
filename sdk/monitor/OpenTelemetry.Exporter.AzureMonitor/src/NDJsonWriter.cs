@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class NDJsonWriter: IDisposable
     {

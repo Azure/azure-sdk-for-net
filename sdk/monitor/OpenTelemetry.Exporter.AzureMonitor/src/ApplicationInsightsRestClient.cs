@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using OpenTelemetry.Exporter.AzureMonitor.Models;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {

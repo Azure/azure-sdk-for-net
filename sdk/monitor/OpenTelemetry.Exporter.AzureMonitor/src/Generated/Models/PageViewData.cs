@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of PageView represents a generic action on a page like a button click. It is also the base type for PageView. </summary>
     public partial class PageViewData : MonitorDomain

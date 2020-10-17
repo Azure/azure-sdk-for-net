@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     public class TagsExtensionTests
     {
@@ -191,7 +191,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Empty(partBTags);
             Assert.Single(PartCTags);
 
-            Assert.Equal("OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test,OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test,OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test", PartCTags["objArray"]);
+            Assert.Equal("Microsoft.Azure.Monitor.OpenTelemetry.Exporter.TagsExtensionTests+Test,Microsoft.Azure.Monitor.OpenTelemetry.Exporter.TagsExtensionTests+Test,Microsoft.Azure.Monitor.OpenTelemetry.Exporter.TagsExtensionTests+Test", PartCTags["objArray"]);
         }
 
         [Fact]
@@ -217,7 +217,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal("1.1", PartCTags["doubleKey"]);
             Assert.Equal("test", PartCTags["stringKey"]);
             Assert.Equal("True", PartCTags["boolKey"]);
-            Assert.Equal("OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test", PartCTags["objectKey"]);
+            Assert.Equal("Microsoft.Azure.Monitor.OpenTelemetry.Exporter.TagsExtensionTests+Test", PartCTags["objectKey"]);
             Assert.Equal("1,2,3", PartCTags["arrayKey"]);
         }
 

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The context tag keys. </summary>
     internal readonly partial struct ContextTagKeys : IEquatable<ContextTagKeys>

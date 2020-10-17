@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor", "src\OpenTelemetry.Exporter.AzureMonitor.csproj", "{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter", "src\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.csproj", "{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing", "tests\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing.csproj", "{966EFB72-64D7-46D8-B592-9C141C5703F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing", "tests\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing.csproj", "{966EFB72-64D7-46D8-B592-9C141C5703F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.UnitTest\OpenTelemetry.Exporter.AzureMonitor.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.UnitTest\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp.csproj", "{E00C15D6-96E5-4A3B-8701-AC24292301CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj", "{E00C15D6-96E5-4A3B-8701-AC24292301CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

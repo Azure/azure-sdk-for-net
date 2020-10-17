@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of Exception represents a handled or unhandled exception that occurred during execution of the monitored application. </summary>
     public partial class TelemetryExceptionData : MonitorDomain

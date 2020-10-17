@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Defines the level of severity for the event. </summary>
     public readonly partial struct SeverityLevel : IEquatable<SeverityLevel>

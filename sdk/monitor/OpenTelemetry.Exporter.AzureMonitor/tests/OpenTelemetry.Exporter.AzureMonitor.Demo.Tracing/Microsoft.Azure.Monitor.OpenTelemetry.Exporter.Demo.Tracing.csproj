@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
+    <ProjectReference Include="..\..\src\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 
 </Project>

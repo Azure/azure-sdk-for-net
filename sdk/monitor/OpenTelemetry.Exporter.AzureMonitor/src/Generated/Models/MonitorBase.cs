@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Data struct to contain only C section with custom fields. </summary>
     public partial class MonitorBase

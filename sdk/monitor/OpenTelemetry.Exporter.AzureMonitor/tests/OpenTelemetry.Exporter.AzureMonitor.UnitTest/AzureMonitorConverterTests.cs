@@ -7,10 +7,10 @@ using System.Diagnostics;
 using System.Globalization;
 using Xunit;
 
-using OpenTelemetry.Exporter.AzureMonitor.Models;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
     public class AzureMonitorConverterTests
     {
@@ -41,7 +41,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_Empty()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null);
+            var resource = Resources.CreateServiceResource(null);
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Null(roleName);
             Assert.Null(roleInstance);
@@ -50,7 +50,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_ServiceName()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service");
+            var resource = Resources.CreateServiceResource("my-service");
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-service", roleName);
             Assert.True(Guid.TryParse(roleInstance, out var guid));
@@ -59,7 +59,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_ServiceInstance()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null, "roleInstance_1");
+            var resource = Resources.CreateServiceResource(null, "roleInstance_1");
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Empty(resource.Attributes);
             Assert.Null(roleName);
@@ -69,7 +69,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_ServiceNamespace()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null, null, "my-namespace");
+            var resource = Resources.CreateServiceResource(null, null, "my-namespace");
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Empty(resource.Attributes);
             Assert.Null(roleName);
@@ -79,7 +79,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_ServiceNameAndInstance()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service", "roleInstance_1");
+            var resource = Resources.CreateServiceResource("my-service", "roleInstance_1");
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
@@ -88,7 +88,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         [Fact]
         public void ExtractRoleInfo_ServiceNameAndInstanceAndNamespace()
         {
-            var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace");
+            var resource = Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace");
             AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-namespace.my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
@@ -126,7 +126,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         public void GeneratePartAEnvelope_ActivityWithRoleInformation()
         {
             var activity = CreateTestActivity(
-                resource: OpenTelemetry.Resources.Resources.CreateServiceResource("BusyWorker", "TEST3650724"));
+                resource: Resources.CreateServiceResource("BusyWorker", "TEST3650724"));
 
             var telemetryItem = AzureMonitorConverter.GeneratePartAEnvelope(activity);
             Assert.Equal("RemoteDependency", telemetryItem.Name);

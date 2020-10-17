@@ -7,9 +7,10 @@ using System.Threading;
 
 using Azure.Core.Pipeline;
 
+using OpenTelemetry;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     public class AzureMonitorTraceExporter : ActivityExporter
     {

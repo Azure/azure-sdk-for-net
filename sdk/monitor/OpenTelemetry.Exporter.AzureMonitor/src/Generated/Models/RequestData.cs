@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of Request represents completion of an external request to the application to do work and contains a summary of that request execution and the results. </summary>
     public partial class RequestData : MonitorDomain

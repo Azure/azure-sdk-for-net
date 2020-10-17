@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Azure;
 using Azure.Core.Pipeline;
 
-using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
-using OpenTelemetry.Exporter.AzureMonitor.Models;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.ConnectionString;
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
@@ -36,7 +37,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return 0;
             }
 
-            Azure.Response<TrackResponse> response = null;
+            Response<TrackResponse> response = null;
 
             try
             {

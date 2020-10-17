@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
+// This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
+using AzureCoreConnectionString = Azure.Core.ConnectionString;
+
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.ConnectionString
 {
     /// <summary>
     /// Because we don't own the code for <see cref="Azure.Core.ConnectionString"/>, these tests are to verify expected behavior.
@@ -14,7 +18,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         [Fact]
         public void TestParse()
         {
-            var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3");
+            var test = AzureCoreConnectionString.Parse("key1=value1;key2=value2;key3=value3");
 
             Assert.Equal("value1", test.GetRequired("key1"));
             Assert.Equal("value2", test.GetRequired("key2"));
@@ -24,7 +28,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         [Fact]
         public void TestParse_WithTrailingSemicolon()
         {
-            var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3;");
+            var test = AzureCoreConnectionString.Parse("key1=value1;key2=value2;key3=value3;");
 
             Assert.Equal("value1", test.GetRequired("key1"));
             Assert.Equal("value2", test.GetRequired("key2"));
@@ -34,7 +38,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         [Fact]
         public void TestParse_WithExtraSpaces()
         {
-            var test = Azure.Core.ConnectionString.Parse(" key1 =  value1   ; key2 = value2 ; key3    =value3   ");
+            var test = AzureCoreConnectionString.Parse(" key1 =  value1   ; key2 = value2 ; key3    =value3   ");
 
             Assert.Equal("value1", test.GetRequired("key1"));
             Assert.Equal("value2", test.GetRequired("key2"));
@@ -48,7 +52,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         [Fact]
         public void TestParse_IsCaseInsensitive()
         {
-            var test = Azure.Core.ConnectionString.Parse("UPPERCASE=value1;lowercase=value2;MixedCase=value3");
+            var test = AzureCoreConnectionString.Parse("UPPERCASE=value1;lowercase=value2;MixedCase=value3");
 
             Assert.Equal("value1", test.GetRequired("UPPERCASE"));
             Assert.Equal("value1", test.GetRequired("uppercase"));
@@ -61,31 +65,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         [Fact]
         public void TestParse_WithNull()
         {
-            Assert.Throws<NullReferenceException>(() => Azure.Core.ConnectionString.Parse(null));
+            Assert.Throws<NullReferenceException>(() => AzureCoreConnectionString.Parse(null));
         }
 
         [Fact]
         public void TestParse_WithEmptyString()
         {
-            Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse(string.Empty));
+            Assert.Throws<InvalidOperationException>(() => AzureCoreConnectionString.Parse(string.Empty));
         }
 
         [Fact]
         public void TestParse_WithDuplaceKeys()
         {
-            Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1=value2"));
+            Assert.Throws<InvalidOperationException>(() => AzureCoreConnectionString.Parse("key1=value1;key1=value2"));
         }
 
         [Fact]
         public void TestParse_WithDuplaceKeysWithSpaces()
         {
-            Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1  =value2"));
+            Assert.Throws<InvalidOperationException>(() => AzureCoreConnectionString.Parse("key1=value1;key1  =value2"));
         }
 
         [Fact]
         public void TestParse_WithInvalidDelimiters()
         {
-            Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1;key2=value2"));
+            Assert.Throws<InvalidOperationException>(() => AzureCoreConnectionString.Parse("key1;key2=value2"));
         }
     }
 }

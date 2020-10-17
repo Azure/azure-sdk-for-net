@@ -7,7 +7,7 @@
 
 using System;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Models
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Stack frame information. </summary>
     public partial class StackFrame
