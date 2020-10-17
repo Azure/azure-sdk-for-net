@@ -12,6 +12,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal partial class ApplicationInsightsRestClient
     {
+        /// <summary>
+        /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
+        /// </summary>
+        /// <param name="body">The list of telemetry events to track.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns></returns>
         internal async Task<int> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -26,6 +32,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }
 
+        /// <summary>
+        /// This operation sends a blob from persistent storage that will be monitored by Azure Monitor.
+        /// </summary>
+        /// <param name="body">Content of blob to track.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns></returns>
         internal async Task<int> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
         {
             using var message = CreateTrackRequest(body);

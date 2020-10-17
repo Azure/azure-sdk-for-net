@@ -47,7 +47,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     break;
                 case ResponseStatusCodes.RequestTimeout:
                 case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                case ResponseStatusCodes.ResponseCodeTooManyRequestsOverExtendedTime:
+                case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
                     // Parse retry-after header
                     // Send Messages To Storage
                     break;
@@ -83,7 +83,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     break;
                 case ResponseStatusCodes.RequestTimeout:
                 case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                case ResponseStatusCodes.ResponseCodeTooManyRequestsOverExtendedTime:
+                case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
                 case ResponseStatusCodes.InternalServerError:
                 case ResponseStatusCodes.BadGateway:
                 case ResponseStatusCodes.ServiceUnavailable:
