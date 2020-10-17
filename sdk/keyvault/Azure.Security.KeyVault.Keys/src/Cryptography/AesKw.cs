@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// AES Key Wrap algoritm as defined in https://tools.ietf.org/html/rfc3394
+    /// Copied from Microsoft.Azure.KeyVault.Cryptography for AES Key Wrap algorithm as defined in https://tools.ietf.org/html/rfc3394
     /// </summary>
     internal abstract class AesKw
     {
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private static readonly byte[] _defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 
-        protected static RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+        internal static RandomNumberGenerator Rng = RandomNumberGenerator.Create();
 
         internal static Aes Create(byte[] key)
         {
