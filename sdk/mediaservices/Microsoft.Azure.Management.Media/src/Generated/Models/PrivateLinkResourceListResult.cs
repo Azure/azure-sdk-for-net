@@ -11,29 +11,32 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Metric properties.
+    /// A list of private link resources
     /// </summary>
-    public partial class MetricProperties
+    public partial class PrivateLinkResourceListResult
     {
         /// <summary>
-        /// Initializes a new instance of the MetricProperties class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        public MetricProperties()
+        public PrivateLinkResourceListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricProperties class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        /// <param name="serviceSpecification">The service
-        /// specifications.</param>
-        public MetricProperties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
+        /// <param name="value">Array of private link resources</param>
+        public PrivateLinkResourceListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>))
         {
-            ServiceSpecification = serviceSpecification;
+            Value = value;
             CustomInit();
         }
 
@@ -43,10 +46,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the service specifications.
+        /// Gets or sets array of private link resources
         /// </summary>
-        [JsonProperty(PropertyName = "serviceSpecification")]
-        public ServiceSpecification ServiceSpecification { get; private set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateLinkResource> Value { get; set; }
 
     }
 }
