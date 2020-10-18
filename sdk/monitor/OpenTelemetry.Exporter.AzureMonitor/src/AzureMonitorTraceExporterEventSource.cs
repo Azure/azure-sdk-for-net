@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
@@ -11,29 +12,39 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     {
         private const string EventSourceName = "OpenTelemetry-TraceExporter-AzureMonitor";
         public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
+        public readonly IReadOnlyDictionary<string, EventLevel> EventLevelMap = new Dictionary<string, EventLevel>
+        {
+            [EventLevelSuffix.Critical] = EventLevel.Critical,
+            [EventLevelSuffix.Error] = EventLevel.Error,
+            [EventLevelSuffix.Warning] = EventLevel.Warning,
+            [EventLevelSuffix.Informational] = EventLevel.Informational,
+            [EventLevelSuffix.Verbose] = EventLevel.Verbose
+        };
 
         [NonEvent]
         public void Write(string name, object value)
         {
-            if (this.IsEnabled(EventLevel.Critical, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Critical, StringComparison.Ordinal))
+            var eventLevel = EventLevelMap[name.Substring(name.LastIndexOf('.'))];
+            if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
-                WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {GetMessage(value)}");
-            }
-            else if (this.IsEnabled(EventLevel.Error, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Error, StringComparison.Ordinal))
-            {
-                WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {GetMessage(value)}");
-            }
-            else if (this.IsEnabled(EventLevel.Warning, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Warning, StringComparison.Ordinal))
-            {
-                WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {GetMessage(value)}");
-            }
-            else if (this.IsEnabled(EventLevel.Informational, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Informational, StringComparison.Ordinal))
-            {
-                WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {GetMessage(value)}");
-            }
-            else if (this.IsEnabled(EventLevel.Verbose, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Verbose, StringComparison.Ordinal))
-            {
-                WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {GetMessage(value)}");
+                switch (eventLevel)
+                {
+                    case EventLevel.Critical:
+                        WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {GetMessage(value)}");
+                        break;
+                    case EventLevel.Error:
+                        WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {GetMessage(value)}");
+                        break;
+                    case EventLevel.Informational:
+                        WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {GetMessage(value)}");
+                        break;
+                    case EventLevel.Verbose:
+                        WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {GetMessage(value)}");
+                        break;
+                    case EventLevel.Warning:
+                        WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {GetMessage(value)}");
+                        break;
+                }
             }
         }
 
