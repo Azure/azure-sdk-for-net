@@ -7,9 +7,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal static class StringExtensions
     {
-        public static string TrimEnd(this string message, string suffixToRemove)
+        public static string Trim(this string message, int lastIndex)
         {
-            return message.Substring(0, message.Length - suffixToRemove.Length);
+            return message.Substring(0, lastIndex);
         }
     }
 }

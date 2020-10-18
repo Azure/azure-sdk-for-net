@@ -24,25 +24,29 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [NonEvent]
         public void Write(string name, object value)
         {
-            var eventLevel = EventLevelMap[name.Substring(name.LastIndexOf('.'))];
+            var lastIndex = name.LastIndexOf('.');
+            var eventLevel = EventLevelMap[name.Substring(lastIndex)];
+
             if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
+                var message = $"{name.Trim(lastIndex)} - {GetMessage(value)}";
+
                 switch (eventLevel)
                 {
                     case EventLevel.Critical:
-                        WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {GetMessage(value)}");
+                        WriteCritical(message);
                         break;
                     case EventLevel.Error:
-                        WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {GetMessage(value)}");
+                        WriteError(message);
                         break;
                     case EventLevel.Informational:
-                        WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {GetMessage(value)}");
+                        WriteInformational(message);
                         break;
                     case EventLevel.Verbose:
-                        WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {GetMessage(value)}");
+                        WriteVerbose(message);
                         break;
                     case EventLevel.Warning:
-                        WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {GetMessage(value)}");
+                        WriteWarning(message);
                         break;
                 }
             }
