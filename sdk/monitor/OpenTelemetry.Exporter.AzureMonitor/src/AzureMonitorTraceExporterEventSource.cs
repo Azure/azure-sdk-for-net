@@ -15,27 +15,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [NonEvent]
         public void Write(string name, object value)
         {
-            string message = value is Exception exception ? exception.ToInvariantString() : value.ToString();
-
-            if (name.EndsWith(EventLevelSuffix.Critical, StringComparison.Ordinal))
+            if (this.IsEnabled(EventLevel.Critical, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Critical, StringComparison.Ordinal))
             {
-                WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {message}");
+                WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {GetMessage(value)}");
             }
-            else if (name.EndsWith(EventLevelSuffix.Error, StringComparison.Ordinal))
+            else if (this.IsEnabled(EventLevel.Error, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Error, StringComparison.Ordinal))
             {
-                WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {message}");
+                WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {GetMessage(value)}");
             }
-            else if (name.EndsWith(EventLevelSuffix.Warning, StringComparison.Ordinal))
+            else if (this.IsEnabled(EventLevel.Warning, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Warning, StringComparison.Ordinal))
             {
-                WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {message}");
+                WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {GetMessage(value)}");
             }
-            else if (name.EndsWith(EventLevelSuffix.Informational, StringComparison.Ordinal))
+            else if (this.IsEnabled(EventLevel.Informational, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Informational, StringComparison.Ordinal))
             {
-                WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {message}");
+                WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {GetMessage(value)}");
             }
-            else if (name.EndsWith(EventLevelSuffix.Verbose, StringComparison.Ordinal))
+            else if (this.IsEnabled(EventLevel.Verbose, EventKeywords.All) && name.EndsWith(EventLevelSuffix.Verbose, StringComparison.Ordinal))
             {
-                WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {message}");
+                WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {GetMessage(value)}");
             }
         }
 
@@ -53,5 +51,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         [Event(5, Message = "{0}", Level = EventLevel.Verbose)]
         public void WriteVerbose(string message) => this.WriteEvent(5, message);
+
+        private static string GetMessage(object value)
+        {
+            return value is Exception exception ? exception.ToInvariantString() : value.ToString();
+        }
     }
 }
