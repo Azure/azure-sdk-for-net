@@ -13,8 +13,8 @@
             <![CDATA[
         This SDK is using 2020-05-01 version of the API
         
-        * Ability to play fairplay protected content offline.
-        * Added ContentAwareEncoding preset.
+        * Ability to use advanced security features using managed identity.
+        * Added new functionality to live events like live transcription and standby mode.
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
