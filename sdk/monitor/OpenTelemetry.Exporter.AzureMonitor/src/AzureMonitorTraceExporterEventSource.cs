@@ -13,39 +13,45 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
 
         [NonEvent]
-        public void FailedExport(Exception ex)
+        public void Write(string name, object value)
         {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
+            string message = value is Exception exception ? exception.ToInvariantString() : value.ToString();
+
+            if (name.EndsWith(EventLevelSuffix.Critical, StringComparison.Ordinal))
             {
-                this.FailedExport(ex.ToInvariantString());
+                WriteCritical($"{name.TrimEnd(EventLevelSuffix.Critical)} - {message}");
+            }
+            else if (name.EndsWith(EventLevelSuffix.Error, StringComparison.Ordinal))
+            {
+                WriteError($"{name.TrimEnd(EventLevelSuffix.Error)} - {message}");
+            }
+            else if (name.EndsWith(EventLevelSuffix.Warning, StringComparison.Ordinal))
+            {
+                WriteWarning($"{name.TrimEnd(EventLevelSuffix.Warning)} - {message}");
+            }
+            else if (name.EndsWith(EventLevelSuffix.Informational, StringComparison.Ordinal))
+            {
+                WriteInformational($"{name.TrimEnd(EventLevelSuffix.Informational)} - {message}");
+            }
+            else if (name.EndsWith(EventLevelSuffix.Verbose, StringComparison.Ordinal))
+            {
+                WriteVerbose($"{name.TrimEnd(EventLevelSuffix.Verbose)} - {message}");
             }
         }
 
-        [NonEvent]
-        public void SdkVersionCreateFailed(Exception ex)
-        {
-            if (this.IsEnabled(EventLevel.Warning, EventKeywords.All))
-            {
-                this.WarnSdkVersionCreateException(ex.ToInvariantString());
-            }
-        }
+        [Event(1, Message = "{0}", Level = EventLevel.Critical)]
+        public void WriteCritical(string message) => this.WriteEvent(1, message);
 
-        [NonEvent]
-        public void ConnectionStringError(Exception ex)
-        {
-            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
-            {
-                this.ConnectionStringError(ex.ToInvariantString());
-            }
-        }
+        [Event(2, Message = "{0}", Level = EventLevel.Error)]
+        public void WriteError(string message) => this.WriteEvent(2, message);
 
-        [Event(1, Message = "Failed to export activities: '{0}'", Level = EventLevel.Error)]
-        public void FailedExport(string exception) => this.WriteEvent(1, exception);
+        [Event(3, Message = "{0}", Level = EventLevel.Warning)]
+        public void WriteWarning(string message) => this.WriteEvent(3, message);
 
-        [Event(2, Message = "Error creating SdkVersion : '{0}'", Level = EventLevel.Warning)]
-        public void WarnSdkVersionCreateException(string message) => this.WriteEvent(2, message);
+        [Event(4, Message = "{0}", Level = EventLevel.Informational)]
+        public void WriteInformational(string message) => this.WriteEvent(4, message);
 
-        [Event(3, Message = "Connection String Error: '{0}'", Level = EventLevel.Error)]
-        public void ConnectionStringError(string message) => this.WriteEvent(3, message);
+        [Event(5, Message = "{0}", Level = EventLevel.Verbose)]
+        public void WriteVerbose(string message) => this.WriteEvent(5, message);
     }
 }

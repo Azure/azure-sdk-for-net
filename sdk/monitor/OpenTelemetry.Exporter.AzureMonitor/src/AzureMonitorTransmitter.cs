@@ -55,8 +55,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 {
                     // TODO: Network issue. Send Telemetry Items To Storage
                 }
-                // TODO: Log the exception to new event source. If we get a common logger we could just log exception to it.
-                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
+
+                AzureMonitorTraceExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
 
             return itemsAccepted;
