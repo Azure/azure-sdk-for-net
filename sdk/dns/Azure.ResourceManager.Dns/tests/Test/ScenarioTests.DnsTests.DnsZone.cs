@@ -29,17 +29,17 @@ namespace Azure.Management.Dns.Tests
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
             aZone.Tags.Add("key1", "value1");
-            var response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
+            var response = await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
-            response = await ZonesOperations.GetAsync(resourceGroup, defaultZoneName);
+            response = await this.DnsManagementClient.Zones.GetAsync(resourceGroup, defaultZoneName);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
             aZone = response.Value;
             aZone.Tags.Clear();
             aZone.Tags.Add("key1", "new_tag_1");
             aZone.Tags.Add("key2", "val2");
-            response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
+            response = await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
-            var delResponse = await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName));
+            var delResponse = await this.WaitForCompletionAsync(await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, this.defaultZoneName));
             Assert.AreEqual(delResponse.Value.Status, 200);
         }
 
@@ -49,11 +49,11 @@ namespace Azure.Management.Dns.Tests
             string zoneNameOne = "dns.zoneonename.io";
             string zoneNameTwo = "dns.zonetwoname.io";
             var aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
             aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
 
-            var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1);
+            var response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 1);
             var totalList = await response.ToEnumerableAsync();
             var zoneOneFound = false;
             var zoneTwoFound = false;
@@ -69,8 +69,8 @@ namespace Azure.Management.Dns.Tests
                 }
             }
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameTwo);
         }
 
         [TestCase]
@@ -79,12 +79,12 @@ namespace Azure.Management.Dns.Tests
             string zoneNameOne = "dns.zoneonename.io";
             string zoneNameTwo = "dns.zonetwoname.io";
             var aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
 
             aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup + "-Two");
-            var response = ZonesOperations.ListAsync();
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
+            await Helper.TryRegisterResourceGroupAsync(this.ResourcesManagementClient.ResourceGroups, this.location, this.resourceGroup + "-Two");
+            var response = this.DnsManagementClient.Zones.ListAsync();
             var totalList = response.ToEnumerableAsync().Result;
             var zoneOneFound = false;
             var zoneTwoFound = false;
@@ -100,9 +100,9 @@ namespace Azure.Management.Dns.Tests
                 }
             }
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
-            await ResourceGroupsOperations.StartDeleteAsync(this.resourceGroup + "-Two");
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);
+            await this.ResourcesManagementClient.ResourceGroups.StartDeleteAsync(this.resourceGroup + "-Two");
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameTwo);
         }
 
         [TestCase]
@@ -112,39 +112,39 @@ namespace Azure.Management.Dns.Tests
             string zoneNameTwo = "dns.zonetwonametop.io";
             string zoneNameThree = "dns.zonethreenametop.io";
             var aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
             aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
-            var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
+            var response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 1);
             var it = response.AsPages().GetAsyncEnumerator();
             await it.MoveNextAsync();
             Assert.AreEqual(it.Current.Values.Count, 1);
             aZone = new Zone("Global");
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameThree, aZone);
-            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 2);
+            await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, zoneNameThree, aZone);
+            response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 2);
             it = response.AsPages().GetAsyncEnumerator();
             await it.MoveNextAsync();
             Assert.AreEqual(it.Current.Values.Count, 2);
-            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 10);
+            response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 10);
             it = response.AsPages().GetAsyncEnumerator();
             await it.MoveNextAsync();
             Assert.IsTrue(it.Current.Values.Count >= 3);
 
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);
-            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameThree);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameTwo);
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, zoneNameThree);
         }
 
         [TestCase]
         public void DnsListZonesWithTopParameterExtremeParams()
         {
-            var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 0);
+            var response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 0);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
 
-            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, -1);
+            response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, -1);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
 
-            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1000000);
+            response = this.DnsManagementClient.Zones.ListByResourceGroupAsync(resourceGroup, 1000000);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
         }
 
@@ -153,16 +153,16 @@ namespace Azure.Management.Dns.Tests
         {
             var aZone = new Zone("Global");
             aZone.Tags.Add("key1", "value1");
-            var response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, response, "somegibberish", null));
-            await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
+            var response = await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await this.DnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, response, "somegibberish", null));
+            await this.DnsManagementClient.Zones.StartDeleteAsync(resourceGroup, this.defaultZoneName);
 
         }
 
         [TestCase]
         public void GetNonExistingZoneFailsAsExpected()
         {
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await ZonesOperations.GetAsync(resourceGroup, "somegibberish"));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await this.DnsManagementClient.Zones.GetAsync(resourceGroup, "somegibberish"));
         }
     }
 }
