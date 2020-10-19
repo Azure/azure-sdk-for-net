@@ -6,53 +6,46 @@ namespace QnAMaker.Tests
     public abstract class BaseTests
     {
         public static bool IsTestTenant = false;
+        private static readonly string QnAMakerPreviewSubscriptionKey;
         private static readonly string QnAMakerSubscriptionKey;
         private static readonly string QnAMakerEndpointKey;
 
         static BaseTests()
         {
             // Retrieve the configuration information.
+            QnAMakerPreviewSubscriptionKey = "";
             QnAMakerSubscriptionKey = "";
             QnAMakerEndpointKey = "";
         }
 
         protected IQnAMakerClient GetQnAMakerClient(DelegatingHandler handler)
         {
-            IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), handlers: handler)
-            {
-                Endpoint = "https://westus.api.cognitive.microsoft.com"
-            };
-
-            return client;
-        }
-
-        protected IQnAMakerClient GetQnAMakerPreviewClient(DelegatingHandler handler)
-        {
-            IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), isPreview: true, handlers: handler)
+            IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerPreviewSubscriptionKey), handlers: handler)
             {
                 Endpoint = "https://australiaeast.api.cognitive.microsoft.com"
             };
 
             return client;
         }
-        protected IQnAMakerRuntimeClient GetQnAMakerRuntimeClient(DelegatingHandler handler)
+
+        protected IQnAMakerClient GetQnAMakerCustomDomainClient(DelegatingHandler handler)
         {
-            IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials(QnAMakerEndpointKey), handlers: handler)
+            IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), handlers: handler)
             {
-                RuntimeEndpoint = "https://myqnamakerapp.azurewebsites.net"
+                Endpoint = "https://sk4cs.cognitiveservices.azure.com"
             };
 
             return client;
         }
 
-        protected IQnAMakerRuntimeClient GetQnAMakerPreviewRuntimeClient(DelegatingHandler handler)
+        protected QnAMakerRuntimeClient GetQnAMakerRuntimeClient(DelegatingHandler handler)
         {
-            IQnAMakerRuntimeClient client = new QnAMakerRuntimeClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), isPreview: true, handlers: handler)
+            var client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials(QnAMakerEndpointKey), handlers: handler)
             {
-                RuntimeEndpoint = "https://australiaeast.api.cognitive.microsoft.com"
+                RuntimeEndpoint = "https://sk4cs.azurewebsites.net"
             };
 
             return client;
-        }
+        }        
     }
 }

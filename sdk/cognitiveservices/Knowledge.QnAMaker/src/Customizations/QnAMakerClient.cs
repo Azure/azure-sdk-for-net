@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 {
-    public partial class QnAMakerRuntimeClient
+    public partial class QnAMakerClient
     {
         /// <summary>
         /// Initializes a new instance of the QnAMakerClient class.
@@ -28,11 +28,11 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public QnAMakerRuntimeClient(ServiceClientCredentials credentials, bool isPreview = false, params DelegatingHandler[] handlers) : this(credentials, handlers)
+        public QnAMakerClient(ServiceClientCredentials credentials, bool isManaged = true, params DelegatingHandler[] handlers) : this(credentials, handlers)
         {
-            if (isPreview)
+            if (!isManaged)
             {
-                BaseUri = "{RuntimeEndpoint}/qnamaker/v5.0-preview.1";
+                BaseUri = "{Endpoint}/qnamaker";
             }
         }
     }
