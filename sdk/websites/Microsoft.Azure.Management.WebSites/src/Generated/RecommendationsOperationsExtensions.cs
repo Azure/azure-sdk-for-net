@@ -224,10 +224,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all recommendations for a hosting environment.
+            /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Description for Get all recommendations for a hosting environment.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -254,10 +254,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all recommendations for a hosting environment.
+            /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Description for Get all recommendations for a hosting environment.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -930,10 +930,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all recommendations for a hosting environment.
+            /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Description for Get all recommendations for a hosting environment.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -947,10 +947,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all recommendations for a hosting environment.
+            /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Description for Get all recommendations for a hosting environment.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
