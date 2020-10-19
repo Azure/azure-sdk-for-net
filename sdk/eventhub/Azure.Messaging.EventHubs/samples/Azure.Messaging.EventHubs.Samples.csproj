@@ -14,6 +14,7 @@
     <!-- Note: The VersionOverride is only used in beta releases and will be removed prior to GA release. -->
     <PackageReference Include="Azure.Data.SchemaRegistry" VersionOverride="1.0.0-beta.2" />
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Microsoft.ApplicationInsights" />
     <!-- Note: The VersionOverride is only used in beta releases and will be removed prior to GA release. -->
     <PackageReference Include="Microsoft.Azure.Data.SchemaRegistry.ApacheAvro" VersionOverride="1.0.0-beta.1" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />

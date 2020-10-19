@@ -54,7 +54,9 @@ namespace Azure.Messaging.EventHubs.Samples
         private static readonly string[] ExtraOptionsForSamples = new[]
         {
             "Explore Identity Samples",
-            "Explore SchemaRegistry Samples"
+            "Explore SchemaRegistry Samples",
+            "Explore Application Insights Samples"
+
         };
 
         /// <summary>
@@ -163,6 +165,14 @@ namespace Azure.Messaging.EventHubs.Samples
                     parsedArgs.Client,
                     parsedArgs.Secret);
             }
+            else if (sample is IEventHubsApplicationInsightsSample applicationInsightsSample)
+            {
+                PromptConnectionStringIfMissing(parsedArgs);
+                PromptEventHubNameIfMissing(parsedArgs);
+                PromptInstrumentationKeyIfMissing(parsedArgs);
+
+                await applicationInsightsSample.RunAsync(parsedArgs.ConnectionString,parsedArgs.EventHub,parsedArgs.InstrumentationKey);
+            }
         }
 
         /// <summary>
@@ -218,7 +228,25 @@ namespace Azure.Messaging.EventHubs.Samples
                     }
                 }
             }
+            else if (IsEventHubsApplicationInsights(samples, choice))
+            {
+                var schemaRegistrySamples = LocateSamples<IEventHubsApplicationInsightsSample>();
 
+                while (IsEventHubsApplicationInsights(samples, choice))
+                {
+                    PrintEventHubsSchemaRegistrySamples(schemaRegistrySamples);
+                    choice = ReadSelection(schemaRegistrySamples);
+
+                    if (choice.HasValue && !IsGoBack(schemaRegistrySamples, choice))
+                    {
+                        return schemaRegistrySamples[choice.Value];
+                    }
+                    if (IsGoBack(schemaRegistrySamples, choice))
+                    {
+                        return RetrieveSample();
+                    }
+                }
+            }
             if (choice.HasValue)
             {
                 return samples[choice.Value];
@@ -255,6 +283,12 @@ namespace Azure.Messaging.EventHubs.Samples
             return IsLastOption(schemaRegistrySamples, ExtraOptionsForSchemaRegistrySamples.Length, choice);
         }
 
+
+        private static bool IsGoBack(IReadOnlyList<IEventHubsApplicationInsightsSample> applicationInsightsSamples, int? choice)
+        {
+            return IsLastOption(applicationInsightsSamples, ExtraOptionsForSchemaRegistrySamples.Length, choice);
+        }
+
         /// <summary>
         ///   It checks if an option is to see the identity samples.
         /// </summary>
@@ -279,6 +313,12 @@ namespace Azure.Messaging.EventHubs.Samples
         /// <returns>If the user has chosen to see the event hubs SchemaRegistry samples.</returns>
         ///
         private static bool IsEventHubsSchemaRegistry(IReadOnlyList<IEventHubsSample> samples, int? choice)
+        {
+            return IsLastOption(samples, ExtraOptionsForSamples.Length-1, choice);
+        }
+
+
+        private static bool IsEventHubsApplicationInsights(IReadOnlyList<IEventHubsSample> samples, int? choice)
         {
             return IsLastOption(samples, ExtraOptionsForSamples.Length, choice);
         }
@@ -311,7 +351,7 @@ namespace Azure.Messaging.EventHubs.Samples
             PrintSamples(samples);
 
             // TODO: The -1 removes displaying the SchemaRegistry scenarios. See: https://github.com/Azure/azure-sdk-for-net/issues/15463
-            for (int i = 0; i < ExtraOptionsForSamples.Length - 1; i++)
+            for (int i = 0; i < ExtraOptionsForSamples.Length ; i++)
             {
                 Console.WriteLine($"{ samples.Count + i + 1 }) { ExtraOptionsForSamples[i] }");
                 Console.WriteLine();
@@ -357,6 +397,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
             Console.WriteLine();
         }
+
 
         /// <summary>
         ///   It prints to console a set of sample names and their description.
@@ -414,6 +455,17 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                 Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
                 parsedArgs.EventHub = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+        }
+        private static void PromptInstrumentationKeyIfMissing(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the Event Hub name, if it wasn't passed.
+
+            while (string.IsNullOrEmpty(parsedArgs.InstrumentationKey))
+            {
+                Console.Write("Please provide the InstrumentationKey of the ApplicationInsights that you'd like to use and then press Enter: ");
+                parsedArgs.InstrumentationKey = Console.ReadLine().Trim();
                 Console.WriteLine();
             }
         }
@@ -562,6 +614,7 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             IReadOnlyList<IEventHubsSample> eventHubSamples => ReadSelection(eventHubSamples.Count + ExtraOptionsForSamples.Length),
             IReadOnlyList<IEventHubsIdentitySample> identitySamples => ReadSelection(identitySamples.Count + ExtraOptionsForIdentitySamples.Length),
+            IReadOnlyList<IEventHubsApplicationInsightsSample> applicationInsightsSample => ReadSelection(applicationInsightsSample.Count + ExtraOptionsForSamples.Length),
             IReadOnlyList<IEventHubsSchemaRegistrySample> schemaRegistrySamples => ReadSelection(schemaRegistrySamples.Count + ExtraOptionsForSchemaRegistrySamples.Length),
             _ => throw new ArgumentException()
         };
@@ -730,6 +783,9 @@ namespace Azure.Messaging.EventHubs.Samples
 
             /// <summary>The Azure Active Directory secret of the service principal.</summary>
             public string Secret;
+
+            /// <summary>The Azure Active Directory secret of the service principal.</summary>
+            public string InstrumentationKey;
 
             /// <summary>A flag indicating whether or not help was requested.</summary>
             public bool Help;
