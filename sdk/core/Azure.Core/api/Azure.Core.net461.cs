@@ -69,7 +69,6 @@ namespace Azure
         public void AppendTestRaw(string path, string rawJsonValue) { }
         public void AppendTest<T>(string path, T value) { }
         public override string ToString() { throw null; }
-        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
     }
     public partial class MatchConditions
     {
