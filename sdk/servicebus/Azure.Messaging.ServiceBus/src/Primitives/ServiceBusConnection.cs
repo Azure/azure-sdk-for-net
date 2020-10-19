@@ -121,6 +121,24 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        internal ServiceBusConnection(
+            string fullyQualifiedNamespace,
+            ServiceBusSharedAccessKeyCredential credential,
+            ServiceBusClientOptions options)
+                : this(
+                    fullyQualifiedNamespace,
+                    TranslateSharedKeyCredential(credential, fullyQualifiedNamespace, null, options.TransportType),
+                    options)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the connection.</param>
         internal ServiceBusConnection(
@@ -130,17 +148,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
-
             ValidateConnectionOptions(options);
-            switch (credential)
-            {
-                case SharedAccessSignatureCredential _:
-                    break;
-
-                case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildConnectionResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
-                    break;
-            }
 
             var tokenCredential = new ServiceBusTokenCredential(credential, BuildConnectionResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
 
@@ -303,6 +311,30 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal virtual void ThrowIfClosed() =>
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusConnection));
+
+        /// <summary>
+        ///   Translates an <see cref="ServiceBusSharedAccessKeyCredential"/> into the equivalent shared access signature credential.
+        /// </summary>
+        ///
+        /// <param name="credential">The credential to translate.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace being connected to.</param>
+        /// <param name="entityPath">The path of the entity being connected to.</param>
+        /// <param name="transportType">The type of transport being used for the connection.</param>
+        ///
+        /// <returns>The <see cref="SharedAccessSignatureCredential" /> which the <paramref name="credential" /> was translated into.</returns>
+        ///
+        internal static SharedAccessSignatureCredential TranslateSharedKeyCredential(ServiceBusSharedAccessKeyCredential credential,
+                                                                                     string fullyQualifiedNamespace,
+                                                                                     string entityPath,
+                                                                                     ServiceBusTransportType transportType)
+        {
+            if ((credential == null) || (string.IsNullOrEmpty(fullyQualifiedNamespace)))
+            {
+                return null;
+            }
+
+            return credential.AsSharedAccessSignatureCredential(BuildConnectionResource(transportType, fullyQualifiedNamespace, entityPath));
+        }
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ServiceBusClientOptions" /> associated

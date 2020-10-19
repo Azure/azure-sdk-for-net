@@ -145,6 +145,42 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        public ServiceBusClient(string fullyQualifiedNamespace, ServiceBusSharedAccessKeyCredential credential) :
+            this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        public ServiceBusClient(
+            string fullyQualifiedNamespace,
+            ServiceBusSharedAccessKeyCredential credential,
+            ServiceBusClientOptions options)
+        {
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
+            Connection = new ServiceBusConnection(
+                fullyQualifiedNamespace,
+                credential,
+                _options);
+            Plugins = _options.Plugins;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
             this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
