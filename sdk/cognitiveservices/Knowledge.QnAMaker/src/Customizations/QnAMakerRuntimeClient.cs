@@ -48,9 +48,9 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public QnAMakerRuntimeClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
+        public QnAMakerRuntimeClient(EndpointKeyServiceClientCredentials credentials, params DelegatingHandler[] handlers)
         {
-            this.client = new QnAMakerClient(credentials, isManaged: false, handlers);
+            this.client = new QnAMakerClient(credentials, handlers);
             Runtime = new Runtime(this.client);            
         }
 

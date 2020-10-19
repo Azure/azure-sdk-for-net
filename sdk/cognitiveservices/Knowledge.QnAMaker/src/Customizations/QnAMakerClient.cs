@@ -28,11 +28,17 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public QnAMakerClient(ServiceClientCredentials credentials, bool isManaged = true, params DelegatingHandler[] handlers) : this(credentials, handlers)
-        {
-            if (!isManaged)
+        public QnAMakerClient(EndpointKeyServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {            
+            BaseUri = "{Endpoint}/qnamaker";
+            if (credentials == null)
             {
-                BaseUri = "{Endpoint}/qnamaker";
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
             }
         }
     }
