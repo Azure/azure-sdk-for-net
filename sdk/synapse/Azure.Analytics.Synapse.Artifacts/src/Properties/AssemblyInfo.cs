@@ -12,3 +12,6 @@ using System.Runtime.CompilerServices;
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Activity")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Dataset")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Notebook")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Workspace")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Resource")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Analytics.Synapse.Artifacts.Models.Sku")]
