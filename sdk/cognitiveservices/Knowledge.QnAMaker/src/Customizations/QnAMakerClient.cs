@@ -1,26 +1,14 @@
-﻿using Microsoft.Rest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 {
     public partial class QnAMakerClient
     {
         /// <summary>
-        /// Initializes a new instance of the QnAMakerClient class.
+        /// Initializes a new instance of the QnAMakerClient class for QnA Maker resources with hosted Runtime.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name="isPreview">
-        /// Optional. The flag used to change BaseUri if it is true.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -28,18 +16,20 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public QnAMakerClient(EndpointKeyServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal QnAMakerClient(EndpointKeyServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {            
-            BaseUri = "{Endpoint}/qnamaker";
             if (credentials == null)
             {
                 throw new System.ArgumentNullException("credentials");
             }
+
             Credentials = credentials;
             if (Credentials != null)
             {
                 Credentials.InitializeServiceClient(this);
             }
+
+            BaseUri = "{Endpoint}/qnamaker";
         }
     }
 }

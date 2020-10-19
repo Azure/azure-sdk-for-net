@@ -40,6 +40,12 @@ namespace QnAMaker.Tests
 
         protected QnAMakerRuntimeClient GetQnAMakerRuntimeClient(DelegatingHandler handler)
         {
+            // Do not initialize QnAMakerClient with EndpointKeyCredentials.
+            // The following will fallback to constructor with ServiceCredentials instead.
+            //       var client = new QnAMakerClient(new EndpointKeyServiceClientCredentials(QnAMakerEndpointKey), handler);
+            // Because, it is a customized 'internal' contructor for backward compatibility with V2.x.x SDK 
+            // Use QnAMakerRuntimeClient instead like below
+
             var client = new QnAMakerRuntimeClient(new EndpointKeyServiceClientCredentials(QnAMakerEndpointKey), handlers: handler)
             {
                 RuntimeEndpoint = "https://sk4cs.azurewebsites.net"
