@@ -58,7 +58,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8 encoded JSON Patch document.
+        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8-encoded JSON Patch document.
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>
@@ -146,7 +146,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Returns a UTF8 encoded representation of this <see cref="JsonPatchDocument"/> instance.
+        /// Returns a UTF8-encoded representation of this <see cref="JsonPatchDocument"/> instance.
         /// </summary>
         /// <returns>The UTF8 encoded JSON.</returns>
         public ReadOnlyMemory<byte> ToBytes()
