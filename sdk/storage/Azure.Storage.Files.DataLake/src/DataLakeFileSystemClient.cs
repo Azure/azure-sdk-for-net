@@ -1256,7 +1256,9 @@ namespace Azure.Storage.Files.DataLake
                 this,
                 path,
                 recursive,
-                userPrincipalName).ToSyncCollection(cancellationToken);
+                userPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPathsAsync"/> operation returns an async
@@ -1302,7 +1304,9 @@ namespace Azure.Storage.Files.DataLake
             new GetPathsAsyncCollection(this,
                 path,
                 recursive,
-                userPrincipalName).ToAsyncCollection(cancellationToken);
+                userPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPathsInternal"/> operation returns a
@@ -1342,6 +1346,9 @@ namespace Azure.Storage.Files.DataLake
         /// An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000,
         /// the response will include up to 5,000 items.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the operation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1363,6 +1370,7 @@ namespace Azure.Storage.Files.DataLake
             bool userPrincipalName,
             string continuation,
             int? maxResults,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1387,6 +1395,7 @@ namespace Azure.Storage.Files.DataLake
                         upn: userPrincipalName,
                         path: path,
                         async: async,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

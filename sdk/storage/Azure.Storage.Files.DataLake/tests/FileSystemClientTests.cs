@@ -573,6 +573,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.IsNotNull(paths[0].Group);
+            Assert.IsNotNull(paths[0].Owner);
         }
 
         [Test]
@@ -2001,10 +2003,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task SetUpFileSystemForListing(DataLakeFileSystemClient fileSystem)
         {
-            var pathNames = PathNames;
-            var directories = new DataLakeDirectoryClient[pathNames.Length];
+            string[] pathNames = PathNames;
+            DataLakeDirectoryClient[] directories = new DataLakeDirectoryClient[pathNames.Length];
 
-            // Upload Blobs
+            // Upload directories
             for (var i = 0; i < pathNames.Length; i++)
             {
                 DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(pathNames[i]));
@@ -2012,19 +2014,5 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await directory.CreateIfNotExistsAsync();
             }
         }
-
-        private string[] PathNames
-            => new[]
-                {
-                    "foo",
-                    "bar",
-                    "baz",
-                    "baz/bar",
-                    "foo/foo",
-                    "foo/bar",
-                    "baz/foo",
-                    "baz/foo/bar",
-                    "baz/bar/foo"
-                };
-            }
+    }
 }

@@ -13,17 +13,20 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly string _path;
         private readonly bool _recursive;
         private readonly bool _upn;
+        private readonly string _operationName;
 
         public GetPathsAsyncCollection(
             DataLakeFileSystemClient client,
             string path,
             bool recursive,
-            bool upn)
+            bool upn,
+            string operationName)
         {
             _client = client;
             _path = path;
             _recursive = recursive;
             _upn = upn;
+            _operationName = operationName;
         }
 
         public override async ValueTask<Page<PathItem>> GetNextPageAsync(
@@ -38,6 +41,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 _upn,
                 continuationToken,
                 pageSizeHint,
+                _operationName,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
