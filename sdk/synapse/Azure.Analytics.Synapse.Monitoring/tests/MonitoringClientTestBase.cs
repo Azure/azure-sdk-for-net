@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
             return InstrumentClient(new MonitoringClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new MonitoringClientOptions())));
+                InstrumentClientOptions(new MonitoringClientOptions())));
         }
     }
 }
