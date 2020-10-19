@@ -20,12 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SubResource DeserializeSubResource(JsonElement element)
         {
+            Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -39,11 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
                     continue;
                 }
             }
