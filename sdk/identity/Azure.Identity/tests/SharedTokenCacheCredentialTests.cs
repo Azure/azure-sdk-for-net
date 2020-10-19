@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
             var mockMsalClient = new MockMsalPublicClient
             {
                 Accounts = new List<IAccount> { new MockAccount("nonexpecteduser@mockdomain.com") },
-                ExtendedSilentAuthFactory = (_, account, _, _) =>
+                ExtendedSilentAuthFactory = (_, account, __, ___) =>
                 {
                     Assert.AreEqual(expectedUsername, account.Username);
 
