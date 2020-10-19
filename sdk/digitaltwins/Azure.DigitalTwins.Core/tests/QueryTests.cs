@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
@@ -77,7 +78,7 @@ namespace Azure.DigitalTwins.Core.Tests
             int pageSize = 5;
             string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
             string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
-            int QueryWaitTimeoutMillis = 60 * 1000; // 1 minute
+            TimeSpan QueryWaitTimeout = TimeSpan.FromMinutes(1); // Wait at most one minute for the created twins to become queryable
 
             try
             {
@@ -100,28 +101,25 @@ namespace Azure.DigitalTwins.Core.Tests
                 var options = new QueryOptions();
                 options.MaxItemsPerPage = pageSize;
 
-                var queryWaitTimeoutStopwatch = new Stopwatch();
+                CancellationTokenSource queryTimeoutCancellationToken = new CancellationTokenSource(QueryWaitTimeout);
                 bool queryHasExpectedCount = false;
-                queryWaitTimeoutStopwatch.Start();
                 while (!queryHasExpectedCount)
                 {
-                    if (queryWaitTimeoutStopwatch.ElapsedMilliseconds >= QueryWaitTimeoutMillis)
+                    if (queryTimeoutCancellationToken.IsCancellationRequested)
                     {
-                        queryWaitTimeoutStopwatch.Stop();
                         throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
                     }
 
                     AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString);
                     int count = 0;
-                    await foreach (string queriedTwin in asyncPageableResponse)
+                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages())
                     {
-                        count++;
+                        count += queriedTwinPage.Values.Count;
                     }
 
-                    // Once at least (page + 1) twins are query-able, then pagination can be tested.
+                    // Once at least (page + 1) twins are query-able, then page size control can be tested.
                     queryHasExpectedCount = count >= pageSize + 1;
                 }
-                queryWaitTimeoutStopwatch.Stop();
 
                 // assert
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
