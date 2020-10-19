@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Automanage.Models
     using System.Linq;
 
     /// <summary>
-    /// The core properties of ARM resources
+    /// The resource model definition for a ARM tracked top level resource
     /// </summary>
     public partial class Resource : IResource
     {
@@ -31,16 +31,16 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">ARM resource id of the Automanage
-        /// assignment.</param>
-        /// <param name="name">Name of the Automanage assignment.</param>
-        /// <param name="location">Region where the VM is located.</param>
-        /// <param name="type">The type of the resource.</param>
-        public Resource(string id = default(string), string name = default(string), string location = default(string), string type = default(string))
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
-            Location = location;
             Type = type;
             CustomInit();
         }
@@ -51,25 +51,22 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets ARM resource id of the Automanage assignment.
+        /// Gets fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the Automanage assignment.
+        /// Gets the name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets region where the VM is located.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource.
+        /// Gets the type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

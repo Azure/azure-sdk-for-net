@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// The configuration profile assignment name.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// The configuration profile assignment name.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// Name of the configuration profile assignment
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfileAssignmentName'>
             /// Name of the configuration profile assignment
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<ConfigurationProfileAssignment> List(this IConfigurationProfileAssignmentsOperations operations, string resourceGroupName)
             {
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// assignment.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.

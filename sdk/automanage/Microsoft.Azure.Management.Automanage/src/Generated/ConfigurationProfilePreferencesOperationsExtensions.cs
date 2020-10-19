@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the configuration profile preference.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update configuration profile preference.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the configuration profile preference.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update configuration profile preference.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The configuration profile preference name.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static ConfigurationProfilePreference Get(this IConfigurationProfilePreferencesOperations operations, string configurationProfilePreferenceName, string resourceGroupName)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The configuration profile preference name.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfilePreferenceName'>
             /// Name of the configuration profile preference
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='configurationProfilePreferenceName'>
             /// Name of the configuration profile preference
@@ -156,12 +156,12 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the configuration profile preference.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update configuration profile preference.
             /// </param>
-            public static ConfigurationProfilePreference Update(this IConfigurationProfilePreferencesOperations operations, string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreference parameters)
+            public static ConfigurationProfilePreference Update(this IConfigurationProfilePreferencesOperations operations, string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreferenceUpdate parameters)
             {
                 return operations.UpdateAsync(configurationProfilePreferenceName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the configuration profile preference.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update configuration profile preference.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConfigurationProfilePreference> UpdateAsync(this IConfigurationProfilePreferencesOperations operations, string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreference parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConfigurationProfilePreference> UpdateAsync(this IConfigurationProfilePreferencesOperations operations, string configurationProfilePreferenceName, string resourceGroupName, ConfigurationProfilePreferenceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(configurationProfilePreferenceName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<ConfigurationProfilePreference> ListByResourceGroup(this IConfigurationProfilePreferencesOperations operations, string resourceGroupName)
             {
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

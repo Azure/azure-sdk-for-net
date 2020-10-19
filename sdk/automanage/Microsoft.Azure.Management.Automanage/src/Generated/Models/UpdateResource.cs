@@ -11,28 +11,30 @@
 namespace Microsoft.Azure.Management.Automanage.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The resource management error response.
+    /// Represents an update resource
     /// </summary>
-    public partial class ErrorResponse
+    public partial class UpdateResource
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the UpdateResource class.
         /// </summary>
-        public ErrorResponse()
+        public UpdateResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the UpdateResource class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
+        /// <param name="tags">The tags of the resource.</param>
+        public UpdateResource(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Error = error;
+            Tags = tags;
             CustomInit();
         }
 
@@ -42,10 +44,10 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets or sets the tags of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponseError Error { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
