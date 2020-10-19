@@ -10,6 +10,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir Package-Properties.ps1)
 . (Join-Path $EngCommonScriptsDir logging.ps1)
 . (Join-Path $EngCommonScriptsDir Invoke-GitHubAPI.ps1)
+. (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
