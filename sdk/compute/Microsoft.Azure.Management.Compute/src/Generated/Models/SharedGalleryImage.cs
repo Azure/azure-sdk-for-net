@@ -22,20 +22,19 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// to create or update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryImage : Resource
+    public partial class SharedGalleryImage : PirSharedGalleryResource
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryImage class.
+        /// Initializes a new instance of the SharedGalleryImage class.
         /// </summary>
-        public GalleryImage()
+        public SharedGalleryImage()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryImage class.
+        /// Initializes a new instance of the SharedGalleryImage class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk when creating a VM from a
         /// managed image. &lt;br&gt;&lt;br&gt; Possible values are:
@@ -45,43 +44,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// whether the virtual machines created under this image are
         /// 'Generalized' or 'Specialized'. Possible values include:
         /// 'Generalized', 'Specialized'</param>
-        /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="description">The description of this gallery image
-        /// definition resource. This property is updatable.</param>
-        /// <param name="eula">The Eula agreement for the gallery image
-        /// definition.</param>
-        /// <param name="privacyStatementUri">The privacy statement
-        /// uri.</param>
-        /// <param name="releaseNoteUri">The release note uri.</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="uniqueId">The unique id of this shared
+        /// gallery.</param>
+        /// <param name="endOfLifeDate">The end of life date of the gallery
+        /// image definition. This property can be used for decommissioning
+        /// purposes. This property is updatable.</param>
         /// <param name="hyperVGeneration">The hypervisor generation of the
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
         /// <param name="features">A list of gallery image features.</param>
-        /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// image definition. This property can be used for decommissioning
-        /// purposes. This property is updatable.</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// image definition.</param>
-        public GalleryImage(string location, OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
-            : base(location, id, name, type, tags)
+        public SharedGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan))
+            : base(name, location, uniqueId)
         {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
             OsType = osType;
             OsState = osState;
-            HyperVGeneration = hyperVGeneration;
-            Features = features;
             EndOfLifeDate = endOfLifeDate;
             Identifier = identifier;
             Recommended = recommended;
             Disallowed = disallowed;
+            HyperVGeneration = hyperVGeneration;
+            Features = features;
             PurchasePlan = purchasePlan;
-            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -89,31 +74,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the description of this gallery image definition
-        /// resource. This property is updatable.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Eula agreement for the gallery image definition.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.eula")]
-        public string Eula { get; set; }
-
-        /// <summary>
-        /// Gets or sets the privacy statement uri.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privacyStatementUri")]
-        public string PrivacyStatementUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the release note uri.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.releaseNoteUri")]
-        public string ReleaseNoteUri { get; set; }
 
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
@@ -134,19 +94,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.osState")]
         public OperatingSystemStateTypes OsState { get; set; }
-
-        /// <summary>
-        /// Gets or sets the hypervisor generation of the Virtual Machine.
-        /// Applicable to OS disks only. Possible values include: 'V1', 'V2'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
-        public string HyperVGeneration { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of gallery image features.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.features")]
-        public IList<GalleryImageFeature> Features { get; set; }
 
         /// <summary>
         /// Gets or sets the end of life date of the gallery image definition.
@@ -172,20 +119,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         public Disallowed Disallowed { get; set; }
 
         /// <summary>
+        /// Gets or sets the hypervisor generation of the Virtual Machine.
+        /// Applicable to OS disks only. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of gallery image features.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<GalleryImageFeature> Features { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.purchasePlan")]
         public ImagePurchasePlan PurchasePlan { get; set; }
-
-        /// <summary>
-        /// Gets the current state of the gallery image definition.
-        /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
-        /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -193,9 +142,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Identifier == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Identifier");

@@ -32,10 +32,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="id">The id of the gallery artifact version source. Can
-        /// specify a disk uri, snapshot uri, or user image.</param>
-        public GalleryArtifactVersionSource(string id = default(string))
+        /// specify a disk uri, snapshot uri, user image or storage account
+        /// resource.</param>
+        /// <param name="uri">The uri of the gallery artifact version source.
+        /// Currently used to specify vhd/blob source.</param>
+        public GalleryArtifactVersionSource(string id = default(string), string uri = default(string))
         {
             Id = id;
+            Uri = uri;
             CustomInit();
         }
 
@@ -46,10 +50,18 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the id of the gallery artifact version source. Can
-        /// specify a disk uri, snapshot uri, or user image.
+        /// specify a disk uri, snapshot uri, user image or storage account
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the uri of the gallery artifact version source.
+        /// Currently used to specify vhd/blob source.
+        /// </summary>
+        [JsonProperty(PropertyName = "uri")]
+        public string Uri { get; set; }
 
     }
 }
