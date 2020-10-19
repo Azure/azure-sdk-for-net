@@ -68,7 +68,7 @@ namespace Azure.Identity
         public ClientCertificateCredentialOptions() { }
         public bool AllowUnencryptedCache { get { throw null; } set { } }
         public bool EnablePersistentCache { get { throw null; } set { } }
-        public bool IncludeX5CCliamHeader { get { throw null; } set { } }
+        public bool IncludeX5CClaimHeader { get { throw null; } set { } }
     }
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
