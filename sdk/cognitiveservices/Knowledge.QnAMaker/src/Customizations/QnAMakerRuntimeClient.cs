@@ -37,7 +37,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         }
 
         /// <summary>
-        /// Initializes a new instance of the QnAMakerClient class.
+        /// Initializes a new instance of the QnAMakerRuntimeClient class. 
+        /// An adapter class for supporting (hosted) Runtime operations using Knowledgebase operations (generateAnswer and train) from QnAMakerClient V5.preview.1.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
