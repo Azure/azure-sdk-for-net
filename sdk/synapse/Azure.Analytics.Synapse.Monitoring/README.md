@@ -64,15 +64,15 @@ The Azure.Analytics.Synapse.Monitoring package supports synchronous and asynchro
 `GetSparkJobList` gets a list of spark applications for the workspace.
 
 ```C# Snippet:GetSparkJobList
-SparkJobListViewResponse sparkJobList = MonitoringClient.GetSparkJobList();
+SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
 ```
 
 ### Get SQl query
 
 `GetSqlJobQueryString` gets the SQL OD/DW query
 
-```C# Snippet:
-SqlQueryStringDataModel sqlQuery = MonitoringClient.GetSqlJobQueryString();
+```C# Snippet:GetSqlJobQueryString
+SqlQueryStringDataModel sqlQuery = client.GetSqlJobQueryString();
 ```
 
 ## To build

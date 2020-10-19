@@ -39,9 +39,9 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
         }
 
         [Test]
-        public void GetSqlJobQuery()
+        public void GetSqlJobQueryString()
         {
-            #region Snippet:GetSqlJobQuery
+            #region Snippet:GetSqlJobQueryString
             SqlQueryStringDataModel sqlQuery = client.GetSqlJobQueryString();
             #endregion
         }
