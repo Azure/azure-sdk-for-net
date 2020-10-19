@@ -101,9 +101,9 @@ Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans 
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
-### Searching and acquiring numbers
+### Reserving and acquiring numbers
 
-Phone numbers search can be performed through the search creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This search of phone numbers can either be cancelled or purchased. If the search is cancelled, then the phone numbers will become available to others. If the search is purchased, then the phone numbers are acquired for the Azure resources.
+Phone numbers reservation can be performed through the reservation creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This reservation of phone numbers can either be cancelled or purchased. If the reservation is cancelled, then the phone numbers will become available to others. If the reservation is purchased, then the phone numbers are acquired for the Azure resources.
 
 ### Configuring / Assigning numbers
 
@@ -190,23 +190,23 @@ foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
 }
 ```
 
-### Create search
+### Create reservation
 
 ```C#
-var searchOptions = new CreateSearchOptions(displayName, description, plans, areaCode) { Quantity = 1 };
-var searchOperation = await client.StartSearchAsync(searchOptions).ConfigureAwait(false);
-var searchResponse = await searchOperation.WaitForCompletionAsync().ConfigureAwait(false);
+var reservationOptions = new CreateReservationOptions(displayName, description, plans, areaCode) { Quantity = 1 };
+var reservationOperation = await client.StartReservationAsync(reservationOptions).ConfigureAwait(false);
+var reservationResponse = await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-Console.WriteLine($"Search result: SearchId: {searchResponse.Value.SearchId}");
+Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, Status {reservationResponse.Value.Status}");
 ```
 
-### Purchase search
+### Purchase reservation
 
 ```C#
-var searchPurchaseOperation = await client.StartPurchaseSearchAsync(searchId).ConfigureAwait(false);
-await searchPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
+var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
+await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-Console.WriteLine($"Purchase status: {searchPurchaseOperation.Value.Status}, AreaCode: {searchPurchaseOperation.Value.AreaCode}, DisplayName: {searchPurchaseOperation.Value.DisplayName}");
+Console.WriteLine($"Purchase status: {reservationPurchaseOperation.Value.Status}, AreaCode: {reservationPurchaseOperation.Value.AreaCode}, DisplayName: {reservationPurchaseOperation.Value.DisplayName}");
 ```
 
 ### Configure phone number

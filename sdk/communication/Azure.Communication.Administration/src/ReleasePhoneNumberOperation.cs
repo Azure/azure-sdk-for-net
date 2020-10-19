@@ -26,16 +26,34 @@ namespace Azure.Communication.Administration
         /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
         /// </summary>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="releaseResponseId">The phone number release ID of this operation.</param>
+        /// <param name="id">The phone number release operation ID.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public ReleasePhoneNumberOperation(
+            PhoneNumberAdministrationClient client,
+            string id,
+            CancellationToken cancellationToken = default)
+        {
+            Id = id;
+            _value = null;
+            _rawResponse = null!;
+            _client = client;
+            _cancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
+        /// </summary>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="id">The phone number release operation ID.</param>
         /// <param name="initialResponse">The original server response on start operation request.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         internal ReleasePhoneNumberOperation(
             PhoneNumberAdministrationClient client,
-            string releaseResponseId,
+            string id,
             Response initialResponse,
             CancellationToken cancellationToken = default)
         {
-            Id = releaseResponseId;
+            Id = id;
             _value = null;
             _rawResponse = initialResponse;
             _client = client;
@@ -52,7 +70,7 @@ namespace Azure.Communication.Administration
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdocs />
-        public override bool HasValue => _value != null;
+        public override bool HasValue => _rawResponse != null && _value != null;
 
         /// <inheritdocs />
         public override Response GetRawResponse() => _rawResponse;
@@ -65,9 +83,8 @@ namespace Azure.Communication.Administration
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override Response UpdateStatus(
-            CancellationToken cancellationToken = default) =>
-            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+            => UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -77,9 +94,8 @@ namespace Azure.Communication.Administration
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override async ValueTask<Response> UpdateStatusAsync(
-            CancellationToken cancellationToken = default) =>
-            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+            => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -90,7 +106,7 @@ namespace Azure.Communication.Administration
         /// </param>
         /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (HasCompleted)
             {
@@ -115,25 +131,23 @@ namespace Azure.Communication.Administration
                 ReleaseStatus.Expired
             };
 
-            if (update.Value.Status.HasValue)
-            {
-                if (terminateStatuses.Contains(update.Value.Status.Value))
-                {
-                    _hasCompleted = true;
-                }
-            }
-
             Response response = update.GetRawResponse();
             _rawResponse = response;
+
+            if (update.Value.Status.HasValue && terminateStatuses.Contains(update.Value.Status.Value))
+            {
+                _hasCompleted = true;
+            }
+
             return response;
         }
 
         /// <inheritdocs />
-        public override ValueTask<Response<PhoneNumberRelease>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PhoneNumberRelease>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+            => this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdocs />
-        public override ValueTask<Response<PhoneNumberRelease>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PhoneNumberRelease>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

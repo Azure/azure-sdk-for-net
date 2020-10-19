@@ -13,15 +13,15 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a search creation option. </summary>
-    public partial class CreateSearchOptions
+    public partial class CreateReservationOptions
     {
-        /// <summary> Initializes a new instance of CreateSearchOptions. </summary>
+        /// <summary> Initializes a new instance of CreateReservationOptions. </summary>
         /// <param name="displayName"> Display name of the search. </param>
         /// <param name="description"> Description of the search. </param>
         /// <param name="phonePlanIds"> The plan subtype ids from which to create the search. </param>
         /// <param name="areaCode"> The area code from which to create the search. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="description"/>, <paramref name="phonePlanIds"/>, or <paramref name="areaCode"/> is null. </exception>
-        public CreateSearchOptions(string displayName, string description, IEnumerable<string> phonePlanIds, string areaCode)
+        public CreateReservationOptions(string displayName, string description, IEnumerable<string> phonePlanIds, string areaCode)
         {
             if (displayName == null)
             {

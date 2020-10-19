@@ -57,6 +57,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets the list of the acquired phone numbers. </summary>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual AsyncPageable<AcquiredPhoneNumber> GetAllPhoneNumbersAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
@@ -80,6 +81,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets the list of the acquired phone numbers. </summary>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Pageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual Pageable<AcquiredPhoneNumber> GetAllPhoneNumbers(string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
@@ -103,6 +105,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanId"> The plan id from which to search area codes. </param>
         /// <param name="locationOptions"> Represents the underlying list of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{AreaCodes}"/>. </returns>
         public virtual async Task<Response<AreaCodes>> GetAllAreaCodesAsync(string locationType, string countryCode, string phonePlanId, IEnumerable<LocationOptionsQuery> locationOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
@@ -124,6 +127,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanId"> The plan id from which to search area codes. </param>
         /// <param name="locationOptions"> Represents the underlying list of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{AreaCodes}"/>. </returns>
         public virtual Response<AreaCodes> GetAllAreaCodes(string locationType, string countryCode, string phonePlanId, IEnumerable<LocationOptionsQuery> locationOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
@@ -142,6 +146,7 @@ namespace Azure.Communication.Administration
         /// <summary> Get capabilities by capabilities update id. </summary>
         /// <param name="capabilitiesUpdateId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{UpdatePhoneNumberCapabilitiesResponse}"/>. </returns>
         public virtual async Task<Response<UpdatePhoneNumberCapabilitiesResponse>> GetCapabilitiesUpdateAsync(string capabilitiesUpdateId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
@@ -160,6 +165,7 @@ namespace Azure.Communication.Administration
         /// <summary> Get capabilities by capabilities update id. </summary>
         /// <param name="capabilitiesUpdateId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{UpdatePhoneNumberCapabilitiesResponse}"/>. </returns>
         public virtual Response<UpdatePhoneNumberCapabilitiesResponse> GetCapabilitiesUpdate(string capabilitiesUpdateId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
@@ -178,6 +184,7 @@ namespace Azure.Communication.Administration
         /// <summary> Adds or removes phone number capabilities. </summary>
         /// <param name="phoneNumberUpdateCapabilities"> Dictionary of &lt;NumberUpdateCapabilities&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{UpdateNumberCapabilitiesResponse}"/>. </returns>
         public virtual async Task<Response<UpdateNumberCapabilitiesResponse>> UpdateCapabilitiesAsync(IDictionary<string, NumberUpdateCapabilities> phoneNumberUpdateCapabilities, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UpdateCapabilities)}");
@@ -196,6 +203,7 @@ namespace Azure.Communication.Administration
         /// <summary> Adds or removes phone number capabilities. </summary>
         /// <param name="phoneNumberUpdateCapabilities"> Dictionary of &lt;NumberUpdateCapabilities&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{UpdateNumberCapabilitiesResponse}"/>. </returns>
         public virtual Response<UpdateNumberCapabilitiesResponse> UpdateCapabilities(IDictionary<string, NumberUpdateCapabilities> phoneNumberUpdateCapabilities, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(UpdateCapabilities)}.{nameof(UpdateCapabilities)}");
@@ -214,6 +222,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets a list of supported countries. </summary>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberCountry> GetAllSupportedCountriesAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
@@ -236,6 +245,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets a list of supported countries. </summary>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual Pageable<PhoneNumberCountry> GetAllSupportedCountries(string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
@@ -255,6 +265,7 @@ namespace Azure.Communication.Administration
         /// <summary> Endpoint for getting number configurations. </summary>
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
         public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
@@ -273,6 +284,7 @@ namespace Azure.Communication.Administration
         /// <summary> Endpoint for getting number configurations. </summary>
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
         public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
@@ -292,6 +304,7 @@ namespace Azure.Communication.Administration
         /// <param name="pstnConfiguration"> Definition for pstn number configuration. </param>
         /// <param name="phoneNumber"> The phone number to configure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response"/>. </returns>
         public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
@@ -311,6 +324,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number to configure. </param>
         /// <param name="pstnConfiguration"> Definition for pstn number configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response"/>. </returns>
         public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
@@ -329,6 +343,7 @@ namespace Azure.Communication.Administration
         /// <summary> Endpoint for unconfiguring a pstn number by removing the configuration. </summary>
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response"/>. </returns>
         public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
@@ -347,6 +362,7 @@ namespace Azure.Communication.Administration
         /// <summary> Endpoint for unconfiguring a pstn number by removing the configuration. </summary>
         /// <param name="phoneNumber"> The phone number in the E.164 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response"/>. </returns>
         public virtual Response UnconfigureNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
@@ -367,6 +383,7 @@ namespace Azure.Communication.Administration
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="includeRateInformation"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{PhonePlanGroup}"/>. </returns>
         public virtual AsyncPageable<PhonePlanGroup> GetPhonePlanGroupsAsync(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
@@ -391,6 +408,7 @@ namespace Azure.Communication.Administration
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="includeRateInformation"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Pageable{PhonePlanGroup}"/>. </returns>
         public virtual Pageable<PhonePlanGroup> GetPhonePlanGroups(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
@@ -412,6 +430,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanGroupId"> The String to use. </param>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{PhonePlan}"/>. </returns>
         public virtual AsyncPageable<PhonePlan> GetPhonePlansAsync(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
@@ -436,6 +455,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanGroupId"> The String to use. </param>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Pageable{PhonePlan}"/>. </returns>
         public virtual Pageable<PhonePlan> GetPhonePlans(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
@@ -458,6 +478,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanId"> The String to use. </param>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{LocationOptionsResponse}"/>. </returns>
         public virtual async Task<Response<LocationOptionsResponse>> GetPhonePlanLocationOptionsAsync(string countryCode, string phonePlanGroupId, string phonePlanId, string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
@@ -479,6 +500,7 @@ namespace Azure.Communication.Administration
         /// <param name="phonePlanId"> The String to use. </param>
         /// <param name="locale"> A language-locale pairing which will be used to localise the names of countries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{LocationOptionsResponse}"/>. </returns>
         public virtual Response<LocationOptionsResponse> GetPhonePlanLocationOptions(string countryCode, string phonePlanGroupId, string phonePlanId, string? locale = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
@@ -497,6 +519,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets a release by a release id. </summary>
         /// <param name="releaseId"> Represents the release id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{PhoneNumberRelease}"/>. </returns>
         public virtual async Task<Response<PhoneNumberRelease>> GetReleaseByIdAsync(string releaseId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
@@ -515,6 +538,7 @@ namespace Azure.Communication.Administration
         /// <summary> Gets a release by a release id. </summary>
         /// <param name="releaseId"> Represents the release id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Response{PhoneNumberRelease}"/>. </returns>
         public virtual Response<PhoneNumberRelease> GetReleaseById(string releaseId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
@@ -533,6 +557,7 @@ namespace Azure.Communication.Administration
         /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
@@ -556,6 +581,7 @@ namespace Azure.Communication.Administration
         /// <summary> Starts a release for the given phone numbers. </summary>
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
@@ -578,6 +604,7 @@ namespace Azure.Communication.Administration
 
         /// <summary> Gets a list of all releases. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberEntity> GetAllReleasesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
@@ -599,6 +626,7 @@ namespace Azure.Communication.Administration
 
         /// <summary> Gets a list of all releases. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
         public virtual Pageable<PhoneNumberEntity> GetAllReleases(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
@@ -615,16 +643,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Get search by search id. </summary>
-        /// <param name="searchId"> The search id to be searched for. </param>
+        /// <summary> Get reservation by id. </summary>
+        /// <param name="reservationId"> The reservation id to be searched for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumberSearch>> GetSearchByIdAsync(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Response{PhoneNumberReservation}"/>. </returns>
+        public virtual async Task<Response<PhoneNumberReservation>> GetReservationByIdAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetSearchById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
             scope.Start();
             try
             {
-                return await RestClient.GetSearchByIdAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetSearchByIdAsync(reservationId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -633,16 +662,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Get search by search id. </summary>
-        /// <param name="searchId"> The search id to be searched for. </param>
+        /// <summary> Get reservation by id. </summary>
+        /// <param name="reservationId"> The reservation id to be searched for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumberSearch> GetSearchById(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Response{PhoneNumberReservation}"/>. </returns>
+        public virtual Response<PhoneNumberReservation> GetReservationById(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetSearchById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
             scope.Start();
             try
             {
-                return RestClient.GetSearchById(searchId, cancellationToken);
+                return RestClient.GetSearchById(reservationId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -651,19 +681,20 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Startss a phone number search. </summary>
-        /// <param name="body"> Defines the search options. </param>
+        /// <summary> Starts a phone number reservation. </summary>
+        /// <param name="body"> Defines the reservation options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PhoneNumberSearchOperation> StartSearchAsync(CreateSearchOptions body, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Response{PhoneNumberReservationOperation}"/>. </returns>
+        public virtual async Task<PhoneNumberReservationOperation> StartReservationAsync(CreateReservationOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
             scope.Start();
             try
             {
                 var response = await RestClient.CreateSearchAsync(body, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumberSearchOperation(
+                return new PhoneNumberReservationOperation(
                     this,
-                    response.Value.SearchId,
+                    response.Value.ReservationId,
                     response.GetRawResponse(),
                     cancellationToken);
             }
@@ -674,19 +705,20 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts a phone number search. </summary>
-        /// <param name="body"> Defines the search options. </param>
+        /// <summary> Starts a phone number reservation. </summary>
+        /// <param name="body"> Defines the reservation options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PhoneNumberSearchOperation StartSearch(CreateSearchOptions body, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="PhoneNumberReservationOperation"/>. </returns>
+        public virtual PhoneNumberReservationOperation StartReservation(CreateReservationOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
             scope.Start();
             try
             {
                 var response = RestClient.CreateSearch(body, cancellationToken);
-                return new PhoneNumberSearchOperation(
+                return new PhoneNumberReservationOperation(
                     this,
-                    response.Value.SearchId,
+                    response.Value.ReservationId,
                     response.GetRawResponse(),
                     cancellationToken);
             }
@@ -697,11 +729,12 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Gets a list of all searches. </summary>
+        /// <summary> Gets a list of all reservations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberEntity> GetAllSearchesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
+        public virtual AsyncPageable<PhoneNumberEntity> GetAllReservationsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSearches)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
             scope.Start();
             try
             {
@@ -718,11 +751,12 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Gets a list of all searches. </summary>
+        /// <summary> Gets a list of all reservations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberEntity> GetAllSearches(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
+        public virtual Pageable<PhoneNumberEntity> GetAllReservations(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSearches)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
             scope.Start();
             try
             {
@@ -736,16 +770,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Cancels the search. This means existing numbers in the search will be made available. </summary>
-        /// <param name="searchId"> The search id to be canceled. </param>
+        /// <summary> Cancels the reservation. This means existing numbers in the reservation will be made available. </summary>
+        /// <param name="reservationId"> The reservation id to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelSearchAsync(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Response"/>. </returns>
+        public virtual async Task<Response> CancelReservationAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
             scope.Start();
             try
             {
-                return await RestClient.CancelSearchAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CancelSearchAsync(reservationId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -754,16 +789,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Cancels the search. This means existing numbers in the search will be made available. </summary>
-        /// <param name="searchId"> The search id to be canceled. </param>
+        /// <summary> Cancels the reservation. This means existing numbers in the reservation will be made available. </summary>
+        /// <param name="reservationId"> The reservation id to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelSearch(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Response"/>. </returns>
+        public virtual Response CancelReservation(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
             scope.Start();
             try
             {
-                return RestClient.CancelSearch(searchId, cancellationToken);
+                return RestClient.CancelSearch(reservationId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -772,19 +808,20 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts purchases the phone number search. </summary>
-        /// <param name="searchId"> The search id to be purchased. </param>
+        /// <summary> Starts purchases the phone number reservation. </summary>
+        /// <param name="reservationId"> The reservation id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PhoneNumberSearchPurchaseOperation> StartPurchaseSearchAsync(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="PhoneNumberReservationPurchaseOperation"/>. </returns>
+        public virtual async Task<PhoneNumberReservationPurchaseOperation> StartPurchaseReservationAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {
-                var response = await RestClient.PurchaseSearchAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumberSearchPurchaseOperation(
+                var response = await RestClient.PurchaseSearchAsync(reservationId, cancellationToken).ConfigureAwait(false);
+                return new PhoneNumberReservationPurchaseOperation(
                         this,
-                        searchId,
+                        reservationId,
                         response,
                         cancellationToken);
             }
@@ -795,19 +832,20 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts purchases the phone number search. </summary>
-        /// <param name="searchId"> The search id to be purchased. </param>
+        /// <summary> Starts purchases the phone number reservation. </summary>
+        /// <param name="reservationId"> The reservation id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PhoneNumberSearchPurchaseOperation StartPurchaseSearch(string searchId, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="PhoneNumberReservationPurchaseOperation"/>. </returns>
+        public virtual PhoneNumberReservationPurchaseOperation StartPurchaseReservation(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseSearch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {
-                var response = RestClient.PurchaseSearch(searchId, cancellationToken);
-                return new PhoneNumberSearchPurchaseOperation(
+                var response = RestClient.PurchaseSearch(reservationId, cancellationToken);
+                return new PhoneNumberReservationPurchaseOperation(
                         this,
-                        searchId,
+                        reservationId,
                         response,
                         cancellationToken);
             }

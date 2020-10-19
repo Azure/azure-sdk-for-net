@@ -13,59 +13,78 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Administration
 {
     /// <summary>
-    /// Represent a long-running phone number search operation.
+    /// Represents a long-running phone number reservation operation.
     /// </summary>
-    public class PhoneNumberSearchOperation : Operation<PhoneNumberSearch>
+    public class PhoneNumberReservationOperation : Operation<PhoneNumberReservation>
     {
         private readonly PhoneNumberAdministrationClient _client;
         private readonly CancellationToken _cancellationToken;
         private bool _hasCompleted;
-        private PhoneNumberSearch? _value;
+        private PhoneNumberReservation? _value;
         private Response _rawResponse;
-        private readonly IReadOnlyList<SearchStatus> _terminateStatuses = new SearchStatus []
+        private Response _finalRawResponse;
+        private readonly IReadOnlyList<ReservationStatus> _terminateStatuses = new ReservationStatus[]
         {
-            SearchStatus.Reserved,
-            SearchStatus.Expired,
-            SearchStatus.Success,
-            SearchStatus.Cancelled,
-            SearchStatus.Error
+            ReservationStatus.Reserved,
+            ReservationStatus.Expired,
+            ReservationStatus.Cancelled,
+            ReservationStatus.Error
         };
 
         /// <summary>
-        /// Initializes a new <see cref="PhoneNumberSearchOperation"/> instance
+        /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
         /// </summary>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="phoneNumberSearchId">The search ID of this operation.</param>
-        /// <param name="initialResponse">The original server response on start operation request.</param>
+        /// <param name="id">The reservation operation ID.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        internal PhoneNumberSearchOperation(
+        public PhoneNumberReservationOperation(
             PhoneNumberAdministrationClient client,
-            string phoneNumberSearchId,
-            Response initialResponse,
+            string id,
             CancellationToken cancellationToken = default)
         {
-            Id = phoneNumberSearchId;
-            _value = null;
-            _rawResponse = initialResponse;
+            Id = id;
+            _rawResponse = null!;
+            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
 
         /// <summary>
-        /// Initializes a new <see cref="PhoneNumberSearchOperation"/> instance
+        /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
         /// </summary>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="phoneNumberSearchId">The search ID of this operation.</param>
+        /// <param name="id">The reservation operation ID.</param>
         /// <param name="initialResponse">The original server response on start operation request.</param>
-        /// <param name="terminateStatuses">The list of <see cref="SearchStatus"/> that indicate the end of operation.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        internal PhoneNumberSearchOperation(
+        internal PhoneNumberReservationOperation(
             PhoneNumberAdministrationClient client,
-            string phoneNumberSearchId,
+            string id,
             Response initialResponse,
-            IReadOnlyList<SearchStatus> terminateStatuses,
+            CancellationToken cancellationToken = default)
+        {
+            Id = id;
+            _value = null;
+            _rawResponse = initialResponse;
+            _finalRawResponse = null!;
+            _client = client;
+            _cancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
+        /// </summary>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="phoneNumberReservationId">The reservation ID of this operation.</param>
+        /// <param name="initialResponse">The original server response on start operation request.</param>
+        /// <param name="terminateStatuses">The list of <see cref="ReservationStatus"/> that indicate the end of operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        internal PhoneNumberReservationOperation(
+            PhoneNumberAdministrationClient client,
+            string phoneNumberReservationId,
+            Response initialResponse,
+            IReadOnlyList<ReservationStatus> terminateStatuses,
             CancellationToken cancellationToken = default) :
-            this(client, phoneNumberSearchId, initialResponse, cancellationToken)
+            this(client, phoneNumberReservationId, initialResponse, cancellationToken)
         {
             _terminateStatuses = terminateStatuses;
         }
@@ -74,16 +93,16 @@ namespace Azure.Communication.Administration
         public override string Id { get; }
 
         /// <inheritdocs />
-        public override PhoneNumberSearch Value => OperationHelpers.GetValue(ref _value);
+        public override PhoneNumberReservation Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdocs />
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdocs />
-        public override bool HasValue => _value != null;
+        public override bool HasValue => _rawResponse != null && _value != null;
 
         /// <inheritdocs />
-        public override Response GetRawResponse() => _rawResponse;
+        public override Response GetRawResponse() => HasCompleted ? _finalRawResponse : _rawResponse;
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -93,9 +112,8 @@ namespace Azure.Communication.Administration
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override Response UpdateStatus(
-            CancellationToken cancellationToken = default) =>
-            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+            => UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -105,9 +123,8 @@ namespace Azure.Communication.Administration
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override async ValueTask<Response> UpdateStatusAsync(
-            CancellationToken cancellationToken = default) =>
-            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+            => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -118,7 +135,7 @@ namespace Azure.Communication.Administration
         /// </param>
         /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (HasCompleted)
             {
@@ -130,22 +147,24 @@ namespace Azure.Communication.Administration
                 cancellationToken = _cancellationToken;
             }
 
-            Response<PhoneNumberSearch> update = async
-                ? await _client.GetSearchByIdAsync(searchId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _client.GetSearchById(searchId: Id, cancellationToken: cancellationToken);
+            Response<PhoneNumberReservation> update = async
+                ? await _client.GetReservationByIdAsync(reservationId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _client.GetReservationById(reservationId: Id, cancellationToken: cancellationToken);
 
-            _value = update.Value;
+            var response = update.GetRawResponse();
+            _rawResponse = response;
 
             if (IsOperationFinished(update))
             {
+                _finalRawResponse = response;
+                _value = update.Value;
                 _hasCompleted = true;
             }
 
-            _rawResponse = update.GetRawResponse();
             return _rawResponse;
         }
 
-        private bool IsOperationFinished(Response<PhoneNumberSearch> response)
+        private bool IsOperationFinished(Response<PhoneNumberReservation> response)
         {
             if (!response.Value.Status.HasValue)
                 return false;
@@ -154,11 +173,11 @@ namespace Azure.Communication.Administration
         }
 
         /// <inheritdocs />
-        public override ValueTask<Response<PhoneNumberSearch>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PhoneNumberReservation>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+            => this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdocs />
-        public override ValueTask<Response<PhoneNumberSearch>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PhoneNumberReservation>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }
