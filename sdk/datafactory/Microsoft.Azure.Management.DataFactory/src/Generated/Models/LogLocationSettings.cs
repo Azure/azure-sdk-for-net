@@ -12,47 +12,34 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// (Deprecated. Please use LogSettings) Log storage settings.
+    /// Log location settings.
     /// </summary>
-    public partial class LogStorageSettings
+    public partial class LogLocationSettings
     {
         /// <summary>
-        /// Initializes a new instance of the LogStorageSettings class.
+        /// Initializes a new instance of the LogLocationSettings class.
         /// </summary>
-        public LogStorageSettings()
+        public LogLocationSettings()
         {
             LinkedServiceName = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LogStorageSettings class.
+        /// Initializes a new instance of the LogLocationSettings class.
         /// </summary>
         /// <param name="linkedServiceName">Log storage linked service
         /// reference.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="path">The path to storage for storing detailed logs of
         /// activity execution. Type: string (or Expression with resultType
         /// string).</param>
-        /// <param name="logLevel">Gets or sets the log level, support: Info,
-        /// Warning. Type: string (or Expression with resultType
-        /// string).</param>
-        /// <param name="enableReliableLogging">Specifies whether to enable
-        /// reliable logging. Type: boolean (or Expression with resultType
-        /// boolean).</param>
-        public LogStorageSettings(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object path = default(object), object logLevel = default(object), object enableReliableLogging = default(object))
+        public LogLocationSettings(LinkedServiceReference linkedServiceName, object path = default(object))
         {
-            AdditionalProperties = additionalProperties;
             LinkedServiceName = linkedServiceName;
             Path = path;
-            LogLevel = logLevel;
-            EnableReliableLogging = enableReliableLogging;
             CustomInit();
         }
 
@@ -60,13 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets log storage linked service reference.
@@ -81,20 +61,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public object Path { get; set; }
-
-        /// <summary>
-        /// Gets or sets the log level, support: Info, Warning. Type: string
-        /// (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "logLevel")]
-        public object LogLevel { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies whether to enable reliable logging. Type:
-        /// boolean (or Expression with resultType boolean).
-        /// </summary>
-        [JsonProperty(PropertyName = "enableReliableLogging")]
-        public object EnableReliableLogging { get; set; }
 
         /// <summary>
         /// Validate the object.
