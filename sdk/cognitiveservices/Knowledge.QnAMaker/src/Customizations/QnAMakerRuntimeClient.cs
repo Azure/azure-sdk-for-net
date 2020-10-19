@@ -54,9 +54,5 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             this.client = new QnAMakerClient(credentials, handlers);
             Runtime = new Runtime(this.client);            
         }
-
-        public void Dispose()
-        {
-        }
     }
 }
