@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200928.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201019.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "4944c4ccdc20706d812dae3e4c9a414d",
@@ -19,15 +19,15 @@
         "Cache-Control": "private",
         "Content-Length": "102",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Sep 2020 19:35:03 GMT",
+        "Date": "Mon, 19 Oct 2020 22:06:07 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "da92b655-63f2-4890-afca-a6700c3b7fc9",
-        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59982",
+        "x-ms-correlation-request-id": "ce05087f-057f-4364-884e-64651477ede7",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59989",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "491",
         "x-ms-request-id": "4944c4cc-dc20-706d-812d-ae3e4c9a414d",
-        "x-ms-routing-request-id": "WESTUS2:20200928T193504Z:da92b655-63f2-4890-afca-a6700c3b7fc9",
+        "x-ms-routing-request-id": "WESTUS2:20201019T220607Z:ce05087f-057f-4364-884e-64651477ede7",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -42,7 +42,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200928.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201019.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "5236974a76ddfc6094313438713732d6",
@@ -54,15 +54,15 @@
         "Cache-Control": "private",
         "Content-Length": "103",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Sep 2020 19:35:03 GMT",
+        "Date": "Mon, 19 Oct 2020 22:06:07 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "55e29a78-b68f-41b3-bde9-0748d5bc7ad2",
-        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59982",
+        "x-ms-correlation-request-id": "c76dfe2e-d62e-41d9-9a9b-4219ea449dd8",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59989",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "490",
         "x-ms-request-id": "5236974a-76dd-fc60-9431-3438713732d6",
-        "x-ms-routing-request-id": "WESTUS2:20200928T193504Z:55e29a78-b68f-41b3-bde9-0748d5bc7ad2",
+        "x-ms-routing-request-id": "WESTUS2:20201019T220607Z:c76dfe2e-d62e-41d9-9a9b-4219ea449dd8",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -77,7 +77,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200928.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201019.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "7242a8e03d57de9dc07e46329dee071a",
@@ -89,15 +89,15 @@
         "Cache-Control": "private",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Sep 2020 19:35:03 GMT",
+        "Date": "Mon, 19 Oct 2020 22:06:07 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "04108cac-ef55-4cf0-ad72-dbc18891a05e",
-        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59982",
+        "x-ms-correlation-request-id": "95cff6c7-6455-45f8-bf3b-df2bc8b8e500",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59989",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "489",
         "x-ms-request-id": "7242a8e0-3d57-de9d-c07e-46329dee071a",
-        "x-ms-routing-request-id": "WESTUS2:20200928T193504Z:04108cac-ef55-4cf0-ad72-dbc18891a05e",
+        "x-ms-routing-request-id": "WESTUS2:20201019T220607Z:95cff6c7-6455-45f8-bf3b-df2bc8b8e500",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
