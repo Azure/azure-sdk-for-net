@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs;
@@ -20,6 +21,7 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [TestCase(typeof(BlobTriggerFunction_String))]
         [TestCase(typeof(BlobTriggerFunction_Stream))]
+        [TestCase(typeof(BlobTriggerFunction_BlobBaseClient))]
         public async Task Run_BlobTriggerBindingFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
@@ -64,6 +66,18 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
         {
             using var streamReader = new StreamReader(streamContent);
             logger.LogInformation("Blob has been updated with content: {content}", streamReader.ReadToEnd());
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobTriggerFunction_BlobBaseClient
+    public static class BlobTriggerFunction_BlobBaseClient
+    {
+        [FunctionName("BlobTriggerFunction")]
+        public static async Task Run([BlobTrigger("sample-container/sample-blob.txt")] BlobBaseClient blobBaseClient, ILogger logger)
+        {
+            BlobProperties blobProperties = await blobBaseClient.GetPropertiesAsync();
+            logger.LogInformation("Blob has been updated on: {datetime}", blobProperties.LastModified);
         }
     }
     #endregion

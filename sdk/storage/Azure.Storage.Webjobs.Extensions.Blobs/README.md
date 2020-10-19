@@ -44,6 +44,18 @@ public static class BlobTriggerFunction_Stream
 }
 ```
 
+```C# Snippet:BlobTriggerFunction_BlobBaseClient
+public static class BlobTriggerFunction_BlobBaseClient
+{
+    [FunctionName("BlobTriggerFunction")]
+    public static async Task Run([BlobTrigger("sample-container/sample-blob.txt")] BlobBaseClient blobBaseClient, ILogger logger)
+    {
+        BlobProperties blobProperties = await blobBaseClient.GetPropertiesAsync();
+        logger.LogInformation("Blob has been updated on: {datetime}", blobProperties.LastModified);
+    }
+}
+```
+
 ## Troubleshooting
 
 TODO
