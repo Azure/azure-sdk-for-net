@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
@@ -17,7 +18,8 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
 {
     public class BlobTriggerAttributeSample
     {
-        [TestCase(typeof(BlobTriggerBindingFunction))]
+        [TestCase(typeof(BlobTriggerFunction_String))]
+        [TestCase(typeof(BlobTriggerFunction_Stream))]
         public async Task Run_BlobTriggerBindingFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
@@ -43,13 +45,25 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
         }
     }
 
-    #region Snippet:BlobTriggerBindingFunction_String
-    public static class BlobTriggerBindingFunction
+    #region Snippet:BlobTriggerFunction_String
+    public static class BlobTriggerFunction_String
     {
-        [FunctionName("BlobTriggerBindingFunction")]
+        [FunctionName("BlobTriggerFunction")]
         public static void Run([BlobTrigger("sample-container/sample-blob.txt")] string blobContent, ILogger logger)
         {
             logger.LogInformation("Blob has been updated with content: {content}", blobContent);
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobTriggerFunction_Stream
+    public static class BlobTriggerFunction_Stream
+    {
+        [FunctionName("BlobTriggerFunction")]
+        public static void Run([BlobTrigger("sample-container/sample-blob.txt")] Stream streamContent, ILogger logger)
+        {
+            using var streamReader = new StreamReader(streamContent);
+            logger.LogInformation("Blob has been updated with content: {content}", streamReader.ReadToEnd());
         }
     }
     #endregion

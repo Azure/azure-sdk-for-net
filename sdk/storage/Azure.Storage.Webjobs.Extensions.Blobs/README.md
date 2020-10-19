@@ -21,13 +21,25 @@ TODO
 
 ### Functions that use Blob Trigger
 
-```C# Snippet:BlobTriggerBindingFunction_String
-public static class BlobTriggerBindingFunction
+```C# Snippet:BlobTriggerFunction_String
+public static class BlobTriggerFunction_String
 {
-    [FunctionName("BlobTriggerBindingFunction")]
+    [FunctionName("BlobTriggerFunction")]
     public static void Run([BlobTrigger("sample-container/sample-blob.txt")] string blobContent, ILogger logger)
     {
         logger.LogInformation("Blob has been updated with content: {content}", blobContent);
+    }
+}
+```
+
+```C# Snippet:BlobTriggerFunction_Stream
+public static class BlobTriggerFunction_Stream
+{
+    [FunctionName("BlobTriggerFunction")]
+    public static void Run([BlobTrigger("sample-container/sample-blob.txt")] Stream streamContent, ILogger logger)
+    {
+        using var streamReader = new StreamReader(streamContent);
+        logger.LogInformation("Blob has been updated with content: {content}", streamReader.ReadToEnd());
     }
 }
 ```
