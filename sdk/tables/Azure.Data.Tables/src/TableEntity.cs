@@ -10,8 +10,12 @@ using Azure.Core;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// A <see cref="ITableEntity"/> type which allows callers direct access to the property map of the entity.
+    /// A generic dictionary-like <see cref="ITableEntity"/> type which defines an arbitrary set of properties on an entity as key-value pairs.
     /// </summary>
+    /// <remarks>
+    /// This type can be used with any of the generic entity interaction methods in <see cref="TableClient"/> where entity model type flexibility is desired.
+    /// For example, if your table contains a jagged schema, or you need to precisely update a subset of properties in a <see cref="TableUpdateMode.Merge"/> mode operation.
+    /// </remarks>
     public partial class TableEntity : ITableEntity
     {
         private readonly IDictionary<string, object> _properties;
@@ -27,7 +31,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// The row key is a unique identifier for an entity within a given partition. Together the <see cref="PartitionKey" /> and RowKey uniquely identify every entity within a table.
+        /// The row key is a unique identifier for an entity within a given partition. Together, the <see cref="PartitionKey" /> and RowKey uniquely identify an entity within a table.
         /// </summary>
         /// <value>A string containing the row key for the entity.</value>
         public string RowKey
@@ -37,7 +41,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// The Timestamp property is a DateTime value that is maintained on the server side to record the time an entity was last modified.
+        /// The Timestamp property is a DateTimeOffset value that is maintained on the server side to record the time an entity was last modified.
         /// The Table service uses the Timestamp property internally to provide optimistic concurrency. The value of Timestamp is a monotonically increasing value,
         /// meaning that each time the entity is modified, the value of Timestamp increases for that entity. This property should not be set on insert or update operations (the value will be ignored).
         /// </summary>
@@ -49,7 +53,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets or sets the entity's ETag. Set this value to <see cref="ETag.All"/> in order to force an overwrite to an entity as part of an update operation.
+        /// Gets or sets the entity's ETag.
         /// </summary>
         /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
         public ETag ETag
@@ -59,7 +63,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Constructs an instance of a <see cref="ITableEntity" />.
+        /// Creates an instance of the <see cref="TableEntity" /> class.
         /// </summary>
         public TableEntity()
             : this(null)

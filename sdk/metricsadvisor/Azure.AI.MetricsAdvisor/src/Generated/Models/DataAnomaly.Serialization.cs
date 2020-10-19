@@ -42,11 +42,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property0.NameEquals("createdTime"))
                 {
+                    if (property0.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property0.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property0.NameEquals("modifiedTime"))
                 {
+                    if (property0.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property0.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modifiedTime = property0.Value.GetDateTimeOffset("O");
                     continue;
                 }

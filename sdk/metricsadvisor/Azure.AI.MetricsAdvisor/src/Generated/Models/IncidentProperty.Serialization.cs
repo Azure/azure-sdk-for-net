@@ -25,6 +25,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("incidentStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     incidentStatus = new IncidentStatus(property.Value.GetString());
                     continue;
                 }

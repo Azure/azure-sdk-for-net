@@ -21,16 +21,31 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("totalDeviceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     totalDeviceCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("enabledDeviceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("disabledDeviceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }

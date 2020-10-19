@@ -569,7 +569,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task DownloadAsync_LastAccess()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3787,7 +3786,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task GetPropertiesAsync_LastAccessed()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -4443,6 +4441,27 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task AcquireLeaseAsync_ExtendedExceptionMessage()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(10);
+            BlobLeaseClient blobLeaseClient = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blobLeaseClient.AcquireAsync(duration),
+                e =>
+                {
+                    Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                });
         }
 
         [Test]

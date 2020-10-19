@@ -21,6 +21,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ServicePrincipal> array = new List<ServicePrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

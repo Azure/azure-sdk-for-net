@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("tables"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SyncFullSchemaTable> array = new List<SyncFullSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -32,6 +37,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

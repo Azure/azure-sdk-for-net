@@ -15,8 +15,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service", "roleinstance1", "my-namespace");
             using var tracerProvider = OpenTelemetry.Sdk.CreateTracerProviderBuilder()
                 .SetResource(resource)
-                .AddSource("Samples.SampleServer")
-                .AddSource("Samples.SampleClient")
+                .AddSource("Demo.DemoServer")
+                .AddSource("Demo.DemoClient")
                 .AddAzureMonitorTraceExporter(o => {
                     o.ConnectionString = $"InstrumentationKey=Ikey;";
                 })

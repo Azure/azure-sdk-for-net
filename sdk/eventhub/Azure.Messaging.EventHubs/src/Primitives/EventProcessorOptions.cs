@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
+        ///   The maximum amount of time to wait for events to become available from a given partition before emitting
         ///   an empty batch of events.
         /// </summary>
         ///

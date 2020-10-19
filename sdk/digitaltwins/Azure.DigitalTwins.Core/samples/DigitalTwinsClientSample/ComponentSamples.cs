@@ -165,7 +165,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleGetComponent
 
-            await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+            await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
             Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent

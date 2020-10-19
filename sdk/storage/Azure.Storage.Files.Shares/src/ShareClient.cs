@@ -905,10 +905,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -935,10 +936,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -969,10 +971,11 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<bool> DeleteIfExists(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1003,10 +1006,11 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1021,6 +1025,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeSnapshots">
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
+        /// </param>
+        /// <param name="shareSnapshotsDeleteOption">
+        /// Parameter indicating if the share's snapshots or leased snapshots should be deleted.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1042,6 +1049,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             bool includeSnapshots,
+            ShareSnapshotsDeleteOption? shareSnapshotsDeleteOption,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1056,6 +1064,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     Response response = await DeleteInternal(
                         includeSnapshots,
+                        shareSnapshotsDeleteOption,
                         conditions,
                         async,
                         cancellationToken,
@@ -1229,10 +1238,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -1261,10 +1271,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -1295,10 +1306,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -1329,10 +1341,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -1347,8 +1360,10 @@ namespace Azure.Storage.Files.Shares
         /// Delete Share</see>.
         /// </summary>
         /// <param name="includeSnapshots">
-        /// A value indicating whether to delete a share's snapshots in addition
-        /// to the share itself.
+        /// If this share snapshots should be deleted.  This parameter is for backwards compatibility.
+        /// </param>
+        /// <param name="shareSnapshotsDeleteOption">
+        /// Parameter indicating if the share's snapshots or leased snapshots should be deleted.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1372,7 +1387,8 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response> DeleteInternal(
-            bool includeSnapshots,
+            bool? includeSnapshots,
+            ShareSnapshotsDeleteOption? shareSnapshotsDeleteOption,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -1386,16 +1402,15 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    DeleteSnapshotsOptionType? deleteSnapshotsOption;
-
                     // DeleteSnapshotsOptionType.Include is not valid when deleting a Snapshot Share.
                     if (Uri.GetQueryParameters().ContainsKey(Constants.ShareSnapshotParameterName))
                     {
-                        deleteSnapshotsOption = null;
+                        shareSnapshotsDeleteOption = null;
                     }
-                    else
+                    // This is for backwards compatibility.  Perviously, ShareClient.Delete() took a bool includSnapshots parameter.s
+                    else if ((includeSnapshots == null || includeSnapshots == true) && shareSnapshotsDeleteOption == null)
                     {
-                        deleteSnapshotsOption = includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null;
+                        shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.Include;
                     }
 
                     return await FileRestClient.Share.DeleteAsync(
@@ -1404,7 +1419,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
-                        deleteSnapshots: deleteSnapshotsOption,
+                        deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
@@ -1621,16 +1636,16 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion GetProperties
 
-        #region SetAccessTier
+        #region SetProperties
         /// <summary>
-        /// Sets access tier of the share.
+        /// Sets properties of the share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
         /// Set Share Properties</see>.
         /// </summary>
-        /// <param name="accessTier">
-        /// Access tier to set on the share.
+        /// <param name="options">
+        /// Properties to set on the share.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1644,24 +1659,27 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<ShareInfo> SetAccessTier(
-            ShareAccessTier? accessTier,
+        public virtual Response<ShareInfo> SetProperties(
+            ShareSetPropertiesOptions options,
             CancellationToken cancellationToken = default) =>
-            SetAccessTierInternal(
-                accessTier,
+            SetPropertiesInternal(
+                quotaInGB: options?.QuotaInGB,
+                accessTier: options?.AccessTier,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// Sets access tier of the share.
+        /// Sets properties of the share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
         /// Set Share Properties</see>.
         /// </summary>
-        /// <param name="accessTier">
-        /// Access tier to set on the share.
+        /// <param name="options">
+        /// Properties to set on the share.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1675,11 +1693,14 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetAccessTierAsync(
-            ShareAccessTier? accessTier,
+        public virtual async Task<Response<ShareInfo>> SetPropertiesAsync(
+            ShareSetPropertiesOptions options,
             CancellationToken cancellationToken = default) =>
-            await SetAccessTierInternal(
-                accessTier,
+            await SetPropertiesInternal(
+                quotaInGB: options?.QuotaInGB,
+                accessTier: options?.AccessTier,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1691,8 +1712,19 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
         /// Set Share Properties</see>.
         /// </summary>
+        /// <param name="quotaInGB">
+        /// Optional. The maximum size of the share.
+        /// If unspecified, use the service's default value.
+        /// </param>
         /// <param name="accessTier">
         /// Access tier to set on the share.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the quota.
+        /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1709,8 +1741,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<ShareInfo>> SetAccessTierInternal(
+        internal virtual async Task<Response<ShareInfo>> SetPropertiesInternal(
+            int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareFileRequestConditions conditions,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1728,9 +1763,11 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         version: Version.ToVersionString(),
+                        quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(SetAccessTier)}",
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1745,7 +1782,7 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-        #endregion SetAccessTier
+        #endregion SetProperties
 
         #region SetQuota
         /// <summary>
@@ -1775,13 +1812,16 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareInfo> SetQuota(
             int quotaInGB = default,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            SetQuotaInternal(
-                quotaInGB,
+            SetPropertiesInternal(
+                quotaInGB: quotaInGB,
+                accessTier: default,
                 conditions: conditions,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1813,13 +1853,16 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
             int quotaInGB = default,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await SetQuotaInternal(
-                quotaInGB,
+            await SetPropertiesInternal(
+                quotaInGB: quotaInGB,
+                accessTier: default,
                 conditions: conditions,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1854,9 +1897,11 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             int quotaInGB,
             CancellationToken cancellationToken) =>
-            SetQuotaInternal(
-                quotaInGB,
+            SetPropertiesInternal(
+                quotaInGB: quotaInGB,
+                accessTier: default,
                 conditions: default,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1890,81 +1935,14 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             int quotaInGB,
             CancellationToken cancellationToken) =>
-            await SetQuotaInternal(
-                quotaInGB,
+            await SetPropertiesInternal(
+                quotaInGB: quotaInGB,
+                accessTier: default,
                 conditions: default,
+                operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
-
-        /// <summary>
-        /// Sets the maximum size of the share.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
-        /// Set Share Properties</see>.
-        /// </summary>
-        /// <param name="quotaInGB">
-        /// Optional. The maximum size of the share.
-        /// If unspecified, use the service's default value.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
-        /// on setting the quota.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{ShareInfo}"/> describing the updated
-        /// share.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
-            int quotaInGB,
-            ShareFileRequestConditions conditions,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
-            {
-                Pipeline.LogMethodEnter(
-                    nameof(ShareClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(quotaInGB)}: {quotaInGB}");
-                try
-                {
-                    return await FileRestClient.Share.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        quotaInGB: quotaInGB,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
-                }
-            }
-        }
         #endregion SetQuota
 
         #region SetMetadata

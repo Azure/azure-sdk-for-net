@@ -335,6 +335,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the duration specified by the <see cref="EventHubsRetryOptions.TryTimeout" /> in the active retry policy for events to be read from the service.  Once any
+        ///   events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             CancellationToken cancellationToken = default) =>
             await ReceiveBatchInternalAsync(maximumEventCount, null, cancellationToken).ConfigureAwait(false);
@@ -344,10 +351,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait for events to become available, if no events can be read from the prefetch queue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        ///
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
+        /// </remarks>
         ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             TimeSpan maximumWaitTime,

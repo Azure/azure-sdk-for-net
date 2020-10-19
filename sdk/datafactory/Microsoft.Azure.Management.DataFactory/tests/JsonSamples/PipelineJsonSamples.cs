@@ -4517,6 +4517,85 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_DelimitedText_AdlsWithlogSettings = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
+            }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logSettings"": {
+             ""enableCopyActivityLog"": true,
+             ""copyActivityLogSettings"": {
+                 ""logLevel"": ""Info"",
+                 ""enableReliableLogging"": true
+              },
+             ""logLocationSettings"": {
+                 ""linkedServiceName"": {
+                    ""referenceName"": ""exampleLinkedService"",
+                    ""type"": ""LinkedServiceReference""
+                  },
+                ""path"": ""test"" 
+              }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_AzureBlob = @"{
   ""properties"": {
     ""activities"": [

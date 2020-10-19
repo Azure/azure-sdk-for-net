@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("sourceStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("states"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
