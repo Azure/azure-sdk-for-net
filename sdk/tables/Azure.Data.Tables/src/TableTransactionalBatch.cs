@@ -202,7 +202,7 @@ namespace Azure.Data.Tables
             try
             {
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-                var response = _tableOperations.SendBatchRequest(request, cancellationToken);
+                var response = _tableOperations.SendBatchRequest(request, messageList, cancellationToken);
 
                 for (int i = 0; i < response.Value.Count; i++)
                 {

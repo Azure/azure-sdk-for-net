@@ -54,7 +54,7 @@ namespace Azure.Data.Tables
             return new MultipartContent("mixed", $"batch_{guid}");
         }
 
-        /// <summary> Insert entity in a table. </summary>
+        /// <summary> Submits a batch operation to a table. </summary>
         /// <param name="message">The message to send.</param>
         /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,11 +105,12 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Insert entity in a table. </summary>
-        /// <param name="message"></param>
+        /// <summary> Submits a batch operation to a table. </summary>
+        /// <param name="message">The message to send.</param>
+        /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
+        public Response<List<Response>> SendBatchRequest(HttpMessage message, List<(ITableEntity Entity, HttpMessage HttpMessage)> messageList, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -130,6 +131,22 @@ namespace Azure.Data.Tables
 
                         if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
                         {
+                            // Batch error messages should be formatted as follows:
+                            // "0:<some error message>"
+                            // where the number prefix is the index of the sub request that failed.
+                            var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+
+                            //Get the failed index
+                            var match = s_entityIndexRegex.Match(ex.Message);
+
+                            if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
+                            {
+                                throw new TableBatchOperationFailedException(ex.Status, ex.Message, ex.ErrorCode, ex.InnerException, messageList[failedEntityIndex].Entity);
+                            }
+                            else
+                            {
+                                throw ex;
+                            }
                             throw _clientDiagnostics.CreateRequestFailedException(responses[0]);
                         }
 
