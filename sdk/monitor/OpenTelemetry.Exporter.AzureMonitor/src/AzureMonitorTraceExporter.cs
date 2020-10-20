@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
+                AzureMonitorTraceExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
                 return ExportResult.Failure;
             }
         }
