@@ -22,11 +22,18 @@ To create a new Storage Account, you can use the [Azure Portal][storage_account_
 Here's an example using the Azure CLI:
 
 ```Powershell
-az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
+az storage account create --name <your-resource-name> --resource-group <your-resource-group-name> --location westus --sku Standard_LRS
 ```
 
 ### Authenticate the client
 
+In order for the extension to access Blobs, you will need the connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+
+```bash
+az storage account show-connection-string -g <your-resource-group-name> -n <your-resource-name>
+```
+
+The connection string can be supplied through [app settings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings).
 
 ## Key concepts
 
