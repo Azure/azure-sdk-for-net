@@ -2,24 +2,25 @@
 trigger:
   branches:
     include:
-    - master
-    - hotfix/*
-    - release/*
+      - master
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/template/
+      - sdk/template/
 
 pr:
   branches:
     include:
-    - master
-    - feature/*
-    - hotfix/*
-    - release/*
+      - master
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/template/
-    - eng/common/
+      - sdk/template/
+    exclude:
+      - eng/common/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
