@@ -4,10 +4,10 @@
     <UserSecretsId>67ca5d37-051b-4ab1-b013-c74a2d4edb76</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.6" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.0.0-preview.6" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.1.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.2.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.2.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
