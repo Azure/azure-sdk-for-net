@@ -37,19 +37,21 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="input">The inputs for the Job.</param>
         /// <param name="outputs">The outputs for the Job.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="created">The UTC date and time when the Job was
-        /// created, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="created">The UTC date and time when the customer has
+        /// created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="state">The current state of the job. Possible values
         /// include: 'Canceled', 'Canceling', 'Error', 'Finished',
         /// 'Processing', 'Queued', 'Scheduled'</param>
         /// <param name="description">Optional customer supplied description of
         /// the Job.</param>
-        /// <param name="lastModified">The UTC date and time when the Job was
-        /// last updated, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
+        /// <param name="lastModified">The UTC date and time when the customer
+        /// has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="priority">Priority with which the job should be
         /// processed. Higher priority jobs are processed before lower priority
         /// jobs. If not set, the default is normal. Possible values include:
@@ -82,8 +84,8 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the UTC date and time when the Job was created, in
-        /// 'YYYY-MM-DDThh:mm:ssZ' format.
+        /// Gets the UTC date and time when the customer has created the Job,
+        /// in 'YYYY-MM-DDThh:mm:ssZ' format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.created")]
         public System.DateTime Created { get; private set; }
@@ -109,8 +111,8 @@ namespace Microsoft.Azure.Management.Media.Models
         public JobInput Input { get; set; }
 
         /// <summary>
-        /// Gets the UTC date and time when the Job was last updated, in
-        /// 'YYYY-MM-DDThh:mm:ssZ' format.
+        /// Gets the UTC date and time when the customer has last updated the
+        /// Job, in 'YYYY-MM-DDThh:mm:ssZ' format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime LastModified { get; private set; }
