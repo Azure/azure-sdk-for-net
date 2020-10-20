@@ -81,14 +81,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            System.Collections.Generic.IEnumerable<System.Attribute> customAttributes = this.GetType().Assembly.GetCustomAttributes(typeof(AssemblyMetadataAttribute));
-
-            Dictionary<string, string> attributes = new Dictionary<string, string>();
-            foreach (var attribute in customAttributes)
-            {
-                attributes.Add(((AssemblyMetadataAttribute) attribute).Key, ((AssemblyMetadataAttribute) attribute).Value);
-            }
-            var path = attributes["SourcePath"];
+            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
 
             if (path == null) // send to test directory
             {
