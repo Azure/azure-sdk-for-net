@@ -418,10 +418,9 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
         /// // Update Component1 by replacing the property ComponentProp1 value,
         /// // using an optional utility to build the payload.
-        /// var componentUpdateUtility = new UpdateOperationsUtility();
-        /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
-        /// string updatePayload = componentUpdateUtility.Serialize();
-        /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
+        /// var componentJsonPatchDocument = new JsonPatchDocument();
+        /// componentJsonPatchDocument.AppendReplace(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
+        /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, componentJsonPatchDocument);
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
