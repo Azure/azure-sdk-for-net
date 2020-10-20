@@ -41,7 +41,9 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="metadata">List of metadata associated with the
         /// answer.</param>
         /// <param name="context">Context of a QnA</param>
-        public QnADTO(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnADTOContext context = default(QnADTOContext))
+        /// <param name="lastUpdatedTimestamp">Timestamp when the QnA was last
+        /// updated.</param>
+        public QnADTO(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnADTOContext context = default(QnADTOContext), string lastUpdatedTimestamp = default(string))
         {
             Id = id;
             Answer = answer;
@@ -49,6 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             Questions = questions;
             Metadata = metadata;
             Context = context;
+            LastUpdatedTimestamp = lastUpdatedTimestamp;
             CustomInit();
         }
 
@@ -95,6 +98,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public QnADTOContext Context { get; set; }
 
         /// <summary>
+        /// Gets or sets timestamp when the QnA was last updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastUpdatedTimestamp")]
+        public string LastUpdatedTimestamp { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -110,6 +119,24 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Questions");
             }
+            if (Answer != null)
+            {
+                if (Answer.Length > 25000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Answer", 25000);
+                }
+                if (Answer.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Answer", 1);
+                }
+            }
+            if (Source != null)
+            {
+                if (Source.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Source", 300);
+                }
+            }
             if (Metadata != null)
             {
                 foreach (var element in Metadata)
@@ -118,6 +145,17 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                     {
                         element.Validate();
                     }
+                }
+            }
+            if (Context != null)
+            {
+                Context.Validate();
+            }
+            if (LastUpdatedTimestamp != null)
+            {
+                if (LastUpdatedTimestamp.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LastUpdatedTimestamp", 300);
                 }
             }
         }
