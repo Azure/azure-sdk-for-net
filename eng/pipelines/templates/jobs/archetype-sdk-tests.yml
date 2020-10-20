@@ -118,42 +118,42 @@ jobs:
       - DisplayName: "Test on Windows for NetCoreApp"
         OSVmImage: "windows-2019"
         TestTargetFramework: netcoreapp2.1
-      - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: netcoreapp2.1
-        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-      - DisplayName: "Test on Windows for .Net Framework"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: net461
-      - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: net461
-        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      # - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
+      #   OSVmImage: "windows-2019"
+      #   TestTargetFramework: netcoreapp2.1
+      #   AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      # - DisplayName: "Test on Windows for .Net Framework"
+      #   OSVmImage: "windows-2019"
+      #   TestTargetFramework: net461
+      # - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
+      #   OSVmImage: "windows-2019"
+      #   TestTargetFramework: net461
+      #   AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
       - DisplayName: "Test on MacOS"
         OSVmImage: "macOS-10.15"
         TestTargetFramework: netcoreapp2.1
-      - ${{ if eq(parameters.TestCanary, 'true') }}:          
-        - DisplayName: "Test on Windows for NetCoreApp - Canary region"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
-          Location: ${{ parameters.ResourceGroupLocationCanary }}
-      - DisplayName: "Record on Windows for NetCoreApp"
-        OSVmImage: "windows-2019"
-        TestMode: Record
-        TestTargetFramework: netcoreapp2.1
-        AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
-        PostSteps:
-          - task: CopyFiles@2
-            displayName: "Copy Test Recordings"
-            inputs:
-              sourceFolder: '$(Build.SourcesDirectory)'
-              contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
-              targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-          - task: PublishBuildArtifacts@1
-            displayName: "Publish Test Recordings"
-            inputs:
-              pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-              artifactName: SessionRecords
+      # - ${{ if eq(parameters.TestCanary, 'true') }}:          
+      #   - DisplayName: "Test on Windows for NetCoreApp - Canary region"
+      #     OSVmImage: "windows-2019"
+      #     TestTargetFramework: netcoreapp2.1
+      #     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
+      #     Location: ${{ parameters.ResourceGroupLocationCanary }}
+      # - DisplayName: "Record on Windows for NetCoreApp"
+      #   OSVmImage: "windows-2019"
+      #   TestMode: Record
+      #   TestTargetFramework: netcoreapp2.1
+      #   AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
+      #   PostSteps:
+      #     - task: CopyFiles@2
+      #       displayName: "Copy Test Recordings"
+      #       inputs:
+      #         sourceFolder: '$(Build.SourcesDirectory)'
+      #         contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+      #         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+      #     - task: PublishBuildArtifacts@1
+      #       displayName: "Publish Test Recordings"
+      #       inputs:
+      #         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+      #         artifactName: SessionRecords
 
       - ${{ parameters.AdditionalPlatforms }}
