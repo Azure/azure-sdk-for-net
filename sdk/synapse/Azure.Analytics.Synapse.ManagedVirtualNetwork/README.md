@@ -65,7 +65,7 @@ The Azure.Analytics.Synapse.ManagedVirtualNetwork package supports synchronous a
 
 ### Create a private endpoint
 
-```C# Snippet:Create a managed private endpoint
+```C# Snippet:CreateManagedPrivateEndpoint
 string managedVnetName = "default";
 string managedPrivateEndpointName = "myPrivateEndpoint";
 string fakedStorageAccountName = "myStorageAccount";
@@ -83,21 +83,24 @@ client.Create(managedVnetName, managedPrivateEndpointName, new ManagedPrivateEnd
 
 ### Retrieve a private endpoint
 
-```C# Snippet:Retrieve a managed private endpoint
+```C# Snippet:RetrieveManagedPrivateEndpoint
 ManagedPrivateEndpoint retrievedPrivateEndpoint = client.Get(managedVnetName, managedPrivateEndpointName);
 Console.WriteLine(retrievedPrivateEndpoint.Id);
 ```
 
 ### List private endpoints
 
-```C# Snippet:List managed private endpoints
-ManagedPrivateEndpoint retrievedPrivateEndpoint = client.Get(managedVnetName, managedPrivateEndpointName);
-Console.WriteLine(retrievedPrivateEndpoint.Id);
+```C# Snippet:ListManagedPrivateEndpoints
+List<ManagedPrivateEndpoint> privateEndpoints = client.List(managedVnetName).ToList();
+foreach (ManagedPrivateEndpoint privateEndpoint in privateEndpoints)
+{
+    Console.WriteLine(privateEndpoint.Id);
+}
 ```
 
 ### Delete a private endpoint
 
-```C# Snippet:Delete a managed private endpoint
+```C# Snippet:DeleteManagedPrivateEndpoint
 client.Delete(managedVnetName, managedPrivateEndpointName);
 ```
 

@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Samples
         [Test]
         public void TestManagedPrivateEndpoint()
         {
-            #region Snippet:Create a managed private endpoint
+            #region Snippet:CreateManagedPrivateEndpoint
             string managedVnetName = "default";
             string managedPrivateEndpointName = "myPrivateEndpoint";
             string fakedStorageAccountName = "myStorageAccount";
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Samples
             });
             #endregion
 
-            #region Snippet:List managed private endpoints
+            #region Snippet:ListManagedPrivateEndpoints
             List<ManagedPrivateEndpoint> privateEndpoints = client.List(managedVnetName).ToList();
             foreach (ManagedPrivateEndpoint privateEndpoint in privateEndpoints)
             {
@@ -59,12 +59,12 @@ namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Samples
             }
             #endregion
 
-            #region Snippet:Retrieve a managed private endpoint
+            #region Snippet:RetrieveManagedPrivateEndpoint
             ManagedPrivateEndpoint retrievedPrivateEndpoint = client.Get(managedVnetName, managedPrivateEndpointName);
             Console.WriteLine(retrievedPrivateEndpoint.Id);
             #endregion
 
-            #region Snippet:Delete a managed private endpoint
+            #region Snippet:DeleteManagedPrivateEndpoint
             client.Delete(managedVnetName, managedPrivateEndpointName);
             #endregion
         }
