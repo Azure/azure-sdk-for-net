@@ -62,9 +62,7 @@ namespace LineCounter
 
         private async Task ProcessEvent(ProcessEventArgs eventArgs)
         {
-            // Note there is a bug with the HasEvent property in Preview 6, so check if Data is not null as work around.
-            // https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_EventProcessingHeartbeat.cs#L85
-            if (eventArgs.Data != null)
+            if (eventArgs.HasEvent)
             {
                 var totalCount = 0;
                 var cancellationToken = _cancellationTokenSource.Token;
