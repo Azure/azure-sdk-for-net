@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.Core.JsonPatch;
 using NUnit.Framework;
 
@@ -100,6 +101,51 @@ namespace Azure.Core.Tests
                      "{\"op\":\"move\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}," +
                      "{\"op\":\"copy\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}" +
                      "]");
+        }
+
+        [Test]
+        public void CanAppendOperationsToExistingEmpty()
+        {
+            JsonPatchDocument document = new JsonPatchDocument(Encoding.UTF8.GetBytes(""));
+            document.AppendCopy("/a/b/c", "/a/b/d");
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"copy\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}]");
+        }
+
+        [Test]
+        public void CanAppendOperationsToExistingEmptyArray()
+        {
+            JsonPatchDocument document = new JsonPatchDocument(Encoding.UTF8.GetBytes("[]"));
+            document.AppendCopy("/a/b/c", "/a/b/d");
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"copy\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}]");
+        }
+
+        [Test]
+        public void CanAppendOperationsToExistingSingle()
+        {
+            JsonPatchDocument document = new JsonPatchDocument(Encoding.UTF8.GetBytes(
+                "[{\"op\":\"custom\"}]"));
+            document.AppendCopy("/a/b/c", "/a/b/d");
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"custom\"},{\"op\":\"copy\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}]");
+        }
+
+        [Test]
+        public void CanAppendOperationsToExistingMultiple()
+        {
+            JsonPatchDocument document = new JsonPatchDocument(Encoding.UTF8.GetBytes(
+                "[" +
+                "{\"op\":\"custom\"}," +
+                "{\"op\":\"copy\",\"from\":\"q\",\"path\":\"w\"}]"));
+
+            document.AppendCopy("/a/b/c", "/a/b/d");
+            Assert.AreEqual(document.ToString(), "[{\"op\":\"custom\"},{\"op\":\"copy\",\"from\":\"q\",\"path\":\"w\"},{\"op\":\"copy\",\"from\":\"/a/b/c\",\"path\":\"/a/b/d\"}]");
+        }
+
+        [Test]
+        public void ExistingBytesReturnedWithoutValidation()
+        {
+            JsonPatchDocument document = new JsonPatchDocument(Encoding.UTF8.GetBytes(
+                "this is not correct json"));
+            Assert.AreEqual(document.ToString(), "this is not correct json");
         }
     }
 }

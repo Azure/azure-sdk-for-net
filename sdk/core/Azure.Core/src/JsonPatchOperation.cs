@@ -3,7 +3,7 @@
 
 namespace Azure.Core.JsonPatch
 {
-    internal class JsonPatchOperation
+    internal readonly struct JsonPatchOperation
     {
         public JsonPatchOperation(JsonPatchOperationKind kind, string path, string? from, string? rawJsonValue)
         {
