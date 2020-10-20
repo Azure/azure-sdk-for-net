@@ -6,6 +6,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.Serialization;
+using Azure.DigitalTwins.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -23,25 +24,8 @@ namespace Azure.DigitalTwins.Core.Samples
             PrintHeader("RELATIONSHIP SAMPLE");
             string sampleBuildingModelId = "dtmi:com:samples:SampleBuilding;1";
             string sampleFloorModelId = "dtmi:com:samples:SampleFloor;1";
-            try
-            {
-                Console.WriteLine($"Deleting model Id '{sampleBuildingModelId}' if it exists.");
-                await client.DeleteModelAsync(sampleBuildingModelId);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-                // Model did not exist yet, and that's fine
-            }
-
-            try
-            {
-                Console.WriteLine($"Deleting model Id '{sampleFloorModelId}' if it exists.");
-                await client.DeleteModelAsync(sampleFloorModelId);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-                // Model did not exist yet, and that's fine
-            }
+            await ModelLifecycleSamples.TryDeleteModelAsync(client, sampleBuildingModelId);
+            await ModelLifecycleSamples.TryDeleteModelAsync(client, sampleFloorModelId);
 
             // Create a building digital twin model.
             string buildingModelPayload = SamplesConstants.TemporaryModelWithRelationshipPayload
