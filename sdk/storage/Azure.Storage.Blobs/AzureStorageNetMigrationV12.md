@@ -143,8 +143,11 @@ In the interest of simplifying the API surface we've made a three top level clie
 |-------|--------|
 | `CloudStorageAccount` | `BlobServiceClient` |
 | `CloudBlobContainer`  | `BlobContainerClient` |
-| `CloudBlobClient` | `BlobClient` |
+| `CloudBlobDirectory` | Not supported |
+| `CloudBlob` | `BlobBaseClient` |
 | `CloudBlockBlob` | `BlockBlobClient` |
+| `CloudPageBlob` | `PageBlobClient` |
+| `CloudAppendBlob` | `AppendBlobClient` |
 
 ### Creating a Container
 
