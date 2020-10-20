@@ -89,45 +89,14 @@ namespace Azure.Core.TestFramework
                 attributes.Add(((AssemblyMetadataAttribute) attribute).Key, ((AssemblyMetadataAttribute) attribute).Value);
             }
             var path = attributes["SourcePath"];
-            var isMgmt = attributes["MSBuildProjectName"];
 
-            string[] pathParts = path.Split("\\");
-            string testname = pathParts[pathParts.Length - 2];
-            var rpname = "";
-
-            if (testname.Substring(0,22) == "Azure.ResourceManager." && isMgmt == "true") //Track 2
-            {
-                int rpnamefirstindex = testname.IndexOf("ResourceManager.") + "ResourceManager.".Length;
-                rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
-                rpname.Replace(".", "-");
-            }
-            else if (testname.Substring(0,6) == "Azure.") //Dataplane
-            {
-                string[] findRpName = path.Split(".");
-                rpname = findRpName[1].ToLower();
-                rpname.Replace(".", "-");
-            }
-            else // send to test directory
+            if (path == null) // send to test directory
             {
                 return Path.Combine(TestContext.CurrentContext.TestDirectory,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
             }
-
-            var directoryPath = path.Substring(0, path.LastIndexOf("sdk") + 3);
-            var directories = Directory.GetDirectories(directoryPath);
-            for (int i = 0; i < directories.Length; i++)
-            {
-                int directoryIndex = directories[i].IndexOf("sdk\\") + "sdk\\".Length;
-                directories[i] = directories[i].Substring(directoryIndex, directories[i].Length - directoryIndex);
-            }
-            var rpexists = directories.Contains(rpname);
-            if (!rpexists)
-            {
-                throw new Exception();
-            }
-
             return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
