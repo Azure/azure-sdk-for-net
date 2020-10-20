@@ -5663,13 +5663,11 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task GetTagsAsync_Lease()
+        public async Task GetSetTagsAsync_Lease()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
-            Dictionary<string, string> tags = BuildTags();
-            await blob.SetTagsAsync(tags);
 
             string leaseId = Recording.Random.NewGuid().ToString();
             TimeSpan duration = TimeSpan.FromSeconds(15);
@@ -5679,6 +5677,9 @@ namespace Azure.Storage.Blobs.Test
             {
                 LeaseId = leaseId
             };
+
+            Dictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags, conditions);
 
             // Act
             Response<GetBlobTagResult> response = await blob.GetTagsAsync(conditions);
@@ -5704,6 +5705,28 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.GetTagsAsync(conditions),
+                e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetTagsAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetTagsAsync(tags, conditions),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
         }
 
