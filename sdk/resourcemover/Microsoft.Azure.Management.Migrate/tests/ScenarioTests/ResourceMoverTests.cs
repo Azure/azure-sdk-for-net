@@ -586,5 +586,74 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                     "Commit operation should have succeeded.");
             }
         }
+
+        [Fact]
+        public async Task ValidateBulkRemoveForMoveResourcesAsync()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                this.TestHelper.Initialize(context);
+                var client = this.TestHelper.ResourceMoverServiceClient;
+
+                var bulkRemoveRequest = new BulkRemoveRequest()
+                {
+                    MoveResources = new List<string>()
+                    {
+                        VirtualMachineId,
+                        PublicIpId,
+                        VirtualNetworkId,
+                        NetworkSecurityGroupId,
+                        ResourceGroupId
+                    },
+                    ValidateOnly = true,
+                    MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
+                };
+
+                var operationStatus =
+                    (await client.MoveCollections.BulkRemoveWithHttpMessagesAsync(
+                        MoveCollectionResourceGroup,
+                        MoveCollectionName,
+                        bulkRemoveRequest)).Body;
+
+                Assert.True(OperationStatusSucceeded.Equals(
+                    operationStatus.Status,
+                    StringComparison.OrdinalIgnoreCase),
+                    "Validate Bulk remove operation should have succeeded.");
+            }
+        }
+
+        [Fact]
+        public async Task InitiateBulkRemoveForMoveResourcesAsync()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                this.TestHelper.Initialize(context);
+                var client = this.TestHelper.ResourceMoverServiceClient;
+
+                var bulkRemoveRequest = new BulkRemoveRequest()
+                {
+                    MoveResources = new List<string>()
+                    {
+                        VirtualMachineId,
+                        PublicIpId,
+                        VirtualNetworkId,
+                        NetworkSecurityGroupId,
+                        ResourceGroupId
+                    },
+                    MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
+                };
+
+                var operationStatus =
+                    (await client.MoveCollections.BulkRemoveWithHttpMessagesAsync(
+                        MoveCollectionResourceGroup,
+                        MoveCollectionName,
+                        bulkRemoveRequest)).Body;
+
+                Assert.True(OperationStatusSucceeded.Equals(
+                    operationStatus.Status,
+                    StringComparison.OrdinalIgnoreCase),
+                    "Bulk Remove operation should have succeeded.");
+            }
+        }
     }
 }
