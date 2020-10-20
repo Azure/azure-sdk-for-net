@@ -24,11 +24,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             }
 
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-
+            Credentials.InitializeServiceClient(this);
             BaseUri = "{Endpoint}/qnamaker";
         }
     }

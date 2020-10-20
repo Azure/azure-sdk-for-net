@@ -7,7 +7,7 @@
     /// <summary>
     /// Customized Runtime operations - using V5.0-preivew.1 Knowledgebase operations for generateAnswer and train APIs.
     /// </summary>
-    public partial class Runtime
+    public class Runtime
     {
         /// <summary>
         /// Initializes a new instance of the Runtime class.
@@ -18,7 +18,7 @@
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Runtime(QnAMakerClient client)
+        internal Runtime(QnAMakerClient client)
         {
             if (client == null)
             {
@@ -30,7 +30,7 @@
         /// <summary>
         /// Gets a reference to the QnAMakerRuntimeClient
         /// </summary>
-        public QnAMakerClient Client { get; private set; }
+        private QnAMakerClient Client { get; set; }
 
         /// <summary>
         /// GenerateAnswer call to query the knowledgebase.
