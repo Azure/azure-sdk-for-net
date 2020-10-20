@@ -30,7 +30,7 @@
         /// <summary>
         /// Gets a reference to the QnAMakerRuntimeClient
         /// </summary>
-        public static QnAMakerClient Client { get; private set; }
+        public QnAMakerClient Client { get; private set; }
 
         /// <summary>
         /// GenerateAnswer call to query the knowledgebase.

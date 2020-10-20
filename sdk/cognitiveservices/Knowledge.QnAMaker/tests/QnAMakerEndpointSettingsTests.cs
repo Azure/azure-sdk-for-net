@@ -17,7 +17,7 @@ namespace QnAMaker.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerEndpointSettingsReadUpdate");
-                IQnAMakerClient client = GetQnAMakerCustomDomainClient(HttpMockServer.CreateInstance());
+                IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
 
                 client.EndpointSettings.UpdateSettingsAsync(new EndpointSettingsDTO
                 {

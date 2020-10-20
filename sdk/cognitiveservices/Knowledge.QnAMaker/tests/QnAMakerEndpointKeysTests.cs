@@ -17,7 +17,7 @@ namespace QnAMaker.Tests
             {
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerEndpointKeysGetEnpointKeys");
 
-                IQnAMakerClient client = GetQnAMakerCustomDomainClient(HttpMockServer.CreateInstance());
+                IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
                 var keys = client.EndpointKeys.GetKeysAsync().Result;
                 Assert.NotEmpty(keys.PrimaryEndpointKey);
                 Assert.NotEmpty(keys.SecondaryEndpointKey);
@@ -31,7 +31,7 @@ namespace QnAMaker.Tests
             {
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerEndpointKeysRefreshKeys");
 
-                IQnAMakerClient client = GetQnAMakerCustomDomainClient(HttpMockServer.CreateInstance());
+                IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
                 var keys = client.EndpointKeys.RefreshKeysAsync("SecondaryKey").Result;
                 Assert.NotEmpty(keys.PrimaryEndpointKey);
                 Assert.NotEmpty(keys.SecondaryEndpointKey);
