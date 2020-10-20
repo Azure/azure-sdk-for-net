@@ -305,7 +305,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
         public async Task ListSharesSegmentAsync_EnabledProtocolsAndRootSquash()
         {
             // Arrange
@@ -316,8 +316,9 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 EnabledProtocols = ShareEnabledProtocols.Nfs,
                 RootSquash = ShareRootSquash.AllSquash,
-                QuotaInGB = 1
             };
+
+            await share.CreateAsync(options);
 
             // Act
             IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();

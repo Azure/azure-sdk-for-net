@@ -1686,6 +1686,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -1720,6 +1721,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -1739,6 +1741,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="accessTier">
         /// Access tier to set on the share.
+        /// </param>
+        /// <param name="rootSquash">
+        /// The root squash to set for the share.  Only valid for NFS shares.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1765,6 +1770,7 @@ namespace Azure.Storage.Files.Shares
         internal virtual async Task<Response<ShareInfo>> SetPropertiesInternal(
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareRootSquash? rootSquash,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -1786,6 +1792,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        rootSquash: rootSquash,
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: operationName,
@@ -1841,6 +1848,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1882,6 +1890,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -1921,6 +1930,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1959,6 +1969,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,

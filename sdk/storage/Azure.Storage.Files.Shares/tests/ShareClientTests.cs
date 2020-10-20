@@ -324,8 +324,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareCreateOptions options = new ShareCreateOptions
             {
                 EnabledProtocols = ShareEnabledProtocols.Nfs,
-                RootSquash = ShareRootSquash.AllSquash,
-                QuotaInGB = 1
+                RootSquash = ShareRootSquash.AllSquash
             };
 
             try
@@ -335,7 +334,6 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(1, response.Value.QuotaInGB);
                 Assert.AreEqual("NFS", response.Value.EnabledProtocols);
                 Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
             }
@@ -602,6 +600,30 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 snapshotShareClient.GetPropertiesAsync(),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task GetPropertiesAsync_EnabledProtocolsAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash,
+            };
+
+            await share.CreateAsync(options);
+
+            // Act
+            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("NFS", propertiesResponse.Value.EnabledProtocols);
+            Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
         }
 
         [Test]
