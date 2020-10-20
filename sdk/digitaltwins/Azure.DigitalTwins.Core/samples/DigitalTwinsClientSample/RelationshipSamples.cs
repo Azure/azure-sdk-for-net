@@ -21,36 +21,57 @@ namespace Azure.DigitalTwins.Core.Samples
             // Despite not being a good code practice, this prevents code snippets from being out of context for the user when making API calls that accept Ids as parameters.
 
             PrintHeader("RELATIONSHIP SAMPLE");
+            string sampleBuildingModelId = "dtmi:com:samples:SampleBuilding;1";
+            string sampleFloorModelId = "dtmi:com:samples:SampleFloor;1";
+            try
+            {
+                Console.WriteLine($"Deleting model Id '{sampleBuildingModelId}' if it exists.");
+                await client.DeleteModelAsync(sampleBuildingModelId);
+            }
+            catch (Exception ex)
+            {
+                // Model did not exist yet, and that's fine
+            }
+
+            try
+            {
+                Console.WriteLine($"Deleting model Id '{sampleFloorModelId}' if it exists.");
+                await client.DeleteModelAsync(sampleFloorModelId);
+            }
+            catch (Exception ex)
+            {
+                // Model did not exist yet, and that's fine
+            }
 
             // Create a building digital twin model.
             string buildingModelPayload = SamplesConstants.TemporaryModelWithRelationshipPayload
-                .Replace(SamplesConstants.ModelId, "dtmi:samples:SampleBuilding;1")
+                .Replace(SamplesConstants.RelationshipTargetModelId, sampleFloorModelId)
+                .Replace(SamplesConstants.ModelId, sampleBuildingModelId)
                 .Replace(SamplesConstants.ModelDisplayName, "Building")
-                .Replace(SamplesConstants.RelationshipName, "contains")
-                .Replace(SamplesConstants.RelationshipTargetModelId, "dtmi:samples:SampleFloor;1");
+                .Replace(SamplesConstants.RelationshipName, "contains");
 
             await client.CreateModelsAsync(
                 new[]
                 {
                     buildingModelPayload
                 });
-            Console.WriteLine($"Created model 'dtmi:samples:SampleBuilding;1'.");
+            Console.WriteLine($"Created model '{sampleBuildingModelId}'.");
 
             // Create a floor digital twin model.
             string floorModelPayload = SamplesConstants.TemporaryModelWithRelationshipPayload
-                .Replace(SamplesConstants.ModelId, "dtmi:samples:SampleFloor;1")
+                .Replace(SamplesConstants.RelationshipTargetModelId, sampleBuildingModelId)
+                .Replace(SamplesConstants.ModelId, sampleFloorModelId)
                 .Replace(SamplesConstants.ModelDisplayName, "Floor")
-                .Replace(SamplesConstants.RelationshipName, "containedIn")
-                .Replace(SamplesConstants.RelationshipTargetModelId, "dtmi:samples:SampleBuilding;1");
+                .Replace(SamplesConstants.RelationshipName, "containedIn");
 
             await client.CreateModelsAsync(new[] { floorModelPayload });
-            Console.WriteLine($"Created model 'dtmi:samples:SampleFloor;1.'");
+            Console.WriteLine($"Created model '{sampleFloorModelId}'");
 
             // Create a building digital twin.
             var buildingDigitalTwin = new BasicDigitalTwin
             {
                 Id = "buildingTwinId",
-                Metadata = { ModelId = "dtmi:samples:SampleBuilding;1" }
+                Metadata = { ModelId = sampleBuildingModelId }
             };
 
             string buildingDigitalTwinPayload = JsonSerializer.Serialize(buildingDigitalTwin);
@@ -61,7 +82,7 @@ namespace Azure.DigitalTwins.Core.Samples
             var floorDigitalTwin = new BasicDigitalTwin
             {
                 Id = "floorTwinId",
-                Metadata = { ModelId = "dtmi:samples:SampleFloor;1" }
+                Metadata = { ModelId = sampleFloorModelId }
             };
 
             string floorDigitalTwinPayload = JsonSerializer.Serialize(floorDigitalTwin);
@@ -197,8 +218,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
             try
             {
-                await client.DeleteModelAsync("dtmi:samples:SampleBuilding;1");
-                await client.DeleteModelAsync("dtmi:samples:SampleFloor;1");
+                await client.DeleteModelAsync(sampleBuildingModelId);
+                await client.DeleteModelAsync(sampleFloorModelId);
             }
             catch (RequestFailedException ex)
             {
