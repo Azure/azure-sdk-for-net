@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
@@ -81,15 +82,15 @@ namespace Azure.Core.TestFramework
         {
             IsAsync = isAsync;
         }
-        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation, CancellationToken cancellationToken = default)
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0), default);
+                return operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0), cancellationToken);
             }
             else
             {
-                return operation.WaitForCompletionAsync();
+                return operation.WaitForCompletionAsync(cancellationToken);
             }
         }
 
