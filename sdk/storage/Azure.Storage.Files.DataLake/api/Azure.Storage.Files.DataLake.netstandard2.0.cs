@@ -41,8 +41,8 @@ namespace Azure.Storage.Files.DataLake
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
-        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryGetPathsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryGetPathsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName) { throw null; }
@@ -176,7 +176,11 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetPathsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetPathsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -371,6 +375,12 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ContinuationToken { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
+    public partial class DataLakeDirectoryGetPathsOptions
+    {
+        public DataLakeDirectoryGetPathsOptions() { }
+        public bool Recursive { get { throw null; } set { } }
+        public bool UserPrincipalName { get { throw null; } set { } }
+    }
     public enum DataLakeFileExpirationOrigin
     {
         CreationTime = 0,
@@ -392,6 +402,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
+    }
+    public partial class DataLakeFileSystemGetPathsOptions
+    {
+        public DataLakeFileSystemGetPathsOptions() { }
+        public string Path { get { throw null; } set { } }
+        public bool Recursive { get { throw null; } set { } }
+        public bool UserPrincipalName { get { throw null; } set { } }
     }
     public partial class DataLakeFileUploadOptions
     {

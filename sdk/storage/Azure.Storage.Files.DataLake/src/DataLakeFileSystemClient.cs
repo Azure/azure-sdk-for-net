@@ -14,6 +14,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Text.Json;
 using System.Collections.Generic;
 using Azure.Storage.Shared;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -1213,9 +1214,79 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Paths
         /// <summary>
-        /// The <see cref="GetPaths"/> operation returns an async sequence
-        /// of paths in this file system.  Enumerating the paths may make
-        /// multiple requests to the service while fetching all the values.
+        /// The <see cref="GetPaths(DataLakeFileSystemGetPathsOptions, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.  Enumerating
+        /// the paths may make multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PathItem> GetPaths(
+            DataLakeFileSystemGetPathsOptions options,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                this,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPathsAsync(DataLakeFileSystemGetPathsOptions, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.  Enumerating the
+        /// paths may make multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+            DataLakeFileSystemGetPathsOptions options,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(this,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPaths(string, bool, bool, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.
+        /// Enumerating the paths may make multiple requests to the service
+        /// while fetching all the values.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
@@ -1247,6 +1318,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<PathItem> GetPaths(
             string path = default,
             bool recursive = default,
@@ -1261,9 +1333,9 @@ namespace Azure.Storage.Files.DataLake
                 .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetPathsAsync"/> operation returns an async
-        /// sequence of paths in this file system.  Enumerating the paths may
-        /// make multiple requests to the service while fetching all the
+        /// The <see cref="GetPathsAsync(string, bool, bool, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.  Enumerating
+        /// the paths may make multiple requests to the service while fetching all the
         /// values.
         ///
         /// For more information, see
@@ -1296,6 +1368,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<PathItem> GetPathsAsync(
             string path = default,
             bool recursive = default,
@@ -1314,7 +1387,8 @@ namespace Azure.Storage.Files.DataLake
         /// from the specified <paramref name="continuation"/>.  Use an empty
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
+        /// empty to make subsequent calls to
+        /// <see cref="GetPathsAsync(DataLakeFileSystemGetPathsOptions, CancellationToken)"/>
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///

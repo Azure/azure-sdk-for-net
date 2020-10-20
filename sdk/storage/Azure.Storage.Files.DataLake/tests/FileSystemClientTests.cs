@@ -541,6 +541,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -551,12 +554,26 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
+            {
+                Recursive = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(recursive: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(PathNames.Length, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("baz/bar", paths[2].Name);
+            Assert.AreEqual("baz/bar/foo", paths[3].Name);
+            Assert.AreEqual("baz/foo", paths[4].Name);
+            Assert.AreEqual("baz/foo/bar", paths[5].Name);
+            Assert.AreEqual("foo", paths[6].Name);
+            Assert.AreEqual("foo/bar", paths[7].Name);
+            Assert.AreEqual("foo/foo", paths[8].Name);
         }
 
         [Test]
@@ -567,14 +584,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
+            {
+                UserPrincipalName = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(userPrincipalName: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(3, paths.Count);
             Assert.IsNotNull(paths[0].Group);
             Assert.IsNotNull(paths[0].Owner);
+
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -585,12 +611,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
+            {
+                Path = "foo"
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(path: "foo");
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(2, paths.Count);
+            Assert.AreEqual("foo/bar", paths[0].Name);
+            Assert.AreEqual("foo/foo", paths[1].Name);
         }
 
         [Test]
@@ -607,6 +640,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual("bar", page.Values[0].Name);
+            Assert.AreEqual("baz", page.Values[1].Name);
         }
 
         [Test]

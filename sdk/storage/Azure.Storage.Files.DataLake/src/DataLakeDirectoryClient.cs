@@ -2199,16 +2199,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
         /// List Path(s)</see>.
         /// </summary>
-        /// <param name="recursive">
-        /// If "true", all paths are listed; otherwise, only paths at the root of the directory are listed.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
-        /// "true", the user identity values returned in the owner and group fields of each list
-        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
-        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
-        /// The default value is false. Note that group and application Object IDs are not translated
-        /// because they do not have unique friendly names.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2223,14 +2215,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<PathItem> GetPaths(
-            bool recursive = default,
-            bool userPrincipalName = default,
+            DataLakeDirectoryGetPathsOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
-                recursive,
-                userPrincipalName,
+                options?.Recursive,
+                options?.UserPrincipalName,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToSyncCollection(cancellationToken);
 
@@ -2243,16 +2234,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
         /// List Path(s)</see>.
         /// </summary>
-        /// <param name="recursive">
-        /// If "true", all paths are listed; otherwise, only paths at the root of the directory are listed.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
-        /// "true", the user identity values returned in the owner and group fields of each list
-        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
-        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
-        /// The default value is false. Note that group and application Object IDs are not translated
-        /// because they do not have unique friendly names.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2267,14 +2250,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<PathItem> GetPathsAsync(
-            bool recursive = default,
-            bool userPrincipalName = default,
+            DataLakeDirectoryGetPathsOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
-                recursive,
-                userPrincipalName,
+                options?.Recursive,
+                options?.UserPrincipalName,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
         #endregion Get Paths
