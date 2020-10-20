@@ -81,52 +81,42 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            var path = TestContext.CurrentContext.TestDirectory;
-            var indexartifacts = path.IndexOf("artifacts");
-            if (indexartifacts == -1)
-            {
-                return Path.Combine(TestContext.CurrentContext.TestDirectory,
-                "SessionRecords",
-                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
-                fileName);
-            }
-            var newpath = path.Substring(0, indexartifacts) + "sdk";
+            System.Collections.Generic.IEnumerable<System.Attribute> customAttributes = this.GetType().Assembly.GetCustomAttributes(typeof(AssemblyMetadataAttribute));
 
-            // check if Track 1 or Track 2
-            int firstIndex = path.IndexOf("bin\\");
-            int lastIndex = path.LastIndexOf(".Tests");
-            if (firstIndex == -1 || lastIndex == -1)
+            Dictionary<string, string> attributes = new Dictionary<string, string>();
+            foreach (var attribute in customAttributes)
             {
-                return Path.Combine(TestContext.CurrentContext.TestDirectory,
-                "SessionRecords",
-                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
-                fileName);
+                attributes.Add(((AssemblyMetadataAttribute) attribute).Key, ((AssemblyMetadataAttribute) attribute).Value);
             }
+            var path = attributes["SourcePath"];
+            var isMgmt = attributes["MSBuildProjectName"];
 
-            firstIndex += "bin\\".Length;
-            var testname = path.Substring(firstIndex, lastIndex - firstIndex);
+            string[] pathParts = path.Split("\\");
+            string testname = pathParts[pathParts.Length - 2];
             var rpname = "";
 
-            if (testname.Substring(0,5) == "Azure") //Track 2
+            if (testname.Substring(0,22) == "Azure.ResourceManager." && isMgmt == "true") //Track 2
             {
                 int rpnamefirstindex = testname.IndexOf("ResourceManager.") + "ResourceManager.".Length;
                 rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
                 rpname.Replace(".", "-");
             }
-            else if (testname.Substring(0,9) == "Management") //Track 1
+            else if (testname.Substring(0,6) == "Azure.") //Dataplane
             {
-                int rpnamefirstindex = testname.IndexOf("Management.") + "Management.".Length;
-                rpname = testname.Substring(rpnamefirstindex, testname.Length - rpnamefirstindex).ToLower();
+                string[] findRpName = path.Split(".");
+                rpname = findRpName[1].ToLower();
                 rpname.Replace(".", "-");
             }
-            else {
+            else // send to test directory
+            {
                 return Path.Combine(TestContext.CurrentContext.TestDirectory,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
             }
 
-            var directories = Directory.GetDirectories(newpath);
+            var directoryPath = path.Substring(0, path.LastIndexOf("sdk") + 3);
+            var directories = Directory.GetDirectories(directoryPath);
             for (int i = 0; i < directories.Length; i++)
             {
                 int directoryIndex = directories[i].IndexOf("sdk\\") + "sdk\\".Length;
@@ -138,8 +128,7 @@ namespace Azure.Core.TestFramework
                 throw new Exception();
             }
 
-            newpath += "\\" + rpname + "\\" + testname + "\\tests\\";
-            return Path.Combine(newpath,
+            return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
