@@ -19,6 +19,7 @@ parameters:
   # Multiple labels seperated by comma, e.g. "bug, APIView"
   PRLabels: ''
   SkipCheckingForChanges: false
+  CloseAfterOpenForTesting: false
 
 steps:
 
@@ -63,7 +64,7 @@ steps:
       -CommitMsg "${{ parameters.CommitMsg }}"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/$(RepoNameWithoutOwner).git"
       -PushArgs "${{ parameters.PushArgs }}"
-      -SkipCommit $${{parameters.SkipCheckingForChanges}}
+      -SkipCommit $${{ parameters.SkipCheckingForChanges }}
 
 - task: PowerShell@2
   displayName: Create pull request
@@ -85,3 +86,4 @@ steps:
       -UserReviewers "${{ parameters.GHReviewersVariable }}"
       -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
       -Assignees "${{ parameters.GHAssignessVariable }}"
+      -CloseAfterOpenForTesting $${{ parameters.CloseAfterOpenForTesting }}
