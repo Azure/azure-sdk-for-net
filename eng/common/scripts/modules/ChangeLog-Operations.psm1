@@ -1,4 +1,3 @@
-# Common Changelog Operations
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s(?<releaseStatus>\(Unreleased\)|\(\d{4}-\d{2}-\d{2}\)))?)"
 
 # Returns a Collection of changeLogEntry object containing changelog info for all version present in the gived CHANGELOG
