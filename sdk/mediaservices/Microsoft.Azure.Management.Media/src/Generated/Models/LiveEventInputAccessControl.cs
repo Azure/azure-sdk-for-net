@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The IP access control for Live Event Input.
+    /// The IP access control for live event input.
     /// </summary>
     public partial class LiveEventInputAccessControl
     {
