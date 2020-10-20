@@ -21159,10 +21159,29 @@ namespace Azure.Storage.Blobs.Models
         public string BlobContainerName { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of FilterBlobItem instances.
-        /// You can use BlobsModelFactory.FilterBlobItem instead.
+        /// Blob tags
         /// </summary>
-        internal FilterBlobItem() { }
+        public Azure.Storage.Blobs.Models.BlobTags Tags { get; internal set; }
+
+        /// <summary>
+        /// Creates a new FilterBlobItem instance
+        /// </summary>
+        public FilterBlobItem()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new FilterBlobItem instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal FilterBlobItem(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Tags = new Azure.Storage.Blobs.Models.BlobTags();
+            }
+        }
 
         /// <summary>
         /// Deserializes XML into a new FilterBlobItem instance.
@@ -21173,7 +21192,7 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem();
+            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
@@ -21183,6 +21202,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.BlobContainerName = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Tags", ""));
+            if (_child != null)
+            {
+                _value.Tags = Azure.Storage.Blobs.Models.BlobTags.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
