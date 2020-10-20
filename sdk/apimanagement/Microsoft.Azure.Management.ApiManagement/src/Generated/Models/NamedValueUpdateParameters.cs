@@ -44,12 +44,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="value">Value of the NamedValue. Can contain policy
         /// expressions. It may not be empty or consist only of
         /// whitespace.</param>
-        public NamedValueUpdateParameters(IList<string> tags = default(IList<string>), bool? secret = default(bool?), string displayName = default(string), string value = default(string))
+        /// <param name="keyVault">KeyVault location details of the
+        /// namedValue.</param>
+        public NamedValueUpdateParameters(IList<string> tags = default(IList<string>), bool? secret = default(bool?), string displayName = default(string), string value = default(string), KeyVaultContractCreateProperties keyVault = default(KeyVaultContractCreateProperties))
         {
             Tags = tags;
             Secret = secret;
             DisplayName = displayName;
             Value = value;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -86,5 +89,53 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Gets or sets keyVault location details of the namedValue.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractCreateProperties KeyVault { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Tags != null)
+            {
+                if (Tags.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Tags", 32);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 256);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^[A-Za-z0-9-._]+$");
+                }
+            }
+            if (Value != null)
+            {
+                if (Value.Length > 4096)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Value", 4096);
+                }
+                if (Value.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Value", 1);
+                }
+            }
+        }
     }
 }
