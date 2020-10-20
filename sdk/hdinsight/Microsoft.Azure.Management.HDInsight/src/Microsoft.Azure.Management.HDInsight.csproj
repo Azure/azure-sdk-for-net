@@ -7,12 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.6.0</Version>
+		<Version>6.0.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release supports one feature:
-- Support to create cluster with encryption at host.
+This release contains the bellow change:
+- Remove previous NetworkSettings property
+- Support customer to create cluster with relay outbound and private link feature
+- Support customer to get the cluster id
       ]]>
 		</PackageReleaseNotes>
     
