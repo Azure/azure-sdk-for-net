@@ -49,8 +49,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                options.Initialize(algorithm);
-
                 return await Pipeline.SendRequestAsync(RequestMethod.Post, options, () => new EncryptResult { Algorithm = algorithm }, cancellationToken, "/encrypt").ConfigureAwait(false);
             }
             catch (Exception e)
@@ -68,8 +66,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                options.Initialize(algorithm);
-
                 return Pipeline.SendRequest(RequestMethod.Post, options, () => new EncryptResult { Algorithm = algorithm }, cancellationToken, "/encrypt");
             }
             catch (Exception e)

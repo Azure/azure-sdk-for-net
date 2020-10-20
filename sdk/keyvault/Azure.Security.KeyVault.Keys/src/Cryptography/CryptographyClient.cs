@@ -202,6 +202,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     await InitializeAsync(nameof(Encrypt), cancellationToken).ConfigureAwait(false);
                 }
 
+                options.Initialize(algorithm);
+
                 EncryptResult result = null;
                 if (_provider.SupportsOperation(KeyOperation.Encrypt))
                 {
@@ -259,6 +261,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 {
                     Initialize(nameof(Encrypt), cancellationToken);
                 }
+
+                options.Initialize(algorithm);
 
                 EncryptResult result = null;
                 if (_provider.SupportsOperation(KeyOperation.Encrypt))

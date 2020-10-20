@@ -7,6 +7,11 @@ using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
+    /// <summary>
+    /// Since System.Security.Cryptography.AesGcm requires targeting netstandard2.1,
+    /// for needing this instance only we will proxy calls via reflection instead of multi-targeting.
+    /// This feature will light up on netcoreapp3.0 or newer.
+    /// </summary>
     internal class AesGcmProxy : IDisposable
     {
         private static MethodInfo s_decryptMethod;

@@ -316,6 +316,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     }
     public partial class DecryptOptions
     {
+        public DecryptOptions(byte[] ciphertext) { }
+        public DecryptOptions(byte[] ciphertext, byte[] iv) { }
         public DecryptOptions(byte[] ciphertext, byte[] iv, byte[] authenticationTag) { }
         public byte[] AdditionalAuthenticatedData { get { throw null; } set { } }
         public byte[] AuthenticationTag { get { throw null; } }

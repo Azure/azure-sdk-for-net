@@ -23,6 +23,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             Ciphertext = ciphertext;
         }
+        /// <summary>
+        /// Creates a new instance of the <see cref="DecryptOptions"/> class.
+        /// </summary>
+        /// <param name="ciphertext">The ciphertext to decrypt.</param>
+        /// <param name="iv">The initialization vector for decryption.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/> or <paramref name="iv"/> is null.</exception>
+        public DecryptOptions(byte[] ciphertext, byte[] iv)
+        {
+            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
+            Argument.AssertNotNull(iv, nameof(iv));
+
+            Ciphertext = ciphertext;
+            Iv = iv;
+        }
+
 
         /// <summary>
         /// Creates a new instance of the <see cref="DecryptOptions"/> class.

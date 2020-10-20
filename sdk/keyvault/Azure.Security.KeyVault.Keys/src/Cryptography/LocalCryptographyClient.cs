@@ -101,6 +101,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(options, nameof(options));
 
+            options.Initialize(algorithm);
+
             EncryptResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Encrypt))
             {
@@ -128,6 +130,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
+
+            options.Initialize(algorithm);
 
             EncryptResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Encrypt))

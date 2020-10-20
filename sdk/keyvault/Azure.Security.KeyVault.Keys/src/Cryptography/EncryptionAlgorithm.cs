@@ -140,6 +140,33 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _ => null,
         };
 
+        internal AesCbc GetAesCbcEncryptionAlgorithm() => _value switch
+        {
+            A128CbcValue => AesCbc.Aes128Cbc,
+            A192CbcValue => AesCbc.Aes192Cbc,
+            A256CbcValue => AesCbc.Aes256Cbc,
+
+            A128CbcPadValue => AesCbc.Aes128CbcPad,
+            A192CbcPadValue => AesCbc.Aes192CbcPad,
+            A256CbcPadValue => AesCbc.Aes256CbcPad,
+
+            _ => null,
+        };
+
+        internal bool IsAesGcm()
+        {
+            switch (_value)
+            {
+                case A128GcmValue:
+                case A192GcmValue:
+                case A256GcmValue:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
         internal bool RequiresIv()
         {
             switch (_value)

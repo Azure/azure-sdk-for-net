@@ -3,19 +3,18 @@
 
 using System;
 using System.Linq;
-using System.Security.Cryptography;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     /// <summary>
-    /// Verify AESCBC
+    /// Verify AESCBC.
     /// </summary>
     public class AesCbcTests
     {
         /// <summary>
-        /// Testing AES128CBC, vectors from RFC 3602
+        /// Testing AES128CBC, vectors from RFC 3602.
         /// </summary>
         [Test]
         public void KeyVault_Aes128CbcOneBlock()
@@ -28,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] IV    = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
             byte[] ED    = { 0xe3, 0x53, 0x77, 0x9c, 0x10, 0x79, 0xae, 0xb8, 0x27, 0x08, 0x94, 0x2d, 0xbe, 0x77, 0x18, 0x1a };
 
-            Aes128Cbc algo      = new Aes128Cbc();
+            AesCbc algo = AesCbc.Aes128Cbc;
             byte[]    encrypted;
 
             using ( var encryptor = algo.CreateEncryptor( CEK, IV ) )
@@ -50,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         /// <summary>
-        /// Testing AES128CBC, vectors from RFC 3602
+        /// Testing AES128CBC, vectors from RFC 3602.
         /// </summary>
         [Test]
         public void KeyVault_Aes128CbcTwoBlock()
@@ -63,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] IV    = { 0x56, 0x2e, 0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58 };
             byte[] ED    = { 0xd2, 0x96, 0xcd, 0x94, 0xc2, 0xcc, 0xcf, 0x8a, 0x3a, 0x86, 0x30, 0x28, 0xb5, 0xe1, 0xdc, 0x0a, 0x75, 0x86, 0x60, 0x2d, 0x25, 0x3c, 0xff, 0xf9, 0x1b, 0x82, 0x66, 0xbe, 0xa6, 0xd6, 0x1a, 0xb1 };
 
-            Aes128Cbc algo      = new Aes128Cbc();
+            AesCbc algo = AesCbc.Aes128Cbc;
             byte[]    encrypted;
 
             using ( var encryptor = algo.CreateEncryptor( CEK, IV ) )
@@ -85,7 +84,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         /// <summary>
-        /// Testing AES128CBC, vectors from RFC 3602
+        /// Testing AES128CBC, vectors from RFC 3602.
         /// </summary>
         [Test]
         public void KeyVault_Aes128CbcOneBlock_ExcessKeyMaterial()
@@ -98,7 +97,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] IV    = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
             byte[] ED    = { 0xe3, 0x53, 0x77, 0x9c, 0x10, 0x79, 0xae, 0xb8, 0x27, 0x08, 0x94, 0x2d, 0xbe, 0x77, 0x18, 0x1a };
 
-            Aes128Cbc algo      = new Aes128Cbc();
+            AesCbc algo = AesCbc.Aes128Cbc;
             byte[]    encrypted;
 
             using ( var encryptor = algo.CreateEncryptor( CEK, IV ) )
@@ -120,7 +119,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         /// <summary>
-        /// Testing AES128CBC, vectors from RFC 3602
+        /// Testing AES128CBC, vectors from RFC 3602.
         /// </summary>
         [Test]
         public void KeyVault_Aes128CbcTwoBlock_ExcessKeyMaterial()
@@ -133,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] IV    = { 0x56, 0x2e, 0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58 };
             byte[] ED    = { 0xd2, 0x96, 0xcd, 0x94, 0xc2, 0xcc, 0xcf, 0x8a, 0x3a, 0x86, 0x30, 0x28, 0xb5, 0xe1, 0xdc, 0x0a, 0x75, 0x86, 0x60, 0x2d, 0x25, 0x3c, 0xff, 0xf9, 0x1b, 0x82, 0x66, 0xbe, 0xa6, 0xd6, 0x1a, 0xb1 };
 
-            Aes128Cbc algo      = new Aes128Cbc();
+            AesCbc algo      = AesCbc.Aes128Cbc;
             byte[]    encrypted;
 
             using ( var encryptor = algo.CreateEncryptor( CEK, IV ) )
@@ -151,38 +150,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
                 // Assert
                 Assert.True( decrypted.SequenceEqual( PLAIN ) );
-            }
-        }
-
-        /// <summary>
-        /// AESCBC 128bit key with PKCS7 Padding (copied from Microsoft.Azure.KeyVault.Cryptography).
-        /// </summary>
-        private class Aes128Cbc : AesCbc
-        {
-            public const string AlgorithmName = "A128CBC";
-
-            private const int KeySizeInBytes = 128 >> 3;
-
-            public ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
-            {
-                if (key == null)
-                    throw new CryptographicException("key");
-
-                if (key.Length < KeySizeInBytes)
-                    throw new CryptographicException("key", "key must be at least 128 bits");
-
-                return CreateDecryptor(key.Take(KeySizeInBytes), iv, PaddingMode.Zeros);
-            }
-
-            public ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
-            {
-                if (key == null)
-                    throw new CryptographicException("key");
-
-                if (key.Length < KeySizeInBytes)
-                    throw new CryptographicException("key", "key must be at least 128 bits long");
-
-                return CreateEncryptor(key.Take(KeySizeInBytes), iv, PaddingMode.Zeros);
             }
         }
     }
