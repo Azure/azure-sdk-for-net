@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Console.WriteLine($"Deleting model Id '{sampleBuildingModelId}' if it exists.");
                 await client.DeleteModelAsync(sampleBuildingModelId);
             }
-            catch (Exception ex)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
                 // Model did not exist yet, and that's fine
             }
@@ -38,7 +38,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Console.WriteLine($"Deleting model Id '{sampleFloorModelId}' if it exists.");
                 await client.DeleteModelAsync(sampleFloorModelId);
             }
-            catch (Exception ex)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
                 // Model did not exist yet, and that's fine
             }
