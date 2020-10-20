@@ -40,10 +40,12 @@ function readInput(): GenerateInput {
 
 // Sort RPs
 function getRPs(changedFiles: string[]): string[] {
+    let rpMapping = JSON.parse(fs.readFileSync('RPMapping.json','utf8'));
     let output: string[] = []; 
     changedFiles.map(element => {
-        let rpName = element.substring(element.indexOf('.') + 1);
+        let rpName = element.substring(14);
         rpName = rpName.substring(0, rpName.indexOf('/'));
+        rpName = rpMapping[rpName]
         if( output.findIndex(rp => rp === rpName) === -1 ){
             output.push(rpName);
         }
@@ -70,7 +72,8 @@ function generateCodeWithBuild(path: string, commit: string) {
     Log('Start Generate Code!');
     const autorestFile: string = path + '/src/autorest.md';
     let content = fs.readFileSync(autorestFile, 'utf8');
-    content = content.replace('master', commit);
+    let pattern = new RegExp('azure-rest-api-specs\\/[\\S]*\\/specification','g');
+    content = content.replace(pattern, 'azure-rest-api-specs/' + commit + '/specification');
     fs.writeFileSync(autorestFile, content, 'utf8');
     Log('autorest.md havs been updated with commit id: ' + commit);
 
