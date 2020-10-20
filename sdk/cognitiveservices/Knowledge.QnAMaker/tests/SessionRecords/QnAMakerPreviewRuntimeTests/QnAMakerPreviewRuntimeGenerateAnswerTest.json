@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/192233e1-0ec8-44dc-8285-57a541b7c79c/generateAnswer",
-      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzE5MjIzM2UxLTBlYzgtNDRkYy04Mjg1LTU3YTU0MWI3Yzc5Yy9nZW5lcmF0ZUFuc3dlcg==",
+      "RequestUri": "/qnamaker/v5.0-preview.1/knowledgebases/0667a3c4-fd61-4f13-9ada-a7fc0e257112/generateAnswer",
+      "EncodedRequestUri": "L3FuYW1ha2VyL3Y1LjAtcHJldmlldy4xL2tub3dsZWRnZWJhc2VzLzA2NjdhM2M0LWZkNjEtNGYxMy05YWRhLWE3ZmMwZTI1NzExMi9nZW5lcmF0ZUFuc3dlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"question\": \"new question\",\r\n  \"isTest\": true\r\n}",
+      "RequestBody": "{\r\n  \"question\": \"new question\",\r\n  \"top\": 3,\r\n  \"isTest\": true,\r\n  \"answerSpanRequest\": {\r\n    \"enable\": true,\r\n    \"scoreThreshold\": 5.0,\r\n    \"topAnswersWithSpan\": 1\r\n  }\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "c692f6f64dd54468b25eefd0c6c67c71"
+          "7942ed8406a748309d63728b2b7f7378"
         ],
         "User-Agent": [
           "FxVersion/4.6.29220.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerRuntimeClient/2.1.0.0"
+          "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.QnAMakerClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "53"
+          "176"
         ]
       },
       "ResponseHeaders": {
@@ -27,10 +27,10 @@
           "CognitiveServices.QnAMakerV2.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "3359"
+          "6034"
         ],
         "apim-request-id": [
-          "8347223a-b784-45f2-a47c-6a73a44ef100"
+          "73d9298a-54a6-432a-b1ce-7ed446ba5de6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -39,16 +39,16 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 14 Oct 2020 18:28:38 GMT"
+          "Mon, 19 Oct 2020 17:43:05 GMT"
         ],
         "Content-Length": [
-          "320"
+          "720"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"new question\"\r\n      ],\r\n      \"answer\": \"new answer\",\r\n      \"score\": 100.0,\r\n      \"id\": 91,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      }\r\n    }\r\n  ],\r\n  \"activeLearningEnabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"answers\": [\r\n    {\r\n      \"questions\": [\r\n        \"new question\"\r\n      ],\r\n      \"answer\": \"Every question has an answer. I can answer any question as long as it is in the syllabus. If it is out of syllabus. You get a default answer called \\\"No match found in the KB\\\". If you are not happy with that answer, you can change it in the settings page.\",\r\n      \"score\": 100.0,\r\n      \"id\": 11,\r\n      \"source\": \"Editorial\",\r\n      \"metadata\": [],\r\n      \"context\": {\r\n        \"isContextOnly\": false,\r\n        \"prompts\": []\r\n      },\r\n      \"answerSpan\": {\r\n        \"text\": \"\\\"No match found in the KB\\\".\",\r\n        \"score\": 8.32,\r\n        \"startIndex\": 148,\r\n        \"endIndex\": 175\r\n      }\r\n    }\r\n  ],\r\n  \"activeLearningEnabled\": true\r\n}",
       "StatusCode": 200
     }
   ],
