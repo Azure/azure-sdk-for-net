@@ -4,6 +4,7 @@
 
 ### Added
 - The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `JsonPatchDocument` type.
 
 ### Fixed
 - The race condition in `AzureEventSourceListener` class that sometimes resulted in a `NullReferenceException` in the `EventSource`.

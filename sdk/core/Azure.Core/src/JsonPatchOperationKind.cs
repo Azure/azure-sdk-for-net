@@ -7,7 +7,7 @@ namespace Azure.Core.JsonPatch
     {
         private readonly string _operation;
 
-        public JsonPatchOperationKind(string operation)
+        private JsonPatchOperationKind(string operation)
         {
             _operation = operation;
         }

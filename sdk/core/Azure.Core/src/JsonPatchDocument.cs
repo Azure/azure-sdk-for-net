@@ -4,26 +4,28 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core.JsonPatch;
 using Azure.Core.Serialization;
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// Represents a JSON Patch document.
     /// </summary>
     public class JsonPatchDocument
     {
+        private readonly ReadOnlyMemory<byte> _rawDocument;
         private readonly ObjectSerializer _serializer;
         private readonly Collection<JsonPatchOperation> _operations;
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonPatchDocument"/> that uses <see cref="JsonObjectSerializer"/> as the default serializer.
         /// </summary>
-        public JsonPatchDocument() : this(new JsonObjectSerializer())
+        public JsonPatchDocument() : this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -31,14 +33,32 @@ namespace Azure.Core
         /// Initializes a new instance of <see cref="JsonPatchDocument"/>
         /// </summary>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> instance to use for value serialization.</param>
-        public JsonPatchDocument(ObjectSerializer serializer)
+        public JsonPatchDocument(ObjectSerializer serializer): this(default(ReadOnlyMemory<byte>), serializer)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="JsonPatchDocument"/>
+        /// </summary>
+        /// <param name="rawDocument">The binary representation of JSON Patch document.</param>
+        public JsonPatchDocument(ReadOnlyMemory<byte> rawDocument) : this(rawDocument, new JsonObjectSerializer())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8-encoded JSON Patch document.
+        /// </summary>
+        /// <param name="rawDocument">The binary representation of JSON Patch document.</param>
+        /// <param name="serializer">The <see cref="ObjectSerializer"/> instance to use for value serialization.</param>
+        public JsonPatchDocument(ReadOnlyMemory<byte> rawDocument, ObjectSerializer serializer)
         {
             _operations = new Collection<JsonPatchOperation>();
+            _rawDocument = rawDocument;
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
         /// <summary>
-        /// Appends an "add" operation to this <see cref="JsonPatchDocument"/>.
+        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8-encoded JSON Patch document.
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>
@@ -126,17 +146,33 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns a formatted JSON string representation of this <see cref="JsonPatchDocument"/>.
+        /// Returns a UTF8-encoded representation of this <see cref="JsonPatchDocument"/> instance.
         /// </summary>
-        /// <returns>A formatted JSON string representation of this <see cref="JsonPatchDocument"/>.</returns>
-        public override string ToString()
+        /// <returns>The UTF8-encoded JSON.</returns>
+        public ReadOnlyMemory<byte> ToBytes()
         {
+            // Fast-path the pre-computed value
+            if (!_rawDocument.IsEmpty && _operations.Count == 0)
+            {
+                return _rawDocument;
+            }
+
             using var memoryStream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(memoryStream))
             {
                 WriteTo(writer);
             }
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+
+            return memoryStream.GetBuffer().AsMemory(0, (int) memoryStream.Length);
+        }
+
+        /// <summary>
+        /// Returns a formatted JSON string representation of this <see cref="JsonPatchDocument"/>.
+        /// </summary>
+        /// <returns>A formatted JSON string representation of this <see cref="JsonPatchDocument"/>.</returns>
+        public override string ToString()
+        {
+            return Encoding.UTF8.GetString(ToBytes().ToArray());
         }
 
         /// <summary>
@@ -144,10 +180,19 @@ namespace Azure.Core
         /// </summary>
         /// <param name="writer">The <see cref="Utf8JsonWriter"/> instance to write this document to</param>
 #pragma warning disable AZC0014 // do not expose Json types in public APIs
-        public void WriteTo(Utf8JsonWriter writer)
+        private void WriteTo(Utf8JsonWriter writer)
 #pragma warning restore AZC0014
         {
             writer.WriteStartArray();
+            if (!_rawDocument.IsEmpty)
+            {
+                using var jsonDocument = JsonDocument.Parse(_rawDocument);
+                foreach (var operation in jsonDocument.RootElement.EnumerateArray())
+                {
+                    operation.WriteTo(writer);
+                }
+            }
+
             foreach (var operation in _operations)
             {
                 writer.WriteStartObject();
