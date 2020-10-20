@@ -187,15 +187,13 @@ await cloudBlockBlob.UploadFromFileAsync(localFilePath);
 
 v12
 ```csharp
-// Assumes containerClient already contains a reference to the container.
-// filename is the intended blob name as a string
+// Assumes container already exists on the service.
+// blobName is desired name of new blob in the service
 // localFilePath should be the path to the local file you want to upload
 // Get a reference to a blob
-BlobClient blobClient = containerClient.GetBlobClient(filename);
-// Open the file and upload its data
-using FileStream uploadFileStream = File.OpenRead(localFilePath);
-await blobClient.UploadAsync(uploadFileStream, overwrite: true);
-uploadFileStream.Close();
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+// choose the file to upload
+await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
 Summary: In v11, a file path was used to upload a blob. In v12, `Stream` is used to upload a blob's content.
