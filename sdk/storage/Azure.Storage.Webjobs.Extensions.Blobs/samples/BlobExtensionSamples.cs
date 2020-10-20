@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
 {
-    public class BlobTriggerAttributeSample
+    public class BlobExtensionSamples
     {
         [TestCase(typeof(BlobTriggerFunction_String))]
         [TestCase(typeof(BlobTriggerFunction_Stream))]
