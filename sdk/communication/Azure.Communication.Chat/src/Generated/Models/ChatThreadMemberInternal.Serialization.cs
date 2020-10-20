@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatThreadMemberInternal : IUtf8JsonSerializable
+    internal partial class ChatThreadMemberInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,6 +50,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("shareHistoryTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     shareHistoryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

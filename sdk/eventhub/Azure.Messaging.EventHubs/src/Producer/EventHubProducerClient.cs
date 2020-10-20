@@ -26,13 +26,24 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </summary>
     ///
     /// <remarks>
-    ///   Allowing automatic routing of partitions is recommended when:
-    ///   <para>- The sending of events needs to be highly available.</para>
-    ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+    ///   <para>
+    ///     Allowing automatic routing of partitions is recommended when:
+    ///     <para>- The sending of events needs to be highly available.</para>
+    ///     <para>- The event data should be evenly distributed among all available partitions.</para>
+    ///   </para>
     ///
-    ///   If no partition is specified, the following rules are used for automatically selecting one:
-    ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-    ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    ///   <para>
+    ///     If no partition is specified, the following rules are used for automatically selecting one:
+    ///     <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+    ///     <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    ///   </para>
+    ///
+    ///   <para>
+    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///     publishes events regularly or semi-regularly.  The producer holds responsibility for efficient resource management, working to keep resource usage low during
+    ///     periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
+    ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///   </para>
     /// </remarks>
     ///
     public class EventHubProducerClient : IAsyncDisposable
@@ -401,8 +412,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
         ///
-        public virtual async Task<PartitionPublishingProperties> ReadPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                       CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -566,9 +577,9 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            var sendTask = (!Options.EnableIdempotentPartitions)
-                ? SendInternalAsync(eventBatch, cancellationToken)
-                : SendIdempotentAsync(eventBatch, cancellationToken);
+            var sendTask = (Options.EnableIdempotentPartitions)
+                ? SendIdempotentAsync(eventBatch, cancellationToken)
+                : SendInternalAsync(eventBatch, cancellationToken);
 
             await sendTask.ConfigureAwait(false);
         }

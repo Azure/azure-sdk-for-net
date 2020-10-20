@@ -19,6 +19,11 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("connectedDeviceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectedDeviceCount = property.Value.GetInt64();
                     continue;
                 }

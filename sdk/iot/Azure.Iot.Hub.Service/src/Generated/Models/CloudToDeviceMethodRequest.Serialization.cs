@@ -53,16 +53,31 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("payload"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     payload = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("responseTimeoutInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     responseTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("connectTimeoutInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }

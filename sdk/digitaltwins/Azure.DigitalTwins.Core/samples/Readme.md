@@ -300,7 +300,7 @@ Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 Get a component by providing name of a component and Id of digital twin to which it belongs.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
 Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 ```
 
@@ -419,10 +419,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(eventhubEndpointName)
-{
-    Filter = eventFilter
-};
+var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
 
 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
@@ -457,7 +454,7 @@ To publish a telemetry message for a digital twin, you need to provide the digit
 
 ```C# Snippet:DigitalTwinsSamplePublishTelemetry
 // construct your json telemetry payload by hand.
-await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+await client.PublishTelemetryAsync(twinId, Guid.NewGuid().ToString(), "{\"Telemetry1\": 5}");
 Console.WriteLine($"Published telemetry message to twin '{twinId}'.");
 ```
 
@@ -472,6 +469,7 @@ var telemetryPayload = new Dictionary<string, int>
 await client.PublishComponentTelemetryAsync(
     twinId,
     "Component1",
+    Guid.NewGuid().ToString(),
     JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 ```

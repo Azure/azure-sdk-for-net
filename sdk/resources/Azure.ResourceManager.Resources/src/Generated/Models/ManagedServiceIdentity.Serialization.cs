@@ -43,11 +43,21 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

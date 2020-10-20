@@ -23,7 +23,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "private",
-        "Content-Length": "568",
+        "Content-Length": "584",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 19 Oct 2020 22:05:23 GMT",
         "ETag": "00000002-0000-0000-ff87-64f163a6d601",

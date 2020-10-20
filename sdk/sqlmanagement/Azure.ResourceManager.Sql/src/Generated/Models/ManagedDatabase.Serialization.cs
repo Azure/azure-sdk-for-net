@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -154,6 +159,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("collation"))
@@ -163,21 +173,41 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("status"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             status = new ManagedDatabaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("earliestRestorePoint"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             earliestRestorePoint = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -188,11 +218,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("catalogCollation"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             catalogCollation = new CatalogCollationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             createMode = new ManagedDatabaseCreateMode(property0.Value.GetString());
                             continue;
                         }
@@ -233,6 +273,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("autoCompleteRestore"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             autoCompleteRestore = property0.Value.GetBoolean();
                             continue;
                         }

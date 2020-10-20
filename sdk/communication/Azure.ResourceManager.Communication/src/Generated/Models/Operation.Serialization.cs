@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("display"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     properties = OperationProperties.DeserializeOperationProperties(property.Value);
                     continue;
                 }

@@ -51,6 +51,18 @@ namespace Azure.Messaging.EventGrid
         // Event Hub Events
         public const string EventHubCaptureFileCreatedEvent = "Microsoft.EventHub.CaptureFileCreated";
 
+        // Key Vault Events
+        public const string KeyVaultCertificateNewVersionCreatedEvent = "Microsoft.KeyVault.CertificateNewVersionCreated";
+        public const string KeyVaultCertificateNearExpiryEvent = "Microsoft.KeyVault.CertificateNearExpiry";
+        public const string KeyVaultCertificateExpiredEvent = "Microsoft.KeyVault.CertificateExpired";
+        public const string KeyVaultKeyNewVersionCreatedEvent = "Microsoft.KeyVault.KeyNewVersionCreated";
+        public const string KeyVaultKeyNearExpiryEvent = "Microsoft.KeyVault.KeyNearExpiry";
+        public const string KeyVaultKeyExpiredEvent = "Microsoft.KeyVault.KeyExpired";
+        public const string KeyVaultSecretNewVersionCreatedEvent = "Microsoft.KeyVault.SecretNewVersionCreated";
+        public const string KeyVaultSecretNearExpiryEvent = "Microsoft.KeyVault.SecretNearExpiry";
+        public const string KeyVaultSecretExpiredEvent = "Microsoft.KeyVault.SecretExpired";
+        public const string KeyVaultVaultAccessPolicyChangedEvent = "Microsoft.KeyVault.VaultAccessPolicyChanged";
+
         // MachineLearningServices events
         public const string MachineLearningServicesDatasetDriftDetectedEvent = "Microsoft.MachineLearningServices.DatasetDriftDetected";
         public const string MachineLearningServicesModelDeployedEvent = "Microsoft.MachineLearningServices.ModelDeployed";

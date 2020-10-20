@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -95,15 +100,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("sourceVirtualMachine"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sourceVirtualMachine = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageProfile = ImageStorageProfile.DeserializeImageStorageProfile(property0.Value);
                             continue;
                         }
@@ -114,6 +134,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("hyperVGeneration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             hyperVGeneration = new HyperVGenerationTypes(property0.Value.GetString());
                             continue;
                         }

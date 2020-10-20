@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-preview.5 (Unreleased)
-
+- Supports List/Get Synapse resources through data plane APIs
 
 ## 1.0.0-preview.4 (2020-09-01)
 - Added test cases.

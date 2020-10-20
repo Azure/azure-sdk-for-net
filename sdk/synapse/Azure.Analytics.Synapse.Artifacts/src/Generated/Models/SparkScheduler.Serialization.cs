@@ -24,26 +24,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("submittedAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     submittedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("scheduledAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endedAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cancellationRequestedAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentState = new SchedulerCurrentState(property.Value.GetString());
                     continue;
                 }

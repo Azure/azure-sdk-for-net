@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
-        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults, bool isBusinessCard = default)
         {
             Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
@@ -56,10 +56,12 @@ namespace Azure.AI.FormRecognizer.Models
                 // TODO: FormEnum<T> ?
                 FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
-                ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
+                int fieldPage = isBusinessCard ? CalculatePage(fieldValue) : fieldValue.Page.Value;
+
+                ValueData = new FieldData(boundingBox, fieldPage, fieldValue.Text, fieldElements);
             }
 
-            Value = new FieldValue(fieldValue, readResults);
+            Value = new FieldValue(fieldValue, readResults, isBusinessCard);
         }
 
         /// <summary>
@@ -116,6 +118,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _selectionMarkRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/selectionMarks/(?<selectionMarkIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
@@ -147,7 +150,41 @@ namespace Azure.AI.FormRecognizer.Models
                 return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
             }
 
+            // Selection Mark Reference
+            var selectionMarkMatch = _selectionMarkRegex.Match(reference);
+            if (selectionMarkMatch.Success && selectionMarkMatch.Groups.Count == 3)
+            {
+                int pageIndex = int.Parse(selectionMarkMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int selectionMark = int.Parse(selectionMarkMatch.Groups["selectionMarkIndex"].Value, CultureInfo.InvariantCulture);
+
+                return new FormSelectionMark(readResults[pageIndex].SelectionMarks[selectionMark], pageIndex + 1);
+            }
+
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+        }
+
+        /// <summary>
+        /// Business Cards pre-built model doesn't return a page number for the `ContactNames` field.
+        /// This function looks into the FieldValue_internal to see if it corresponds to
+        /// `ContactNames` and verifies that the page value before returning it.
+        /// </summary>
+        /// <returns>Page value if the field is `ContactNames` for Business cards. If not, defaults to 1.</returns>
+        private static int CalculatePage(FieldValue_internal field)
+        {
+            int page = 1;
+            if (field.Type == FieldValueType.Dictionary)
+            {
+                IReadOnlyDictionary<string, FieldValue_internal> possibleContactNamesField = field.ValueObject;
+                if (possibleContactNamesField.Count == 2 && possibleContactNamesField.ContainsKey("FirstName")
+                    && possibleContactNamesField.ContainsKey("LastName"))
+                {
+                    if (possibleContactNamesField["FirstName"].Page == possibleContactNamesField["LastName"].Page)
+                    {
+                        page = possibleContactNamesField["FirstName"].Page.Value;
+                    }
+                }
+            }
+            return page;
         }
     }
 }

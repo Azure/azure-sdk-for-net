@@ -3,8 +3,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);TESTFRAMEWORK</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TestHelperProjects>;</TestHelperProjects>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DigitalTwins.csproj" />
   </ItemGroup>
@@ -16,6 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
 
   <!-- required by TestFramework.props -->

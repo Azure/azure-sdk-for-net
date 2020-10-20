@@ -26,6 +26,7 @@ namespace Azure.Core.TestFramework
         protected static TestLogger Logger { get; set; }
         public bool TestDiagnostics { get; set; } = true;
         public RecordedTestMode Mode { get; set; }
+        public TestRecording Recording { get;  set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
@@ -53,6 +54,17 @@ namespace Azure.Core.TestFramework
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
+        }
+        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        {
+            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Not making the timeout zero so retry code still goes async
+                clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
+                clientOptions.Retry.Mode = RetryMode.Fixed;
+            }
+            return clientOptions;
         }
 
 #if DEBUG

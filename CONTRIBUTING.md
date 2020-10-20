@@ -130,7 +130,7 @@ After a few moments of initial configuration Visual Studio Code will launch the 
 
 ### All Client Services from Command Line
 
-1. Open VS 2019 Command Propmpt
+1. Open VS 2019 Command Prompt
 2. Navigate to repository root directory
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
@@ -138,10 +138,7 @@ After a few moments of initial configuration Visual Studio Code will launch the 
 ### Live testing
 
 Before running or recording live tests you need to create
-[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
-If recording tests, secrets will be sanitized from saved recordings.
-If you will be working on contributions over time, you should consider
-persisting these variables.
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).  Many of the client libraries make use of the Azure Core Test Framework to provide the basis for the live test infrastructure, including the ability to record Live tests so that they can be run without access to Azure resources.  The [Test Framework documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework/README.md) provides more context around test recordings and other features.
 
 To run live tests after creating live resources:
 
@@ -377,7 +374,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 

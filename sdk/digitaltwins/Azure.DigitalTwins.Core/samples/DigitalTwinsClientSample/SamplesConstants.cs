@@ -94,9 +94,9 @@ namespace Azure.DigitalTwins.Core.Samples
             }";
 
         /// <summary>
-        /// Path for component.
+        /// Name for component.
         /// </summary>
-        public const string ComponentPath = "Component1";
+        public const string ComponentName = "Component1";
 
         /// <summary>
         /// The application/json description of a temporary component model

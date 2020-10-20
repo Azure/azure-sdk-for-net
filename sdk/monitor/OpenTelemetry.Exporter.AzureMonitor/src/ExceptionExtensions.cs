@@ -23,5 +23,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 Thread.CurrentThread.CurrentUICulture = originalUICulture;
             }
         }
+
+        internal static Exception LogAsyncException(this Exception exception)
+        {
+            return exception is AggregateException aggregateException ? aggregateException.InnerException : exception;
+        }
     }
 }

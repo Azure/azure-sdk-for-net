@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("asn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     asn = property.Value.GetInt64();
                     continue;
                 }

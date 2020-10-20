@@ -44,6 +44,8 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
+        #region Recognize Content
+
         [Test]
         public async Task StartRecognizeContentSendsUserSpecifiedContentType()
         {
@@ -110,6 +112,9 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        #endregion
+
+        #region Recognize Receipt
         [Test]
         public async Task StartRecognizeReceiptsSendsUserSpecifiedContentType()
         {
@@ -177,6 +182,127 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeReceiptsSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        #endregion
+
+        #region Recognize Business Cards
+        [Test]
+        public async Task StartRecognizeBusinessCardsSendsUserSpecifiedContentType()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businessCard/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            var recognizeOptions = new RecognizeBusinessCardsOptions { ContentType = FormContentType.Jpeg };
+            await client.StartRecognizeBusinessCardsAsync(stream, recognizeOptions);
+
+            var request = mockTransport.Requests.Single();
+
+            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
+            Assert.AreEqual("image/jpeg", contentType);
+        }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsSendsAutoDetectedContentType()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businessCard/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            await client.StartRecognizeBusinessCardsAsync(stream);
+
+            var request = mockTransport.Requests.Single();
+
+            Assert.True(request.Headers.TryGetValue("Content-Type", out var contentType));
+            Assert.AreEqual("image/tiff", contentType);
+        }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businessCard/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.StartRecognizeBusinessCardsFromUriAsync(new Uri(encodedUriString));
+            await client.StartRecognizeBusinessCardsFromUriAsync(new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeBusinessCardsSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businesscards/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        #endregion
+
+        #region Recognize Custom Forms
+
+        [Test]
         public async Task StartRecognizeCustomFormsSendsUserSpecifiedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -241,6 +367,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.False(requestBody.Contains(decodedUriString));
             }
         }
+
+        #endregion
 
         private static string GetString(RequestContent content)
         {

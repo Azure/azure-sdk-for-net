@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedBy"> The MRI of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
-        internal ACSChatThreadWithUserDeletedEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version, string deletedBy, DateTimeOffset? deleteTime) : base(recipientId, transactionId, threadId, createTime, version)
+        internal ACSChatThreadWithUserDeletedEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, string deletedBy, DateTimeOffset? deleteTime) : base(recipientId, transactionId, threadId, createTime, version)
         {
             DeletedBy = deletedBy;
             DeleteTime = deleteTime;

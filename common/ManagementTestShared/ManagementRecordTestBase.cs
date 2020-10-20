@@ -3,11 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RP
 using Azure.ResourceManager.Resources;
-#else
-using Azure.Management.Resources;
-#endif
 using System.Diagnostics;
 
 using System.Threading.Tasks;
@@ -23,8 +19,6 @@ namespace Azure.ResourceManager.TestFramework
 
         protected RecordMatcher Matcher { get; set; }
 
-        public TestRecording Recording { get; private set; }
-
         public TEnvironment TestEnvironment { get; }
 
         private ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
@@ -32,7 +26,6 @@ namespace Azure.ResourceManager.TestFramework
         protected ManagementRecordTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
-
         protected ManagementRecordTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
@@ -152,7 +145,7 @@ namespace Azure.ResourceManager.TestFramework
         /// </summary>
         protected ResourcesManagementClient GetResourceManagementClient()
         {
-            var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
             return GetManagementClient<ResourcesManagementClient>(options);
         }
@@ -181,7 +174,7 @@ namespace Azure.ResourceManager.TestFramework
         protected T GetManagementClient<T>(ClientOptions options) where T : class
         {
             return this.CreateClient<T>(TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential, Recording.InstrumentClientOptions(options));
+                TestEnvironment.Credential, InstrumentClientOptions(options));
         }
 
     }

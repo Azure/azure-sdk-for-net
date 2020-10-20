@@ -4,23 +4,29 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+
 using Azure.Core.Pipeline;
+
 using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorTraceExporter : ActivityExporter
     {
-        private readonly AzureMonitorTransmitter AzureMonitorTransmitter;
+        private readonly ITransmitter Transmitter;
+        private readonly AzureMonitorExporterOptions options;
+        private readonly string instrumentationKey;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options)
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+        }
 
-            this.AzureMonitorTransmitter = new AzureMonitorTransmitter(options);
+        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+        {
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
+
+            this.Transmitter = transmitter;
         }
 
         /// <inheritdoc/>
@@ -31,17 +37,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             try
             {
+                var telemetryItems = AzureMonitorConverter.Convert(batch, this.instrumentationKey);
+
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
-                this.AzureMonitorTransmitter.AddBatchActivityAsync(batch, false, CancellationToken.None).EnsureCompleted();
+                this.Transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 return ExportResult.Success;
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
+                AzureMonitorTraceExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
                 return ExportResult.Failure;
             }
-
         }
     }
 }

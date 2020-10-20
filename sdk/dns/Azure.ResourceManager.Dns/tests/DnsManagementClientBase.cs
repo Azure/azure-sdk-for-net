@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Azure.Management.Dns.Tests;
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Dns.Tests
         {
             ResourcesManagementClient = this.GetResourceManagementClient();
             DnsManagementClient = this.GetManagementClient<DnsManagementClient>(new DnsManagementClientOptions());
-
         }
 
     }

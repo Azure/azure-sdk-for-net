@@ -86,10 +86,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("linkProperties"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value);
                             continue;
                         }
@@ -105,11 +115,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("bgpProperties"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

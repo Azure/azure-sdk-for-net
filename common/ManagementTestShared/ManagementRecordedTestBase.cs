@@ -3,11 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RP
 using Azure.ResourceManager.Resources;
-#else
-using Azure.Management.Resources;
-#endif
 using System;
 using System.Linq;
 using System.Threading;
@@ -15,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
 {
-    public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
+    public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment: TestEnvironment, new()
     {
         private static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
@@ -28,9 +24,10 @@ namespace Azure.ResourceManager.TestFramework
         protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
+
         protected ResourcesManagementClient GetResourceManagementClient()
         {
-            var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 

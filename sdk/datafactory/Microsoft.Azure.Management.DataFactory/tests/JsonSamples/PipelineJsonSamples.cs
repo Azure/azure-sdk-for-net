@@ -56,6 +56,64 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string MongoDbAtlasCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""CosmosDbMongoDbApiSink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -4459,6 +4517,85 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_DelimitedText_AdlsWithlogSettings = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
+            }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logSettings"": {
+             ""enableCopyActivityLog"": true,
+             ""copyActivityLogSettings"": {
+                 ""logLevel"": ""Info"",
+                 ""enableReliableLogging"": true
+              },
+             ""logLocationSettings"": {
+                 ""linkedServiceName"": {
+                    ""referenceName"": ""exampleLinkedService"",
+                    ""type"": ""LinkedServiceReference""
+                  },
+                ""path"": ""test"" 
+              }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_AzureBlob = @"{
   ""properties"": {
     ""activities"": [
@@ -6849,8 +6986,7 @@ namespace DataFactory.Tests.JsonSamples
                         },
                         writeBatchSize: 1000,
                         writeBatchTimeout: ""01:00:00"",
-                        compressionType: ""gzip"",
-                        wrapRequestJsonInAnObject: true,
+                        httpCompressionType: ""gzip""
                     },
                     translator:
                     {

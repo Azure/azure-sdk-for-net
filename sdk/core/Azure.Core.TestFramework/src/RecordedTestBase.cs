@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,7 +16,6 @@ namespace Azure.Core.TestFramework
 
         protected RecordMatcher Matcher { get; set; }
 
-        public TestRecording Recording { get; private set; }
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -27,12 +27,6 @@ namespace Azure.Core.TestFramework
             Matcher = new RecordMatcher();
             Mode = mode;
         }
-
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// </summary>
-
         /// <summary>
         /// Start logging events to the console if debugging or in Live mode.
         /// This will run once before any tests.
