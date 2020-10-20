@@ -19,15 +19,17 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
 {
     public class BlobExtensionSamples
     {
-        [TestCase(typeof(BlobTriggerFunction_String))]
-        [TestCase(typeof(BlobTriggerFunction_Stream))]
-        [TestCase(typeof(BlobTriggerFunction_BlobBaseClient))]
-        public async Task Run_BlobTriggerBindingFunction(Type programType)
+        [TestCase(typeof(BlobFunction_String))]
+        [TestCase(typeof(BlobFunction_ReadStream))]
+        [TestCase(typeof(BlobFunction_WriteStream))]
+        [TestCase(typeof(BlobFunction_BlobBaseClient))]
+        public async Task Run_BlobFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
             await containerClient.CreateIfNotExistsAsync();
-            var blobClient = containerClient.GetBlockBlobClient("sample-blob.txt");
-            await blobClient.UploadTextAsync("content");
+            await containerClient.GetBlockBlobClient("sample-blob").UploadTextAsync("content");
+            await containerClient.GetBlockBlobClient("sample-blob-1").UploadTextAsync("content-1");
+            await containerClient.GetBlockBlobClient("sample-blob-2").UploadTextAsync("content-2");
             await RunTrigger(programType);
         }
 
@@ -47,37 +49,66 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
         }
     }
 
-    #region Snippet:BlobTriggerFunction_String
-    public static class BlobTriggerFunction_String
+    #region Snippet:BlobFunction_String
+    public static class BlobFunction_String
     {
-        [FunctionName("BlobTriggerFunction")]
-        public static void Run([BlobTrigger("sample-container/sample-blob.txt")] string blobContent, ILogger logger)
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob-1")] string blobTriggerContent,
+            [Blob("sample-container/sample-blob-2")] string blobContent,
+            ILogger logger)
         {
-            logger.LogInformation("Blob has been updated with content: {content}", blobContent);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobTriggerContent);
+            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobContent);
         }
     }
     #endregion
 
-    #region Snippet:BlobTriggerFunction_Stream
-    public static class BlobTriggerFunction_Stream
+    #region Snippet:BlobFunction_ReadStream
+    public static class BlobFunction_ReadStream
     {
-        [FunctionName("BlobTriggerFunction")]
-        public static void Run([BlobTrigger("sample-container/sample-blob.txt")] Stream streamContent, ILogger logger)
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob-1")] Stream blobTriggerStream,
+            [Blob("sample-container/sample-blob-2", FileAccess.Read)] Stream blobStream,
+            ILogger logger)
         {
-            using var streamReader = new StreamReader(streamContent);
-            logger.LogInformation("Blob has been updated with content: {content}", streamReader.ReadToEnd());
+            using var blobTriggerStreamReader = new StreamReader(blobTriggerStream);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobTriggerStreamReader.ReadToEnd());
+            using var blobStreamReader = new StreamReader(blobStream);
+            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobStreamReader.ReadToEnd());
         }
     }
     #endregion
 
-    #region Snippet:BlobTriggerFunction_BlobBaseClient
-    public static class BlobTriggerFunction_BlobBaseClient
+    #region Snippet:BlobFunction_WriteStream
+    public static class BlobFunction_WriteStream
     {
-        [FunctionName("BlobTriggerFunction")]
-        public static async Task Run([BlobTrigger("sample-container/sample-blob.txt")] BlobBaseClient blobBaseClient, ILogger logger)
+        [FunctionName("BlobFunction")]
+        public static async Task Run(
+            [BlobTrigger("sample-container/sample-blob-1")] Stream blobTriggerStream,
+            [Blob("sample-container/sample-blob-2", FileAccess.Write)] Stream blobStream,
+            ILogger logger)
         {
-            BlobProperties blobProperties = await blobBaseClient.GetPropertiesAsync();
-            logger.LogInformation("Blob has been updated on: {datetime}", blobProperties.LastModified);
+            await blobTriggerStream.CopyToAsync(blobStream);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_BlobBaseClient
+    public static class BlobFunction_BlobBaseClient
+    {
+        [FunctionName("BlobFunction")]
+        public static async Task Run(
+            [BlobTrigger("sample-container/sample-blob-1")] BlobBaseClient blobTriggerClient,
+            [Blob("sample-container/sample-blob-2")] BlobBaseClient blobClient,
+            ILogger logger)
+        {
+            BlobProperties blobTriggerProperties = await blobTriggerClient.GetPropertiesAsync();
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated on: {datetime}", blobTriggerProperties.LastModified);
+            BlobProperties blobProperties = await blobClient.GetPropertiesAsync();
+            logger.LogInformation("Blob sample-container/sample-blob-2 has been updated on: {datetime}", blobProperties.LastModified);
         }
     }
     #endregion
