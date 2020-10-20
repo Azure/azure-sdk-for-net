@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccess.
+    /// Defines values for ResourceProviderConnection.
     /// </summary>
-    public static class PublicNetworkAccess
+    public static class ResourceProviderConnection
     {
-        public const string InboundAndOutbound = "InboundAndOutbound";
-        public const string OutboundOnly = "OutboundOnly";
+        public const string Inbound = "Inbound";
+        public const string Outbound = "Outbound";
     }
 }
