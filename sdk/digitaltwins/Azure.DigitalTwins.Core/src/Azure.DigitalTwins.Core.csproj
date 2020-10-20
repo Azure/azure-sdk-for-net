@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly props -->
   <PropertyGroup>
     <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
@@ -51,5 +51,11 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
+  <!--Uncomment the below to take reference from Azure.Core based on how Azure.Core.props defines how libraries should take reference-->
+  <!--<Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />-->
+
+  <!--Remove the below after uncommenting the above in order to stop taking a source dependency on Azure.Core-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
 </Project>
