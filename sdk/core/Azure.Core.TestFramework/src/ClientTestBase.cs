@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,7 @@ namespace Azure.Core.TestFramework
         public bool IsAsync { get; }
         protected static TestLogger Logger { get; set; }
         public bool TestDiagnostics { get; set; } = true;
+        public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
@@ -66,6 +68,17 @@ namespace Azure.Core.TestFramework
         public ClientTestBase(bool isAsync)
         {
             IsAsync = isAsync;
+        }
+        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0), default);
+            }
+            else
+            {
+                return operation.WaitForCompletionAsync();
+            }
         }
 
         protected TClient CreateClient<TClient>(params object[] args) where TClient : class

@@ -8,11 +8,7 @@ using Azure.ResourceManager.Resources;
 #else
 using Azure.Management.Resources;
 #endif
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -28,8 +24,6 @@ namespace Azure.ResourceManager.TestFramework
         protected RecordMatcher Matcher { get; set; }
 
         public TestRecording Recording { get; private set; }
-
-        public RecordedTestMode Mode { get; set; }
 
         public TEnvironment TestEnvironment { get; }
 
@@ -93,7 +87,9 @@ namespace Azure.ResourceManager.TestFramework
         {
             return Task.FromResult<object>(null);
         }
-
+        /// <summary>
+        /// Called by NUnit for one time setup, calls on setup
+        /// </summary>
         [OneTimeSetUp]
         protected async Task RunOneTimeSetup()
         {
@@ -106,7 +102,9 @@ namespace Azure.ResourceManager.TestFramework
             InitializeClients();
             await OnOneTimeSetupAsync();
         }
-
+        /// <summary>
+        /// Called by NUnit to run one time tear down and runs user defined on one time teardown
+        /// </summary>
         [OneTimeTearDown]
         protected async Task RunOneTimeTearDown()
         {
@@ -116,7 +114,9 @@ namespace Azure.ResourceManager.TestFramework
             Logger = null;
             await OnOneTimeTearDownAsync();
         }
-
+        /// <summary>
+        /// A method called by NUnit framework to setup recordings for new test and run onsetup
+        /// </summary>
         [SetUp]
         protected async Task StartTestRecording()
         {
@@ -133,7 +133,9 @@ namespace Azure.ResourceManager.TestFramework
             InitializeClients();
             await OnSetupAsync();
         }
-
+        /// <summary>
+        /// Called by NUnit upon completion of test and saves the recording if running in record mode
+        /// </summary>
         [TearDown]
         protected async Task StopTestRecording()
         {
@@ -145,29 +147,19 @@ namespace Azure.ResourceManager.TestFramework
             await OnTearDownAsync();
         }
 
+        /// <summary>
+        /// Create a resource group to be monitored by the test framework.
+        /// </summary>
         protected ResourcesManagementClient GetResourceManagementClient()
         {
             var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
-
-            return CreateClient<ResourcesManagementClient>(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                options);
+            return GetManagementClient<ResourcesManagementClient>(options);
         }
 
-        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0), default);
-            }
-            else
-            {
-                return operation.WaitForCompletionAsync();
-            }
-        }
-
+        /// <summary>
+        /// Delete all monitored resource groups.
+        /// </summary>
         protected async Task CleanupResourceGroupsAsync()
         {
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
@@ -183,7 +175,9 @@ namespace Azure.ResourceManager.TestFramework
                 CleanupPolicy.ResourceGroupsCreated.Clear();
             }
         }
-
+        /// <summary>
+        /// Get a management client with the test enviroment subscription
+        /// </summary>
         protected T GetManagementClient<T>(ClientOptions options) where T : class
         {
             return this.CreateClient<T>(TestEnvironment.SubscriptionId,

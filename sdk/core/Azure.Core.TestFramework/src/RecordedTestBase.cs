@@ -17,8 +17,6 @@ namespace Azure.Core.TestFramework
 
         public TestRecording Recording { get; private set; }
 
-        public RecordedTestMode Mode { get; set; }
-
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
@@ -67,7 +65,7 @@ namespace Azure.Core.TestFramework
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }
