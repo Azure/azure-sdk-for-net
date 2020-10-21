@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.ConnectionString
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.ConnectionStringError(ex);
+                AzureMonitorTraceExporterEventSource.Log.Write($"ConnectionStringError{EventLevelSuffix.Error}", ex);
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }

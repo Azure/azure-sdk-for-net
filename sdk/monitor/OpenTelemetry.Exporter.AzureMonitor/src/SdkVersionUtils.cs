@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.SdkVersionCreateFailed(ex);
+                AzureMonitorTraceExporterEventSource.Log.Write($"SdkVersionCreateFailed{EventLevelSuffix.Warning}", ex);
                 return null;
             }
         }
