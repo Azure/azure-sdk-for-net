@@ -3,29 +3,46 @@ const { spawnSync } = require( 'child_process' );
 
 const input: GenerateInput = readInput();
 Log('There is a property in input: ' + input.repoHttpsUrl);
+let flag: boolean = false;
 
-let output: GenerateOutput = {
-    packages: []
-};
-
-let rpIndex: string[] = getRPs(input.changedFiles); 
-rpIndex.map( rpName =>{
-    Log('RP name: ' + rpName);
-    let path: string = '../sdk/' + rpName + '/Azure.ResourceManager.' + rpName;
-    Log('Project path: ' + path);
-    if( !fs.existsSync(path) ){
-        Log('Path do NOT exsits, new project!')
-        buildProject(path, rpName);
-    }
-    generateCodeWithBuild(path, input.headSha);
-    Log('Generate cuccess!!');
-    output.packages.push(generateOutput(rpName));
+input.relatedReadmeMdFiles.map(
+    item => {
+        if(item.indexOf('resource-manager') !== -1) {
+            flag = true;
+            return;
+        }
     }
 )
+if(flag) {
+    input.changedFiles.filter(item => item.includes('resource-manager'));
+    let output: GenerateOutput = managementGeneration(input);
+}
 
-output.packages.map(
-    item => Log("There is a output package with name: " + item.packageName)
-);
+function managementGeneration(input: GenerateInput): GenerateOutput {
+    let output: GenerateOutput = {
+        packages: []
+    };
+
+    let rpIndex: string[] = getRPs(input.changedFiles); 
+    rpIndex.map( rpName =>{
+        Log('RP name: ' + rpName);
+        let path: string = '../sdk/' + rpName + '/Azure.ResourceManager.' + rpName;
+        Log('Project path: ' + path);
+        if( !fs.existsSync(path) ){
+            Log('Path do NOT exsits, new project!')
+            buildProject(path, rpName);
+        }
+        generateCodeWithBuild(path, input.headSha);
+        Log('Generate cuccess!!');
+        output.packages.push(generateOutput(rpName));
+        }
+    )
+
+    output.packages.map(
+        item => Log("There is a output package with name: " + item.packageName)
+    );
+    return output;
+}
 
 // Log string
 function Log(input: string) {
