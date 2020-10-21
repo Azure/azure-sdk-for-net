@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201019.1" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201021.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />

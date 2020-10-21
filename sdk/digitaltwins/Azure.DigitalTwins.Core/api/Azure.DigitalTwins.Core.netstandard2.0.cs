@@ -97,12 +97,12 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, Azure.DigitalTwins.Core.PublishTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> Query(string query, Azure.DigitalTwins.Core.QueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> QueryAsync(string query, Azure.DigitalTwins.Core.QueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateComponent(string digitalTwinId, string componentName, string jsonPatch, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateComponentAsync(string digitalTwinId, string componentName, string jsonPatch, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateDigitalTwin(string digitalTwinId, string jsonPatch, Azure.DigitalTwins.Core.UpdateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDigitalTwinAsync(string digitalTwinId, string jsonPatch, Azure.DigitalTwins.Core.UpdateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateRelationship(string digitalTwinId, string relationshipId, string jsonPatch, Azure.DigitalTwins.Core.UpdateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string jsonPatch, Azure.DigitalTwins.Core.UpdateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateComponent(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateComponentAsync(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateDigitalTwin(string digitalTwinId, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDigitalTwinAsync(string digitalTwinId, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateRelationship(string digitalTwinId, string relationshipId, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DigitalTwinsClientOptions : Azure.Core.ClientOptions
     {
@@ -299,14 +299,6 @@ namespace Azure.DigitalTwins.Core.Serialization
         public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public Azure.DigitalTwins.Core.Serialization.ComponentMetadata Metadata { get { throw null; } }
-    }
-    public partial class UpdateOperationsUtility
-    {
-        public UpdateOperationsUtility() { }
-        public void AppendAddOp(string path, object value) { }
-        public void AppendRemoveOp(string path) { }
-        public void AppendReplaceOp(string path, object value) { }
-        public string Serialize() { throw null; }
     }
     public partial class WritableProperty
     {

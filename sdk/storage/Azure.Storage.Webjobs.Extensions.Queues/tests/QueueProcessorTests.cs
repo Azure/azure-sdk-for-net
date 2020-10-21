@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             _poisonQueue = _fixture.PoisonQueue;
 
             _queuesOptions = new QueuesOptions();
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions);
             _processor = new QueueProcessor(context);
         }
 
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 VisibilityTimeout = TimeSpan.FromSeconds(30),
                 MaxPollingInterval = TimeSpan.FromSeconds(15)
             };
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, options);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, options);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
-            Assert.AreEqual(options.BatchSize, localProcessor.BatchSize);
-            Assert.AreEqual(options.MaxDequeueCount, localProcessor.MaxDequeueCount);
-            Assert.AreEqual(options.NewBatchThreshold, localProcessor.NewBatchThreshold);
-            Assert.AreEqual(options.VisibilityTimeout, localProcessor.VisibilityTimeout);
-            Assert.AreEqual(options.MaxPollingInterval, localProcessor.MaxPollingInterval);
+            Assert.AreEqual(options.BatchSize, localProcessor.QueuesOptions.BatchSize);
+            Assert.AreEqual(options.MaxDequeueCount, localProcessor.QueuesOptions.MaxDequeueCount);
+            Assert.AreEqual(options.NewBatchThreshold, localProcessor.QueuesOptions.NewBatchThreshold);
+            Assert.AreEqual(options.VisibilityTimeout, localProcessor.QueuesOptions.VisibilityTimeout);
+            Assert.AreEqual(options.MaxPollingInterval, localProcessor.QueuesOptions.MaxPollingInterval);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Test]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await _queue.SendMessageAsync(messageContent);
 
             FunctionResult result = new FunctionResult(false);
-            for (int i = 0; i < context.MaxDequeueCount; i++)
+            for (int i = 0; i < context.Options.MaxDequeueCount; i++)
             {
                 message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 await localProcessor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 })
                 .ReturnsAsync(Response.FromValue(QueuesModelFactory.UpdateReceipt("x", DateTimeOffset.UtcNow.AddMinutes(5)), null));
 
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queueClientMock.Object, null, queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(queueClientMock.Object, null, queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             string messageContent = Guid.NewGuid().ToString();
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Test]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             string messageContent = Guid.NewGuid().ToString();
             await _queue.SendMessageAsync(messageContent);
             QueueMessage messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            for (int i = 0; i < context.MaxDequeueCount; i++)
+            for (int i = 0; i < context.Options.MaxDequeueCount; i++)
             {
                 await _queue.UpdateMessageAsync(messageFromCloud.MessageId, messageFromCloud.PopReceipt, visibilityTimeout: TimeSpan.FromMilliseconds(0));
                 messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();

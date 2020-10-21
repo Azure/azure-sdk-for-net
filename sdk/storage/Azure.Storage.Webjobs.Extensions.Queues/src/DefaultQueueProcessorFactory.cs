@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     internal class DefaultQueueProcessorFactory : IQueueProcessorFactory
     {
         /// <inheritdoc/>
-        public virtual QueueProcessor Create(QueueProcessorFactoryContext context)
+        public virtual QueueProcessor Create(QueueProcessorOptions context)
         {
             if (context == null)
             {
