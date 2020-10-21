@@ -12,7 +12,7 @@
       <![CDATA[
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
         - Add user assigned identity
-		- Support Engine v3
+				- Support Engine v3
       ]]>
   </PackageReleaseNotes>
   </PropertyGroup>
