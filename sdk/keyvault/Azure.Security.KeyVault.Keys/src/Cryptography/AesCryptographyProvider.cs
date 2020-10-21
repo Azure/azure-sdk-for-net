@@ -27,12 +27,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, DecryptOptions options, CancellationToken cancellationToken = default)
+        public override DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             ThrowIfTimeInvalid();
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
             {
                 using ICryptoTransform decryptor = aesCbc.CreateDecryptor(KeyMaterial.K, options.Iv);
@@ -71,12 +72,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken = default)
+        public override EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             ThrowIfTimeInvalid();
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
             {
                 using ICryptoTransform encryptor = aesCbc.CreateEncryptor(KeyMaterial.K, options.Iv);
@@ -100,14 +102,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     byte[] ciphertext = new byte[plaintext.Length];
                     byte[] tag = new byte[AesGcmProxy.NonceByteSize];
 
-                    aesGcm.Encrypt(options.Iv, plaintext, ciphertext, tag, options.AdditionalAuthenticatedData);
+                    // Generate an nonce only for local AES-GCM; Managed HSM will do it service-side and err if serialized.
+                    byte[] iv = Crypto.GenerateIv(AesGcmProxy.NonceByteSize);
+
+                    aesGcm.Encrypt(iv, plaintext, ciphertext, tag, options.AdditionalAuthenticatedData);
 
                     return new EncryptResult
                     {
                         Algorithm = algorithm,
                         KeyId = KeyMaterial.Id,
                         Ciphertext = ciphertext,
-                        Iv = options.Iv,
+                        Iv = iv,
                         AuthenticationTag = tag,
                         AdditionalAuthenticatedData = options.AdditionalAuthenticatedData,
                     };

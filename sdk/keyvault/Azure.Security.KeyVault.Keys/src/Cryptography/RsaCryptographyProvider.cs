@@ -26,12 +26,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override EncryptResult Encrypt(EncryptionAlgorithm algorithm, EncryptOptions options, CancellationToken cancellationToken)
+        public override EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             ThrowIfTimeInvalid();
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {
@@ -55,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result;
         }
 
-        public override DecryptResult Decrypt(EncryptionAlgorithm algorithm, DecryptOptions options, CancellationToken cancellationToken)
+        public override DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -66,6 +67,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return null;
             }
 
+            EncryptionAlgorithm algorithm = options.Algorithm;
             RSAEncryptionPadding padding = algorithm.GetRsaEncryptionPadding();
             if (padding is null)
             {

@@ -10,6 +10,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class AesCbc
     {
+        public const int BlockByteSize = 16;
+
         public static readonly AesCbc Aes128Cbc = new AesCbc("A128CBC", 128, PaddingMode.Zeros);
         public static readonly AesCbc Aes192Cbc = new AesCbc("A192CBC", 192, PaddingMode.Zeros);
         public static readonly AesCbc Aes256Cbc = new AesCbc("A256CBC", 256, PaddingMode.Zeros);

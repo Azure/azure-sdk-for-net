@@ -13,17 +13,68 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void RequiresPlaintext()
         {
-            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new EncryptOptions(null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.Rsa15Options(null));
             Assert.AreEqual("plaintext", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.RsaOaepOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.RsaOaep256Options(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128GcmOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A128GcmOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A192GcmOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A192GcmOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A256GcmOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A256GcmOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A128CbcOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A192CbcOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A256CbcOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcPadOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A128CbcPadOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcPadOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A192CbcPadOptions(Array.Empty<byte>(), null));
+
+            ex = Assert.Throws<ArgumentNullException>(() => EncryptOptions.A128CbcPadOptions(null));
+            Assert.AreEqual("plaintext", ex.ParamName);
+
+            Assert.DoesNotThrow(() => EncryptOptions.A256CbcPadOptions(Array.Empty<byte>(), null));
         }
 
         [Test]
         public void InitializesIv([EnumValues] EncryptionAlgorithm algorithm)
         {
-            EncryptOptions options = new EncryptOptions(Array.Empty<byte>());
-            options.Initialize(algorithm);
+            EncryptOptions options = new EncryptOptions(algorithm, Array.Empty<byte>());
+            options.Initialize();
 
-            if (algorithm.RequiresIv())
+            if (algorithm.GetAesCbcEncryptionAlgorithm() != null)
             {
                 byte[] iv = options.Iv;
 
@@ -31,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 CollectionAssert.IsNotEmpty(options.Iv);
 
                 // Calling it again should not overwrite.
-                options.Initialize(algorithm);
+                options.Initialize();
 
                 Assert.AreSame(iv, options.Iv);
             }
@@ -39,17 +90,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 Assert.IsNull(options.Iv);
             }
-        }
-
-        [Test]
-        public void DoesNotOverwriteIv()
-        {
-            byte[] iv = new byte[12] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-
-            EncryptOptions options = new EncryptOptions(Array.Empty<byte>(), iv);
-            options.Initialize(EncryptionAlgorithm.A256Gcm);
-
-            Assert.AreSame(iv, options.Iv);
         }
     }
 }

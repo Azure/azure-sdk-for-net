@@ -74,9 +74,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = new EncryptOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptionAlgorithm.A128Cbc, options, default));
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
         }
 
@@ -97,9 +97,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
-            EncryptOptions options = new EncryptOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
+            EncryptOptions options = EncryptOptions.A128CbcOptions(Encoding.UTF8.GetBytes("Single block msg"), iv);
 
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptionAlgorithm.A128Cbc, options, default));
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(options, default));
             Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey key = new JsonWebKey(aes);
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Encrypt(new EncryptionAlgorithm("invalid"), new EncryptOptions(new byte[] { 0 })));
+            Assert.IsNull(provider.Encrypt(new EncryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Encrypt", e.GetProperty<string>("operation"));
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey key = new JsonWebKey(aes);
 
             AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
-            Assert.IsNull(provider.Decrypt(new EncryptionAlgorithm("invalid"), new DecryptOptions(new byte[] { 0 })));
+            Assert.IsNull(provider.Decrypt(new DecryptOptions(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
             Assert.AreEqual("Decrypt", e.GetProperty<string>("operation"));
@@ -159,12 +159,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 iv = iv.Take(AesGcmProxy.NonceByteSize);
             }
 
-            EncryptOptions encryptOptions = new EncryptOptions(plaintext, iv)
-            {
-                AdditionalAuthenticatedData = aad,
-            };
+            EncryptOptions encryptOptions = new EncryptOptions(algorithm, plaintext, iv, aad);
+            EncryptResult encrypted = provider.Encrypt(encryptOptions, default);
 
-            EncryptResult encrypted = provider.Encrypt(algorithm, encryptOptions, default);
 #if !NETCOREAPP3_1
             if (algorithm.IsAesGcm())
             {
@@ -175,13 +172,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(encrypted);
 
             DecryptOptions decryptOptions = algorithm.IsAesGcm() ?
-                new DecryptOptions(encrypted.Ciphertext, encrypted.Iv, encrypted.AuthenticationTag)
-                {
-                    AdditionalAuthenticatedData = encrypted.AdditionalAuthenticatedData,
-                } :
-                new DecryptOptions(encrypted.Ciphertext, encrypted.Iv);
+                new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv, encrypted.AuthenticationTag, encrypted.AdditionalAuthenticatedData) :
+                new DecryptOptions(algorithm, encrypted.Ciphertext, encrypted.Iv);
 
-            DecryptResult decrypted = provider.Decrypt(algorithm, decryptOptions, default);
+            DecryptResult decrypted = provider.Decrypt(decryptOptions, default);
             Assert.IsNotNull(decrypted);
 
             // AES-CBC will be zero-padded.

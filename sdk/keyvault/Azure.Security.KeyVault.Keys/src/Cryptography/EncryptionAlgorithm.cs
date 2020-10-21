@@ -166,25 +166,5 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     return false;
             }
         }
-
-        internal bool RequiresIv()
-        {
-            switch (_value)
-            {
-                case A128GcmValue:
-                case A192GcmValue:
-                case A256GcmValue:
-                case A128CbcValue:
-                case A192CbcValue:
-                case A256CbcValue:
-                case A128CbcPadValue:
-                case A192CbcPadValue:
-                case A256CbcPadValue:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
     }
 }

@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class AesGcmProxy : IDisposable
     {
+        public const int NonceByteSize = 12;
+
         private static MethodInfo s_decryptMethod;
         private static MethodInfo s_encryptMethod;
 
@@ -23,8 +25,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             _aes = aes ?? throw new ArgumentNullException(nameof(aes));
         }
-
-        public static int NonceByteSize = 12;
 
         public static bool TryCreate(byte[] key, out AesGcmProxy proxy)
         {
