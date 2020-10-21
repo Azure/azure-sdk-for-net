@@ -38,17 +38,17 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // Run the samples
 
-            //var dtLifecycleSamples = new DigitalTwinsLifecycleSamples(dtClient, options.EventHubEndpointName);
-            //await dtLifecycleSamples.RunSamplesAsync();
+            var dtLifecycleSamples = new DigitalTwinsLifecycleSamples(dtClient, options.EventHubEndpointName);
+            await dtLifecycleSamples.RunSamplesAsync();
 
-            //var modelLifecycleSamples = new ModelLifecycleSamples();
-            //await modelLifecycleSamples.RunSamplesAsync(dtClient);
+            var modelLifecycleSamples = new ModelLifecycleSamples();
+            await modelLifecycleSamples.RunSamplesAsync(dtClient);
 
-            //var componentSamples = new ComponentSamples();
-            //await componentSamples.RunSamplesAsync(dtClient);
+            var componentSamples = new ComponentSamples();
+            await componentSamples.RunSamplesAsync(dtClient);
 
-            //var publishTelemetrySamples = new PublishTelemetrySamples();
-            //await publishTelemetrySamples.RunSamplesAsync(dtClient);
+            var publishTelemetrySamples = new PublishTelemetrySamples();
+            await publishTelemetrySamples.RunSamplesAsync(dtClient);
 
             var relationshipSamples = new RelationshipSamples();
             await relationshipSamples.RunSamplesAsync(dtClient);
