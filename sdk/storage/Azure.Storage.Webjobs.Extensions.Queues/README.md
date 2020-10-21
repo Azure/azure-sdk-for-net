@@ -47,6 +47,10 @@ Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/fu
 
 ## Examples
 
+### Listening to queue
+
+#### Binding queue message to string
+
 ```C# Snippet:QueueTriggerFunction_String
 public static class QueueTriggerFunction_String
 {
@@ -59,6 +63,8 @@ public static class QueueTriggerFunction_String
     }
 }
 ```
+
+#### Binding queue message to custom type
 
 ```C# Snippet:QueueTriggerFunction_CustomObject
 public static class QueueTriggerFunction_CustomObject
@@ -78,6 +84,8 @@ public static class QueueTriggerFunction_CustomObject
 }
 ```
 
+#### Binding queue message to JObject
+
 ```C# Snippet:QueueTriggerFunction_JObject
 public static class QueueTriggerFunction_JObject
 {
@@ -90,6 +98,10 @@ public static class QueueTriggerFunction_JObject
     }
 }
 ```
+
+### Publishing messages to queue
+
+#### Publishing message as string
 
 ```C# Snippet:QueueSenderFunction_String_Return
 public static class QueueSenderFunction_String_Return
@@ -106,6 +118,8 @@ public static class QueueSenderFunction_String_Return
     }
 }
 ```
+
+#### Publishing message as custom type through out parameter
 
 ```C# Snippet:QueueSenderFunction_CustomObject_OutParamter
 public static class QueueSenderFunction_CustomObject_OutParamter
@@ -127,6 +141,8 @@ public static class QueueSenderFunction_CustomObject_OutParamter
     }
 }
 ```
+
+#### Publishing message as custom type through collector
 
 ```C# Snippet:QueueSenderFunction_CustomObject_Collector
 public static class QueueSenderFunction_CustomObject_Collector

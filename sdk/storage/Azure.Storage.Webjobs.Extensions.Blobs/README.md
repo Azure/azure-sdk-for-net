@@ -47,6 +47,8 @@ Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/fu
 
 ## Examples
 
+### Binding to string
+
 ```C# Snippet:BlobFunction_String
 public static class BlobFunction_String
 {
@@ -61,6 +63,8 @@ public static class BlobFunction_String
     }
 }
 ```
+
+### Reading from stream
 
 ```C# Snippet:BlobFunction_ReadStream
 public static class BlobFunction_ReadStream
@@ -79,6 +83,8 @@ public static class BlobFunction_ReadStream
 }
 ```
 
+### Writing to stream
+
 ```C# Snippet:BlobFunction_WriteStream
 public static class BlobFunction_WriteStream
 {
@@ -93,6 +99,8 @@ public static class BlobFunction_WriteStream
     }
 }
 ```
+
+### Binding to Azure Storage Blob SDK types
 
 ```C# Snippet:BlobFunction_BlobBaseClient
 public static class BlobFunction_BlobBaseClient
