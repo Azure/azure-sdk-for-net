@@ -7,7 +7,7 @@ jobs:
     steps:
       - task: PowerShell@2
         displayName: Prep template pipeline for release
-        condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
+        condition: and(succeeded(),eq('${{ parameters.testPipeline }}','true'))
         inputs:
           pwsh: true
           workingDirectory: $(Build.SourcesDirectory)
