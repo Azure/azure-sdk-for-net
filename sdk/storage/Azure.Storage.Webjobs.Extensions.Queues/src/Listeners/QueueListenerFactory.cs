@@ -11,6 +11,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
@@ -56,10 +57,33 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         {
             QueueTriggerExecutor triggerExecutor = new QueueTriggerExecutor(_executor);
 
+            var queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, _loggerFactory, _queueProcessorFactory, _queueOptions, _messageEnqueuedWatcherSetter);
             IListener listener = new QueueListener(_queue, _poisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _messageEnqueuedWatcherSetter, _queueOptions, _queueProcessorFactory, _descriptor);
+                _messageEnqueuedWatcherSetter, _queueOptions, queueProcessor, _descriptor);
 
             return Task.FromResult(listener);
+        }
+
+        internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
+            QueuesOptions queuesOptions, IMessageEnqueuedWatcher sharedWatcher)
+        {
+            QueueProcessorOptions context = new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue);
+
+            QueueProcessor queueProcessor = null;
+            if (HostQueueNames.IsHostQueue(queue.Name))
+            {
+                // We only delegate to the processor factory for application queues,
+                // not our built in control queues
+                queueProcessor = new QueueProcessor(context);
+            }
+            else
+            {
+                queueProcessor = queueProcessorFactory.Create(context);
+            }
+
+            QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, sharedWatcher);
+
+            return queueProcessor;
         }
 
         private static QueueClient CreatePoisonQueueReference(QueueServiceClient client, string name)

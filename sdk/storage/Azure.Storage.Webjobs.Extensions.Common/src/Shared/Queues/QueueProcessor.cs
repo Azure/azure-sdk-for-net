@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
+#if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
     /// <summary>
     /// This class defines a strategy used for processing queue messages.
     /// </summary>
@@ -22,6 +23,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     /// a custom <see cref="IQueueProcessorFactory"/>.
     /// </remarks>
     public class QueueProcessor
+#else
+    internal class QueueProcessor
+#endif
     {
         private readonly QueueClient _queue;
         private readonly QueueClient _poisonQueue;
@@ -30,23 +34,19 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        /// <param name="context">The factory context.</param>
-        public QueueProcessor(QueueProcessorFactoryContext context)
+        /// <param name="queueProcessorOptions">The options.</param>
+        internal protected QueueProcessor(QueueProcessorOptions queueProcessorOptions)
         {
-            if (context == null)
+            if (queueProcessorOptions == null)
             {
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException(nameof(queueProcessorOptions));
             }
 
-            _queue = context.Queue;
-            _poisonQueue = context.PoisonQueue;
-            _logger = context.Logger;
+            _queue = queueProcessorOptions.Queue;
+            _poisonQueue = queueProcessorOptions.PoisonQueue;
+            _logger = queueProcessorOptions.Logger;
 
-            MaxDequeueCount = context.MaxDequeueCount;
-            BatchSize = context.BatchSize;
-            NewBatchThreshold = context.NewBatchThreshold;
-            VisibilityTimeout = context.VisibilityTimeout;
-            MaxPollingInterval = context.MaxPollingInterval;
+            QueuesOptions = queueProcessorOptions.Options;
         }
 
         /// <summary>
@@ -55,31 +55,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         public event EventHandler<PoisonMessageEventArgs> MessageAddedToPoisonQueue;
 
         /// <summary>
-        /// Gets or sets the number of queue messages to retrieve and process in parallel.
+        /// TODO.
         /// </summary>
-        public int BatchSize { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the number of times to try processing a message before moving it to the poison queue.
-        /// </summary>
-        public int MaxDequeueCount { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the threshold at which a new batch of messages will be fetched.
-        /// </summary>
-        public int NewBatchThreshold { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the longest period of time to wait before checking for a message to arrive when a queue remains
-        /// empty.
-        /// </summary>
-        public TimeSpan MaxPollingInterval { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the default message visibility timeout that will be used
-        /// for messages that fail processing.
-        /// </summary>
-        public TimeSpan VisibilityTimeout { get; protected set; }
+        internal QueuesOptions QueuesOptions { get; private set; }
 
         /// <summary>
         /// This method is called when there is a new message to process, before the job function is invoked.
@@ -88,9 +66,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>True if the message processing should continue, false otherwise.</returns>
-        public virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        internal protected virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
-            if (message.DequeueCount > MaxDequeueCount)
+            if (message.DequeueCount > QueuesOptions.MaxDequeueCount)
             {
                 await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 return await Task.FromResult<bool>(false).ConfigureAwait(false);
@@ -110,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        public virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
+        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result.Succeeded)
             {
@@ -118,13 +96,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
             else if (_poisonQueue != null)
             {
-                if (message.DequeueCount >= MaxDequeueCount)
+                if (message.DequeueCount >= QueuesOptions.MaxDequeueCount)
                 {
                     await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    await ReleaseMessageAsync(message, result, VisibilityTimeout, cancellationToken).ConfigureAwait(false);
+                    await ReleaseMessageAsync(message, result, QueuesOptions.VisibilityTimeout, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
@@ -153,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <returns></returns>
         protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
-            string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", MaxDequeueCount, poisonQueue.Name);
+            string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
             await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);

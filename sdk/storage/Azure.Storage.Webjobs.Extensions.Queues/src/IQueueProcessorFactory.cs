@@ -11,8 +11,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Creates a <see cref="QueueProcessor"/> using the specified context.
         /// </summary>
-        /// <param name="context">The <see cref="QueueProcessorFactoryContext"/> to use.</param>
+        /// <param name="queueProcessorOptions">The <see cref="QueueProcessorOptions"/> to use.</param>
         /// <returns>A <see cref="QueueProcessor"/> instance.</returns>
-        QueueProcessor Create(QueueProcessorFactoryContext context);
+        QueueProcessor Create(QueueProcessorOptions queueProcessorOptions);
     }
 }
