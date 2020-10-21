@@ -1076,11 +1076,11 @@ namespace Azure.Data.Tables.Tests
             {
                 TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
             }
-            catch (TableBatchOperationFailedException ex)
+            catch (RequestFailedException ex)
             {
-                Assert.That(ex.Status == (int)HttpStatusCode.Conflict);
-                Assert.That(ex.TableEntity, Is.Not.Null);
-                Assert.That(ex.TableEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
+                Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
+                Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
+                Assert.That(ex.Message.Contains(entitiesToCreate.Last().RowKey), $"Exception message should have contained {entitiesToCreate.Last().RowKey}.\n\n Actual: {ex.Message}");
             }
         }
     }

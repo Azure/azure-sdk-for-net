@@ -158,8 +158,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
-        /// <exception cref="TableBatchOperationFailedException"/> if the batch transaction fails./>
-        /// <exception cref="RequestFailedException"/> if the general operation fails./>
+        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default)
         {
             var messageList = BuildOrderedBatchRequests();
@@ -191,8 +190,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
-        /// <exception cref="TableBatchOperationFailedException"/> if the batch transaction fails./>
-        /// <exception cref="RequestFailedException"/> if the general operation fails./>
+        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         public virtual Response<TableBatchResponse> SubmitBatch(CancellationToken cancellationToken = default)
         {
             var messageList = BuildOrderedBatchRequests();

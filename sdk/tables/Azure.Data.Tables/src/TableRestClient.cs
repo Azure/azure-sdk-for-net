@@ -6,7 +6,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -90,7 +93,9 @@ namespace Azure.Data.Tables
 
                             if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
                             {
-                                throw new TableBatchOperationFailedException(ex.Status, ex.Message, ex.ErrorCode, ex.InnerException, messageList[failedEntityIndex].Entity);
+                                // create a new exception with the additional info populated.
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
+                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
                             }
                             else
                             {
@@ -141,13 +146,15 @@ namespace Azure.Data.Tables
 
                             if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
                             {
-                                throw new TableBatchOperationFailedException(ex.Status, ex.Message, ex.ErrorCode, ex.InnerException, messageList[failedEntityIndex].Entity);
+                                // create a new exception with the additional info populated.
+                                // reset the response stream position so we can read it again
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
+                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
                             }
                             else
                             {
                                 throw ex;
                             }
-                            throw _clientDiagnostics.CreateRequestFailedException(responses[0]);
                         }
 
                         return Response.FromValue(responses.ToList(), message.Response);
@@ -155,6 +162,11 @@ namespace Azure.Data.Tables
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
+        }
+
+        private static string AppendEntityInfoToMessage(string messsage, ITableEntity entity)
+        {
+            return messsage += $"\n\nRowKey={entity.RowKey}";
         }
     }
 }
