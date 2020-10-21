@@ -47,7 +47,18 @@ Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/fu
 
 ## Examples
 
-TODO
+```C# Snippet:QueueTriggerFunction_String
+public static class QueueTriggerFunction_String
+{
+    [FunctionName("QueueTriggerFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue")] string message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message);
+    }
+}
+```
 
 ## Troubleshooting
 
