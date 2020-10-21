@@ -30,8 +30,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Azure.Storage.Webjobs.Extensions.Scenario.Tests\tests\Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Webjobs.Extensions.Storage.Samples", "Azure.Storage.Webjobs.Extensions.Samples\Azure.Webjobs.Extensions.Storage.Samples.csproj", "{0425DF36-E0F1-419A-8B07-E01DE249D066}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{CB002B93-3D25-42DD-B1A6-472C10B99BA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests", "Azure.Storage.Webjobs.Extensions.Blobs\samples\Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests.csproj", "{77860E78-4770-4C48-8C2B-AF6B42A8D067}"
@@ -88,10 +86,6 @@ Global
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB002B93-3D25-42DD-B1A6-472C10B99BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB002B93-3D25-42DD-B1A6-472C10B99BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB002B93-3D25-42DD-B1A6-472C10B99BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
