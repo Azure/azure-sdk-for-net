@@ -15,7 +15,7 @@ namespace Azure.DigitalTwins.Core
         [CodeGenMember("Traceparent")]
         public string TraceParent { get; set; }
 
-        /// <summary> Provides vendor-specific trace identification information and is a companion to traceparent. </summary>
+        /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
         public string TraceState { get; set; }
     }

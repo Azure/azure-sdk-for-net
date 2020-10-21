@@ -162,13 +162,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsAddOptions?.Traceparent != null)
+            if (digitalTwinModelsAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsAddOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinModelsAddOptions.TraceParent);
             }
-            if (digitalTwinModelsAddOptions?.Tracestate != null)
+            if (digitalTwinModelsAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsAddOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinModelsAddOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -193,13 +193,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsUpdateOptions?.Traceparent != null)
+            if (digitalTwinModelsUpdateOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsUpdateOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinModelsUpdateOptions.TraceParent);
             }
-            if (digitalTwinModelsUpdateOptions?.Tracestate != null)
+            if (digitalTwinModelsUpdateOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsUpdateOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinModelsUpdateOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");

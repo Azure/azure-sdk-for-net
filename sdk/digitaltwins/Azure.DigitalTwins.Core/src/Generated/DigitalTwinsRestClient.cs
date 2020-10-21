@@ -642,13 +642,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendComponentTelemetryOptions?.Traceparent != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.TraceParent);
             }
-            if (digitalTwinsSendComponentTelemetryOptions?.Tracestate != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.TraceState);
             }
             request.Headers.Add("Message-Id", messageId);
             if (telemetrySourceTime != null)
