@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class StringExtensions
     {

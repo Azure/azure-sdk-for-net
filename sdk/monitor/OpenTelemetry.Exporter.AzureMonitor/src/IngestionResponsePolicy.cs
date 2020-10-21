@@ -4,12 +4,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using OpenTelemetry.Exporter.AzureMonitor.Models;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
+
+namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class IngestionResponsePolicy : HttpPipelineSynchronousPolicy
     {
