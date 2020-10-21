@@ -21,10 +21,9 @@ namespace Microsoft.Azure.Management.Confluent.Tests
               
                 CreateResourceGroup(context, rgName);
                 OrganizationResource rp = CreateResource(context, rgName, resourceName);
-                // Assert.NotNull(rp);
+                Assert.NotNull(rp);
 
-                // DeleteResource(context, rgName, resourceName);
-                // AssertNoResource(context, rgName);
+                DeleteResource(context, rgName, resourceName);
                 DeleteResourceGroup(context, rgName);
             }
         }
@@ -66,12 +65,6 @@ namespace Microsoft.Azure.Management.Confluent.Tests
         {
             ConfluentManagementClient client = GetConfluentManagementClient(context);
             client.Organization.Delete(rgName, resourceName);
-        }
-
-        private void AssertNoResource(MockContext context, string rgName)
-        {
-            IPage<OrganizationResource> resources = ListResources(context, rgName);
-            Assert.Null(resources.GetEnumerator().Current);
         }
 
         private IPage<OrganizationResource> ListResources(MockContext context, string rgName)

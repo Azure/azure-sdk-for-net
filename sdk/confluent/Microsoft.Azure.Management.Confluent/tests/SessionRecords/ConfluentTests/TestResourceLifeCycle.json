@@ -262,6 +262,138 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Confluent.ConfluentManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Oct 2020 19:06:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"5600e31a-0000-0700-0000-5f90868f0000\""
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "52819f24-c42b-4411-bc82-e518a4a994b1"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd7ed76f-ef3d-421e-9d77-7b88cef604fa"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20201021T190752Z:16382656-5609-4b44-ae14-363f18895d74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "817"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Confluent.ConfluentManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Oct 2020 19:07:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"5600e31a-0000-0700-0000-5f90868f0000\""
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "85fe7fef-5532-48df-8e99-0bec2a7ef1cb"
+        ],
+        "x-ms-correlation-request-id": [
+          "62ea5233-9184-46a3-918e-fa5c6c2d15d9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20201021T190552Z:16382656-5609-4b44-ae14-363f18895d74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "817"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "\"{\r\n  \"error\": {\r\n   \"code\": \"ResourceNotFound\",\r\n  \"message\": \"The Resource 'Microsoft.Confluent/organizations/confluent-sdk-test-resource8350' under resource group 'confluent-sdk-test-rg1630' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"  \r\n}  \r\n}\"",
+      "StatusCode": 404
+    },
+    {
       "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "DELETE",
