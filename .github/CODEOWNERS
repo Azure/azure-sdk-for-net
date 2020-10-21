@@ -289,7 +289,7 @@
 /sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.*/           @jfggdl @serkantkaraca
+/sdk/eventhub/Microsoft.*/           @jfggdl @serkantkaraca @samuelkoppes
 
 # ServiceLabel: %Functions %Service Attention
 #/<NotInRepo>/            @ahmedelnably @fabiocav
@@ -514,7 +514,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
 
 # ServiceLabel: %Service Bus %Service Attention
-/sdk/servicebus/Microsoft.*/                    @jfggdl
+/sdk/servicebus/Microsoft.*/                    @axisc
 
 # ServiceLabel: %Service Fabric %Service Attention
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/           @QingChenmsft @vaishnavk @juhacket
