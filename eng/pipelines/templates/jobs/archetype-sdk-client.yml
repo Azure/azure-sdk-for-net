@@ -82,7 +82,7 @@ jobs:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: NodeTool@0
         inputs:
-          versionSpec: '13.13.0'
+          versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
