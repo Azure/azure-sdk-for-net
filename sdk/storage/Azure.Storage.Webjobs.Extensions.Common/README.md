@@ -2,6 +2,39 @@
 
 This package provides infrastruture shared by the other Azure WebJobs Storage libraries.
 
+## Getting started
+
+### Install the package
+
+Install the common library with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.WebJobs.Extensions.Storage.Common
+```
+
+### Prerequisites
+
+You need an [Azure subscription][azure_sub] and a
+[Storage Account][storage_account_docs] to use this package.
+
+To create a new Storage Account, you can use the [Azure Portal][storage_account_create_portal],
+[Azure PowerShell][storage_account_create_ps], or the [Azure CLI][storage_account_create_cli].
+Here's an example using the Azure CLI:
+
+```Powershell
+az storage account create --name <your-resource-name> --resource-group <your-resource-group-name> --location westus --sku Standard_LRS
+```
+
+### Authenticate the client
+
+In order for the extensions to access Storage, you will need the connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+
+```bash
+az storage account show-connection-string -g <your-resource-group-name> -n <your-resource-name>
+```
+
+The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/azure/azure-functions/functions-app-settings).
+
 ## Contributing
 
 See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
