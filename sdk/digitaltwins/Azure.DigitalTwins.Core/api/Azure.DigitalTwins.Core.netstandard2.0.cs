@@ -27,6 +27,12 @@ namespace Azure.DigitalTwins.Core
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
+    public partial class DecomissionModelOptions
+    {
+        public DecomissionModelOptions() { }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
+    }
     public partial class DeleteDigitalTwinOptions
     {
         public DeleteDigitalTwinOptions() { }
@@ -66,8 +72,8 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> models, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.UpdateModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.UpdateModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDigitalTwin(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDigitalTwinAsync(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEventRoute(string eventRouteId, Azure.DigitalTwins.Core.DeleteEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -236,12 +242,6 @@ namespace Azure.DigitalTwins.Core
     {
         public UpdateDigitalTwinOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string TraceParent { get { throw null; } set { } }
-        public string TraceState { get { throw null; } set { } }
-    }
-    public partial class UpdateModelOptions
-    {
-        public UpdateModelOptions() { }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
