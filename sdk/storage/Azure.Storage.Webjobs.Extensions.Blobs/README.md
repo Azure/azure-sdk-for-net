@@ -33,17 +33,17 @@ In order for the extension to access Blobs, you will need the connection string 
 az storage account show-connection-string -g <your-resource-group-name> -n <your-resource-name>
 ```
 
-The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings).
+The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/azure/azure-functions/functions-app-settings).
 
 ## Key concepts
 
 ### Using Blob binding
 
-Please follow the [input binding tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
+Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
 
 ### Using Blob trigger
 
-Please follow the [tutorial](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
+Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
 
 ## Examples
 
