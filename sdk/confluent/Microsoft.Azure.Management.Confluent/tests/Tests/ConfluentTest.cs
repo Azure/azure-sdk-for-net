@@ -17,11 +17,11 @@ namespace Microsoft.Azure.Management.Confluent.Tests
             {
                 var context = MockContext.Start(GetType());
                 string rgName = CreateName("confluent-sdk-test-rg");
-                string resourceName = CreateName("confluent-sdk-test-resource");
+                string resourceName = CreateName("confluent-sdk-test-resource8350");
               
                 CreateResourceGroup(context, rgName);
-                //OrganizationResource rp = CreateResource(context, rgName, resourceName);
-                //Assert.NotNull(rp);
+                OrganizationResource rp = CreateResource(context, rgName, resourceName);
+                // Assert.NotNull(rp);
 
                 // DeleteResource(context, rgName, resourceName);
                 // AssertNoResource(context, rgName);
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Management.Confluent.Tests
                 new OrganizationResource(
                     name: resourceName,
                     type: "Microsoft.Confluent/organizations",
-                    offerDetail: new OrganizationResourcePropertiesOfferDetail(publisherId: "confluentinc", id: "confluent-cloud-azure-stag", planId: "confluent-cloud-azure-payg-stag", planName: "Confluent Cloud - Pay as you Go", termUnit: "P1M"),
+                    offerDetail: new OrganizationResourcePropertiesOfferDetail(publisherId: "isvtestuklegacy", id: "liftr_cf_dev", planId: "payg", planName: "Pay as you go", termUnit: "P1M"),
                     userDetail: new OrganizationResourcePropertiesUserDetail(firstName: "Srinivas", lastName: "Alluri", emailAddress: "sralluri@microsoft.com"),
-                    location: "eastus2euap"
+                    location: "westus2"
                     )
             );
         }

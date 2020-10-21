@@ -66,7 +66,201 @@
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourceGroups/confluent-sdk-test-rg1630\",\r\n  \"name\": \"confluent-sdk-test-rg1630\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
-
+    {
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n   \"location\": \"westus2\",\r\n   \"properties\":{\r\n     \"offerDetail\":{\r\n       \"publisherId\": \"isvtestuklegacy\",\r\n       \"id\": \"liftr_cf_dev\",\r\n       \"planId\": \"payg\",\r\n       \"planName\": \"Pay as you go\",\r\n       \"termUnit\": \"P1M\"\r\n},\r\n     \"userDetail\":{\r\n       \"firstName\": \"Srinivas\",\r\n       \"lastName\": \"Alluri\",\r\n       \"emailAddress\": \"sralluri@microsoft.com\"\r\n}  \r\n},\r\n     \"tags\":{\r\n       \"Environment\": \"Dev\" \r\n}   \r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Confluent.ConfluentManagementClient/0.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "683"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Oct 2020 19:05:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"5600e31a-0000-0700-0000-5f90868f0000\""
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2020-03-01-preview"
+        ],
+        "x-ms-request-id": [
+          "5e2bd0bf-aba7-4790-8df8-d992dc82f129"
+        ],
+        "x-ms-correlation-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20201021T190552Z:16382656-5609-4b44-ae14-363f18895d74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "683"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n   \"id\": \"/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourceGroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350\",\r\n   \"name\": \"confluent-sdk-test-resource8350\",\r\n   \"type\": \"Microsoft.Confluent/organizations\",\r\n   \"location\": \"westus2\",\r\n   \"properties\":{\r\n     \"offerDetail\":{\r\n       \"publisherId\": \"isvtestuklegacy\",\r\n       \"id\": \"liftr_cf_dev\",\r\n       \"planId\": \"payg\",\r\n       \"planName\": \"Pay as you go\",\r\n       \"termUnit\": \"P1M\"\r\n},\r\n     \"userDetail\":{\r\n       \"firstName\": \"Srinivas\",\r\n       \"lastName\": \"Alluri\",\r\n       \"emailAddress\": \"sralluri@microsoft.com\"\r\n}  \r\n},\r\n     \"tags\":{\r\n       \"Environment\": \"Dev\" \r\n}   \r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uZmx1ZW50L2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzLzVlMmJkMGJmLWFiYTctNDc5MC04ZGY4LWQ5OTJkYzgyZjEyOT9hcGktdmVyc2lvbj0yMDIwLTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Confluent.ConfluentManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Oct 2020 19:05:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"5600e31a-0000-0700-0000-5f90868f0000\""
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5e2bd0bf-aba7-4790-8df8-d992dc82f129"
+        ],
+        "x-ms-correlation-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20201021T190552Z:16382656-5609-4b44-ae14-363f18895d74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "392"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129\",\r\n  \"name\": \"5e2bd0bf-aba7-4790-8df8-d992dc82f129\",\r\n  \"resourceId\": \"/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourceGroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-21T19:05:48.6482271Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Confluent.ConfluentManagementClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Oct 2020 19:06:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"5600e31a-0000-0700-0000-5f90868f0000\""
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5e2bd0bf-aba7-4790-8df8-d992dc82f129"
+        ],
+        "x-ms-correlation-request-id": [
+          "11c47e3f-bfb0-4e2f-a98d-887cc5bb051c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20201021T190552Z:16382656-5609-4b44-ae14-363f18895d74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "682"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n   \"id\": \"/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourceGroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350\",\r\n   \"name\": \"confluent-sdk-test-resource8350\",\r\n   \"type\": \"Microsoft.Confluent/organizations\",\r\n   \"location\": \"westus2\",\r\n   \"properties\":{\r\n    \"provisioningState\": \"Succeeded\",\r\n   \"createdTime\": \"2020-10-21T19:05:49.2563153Z\",\r\n   \"organizationId\": \"ba95c968-b444-4b21-ac4f-c5dc739fd56b\",\r\n    \"offerDetail\":{\r\n       \"publisherId\": \"isvtestuklegacy\",\r\n       \"id\": \"liftr_cf_dev\",\r\n       \"planId\": \"payg\",\r\n       \"planName\": \"Pay as you go\",\r\n       \"termUnit\": \"P1M\"\r\n},\r\n     \"userDetail\":{\r\n       \"firstName\": \"Srinivas\",\r\n       \"lastName\": \"Alluri\",\r\n       \"emailAddress\": \"sralluri@microsoft.com\"\r\n}   \r\n},\r\n     \"tags\":{\r\n       \"Environment\": \"Dev\" \r\n}   \r\n}",
+      "StatusCode": 200
+    },
     {
       "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
