@@ -88,7 +88,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal async Task<Response> UpdateAsync(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateAsync(string id, IEnumerable<string> modelUpdates, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -120,7 +120,7 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response Update(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal Response Update(string id, IEnumerable<string> modelUpdates, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -182,7 +182,7 @@ namespace Azure.DigitalTwins.Core
 
         // The strings are already json, so we do not want them to be serialized.
         // Instead, the payloads need to be concatenated into a json array.
-        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, UpdateModelOptions digitalTwinModelsUpdateOptions)
+        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, DecomissionModelOptions digitalTwinModelsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
