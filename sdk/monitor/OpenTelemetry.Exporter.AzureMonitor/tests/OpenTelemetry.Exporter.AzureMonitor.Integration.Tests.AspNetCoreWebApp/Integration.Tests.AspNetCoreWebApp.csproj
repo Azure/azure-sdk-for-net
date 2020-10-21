@@ -3,6 +3,7 @@
   
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp</RootNamespace>
     
     <!-- Azure SDK pipeline tries to pack test projects. This warning will be treated as an error and fail the whole build. -->
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>

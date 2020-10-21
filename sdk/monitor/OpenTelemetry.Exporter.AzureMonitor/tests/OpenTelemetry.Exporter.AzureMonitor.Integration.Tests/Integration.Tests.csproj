@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.csproj" />
-    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />
+    <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNetCoreWebApp\Integration.Tests.AspNetCoreWebApp.csproj" />
   </ItemGroup>
 
 </Project>
