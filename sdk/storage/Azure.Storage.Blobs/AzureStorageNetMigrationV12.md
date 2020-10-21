@@ -51,7 +51,7 @@ dotnet add package Azure.Storage.Blobs
 
 ### Authentication
 
-#### Managed Identity
+#### Azure Active Directory
 
 v11
 
@@ -59,7 +59,25 @@ TODO
 
 v12
 
-TODO
+```csharp
+public async Task ActiveDirectoryAuthAsync()
+{
+    // Create a token credential that can use our Azure Active
+    // Directory application to authenticate with Azure Storage
+    TokenCredential credential =
+        new ClientSecretCredential(
+            ActiveDirectoryTenantId,
+            ActiveDirectoryApplicationId,
+            ActiveDirectoryApplicationSecret,
+            new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+
+    // Create a client that can authenticate using our token credential
+    BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
+
+    // Make a service request to verify we've successfully authenticated
+    await service.GetPropertiesAsync();
+}
+```
 
 #### SAS
 
@@ -67,36 +85,68 @@ There are various SAS tokens that may be generated. Visit our documentation page
 
 v11
 ```csharp
-TODO
+string sasBlobToken;
+
+// Get a reference to a blob within the container.
+// Note that the blob may not exist yet, but a SAS can still be created for it.
+CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
+
+if (policyName == null)
+{
+   // Create a new access policy and define its constraints.
+   // Note that the SharedAccessBlobPolicy class is used both to define the parameters of an ad hoc SAS, and
+   // to construct a shared access policy that is saved to the container's shared access policies.
+   SharedAccessBlobPolicy adHocSAS = new SharedAccessBlobPolicy()
+   {
+       // When the start time for the SAS is omitted, the start time is assumed to be the time when the storage service receives the request.
+       // Omitting the start time for a SAS that is effective immediately helps to avoid clock skew.
+       SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+       Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+   };
+
+   // Generate the shared access signature on the blob, setting the constraints directly on the signature.
+   sasBlobToken = blob.GetSharedAccessSignature(adHocSAS);
+
+   Console.WriteLine("SAS for blob (ad hoc): {0}", sasBlobToken);
+   Console.WriteLine();
+}
+else
+{
+   // Generate the shared access signature on the blob. In this case, all of the constraints for the
+   // shared access signature are specified on the container's stored access policy.
+   sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
+
+   Console.WriteLine("SAS for blob (stored access policy): {0}", sasBlobToken);
+   Console.WriteLine();
+}
+
+// Return the URI string for the container, including the SAS token.
+return blob.Uri + sasBlobToken;
 ```
 
 v12
 ```csharp
-// This code snippet creates a service level SAS that only allows reading
-// from service level APIs
-AccountSasBuilder sas = new AccountSasBuilder
+// Create BlobSasBuilder and specify parameters
+BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
-    // Allow access to blobs
-    Services = AccountSasServices.Blobs,
-    // Allow access to the service level APIs
-    ResourceTypes = AccountSasResourceTypes.Service,
-    // Access expires in 1 hour!
-    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+    BlobContainerName = containerName,
+    BlobName = blobName,
+    ExpiresOn = new DateTimeOffset
+    IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
 };
-// Allow read access
-sas.SetPermissions(AccountSasPermissions.Read);
-// Create a SharedKeyCredential that we can use to sign the SAS token
-StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-// Build a SAS URI
-UriBuilder sasUri = new UriBuilder(StorageAccountBlobUri);
-sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-// Create a client that can authenticate with the SAS URI
-BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
-// Make a service request to verify we've successfully authenticated
-await service.GetPropertiesAsync();
-```
+// Set Permissions
+sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
-Summary:
+// Create SasQueryParameters
+BlobSasQueryParameters parameters = sasBuilder.ToSasQueryParameters(sharedKeyCredential);
+
+// Create Uri with SasToken
+BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri)
+{
+    Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+};
+Uri sasUri = uriBuilder.ToUri()
+```
 
 #### Connection string
 
@@ -129,7 +179,73 @@ await service.GetPropertiesAsync();
 
 ### Shared Access Policies
 
-TODO
+To learn more, visit our article [Create a Stored Access Policy with .NET](https://docs.microsoft.com/en-us/azure/storage/common/storage-stored-access-policy-define-dotnet?tabs=dotnet11) or take a look at the code comparison below.
+
+v11
+```csharp
+private static async Task CreateStoredAccessPolicyAsync(CloudBlobContainer container, string policyName)
+{
+    // Create a new stored access policy and define its constraints.
+    // The access policy provides create, write, read, list, and delete permissions.
+    SharedAccessBlobPolicy sharedPolicy = new SharedAccessBlobPolicy()
+    {
+        // When the start time for the SAS is omitted, the start time is assumed to be the time when Azure Storage receives the request.
+        SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+        Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.List |
+            SharedAccessBlobPermissions.Write
+    };
+
+    // Get the container's existing permissions.
+    BlobContainerPermissions permissions = await container.GetPermissionsAsync();
+
+    // Add the new policy to the container's permissions, and set the container's permissions.
+    permissions.SharedAccessPolicies.Add(policyName, sharedPolicy);
+    await container.SetPermissionsAsync(permissions);
+}
+```
+
+v12
+```csharp
+async static Task CreateStoredAccessPolicyAsync(string containerName)
+{
+    string connectionString = "";
+
+    // Use the connection string to authorize the operation to create the access policy.
+    // Azure AD does not support the Set Container ACL operation that creates the policy.
+    BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);
+
+    try
+    {
+        await containerClient.CreateIfNotExistsAsync();
+
+        // Create one or more stored access policies.
+        List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
+        {
+            new BlobSignedIdentifier
+            {
+                Id = "mysignedidentifier",
+                AccessPolicy = new BlobAccessPolicy
+                {
+                    StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+                    ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
+                    Permissions = "rw"
+                }
+            }
+        };
+        // Set the container's access policy.
+        await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
+    }
+    catch (RequestFailedException e)
+    {
+        Console.WriteLine(e.ErrorCode);
+        Console.WriteLine(e.Message);
+    }
+    finally
+    {
+        await containerClient.DeleteAsync();
+    }
+}
+```
 
 ### Client hierarchy
 
@@ -158,16 +274,21 @@ await cloudBlobContainer.CreateAsync();
 ```
 
 v12
+
 ```csharp
 // Create a BlobServiceClient object which will be used to create a container client
 BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-// Create a unique name for the container
-string containerName = "yourcontainer";
-// Create the container and return a container client object
-BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
+BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("yourcontainer");
+await containerClient.CreateAsync()
 ```
 
-Summary: In v11, a `CloudBlobClient` was required to get a reference to the desired blob container. In v12, the intermediate step `cloudBlobClient.GetContainerReference("yourcontainer")` was removed.
+Or you can skip a step by using the `BlobServiceClient.CreateBlobContainerAsync()` method.
+
+```csharp
+// Create a BlobServiceClient object which will be used to create a container client
+BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync("yourcontainer");
+```
 
 
 ### Uploading Blobs to a Container
@@ -194,9 +315,6 @@ using FileStream uploadFileStream = File.OpenRead(localFilePath);
 await blobClient.UploadAsync(uploadFileStream, overwrite: true);
 uploadFileStream.Close();
 ```
-
-Summary: In v11, a file path was used to upload a blob. In v12, `Stream` is used to upload a blob's content.
-
 
 ### Downloading Blobs from a Container
 
