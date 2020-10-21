@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Management.Confluent.Tests
                 string resourceName = CreateName("confluent-sdk-test-resource");
               
                 CreateResourceGroup(context, rgName);
-                // OrganizationResource rp = CreateResource(context, rgName, resourceName);
-                // Assert.NotNull(rp);
+                //OrganizationResource rp = CreateResource(context, rgName, resourceName);
+                //Assert.NotNull(rp);
 
                 // DeleteResource(context, rgName, resourceName);
                 // AssertNoResource(context, rgName);
