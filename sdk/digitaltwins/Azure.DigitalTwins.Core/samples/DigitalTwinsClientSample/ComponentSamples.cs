@@ -153,10 +153,9 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // Update Component1 by replacing the property ComponentProp1 value,
             // using an optional utility to build the payload.
-            var componentUpdateUtility = new UpdateOperationsUtility();
-            componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
-            string updatePayload = componentUpdateUtility.Serialize();
-            await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
+            var componentJsonPatchDocument = new JsonPatchDocument();
+            componentJsonPatchDocument.AppendReplace("/ComponentProp1", "Some new value");
+            await client.UpdateComponentAsync(basicDtId, "Component1", componentJsonPatchDocument);
             Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleUpdateComponent

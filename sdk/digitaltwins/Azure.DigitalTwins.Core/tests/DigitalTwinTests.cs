@@ -47,14 +47,17 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
 
                 // update twin
-                string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
+                JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
+                updateTwinPatchDocument.AppendAdd("/Humidity", 30);
+                updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendRemove("/EmployeeId");
 
                 var requestOptions = new UpdateDigitalTwinOptions
                 {
                     IfMatch = "*"
                 };
 
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin, requestOptions).ConfigureAwait(false);
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, requestOptions).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
