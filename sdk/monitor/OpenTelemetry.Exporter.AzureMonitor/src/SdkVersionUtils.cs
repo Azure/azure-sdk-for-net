@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-// This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Monitor.OpenTelemetry.Sdk" which doesn't exist.
 using OpenTelemetrySdk = OpenTelemetry.Sdk;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
@@ -21,7 +20,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             {
                 Version dotnetSdkVersion = GetVersion(typeof(object));
                 Version otelSdkVersion = GetVersion(typeof(OpenTelemetrySdk));
-                Version extensionVersion = GetVersion(typeof(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorTraceExporter));
+                Version extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 
                 return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
             }
