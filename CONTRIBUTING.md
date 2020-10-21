@@ -11,7 +11,7 @@
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
 - Install **.NET Core 3.1.301 SDK** for your specific platform. (or a higher version within the 3.1.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [NodeJS](https://nodejs.org/en/) (13.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [NodeJS](https://nodejs.org/en/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -374,7 +374,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
