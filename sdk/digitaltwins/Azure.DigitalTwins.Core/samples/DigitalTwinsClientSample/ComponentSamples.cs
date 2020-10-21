@@ -76,21 +76,21 @@ namespace Azure.DigitalTwins.Core.Samples
 
             string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
-            await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
+            await client.CreateDigitalTwinAsync<object>(basicDtId, basicDtPayload);
             Console.WriteLine($"Created digital twin '{basicDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
 
-            // You can also get a digital twin and deserialize it into a BasicDigitalTwin.
+            // You can also get a digital twin as a BasicDigitalTwin type.
             // It works well for basic stuff, but as you can see it gets more difficult when delving into
             // more complex properties, like components.
 
             #region Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 
-            Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+            Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
             if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
             {
-                BasicDigitalTwin basicDt = JsonSerializer.Deserialize<BasicDigitalTwin>(getBasicDtResponse.Value);
+                BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
                 // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
                 string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
@@ -128,18 +128,18 @@ namespace Azure.DigitalTwins.Core.Samples
             };
             string dt2Payload = JsonSerializer.Serialize(customTwin);
 
-            await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
+            await client.CreateDigitalTwinAsync<object>(customDtId, dt2Payload);
             Console.WriteLine($"Created digital twin '{customDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
 
-            // Getting and deserializing a digital twin into a custom data type is extremely easy.
+            // Getting a digital twin as a custom data type is extremely easy.
             // Custom types provide the best possible experience.
 
             #region Snippet:DigitalTwinsSampleGetCustomDigitalTwin
 
-            Response<string> getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
-            CustomDigitalTwin customDt = JsonSerializer.Deserialize<CustomDigitalTwin>(getCustomDtResponse.Value);
+            Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsync<CustomDigitalTwin>(customDtId);
+            CustomDigitalTwin customDt = getCustomDtResponse.Value;
             Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
                 $"ETag: {customDt.ETag}\n\t" +
                 $"Prop1: {customDt.Prop1}\n\t" +
@@ -165,7 +165,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleGetComponent
 
-            await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
+            await client.GetComponentAsync<Component1>(basicDtId, SamplesConstants.ComponentName);
             Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent

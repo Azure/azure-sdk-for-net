@@ -41,10 +41,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room twin
                 string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // get twin
-                await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                await client.GetDigitalTwinAsync<object>(roomTwinId).ConfigureAwait(false);
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
@@ -62,7 +62,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // assert
                 Func<Task> act = async () =>
                 {
-                    await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                    await client.GetDigitalTwinAsync<object>(roomTwinId).ConfigureAwait(false);
                 };
 
                 act.Should().Throw<RequestFailedException>()
@@ -94,7 +94,7 @@ namespace Azure.DigitalTwins.Core.Tests
             // act
             Func<Task> act = async () =>
             {
-                await unauthorizedClient.GetDigitalTwinAsync("someNonExistantTwin").ConfigureAwait(false);
+                await unauthorizedClient.GetDigitalTwinAsync<object>("someNonExistantTwin").ConfigureAwait(false);
             };
 
             // assert
@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Core.Tests
             // act
             Func<Task> act = async () =>
             {
-                await client.GetDigitalTwinAsync("someNonExistantTwin").ConfigureAwait(false);
+                await client.GetDigitalTwinAsync<object>("someNonExistantTwin").ConfigureAwait(false);
             };
 
             // assert

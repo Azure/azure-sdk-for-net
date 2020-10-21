@@ -120,7 +120,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
             // Create the room with wifi component digital twin.
-            await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
+            await client.CreateDigitalTwinAsync<object>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
         private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)

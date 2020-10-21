@@ -59,15 +59,15 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create floor twin
                 string floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
-                await client.CreateDigitalTwinAsync(floorTwinId, floorTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(floorTwinId, floorTwin).ConfigureAwait(false);
 
                 // Create room twin
                 string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // create hvac twin
                 string hvacTwin = TestAssetsHelper.GetHvacTwinPayload(hvacModelId);
-                await client.CreateDigitalTwinAsync(hvacTwinId, hvacTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(hvacTwinId, hvacTwin).ConfigureAwait(false);
 
                 string floorContainsRoomPayload = TestAssetsHelper.GetRelationshipWithPropertyPayload(roomTwinId, ContainsRelationship, "isAccessRestricted", true);
                 string floorTwinCoolsRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, CoolsRelationship);
@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create Relationship from Floor -> Room
                 await client
-                    .CreateRelationshipAsync(
+                    .CreateRelationshipAsync<object>(
                         floorTwinId,
                         floorContainsRoomRelationshipId,
                         floorContainsRoomPayload)
@@ -87,7 +87,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create Relationship from Floor -> Hvac
                 await client
-                    .CreateRelationshipAsync(
+                    .CreateRelationshipAsync<object>(
                         floorTwinId,
                         floorCooledByHvacRelationshipId,
                         floorCooledByHvacPayload)
@@ -95,7 +95,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create Relationship from Hvac -> Floor
                 await client
-                    .CreateRelationshipAsync(
+                    .CreateRelationshipAsync<object>(
                         hvacTwinId,
                         hvacCoolsFloorRelationshipId,
                         floorTwinCoolsRelationshipPayload)
@@ -103,7 +103,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create Relationship from Room -> Floor
                 await client
-                    .CreateRelationshipAsync(
+                    .CreateRelationshipAsync<object>(
                         roomTwinId,
                         roomContainedInFloorRelationshipId,
                         floorTwinContainedInRelationshipPayload)
@@ -120,8 +120,8 @@ namespace Azure.DigitalTwins.Core.Tests
                     .ConfigureAwait(false);
 
                 // GET relationship
-                Response<string> containsRelationshipId = await client
-                    .GetRelationshipAsync(
+                Response<object> containsRelationshipId = await client
+                    .GetRelationshipAsync<object>(
                         floorTwinId,
                         floorContainsRoomRelationshipId)
                     .ConfigureAwait(false);
@@ -151,7 +151,7 @@ namespace Azure.DigitalTwins.Core.Tests
                    .GetRelationshipsAsync(
                        roomTwinId,
                        ContainedInRelationship);
-                containsRelationshipId.Value.Should().Contain(floorContainsRoomRelationshipId);
+                containsRelationshipId.Value.ToString().Should().Contain(floorContainsRoomRelationshipId);
 
                 int numberOfRelationships = 0;
                 await foreach (var relationship in roomTwinRelationships)
@@ -187,7 +187,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 Func<Task> act = async () =>
                 {
                     await client
-                        .GetRelationshipAsync(
+                        .GetRelationshipAsync<object>(
                             floorTwinId,
                             floorContainsRoomRelationshipId)
                         .ConfigureAwait(false);
@@ -198,7 +198,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 act = async () =>
                 {
                     await client
-                        .GetRelationshipAsync(
+                        .GetRelationshipAsync<object>(
                             roomTwinId,
                             roomContainedInFloorRelationshipId)
                         .ConfigureAwait(false);
@@ -209,7 +209,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 act = async () =>
                 {
                     await client
-                        .GetRelationshipAsync(
+                        .GetRelationshipAsync<object>(
                             floorTwinId,
                             floorCooledByHvacRelationshipId)
                         .ConfigureAwait(false);
@@ -220,7 +220,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 act = async () =>
                 {
                     await client
-                        .GetRelationshipAsync(
+                        .GetRelationshipAsync<object>(
                             hvacTwinId,
                             hvacCoolsFloorRelationshipId)
                         .ConfigureAwait(false);
@@ -272,11 +272,11 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create floor twin
                 string floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
-                await client.CreateDigitalTwinAsync(floorTwinId, floorTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(floorTwinId, floorTwin).ConfigureAwait(false);
 
                 // Create room twin
                 string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 string floorContainsRoomPayload = TestAssetsHelper.GetRelationshipWithPropertyPayload(roomTwinId, ContainsRelationship, "isAccessRestricted", true);
                 string floorTwinContainedInRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, ContainedInRelationship);
@@ -288,7 +288,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                     // create Relationship from Floor -> Room
                     await client
-                        .CreateRelationshipAsync(
+                        .CreateRelationshipAsync<object>(
                             floorTwinId,
                             floorContainsRoomRelationshipId,
                             floorContainsRoomPayload)
@@ -302,7 +302,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                     // create Relationship from Room -> Floor
                     await client
-                    .CreateRelationshipAsync(
+                    .CreateRelationshipAsync<object>(
                         roomTwinId,
                         roomContainedInFloorRelationshipId,
                         floorTwinContainedInRelationshipPayload)

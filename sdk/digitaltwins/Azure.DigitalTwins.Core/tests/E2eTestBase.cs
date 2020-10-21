@@ -62,7 +62,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         public async Task<string> GetUniqueTwinIdAsync(DigitalTwinsClient dtClient, string baseName)
         {
-            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync(twinId)).ConfigureAwait(false);
+            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<object>(twinId)).ConfigureAwait(false);
         }
 
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)

@@ -39,7 +39,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Create a room twin, with property "IsOccupied": true
                 string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
                 string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                await client.CreateDigitalTwinAsync<object>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 string queryString = "SELECT * FROM digitaltwins where IsOccupied = true";
 
@@ -92,7 +92,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 for (int i = 0; i < pageSize * 2; i++)
                 {
                     string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
-                    await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                    await client.CreateDigitalTwinAsync<object>(roomTwinId, roomTwin).ConfigureAwait(false);
                 }
 
                 string queryString = "SELECT * FROM digitaltwins";

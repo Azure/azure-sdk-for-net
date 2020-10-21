@@ -253,10 +253,10 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 try
                 {
-                    Response<string> response = await client.CreateDigitalTwinAsync(twin.Key, twin.Value);
+                    Response<BasicDigitalTwin> response = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(twin.Key, twin.Value);
 
                     Console.WriteLine($"Created digital twin '{twin.Key}'.");
-                    Console.WriteLine($"\tBody: {response?.Value}");
+                    Console.WriteLine($"\tBody: {JsonSerializer.Serialize<BasicDigitalTwin>(response?.Value)}");
                 }
                 catch (Exception ex)
                 {
@@ -353,7 +353,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     {
                         string serializedRelationship = JsonSerializer.Serialize(relationship);
 
-                        await client.CreateRelationshipAsync(
+                        await client.CreateRelationshipAsync<object>(
                             relationship.SourceId,
                             relationship.Id,
                             serializedRelationship);

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -107,7 +108,8 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The returned application/json string can always be deserialized into an instance of <see cref="Serialization.BasicDigitalTwin"/>.
+        /// A strongly typed object type such as <see cref="Serialization.BasicDigitalTwin"/> can be used as a generic type for <typeparamref name="T"/>
+        /// to indicate what type is used to deserialize the response value.
         /// It may also be deserialized into custom digital twin types that extend the <see cref="Serialization.BasicDigitalTwin"/> with additional
         /// strongly typed properties provided that you know the definition of the retrieved digital twin prior to deserialization.
         /// </para>
@@ -118,7 +120,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the digital twin with.</typeparam>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -139,9 +142,15 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetDigitalTwinAsync(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> GetDigitalTwinAsync<T>(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetByIdAsync(digitalTwinId, options, cancellationToken);
+            // Get the digital twin as a Stream object
+            Response<Stream> digitalTwinStream = await _dtRestClient.GetByIdAsync(digitalTwinId, options, cancellationToken).ConfigureAwait(false);
+
+            // Deserialize the stream into the generic type
+            T deserializedDigitalTwin = (T)await _objectSerializer.DeserializeAsync(digitalTwinStream, typeof(T), cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue<T>(deserializedDigitalTwin, digitalTwinStream.GetRawResponse());
         }
 
         /// <summary>
@@ -149,7 +158,8 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The returned application/json string can always be deserialized into an instance of <see cref="Serialization.BasicDigitalTwin"/>.
+        /// A strongly typed object type such as <see cref="Serialization.BasicDigitalTwin"/> can be used as a generic type for <typeparamref name="T"/>
+        /// to indicate what type is used to deserialize the response value.
         /// It may also be deserialized into custom digital twin types that extend the <see cref="Serialization.BasicDigitalTwin"/> with additional
         /// strongly typed properties provided that you know the definition of the retrieved digital twin prior to deserialization.
         /// </para>
@@ -160,16 +170,23 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
-        /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the digital twin with.</typeparam>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        public virtual Response<string> GetDigitalTwin(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> GetDigitalTwin<T>(string digitalTwinId, GetDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetById(digitalTwinId, options, cancellationToken);
+            // Get the digital twin as a Stream object
+            Response<Stream> digitalTwinStream = _dtRestClient.GetById(digitalTwinId, options, cancellationToken);
+
+            // Deserialize the stream into the generic type
+            T deserializedDigitalTwin = (T)_objectSerializer.Deserialize(digitalTwinStream, typeof(T), cancellationToken);
+
+            return Response.FromValue<T>(deserializedDigitalTwin, digitalTwinStream.GetRawResponse());
         }
 
         /// <summary>
@@ -181,6 +198,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the digital twin with.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -210,9 +228,15 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created digital twin &apos;{customDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.AddAsync(digitalTwinId, digitalTwin, options, cancellationToken);
+            // Get the digital twin as a Stream object
+            Response<Stream> digitalTwinStream = await _dtRestClient.AddAsync(digitalTwinId, digitalTwin, options, cancellationToken).ConfigureAwait(false);
+
+            // Deserialize the stream into the generic type
+            T deserializedDigitalTwin = (T)await _objectSerializer.DeserializeAsync(digitalTwinStream, typeof(T), cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue<T>(deserializedDigitalTwin, digitalTwinStream.GetRawResponse());
         }
 
         /// <summary>
@@ -224,6 +248,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the digital twin with.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -233,9 +258,15 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Response<string> CreateDigitalTwin(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> CreateDigitalTwin<T>(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Add(digitalTwinId, digitalTwin, options, cancellationToken);
+            // Get the digital twin as a Stream object
+            Response<Stream> digitalTwinStream = _dtRestClient.Add(digitalTwinId, digitalTwin, options, cancellationToken);
+
+            // Deserialize the stream into the generic type
+            T deserializedDigitalTwin = (T)_objectSerializer.Deserialize(digitalTwinStream, typeof(T), cancellationToken);
+
+            return Response.FromValue<T>(deserializedDigitalTwin, digitalTwinStream.GetRawResponse());
         }
 
         /// <summary>
@@ -348,7 +379,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized object representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the component with.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -364,9 +396,15 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> GetComponentAsync<T>(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponentAsync(digitalTwinId, componentName, options, cancellationToken);
+            // Get the component as a Stream object
+            Response<Stream> componentStream = await _dtRestClient.GetComponentAsync(digitalTwinId, componentName, options, cancellationToken).ConfigureAwait(false);
+
+            // Deserialize the stream into the generic type
+            T deserializedComponent = (T)await _objectSerializer.DeserializeAsync(componentStream, typeof(T), cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue<T>(deserializedComponent, componentStream.GetRawResponse());
         }
 
         /// <summary>
@@ -376,7 +414,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The component being retrieved.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Json string representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized object representation of the component corresponding to the provided componentName and the HTTP response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the component with.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -389,9 +428,15 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="GetComponentAsync(string, string, GetComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> GetComponent(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> GetComponent<T>(string digitalTwinId, string componentName, GetComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetComponent(digitalTwinId, componentName, options, cancellationToken);
+            // Get the component as a Stream object
+            Response<Stream> componentStream = _dtRestClient.GetComponent(digitalTwinId, componentName, options, cancellationToken);
+
+            // Deserialize the stream into the generic type
+            T deserializedComponent = (T)_objectSerializer.Deserialize(componentStream, typeof(T), cancellationToken);
+
+            return Response.FromValue<T>(deserializedComponent, componentStream.GetRawResponse());
         }
 
         /// <summary>
@@ -721,7 +766,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the relationship with.</typeparam>
         /// <remarks>
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -743,9 +789,15 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;Prop2: {getCustomRelationship.Prop2}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> GetRelationshipAsync(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> GetRelationshipAsync<T>(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetRelationshipByIdAsync(digitalTwinId, relationshipId, options, cancellationToken);
+            // Get the relationship as a Stream object
+            Response<Stream> relationshipStream = await _dtRestClient.GetRelationshipByIdAsync(digitalTwinId, relationshipId, options, cancellationToken).ConfigureAwait(false);
+
+            // Deserialize the stream into the generic type
+            T deserializedRelationship = (T)await _objectSerializer.DeserializeAsync(relationshipStream, typeof(T), cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue<T>(deserializedRelationship, relationshipStream.GetRawResponse());
         }
 
         /// <summary>
@@ -755,7 +807,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the relationship with.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -768,9 +821,15 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="GetRelationshipAsync(string, string, GetRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> GetRelationship(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> GetRelationship<T>(string digitalTwinId, string relationshipId, GetRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.GetRelationshipById(digitalTwinId, relationshipId, options, cancellationToken);
+            // Get the relationship as a Stream object
+            Response<Stream> relationshipStream = _dtRestClient.GetRelationshipById(digitalTwinId, relationshipId, options, cancellationToken);
+
+            // Deserialize the stream into the generic type
+            T deserializedRelationship = (T)_objectSerializer.Deserialize(relationshipStream, typeof(T), cancellationToken);
+
+            return Response.FromValue<T>(deserializedRelationship, relationshipStream.GetRawResponse());
         }
 
         /// <summary>
@@ -829,7 +888,6 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationship">The application/json relationship to be created.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// <para>
         /// Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.
@@ -838,6 +896,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
         /// </remarks>
+        /// <typeparam name="T">The generic type to deserialize the relationship with.</typeparam>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -861,9 +920,15 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created a digital twin relationship &apos;floorBuildingRelationshipId&apos; from twin &apos;floorTwinId&apos; to twin &apos;buildingTwinId&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, relationship, options, cancellationToken);
+            // Get the component as a Stream object
+            Response<Stream> relationshipStream = await _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, relationship, options, cancellationToken).ConfigureAwait(false);
+
+            // Deserialize the stream into the generic type
+            T deserializedRelationship = (T)await _objectSerializer.DeserializeAsync(relationshipStream, typeof(T), cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue<T>(deserializedRelationship, relationshipStream.GetRawResponse());
         }
 
         /// <summary>
@@ -876,6 +941,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <typeparam name="T">The generic type to deserialize the relationship with.</typeparam>
         /// <remarks>
         /// <para>
         /// Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.
@@ -893,9 +959,15 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="CreateRelationshipAsync(string, string, string, CreateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> CreateRelationship<T>(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.AddRelationship(digitalTwinId, relationshipId, relationship, options, cancellationToken);
+            // Get the relationship as a Stream object
+            Response<Stream> relationshipStream = _dtRestClient.AddRelationship(digitalTwinId, relationshipId, relationship, options, cancellationToken);
+
+            // Deserialize the stream into the generic type
+            T deserializedRelationship = (T)_objectSerializer.Deserialize(relationshipStream, typeof(T), cancellationToken);
+
+            return Response.FromValue<T>(deserializedRelationship, relationshipStream.GetRawResponse());
         }
 
         /// <summary>
