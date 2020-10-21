@@ -340,7 +340,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private class TestQueueProcessorFactory : IQueueProcessorFactory
         {
-            public QueueProcessor Create(QueueProcessorFactoryContext context)
+            public QueueProcessor Create(QueueProcessorOptions context)
             {
                 return new TestQueueProcessor(context);
             }
@@ -348,12 +348,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private class TestQueueProcessor : QueueProcessor
         {
-            public TestQueueProcessor(QueueProcessorFactoryContext context)
+            public TestQueueProcessor(QueueProcessorOptions context)
                 : base(context)
             {
             }
 
-            public override Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+            protected override Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
             {
                 _lastMessageId = message.MessageId;
                 _lastMessagePopReceipt = message.PopReceipt;

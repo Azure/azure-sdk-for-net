@@ -11,7 +11,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     /// Event argument class for when poison messages
     /// are added to a poison queue.
     /// </summary>
+#if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
     public class PoisonMessageEventArgs : EventArgs
+#else
+    internal class PoisonMessageEventArgs : EventArgs
+#endif
     {
         /// <summary>
         /// Constructs a new instance.

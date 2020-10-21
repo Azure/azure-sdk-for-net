@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueProcessorFactoryContextTests
+    public class QueueProcessorOptionsTests
     {
         [Test]
         public void Constructor_DefaultsValues()
@@ -21,16 +21,16 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             loggerFactory.AddProvider(new TestLoggerProvider());
             QueuesOptions queuesOptions = new QueuesOptions();
 
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
+            QueueProcessorOptions context = new QueueProcessorOptions(queue, loggerFactory, queuesOptions, poisonQueue);
 
             Assert.AreSame(queue, context.Queue);
             Assert.AreSame(poisonQueue, context.PoisonQueue);
             Assert.NotNull(context.Logger);
 
-            Assert.AreEqual(queuesOptions.BatchSize, context.BatchSize);
-            Assert.AreEqual(queuesOptions.NewBatchThreshold, context.NewBatchThreshold);
-            Assert.AreEqual(queuesOptions.MaxDequeueCount, context.MaxDequeueCount);
-            Assert.AreEqual(queuesOptions.MaxPollingInterval, context.MaxPollingInterval);
+            Assert.AreEqual(queuesOptions.BatchSize, context.Options.BatchSize);
+            Assert.AreEqual(queuesOptions.NewBatchThreshold, context.Options.NewBatchThreshold);
+            Assert.AreEqual(queuesOptions.MaxDequeueCount, context.Options.MaxDequeueCount);
+            Assert.AreEqual(queuesOptions.MaxPollingInterval, context.Options.MaxPollingInterval);
         }
     }
 }

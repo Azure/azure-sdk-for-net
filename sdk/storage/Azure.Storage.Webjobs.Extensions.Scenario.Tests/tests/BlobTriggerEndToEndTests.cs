@@ -77,7 +77,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class Poison_Program
         {
-            public List<string> _poisonBlobMessages = new List<string>();
+            public List<string> _poisonBlobMessagesPrimary = new List<string>();
+            public List<string> _poisonBlobMessagesSecondary = new List<string>();
 
             public void BlobProcessorPrimary(
                 [BlobTrigger(PoisonTestContainerName + "/{name}")] string input)
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 lock (_syncLock)
                 {
                     string blobName = (string)message["BlobName"];
-                    _poisonBlobMessages.Add(blobName);
+                    _poisonBlobMessagesPrimary.Add(blobName);
                 }
             }
 
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 lock (_syncLock)
                 {
                     string blobName = (string)message["BlobName"];
-                    _poisonBlobMessages.Add(blobName);
+                    _poisonBlobMessagesSecondary.Add(blobName);
                 }
             }
         }
@@ -166,16 +167,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task PoisonMessage_CreatedInPrimaryStorageAccount()
         {
-            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString);
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString, true);
         }
 
         [Test]
         public async Task PoisonMessage_CreatedInSecondaryStorageAccount()
         {
-            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString);
+            await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString, false);
         }
 
-        private async Task PoisonMessage_CreatedInCorrectStorageAccount(string connectionString)
+        private async Task PoisonMessage_CreatedInCorrectStorageAccount(string connectionString, bool isPrimary)
         {
             var blobClient = new BlobServiceClient(connectionString);
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
@@ -196,7 +197,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // wait for the poison message to be handled
                 await TestHelpers.Await(() =>
                 {
-                    return prog._poisonBlobMessages.Contains(blobName);
+                    if (isPrimary)
+                    {
+                        return prog._poisonBlobMessagesPrimary.Contains(blobName);
+                    }
+                    else
+                    {
+                        return prog._poisonBlobMessagesSecondary.Contains(blobName);
+                    }
                 });
             }
         }

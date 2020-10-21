@@ -14,7 +14,11 @@ namespace Microsoft.Azure.WebJobs.Host
     /// <summary>
     /// TODO.
     /// </summary>
+#if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
     public class QueuesOptions : IOptionsFormatter
+#else
+    internal class QueuesOptions : IOptionsFormatter
+#endif
     {
         private const int DefaultMaxDequeueCount = 5;
         private const int DefaultBatchSize = 16;

@@ -20,6 +20,7 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
@@ -37,22 +38,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _sharedWatcher;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
-        private readonly IQueueProcessorFactory _queueProcessorFactory;
 
         public StorageLoadBalancerQueue(
                QueueServiceClientProvider queueServiceClientProvider,
                IOptions<QueuesOptions> queueOptions,
                IWebJobsExceptionHandler exceptionHandler,
                SharedQueueWatcher sharedWatcher,
-               ILoggerFactory loggerFactory,
-               IQueueProcessorFactory queueProcessorFactory)
+               ILoggerFactory loggerFactory)
         {
             _queueServiceClientProvider = queueServiceClientProvider;
             _queueOptions = queueOptions.Value;
             _exceptionHandler = exceptionHandler;
             _sharedWatcher = sharedWatcher;
             _loggerFactory = loggerFactory;
-            _queueProcessorFactory = queueProcessorFactory;
         }
 
         public IAsyncCollector<T> GetQueueWriter<T>(string queue)
@@ -105,21 +103,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // Provide an upper bound on the maximum polling interval for run/abort from dashboard.
             // This ensures that if users have customized this value the Dashboard will remain responsive.
-            TimeSpan maxPollingInterval = SharedQueuePollingIntervals.DefaultMaximum;
+            TimeSpan maxPollingInterval = QueuePollingIntervals.DefaultMaximum;
 
             var wrapper = new Wrapper
             {
                 _callback = callback
             };
 
-            IListener listener = new QueueListener(Convert(queue),
-                poisonQueue: Convert(poisonQueue),
+            var queueClient = Convert(queue);
+            var poisonQueueClient = Convert(poisonQueue);
+            var queueProcessor = new QueueProcessor(new QueueProcessorOptions(queueClient, _loggerFactory, _queueOptions, poisonQueueClient));
+            QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedWatcher);
+            IListener listener = new QueueListener(queueClient,
+                poisonQueue: poisonQueueClient,
                 triggerExecutor: wrapper,
                 exceptionHandler: _exceptionHandler,
                 loggerFactory: _loggerFactory,
                 sharedWatcher: _sharedWatcher,
                 queueOptions: _queueOptions,
-                queueProcessorFactory: _queueProcessorFactory,
+                queueProcessor: queueProcessor,
                 functionDescriptor: new FunctionDescriptor { Id = SharedLoadBalancerQueueListenerFunctionId },
                 maxPollingInterval: maxPollingInterval);
 

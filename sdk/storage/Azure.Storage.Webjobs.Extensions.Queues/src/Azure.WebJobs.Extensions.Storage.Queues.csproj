@@ -17,8 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="C:\git\azure-sdk-for-net\sdk\storage\Azure.Storage.Webjobs.Extensions.Common\src\Shared\Queues\IQueueProcessor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
     <ProjectReference Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR</DefineConstants>
+  </PropertyGroup>
 </Project>

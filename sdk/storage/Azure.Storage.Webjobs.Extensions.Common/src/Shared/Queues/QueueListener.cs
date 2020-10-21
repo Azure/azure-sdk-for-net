@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             ILoggerFactory loggerFactory,
             SharedQueueWatcher sharedWatcher,
             QueuesOptions queueOptions,
-            IQueueProcessorFactory queueProcessorFactory,
+            QueueProcessor queueProcessor,
             FunctionDescriptor functionDescriptor,
             string functionId = null,
             TimeSpan? maxPollingInterval = null)
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 throw new ArgumentNullException(nameof(queueOptions));
             }
 
-            if (queueProcessorFactory == null)
+            if (queueProcessor == null)
             {
-                throw new ArgumentNullException(nameof(queueProcessorFactory));
+                throw new ArgumentNullException(nameof(queueProcessor));
             }
 
             if (loggerFactory == null)
@@ -115,17 +115,18 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 _sharedWatcher = sharedWatcher;
             }
 
-            EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = _sharedWatcher != null ? OnMessageAddedToPoisonQueue : (EventHandler<PoisonMessageEventArgs>)null;
-            _queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, poisonMessageEventHandler);
+            // TODO (kasobol-msft) remove this
+            //_queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, _sharedWatcher);
+            _queueProcessor = queueProcessor;
 
-            TimeSpan maximumInterval = _queueProcessor.MaxPollingInterval;
+            TimeSpan maximumInterval = _queueProcessor.QueuesOptions.MaxPollingInterval;
             if (maxPollingInterval.HasValue && maximumInterval > maxPollingInterval.Value)
             {
                 // enforce the maximum polling interval if specified
                 maximumInterval = maxPollingInterval.Value;
             }
 
-            _delayStrategy = new RandomizedExponentialBackoffStrategy(SharedQueuePollingIntervals.Minimum, maximumInterval);
+            _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();
@@ -202,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     {
                         sw = Stopwatch.StartNew();
 
-                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.QueuesOptions.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
                         batch = response.Value;
 
                         int count = batch?.Count() ?? -1;
@@ -306,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
         private async Task WaitForNewBatchThreshold()
         {
-            while (_processing.Count > _queueProcessor.NewBatchThreshold)
+            while (_processing.Count > _queueProcessor.QueuesOptions.NewBatchThreshold)
             {
                 Task processed = await Task.WhenAny(_processing).ConfigureAwait(false);
                 _processing.Remove(processed);
@@ -356,13 +357,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        private void OnMessageAddedToPoisonQueue(object sender, PoisonMessageEventArgs e)
-        {
-            // TODO: this is assuming that the poison queue is in the same
-            // storage account
-            _sharedWatcher.Notify(e.PoisonQueue.Name);
-        }
-
         private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(QueueClient queue,
             QueueMessage message, TimeSpan visibilityTimeout,
             IWebJobsExceptionHandler exceptionHandler)
@@ -383,31 +377,16 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
-            QueuesOptions queuesOptions, EventHandler<PoisonMessageEventArgs> poisonQueueMessageAddedHandler)
+        internal static void RegisterSharedWatcherWithQueueProcessor(QueueProcessor queueProcessor, IMessageEnqueuedWatcher sharedWatcher)
         {
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
-
-            QueueProcessor queueProcessor = null;
-            if (HostQueueNames.IsHostQueue(queue.Name) &&
-                string.Compare(queue.Uri.Host, "localhost", StringComparison.OrdinalIgnoreCase) != 0)
+            if (sharedWatcher != null)
             {
-                // We only delegate to the processor factory for application queues,
-                // not our built in control queues
-                // We bypass this check for local testing though
-                queueProcessor = new QueueProcessor(context);
+                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
+                {
+                    sharedWatcher.Notify(e.PoisonQueue.Name);
+                };
+                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
             }
-            else
-            {
-                queueProcessor = queueProcessorFactory.Create(context);
-            }
-
-            if (poisonQueueMessageAddedHandler != null)
-            {
-                queueProcessor.MessageAddedToPoisonQueue += poisonQueueMessageAddedHandler;
-            }
-
-            return queueProcessor;
         }
 
         public ScaleMonitorDescriptor Descriptor
