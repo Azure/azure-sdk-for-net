@@ -120,3 +120,11 @@ function Confirm-ChangeLogEntry {
   }
   return $true
 }
+
+function Set-TestChangeLog($TestVersion, $changeLogFile, $ReleaseEntry) {
+  Set-Content -Path $changeLogFile -Value @"
+# Release History
+## $TestVersion ($(Get-Date -f "yyyy-MM-dd"))
+- $ReleaseEntry
+"@
+}
