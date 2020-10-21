@@ -436,6 +436,36 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_PermanentDelete()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
+            BlobRetentionPolicy originalBlobRetentionPolicy = properties.DeleteRetentionPolicy;
+            properties.DeleteRetentionPolicy = new BlobRetentionPolicy
+            {
+                Enabled = true,
+                Days = 1,
+                AllowPermanentDelete = true
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(1, properties.DeleteRetentionPolicy.Days);
+            Assert.IsTrue(properties.DeleteRetentionPolicy.AllowPermanentDelete);
+
+            // Cleanup
+            properties.DeleteRetentionPolicy = originalBlobRetentionPolicy;
+            await service.SetPropertiesAsync(properties);
+        }
+
+        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange

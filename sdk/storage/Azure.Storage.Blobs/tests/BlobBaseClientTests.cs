@@ -2604,8 +2604,13 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
             await blob.CreateSnapshotAsync();
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                SnapshotsOption = DeleteSnapshotsOption.OnlySnapshots
+            };
+
             // Act
-            await blob.DeleteAsync(snapshotsOption: DeleteSnapshotsOption.OnlySnapshots);
+            await blob.DeleteAsync(options);
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
@@ -2629,8 +2634,13 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
+                BlobDeleteOptions options = new BlobDeleteOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Response response = await blob.DeleteAsync(conditions: accessConditions);
+                Response response = await blob.DeleteAsync(options);
 
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
@@ -2653,9 +2663,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
+                BlobDeleteOptions options = new BlobDeleteOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    blob.DeleteAsync(conditions: accessConditions),
+                    blob.DeleteAsync(options),
                     e => { });
             }
         }
@@ -2678,8 +2693,13 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
-            Response response = await blob.DeleteAsync(conditions: conditions);
+            Response response = await blob.DeleteAsync(options);
 
             // Assert
             bool exists = await blob.ExistsAsync();
@@ -2699,9 +2719,14 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.DeleteAsync(conditions: conditions),
+                blob.DeleteAsync(options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -3000,6 +3025,25 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task DeleteAsync_PermanentDelete()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act
+            await blob.DeleteAsync(options);
         }
 
         [Test]

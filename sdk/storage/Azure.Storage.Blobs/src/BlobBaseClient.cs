@@ -2434,8 +2434,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Delete
         /// <summary>
-        /// The <see cref="Delete"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
+        /// The <see cref="Delete(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for  deletion. The blob is later deleted during
         /// garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -2446,12 +2446,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
         /// Delete Blob</see>.
         /// </summary>
-        /// <param name="snapshotsOption">
-        /// Specifies options for deleting blob snapshots.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// deleting this blob.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2465,19 +2461,133 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            DeleteSnapshotsOption snapshotsOption = default,
-            BlobRequestConditions conditions = default,
+            BlobDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                snapshotsOption,
-                conditions,
-                false, // async
+                options?.SnapshotsOption ?? DeleteSnapshotsOption.None,
+                options?.Conditions,
+                options?.DeleteType,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
+        /// The <see cref="DeleteAsync(BlobDeleteOptions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for  deletion. The blob
+        /// is later deleted during garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(
+            BlobDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            await DeleteInternal(
+                options?.SnapshotsOption ?? DeleteSnapshotsOption.None,
+                options?.Conditions,
+                options?.DeleteType,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExists(BlobDeleteOptions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for deletion, if the blob
+        /// exists. The blob is later deleted during garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            BlobDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                options?.SnapshotsOption ?? DeleteSnapshotsOption.None,
+                options?.Conditions ?? default,
+                options?.DeleteType,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for deletion, if the blob exists.
+        /// The blob is later deleted during garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            BlobDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                options?.SnapshotsOption ?? DeleteSnapshotsOption.None,
+                options?.Conditions ?? default,
+                options?.DeleteType,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Delete(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for  deletion. The blob is later deleted during
         /// garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -2506,6 +2616,51 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Delete(
+            DeleteSnapshotsOption snapshotsOption = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            DeleteInternal(
+                snapshotsOption,
+                conditions,
+                deleteType: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for  deletion. The blob is later deleted during
+        /// garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="snapshotsOption">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
@@ -2513,13 +2668,14 @@ namespace Azure.Storage.Blobs.Specialized
             await DeleteInternal(
                 snapshotsOption,
                 conditions,
-                true, // async
+                deleteType: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DeleteIfExists"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
+        /// The <see cref="DeleteIfExists(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for deletion, if the blob exists. The blob is later deleted
         /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -2548,6 +2704,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> DeleteIfExists(
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
@@ -2555,13 +2712,14 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteIfExistsInternal(
                 snapshotsOption,
                 conditions ?? default,
-                false, // async
+                deleteType: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
+        /// The <see cref="DeleteIfExistsAsync(DeleteSnapshotsOption, BlobRequestConditions, CancellationToken)"/>
+        /// operation marks the specified blob or snapshot for deletion, if the blob exists. The blob is later deleted
         /// during garbage collection.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -2590,6 +2748,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
@@ -2597,7 +2756,8 @@ namespace Azure.Storage.Blobs.Specialized
             await DeleteIfExistsInternal(
                 snapshotsOption,
                 conditions ?? default,
-                true, // async
+                deleteType: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2621,6 +2781,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
+        /// <param name="deleteType">
+        /// The type of the blob deletion.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2638,6 +2801,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<bool>> DeleteIfExistsInternal(
             DeleteSnapshotsOption snapshotsOption,
             BlobRequestConditions conditions,
+            BlobDeleteType? deleteType,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2654,6 +2818,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Response response = await DeleteInternal(
                         snapshotsOption,
                         conditions,
+                        deleteType,
                         async,
                         cancellationToken,
                         $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
@@ -2699,6 +2864,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
+        /// <param name="deleteType">
+        /// The type of the blob deletion.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2719,6 +2887,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response> DeleteInternal(
             DeleteSnapshotsOption snapshotsOption,
             BlobRequestConditions conditions,
+            BlobDeleteType? deleteType,
             bool async,
             CancellationToken cancellationToken,
             string operationName = null)
@@ -2745,6 +2914,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         ifTags: conditions?.TagConditions,
+                        blobDeleteType: deleteType.ToBlobDeleteTypeString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

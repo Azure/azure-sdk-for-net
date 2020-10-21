@@ -4722,6 +4722,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -4742,6 +4743,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
                 string requestId = default,
+                string blobDeleteType = default,
                 bool async = true,
                 string operationName = "BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4765,7 +4767,8 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         ifTags,
-                        requestId))
+                        requestId,
+                        blobDeleteType))
                     {
                         if (async)
                         {
@@ -4811,6 +4814,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <returns>The Blob.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4826,7 +4830,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
-                string requestId = default)
+                string requestId = default,
+                string blobDeleteType = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -4848,6 +4853,7 @@ namespace Azure.Storage.Blobs
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
                 if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (blobDeleteType != null) { _request.Uri.AppendQuery("deletetype", blobDeleteType); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
@@ -19102,6 +19108,11 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Indicates whether permanent delete is allowed on this storage account.
+        /// </summary>
+        public bool? AllowPermanentDelete { get; set; }
+
+        /// <summary>
         /// Creates a new BlobRetentionPolicy instance
         /// </summary>
         public BlobRetentionPolicy() { }
@@ -19128,6 +19139,14 @@ namespace Azure.Storage.Blobs.Models
                     System.Xml.Linq.XName.Get("Days", ""),
                     value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             }
+            if (value.AllowPermanentDelete != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("AllowPermanentDelete", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.AllowPermanentDelete.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
             return _element;
         }
 
@@ -19150,6 +19169,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowPermanentDelete", ""));
+            if (_child != null)
+            {
+                _value.AllowPermanentDelete = bool.Parse(_child.Value);
             }
             CustomizeFromXml(element, _value);
             return _value;
