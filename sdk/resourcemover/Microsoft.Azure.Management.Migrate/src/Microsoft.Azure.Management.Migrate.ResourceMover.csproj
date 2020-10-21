@@ -9,7 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.Migrate.ResourceMover</AssemblyName>
 		<Version>1.0.1-preview</Version>
 		<PackageTags>Management.Migrate; Region Move;Azure Resource Mover;</PackageTags>
-		<PackageReleaseNotes>Adding new APIs for azure resource move from one region to another.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added BulkRemoveMoveResources API.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
