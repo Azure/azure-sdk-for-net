@@ -60,6 +60,95 @@ public static class QueueTriggerFunction_String
 }
 ```
 
+```C# Snippet:QueueTriggerFunction_CustomObject
+public static class QueueTriggerFunction_CustomObject
+{
+    public class CustomMessage
+    {
+        public string Content { get; set; }
+    }
+
+    [FunctionName("QueueTriggerFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue")] CustomMessage message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message.Content);
+    }
+}
+```
+
+```C# Snippet:QueueTriggerFunction_JObject
+public static class QueueTriggerFunction_JObject
+{
+    [FunctionName("QueueTriggerFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue")] JObject message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message["content"]);
+    }
+}
+```
+
+```C# Snippet:QueueSenderFunction_String_Return
+public static class QueueSenderFunction_String_Return
+{
+    [FunctionName("QueueFunction")]
+    [return: Queue("sample-queue-2")]
+    public static string Run(
+        [QueueTrigger("sample-queue-1")] string message,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue-1, content={content}", message);
+        logger.LogInformation("Dispatching message to sample-queue-2");
+        return message;
+    }
+}
+```
+
+```C# Snippet:QueueSenderFunction_CustomObject_OutParamter
+public static class QueueSenderFunction_CustomObject_OutParamter
+{
+    public class CustomMessage
+    {
+        public string Content { get; set; }
+    }
+
+    [FunctionName("QueueFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue-1")] CustomMessage incomingMessage,
+        [Queue("sample-queue-2")] out CustomMessage outgoingMessage,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue-1, content={content}", incomingMessage.Content);
+        logger.LogInformation("Dispatching message to sample-queue-2");
+        outgoingMessage = incomingMessage;
+    }
+}
+```
+
+```C# Snippet:QueueSenderFunction_CustomObject_Collector
+public static class QueueSenderFunction_CustomObject_Collector
+{
+    public class CustomMessage
+    {
+        public string Content { get; set; }
+    }
+
+    [FunctionName("QueueFunction")]
+    public static void Run(
+        [QueueTrigger("sample-queue-1")] CustomMessage incomingMessage,
+        [Queue("sample-queue-2")] ICollector<CustomMessage> collector,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue-1, content={content}", incomingMessage.Content);
+        logger.LogInformation("Dispatching message to sample-queue-2");
+        collector.Add(incomingMessage);
+    }
+}
+```
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
