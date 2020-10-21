@@ -900,26 +900,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<AnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
-            scope.Start();
+            async Task<Page<AnomalyDetectionConfiguration>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -928,26 +933,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
-            scope.Start();
+            Page<AnomalyDetectionConfiguration> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -1210,26 +1220,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
-            scope.Start();
+            async Task<Page<AnomalyAlertConfiguration>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(alertConfigurationGuid, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -1238,26 +1253,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
-            scope.Start();
+            Page<AnomalyAlertConfiguration> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(alertConfigurationGuid, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
