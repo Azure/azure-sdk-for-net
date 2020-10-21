@@ -19,7 +19,6 @@ parameters:
   # Multiple labels seperated by comma, e.g. "bug, APIView"
   PRLabels: ''
   SkipCheckingForChanges: false
-  CloseAfterOpenForTesting: false
 
 steps:
 
@@ -86,4 +85,5 @@ steps:
       -UserReviewers "${{ parameters.GHReviewersVariable }}"
       -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
       -Assignees "${{ parameters.GHAssignessVariable }}"
-      -CloseAfterOpenForTesting $${{ parameters.CloseAfterOpenForTesting }}
+      -CloseAfterOpenForTesting: $(TestPipeline)
+      -CloseAfterOpenForTesting $${{ coalesce(variables.TestPipeline, 'false') }}

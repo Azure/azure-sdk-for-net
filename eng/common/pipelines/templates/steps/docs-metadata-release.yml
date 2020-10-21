@@ -83,7 +83,6 @@ steps:
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
     PRLabels: ${{ parameters.PRLabels }}
-    CloseAfterOpenForTesting: $(TestPipeline)
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -124,4 +123,3 @@ steps:
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
       GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
-      CloseAfterOpenForTesting: $(TestPipeline)
