@@ -289,7 +289,7 @@
 /sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.*/           @jfggdl @serkantkaraca @samuelkoppes
+/sdk/eventhub/Microsoft.*/           @serkantkaraca @samuelkoppes
 
 # ServiceLabel: %Functions %Service Attention
 #/<NotInRepo>/            @ahmedelnably @fabiocav
