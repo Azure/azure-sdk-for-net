@@ -33,7 +33,7 @@ In order for the extension to access Blobs, you will need the connection string 
 az storage account show-connection-string -g <your-resource-group-name> -n <your-resource-name>
 ```
 
-The connection string can be supplied through [app settings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings).
+The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings).
 
 ## Key concepts
 
