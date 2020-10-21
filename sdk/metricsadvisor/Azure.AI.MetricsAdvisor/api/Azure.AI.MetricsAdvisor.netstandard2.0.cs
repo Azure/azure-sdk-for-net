@@ -763,9 +763,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public GetMetricSeriesDataOptions(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesToFilter, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> SeriesToFilter { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetMetricSeriesDefinitionsOptions
     {
