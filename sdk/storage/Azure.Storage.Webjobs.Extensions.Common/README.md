@@ -35,6 +35,18 @@ az storage account show-connection-string -g <your-resource-group-name> -n <your
 
 The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/azure/azure-functions/functions-app-settings).
 
+## Key concepts
+
+## Examples
+
+## Troubleshooting
+
+Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+
+## Next steps
+
+Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+
 ## Contributing
 
 See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
