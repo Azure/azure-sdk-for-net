@@ -1,0 +1,19 @@
+parameters:
+- name: Platforms
+  type: object
+  default: []
+- name: CloudConfig
+  type: object
+  default: []
+- name: AdditionalParameters
+  type: object
+  default: []
+
+jobs:
+- ${{ each platform in parameters.Platforms }}:
+  - template: ./archetype-sdk-tests-jobs.yml
+    parameters:
+      Platform: ${{ platform }}
+      CloudConfig: ${{ parameters.CloudConfig }}
+      ${{ each param in parameters.AdditionalParameters }}:
+        ${{ param.key }}: ${{ param.value }}

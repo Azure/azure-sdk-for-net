@@ -23,15 +23,9 @@ parameters:
 - name: Location
   type: string
   default: ''
-- name: SubscriptionConfiguration
-  type: string
-  default: $(sub-config-azure-cloud-test-resources)
 - name: TestCanary
   type: boolean
   default: false
-- name: ResourceGroupLocationCanary
-  type: string
-  default: "centraluseuap"
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -41,75 +35,24 @@ parameters:
 - name: Clouds
   type: string
   default: 'AzureCloud'
+- name: ResourceGroupLocationCanary
+  type: string
+  default: "centraluseuap"
 
-jobs:
-- template: archetype-sdk-tests-jobs.yml
-  parameters:
-    PreSteps: ${{ parameters.PreSteps }}
-    PostSteps: ${{ parameters.PostSteps }}
-    EnvVars: ${{ parameters.EnvVars }}
-    MaxParallel: ${{ parameters.MaxParallel }}
-    BuildInParallel: ${{ parameters.BuildInParallel }}
-    TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-    Location: ${{ parameters.Location }}
-    ServiceDirectory: ${{ parameters.ServiceDirectory }}
-    TestSetupSteps: ${{ parameters.TestSetupSteps }}
-    CloudConfigurations:
-      ${{ if contains(parameters.Clouds, 'AzureCloud') }}:
-        AzureCloud:
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
-          ArmTemplateParameters: >-
-            @{ keyVaultDomainSuffix = '.vault.azure.net';
-            storageEndpointSuffix = 'core.windows.net';
-            endpointSuffix = '.cognitiveservices.azure.com';
-            azureAuthorityHost = 'https://login.microsoftonline.com/';
-            keyVaultEndpointSuffix = '.vault.azure.net'
-            }
-          EnvVars:
-            SERVICE_MANAGEMENT_URL: https://management.core.windows.net/
-            STORAGE_ENDPOINT_SUFFIX: core.windows.net
-            RESOURCE_MANAGER_URL: https://management.azure.com/
-            SEARCH_ENDPOINT_SUFFIX: search.windows.net
-            COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.com
-      ${{ if contains(parameters.Clouds, 'AzureUsGovCloud') }}:
-        AzureUsGovCloud:
-          SubscriptionConfiguration: $(sub-config-gov-test-resources)
-          ArmTemplateParameters: >-
-            @{ keyVaultDomainSuffix = '.vault.usgovcloudapi.net';
-            storageEndpointSuffix = 'core.usgovcloudapi.net';
-            endpointSuffix = '.cognitiveservices.azure.us';
-            azureAuthorityHost = 'https://login.microsoftonline.us/';
-            keyVaultEndpointSuffix = '.vault.usgovcloudapi.net';
-            enableStorageVersioning = $false
-            }
-          EnvVars:
-            AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
-            RESOURCE_MANAGER_URL: https://management.usgovcloudapi.net/
-            STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
-            SERVICE_MANAGEMENT_URL: https://management.core.usgovcloudapi.net/
-            SEARCH_ENDPOINT_SUFFIX: search.azure.us
-            COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.us
-      ${{ if contains(parameters.Clouds, 'AzureChinaCloud') }}:
-        AzureChinaCloud:
-          SubscriptionConfiguration: $(sub-config-cn-test-resources)
-          ArmTemplateParameters: >-
-            @{ keyVaultDomainSuffix = '.vault.azure.cn';
-            storageEndpointSuffix = 'core.chinacloudapi.cn';
-            azureAuthorityHost = 'https://login.chinacloudapi.cn/';
-            keyVaultEndpointSuffix = '.vault.azure.cn';
-            keyVaultSku = 'standard';
-            enableStorageVersioning = $false;
-            endpointSuffix = '.cognitiveservices.azure.cn';
-            textAnalyticsSku = 'S'
-            }
-          EnvVars:
-            AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
-            SERVICE_MANAGEMENT_URL: https://management.core.chinacloudapi.cn/
-            RESOURCE_MANAGER_URL: https://management.chinacloudapi.cn
-            STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
-            SEARCH_ENDPOINT_SUFFIX: search.azure.cn
-            COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.cn
-    platforms:
+stages:
+  - template: ../stages/clouds/clouds.yml
+    parameters:
+      AdditionalParameters:
+        PreSteps: ${{ parameters.PreSteps }}
+        PostSteps: ${{ parameters.PostSteps }}
+        EnvVars: ${{ parameters.EnvVars }}
+        MaxParallel: ${{ parameters.MaxParallel }}
+        BuildInParallel: ${{ parameters.BuildInParallel }}
+        TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+        Location: ${{ parameters.Location }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+      Platforms: 
       - DisplayName: "Test on Linux"
         OSVmImage: "ubuntu-18.04"
         TestTargetFramework: netcoreapp2.1
@@ -155,5 +98,4 @@ jobs:
             inputs:
               pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
               artifactName: SessionRecords
-
       - ${{ parameters.AdditionalPlatforms }}
