@@ -132,8 +132,8 @@ namespace Azure.DigitalTwins.Core
         /// This sample demonstrates getting and deserializing a digital twin into a custom data type.
         ///
         /// <code snippet="Snippet:DigitalTwinsSampleGetCustomDigitalTwin">
-        /// Response&lt;string&gt; getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
-        /// CustomDigitalTwin customDt = JsonSerializer.Deserialize&lt;CustomDigitalTwin&gt;(getCustomDtResponse.Value);
+        /// Response&lt;CustomDigitalTwin&gt; getCustomDtResponse = await client.GetDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId);
+        /// CustomDigitalTwin customDt = getCustomDtResponse.Value;
         /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {customDt.Id}:\n\t&quot; +
         ///     $&quot;ETag: {customDt.ETag}\n\t&quot; +
         ///     $&quot;Prop1: {customDt.Prop1}\n\t&quot; +
@@ -223,7 +223,7 @@ namespace Azure.DigitalTwins.Core
         /// };
         /// string dt2Payload = JsonSerializer.Serialize(customTwin);
         ///
-        /// await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
+        /// await client.CreateDigitalTwinAsync&lt;object&gt;(customDtId, dt2Payload);
         /// Console.WriteLine($&quot;Created digital twin &apos;{customDtId}&apos;.&quot;);
         /// </code>
         /// </example>
@@ -390,7 +390,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
+        /// await client.GetComponentAsync&lt;Component1&gt;(basicDtId, SamplesConstants.ComponentName);
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
@@ -780,8 +780,10 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// This sample demonstrates getting and deserializing a digital twin relationship into a custom data type.
         /// <code snippet="Snippet:DigitalTwinsSampleGetCustomRelationship">
-        /// Response&lt;string&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;);
-        /// CustomRelationship getCustomRelationship = JsonSerializer.Deserialize&lt;CustomRelationship&gt;(getCustomRelationshipResponse.Value);
+        /// Response&lt;CustomRelationship&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync&lt;CustomRelationship&gt;(
+        ///     &quot;floorTwinId&quot;,
+        ///     &quot;floorBuildingRelationshipId&quot;);
+        /// CustomRelationship getCustomRelationship = getCustomRelationshipResponse.Value;
         /// Console.WriteLine($&quot;Retrieved and deserialized relationship &apos;{getCustomRelationship.Id}&apos; from twin &apos;{getCustomRelationship.SourceId}&apos;.\n\t&quot; +
         ///     $&quot;Prop1: {getCustomRelationship.Prop1}\n\t&quot; +
         ///     $&quot;Prop2: {getCustomRelationship.Prop2}&quot;);
@@ -913,7 +915,7 @@ namespace Azure.DigitalTwins.Core
         /// };
         /// string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
         ///
-        /// Response&lt;string&gt; createCustomRelationshipResponse = await client.CreateRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, serializedCustomRelationship);
+        /// await client.CreateRelationshipAsync&lt;object&gt;(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, serializedCustomRelationship);
         /// Console.WriteLine($&quot;Created a digital twin relationship &apos;floorBuildingRelationshipId&apos; from twin &apos;floorTwinId&apos; to twin &apos;buildingTwinId&apos;.&quot;);
         /// </code>
         /// </example>
