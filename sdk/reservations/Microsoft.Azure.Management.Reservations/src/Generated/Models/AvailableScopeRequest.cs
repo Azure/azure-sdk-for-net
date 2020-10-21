@@ -11,28 +11,27 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Available scope
+    /// </summary>
+    public partial class AvailableScopeRequest
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the AvailableScopeRequest class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public AvailableScopeRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the AvailableScopeRequest class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        public AvailableScopeRequest(AvailableScopeRequestProperties properties = default(AvailableScopeRequestProperties))
         {
-            Scopes = scopes;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,8 +42,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public AvailableScopeRequestProperties Properties { get; set; }
 
     }
 }

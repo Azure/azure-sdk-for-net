@@ -11,28 +11,28 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// error details
+    /// </summary>
+    public partial class ExchangePolicyError
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExchangePolicyError class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public ExchangePolicyError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExchangePolicyError class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        public ExchangePolicyError(string code = default(string), string message = default(string))
         {
-            Scopes = scopes;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -43,8 +43,13 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
