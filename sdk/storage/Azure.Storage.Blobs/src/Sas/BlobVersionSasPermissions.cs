@@ -23,6 +23,11 @@ namespace Azure.Storage.Sas
         Delete = 1,
 
         /// <summary>
+        /// Indicates that Permanent Delete is permitted.
+        /// </summary>
+        PermanentlyDelete = 2,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -48,6 +53,10 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobVersionSasPermissions.Delete) == BlobVersionSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & BlobVersionSasPermissions.PermanentlyDelete) == BlobVersionSasPermissions.PermanentlyDelete)
+            {
+                sb.Append(Constants.Sas.Permissions.PermanentlyDeleteBlobVersionOrSnapshot);
             }
             return sb.ToString();
         }

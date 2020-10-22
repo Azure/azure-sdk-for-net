@@ -415,6 +415,7 @@ namespace Azure.Storage
                 public const char Write = 'w';
                 public const char Delete = 'd';
                 public const char DeleteBlobVersion = 'x';
+                public const char PermanentlyDeleteBlobVersionOrSnapshot = 'y';
                 public const char List = 'l';
                 public const char Add = 'a';
                 public const char Update = 'u';

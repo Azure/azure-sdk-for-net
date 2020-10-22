@@ -136,6 +136,11 @@
       <AccountName>[ACCOUNT]</AccountName>
       <AccountKey>[ACCOUNT-KEY]</AccountKey>
 
+      <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+
       <BlobServiceEndpoint>http://[ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
       <QueueServiceEndpoint>http://[ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
       <TableServiceEndpoint>http://[ACCOUNT].table.core.windows.net</TableServiceEndpoint>
