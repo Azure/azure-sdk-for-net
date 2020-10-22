@@ -179,12 +179,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets the initialization vector for decryption.
         /// </summary>
-        public byte[] Iv { get; }
+        public byte[] Iv { get; internal set; }
 
         /// <summary>
         /// Gets the authenticated tag resulting from encryption with a symmetric key using AES.
         /// </summary>
-        public byte[] AuthenticationTag { get; }
+        public byte[] AuthenticationTag { get; internal set; }
 
         /// <summary>
         /// Gets or sets additional data that is authenticated during decryption but not encrypted.
