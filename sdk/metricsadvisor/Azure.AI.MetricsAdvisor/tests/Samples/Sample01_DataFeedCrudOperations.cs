@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [RecordedTest]
-        [Ignore("The default series quota is 10000, please contact us.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task CreateAndDeleteDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [RecordedTest]
-        [Ignore("fillMissingPointType is required if you change fillMissingPointValue.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;

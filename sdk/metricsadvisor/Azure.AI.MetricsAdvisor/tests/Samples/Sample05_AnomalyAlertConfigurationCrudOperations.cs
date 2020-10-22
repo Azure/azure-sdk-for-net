@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [RecordedTest]
-        [Ignore("Invalid parameter. crossMetricsOperator is required.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateAnomalyAlertConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;
