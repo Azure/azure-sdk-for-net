@@ -9,6 +9,9 @@ parameters:
 - name: Artifacts
   type: object
   default: []
+- name: TestPipeline
+  type: boolean
+  default: false
 - name: ArtifactName
   type: string
   default: packages
@@ -34,10 +37,11 @@ stages:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
-        ServiceDirectory: ${{parameters.ServiceDirectory}}
-        Artifacts: ${{parameters.Artifacts}}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        Artifacts: ${{ parameters.Artifacts }}
+        TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
-        TestSetupSteps: ${{parameters.TestSetupSteps}}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
@@ -46,6 +50,7 @@ stages:
         ServiceDirectory: ${{parameters.ServiceDirectory}}
         DependsOn: Build
         Artifacts: ${{parameters.Artifacts}}
+        TestPipeline: ${{ parameters.TestPipeline }}
         ArtifactName: packages
         TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
         TargetDocRepoName: ${{parameters.TargetDocRepoName}} 

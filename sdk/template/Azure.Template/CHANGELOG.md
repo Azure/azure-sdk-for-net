@@ -1,5 +1,11 @@
 # Release History
-## 1.0.3-beta.46 (2020-10-21)
+## 1.0.3-beta.49 (2020-10-22)
+- Test Bugfix in create-pullrequest.yml
+
+## 1.0.3-beta.48 (2020-10-22)
+- Test Bugfix in create-pullrequest.yml
+
+## 1.0.3-beta.47 (2020-10-21)
 - Test Bugfix in create-pullrequest.yml
 
 ## 1.0.3-beta.24 (2020-10-21)

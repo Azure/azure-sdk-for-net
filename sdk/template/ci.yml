@@ -29,4 +29,3 @@ extends:
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
-      testPipeline: true
