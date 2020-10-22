@@ -24,5 +24,13 @@ namespace Azure.DigitalTwins.Core
         /// Whether to include the model definition in the result. If false, only the model metadata will be returned.
         /// </summary>
         public bool IncludeModelDefinition { get; set; } = false;
+
+        /// <summary> Identifies the request in a distributed tracing system. </summary>
+        [CodeGenMember("Traceparent")]
+        public string TraceParent { get; set; }
+
+        /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
+        [CodeGenMember("Tracestate")]
+        public string TraceState { get; set; }
     }
 }

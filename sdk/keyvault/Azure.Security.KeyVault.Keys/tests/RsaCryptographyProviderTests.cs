@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RsaCryptographyProvider provider = new RsaCryptographyProvider(key.Key, key.Properties);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("test");
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptionAlgorithm.RsaOaep256, plaintext, default));
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptOptions.RsaOaep256Options(plaintext), default));
             Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RsaCryptographyProvider provider = new RsaCryptographyProvider(key.Key, key.Properties);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("test");
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptionAlgorithm.RsaOaep256, plaintext, default));
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.Encrypt(EncryptOptions.RsaOaep256Options(plaintext), default));
             Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
         }
 

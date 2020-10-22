@@ -7,8 +7,16 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinModelsUpdateOptions")]
-    public partial class UpdateModelOptions
+    public partial class DecomissionModelOptions
     {
         // This class declaration changes the namespace; do not remove.
+
+        /// <summary> Identifies the request in a distributed tracing system. </summary>
+        [CodeGenMember("Traceparent")]
+        public string TraceParent { get; set; }
+
+        /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
+        [CodeGenMember("Tracestate")]
+        public string TraceState { get; set; }
     }
 }

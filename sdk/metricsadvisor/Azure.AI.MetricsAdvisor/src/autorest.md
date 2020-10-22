@@ -70,6 +70,18 @@ directive:
     $.allOf[1].properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SeriesResult
+  transform: >
+    $.properties.isAnomalyList.items["x-nullable"] = true;
+    $.properties.periodList.items["x-nullable"] = true;
+    $.properties.expectedValueList.items["x-nullable"] = true;
+    $.properties.lowerBoundaryList.items["x-nullable"] = true;
+    $.properties.upperBoundaryList.items["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml
