@@ -16,7 +16,7 @@ namespace Azure.Learn.AppConfig.Samples
         [Test]
         public void GetConfigurationSetting()
         {
-            string endpoint = "http://example.azconfig.io";
+            string endpoint = Environment.GetEnvironmentVariable("API-LEARN_ENDPOINT");
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             ConfigurationSetting color = client.GetConfigurationSetting("FontColor");
