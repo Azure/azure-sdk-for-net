@@ -8,6 +8,7 @@
   <PropertyGroup>
     <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
   <!--
     For Track 1, override the engineering system signing key and use the existing key for
