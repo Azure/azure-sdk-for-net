@@ -17,31 +17,31 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// 
     /// only return for alerting incident result.
     /// </summary>
-    public readonly partial struct IncidentStatus : IEquatable<IncidentStatus>
+    public readonly partial struct AnomalyIncidentStatus : IEquatable<AnomalyIncidentStatus>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IncidentStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IncidentStatus(string value)
+        public AnomalyIncidentStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         private const string ActiveValue = "Active";
         private const string ResolvedValue = "Resolved";
-        /// <summary> Determines if two <see cref="IncidentStatus"/> values are the same. </summary>
-        public static bool operator ==(IncidentStatus left, IncidentStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IncidentStatus"/> values are not the same. </summary>
-        public static bool operator !=(IncidentStatus left, IncidentStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IncidentStatus"/>. </summary>
-        public static implicit operator IncidentStatus(string value) => new IncidentStatus(value);
+        /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are the same. </summary>
+        public static bool operator ==(AnomalyIncidentStatus left, AnomalyIncidentStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are not the same. </summary>
+        public static bool operator !=(AnomalyIncidentStatus left, AnomalyIncidentStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AnomalyIncidentStatus"/>. </summary>
+        public static implicit operator AnomalyIncidentStatus(string value) => new AnomalyIncidentStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IncidentStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is AnomalyIncidentStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(IncidentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnomalyIncidentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
