@@ -77,8 +77,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeed(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed>> GetDataFeedAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -959,13 +959,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricEnrichedSeriesData
     {
         internal MetricEnrichedSeriesData() { }
-        public System.Collections.Generic.IReadOnlyList<double> ExpectedValues { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<bool> IsAnomaly { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<double> LowerBoundaries { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> Periods { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> ExpectedValues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<bool?> IsAnomaly { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> LowerBoundaries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int?> Periods { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> Timestamps { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<double> UpperBoundaries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double?> UpperBoundaries { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<double> Values { get { throw null; } }
     }
     public partial class MetricFeedback

@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The minimum delay between two consecutive retry attempts, in case data ingestion
         /// fails. If not specified, the service's behavior depends on the data feed's granularity.
-        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/onboard-your-data#avoid-loading-partial-data">documentation></see> for details.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/onboard-your-data#avoid-loading-partial-data">documentation</see> for details.
         /// </summary>
         public TimeSpan? IngestionRetryDelay { get; set; }
 

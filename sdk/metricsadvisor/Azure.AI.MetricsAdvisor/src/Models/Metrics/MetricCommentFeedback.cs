@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 
             ValueInternal = comment;
-            Type = Models.FeedbackType.Comment;
+            Type = FeedbackType.Comment;
         }
 
         /// <summary>

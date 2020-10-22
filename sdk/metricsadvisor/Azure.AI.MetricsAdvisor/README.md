@@ -154,7 +154,7 @@ The following section provides several code snippets illustrating common pattern
 
 Metrics Advisor supports multiple types of data sources. In this sample we'll illustrate how to create a [`DataFeed`](#data-feed) that extracts data from a SQL server.
 
-```C# Snippet:CreateDataFeedFromDataSource
+```C# Snippet:CreateDataFeedAsync
 string sqlServerConnectionString = "<connectionString>";
 string sqlServerQuery = "<query>";
 
@@ -186,14 +186,16 @@ Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeedName
 DataFeed dataFeed = response.Value;
 
 Console.WriteLine($"Data feed ID: {dataFeed.Id}");
+```
 
-// Only the ID of the data feed is known at this point. You can perform another service
-// call to get more information, such as status, created time, the list of administrators,
-// or the metric IDs.
+Note that only the ID of the data feed is known at this point. You can performa another service call to `GetDataFeedAsync` or `GetDataFeed` to get more information, such as status, created time, the list of administrators, or the metric IDs.
 
-response = await adminClient.GetDataFeedAsync(dataFeed.Id);
+```C# Snippet:GetDataFeedAsync
+string dataFeedId = "<dataFeedId>";
 
-dataFeed = response.Value;
+Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
+
+DataFeed dataFeed = response.Value;
 
 Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
@@ -215,12 +217,15 @@ foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
 
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 
-```C# Snippet:CheckIngestionStatusOfDataFeed
+```C# Snippet:GetDataFeedIngestionStatusesAsync
 string dataFeedId = "<dataFeedId>";
 
 var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime);
+var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+{
+    TopCount = 5
+};
 
 Console.WriteLine("Ingestion statuses:");
 Console.WriteLine();
@@ -234,8 +239,8 @@ await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFee
     Console.WriteLine($"Service message: {ingestionStatus.Message}");
     Console.WriteLine();
 
-    // Print at most 10 statuses.
-    if (++statusCount >= 10)
+    // Print at most 5 statuses.
+    if (++statusCount >= 5)
     {
         break;
     }
@@ -246,7 +251,7 @@ await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFee
 
 Create an [`AnomalyDetectionConfiguration`](#data-anomaly) to tell the service which data points should be considered anomalies.
 
-```C# Snippet:CreateAnomalyDetectionConfiguration
+```C# Snippet:CreateAnomalyDetectionConfigurationAsync
 string metricId = "<metricId>";
 string configurationName = "Sample anomaly detection configuration";
 
@@ -279,7 +284,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {detectionConfiguration.
 
 Metrics Advisor supports the [`EmailHook` and `WebHook`](#alerting-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
-```C# Snippet:CreateHookForReceivingAnomalyAlerts
+```C# Snippet:CreateHookAsync
 string hookName = "Sample hook";
 var emailsToAlert = new List<string>()
 {
@@ -289,7 +294,7 @@ var emailsToAlert = new List<string>()
 
 var emailHook = new EmailHook(hookName, emailsToAlert);
 
-Response<AlertingHook> response = adminClient.CreateHook(emailHook);
+Response<AlertingHook> response = await adminClient.CreateHookAsync(emailHook);
 
 AlertingHook hook = response.Value;
 
@@ -300,7 +305,7 @@ Console.WriteLine($"Hook ID: {hook.Id}");
 
 Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service which anomalies should trigger alerts.
 
-```C# Snippet:CreateAnomalyAlertConfiguration
+```C# Snippet:CreateAnomalyAlertConfigurationAsync
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
@@ -324,40 +329,64 @@ Console.WriteLine($"Alert configuration ID: {alertConfiguration.Id}");
 
 ### Query detected anomalies and triggered alerts
 
-Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration, and list the [anomalies](#data-anomaly) that triggered these alerts.
+Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration.
 
-```C# Snippet:QueryDetectedAnomaliesAndTriggeredAlerts
+```C# Snippet:GetAlertsAsync
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
 var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime);
+var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime)
+{
+    TopCount = 5
+};
 
 int alertCount = 0;
 
 await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
 {
+    Console.WriteLine($"Alert created at: {alert.CreatedTime}");
     Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
     Console.WriteLine($"Id: {alert.Id}");
-    Console.WriteLine($"Anomalies that triggered this alert:");
+    Console.WriteLine();
 
-    await foreach (DataAnomaly anomaly in client.GetAnomaliesForAlertAsync(anomalyAlertConfigurationId, alert.Id))
+    // Print at most 5 alerts.
+    if (++alertCount >= 5)
     {
-        Console.WriteLine("  Anomaly:");
-        Console.WriteLine($"    Status: {anomaly.Status.Value}");
-        Console.WriteLine($"    Severity: {anomaly.Severity}");
-        Console.WriteLine($"    Series key:");
+        break;
+    }
+}
+```
 
-        foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
-        {
-            Console.WriteLine($"      Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
-        }
+Once you know an alert's ID, list the [anomalies](#data-anomaly) that triggered this alert.
 
-        Console.WriteLine();
+```C# Snippet:GetAnomaliesForAlertAsync
+string alertConfigurationId = "<alertConfigurationId>";
+string alertId = "<alertId>";
+
+var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
+
+int anomalyCount = 0;
+
+await foreach (DataAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
+{
+    Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Metric ID: {anomaly.MetricId}");
+    Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
+    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
+    Console.WriteLine($"Status: {anomaly.Status}");
+    Console.WriteLine($"Severity: {anomaly.Severity}");
+    Console.WriteLine("Series key:");
+
+    foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+    {
+        Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
     }
 
-    // Print at most 3 alerts.
-    if (++alertCount >= 3)
+    Console.WriteLine();
+
+    // Print at most 3 anomalies.
+    if (++anomalyCount >= 3)
     {
         break;
     }
@@ -422,12 +451,16 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Metrics Advisor library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Create a data feed from a data source][metricsadv-sample1]
-- [Check the ingestion status of a data feed][metricsadv-sample2]
-- [Create an anomaly detection configuration][metricsadv-sample3]
-- [Create a hook for receiving anomaly alerts][metricsadv-sample4]
-- [Create an anomaly alert configuration][metricsadv-sample5]
-- [Query detected anomalies and triggered alerts][metricsadv-sample6]
+- [Data feed CRUD operations][metricsadv-sample1]
+- [Data feed ingestion operations][metricsadv-sample2]
+- [Anomaly detection configuration CRUD operations][metricsadv-sample3]
+- [Hook CRUD operations][metricsadv-sample4]
+- [Anomaly alert configuration CRUD operations][metricsadv-sample5]
+- [Query triggered alerts][metricsadv-sample6]
+- [Query detected anomalies][metricsadv-sample7]
+- [Query incidents and their root causes][metricsadv-sample8]
+- [Query time series information][metricsadv-sample9]
+- [Feedback CRUD operations][metricsadv-sample10]
 
 ## Contributing
 
@@ -442,7 +475,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
 [metricsadv_docs]: https://docs.microsoft.com/azure/cognitive-services/metrics-advisor
-[metricsadv_nuget_package]: https://www.nuget.org/packages?q=Azure.AI.MetricsAdvisor
+[metricsadv_nuget_package]: https://www.nuget.org/packages/Azure.AI.MetricsAdvisor
 [metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
 [metricsadv_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
@@ -451,12 +484,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metrics_advisor_admin_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs
 [metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
 
-[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample1_CreateDataFeedFromDataSource.cs
-[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample2_CheckIngestionStatusOfDataFeed.cs
-[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample3_CreateAnomalyDetectionConfiguration.cs
-[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample4_CreateHookForReceivingAnomalyAlerts.cs
-[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample5_CreateAnomalyAlertConfiguration.cs
-[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample6_QueryDetectedAnomaliesAndTriggeredAlerts.cs
+[metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample01_DataFeedCrudOperations.cs
+[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample02_DataFeedIngestionOperations.cs
+[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample03_AnomalyDetectionConfigurationCrudOperations.cs
+[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample04_HookCrudOperations.cs
+[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample05_AnomalyAlertConfigurationCrudOperations.cs
+[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample06_QueryTriggeredAlerts.cs
+[metricsadv-sample7]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample07_QueryDetectedAnomalies.cs
+[metricsadv-sample8]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample08_QueryIncidentsAndRootCauses.cs
+[metricsadv-sample9]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample09_QueryTimeSeriesInformation.cs
+[metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_FeedbackCrudOperations.cs
 
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account

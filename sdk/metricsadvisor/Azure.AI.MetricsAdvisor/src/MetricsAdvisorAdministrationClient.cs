@@ -1218,14 +1218,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             async Task<Page<AnomalyAlertConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1234,7 +1234,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(alertConfigurationGuid, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1251,14 +1251,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string alertConfigurationId, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual Pageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             Page<AnomalyAlertConfiguration> FirstPageFunc(int? pageSizeHint)
             {
@@ -1267,7 +1267,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(alertConfigurationGuid, cancellationToken);
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
