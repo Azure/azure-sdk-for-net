@@ -18,6 +18,7 @@ parameters:
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
   OnboardingBranch: ''
+  CloseAfterOpenForTesting: false
 
 steps:
 - pwsh: |
@@ -83,7 +84,7 @@ steps:
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
     PRLabels: ${{ parameters.PRLabels }}
-    CloseAfterOpenForTesting: $(TestPipeline)
+    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -124,4 +125,4 @@ steps:
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
       GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
-      CloseAfterOpenForTesting: $(TestPipeline)
+      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
