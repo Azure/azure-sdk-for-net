@@ -35,7 +35,7 @@ function Invoke-GitHubAPIPost {
     else {
       $warning = "{0} with Uri [ $apiURI ] did not fire request because of empty body." -f (Get-PSCallStack)[1].FunctionName
       LogWarning $warning
-      exit 0
+      return $null
     }
   }
   catch {
@@ -69,7 +69,7 @@ function Invoke-GitHubAPIPatch {
     else {
       $warning = "{0} with Uri [ $apiURI ] did not fire request because of empty body." -f (Get-PSCallStack)[1].FunctionName
       LogWarning $warning
-      exit 0
+      return $null
     }
   }
   catch {
