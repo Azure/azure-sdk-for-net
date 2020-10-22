@@ -41,6 +41,12 @@ extends:
       safeName: AzureStorageQueues
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage
+      safeName: MicrosoftAzureWebJobsExtensionsStorage
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+      safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
+      safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
     - name: Azure.ResourceManager.Storage
       safeName: AzureResourceManagerStorage
     TestSetupSteps:
