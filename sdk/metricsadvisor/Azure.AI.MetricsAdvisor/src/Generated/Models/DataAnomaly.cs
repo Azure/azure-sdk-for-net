@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyResult. </summary>
-    public partial class DataAnomaly
+    public partial class DataPointAnomaly
     {
     }
 }

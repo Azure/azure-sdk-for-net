@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            List<DataAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
+            List<DataPointAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
                 DetectionConfigurationId,
                 new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
             ).ToEnumerableAsync().ConfigureAwait(false);
