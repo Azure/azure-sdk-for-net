@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.PeekLockTestCase(sender, receiver, messageCount);
+                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
                 }
                 finally
                 {
