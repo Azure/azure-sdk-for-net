@@ -44,10 +44,8 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     },
     /// };
     ///
-    /// string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-    ///
-    /// await client.CreateDigitalTwinAsync&lt;object&gt;(basicDtId, basicDtPayload);
-    /// Console.WriteLine($&quot;Created digital twin &apos;{basicDtId}&apos;.&quot;);
+    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId, basicTwin);
+    /// Console.WriteLine($&quot;Created digital twin &apos;{createDigitalTwinResponse.Value.Id}&apos;.&quot;);
     /// </code>
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.

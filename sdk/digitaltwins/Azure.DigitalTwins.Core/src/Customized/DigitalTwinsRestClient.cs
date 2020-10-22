@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,7 +17,7 @@ namespace Azure.DigitalTwins.Core
     {
         private const string DateTimeOffsetFormat = "MM/dd/yy H:mm:ss zzz";
 
-        internal HttpMessage CreateAddRequest(string id, string twin, CreateDigitalTwinOptions digitalTwinsAddOptions)
+        internal HttpMessage CreateAddRequest(string id, Stream twin, CreateDigitalTwinOptions digitalTwinsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -40,12 +39,16 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var content = new StringRequestContent(twin);
+            var content = RequestContent.Create(twin);
             request.Content = content;
             return message;
         }
 
-        internal async Task<Response<Stream>> AddAsync(string id, string twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response<Stream>> AddAsync(
+            string id,
+            Stream twin,
+            CreateDigitalTwinOptions digitalTwinsAddOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -72,7 +75,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<Stream> Add(string id, string twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        internal Response<Stream> Add(string id, Stream twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -178,7 +181,7 @@ namespace Azure.DigitalTwins.Core
         internal async Task<Response<Stream>> AddRelationshipAsync(
             string id,
             string relationshipId,
-            string relationship,
+            Stream relationship,
             CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null,
             CancellationToken cancellationToken = default)
         {
@@ -195,13 +198,13 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(relationship));
             }
 
-            using var message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
+            using HttpMessage message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        Stream value = message.ExtractResponseContent();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -212,7 +215,7 @@ namespace Azure.DigitalTwins.Core
         public Response<Stream> AddRelationship(
             string id,
             string relationshipId,
-            string relationship,
+            Stream relationship,
             CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null,
             CancellationToken cancellationToken = default)
         {
@@ -235,7 +238,7 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        Stream value = message.ExtractResponseContent();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -574,10 +577,10 @@ namespace Azure.DigitalTwins.Core
             string patchDocument,
             UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = _pipeline.CreateMessage();
+            Request request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
@@ -604,13 +607,13 @@ namespace Azure.DigitalTwins.Core
         private HttpMessage CreateAddRelationshipRequest(
                     string id,
                     string relationshipId,
-                    string relationship,
+                    Stream relationship,
                     CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = _pipeline.CreateMessage();
+            Request request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
@@ -629,7 +632,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            request.Content = new StringRequestContent(relationship);
+            request.Content = RequestContent.Create(relationship);
             return message;
         }
 

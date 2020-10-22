@@ -24,7 +24,7 @@ input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/14fb403
 
 directive:
 - from: swagger-document
-  where: $..[?(@.operationId=='DigitalTwins_GetComponent' || @.operationId=='DigitalTwins_GetRelationshipById' || @.operationId=='DigitalTwins_Add' || @.operationId=='DigitalTwins_GetById')].responses.200.schema
+  where: $..[?(@.operationId=='DigitalTwins_GetComponent' || @.operationId=='DigitalTwins_GetRelationshipById' || @.operationId=='DigitalTwins_Add' || @.operationId=='DigitalTwins_GetById' || @.operationId=='DigitalTwins_AddRelationship')].responses.200.schema
   transform: $.format = "binary";
 
 

@@ -222,16 +222,17 @@ namespace Azure.DigitalTwins.Core
         ///         ComponentProp2 = 123,
         ///     }
         /// };
-        /// string dt2Payload = JsonSerializer.Serialize(customTwin);
-        ///
-        /// await client.CreateDigitalTwinAsync&lt;object&gt;(customDtId, dt2Payload);
-        /// Console.WriteLine($&quot;Created digital twin &apos;{customDtId}&apos;.&quot;);
+        /// Response&lt;CustomDigitalTwin&gt; createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId, customTwin);
+        /// Console.WriteLine($&quot;Created digital twin &apos;{createCustomDigitalTwinResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public async virtual Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
+            // Serialize the digital twin object and write it to a Stream
+            using MemoryStream memoryStream = await WriteToStream<T>(digitalTwin, _objectSerializer, true /*async*/, cancellationToken).ConfigureAwait(false);
+
             // Get the digital twin as a Stream object
-            Response<Stream> digitalTwinStream = await _dtRestClient.AddAsync(digitalTwinId, digitalTwin, options, cancellationToken).ConfigureAwait(false);
+            Response<Stream> digitalTwinStream = await _dtRestClient.AddAsync(digitalTwinId, memoryStream, options, cancellationToken).ConfigureAwait(false);
 
             // Deserialize the stream into the generic type
             T deserializedDigitalTwin = (T)await _objectSerializer.DeserializeAsync(digitalTwinStream, typeof(T), cancellationToken).ConfigureAwait(false);
@@ -258,10 +259,13 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Response<T> CreateDigitalTwin<T>(string digitalTwinId, string digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> CreateDigitalTwin<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
+            // Serialize the digital twin object and write it to a Stream
+            using MemoryStream memoryStream = WriteToStream<T>(digitalTwin, _objectSerializer, false /*async*/, cancellationToken).EnsureCompleted();
+
             // Get the digital twin as a Stream object
-            Response<Stream> digitalTwinStream = _dtRestClient.Add(digitalTwinId, digitalTwin, options, cancellationToken);
+            Response<Stream> digitalTwinStream = _dtRestClient.Add(digitalTwinId, memoryStream, options, cancellationToken);
 
             // Deserialize the stream into the generic type
             T deserializedDigitalTwin = (T)_objectSerializer.Deserialize(digitalTwinStream, typeof(T), cancellationToken);
@@ -916,16 +920,20 @@ namespace Azure.DigitalTwins.Core
         ///     Prop1 = &quot;Prop1 val&quot;,
         ///     Prop2 = 4
         /// };
-        /// string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
         ///
-        /// await client.CreateRelationshipAsync&lt;object&gt;(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, serializedCustomRelationship);
-        /// Console.WriteLine($&quot;Created a digital twin relationship &apos;floorBuildingRelationshipId&apos; from twin &apos;floorTwinId&apos; to twin &apos;buildingTwinId&apos;.&quot;);
+        /// Response&lt;CustomRelationship&gt; createCustomRelationshipResponse = await client
+        ///     .CreateRelationshipAsync&lt;CustomRelationship&gt;(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, floorBuildingRelationshipPayload);
+        /// Console.WriteLine($&quot;Created a digital twin relationship &apos;{createCustomRelationshipResponse.Value.Id}&apos; &quot; +
+        ///     $&quot;from twin &apos;{createCustomRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createCustomRelationshipResponse.Value.TargetId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public async virtual Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
+            // Serialize the digital twin object and write it to a Stream
+            using MemoryStream memoryStream = await WriteToStream<T>(relationship, _objectSerializer, true /*async*/, cancellationToken).ConfigureAwait(false);
+
             // Get the component as a Stream object
-            Response<Stream> relationshipStream = await _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, relationship, options, cancellationToken).ConfigureAwait(false);
+            Response<Stream> relationshipStream = await _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, memoryStream, options, cancellationToken).ConfigureAwait(false);
 
             // Deserialize the stream into the generic type
             T deserializedRelationship = (T)await _objectSerializer.DeserializeAsync(relationshipStream, typeof(T), cancellationToken).ConfigureAwait(false);
@@ -958,13 +966,21 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateRelationshipAsync(string, string, string, CreateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="CreateRelationshipAsync{T}(string, string, T, CreateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<T> CreateRelationship<T>(string digitalTwinId, string relationshipId, string relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> CreateRelationship<T>(
+            string digitalTwinId,
+            string relationshipId,
+            T relationship,
+            CreateRelationshipOptions options = null,
+            CancellationToken cancellationToken = default)
         {
+            // Serialize the digital twin object and write it to a Stream
+            using MemoryStream memoryStream = WriteToStream<T>(relationship, _objectSerializer, false /*async*/, cancellationToken).EnsureCompleted();
+
             // Get the relationship as a Stream object
-            Response<Stream> relationshipStream = _dtRestClient.AddRelationship(digitalTwinId, relationshipId, relationship, options, cancellationToken);
+            Response<Stream> relationshipStream = _dtRestClient.AddRelationship(digitalTwinId, relationshipId, memoryStream, options, cancellationToken);
 
             // Deserialize the stream into the generic type
             T deserializedRelationship = (T)_objectSerializer.Deserialize(relationshipStream, typeof(T), cancellationToken);
@@ -990,7 +1006,11 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string jsonPatch, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId,
+            string relationshipId,
+            string jsonPatch,
+            UpdateRelationshipOptions options = null,
+            CancellationToken cancellationToken = default)
         {
             return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
         }
@@ -1016,7 +1036,11 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="UpdateRelationshipAsync(string, string, string, UpdateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, string jsonPatch, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateRelationship(string digitalTwinId,
+            string relationshipId,
+            string jsonPatch,
+            UpdateRelationshipOptions options = null,
+            CancellationToken cancellationToken = default)
         {
             return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
         }
@@ -1833,7 +1857,12 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, PublishTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishTelemetryAsync(
+            string digitalTwinId,
+            string messageId,
+            string payload,
+            PublishTelemetryOptions options = null,
+            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1915,7 +1944,12 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published component telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, PublishComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId,
+            string componentName,
+            string messageId,
+            string payload,
+            PublishComponentTelemetryOptions options = null,
+            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1951,7 +1985,12 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, PublishComponentTelemetryOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response PublishComponentTelemetry(string digitalTwinId, string componentName, string messageId, string payload, PublishComponentTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response PublishComponentTelemetry(string digitalTwinId,
+            string componentName,
+            string messageId,
+            string payload,
+            PublishComponentTelemetryOptions options = null,
+            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -1985,6 +2024,34 @@ namespace Azure.DigitalTwins.Core
             }
 
             throw new InvalidOperationException($"Azure digital twins instance endpoint '{endpoint.AbsoluteUri}' is not valid.");
+        }
+
+        /// <summary>
+        /// Serializes an object and writes it into a memory stream.
+        /// </summary>
+        /// <typeparam name="T">Generic type of the object being serialized.</typeparam>
+        /// <param name="obj">Object being serialized.</param>
+        /// <param name="objectSerializer">Object serializer used to serialize/deserialize an object.</param>
+        /// <param name="async">Indicates whether or not to use async operations during serialization.</param>
+        /// <param name="cancellationToken">Then cancellation token.</param>
+        /// <returns>A binary representation of the object written to a stream.</returns>
+        internal static async Task<MemoryStream> WriteToStream<T>(T obj, ObjectSerializer objectSerializer, bool async, CancellationToken cancellationToken)
+        {
+            var memoryStream = new MemoryStream();
+
+            if (async)
+            {
+
+                await objectSerializer.SerializeAsync(memoryStream, obj, typeof(T), cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                objectSerializer.Serialize(memoryStream, obj, typeof(T), cancellationToken);
+            }
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            return memoryStream;
         }
     }
 }

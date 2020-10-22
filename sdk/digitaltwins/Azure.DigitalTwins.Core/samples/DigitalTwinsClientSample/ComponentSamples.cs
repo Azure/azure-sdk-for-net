@@ -74,10 +74,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 },
             };
 
-            string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-
-            await client.CreateDigitalTwinAsync<object>(basicDtId, basicDtPayload);
-            Console.WriteLine($"Created digital twin '{basicDtId}'.");
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+            Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
 
@@ -126,10 +124,8 @@ namespace Azure.DigitalTwins.Core.Samples
                     ComponentProp2 = 123,
                 }
             };
-            string dt2Payload = JsonSerializer.Serialize(customTwin);
-
-            await client.CreateDigitalTwinAsync<object>(customDtId, dt2Payload);
-            Console.WriteLine($"Created digital twin '{customDtId}'.");
+            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+            Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
 

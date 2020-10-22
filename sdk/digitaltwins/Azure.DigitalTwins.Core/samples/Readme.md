@@ -152,10 +152,8 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-
-await client.CreateDigitalTwinAsync<object>(basicDtId, basicDtPayload);
-Console.WriteLine($"Created digital twin '{basicDtId}'.");
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
@@ -175,10 +173,8 @@ var customTwin = new CustomDigitalTwin
         ComponentProp2 = 123,
     }
 };
-string dt2Payload = JsonSerializer.Serialize(customTwin);
-
-await client.CreateDigitalTwinAsync<object>(customDtId, dt2Payload);
-Console.WriteLine($"Created digital twin '{customDtId}'.");
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
 ### Get and deserialize a digital twin
@@ -327,9 +323,10 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     }
 };
 
-string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-await client.CreateRelationshipAsync<object>("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
-Console.WriteLine($"Created a digital twin relationship 'buildingFloorRelationshipId' from twin 'buildingTwinId' to twin 'floorTwinId'.");
+Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
+    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
+    $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your relationships.
@@ -346,10 +343,11 @@ var floorBuildingRelationshipPayload = new CustomRelationship
     Prop1 = "Prop1 val",
     Prop2 = 4
 };
-string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
 
-await client.CreateRelationshipAsync<object>("floorTwinId", "floorBuildingRelationshipId", serializedCustomRelationship);
-Console.WriteLine($"Created a digital twin relationship 'floorBuildingRelationshipId' from twin 'floorTwinId' to twin 'buildingTwinId'.");
+Response<CustomRelationship> createCustomRelationshipResponse = await client
+    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
+    $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
 
 ### Get and deserialize a digital twin relationship
