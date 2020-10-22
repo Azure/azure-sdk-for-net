@@ -14,27 +14,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Blobs", "Azure.Storage.Webjobs.Extensions.Blobs\src\Azure.WebJobs.Extensions.Storage.Blobs.csproj", "{DD47DD4C-48D4-41AA-99E7-D0E7CC8D4EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs", "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj", "{DD47DD4C-48D4-41AA-99E7-D0E7CC8D4EA6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Blobs.Tests", "Azure.Storage.Webjobs.Extensions.Blobs\tests\Azure.WebJobs.Extensions.Storage.Blobs.Tests.csproj", "{B3C2CA6A-0DB5-4EA3-B533-3B5F34988750}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.csproj", "{B3C2CA6A-0DB5-4EA3-B533-3B5F34988750}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Common", "Azure.Storage.Webjobs.Extensions.Common\src\Azure.WebJobs.Extensions.Storage.Common.csproj", "{A1AD4ADD-5B0E-45F1-8F2D-CA243CAC945C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Common", "Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Microsoft.Azure.WebJobs.Extensions.Storage.Common.csproj", "{A1AD4ADD-5B0E-45F1-8F2D-CA243CAC945C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Common.Tests", "Azure.Storage.Webjobs.Extensions.Common\tests\Azure.WebJobs.Extensions.Storage.Common.Tests.csproj", "{CE9F72EE-B840-4D3D-98AF-F0D4FE26A3B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests.csproj", "{CE9F72EE-B840-4D3D-98AF-F0D4FE26A3B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Queues", "Azure.Storage.Webjobs.Extensions.Queues\src\Azure.WebJobs.Extensions.Storage.Queues.csproj", "{FD92EA25-86E0-46F3-96B3-FAE8DE4A8FB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Queues", "Microsoft.Azure.WebJobs.Extensions.Storage.Queues\src\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.csproj", "{FD92EA25-86E0-46F3-96B3-FAE8DE4A8FB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Queues.Tests", "Azure.Storage.Webjobs.Extensions.Queues\tests\Azure.WebJobs.Extensions.Storage.Queues.Tests.csproj", "{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Queues\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests.csproj", "{E3AD2DCE-7699-4EA4-AA85-CAF2EE0CD5D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Azure.Storage.Webjobs.Extensions.Scenario.Tests\tests\Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{CB002B93-3D25-42DD-B1A6-472C10B99BA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests", "Azure.Storage.Webjobs.Extensions.Blobs\samples\Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests.csproj", "{77860E78-4770-4C48-8C2B-AF6B42A8D067}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\samples\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests.csproj", "{77860E78-4770-4C48-8C2B-AF6B42A8D067}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests", "Azure.Storage.Webjobs.Extensions.Queues\samples\Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests.csproj", "{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Queues\samples\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests.csproj", "{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
