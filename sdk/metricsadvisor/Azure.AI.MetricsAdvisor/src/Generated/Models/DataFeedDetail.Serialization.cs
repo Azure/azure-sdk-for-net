@@ -258,7 +258,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataFeedDimension> array = new List<DataFeedDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFeedDimension.DeserializeMetricDimension(item));
+                        array.Add(DataFeedDimension.DeserializeDataFeedDimension(item));
                     }
                     dimension = array;
                     continue;

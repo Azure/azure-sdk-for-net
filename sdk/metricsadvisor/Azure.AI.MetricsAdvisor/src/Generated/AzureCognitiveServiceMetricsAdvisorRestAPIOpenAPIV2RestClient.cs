@@ -2053,7 +2053,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         NotificationHook value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationHook.DeserializeAlertingHook(document.RootElement);
+                        value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2074,7 +2074,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         NotificationHook value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationHook.DeserializeAlertingHook(document.RootElement);
+                        value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

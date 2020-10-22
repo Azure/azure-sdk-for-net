@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class DataPointAnomaly
     {
-        internal static DataPointAnomaly DeserializeDataAnomaly(JsonElement element)
+        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;

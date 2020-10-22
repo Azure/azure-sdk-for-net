@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFeedDimension DeserializeMetricDimension(JsonElement element)
+        internal static DataFeedDimension DeserializeDataFeedDimension(JsonElement element)
         {
             string dimensionName = default;
             Optional<string> dimensionDisplayName = default;

@@ -11,11 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class NotificationHook : IUtf8JsonSerializable
+    public partial class EmailNotificationHook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("hookParameter");
+            writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType");
             writer.WriteStringValue(HookType.ToString());
             writer.WritePropertyName("hookName");
@@ -33,16 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static NotificationHook DeserializeAlertingHook(JsonElement element)
+        internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element)
         {
-            if (element.TryGetProperty("hookType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Email": return EmailNotificationHook.DeserializeEmailHook(element);
-                    case "Webhook": return WebNotificationHook.DeserializeWebHook(element);
-                }
-            }
+            EmailHookParameter hookParameter = default;
             HookType hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
@@ -51,6 +46,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IReadOnlyList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("hookParameter"))
+                {
+                    hookParameter = EmailHookParameter.DeserializeEmailHookParameter(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("hookType"))
                 {
                     hookType = new HookType(property.Value.GetString());
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new NotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

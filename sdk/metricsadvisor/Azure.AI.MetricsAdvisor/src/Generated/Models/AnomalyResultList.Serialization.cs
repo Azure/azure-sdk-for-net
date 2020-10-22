@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataPointAnomaly> array = new List<DataPointAnomaly>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPointAnomaly.DeserializeDataAnomaly(item));
+                        array.Add(DataPointAnomaly.DeserializeDataPointAnomaly(item));
                     }
                     value = array;
                     continue;

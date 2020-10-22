@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<NotificationHook> array = new List<NotificationHook>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHook.DeserializeAlertingHook(item));
+                        array.Add(NotificationHook.DeserializeNotificationHook(item));
                     }
                     value = array;
                     continue;

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class EmailNotificationHook : IUtf8JsonSerializable
+    public partial class WebNotificationHook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,9 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static EmailNotificationHook DeserializeEmailHook(JsonElement element)
+        internal static WebNotificationHook DeserializeWebNotificationHook(JsonElement element)
         {
-            EmailHookParameter hookParameter = default;
+            WebhookHookParameter hookParameter = default;
             HookType hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("hookParameter"))
                 {
-                    hookParameter = EmailHookParameter.DeserializeEmailHookParameter(property.Value);
+                    hookParameter = WebhookHookParameter.DeserializeWebhookHookParameter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hookType"))
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            return new WebNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

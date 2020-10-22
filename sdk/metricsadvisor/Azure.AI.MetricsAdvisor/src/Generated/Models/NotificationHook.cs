@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class NotificationHook
     {
 
-        /// <summary> Initializes a new instance of AlertingHook. </summary>
+        /// <summary> Initializes a new instance of NotificationHook. </summary>
         /// <param name="hookType"> hook type. </param>
         /// <param name="id"> Hook unique id. </param>
         /// <param name="name"> hook unique name. </param>
