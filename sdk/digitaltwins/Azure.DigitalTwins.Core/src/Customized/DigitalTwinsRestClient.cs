@@ -59,19 +59,29 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(twin));
             }
 
-            using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.Add");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        Stream value = message.ExtractResponseContent();
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 202:
-                    return Response.FromValue<Stream>(null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Stream value = message.ExtractResponseContent();
+                            return Response.FromValue(value, message.Response);
+                        }
+                    case 202:
+                        return Response.FromValue<Stream>(null, message.Response);
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
