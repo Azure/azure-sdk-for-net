@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> time mode. </summary>
-    public readonly partial struct TimeMode : IEquatable<TimeMode>
+    public readonly partial struct AlertQueryTimeMode : IEquatable<AlertQueryTimeMode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TimeMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TimeMode(string value)
+        public AlertQueryTimeMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -25,18 +25,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AnomalyTimeValue = "AnomalyTime";
         private const string CreatedTimeValue = "CreatedTime";
         private const string ModifiedTimeValue = "ModifiedTime";
-        /// <summary> Determines if two <see cref="TimeMode"/> values are the same. </summary>
-        public static bool operator ==(TimeMode left, TimeMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TimeMode"/> values are not the same. </summary>
-        public static bool operator !=(TimeMode left, TimeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeMode"/>. </summary>
-        public static implicit operator TimeMode(string value) => new TimeMode(value);
+        /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are the same. </summary>
+        public static bool operator ==(AlertQueryTimeMode left, AlertQueryTimeMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are not the same. </summary>
+        public static bool operator !=(AlertQueryTimeMode left, AlertQueryTimeMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AlertQueryTimeMode"/>. </summary>
+        public static implicit operator AlertQueryTimeMode(string value) => new AlertQueryTimeMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TimeMode other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertQueryTimeMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(TimeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertQueryTimeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

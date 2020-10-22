@@ -178,7 +178,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (var alert in client.GetAlertsAsync(
                 AlertConfigurationId,
-                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
+                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, AlertQueryTimeMode.CreatedTime) { TopCount = 1 }))
             {
                 Assert.That(alert.Id, Is.Not.Null);
 
