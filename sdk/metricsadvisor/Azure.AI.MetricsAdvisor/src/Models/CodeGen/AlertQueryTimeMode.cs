@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
@@ -8,6 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// in the <see cref="MetricsAdvisorClient.GetAlerts"/> and the <see cref="MetricsAdvisorClient.GetAlertsAsync"/>
     /// operations.
     /// </summary>
+    [CodeGenModel("TimeMode")]
     public readonly partial struct AlertQueryTimeMode
     {
         /// <summary>
