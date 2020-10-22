@@ -118,7 +118,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Metadata = { ModelId = modelId },
                 Prop1 = "Prop1 val",
                 Prop2 = 987,
-                Component1 = new Component1
+                Component1 = new MyCustomComponent
                 {
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
@@ -160,7 +160,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleGetComponent
 
-            await client.GetComponentAsync<Component1>(basicDtId, SamplesConstants.ComponentName);
+            await client.GetComponentAsync<MyCustomComponent>(basicDtId, SamplesConstants.ComponentName);
             Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent
