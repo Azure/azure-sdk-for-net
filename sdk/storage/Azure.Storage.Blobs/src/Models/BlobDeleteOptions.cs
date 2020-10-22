@@ -21,8 +21,9 @@ namespace Azure.Storage.Blobs.Models
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional.  Only applicable for storage accounts with Blob Soft Delete enabled.
-        /// If specified, the blob will be permanently deleted.
+        /// Optional.  Only applicable when deleting blob snapshots or versions on a
+        /// storage accounts with Blob Soft Delete enabled.
+        /// If specified, the blob snapshots or version will be permanently deleted.
         /// </summary>
         public BlobDeleteType? DeleteType { get; set; }
     }

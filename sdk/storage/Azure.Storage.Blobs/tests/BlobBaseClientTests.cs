@@ -3029,7 +3029,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task DeleteAsync_PermanentDelete()
+        public async Task DeleteAsync_PermanentDeleteSnapshot()
         {
             // Arrange
             BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
@@ -3037,13 +3037,44 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await blob.CreateAsync();
 
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
             BlobDeleteOptions options = new BlobDeleteOptions
             {
                 DeleteType = BlobDeleteType.Permanent
             };
 
-            // Act
-            await blob.DeleteAsync(options);
+            // Act - permanently delete the snapshot
+            await blobSnapshot.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task DeleteAsync_PermanentDeleteVersion()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient blobVersion = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Delete blob version
+            await blobVersion.DeleteAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await blobVersion.DeleteAsync(options);
         }
 
         [Test]
