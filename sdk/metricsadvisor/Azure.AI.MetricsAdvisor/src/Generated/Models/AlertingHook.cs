@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The HookInfo. </summary>
-    public partial class AlertingHook
+    public partial class NotificationHook
     {
 
         /// <summary> Initializes a new instance of AlertingHook. </summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="description"> hook description. </param>
         /// <param name="externalLink"> hook external link. </param>
         /// <param name="administrators"> hook administrators. </param>
-        internal AlertingHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators)
+        internal NotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators)
         {
             HookType = hookType;
             Id = id;

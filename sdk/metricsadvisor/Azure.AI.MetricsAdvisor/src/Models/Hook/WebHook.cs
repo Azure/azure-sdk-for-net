@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
     [CodeGenSuppress(nameof(WebHook), typeof(string), typeof(WebhookHookParameter))]
-    public partial class WebHook : AlertingHook
+    public partial class WebHook : NotificationHook
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WebHook"/> class.

@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     [CodeGenModel("EmailHookInfo")]
     [CodeGenSuppress(nameof(EmailHook), typeof(string), typeof(EmailHookParameter))]
-    public partial class EmailHook : AlertingHook
+    public partial class EmailHook : NotificationHook
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailHook"/> class.
