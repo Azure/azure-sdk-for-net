@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Learn.AppConfig.Tests;
@@ -16,8 +14,7 @@ namespace Azure.Learn.AppConfig.Samples
         [Test]
         public void GetConfigurationSetting()
         {
-            string endpoint = "http://example.azconfig.io";
-            ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = GetClient();
 
             ConfigurationSetting color = client.GetConfigurationSetting("FontColor");
             ConfigurationSetting greeting = client.GetConfigurationSetting("GreetingText");
@@ -25,6 +22,43 @@ namespace Azure.Learn.AppConfig.Samples
             Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color.Value);
             Console.WriteLine(greeting.Value);
             Console.ResetColor();
+        }
+
+        [Test]
+        public void SetConfigurationSetting()
+        {
+            var client = GetClient();
+
+            var setting = new ConfigurationSetting
+            {
+                ContentType = "string",
+                Value = "myvalue"
+            };
+
+            for (var i = 0; i < 100; i++)
+            {
+                Console.WriteLine($"Set setting {i}");
+                setting.Value = $"myvalue{i}";
+                client.SetConfigurationSetting($"mysetting{i}", $"mylabel{i}", setting);
+            }
+        }
+
+        [Test]
+        public void ListConfigurationSettings()
+        {
+            var client = GetClient();
+
+            Console.WriteLine();
+            foreach (var setting in client.GetConfigurationSettings())
+            {
+                Console.WriteLine($"SETTING: {setting.Key} -> {setting.Label} -> {setting.Value}");
+            }
+        }
+
+        private static ConfigurationClient GetClient()
+        {
+            string endpoint = "https://chrissapi-learn-azconfig-net.azconfig.io";
+            return new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
         }
     }
 }

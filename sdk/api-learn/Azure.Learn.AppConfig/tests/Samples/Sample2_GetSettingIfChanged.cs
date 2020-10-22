@@ -16,7 +16,7 @@ namespace Azure.Learn.AppConfig.Samples
         [Test]
         public async Task GetConfigurationSettingIfChanged()
         {
-            string endpoint = "http://example.azconfig.io";
+            string endpoint = "https://chrissapi-learn-azconfig-net.azconfig.io";
 
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
