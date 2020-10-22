@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for IdentityType.
+    /// Defines values for EngineType.
     /// </summary>
-    public static class IdentityType
+    public static class EngineType
     {
-        public const string None = "None";
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
-        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
+        public const string V2 = "V2";
+        public const string V3 = "V3";
     }
 }

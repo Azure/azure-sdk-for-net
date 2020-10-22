@@ -74,7 +74,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// extensions.</param>
         /// <param name="enableDoubleEncryption">A boolean value that indicates
         /// if double encryption is enabled.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?))
+        /// <param name="engineType">The engine type. Possible values include:
+        /// 'V2', 'V3'</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string engineType = default(string))
             : base(id, name, type)
         {
             Tags = tags;
@@ -95,6 +97,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
             EnableDoubleEncryption = enableDoubleEncryption;
+            EngineType = engineType;
             CustomInit();
         }
 
@@ -218,6 +221,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableDoubleEncryption")]
         public bool? EnableDoubleEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the engine type. Possible values include: 'V2', 'V3'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.engineType")]
+        public string EngineType { get; set; }
 
         /// <summary>
         /// Validate the object.
