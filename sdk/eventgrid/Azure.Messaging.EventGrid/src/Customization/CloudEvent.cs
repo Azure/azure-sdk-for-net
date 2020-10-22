@@ -87,10 +87,6 @@ namespace Azure.Messaging.EventGrid
 
         internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement serializedData, byte[] dataBase64)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-
             Id = id;
             Source = source;
             Type = type;
@@ -174,12 +170,6 @@ namespace Azure.Messaging.EventGrid
 
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
-                // Case where Data and Type are null - cannot pass null Type into CloudEvent constructor
-                if (cloudEventInternal.Type == null)
-                {
-                    cloudEventInternal.Type = "";
-                }
-
                 CloudEvent cloudEvent = new CloudEvent(
                     cloudEventInternal.Id,
                     cloudEventInternal.Source,

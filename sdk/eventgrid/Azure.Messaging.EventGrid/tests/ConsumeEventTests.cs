@@ -1534,13 +1534,16 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
-        public void CloudEventParseThrowsIfMissingRequiredProperties()
+        public void CloudEventParseDoesNotThrowIfMissingRequiredProperties()
         {
-            // missing Id and Source
-            string requestContent = "[{ \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"type\": \"Contoso.Items.ItemReceived\"}]";
-
-            Assert.That(() => CloudEvent.Parse(requestContent),
-                Throws.InstanceOf<ArgumentNullException>());
+            // missing Id, Source, SpecVersion, and Type
+            string requestContent = "[{ \"subject\": \"Subject-0\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+            CloudEvent[] events = CloudEvent.Parse(requestContent);
+            var cloudEvent = events[0];
+            Assert.IsNull(cloudEvent.Id);
+            Assert.IsNull(cloudEvent.Source);
+            Assert.IsNull(cloudEvent.Type);
+            Assert.AreEqual("Subject-0", cloudEvent.Subject);
         }
         #endregion
 
@@ -1609,7 +1612,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.AreEqual(events[0].Type, "");
+            Assert.IsNull(events[0].Type);
         }
 
         [Test]
@@ -1623,7 +1626,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.AreEqual(events[0].Type, "");
+            Assert.IsNull(events[0].Type);
         }
         #endregion
 
