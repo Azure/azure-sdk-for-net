@@ -22,8 +22,8 @@ namespace WorkloadMonitor.Tests.ScenarioTests
 
         private readonly string subId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
         private readonly string rgName = "ZESUI-SCALE-RG";
-        private readonly string resourceNamespace = "Microsoft.Compute";
-        private readonly string resourceType = "virtualMachines";
+        private readonly string providerName = "Microsoft.Compute";
+        private readonly string resourceCollectionName = "virtualMachines";
         private readonly string resourceName = "zesui-lin55-s-vm";
 
         public MonitorsTests() : base()
@@ -40,7 +40,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var workloadMonitorClient = GetWorkloadMonitorAPIClient(context, handler);
 
                 // List monitors for the VM.
-                IPage<Monitor> monitorListResult = workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName);
+                IPage<HealthMonitor> monitorListResult = workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName);
 
                 if (!this.IsRecording)
                 {
@@ -60,7 +60,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var expandConfiguration = "configuration";
 
                 // List monitors for the VM.
-                IPage<Monitor> monitorListResult = workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName, default, expandConfiguration);
+                IPage<HealthMonitor> monitorListResult = workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName, default, expandConfiguration);
 
                 if (!this.IsRecording)
                 {
@@ -80,7 +80,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var expandConfiguration = "evidence";
 
                 // List monitors for the VM.
-                IPage<Monitor> monitorListResult = workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName, default, expandConfiguration);
+                IPage<HealthMonitor> monitorListResult = workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName, default, expandConfiguration);
 
                 if (!this.IsRecording)
                 {
@@ -100,7 +100,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var expandConfiguration = "configuration,evidence";
 
                 // List monitors for the VM.
-                IPage<Monitor> monitorListResult = workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName, default, expandConfiguration);
+                IPage<HealthMonitor> monitorListResult = workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName, default, expandConfiguration);
 
                 if (!this.IsRecording)
                 {
@@ -121,7 +121,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var filterForRoot = "monitorName eq '" + rootName + "'";
 
                 // List monitors for the VM.
-                IPage<Monitor> monitorListResult = workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName, filterForRoot);
+                IPage<HealthMonitor> monitorListResult = workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName, filterForRoot);
 
                 if (!this.IsRecording)
                 {
@@ -141,7 +141,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var workloadMonitorClient = GetWorkloadMonitorAPIClient(context, handler);
                 var filter = "bad-filter";
 
-                var ex = Assert.Throws<DefaultErrorException>(() => workloadMonitorClient.Monitors.List(subId, rgName, resourceNamespace, resourceType, resourceName, filter));
+                var ex = Assert.Throws<ErrorResponseException>(() => workloadMonitorClient.HealthMonitors.List(subId, rgName, providerName, resourceCollectionName, resourceName, filter));
 
                 if (!this.IsRecording)
                 {
@@ -160,7 +160,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var rootName = "root";
 
                 // Get a monitor for the VM.
-                Monitor monitorResult = workloadMonitorClient.Monitors.Get(subId, rgName, resourceNamespace, resourceType, resourceName, rootName);
+                HealthMonitor monitorResult = workloadMonitorClient.HealthMonitors.Get(subId, rgName, providerName, resourceCollectionName, resourceName, rootName);
 
                 if (!this.IsRecording)
                 {
@@ -185,7 +185,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var monitoredObject = "/";
 
                 // Get a monitor for the VM.
-                Monitor monitorResult = workloadMonitorClient.Monitors.Get(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId);
+                HealthMonitor monitorResult = workloadMonitorClient.HealthMonitors.Get(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId);
 
                 if (!this.IsRecording)
                 {
@@ -208,7 +208,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var workloadMonitorClient = GetWorkloadMonitorAPIClient(context, handler);
                 var monitorId = "fake-monitor";
 
-                var ex = Assert.Throws<DefaultErrorException>(() => workloadMonitorClient.Monitors.Get(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId));
+                var ex = Assert.Throws<ErrorResponseException>(() => workloadMonitorClient.HealthMonitors.Get(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId));
 
                 if (!this.IsRecording)
                 {
@@ -227,7 +227,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var monitorId = "root";
 
                 // Get a monitor for the VM.
-                IPage<MonitorStateChange> monitorHistoryResult = workloadMonitorClient.Monitors.ListStateChanges(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId);
+                IPage<HealthMonitorStateChange> monitorHistoryResult = workloadMonitorClient.HealthMonitors.ListStateChanges(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId);
 
                 if (!this.IsRecording)
                 {
@@ -249,7 +249,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var onlyHbFilter = "isHeartbeat eq true";
 
                 // Get a monitor for the VM.
-                IPage<MonitorStateChange> monitorHistoryResult = workloadMonitorClient.Monitors.ListStateChanges(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId, onlyHbFilter);
+                IPage<HealthMonitorStateChange> monitorHistoryResult = workloadMonitorClient.HealthMonitors.ListStateChanges(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId, onlyHbFilter);
 
                 if (!this.IsRecording)
                 {
@@ -271,7 +271,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var noHbFilter = "isHeartbeat eq false";
 
                 // Get a monitor for the VM.
-                IPage<MonitorStateChange> monitorHistoryResult = workloadMonitorClient.Monitors.ListStateChanges(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId, noHbFilter);
+                IPage<HealthMonitorStateChange> monitorHistoryResult = workloadMonitorClient.HealthMonitors.ListStateChanges(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId, noHbFilter);
 
                 if (!this.IsRecording)
                 {
@@ -293,7 +293,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var timestampUtc = "1602185025000";
 
                 // Get a monitor for the VM.
-                MonitorStateChange monitorStateChangeResult = workloadMonitorClient.Monitors.GetStateChange(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId, timestampUtc);
+                HealthMonitorStateChange monitorStateChangeResult = workloadMonitorClient.HealthMonitors.GetStateChange(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId, timestampUtc);
 
                 if (!this.IsRecording)
                 {
@@ -315,7 +315,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
                 var monitorId = "cpu-utilization";
                 var timestampUtc = "1602185025002";
 
-                var ex = Assert.Throws<DefaultErrorException>(() => workloadMonitorClient.Monitors.GetStateChange(subId, rgName, resourceNamespace, resourceType, resourceName, monitorId, timestampUtc));
+                var ex = Assert.Throws<ErrorResponseException>(() => workloadMonitorClient.HealthMonitors.GetStateChange(subId, rgName, providerName, resourceCollectionName, resourceName, monitorId, timestampUtc));
 
                 if (!this.IsRecording)
                 {
@@ -324,7 +324,7 @@ namespace WorkloadMonitor.Tests.ScenarioTests
             }
         }
 
-        private static void CheckListedMonitors(IPage<Monitor> monitorListResult)
+        private static void CheckListedMonitors(IPage<HealthMonitor> monitorListResult)
         {
             List<String> expectedNames = new List<String>
             {
@@ -342,78 +342,78 @@ namespace WorkloadMonitor.Tests.ScenarioTests
             var enumerator = monitorListResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                Monitor current = enumerator.Current;
+                HealthMonitor current = enumerator.Current;
                 Assert.Contains(current.Name, expectedNames);
                 Assert.NotNull(current.CurrentMonitorState);
                 Assert.Equal(expectedMonitorsType, current.Type);
             }
         }
 
-        private static void CheckListedMonitorsExpandConfig(IPage<Monitor> monitorListResult)
+        private static void CheckListedMonitorsExpandConfig(IPage<HealthMonitor> monitorListResult)
         {
             var enumerator = monitorListResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                Monitor current = enumerator.Current;
+                HealthMonitor current = enumerator.Current;
                 Assert.NotNull(current.MonitorConfiguration);
                 Assert.Null(current.Evidence);
                 Assert.Equal(expectedMonitorsType, current.Type);
             }
         }
 
-        private static void CheckListedMonitorsExpandEvidence(IPage<Monitor> monitorListResult)
+        private static void CheckListedMonitorsExpandEvidence(IPage<HealthMonitor> monitorListResult)
         {
             var enumerator = monitorListResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                Monitor current = enumerator.Current;
+                HealthMonitor current = enumerator.Current;
                 Assert.Null(current.MonitorConfiguration);
                 Assert.NotNull(current.Evidence);
                 Assert.Equal(expectedMonitorsType, current.Type);
             }
         }
 
-        private static void CheckListedMonitorsExpandConfigAndEvidence(IPage<Monitor> monitorListResult)
+        private static void CheckListedMonitorsExpandConfigAndEvidence(IPage<HealthMonitor> monitorListResult)
         {
             var enumerator = monitorListResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                Monitor current = enumerator.Current;
+                HealthMonitor current = enumerator.Current;
                 Assert.NotNull(current.MonitorConfiguration);
                 Assert.NotNull(current.Evidence);
                 Assert.Equal(expectedMonitorsType, current.Type);
             }
         }
 
-        private static void CheckMonitorHistory(IPage<MonitorStateChange> monitorHistoryResult, string expectedName)
+        private static void CheckMonitorHistory(IPage<HealthMonitorStateChange> monitorHistoryResult, string expectedName)
         {
             var enumerator = monitorHistoryResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                MonitorStateChange current = enumerator.Current;
+                HealthMonitorStateChange current = enumerator.Current;
                 Assert.Equal(current.MonitorName, expectedName);
                 Assert.Equal(expectedHistoryType, current.Type);
             }
         }
 
-        private static void CheckMonitorHistoryNoHeartbeats(IPage<MonitorStateChange> monitorHistoryResult, string expectedName)
+        private static void CheckMonitorHistoryNoHeartbeats(IPage<HealthMonitorStateChange> monitorHistoryResult, string expectedName)
         {
             var enumerator = monitorHistoryResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                MonitorStateChange current = enumerator.Current;
+                HealthMonitorStateChange current = enumerator.Current;
                 Assert.Equal(current.MonitorName, expectedName);
                 Assert.NotEqual(current.PreviousMonitorState, current.CurrentMonitorState);
                 Assert.Equal(expectedHistoryType, current.Type);
             }
         }
 
-        private static void CheckMonitorHistoryOnlyHeartbeats(IPage<MonitorStateChange> monitorHistoryResult, string expectedName)
+        private static void CheckMonitorHistoryOnlyHeartbeats(IPage<HealthMonitorStateChange> monitorHistoryResult, string expectedName)
         {
             var enumerator = monitorHistoryResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                MonitorStateChange current = enumerator.Current;
+                HealthMonitorStateChange current = enumerator.Current;
                 Assert.Equal(current.MonitorName, expectedName);
                 Assert.Equal(current.PreviousMonitorState, current.CurrentMonitorState);
                 Assert.Equal(expectedHistoryType, current.Type);
