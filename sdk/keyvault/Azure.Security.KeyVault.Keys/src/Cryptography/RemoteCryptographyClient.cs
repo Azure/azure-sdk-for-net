@@ -49,6 +49,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
+                // Make sure the IV is initialized.
+                // TODO: Remove this call once the service will initialized it: https://github.com/Azure/azure-sdk-for-net/issues/16175
+                options.Initialize();
+
                 return await Pipeline.SendRequestAsync(RequestMethod.Post, options, () => new EncryptResult { Algorithm = options.Algorithm }, cancellationToken, "/encrypt").ConfigureAwait(false);
             }
             catch (Exception e)
@@ -66,6 +70,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
+                // Make sure the IV is initialized.
+                // TODO: Remove this call once the service will initialized it: https://github.com/Azure/azure-sdk-for-net/issues/16175
+                options.Initialize();
+
                 return Pipeline.SendRequest(RequestMethod.Post, options, () => new EncryptResult { Algorithm = options.Algorithm }, cancellationToken, "/encrypt");
             }
             catch (Exception e)

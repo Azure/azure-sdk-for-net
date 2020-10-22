@@ -81,6 +81,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             EncryptionAlgorithm algorithm = options.Algorithm;
             if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
             {
+                // Make sure the IV is initialized.
+                options.Initialize();
+
                 using ICryptoTransform encryptor = aesCbc.CreateEncryptor(KeyMaterial.K, options.Iv);
 
                 byte[] plaintext = options.Plaintext;
