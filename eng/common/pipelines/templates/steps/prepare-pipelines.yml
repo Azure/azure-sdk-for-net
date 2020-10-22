@@ -34,6 +34,7 @@ steps:
         --patvar PATVAR
         --debug
         ${{parameters.CIConventionOptions}}
+      displayName: Create CI pipelines for public repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -51,6 +52,7 @@ steps:
         --patvar PATVAR
         --debug
         ${{parameters.UPConventionOptions}}
+      displayName: Create UP pipelines for public repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -68,6 +70,8 @@ steps:
         --patvar PATVAR
         --debug
         ${{parameters.TestsConventionOptions}}
+      displayName: Create Live Test pipelines for public repository
+      condition: ne(variables['TestsConventionOptions'],'')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
 
@@ -89,6 +93,7 @@ steps:
         --debug
         --no-schedule
         ${{parameters.CIConventionOptions}}
+      displayName: Create CI pipelines for private repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -107,6 +112,7 @@ steps:
         --debug
         --no-schedule
         ${{parameters.UPConventionOptions}}
+      displayName: Create UP pipelines for private repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -125,5 +131,7 @@ steps:
         --debug
         --no-schedule
         ${{parameters.TestsConventionOptions}}
+      displayName: Create Live Test pipelines for private repository
+      condition: ne(variables['TestsConventionOptions'],'')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)

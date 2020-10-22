@@ -59,14 +59,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DimensionKey DimensionKey { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> started. Corresponds to
-        /// the time when the first associated <see cref="DataAnomaly"/> occurred.
+        /// Corresponds to the time, in UTC, when the first associated <see cref="DataAnomaly"/> occurred.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> last occurred. Corresponds
-        /// to the time when the last associated <see cref="DataAnomaly"/> occurred.
+        /// Corresponds to the time, in UTC, when the last associated <see cref="DataAnomaly"/> occurred.
         /// </summary>
         public DateTimeOffset LastTime { get; }
 
