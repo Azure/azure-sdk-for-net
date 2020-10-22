@@ -28,13 +28,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsAddOptions?.Traceparent != null)
+            if (digitalTwinsAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsAddOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsAddOptions.TraceParent);
             }
-            if (digitalTwinsAddOptions?.Tracestate != null)
+            if (digitalTwinsAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsAddOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsAddOptions.TraceState);
             }
             request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
@@ -862,13 +862,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateOptions?.Traceparent != null)
+            if (digitalTwinsUpdateOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsUpdateOptions.TraceParent);
             }
-            if (digitalTwinsUpdateOptions?.Tracestate != null)
+            if (digitalTwinsUpdateOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsUpdateOptions.TraceState);
             }
             if (digitalTwinsUpdateOptions?.IfMatch != null)
             {
@@ -897,13 +897,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsAddRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsAddRelationshipOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsAddRelationshipOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsAddRelationshipOptions.TraceParent);
             }
-            if (digitalTwinsAddRelationshipOptions?.Tracestate != null)
+            if (digitalTwinsAddRelationshipOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsAddRelationshipOptions.TraceState);
             }
             request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
@@ -929,13 +929,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsUpdateRelationshipOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateRelationshipOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsUpdateRelationshipOptions.TraceParent);
             }
-            if (digitalTwinsUpdateRelationshipOptions?.Tracestate != null)
+            if (digitalTwinsUpdateRelationshipOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateRelationshipOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsUpdateRelationshipOptions.TraceState);
             }
             if (digitalTwinsUpdateRelationshipOptions?.IfMatch != null)
             {
@@ -964,13 +964,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateComponentOptions?.Traceparent != null)
+            if (digitalTwinsUpdateComponentOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateComponentOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsUpdateComponentOptions.TraceParent);
             }
-            if (digitalTwinsUpdateComponentOptions?.Tracestate != null)
+            if (digitalTwinsUpdateComponentOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateComponentOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsUpdateComponentOptions.TraceState);
             }
             if (digitalTwinsUpdateComponentOptions?.IfMatch != null)
             {
@@ -998,13 +998,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendTelemetryOptions?.Traceparent != null)
+            if (digitalTwinsSendTelemetryOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsSendTelemetryOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsSendTelemetryOptions.TraceParent);
             }
-            if (digitalTwinsSendTelemetryOptions?.Tracestate != null)
+            if (digitalTwinsSendTelemetryOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsSendTelemetryOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsSendTelemetryOptions.TraceState);
             }
             request.Headers.Add("Message-Id", messageId);
             if (digitalTwinsSendTelemetryOptions?.TimeStamp != null)
@@ -1036,13 +1036,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendComponentTelemetryOptions?.Traceparent != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinsSendComponentTelemetryOptions.TraceParent);
             }
-            if (digitalTwinsSendComponentTelemetryOptions?.Tracestate != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinsSendComponentTelemetryOptions.TraceState);
             }
             request.Headers.Add("Message-Id", messageId);
             if (digitalTwinsSendComponentTelemetryOptions?.TimeStamp != null)

@@ -3,52 +3,58 @@ namespace Azure.DigitalTwins.Core
     public partial class CreateDigitalTwinOptions
     {
         public CreateDigitalTwinOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class CreateEventRouteOptions
     {
         public CreateEventRouteOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class CreateModelsOptions
     {
         public CreateModelsOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class CreateRelationshipOptions
     {
         public CreateRelationshipOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
+    }
+    public partial class DecomissionModelOptions
+    {
+        public DecomissionModelOptions() { }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class DeleteDigitalTwinOptions
     {
         public DeleteDigitalTwinOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class DeleteEventRouteOptions
     {
         public DeleteEventRouteOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class DeleteModelOptions
     {
         public DeleteModelOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class DeleteRelationshipOptions
     {
         public DeleteRelationshipOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class DigitalTwinsClient
     {
@@ -63,8 +69,8 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> models, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.UpdateModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.UpdateModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDigitalTwin(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDigitalTwinAsync(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEventRoute(string eventRouteId, Azure.DigitalTwins.Core.DeleteEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -134,39 +140,39 @@ namespace Azure.DigitalTwins.Core
     public partial class GetComponentOptions
     {
         public GetComponentOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetDigitalTwinOptions
     {
         public GetDigitalTwinOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetEventRouteOptions
     {
         public GetEventRouteOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetEventRoutesOptions
     {
         public GetEventRoutesOptions() { }
         public int? MaxItemsPerPage { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetIncomingRelationshipsOptions
     {
         public GetIncomingRelationshipsOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetModelOptions
     {
         public GetModelOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetModelsOptions
     {
@@ -174,20 +180,20 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IEnumerable<string> DependenciesFor { get { throw null; } set { } }
         public bool IncludeModelDefinition { get { throw null; } set { } }
         public int? MaxItemsPerPage { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetRelationshipOptions
     {
         public GetRelationshipOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class GetRelationshipsOptions
     {
         public GetRelationshipsOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class IncomingRelationship
     {
@@ -201,15 +207,15 @@ namespace Azure.DigitalTwins.Core
     {
         public PublishComponentTelemetryOptions() { }
         public System.DateTimeOffset TimeStamp { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class PublishTelemetryOptions
     {
         public PublishTelemetryOptions() { }
         public System.DateTimeOffset TimeStamp { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public static partial class QueryChargeHelper
     {
@@ -219,35 +225,29 @@ namespace Azure.DigitalTwins.Core
     {
         public QueryOptions() { }
         public int? MaxItemsPerPage { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class UpdateComponentOptions
     {
         public UpdateComponentOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class UpdateDigitalTwinOptions
     {
         public UpdateDigitalTwinOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
-    }
-    public partial class UpdateModelOptions
-    {
-        public UpdateModelOptions() { }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
     public partial class UpdateRelationshipOptions
     {
         public UpdateRelationshipOptions() { }
         public string IfMatch { get { throw null; } set { } }
-        public string Traceparent { get { throw null; } set { } }
-        public string Tracestate { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
     }
 }
 namespace Azure.DigitalTwins.Core.Serialization

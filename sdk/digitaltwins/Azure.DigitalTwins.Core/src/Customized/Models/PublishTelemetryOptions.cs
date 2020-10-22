@@ -16,5 +16,13 @@ namespace Azure.DigitalTwins.Core
         /// An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.
         /// </summary>
         public DateTimeOffset TimeStamp { get; set; } = DateTimeOffset.UtcNow;
+
+        /// <summary> Identifies the request in a distributed tracing system. </summary>
+        [CodeGenMember("Traceparent")]
+        public string TraceParent { get; set; }
+
+        /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
+        [CodeGenMember("Tracestate")]
+        public string TraceState { get; set; }
     }
 }

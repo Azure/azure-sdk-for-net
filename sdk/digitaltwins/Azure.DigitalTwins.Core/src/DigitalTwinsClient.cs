@@ -1154,7 +1154,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DecommissionModelAsync(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DecommissionModelAsync(string modelId, DecomissionModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.UpdateAsync(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }
@@ -1182,10 +1182,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DecommissionModelAsync(string, UpdateModelOptions, CancellationToken)">
+        /// <seealso cref="DecommissionModelAsync(string, DecomissionModelOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DecommissionModel(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DecommissionModel(string modelId, DecomissionModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.Update(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }
