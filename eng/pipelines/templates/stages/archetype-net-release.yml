@@ -54,13 +54,14 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
-                    - task: PowerShell@2
-                      displayName: Prep template pipeline for release
-                      condition: and(succeeded(),eq('${{ parameters.testPipeline }}','true'))
-                      inputs:
-                        pwsh: true
-                        workingDirectory: $(Build.SourcesDirectory)
-                        filePath: eng/scripts/SetTestPipelineVersion.ps1
+                    - ${{if eq(parameters.TestPipeline, 'true')}}:
+                      - task: PowerShell@2
+                        displayName: Prep template pipeline for release
+                        condition: succeeded()
+                        inputs:
+                          pwsh: true
+                          workingDirectory: $(Build.SourcesDirectory)
+                          filePath: eng/scripts/SetTestPipelineVersion.ps1
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -166,7 +167,7 @@ stages:
                           GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
-                          CloseAfterOpenForTesting: '${{ artifact.testPipeline }}'
+                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
@@ -217,7 +218,7 @@ stages:
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-                          CloseAfterOpenForTesting: '${{ artifact.testPipeline }}'
+                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
   - stage: Integration
     dependsOn: Signing
