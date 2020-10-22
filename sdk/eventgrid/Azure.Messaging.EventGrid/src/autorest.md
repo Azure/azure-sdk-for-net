@@ -37,3 +37,15 @@ title: EventGridClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/3695f4ef3bf65c253509d2708c31c96b71822613/specification/eventgrid/data-plane/readme.md
 
 ```
+
+## Swagger workarounds
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.CloudEventEvent
+  transform: >
+    $.properties.data["x-nullable"] = true;
+````

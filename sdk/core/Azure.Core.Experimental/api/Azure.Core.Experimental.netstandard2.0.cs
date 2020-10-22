@@ -93,17 +93,6 @@ namespace Azure.Core
         public override string ToString() { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
     }
-    public partial class JsonPatchDocument
-    {
-        public JsonPatchDocument() { }
-        public void AppendAdd(string path, string rawJsonValue) { }
-        public void AppendCopy(string from, string path) { }
-        public void AppendMove(string from, string path) { }
-        public void AppendRemove(string path) { }
-        public void AppendReplace(string path, string rawJsonValue) { }
-        public void AppendTest(string path, string rawJsonValue) { }
-        public override string ToString() { throw null; }
-    }
 }
 namespace Azure.Core.Amqp
 {

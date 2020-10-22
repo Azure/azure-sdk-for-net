@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("authorizedResources"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,6 +76,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("queryType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     queryType = new QueryType(property.Value.GetString());
                     continue;
                 }

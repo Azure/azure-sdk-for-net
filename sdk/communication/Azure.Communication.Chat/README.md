@@ -14,7 +14,7 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.0-beta.1
+dotnet add package Azure.Communication.Chat --version 1.0.0-beta.2
 ``` 
 
 ### Prerequisites
@@ -91,23 +91,24 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 ### Update a thread
 
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateThread
-chatThreadClient.UpdateThread("Updated topic - C# sdk");
+chatThreadClient.UpdateThread(topic: "Launch meeting");
 ```
 
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
-SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("This is message 1 content", ChatMessagePriority.High, displayNameMessage);
+SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
 ```
+### Update a message
+```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
+chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
+```
+
 ### Get messages
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
 ChatMessage message = chatThreadClient.GetMessage(messageId);
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_GetMessages
 Pageable<ChatMessage> messages = chatThreadClient.GetMessages();
-```
-### Update a message
-```C# Snippet:Azure_Communication_Chat_Tests_E2E_UpdateMessage
-chatThreadClient.UpdateMessage(messageId, "This is message 1 content updated");
 ```
 ### Delete a message
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_DeleteMessage
@@ -314,7 +315,7 @@ await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
 
 ### Send typing notification
 
-Use `SendTypingNotification` to post a typing notification event to a chat thread, on behalf of a chat member.
+Use `SendTypingNotification` to indicate that the user is typing a response in the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification
 await chatThreadClient.SendTypingNotificationAsync();
@@ -322,7 +323,7 @@ await chatThreadClient.SendTypingNotificationAsync();
 
 ### Send read receipt
 
-Use `SendReadReceipt` to post a read receipt event to a chat thread, on behalf of a chat member.
+Use `SendReadReceipt` to notify other members that the message is read by the user.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 await chatThreadClient.SendReadReceiptAsync(messageId);
@@ -330,7 +331,7 @@ await chatThreadClient.SendReadReceiptAsync(messageId);
 
 ### Get read receipts
 
-Use `GetReadReceipts` to retrieve a list of read receipts for a chat thread.
+Use `GetReadReceipts` to check the status of messages to see which ones are read by other members of a chat thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 AsyncPageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();

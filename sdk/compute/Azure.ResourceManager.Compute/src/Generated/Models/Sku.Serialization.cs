@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("capacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capacity = property.Value.GetInt64();
                     continue;
                 }

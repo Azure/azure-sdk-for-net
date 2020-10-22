@@ -15,8 +15,11 @@ parameters:
   ScriptDirectory: eng/common/scripts
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: ''
+  GHAssignessVariable: ''
   # Multiple labels seperated by comma, e.g. "bug, APIView"
   PRLabels: ''
+  SkipCheckingForChanges: false
+  CloseAfterOpenForTesting: false
 
 steps:
 
@@ -35,15 +38,19 @@ steps:
       echo "##vso[task.setvariable variable=HasChanges]$false"
       echo "No changes so skipping code push"
     }
+  displayName: Check for changes
+  condition: and(succeeded(), eq(${{ parameters.SkipCheckingForChanges }}, false))
+  workingDirectory: ${{ parameters.WorkingDirectory }}
+  ignoreLASTEXITCODE: true
 
+- pwsh: |
     # Remove the repo owner from the front of the repo name if it exists there
     $repoName = "${{ parameters.RepoName }}" -replace "^${{ parameters.RepoOwner }}/", ""
     echo "##vso[task.setvariable variable=RepoNameWithoutOwner]$repoName"
-    echo "RepoName = $repName"
-
-  displayName: Check for changes
+    echo "RepoName = $repoName"
+  displayName: Remove Repo Owner from Repo Name
+  condition: succeeded()
   workingDirectory: ${{ parameters.WorkingDirectory }}
-  ignoreLASTEXITCODE: true
 
 - task: PowerShell@2
   displayName: Push changes
@@ -57,6 +64,7 @@ steps:
       -CommitMsg "${{ parameters.CommitMsg }}"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/$(RepoNameWithoutOwner).git"
       -PushArgs "${{ parameters.PushArgs }}"
+      -SkipCommit $${{ parameters.SkipCheckingForChanges }}
 
 - task: PowerShell@2
   displayName: Create pull request
@@ -74,20 +82,8 @@ steps:
       -AuthToken "$(azuresdk-github-pat)"
       -PRTitle "${{ parameters.PRTitle }}"
       -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
-      -PRLabels "${{ parameters.PRLabels}}"
-
-- task: PowerShell@2
-  displayName: Tag a Reviewer on PR
-  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
-  continueOnError: true
-  inputs:
-    pwsh: true
-    workingDirectory: ${{ parameters.WorkingDirectory }}
-    filePath: ${{ parameters.ScriptDirectory }}/add-pullrequest-reviewers.ps1
-    arguments: >
-      -RepoOwner "${{ parameters.RepoOwner }}"
-      -RepoName "$(RepoNameWithoutOwner)"
-      -AuthToken "$(azuresdk-github-pat)"
-      -GitHubUsers "$(${{ parameters.GHReviewersVariable }})"
-      -GitHubTeams "$(${{ parameters.GHTeamReviewersVariable }})"
-      -PRNumber "$(Submitted.PullRequest.Number)"
+      -PRLabels "${{ parameters.PRLabels }}"
+      -UserReviewers "${{ parameters.GHReviewersVariable }}"
+      -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
+      -Assignees "${{ parameters.GHAssignessVariable }}"
+      -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}

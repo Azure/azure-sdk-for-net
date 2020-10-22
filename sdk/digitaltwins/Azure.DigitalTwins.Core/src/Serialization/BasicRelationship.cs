@@ -30,18 +30,21 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     }
     /// };
     ///
-    /// string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-    /// await client.CreateRelationshipAsync(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, serializedRelationship);
-    /// Console.WriteLine($&quot;Created a digital twin relationship &apos;buildingFloorRelationshipId&apos; from twin &apos;buildingTwinId&apos; to twin &apos;floorTwinId&apos;.&quot;);
+    /// Response&lt;BasicRelationship&gt; createBuildingFloorRelationshipResponse = await client
+    ///     .CreateRelationshipAsync&lt;BasicRelationship&gt;(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, buildingFloorRelationshipPayload);
+    /// Console.WriteLine($&quot;Created a digital twin relationship &apos;{createBuildingFloorRelationshipResponse.Value.Id}&apos; &quot; +
+    ///     $&quot;from twin &apos;{createBuildingFloorRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createBuildingFloorRelationshipResponse.Value.TargetId}&apos;.&quot;);
     /// </code>
     ///
     /// Here's an example of how to use the BasicRelationship helper class to get and deserialize a relationship.
     ///
     /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship">
-    /// Response&lt;string&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;);
+    /// Response&lt;BasicRelationship&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync&lt;BasicRelationship&gt;(
+    ///     &quot;buildingTwinId&quot;,
+    ///     &quot;buildingFloorRelationshipId&quot;);
     /// if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     /// {
-    ///     BasicRelationship basicRelationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(getBasicRelationshipResponse.Value);
+    ///     BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     ///     Console.WriteLine($&quot;Retrieved relationship &apos;{basicRelationship.Id}&apos; from twin {basicRelationship.SourceId}.\n\t&quot; +
     ///         $&quot;Prop1: {basicRelationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
     ///         $&quot;Prop2: {basicRelationship.CustomProperties[&quot;Prop2&quot;]}&quot;);

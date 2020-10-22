@@ -1169,32 +1169,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public async Task SetAccessTierAsync()
+        public async Task SetPropertiesAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                QuotaInGB = 5,
+                AccessTier = ShareAccessTier.Hot
+            };
+
             // Act
-            await share.SetAccessTierAsync(ShareAccessTier.Hot);
+            await share.SetPropertiesAsync(options);
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
             Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
+            Assert.AreEqual(5, response.Value.QuotaInGB);
             Assert.IsNotNull(response.Value.AccessTierChangeTime);
         }
 
         [Test]
-        public async Task SetAccessTierAsync_Error()
+        public async Task SetPropertiesAsync_Error()
         {
             // Arrange
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                QuotaInGB = 5,
+                AccessTier = ShareAccessTier.Hot
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.SetAccessTierAsync(ShareAccessTier.Hot),
+                share.SetPropertiesAsync(options),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
@@ -1290,6 +1304,46 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DeleteAsync_IncludeLeasedSnapshots()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await share.CreateIfNotExistsAsync(quotaInGB: 1);
+
+            // Create a snapshot
+            Response<ShareSnapshotInfo> snapshotResponse0 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient0 = share.WithSnapshot(snapshotResponse0.Value.Snapshot);
+
+            // Create another snapshot
+            Response<ShareSnapshotInfo> snapshotResponse1 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient1 = share.WithSnapshot(snapshotResponse1.Value.Snapshot);
+
+            // Lease 2nd snapshot
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShareClient1.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync(duration);
+
+            // Act
+            ShareDeleteOptions options = new ShareDeleteOptions()
+            {
+                ShareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeWithLeased
+            };
+            await share.DeleteAsync(options);
+
+            // Assert
+            Response<bool> shareExists = await share.ExistsAsync();
+            Response<bool> snapshot0Exists = await snapshotShareClient0.ExistsAsync();
+            Response<bool> snapshot1Exists = await snapshotShareClient1.ExistsAsync();
+
+            Assert.IsFalse(shareExists);
+            Assert.IsFalse(snapshot0Exists);
+            Assert.IsFalse(snapshot1Exists);
         }
 
         [Test]
@@ -1502,6 +1556,26 @@ namespace Azure.Storage.Files.Shares.Test
                 }
             };
             await shareClient.DeleteAsync(options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task AcquireLeaseAsync_ExtendedExceptionMessage()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(10);
+            ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.AcquireAsync(duration),
+                e =>
+                {
+                    Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                });
         }
 
         [Test]

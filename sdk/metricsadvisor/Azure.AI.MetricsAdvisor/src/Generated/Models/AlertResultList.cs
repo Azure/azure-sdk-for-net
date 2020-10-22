@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="nextLink"> . </param>
         /// <param name="value"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        internal AlertResultList(string nextLink, IEnumerable<AlertResult> value)
+        internal AlertResultList(string nextLink, IEnumerable<AnomalyAlert> value)
         {
             if (nextLink == null)
             {
@@ -36,13 +36,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AlertResultList. </summary>
         /// <param name="nextLink"> . </param>
         /// <param name="value"> . </param>
-        internal AlertResultList(string nextLink, IReadOnlyList<AlertResult> value)
+        internal AlertResultList(string nextLink, IReadOnlyList<AnomalyAlert> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
         public string NextLink { get; }
-        public IReadOnlyList<AlertResult> Value { get; }
+        public IReadOnlyList<AnomalyAlert> Value { get; }
     }
 }

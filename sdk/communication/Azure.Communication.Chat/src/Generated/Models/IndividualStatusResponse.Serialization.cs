@@ -27,6 +27,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("statusCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statusCode = property.Value.GetInt32();
                     continue;
                 }

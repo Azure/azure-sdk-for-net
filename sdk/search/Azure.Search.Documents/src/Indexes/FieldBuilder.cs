@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary>
         /// Gets or sets the <see cref="ObjectSerializer"/> to use to generate field names that match JSON property names.
-        /// You should use hte same value as <see cref="SearchClientOptions.Serializer"/>.
+        /// You should use the same value as <see cref="SearchClientOptions.Serializer"/>.
         /// <see cref="JsonObjectSerializer"/> will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
@@ -69,7 +69,19 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
-        public IList<SearchField> Build(Type modelType)
+        public IList<SearchField> Build(Type modelType) =>
+            BuildMapping(modelType).Values.ToList();
+
+        /// <summary>
+        /// Creates a dictionary mapping property names to the <see cref="SearchField"/> objects corresponding to the properties of the type supplied.
+        /// </summary>
+        /// <param name="modelType">
+        /// The type for which fields will be created, based on its properties.
+        /// </param>
+        /// <returns>A collection of fields.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
+        /// <remarks>This overload is used to find the Key field of a SearchIndex so we can associate indexing failures with actions.</remarks>
+        internal IDictionary<string, SearchField> BuildMapping(Type modelType)
         {
             Argument.AssertNotNull(modelType, nameof(modelType));
 
@@ -99,7 +111,7 @@ namespace Azure.Search.Documents.Indexes
             throw FailOnNonObjectDataType();
         }
 
-        private static IList<SearchField> Build(
+        private static IDictionary<string, SearchField> Build(
             Type modelType,
             ObjectInfo info,
             IMemberNameConverter nameProvider,
@@ -129,7 +141,7 @@ namespace Azure.Search.Documents.Indexes
                     try
                     {
                         IList<SearchField> subFields =
-                            Build(underlyingClrType, info, nameProvider, processedTypes);
+                            Build(underlyingClrType, info, nameProvider, processedTypes).Values.ToList();
 
                         if (prop.SerializedName is null)
                         {
@@ -214,7 +226,10 @@ namespace Azure.Search.Documents.Indexes
                     onComplexDataType: CreateComplexField);
             }
 
-            return info.Properties.Select(BuildField).Where(field => field != null).ToList();
+            return info.Properties
+                .Select(prop => (prop.Name, BuildField(prop)))
+                .Where(pair => pair.Item2 != null)
+                .ToDictionary(pair => pair.Item1, pair => pair.Item2);
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)

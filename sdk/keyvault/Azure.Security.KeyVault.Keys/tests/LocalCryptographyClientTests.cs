@@ -70,14 +70,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
+        public void EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.EncryptAsync(new EncryptionAlgorithm("ignored"), TestData));
         }
-
 
         [Test]
         public void DecryptOperationNotSupported()
@@ -89,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
+        public void DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
@@ -108,8 +107,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep, encrypted.Ciphertext));
         }
 
+        // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
-        public async Task EncryptDecryptRoundtrip([EnumValues(Exclude = new[] { nameof(EncryptionAlgorithm.RsaOaep256) })] EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundtrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep))] EncryptionAlgorithm algorithm)
         {
             JsonWebKey jwk = CreateKey(KeyType.Rsa, includePrivateParameters: true);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 #endregion
 
-#region WrapKey / UnwrapKey
+        #region WrapKey / UnwrapKey
         [Test]
         public void WrapKeyOperationNotSupported()
         {
@@ -385,6 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return new JsonWebKey(RSA.Create(), includePrivateParameters, keyOps);
 
                 case KeyType.OctValue:
+                case KeyType.OctHsmValue:
                     return new JsonWebKey(Aes.Create(), keyOps);
 
                 default:
