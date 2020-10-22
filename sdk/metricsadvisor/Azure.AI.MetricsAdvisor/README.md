@@ -167,10 +167,10 @@ var dataFeedMetrics = new List<DataFeedMetric>()
     new DataFeedMetric("cost"),
     new DataFeedMetric("revenue")
 };
-var dataFeedDimensions = new List<MetricDimension>()
+var dataFeedDimensions = new List<DataFeedDimension>()
 {
-    new MetricDimension("category"),
-    new MetricDimension("city")
+    new DataFeedDimension("category"),
+    new DataFeedDimension("city")
 };
 var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
 {
@@ -292,11 +292,11 @@ var emailsToAlert = new List<string>()
     "email2@sample.com"
 };
 
-var emailHook = new EmailHook(hookName, emailsToAlert);
+var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
 
-Response<AlertingHook> response = await adminClient.CreateHookAsync(emailHook);
+Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-AlertingHook hook = response.Value;
+NotificationHook hook = response.Value;
 
 Console.WriteLine($"Hook ID: {hook.Id}");
 ```
@@ -336,7 +336,7 @@ string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
 var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime)
+var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
 {
     TopCount = 5
 };
@@ -368,7 +368,7 @@ var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
 
 int anomalyCount = 0;
 
-await foreach (DataAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
+await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
