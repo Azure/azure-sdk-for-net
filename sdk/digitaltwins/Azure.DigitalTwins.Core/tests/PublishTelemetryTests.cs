@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -117,10 +118,10 @@ namespace Azure.DigitalTwins.Core.Tests
             await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
             // Generate the payload needed to create the room with wifi twin.
-            string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
+            BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
             // Create the room with wifi component digital twin.
-            await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
+            await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
         private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -43,13 +43,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
-                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
-
-                await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin);
+                BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
+                await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin);
 
                 // Get the component
-                Response<string> getComponentResponse = await client
-                    .GetComponentAsync(
+                Response<object> getComponentResponse = await client
+                    .GetComponentAsync<object>(
                         roomWithWifiTwinId,
                         wifiComponentName)
                     .ConfigureAwait(false);

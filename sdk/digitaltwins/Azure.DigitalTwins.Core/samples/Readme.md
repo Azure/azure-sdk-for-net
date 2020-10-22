@@ -152,10 +152,8 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-
-await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-Console.WriteLine($"Created digital twin '{basicDtId}'.");
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
@@ -169,16 +167,14 @@ var customTwin = new CustomDigitalTwin
     Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
-    Component1 = new Component1
+    Component1 = new MyCustomComponent
     {
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
 };
-string dt2Payload = JsonSerializer.Serialize(customTwin);
-
-await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-Console.WriteLine($"Created digital twin '{customDtId}'.");
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
 ### Get and deserialize a digital twin
@@ -188,10 +184,10 @@ You can get a digital twin and deserialize it into a BasicDigitalTwin.
 It works well for basic stuff, but as you can see it gets more difficult when delving into more complex properties, like components.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
-Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
 if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
-    BasicDigitalTwin basicDt = JsonSerializer.Deserialize<BasicDigitalTwin>(getBasicDtResponse.Value);
+    BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
     string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
@@ -210,8 +206,8 @@ Getting and deserializing a digital twin into a custom data type is extremely ea
 Custom types provide the best possible experience.
 
 ```C# Snippet:DigitalTwinsSampleGetCustomDigitalTwin
-Response<string> getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
-CustomDigitalTwin customDt = JsonSerializer.Deserialize<CustomDigitalTwin>(getCustomDtResponse.Value);
+Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsync<CustomDigitalTwin>(customDtId);
+CustomDigitalTwin customDt = getCustomDtResponse.Value;
 Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
     $"ETag: {customDt.ETag}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
@@ -299,7 +295,7 @@ Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 Get a component by providing name of a component and Id of digital twin to which it belongs.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentName);
+await client.GetComponentAsync<MyCustomComponent>(basicDtId, SamplesConstants.ComponentName);
 Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 ```
 
@@ -326,9 +322,10 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     }
 };
 
-string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-await client.CreateRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
-Console.WriteLine($"Created a digital twin relationship 'buildingFloorRelationshipId' from twin 'buildingTwinId' to twin 'floorTwinId'.");
+Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
+    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
+    $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your relationships.
@@ -345,20 +342,23 @@ var floorBuildingRelationshipPayload = new CustomRelationship
     Prop1 = "Prop1 val",
     Prop2 = 4
 };
-string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
 
-Response<string> createCustomRelationshipResponse = await client.CreateRelationshipAsync("floorTwinId", "floorBuildingRelationshipId", serializedCustomRelationship);
-Console.WriteLine($"Created a digital twin relationship 'floorBuildingRelationshipId' from twin 'floorTwinId' to twin 'buildingTwinId'.");
+Response<CustomRelationship> createCustomRelationshipResponse = await client
+    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
+    $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
 
 ### Get and deserialize a digital twin relationship
 You can get a digital twin relationship and deserialize it into a BasicRelationship.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicRelationship
-Response<string> getBasicRelationshipResponse = await client.GetRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
+Response<BasicRelationship> getBasicRelationshipResponse = await client.GetRelationshipAsync<BasicRelationship>(
+    "buildingTwinId",
+    "buildingFloorRelationshipId");
 if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
-    BasicRelationship basicRelationship = JsonSerializer.Deserialize<BasicRelationship>(getBasicRelationshipResponse.Value);
+    BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
         $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
         $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
@@ -367,8 +367,10 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 
 Getting and deserializing a digital twin relationship into a custom data type is as easy.
 ```C# Snippet:DigitalTwinsSampleGetCustomRelationship
-Response<string> getCustomRelationshipResponse = await client.GetRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
-CustomRelationship getCustomRelationship = JsonSerializer.Deserialize<CustomRelationship>(getCustomRelationshipResponse.Value);
+Response<CustomRelationship> getCustomRelationshipResponse = await client.GetRelationshipAsync<CustomRelationship>(
+    "floorTwinId",
+    "floorBuildingRelationshipId");
+CustomRelationship getCustomRelationship = getCustomRelationshipResponse.Value;
 Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelationship.Id}' from twin '{getCustomRelationship.SourceId}'.\n\t" +
     $"Prop1: {getCustomRelationship.Prop1}\n\t" +
     $"Prop2: {getCustomRelationship.Prop2}");
