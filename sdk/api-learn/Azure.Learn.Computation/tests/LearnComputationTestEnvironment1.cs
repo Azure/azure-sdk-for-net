@@ -6,9 +6,9 @@ using Azure.Core.TestFramework;
 namespace Azure.Learn.Computation.Samples
 {
     // To learn more about TestEnvironment classes, please see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core.TestFramework/README.md
-    public class LearnComputationTestEnvironment : TestEnvironment
+    public class LearnComputationTestEnvironment1 : TestEnvironment
     {
-        public LearnComputationTestEnvironment() : base("api-learn")
+        public LearnComputationTestEnvironment1() : base("api-learn")
         {
         }
     }

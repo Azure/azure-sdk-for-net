@@ -141,7 +141,7 @@
                             }
                         },
                         "schema": {
-                            "$ref": "#/definitions/Operation"
+                            "$ref": "#/definitions/ComputeOperation"
                         }
                     }
                 }
@@ -236,7 +236,7 @@
                 }
             }
         },
-        "Operation": {
+        "ComputeOperation": {
             "type": "object",
             "properties": {
                 "createdDateTime": {

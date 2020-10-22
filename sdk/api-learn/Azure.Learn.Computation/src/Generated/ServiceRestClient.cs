@@ -50,7 +50,7 @@ namespace Azure.Learn.Computation
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Operation, ServiceComputationHeaders>> ComputationAsync(string operationId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ComputeOperation, ServiceComputationHeaders>> ComputationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -64,9 +64,9 @@ namespace Azure.Learn.Computation
             {
                 case 200:
                     {
-                        Operation value = default;
+                        ComputeOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Operation.DeserializeOperation(document.RootElement);
+                        value = ComputeOperation.DeserializeComputeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -77,7 +77,7 @@ namespace Azure.Learn.Computation
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public ResponseWithHeaders<Operation, ServiceComputationHeaders> Computation(string operationId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ComputeOperation, ServiceComputationHeaders> Computation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.Learn.Computation
             {
                 case 200:
                     {
-                        Operation value = default;
+                        ComputeOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Operation.DeserializeOperation(document.RootElement);
+                        value = ComputeOperation.DeserializeComputeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
