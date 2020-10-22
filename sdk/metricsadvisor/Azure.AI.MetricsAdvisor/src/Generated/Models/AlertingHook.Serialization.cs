@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 switch (discriminator.GetString())
                 {
                     case "Email": return EmailNotificationHook.DeserializeEmailHook(element);
-                    case "Webhook": return WebHook.DeserializeWebHook(element);
+                    case "Webhook": return WebNotificationHook.DeserializeWebHook(element);
                 }
             }
             HookType hookType = default;

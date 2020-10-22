@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class WebHook : IUtf8JsonSerializable
+    public partial class WebNotificationHook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static WebHook DeserializeWebHook(JsonElement element)
+        internal static WebNotificationHook DeserializeWebHook(JsonElement element)
         {
             WebhookHookParameter hookParameter = default;
             HookType hookType = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            return new WebNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

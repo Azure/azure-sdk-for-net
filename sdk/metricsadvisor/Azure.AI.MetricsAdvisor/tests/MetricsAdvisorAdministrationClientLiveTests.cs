@@ -256,13 +256,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await adminClient.UpdateHookAsync(getEmailHook.Id, getEmailHook).ConfigureAwait(false);
 
-            NotificationHook createdWebHook = await adminClient.CreateHookAsync(new WebHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebHook)} description" }).ConfigureAwait(false);
+            NotificationHook createdWebHook = await adminClient.CreateHookAsync(new WebNotificationHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebNotificationHook)} description" }).ConfigureAwait(false);
 
             createdWebHook.Description = "updated description";
 
             await adminClient.UpdateHookAsync(createdEmailHook.Id, createdEmailHook).ConfigureAwait(false);
 
-            WebHook getWebHook = (await adminClient.GetHookAsync(createdWebHook.Id).ConfigureAwait(false)).Value as WebHook;
+            WebNotificationHook getWebHook = (await adminClient.GetHookAsync(createdWebHook.Id).ConfigureAwait(false)).Value as WebNotificationHook;
 
             getWebHook.Description = "updated description";
             getWebHook.CertificateKey = Recording.GenerateAlphaNumericId("key");

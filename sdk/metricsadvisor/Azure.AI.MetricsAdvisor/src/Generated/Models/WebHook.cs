@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WebhookHookInfo. </summary>
-    public partial class WebHook : NotificationHook
+    public partial class WebNotificationHook : NotificationHook
     {
     }
 }

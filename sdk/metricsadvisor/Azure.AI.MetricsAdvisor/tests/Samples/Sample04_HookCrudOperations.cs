@@ -83,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
             else if (hook.HookType == HookType.Webhook)
             {
-                WebHook webHook = hook as WebHook;
+                WebNotificationHook webHook = hook as WebNotificationHook;
 
                 Console.WriteLine($"Username: {webHook.Username}");
             }
