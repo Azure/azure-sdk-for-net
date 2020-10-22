@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 "email2@sample.com"
             };
 
-            var emailHook = new EmailHook(hookName, emailsToAlert);
+            var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
 
             Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             if (hook.HookType == HookType.Email)
             {
-                EmailHook emailHook = hook as EmailHook;
+                EmailNotificationHook emailHook = hook as EmailNotificationHook;
 
                 Console.WriteLine("Emails to alert:");
                 foreach (string email in emailHook.EmailsToAlert)

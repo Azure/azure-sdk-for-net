@@ -247,9 +247,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
-            NotificationHook createdEmailHook = await adminClient.CreateHookAsync(new EmailHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailHook)} description" }).ConfigureAwait(false);
+            NotificationHook createdEmailHook = await adminClient.CreateHookAsync(new EmailNotificationHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailNotificationHook)} description" }).ConfigureAwait(false);
 
-            EmailHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHook.Id).ConfigureAwait(false)).Value as EmailHook;
+            EmailNotificationHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHook.Id).ConfigureAwait(false)).Value as EmailNotificationHook;
 
             getEmailHook.Description = "updated description";
             getEmailHook.EmailsToAlert.Add($"{Recording.GenerateAlphaNumericId("user")}@contoso.com");
