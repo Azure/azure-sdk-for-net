@@ -562,7 +562,7 @@ is based on the cloud to which the template is being deployed:
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
