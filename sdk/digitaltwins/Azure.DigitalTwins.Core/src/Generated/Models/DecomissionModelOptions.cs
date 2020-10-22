@@ -8,10 +8,10 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class PublishComponentTelemetryOptions
+    public partial class DecomissionModelOptions
     {
-        /// <summary> Initializes a new instance of PublishComponentTelemetryOptions. </summary>
-        public PublishComponentTelemetryOptions()
+        /// <summary> Initializes a new instance of DecomissionModelOptions. </summary>
+        public DecomissionModelOptions()
         {
         }
     }
