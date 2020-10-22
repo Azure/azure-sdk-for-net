@@ -554,13 +554,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
-            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
-            {
-                Recursive = true
-            };
-
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                recursive: true);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -584,13 +580,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
-            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
-            {
-                UserPrincipalName = true
-            };
-
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                userPrincipalName: true);
+            ;
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -611,13 +604,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
-            DataLakeFileSystemGetPathsOptions options = new DataLakeFileSystemGetPathsOptions
-            {
-                Path = "foo"
-            };
-
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                path: "foo");
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
