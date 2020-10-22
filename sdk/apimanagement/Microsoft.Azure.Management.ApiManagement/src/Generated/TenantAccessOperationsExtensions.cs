@@ -121,9 +121,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch)
+            public static AccessInformationContract Update(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -149,9 +149,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessInformationContract> UpdateAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

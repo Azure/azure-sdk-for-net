@@ -276,6 +276,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     }
                 }
             }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 50);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
         }
     }
 }
