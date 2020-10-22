@@ -97,13 +97,13 @@ namespace Azure.AI.MetricsAdvisor
         #region Metrics
 
         /// <summary>
-        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
@@ -157,13 +157,13 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)

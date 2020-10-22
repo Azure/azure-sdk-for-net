@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var metricId in feed.MetricIds)
             {
-                foreach (MetricDimension dimension in feed.Schema.DimensionColumns)
+                foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
                     await foreach (string value in client.GetMetricDimensionValuesAsync(metricId, dimension.DimensionName))
                     {
