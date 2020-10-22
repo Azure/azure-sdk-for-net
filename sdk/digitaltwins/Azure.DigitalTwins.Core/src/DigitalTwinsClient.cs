@@ -333,7 +333,7 @@ namespace Azure.DigitalTwins.Core
         /// Updates a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
@@ -344,18 +344,19 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatch"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, string jsonPatch, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateAsync(digitalTwinId, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.UpdateAsync(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
         /// Updates a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
@@ -366,14 +367,15 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatch"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateDigitalTwinAsync(string, string, UpdateDigitalTwinOptions, CancellationToken)">
+        /// <seealso cref="UpdateDigitalTwinAsync(string, JsonPatchDocument, UpdateDigitalTwinOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateDigitalTwin(string digitalTwinId, string jsonPatch, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateDigitalTwin(string digitalTwinId, JsonPatchDocument jsonPatchDocument, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Update(digitalTwinId, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.Update(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +450,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
@@ -465,16 +467,16 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
         /// // Update Component1 by replacing the property ComponentProp1 value,
         /// // using an optional utility to build the payload.
-        /// var componentUpdateUtility = new UpdateOperationsUtility();
-        /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
-        /// string updatePayload = componentUpdateUtility.Serialize();
-        /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
+        /// var componentJsonPatchDocument = new JsonPatchDocument();
+        /// componentJsonPatchDocument.AppendReplace(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
+        /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, componentJsonPatchDocument);
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
@@ -482,7 +484,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
@@ -495,12 +497,13 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="UpdateComponentAsync(string, string, string, UpdateComponentOptions, CancellationToken)">
+        /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, UpdateComponentOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateComponent(string digitalTwinId, string componentName, string jsonPatch, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateComponent(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponent(digitalTwinId, componentName, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.UpdateComponent(digitalTwinId, componentName, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
@@ -993,7 +996,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
@@ -1006,13 +1009,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId,
-            string relationshipId,
-            string jsonPatch,
-            UpdateRelationshipOptions options = null,
-            CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
-        /// <param name="jsonPatch">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
+        /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
@@ -1033,16 +1033,13 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateRelationshipAsync(string, string, string, UpdateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="UpdateRelationshipAsync(string, string, JsonPatchDocument, UpdateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateRelationship(string digitalTwinId,
-            string relationshipId,
-            string jsonPatch,
-            UpdateRelationshipOptions options = null,
-            CancellationToken cancellationToken = default)
+        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, jsonPatch, options, cancellationToken);
+            Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
         /// <summary>
@@ -1247,7 +1244,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual Task<Response> DecommissionModelAsync(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DecommissionModelAsync(string modelId, DecomissionModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.UpdateAsync(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }
@@ -1275,10 +1272,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DecommissionModelAsync(string, UpdateModelOptions, CancellationToken)">
+        /// <seealso cref="DecommissionModelAsync(string, DecomissionModelOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DecommissionModel(string modelId, UpdateModelOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DecommissionModel(string modelId, DecomissionModelOptions options = null, CancellationToken cancellationToken = default)
         {
             return _dtModelsRestClient.Update(modelId, ModelsConstants.DecommissionModelOperationList, options, cancellationToken);
         }

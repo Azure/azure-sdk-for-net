@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly props -->
   <PropertyGroup>
     <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
@@ -51,5 +51,17 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
+  <!--
+  This project currently takes a project reference on Azure.Core, rather than deferring to Azure.Core.props to choose between project reference and nuget reference.
+  This is because the project needs access to the JsonPatchDocument type that is defined in Azure.Core, but has not been released in a nuget yet. After the next
+  release of Azure.Core, the below can be changed back so that we just import Azure.Core.props
+  -->
+
+  <!--Uncomment the below to take reference from Azure.Core based on how Azure.Core.props defines how libraries should take reference-->
+  <!--<Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />-->
+
+  <!--Remove the below after uncommenting the above in order to stop taking a project reference on Azure.Core-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
 </Project>

@@ -52,13 +52,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/eventroutes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesListOptions?.Traceparent != null)
+            if (eventRoutesListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
             }
-            if (eventRoutesListOptions?.Tracestate != null)
+            if (eventRoutesListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
             }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {
@@ -129,13 +129,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesGetByIdOptions?.Traceparent != null)
+            if (eventRoutesGetByIdOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.TraceParent);
             }
-            if (eventRoutesGetByIdOptions?.Tracestate != null)
+            if (eventRoutesGetByIdOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -220,13 +220,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesAddOptions?.Traceparent != null)
+            if (eventRoutesAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesAddOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesAddOptions.TraceParent);
             }
-            if (eventRoutesAddOptions?.Tracestate != null)
+            if (eventRoutesAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesAddOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesAddOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -316,13 +316,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesDeleteOptions?.Traceparent != null)
+            if (eventRoutesDeleteOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesDeleteOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesDeleteOptions.TraceParent);
             }
-            if (eventRoutesDeleteOptions?.Tracestate != null)
+            if (eventRoutesDeleteOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesDeleteOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesDeleteOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -395,13 +395,13 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (eventRoutesListOptions?.Traceparent != null)
+            if (eventRoutesListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
             }
-            if (eventRoutesListOptions?.Tracestate != null)
+            if (eventRoutesListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
             }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {

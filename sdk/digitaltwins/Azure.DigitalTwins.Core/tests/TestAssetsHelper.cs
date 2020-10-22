@@ -51,22 +51,6 @@ namespace Azure.DigitalTwins.Core.Tests
             return RemoveNewLines(TestAssets.WardModelPayload.Replace("WARD_MODEL_ID", wardModelId));
         }
 
-        public static string GetRoomTwinUpdatePayload()
-        {
-            var uou = new UpdateOperationsUtility();
-            uou.AppendAddOp("/Humidity", 30);
-            uou.AppendReplaceOp("/Temperature", 70);
-            uou.AppendRemoveOp("/EmployeeId");
-            return RemoveNewLines(uou.Serialize());
-        }
-
-        public static string GetWifiComponentUpdatePayload()
-        {
-            var uou = new UpdateOperationsUtility();
-            uou.AppendReplaceOp("/Network", "New Network");
-            return RemoveNewLines(uou.Serialize());
-        }
-
         public static BasicDigitalTwin GetFloorTwinPayload(string floorModelId)
         {
             string floorTwinPayload = RemoveNewLines(TestAssets.FloorTwinPayload.Replace("FLOOR_MODEL_ID", floorModelId));
@@ -95,13 +79,6 @@ namespace Azure.DigitalTwins.Core.Tests
                 .Replace("PROPERTY_NAME", propertyName)
                 .Replace("\"PROPERTY_VALUE\"", propertyValue.ToString().ToLower()));
             return JsonSerializer.Deserialize<BasicRelationship>(relationshipWithPropertyPayload);
-        }
-
-        public static string GetRelationshipUpdatePayload(string propertyName, bool propertyValue)
-        {
-            var uou = new UpdateOperationsUtility();
-            uou.AppendReplaceOp(propertyName, propertyValue);
-            return RemoveNewLines(uou.Serialize());
         }
 
         public static string GetWifiModelPayload(string wifiModelId)
