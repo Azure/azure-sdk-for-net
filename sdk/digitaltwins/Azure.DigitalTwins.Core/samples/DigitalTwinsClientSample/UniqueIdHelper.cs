@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
@@ -18,7 +19,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
         internal static async Task<string> GetUniqueTwinIdAsync(string baseName, DigitalTwinsClient client)
         {
-            return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync(twinId));
+            return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync<BasicDigitalTwin>(twinId));
         }
 
         private static async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)

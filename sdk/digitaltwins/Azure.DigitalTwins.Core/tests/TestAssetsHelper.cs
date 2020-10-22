@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Tests
@@ -50,30 +51,34 @@ namespace Azure.DigitalTwins.Core.Tests
             return RemoveNewLines(TestAssets.WardModelPayload.Replace("WARD_MODEL_ID", wardModelId));
         }
 
-        public static string GetFloorTwinPayload(string floorModelId)
+        public static BasicDigitalTwin GetFloorTwinPayload(string floorModelId)
         {
-            return RemoveNewLines(TestAssets.FloorTwinPayload.Replace("FLOOR_MODEL_ID", floorModelId));
+            string floorTwinPayload = RemoveNewLines(TestAssets.FloorTwinPayload.Replace("FLOOR_MODEL_ID", floorModelId));
+            return JsonSerializer.Deserialize<BasicDigitalTwin>(floorTwinPayload);
         }
 
-        public static string GetRoomTwinPayload(string roomModelId)
+        public static BasicDigitalTwin GetRoomTwinPayload(string roomModelId)
         {
-            return RemoveNewLines(TestAssets.RoomTwinPayload.Replace("ROOM_MODEL_ID", roomModelId));
+            string roomTwinPayload = RemoveNewLines(TestAssets.RoomTwinPayload.Replace("ROOM_MODEL_ID", roomModelId));
+            return JsonSerializer.Deserialize<BasicDigitalTwin>(roomTwinPayload);
         }
 
-        public static string GetRelationshipPayload(string targetTwinId, string relationshipName)
+        public static BasicRelationship GetRelationshipPayload(string targetTwinId, string relationshipName)
         {
-            return RemoveNewLines(TestAssets.RelationshipPayload
+            string relationshipPayload = RemoveNewLines(TestAssets.RelationshipPayload
                 .Replace("TARGET_TWIN_ID", targetTwinId)
                 .Replace("RELATIONSHIP_NAME", relationshipName));
+            return JsonSerializer.Deserialize<BasicRelationship>(relationshipPayload);
         }
 
-        public static string GetRelationshipWithPropertyPayload(string targetTwinId, string relationshipName, string propertyName, bool propertyValue)
+        public static BasicRelationship GetRelationshipWithPropertyPayload(string targetTwinId, string relationshipName, string propertyName, bool propertyValue)
         {
-            return RemoveNewLines(TestAssets.RelationshipWithPropertyPayload
+            string relationshipWithPropertyPayload = RemoveNewLines(TestAssets.RelationshipWithPropertyPayload
                 .Replace("TARGET_TWIN_ID", targetTwinId)
                 .Replace("RELATIONSHIP_NAME", relationshipName)
                 .Replace("PROPERTY_NAME", propertyName)
                 .Replace("\"PROPERTY_VALUE\"", propertyValue.ToString().ToLower()));
+            return JsonSerializer.Deserialize<BasicRelationship>(relationshipWithPropertyPayload);
         }
 
         public static string GetWifiModelPayload(string wifiModelId)
@@ -89,16 +94,18 @@ namespace Azure.DigitalTwins.Core.Tests
                 .Replace("WIFI_COMPONENT_NAME", wifiComponentName));
         }
 
-        public static string GetRoomWithWifiTwinPayload(string roomWithWifiModelId, string wifiComponentName)
+        public static BasicDigitalTwin GetRoomWithWifiTwinPayload(string roomWithWifiModelId, string wifiComponentName)
         {
-            return RemoveNewLines(TestAssets.RoomWithWifiTwinPayload
+            string roomWithWifiTwinPayload = RemoveNewLines(TestAssets.RoomWithWifiTwinPayload
                 .Replace("ROOM_WITH_WIFI_MODEL_ID", roomWithWifiModelId)
                 .Replace("WIFI_COMPONENT_NAME", wifiComponentName));
+            return JsonSerializer.Deserialize<BasicDigitalTwin>(roomWithWifiTwinPayload);
         }
 
-        public static string GetHvacTwinPayload(string hvacModelId)
+        public static BasicDigitalTwin GetHvacTwinPayload(string hvacModelId)
         {
-            return RemoveNewLines(TestAssets.HvacTwinPayload.Replace("HVAC_MODEL_ID", hvacModelId));
+            string hvacTwinPayload = RemoveNewLines(TestAssets.HvacTwinPayload.Replace("HVAC_MODEL_ID", hvacModelId));
+            return JsonSerializer.Deserialize<BasicDigitalTwin>(hvacTwinPayload);
         }
     }
 }

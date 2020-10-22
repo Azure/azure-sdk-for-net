@@ -253,10 +253,11 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 try
                 {
-                    Response<string> response = await client.CreateDigitalTwinAsync(twin.Key, twin.Value);
+                    BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twin.Value);
+                    Response<BasicDigitalTwin> response = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(twin.Key, basicDigitalTwin);
 
                     Console.WriteLine($"Created digital twin '{twin.Key}'.");
-                    Console.WriteLine($"\tBody: {response?.Value}");
+                    Console.WriteLine($"\tBody: {JsonSerializer.Serialize(response?.Value)}");
                 }
                 catch (Exception ex)
                 {
@@ -351,14 +352,13 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     try
                     {
-                        string serializedRelationship = JsonSerializer.Serialize(relationship);
-
-                        await client.CreateRelationshipAsync(
+                        Response<BasicRelationship> createRelationshipResponse = await client.CreateRelationshipAsync<BasicRelationship>(
                             relationship.SourceId,
                             relationship.Id,
-                            serializedRelationship);
+                            relationship);
 
-                        Console.WriteLine($"Linked twin '{relationship.SourceId}' to twin '{relationship.TargetId}' as '{relationship.Name}'");
+                        Console.WriteLine($"Linked twin '{createRelationshipResponse.Value.SourceId}' to twin " +
+                            $"'{createRelationshipResponse.Value.TargetId}' as '{createRelationshipResponse.Value.Name}'");
                     }
                     catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
                     {
