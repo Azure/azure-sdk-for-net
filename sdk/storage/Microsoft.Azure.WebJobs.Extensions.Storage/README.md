@@ -45,6 +45,10 @@ Please refer to [Azure WebJobs Storage Queues](https://github.com/Azure/azure-sd
 
 Please refer to [Azure WebJobs Storage Blobs](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs).
 
+## Examples
+
+Please refer to [Azure WebJobs Storage Queues](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues) and [Azure WebJobs Storage Blobs](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs).
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
