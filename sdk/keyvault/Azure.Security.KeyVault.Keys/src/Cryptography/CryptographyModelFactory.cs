@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Security.KeyVault.Keys.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys
@@ -31,11 +32,27 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="ciphertext">Sets the <see cref="EncryptResult.Ciphertext"/> property.</param>
         /// <param name="algorithm">Sets the <see cref="EncryptResult.Algorithm"/> property.</param>
         /// <returns>A new instance of the <see cref="Cryptography.EncryptResult"/> for mocking purposes.</returns>
-        public static EncryptResult EncryptResult(string keyId = default, byte[] ciphertext = default, EncryptionAlgorithm algorithm = default) => new EncryptResult
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EncryptResult EncryptResult(string keyId, byte[] ciphertext, EncryptionAlgorithm algorithm) => EncryptResult(keyId, ciphertext, algorithm, null);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cryptography.EncryptResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="keyId">Sets the <see cref="EncryptResult.KeyId"/> property.</param>
+        /// <param name="ciphertext">Sets the <see cref="EncryptResult.Ciphertext"/> property.</param>
+        /// <param name="algorithm">Sets the <see cref="EncryptResult.Algorithm"/> property.</param>
+        /// <param name="iv">Sets the initialization vector for encryption.</param>
+        /// <param name="authenticatedTag">Sets the authenticated tag resulting from encryption with a symmetric key using AES.</param>
+        /// <param name="additionalAuthenticatedData">Sets additional data that is authenticated during decryption but not encrypted.</param>
+        /// <returns>A new instance of the <see cref="Cryptography.EncryptResult"/> for mocking purposes.</returns>
+        public static EncryptResult EncryptResult(string keyId = default, byte[] ciphertext = default, EncryptionAlgorithm algorithm = default, byte[] iv = default, byte[] authenticatedTag = default, byte[] additionalAuthenticatedData = default) => new EncryptResult
         {
             KeyId = keyId,
             Ciphertext = ciphertext,
             Algorithm = algorithm,
+            Iv = iv,
+            AuthenticationTag = authenticatedTag,
+            AdditionalAuthenticatedData = additionalAuthenticatedData,
         };
 
         /// <summary>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
@@ -36,8 +35,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
+        // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
-        public async Task EncryptDecryptRoundTrip([EnumValues]EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundTrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))]EncryptionAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
