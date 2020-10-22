@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task CreateAndDeleteHookAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.DeleteHookAsync(hook.Id);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetHookAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -89,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task UpdateHookAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.UpdateHookAsync(hookId, hook);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetHooksAsync()
         {
             string endpoint = MetricsAdvisorUri;

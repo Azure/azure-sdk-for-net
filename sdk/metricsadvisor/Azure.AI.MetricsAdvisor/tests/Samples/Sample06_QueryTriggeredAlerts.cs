@@ -5,13 +5,13 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task GetAlertsAsync()
         {
             string endpoint = MetricsAdvisorUri;

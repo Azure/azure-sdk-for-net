@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task GetMetricDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetValuesOfDimensionWithAnomaliesAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -80,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricEnrichmentStatusesAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -113,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricSeriesDefinitionsAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -149,7 +149,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricSeriesDataAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -201,7 +201,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricEnrichedSeriesDataAsync()
         {
             string endpoint = MetricsAdvisorUri;

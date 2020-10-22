@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task CreateAndDeleteAnomalyAlertConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -55,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.DeleteAnomalyAlertConfigurationAsync(alertConfiguration.Id);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAnomalyAlertConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -91,7 +90,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateAnomalyAlertConfigurationAsync()
         {
@@ -119,7 +118,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.UpdateAnomalyAlertConfigurationAsync(alertConfigurationId, alertConfiguration);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAnomalyAlertConfigurationsAsync()
         {
             string endpoint = MetricsAdvisorUri;

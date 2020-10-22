@@ -5,13 +5,13 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task CreateMetricFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Feedback ID: {feedback.Id}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetMetricFeedbacksAsync()
         {
             string endpoint = MetricsAdvisorUri;

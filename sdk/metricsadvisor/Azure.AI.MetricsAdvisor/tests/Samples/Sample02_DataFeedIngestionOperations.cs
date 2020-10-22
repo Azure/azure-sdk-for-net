@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public async Task GetDataFeedIngestionStatusesAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetDataFeedIngestionProgressAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Latest success timestamp: {ingestionProgress.LatestSuccessTimestamp}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RefreshDataFeedIngestionAsync()
         {
             string endpoint = MetricsAdvisorUri;

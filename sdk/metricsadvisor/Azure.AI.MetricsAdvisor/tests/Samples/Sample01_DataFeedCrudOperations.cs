@@ -15,8 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     [LiveOnly]
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
+        [Test]
         public async Task CreateAndDeleteDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -73,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;
@@ -115,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateDataFeedAsync()
         {
@@ -143,7 +142,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await adminClient.UpdateDataFeedAsync(dataFeedId, dataFeed);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetDataFeedsAsync()
         {
             string endpoint = MetricsAdvisorUri;
