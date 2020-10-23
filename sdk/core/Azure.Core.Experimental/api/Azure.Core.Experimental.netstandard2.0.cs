@@ -1,32 +1,42 @@
-namespace Azure.Core
+namespace Azure
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BinaryData
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public BinaryData(byte[] data) { throw null; }
+        public BinaryData(object serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Type? type = null) { throw null; }
+        public BinaryData(object jsonSerializable, System.Type? type = null) { throw null; }
+        public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
         public BinaryData(System.ReadOnlySpan<byte> data) { throw null; }
         public BinaryData(string data) { throw null; }
-        public System.ReadOnlyMemory<byte> Bytes { get { throw null; } }
-        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T Deserialize<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T Deserialize<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        public static Azure.Core.BinaryData FromMemory(System.ReadOnlyMemory<byte> data) { throw null; }
-        public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromBytes(byte[] data) { throw null; }
+        public static Azure.BinaryData FromBytes(System.ReadOnlyMemory<byte> data) { throw null; }
+        public static Azure.BinaryData FromBytes(System.ReadOnlySpan<byte> data) { throw null; }
+        public static System.Threading.Tasks.ValueTask<Azure.BinaryData> FromObjectAsync<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<Azure.BinaryData> FromObjectAsync<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromObject<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromObject<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromStream(System.IO.Stream stream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromString(string data) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> SerializeAsync<T>(T data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> SerializeAsync<T>(T data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.BinaryData Serialize<T>(T data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.BinaryData Serialize<T>(T data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (Azure.BinaryData data) { throw null; }
+        public System.ReadOnlyMemory<byte> ToBytes() { throw null; }
+        public System.Threading.Tasks.ValueTask<T> ToObjectAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> ToObjectAsync<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T ToObject<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T ToObject<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.IO.Stream ToStream() { throw null; }
         public override string ToString() { throw null; }
     }
+}
+namespace Azure.Core
+{
     public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
     {
         public DynamicJson(string json) { }
@@ -82,6 +92,72 @@ namespace Azure.Core
         public System.Text.Json.JsonElement ToJsonElement() { throw null; }
         public override string ToString() { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+    }
+    public partial class JsonPatchDocument
+    {
+        public JsonPatchDocument() { }
+        public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public void AppendAddRaw(string path, string rawJsonValue) { }
+        public void AppendAdd<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public void AppendCopy(string from, string path) { }
+        public void AppendMove(string from, string path) { }
+        public void AppendRemove(string path) { }
+        public void AppendReplaceRaw(string path, string rawJsonValue) { }
+        public void AppendReplace<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public void AppendTestRaw(string path, string rawJsonValue) { }
+        public void AppendTest<T>(string path, T value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Core.Amqp
+{
+    public partial class AmqpAnnotatedMessage
+    {
+        public AmqpAnnotatedMessage(Azure.Core.Amqp.AmqpAnnotatedMessage message) { }
+        public AmqpAnnotatedMessage(System.Collections.Generic.IEnumerable<Azure.BinaryData> dataBody) { }
+        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } set { } }
+        public Azure.Core.Amqp.AmqpMessageBody Body { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Footer { get { throw null; } set { } }
+        public Azure.Core.Amqp.AmqpMessageHeader Header { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } set { } }
+        public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } set { } }
+    }
+    public partial class AmqpDataBody : Azure.Core.Amqp.AmqpMessageBody
+    {
+        public AmqpDataBody(System.Collections.Generic.IEnumerable<Azure.BinaryData> data) { }
+        public System.Collections.Generic.IEnumerable<Azure.BinaryData> Data { get { throw null; } }
+    }
+    public abstract partial class AmqpMessageBody
+    {
+        protected AmqpMessageBody() { }
+    }
+    public partial class AmqpMessageHeader
+    {
+        public AmqpMessageHeader() { }
+        public uint? DeliveryCount { get { throw null; } set { } }
+        public bool? Durable { get { throw null; } set { } }
+        public bool? FirstAcquirer { get { throw null; } set { } }
+        public byte? Priority { get { throw null; } set { } }
+        public System.TimeSpan? TimeToLive { get { throw null; } set { } }
+    }
+    public partial class AmqpMessageProperties
+    {
+        public AmqpMessageProperties() { }
+        public AmqpMessageProperties(Azure.Core.Amqp.AmqpMessageProperties properties) { }
+        public System.DateTime? AbsoluteExpiryTime { get { throw null; } set { } }
+        public string? ContentEncoding { get { throw null; } set { } }
+        public string? ContentType { get { throw null; } set { } }
+        public string? CorrelationId { get { throw null; } set { } }
+        public System.DateTime? CreationTime { get { throw null; } set { } }
+        public string? GroupId { get { throw null; } set { } }
+        public uint? GroupSequence { get { throw null; } set { } }
+        public string? MessageId { get { throw null; } set { } }
+        public string? ReplyTo { get { throw null; } set { } }
+        public string? ReplyToGroupId { get { throw null; } set { } }
+        public string? Subject { get { throw null; } set { } }
+        public string? To { get { throw null; } set { } }
+        public Azure.BinaryData? UserId { get { throw null; } set { } }
     }
 }
 namespace Azure.Core.GeoJson
@@ -172,7 +248,7 @@ namespace Azure.Core.GeoJson
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoPosition
+    public readonly partial struct GeoPosition : System.IEquatable<Azure.Core.GeoJson.GeoPosition>
     {
         private readonly int _dummyPrimitive;
         public GeoPosition(double longitude, double latitude) { throw null; }

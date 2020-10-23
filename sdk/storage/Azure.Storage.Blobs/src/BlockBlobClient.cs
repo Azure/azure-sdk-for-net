@@ -716,12 +716,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
                     return await BlobRestClient.BlockBlob.UploadAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -967,6 +969,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     return await BlobRestClient.BlockBlob.StageBlockAsync(
                         ClientDiagnostics,
@@ -974,7 +977,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         blockId: base64BlockId,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,
@@ -1962,8 +1965,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = querySqlExpression,
-                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(isInput: true),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
                     (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
@@ -2118,9 +2121,9 @@ namespace Azure.Storage.Blobs.Specialized
                 // Create Block Blob
                 Response<BlobContentInfo> response = await UploadInternal(
                     content: new MemoryStream(Array.Empty<byte>()),
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    tags: default,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags,
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
@@ -2140,7 +2143,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags);
             }
             catch (Exception ex)
             {
@@ -2229,23 +2235,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new BlockBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetBlockBlobClientCore(blobName);
         }
     }
 }

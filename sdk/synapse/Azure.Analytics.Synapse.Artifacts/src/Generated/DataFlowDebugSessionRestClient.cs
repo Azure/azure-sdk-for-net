@@ -57,6 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -121,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/queryDataFlowDebugSessions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -175,6 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -246,6 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -307,6 +311,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -370,6 +375,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,7 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
+        public FormTrainingClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -69,6 +72,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
+            Assert.IsNotNull(model.Properties);
+            Assert.IsFalse(model.Properties.IsComposedModel);
             Assert.IsNotNull(model.TrainingStartedOn);
             Assert.IsNotNull(model.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
@@ -78,6 +83,7 @@ namespace Azure.AI.FormRecognizer.Tests
             foreach (TrainingDocumentInfo doc in model.TrainingDocuments)
             {
                 Assert.IsNotNull(doc.Name);
+                Assert.IsNotNull(doc.ModelId);
                 Assert.IsNotNull(doc.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
                 Assert.IsNotNull(doc.Errors);
@@ -87,6 +93,7 @@ namespace Azure.AI.FormRecognizer.Tests
             foreach (var submodel in model.Submodels)
             {
                 Assert.IsNotNull(submodel.FormType);
+                Assert.IsNotNull(submodel.ModelId);
                 foreach (var fields in submodel.Fields)
                 {
                     Assert.IsNotNull(fields.Value.Name);
@@ -96,6 +103,115 @@ namespace Azure.AI.FormRecognizer.Tests
                         Assert.IsNotNull(fields.Value.Label);
                 }
             }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CheckFormTypeinSubmodelAndRecognizedForm(bool labeled)
+        {
+            var client = CreateFormTrainingClient();
+            var formClient = client.GetFormRecognizerClient();
+
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFilesUri, labeled);
+            await trainingOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(trainingOperation.HasValue);
+
+            CustomFormModel model = trainingOperation.Value;
+            Assert.IsNotNull(model.Submodels.FirstOrDefault().FormType);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+            RecognizeCustomFormsOperation recognizeOperation = await formClient.StartRecognizeCustomFormsFromUriAsync(model.ModelId, uri);
+            await recognizeOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(recognizeOperation.HasValue);
+
+            RecognizedForm form = recognizeOperation.Value.Single();
+            Assert.IsNotNull(form.FormType);
+            Assert.AreEqual(form.FormType, model.Submodels.FirstOrDefault().FormType);
+        }
+
+        [Test]
+        public async Task StartCreateComposedModel()
+        {
+            var client = CreateFormTrainingClient();
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
+
+            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" });
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            CustomFormModel composedModel = operation.Value;
+
+            Assert.IsNotNull(composedModel.ModelId);
+            Assert.IsNotNull(composedModel.Properties);
+            Assert.IsTrue(composedModel.Properties.IsComposedModel);
+            Assert.IsNotNull(composedModel.TrainingStartedOn);
+            Assert.IsNotNull(composedModel.TrainingCompletedOn);
+            Assert.AreEqual(CustomFormModelStatus.Ready, composedModel.Status);
+            Assert.IsNotNull(composedModel.Errors);
+            Assert.AreEqual(0, composedModel.Errors.Count);
+
+            Dictionary<string, List<TrainingDocumentInfo>> trainingDocsPerModel = composedModel.TrainingDocuments.GroupBy(doc => doc.ModelId).ToDictionary(g => g.Key, g => g.ToList());
+
+            Assert.AreEqual(2, trainingDocsPerModel.Count);
+            Assert.IsTrue(trainingDocsPerModel.ContainsKey(trainedModelA.ModelId));
+            Assert.IsTrue(trainingDocsPerModel.ContainsKey(trainedModelB.ModelId));
+
+            //Check training documents in modelA
+            foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelA.ModelId])
+            {
+                Assert.IsNotNull(doc.Name);
+                Assert.AreEqual(trainedModelA.ModelId, doc.ModelId);
+                Assert.IsNotNull(doc.PageCount);
+                Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
+                Assert.IsNotNull(doc.Errors);
+                Assert.AreEqual(0, doc.Errors.Count);
+            }
+
+            //Check training documents in modelB
+            foreach (TrainingDocumentInfo doc in trainingDocsPerModel[trainedModelB.ModelId])
+            {
+                Assert.IsNotNull(doc.Name);
+                Assert.AreEqual(trainedModelB.ModelId, doc.ModelId);
+                Assert.IsNotNull(doc.PageCount);
+                Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
+                Assert.IsNotNull(doc.Errors);
+                Assert.AreEqual(0, doc.Errors.Count);
+            }
+
+            Assert.AreEqual(2, composedModel.Submodels.Count);
+            foreach (var submodel in composedModel.Submodels)
+            {
+                Assert.IsNotNull(submodel.FormType);
+                Assert.IsNotNull(submodel.ModelId);
+                Assert.IsTrue(modelIds.Contains(submodel.ModelId));
+                foreach (var fields in submodel.Fields)
+                {
+                    Assert.IsNotNull(fields.Value.Name);
+                    Assert.IsNotNull(fields.Value.Accuracy);
+                }
+            }
+        }
+
+        [Test]
+        public async Task StartCreateComposedModelFailsWithInvalidId()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var modelIds = new List<string> { trainedModelA.ModelId, "00000000-0000-0000-0000-000000000000" };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" }));
+            Assert.AreEqual("1001", ex.ErrorCode);
         }
 
         [Test]
@@ -124,6 +240,37 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             Assert.AreEqual("2014", ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task StartTrainingWithLabelsModelName()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var modelName = "My training";
+
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { ModelName = modelName });
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(modelName, operation.Value.ModelName);
+        }
+
+        [Test]
+        [Ignore("Current bug on the service side returns null for model name.")]
+        public async Task StartTrainingWithNoLabelsModelName()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var modelName = "My training";
+
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { ModelName = modelName });
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(modelName, operation.Value.ModelName);
         }
 
         [Test]
@@ -160,6 +307,7 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
             Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
+            Assert.AreEqual(trainedModel.Properties.IsComposedModel, resultModel.Properties.IsComposedModel);
             Assert.AreEqual(trainedModel.TrainingStartedOn, resultModel.TrainingStartedOn);
             Assert.AreEqual(trainedModel.TrainingCompletedOn, resultModel.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
@@ -172,6 +320,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var rm = resultModel.TrainingDocuments[i];
 
                 Assert.AreEqual(tm.Name, rm.Name);
+                Assert.AreEqual(tm.ModelId, rm.ModelId);
                 Assert.AreEqual(tm.PageCount, rm.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, rm.Status);
                 Assert.AreEqual(tm.Status, rm.Status);
@@ -181,7 +330,7 @@ namespace Azure.AI.FormRecognizer.Tests
             for (int i = 0; i < resultModel.Submodels.Count; i++)
             {
                 Assert.AreEqual(trainedModel.Submodels[i].FormType, resultModel.Submodels[i].FormType);
-
+                Assert.AreEqual(trainedModel.Submodels[i].ModelId, resultModel.Submodels[i].ModelId);
                 foreach (var fields in resultModel.Submodels[i].Fields)
                 {
                     Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Name, fields.Value.Name);
@@ -198,6 +347,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(modelInfo.TrainingStartedOn);
             Assert.IsNotNull(modelInfo.TrainingCompletedOn);
             Assert.IsNotNull(modelInfo.Status);
+            Assert.IsNotNull(modelInfo.Properties);
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
 
@@ -246,7 +396,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public void CopyModelError()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -256,7 +405,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("1002", ex.ErrorCode);
         }
 
         [Test]

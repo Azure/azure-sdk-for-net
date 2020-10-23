@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Core.TestFramework;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.DataProtection;
@@ -13,10 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionBlobFunctionalTests
+    public class DataProtectionBlobFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
-        [Category("Live")]
         public async Task PersistsKeysToAzureBlob()
         {
             var serviceCollection = new ServiceCollection();
@@ -35,7 +35,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         }
 
         [Test]
-        [Category("Live")]
         public async Task CanAddKeysIndependently()
         {
             var blobClient = await GetBlobClient("testblob2");
@@ -53,13 +52,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             Assert.AreEqual(2, repository.GetAllElements().Count);
         }
 
-        private static async Task<BlobClient> GetBlobClient(string name)
+        private async Task<BlobClient> GetBlobClient(string name)
         {
             var client = new BlobServiceClient(
-                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.core.windows.net/"),
+                new Uri($"https://{TestEnvironment.StorageAccountName}.blob.core.windows.net/"),
                 new StorageSharedKeyCredential(
-                    DataProtectionTestEnvironment.Instance.StorageAccountName,
-                    DataProtectionTestEnvironment.Instance.StorageAccountKey));
+                    TestEnvironment.StorageAccountName,
+                    TestEnvironment.StorageAccountKey));
 
             var blobContainerClient = client.GetBlobContainerClient("testcontainer");
             await blobContainerClient.CreateIfNotExistsAsync();

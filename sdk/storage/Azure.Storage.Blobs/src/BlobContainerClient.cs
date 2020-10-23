@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -405,6 +406,108 @@ namespace Azure.Storage.Blobs
                 EncryptionScope);
         }
 
+        /// <summary>
+        /// Create a new <see cref="BlockBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <see cref="Uri"/>. The new
+        /// <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the block blob.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
+        {
+            if (ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new BlockBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="AppendBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <see cref="BlobContainerClient.Uri"/>. The new
+        /// <see cref="AppendBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the append blob.</param>
+        /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
+        protected internal virtual AppendBlobClient GetAppendBlobClientCore(string blobName)
+        {
+            if (ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new AppendBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="PageBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <see cref="BlobContainerClient.Uri"/>. The new
+        /// <see cref="PageBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobName">The name of the page blob.</param>
+        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
+        protected internal virtual PageBlobClient GetPageBlobClientCore(string blobName)
+        {
+            if (ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = blobName
+            };
+
+            return new PageBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
+        /// </summary>
+        /// <param name="leaseId">
+        /// An optional lease ID.  If no lease ID is provided, a random lease
+        /// ID will be created.
+        /// </param>
+        protected internal virtual BlobLeaseClient GetBlobLeaseClientCore(string leaseId) =>
+            new BlobLeaseClient(this, leaseId);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -2037,12 +2140,27 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
                     }
 
+                    List<BlobSignedIdentifier> sanitizedPermissions = null;
+                    if (permissions != null)
+                    {
+                        sanitizedPermissions = new List<BlobSignedIdentifier>();
+
+                        foreach (BlobSignedIdentifier signedIdentifier in permissions)
+                        {
+                            signedIdentifier.AccessPolicy.Permissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                                signedIdentifier.AccessPolicy.Permissions,
+                                Constants.Sas.ValidPermissionsInOrder);
+
+                            sanitizedPermissions.Add(signedIdentifier);
+                        }
+                    }
+
                     return await BlobRestClient.Container.SetAccessPolicyAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         version: Version.ToVersionString(),
-                        permissions: permissions,
+                        permissions: sanitizedPermissions,
                         leaseId: conditions?.LeaseId,
                         access: accessType,
                         ifModifiedSince: conditions?.IfModifiedSince,

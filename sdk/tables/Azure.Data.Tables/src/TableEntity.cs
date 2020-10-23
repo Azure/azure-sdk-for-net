@@ -44,18 +44,18 @@ namespace Azure.Data.Tables
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
         public DateTimeOffset? Timestamp
         {
-            get { return GetValue(TableConstants.PropertyNames.TimeStamp) as DateTimeOffset?; }
+            get { return GetValue<DateTimeOffset?>(TableConstants.PropertyNames.TimeStamp); }
             set { _properties[TableConstants.PropertyNames.TimeStamp] = value; }
         }
 
         /// <summary>
-        /// Gets or sets the entity's ETag. Set this value to '*' in order to force an overwrite to an entity as part of an update operation.
+        /// Gets or sets the entity's ETag. Set this value to <see cref="ETag.All"/> in order to force an overwrite to an entity as part of an update operation.
         /// </summary>
-        /// <value>A string containing the ETag value for the entity.</value>
-        public string ETag
+        /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
+        public ETag ETag
         {
-            get { return GetString(TableConstants.PropertyNames.Etag); }
-            set { _properties[TableConstants.PropertyNames.Etag] = value; }
+            get { return new ETag(GetString(TableConstants.PropertyNames.EtagOdata)); }
+            set { _properties[TableConstants.PropertyNames.EtagOdata] = value.ToString(); }
         }
 
         /// <summary>

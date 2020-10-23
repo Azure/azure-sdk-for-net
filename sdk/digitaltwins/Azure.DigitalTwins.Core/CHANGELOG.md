@@ -1,7 +1,12 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0 (Unreleased)
 
+- Regenerate protocol layer from service API version 2020-10-31
+- Update service API version to use service API version 2020-10-31 by default
+- Add optional parameters for traceparent and tracestate to all service request APIs to support distributed tracing
+- Renamed model type "ModelData" to "DigitalTwinsModelData" to make type less generic, and less likely to conflict with other libraries
+- Renamed model type "RequestOptions" to "DigitalTwinsRequestOptions" to make type less generic, and less likely to conflict with other libraries
 
 ## 1.0.0-preview.3 (2020-07-13)
 

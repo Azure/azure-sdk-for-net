@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             else if (Mode == RecordedTestMode.Record)
             {
                 var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
-                await foreach (var servicePrincipal in servicePrincipalList)
+                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
+                foreach (var servicePrincipal in servicePrincipalList)
                 {
                     this.ObjectId = servicePrincipal.ObjectId;
                     Recording.GetVariable(ObjectIdKey, this.ObjectId);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+                InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
     }
 }

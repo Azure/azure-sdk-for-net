@@ -10,7 +10,7 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Storage" (https://www.nuget.org/packages/Azure.ResourceManager.Storage/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Storage</AssemblyName>
-		<Version>17.1.1</Version>
+		<Version>17.2.0</Version>
 		<PackageTags>Microsoft Azure Storage management;Storage;Storage management;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/asdotnetsdkchangelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>

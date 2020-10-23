@@ -564,8 +564,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> PerformMaintenanceWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to simulate the eviction of spot virtual machine. The
-        /// eviction will occur within 30 minutes of calling the API
+        /// The operation to simulate the eviction of spot virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

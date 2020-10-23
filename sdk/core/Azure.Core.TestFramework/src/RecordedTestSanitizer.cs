@@ -15,6 +15,13 @@ namespace Azure.Core.TestFramework
         public const string SanitizeValue = "Sanitized";
         public List<string> JsonPathSanitizers { get; } = new List<string>();
 
+        /// <summary>
+        /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
+        //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.
+        //  this property will be removed in the future.
+        /// </summary>
+        public bool DoNotConvertJsonDateTokens { get; set; }
+
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
         public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
@@ -41,7 +48,23 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
-                var jsonO = JObject.Parse(body);
+                var settings = new JsonSerializerSettings
+                {
+                    DateParseHandling = DateParseHandling.None
+                };
+
+                JToken jsonO;
+                // Prevent default behavior where JSON.NET will convert DateTimeOffset
+                // into a DateTime.
+                if (DoNotConvertJsonDateTokens)
+                {
+                    jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
+                }
+                else
+                {
+                    jsonO = JToken.Parse(body);
+                }
+
                 foreach (string jsonPath in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
@@ -49,7 +72,7 @@ namespace Azure.Core.TestFramework
                         token.Replace(JToken.FromObject(SanitizeValue));
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO);
+                return JsonConvert.SerializeObject(jsonO, settings);
             }
             catch
             {
@@ -93,7 +116,10 @@ namespace Azure.Core.TestFramework
 
             SanitizeHeaders(entry.Response.Headers);
 
-            SanitizeBody(entry.Response);
+            if (entry.RequestMethod != RequestMethod.Head)
+            {
+                SanitizeBody(entry.Response);
+            }
         }
 
         public virtual void Sanitize(RecordSession session)

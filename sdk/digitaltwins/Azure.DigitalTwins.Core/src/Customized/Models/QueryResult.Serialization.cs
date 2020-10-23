@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core
             string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("items"))
+                if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

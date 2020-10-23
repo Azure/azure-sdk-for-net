@@ -15,6 +15,7 @@
 *.cs text diff=csharp
 *.csproj text=auto
 *.sln text=auto eol=crlf
+*.sh text=auto eol=lf
 
 # Automatically collapse Track 2 test recordings in github PRs
 **/SessionRecords/**/*.json linguist-generated=true

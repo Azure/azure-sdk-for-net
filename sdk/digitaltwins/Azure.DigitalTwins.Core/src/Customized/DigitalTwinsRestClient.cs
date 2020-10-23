@@ -15,12 +15,12 @@ namespace Azure.DigitalTwins.Core
     // objects for json inputs/return values
     internal partial class DigitalTwinsRestClient
     {
-        private const string IfMatchHeaderKey = "If-Match";
+        private const string DateTimeOffsetFormat = "MM/dd/yy H:mm:ss zzz";
 
-        internal HttpMessage CreateAddRequest(string id, string twin)
+        internal HttpMessage CreateAddRequest(string id, string twin, DigitalTwinsAddOptions digitalTwinsAddOptions)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
@@ -28,12 +28,23 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            request.Content = new StringRequestContent(twin);
+            if (digitalTwinsAddOptions?.Traceparent != null)
+            {
+                request.Headers.Add("traceparent", digitalTwinsAddOptions.Traceparent);
+            }
+            if (digitalTwinsAddOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", digitalTwinsAddOptions.Tracestate);
+            }
+            request.Headers.Add("If-None-Match", "*");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            var content = new StringRequestContent(twin);
+            request.Content = content;
             return message;
         }
 
-        internal async Task<Response<string>> AddAsync(string id, string twin, CancellationToken cancellationToken = default)
+        internal async Task<Response<string>> AddAsync(string id, string twin, DigitalTwinsAddOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -48,7 +59,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddRequest(id, twin);
+                using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -74,7 +85,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> Add(string id, string twin, CancellationToken cancellationToken = default)
+        internal Response<string> Add(string id, string twin, DigitalTwinsAddOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -89,7 +100,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddRequest(id, twin);
+                using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -115,7 +126,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+        internal async Task<Response<string>> GetByIdAsync(string id, DigitalTwinsGetByIdOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -126,7 +137,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetByIdRequest(id);
+                using HttpMessage message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -148,7 +159,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> GetById(string id, CancellationToken cancellationToken = default)
+        internal Response<string> GetById(string id, DigitalTwinsGetByIdOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -159,7 +170,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetByIdRequest(id);
+                using HttpMessage message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -181,7 +192,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> UpdateAsync(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateAsync(
+            string id,
+            string patchDocument,
+            DigitalTwinsUpdateOptions digitalTwinsUpdateOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -196,19 +211,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(id, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -221,7 +230,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> Update(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal Response Update(
+            string id,
+            string patchDocument,
+            DigitalTwinsUpdateOptions digitalTwinsUpdateOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -236,19 +249,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(id, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -261,7 +268,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> GetRelationshipByIdAsync(string id, string relationshipId, CancellationToken cancellationToken = default)
+        internal async Task<Response<string>> GetRelationshipByIdAsync(
+            string id,
+            string relationshipId,
+            DigitalTwinsGetRelationshipByIdOptions digitalTwinsGetRelationshipByIdOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -276,7 +287,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByIdRequest(id, relationshipId);
+                using HttpMessage message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -298,7 +309,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> GetRelationshipById(string id, string relationshipId, CancellationToken cancellationToken = default)
+        internal Response<string> GetRelationshipById(
+            string id,
+            string relationshipId,
+            DigitalTwinsGetRelationshipByIdOptions digitalTwinsGetRelationshipByIdOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -313,7 +328,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByIdRequest(id, relationshipId);
+                using HttpMessage message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -335,7 +350,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> AddRelationshipAsync(string id, string relationshipId, string relationship = null, CancellationToken cancellationToken = default)
+        internal async Task<Response<string>> AddRelationshipAsync(
+            string id,
+            string relationshipId,
+            string relationship,
+            DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -350,7 +370,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddRelationshipRequest(id, relationshipId, relationship);
+                using HttpMessage message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -375,7 +395,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> AddRelationship(string id, string relationshipId, string relationship = null, CancellationToken cancellationToken = default)
+        internal Response<string> AddRelationship(
+            string id,
+            string relationshipId,
+            string relationship,
+            DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -390,7 +415,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddRelationshipRequest(id, relationshipId, relationship);
+                using HttpMessage message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -415,7 +440,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response> UpdateRelationshipAsync(string id, string relationshipId, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateRelationshipAsync(
+            string id,
+            string relationshipId,
+            string patchDocument,
+            DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -430,7 +460,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 return message.Response.Status switch
                 {
@@ -445,7 +475,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response UpdateRelationship(string id, string relationshipId, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal Response UpdateRelationship(
+            string id,
+            string relationshipId,
+            string patchDocument,
+            DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -460,7 +495,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
                 _pipeline.Send(message, cancellationToken);
                 return message.Response.Status switch
                 {
@@ -475,7 +510,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> GetComponentAsync(string id, string componentPath, CancellationToken cancellationToken = default)
+        internal async Task<Response<string>> GetComponentAsync(
+            string id,
+            string componentPath,
+            DigitalTwinsGetComponentOptions digitalTwinsGetComponentOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -490,7 +529,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetComponentRequest(id, componentPath);
+                using HttpMessage message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -512,7 +551,11 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> GetComponent(string id, string componentPath, CancellationToken cancellationToken = default)
+        internal Response<string> GetComponent(
+            string id,
+            string componentPath,
+            DigitalTwinsGetComponentOptions digitalTwinsGetComponentOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -527,7 +570,7 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetComponentRequest(id, componentPath);
+                using HttpMessage message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -549,7 +592,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> UpdateComponentAsync(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateComponentAsync(
+            string id,
+            string componentPath,
+            string patchDocument,
+            DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -564,19 +612,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -589,7 +631,12 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> UpdateComponent(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal Response UpdateComponent(
+            string id,
+            string componentPath,
+            string patchDocument,
+            DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -604,19 +651,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, ifMatch);
+                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -629,15 +670,20 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response> SendTelemetryAsync(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> SendTelemetryAsync(
+            string id,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (dtId == null)
+            if (messageId == null)
             {
-                throw new ArgumentNullException(nameof(dtId));
+                throw new ArgumentNullException(nameof(messageId));
             }
             if (telemetry == null)
             {
@@ -648,12 +694,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, dtId, telemetry, dtTimestamp);
+                using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -665,15 +712,20 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response SendTelemetry(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal Response SendTelemetry(
+            string id,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (dtId == null)
+            if (messageId == null)
             {
-                throw new ArgumentNullException(nameof(dtId));
+                throw new ArgumentNullException(nameof(messageId));
             }
             if (telemetry == null)
             {
@@ -684,12 +736,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, dtId, telemetry, dtTimestamp);
+                using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -701,7 +754,13 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> SendComponentTelemetryAsync(
+            string id,
+            string componentPath,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -711,9 +770,9 @@ namespace Azure.DigitalTwins.Core
             {
                 throw new ArgumentNullException(nameof(componentPath));
             }
-            if (dtId == null)
+            if (messageId == null)
             {
-                throw new ArgumentNullException(nameof(dtId));
+                throw new ArgumentNullException(nameof(messageId));
             }
             if (telemetry == null)
             {
@@ -724,12 +783,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, dtId, telemetry, dtTimestamp);
+                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -741,7 +801,13 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response SendComponentTelemetry(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal Response SendComponentTelemetry(
+            string id,
+            string componentPath,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -751,9 +817,9 @@ namespace Azure.DigitalTwins.Core
             {
                 throw new ArgumentNullException(nameof(componentPath));
             }
-            if (dtId == null)
+            if (messageId == null)
             {
-                throw new ArgumentNullException(nameof(dtId));
+                throw new ArgumentNullException(nameof(messageId));
             }
             if (telemetry == null)
             {
@@ -764,12 +830,13 @@ namespace Azure.DigitalTwins.Core
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, dtId, telemetry, dtTimestamp);
+                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -781,30 +848,46 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string id, string patchDocument, string ifMatch = null)
+        private HttpMessage CreateUpdateRequest(
+            string id,
+            string patchDocument,
+            DigitalTwinsUpdateOptions digitalTwinsUpdateOptions)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
-            if (ifMatch != null)
-            {
-                request.Headers.Add(IfMatchHeaderKey, ifMatch);
-            }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            if (digitalTwinsUpdateOptions?.Traceparent != null)
+            {
+                request.Headers.Add("traceparent", digitalTwinsUpdateOptions.Traceparent);
+            }
+            if (digitalTwinsUpdateOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", digitalTwinsUpdateOptions.Tracestate);
+            }
+            if (digitalTwinsUpdateOptions?.IfMatch != null)
+            {
+                request.Headers.Add("If-Match", digitalTwinsUpdateOptions.IfMatch);
+            }
+            request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
             request.Content = new StringRequestContent(patchDocument);
             return message;
         }
 
-        private HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, string relationship)
+        private HttpMessage CreateAddRelationshipRequest(
+            string id,
+            string relationshipId,
+            string relationship,
+            DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
@@ -814,18 +897,29 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            if (relationship != null)
+            if (digitalTwinsAddRelationshipOptions?.Traceparent != null)
             {
-                request.Content = new StringRequestContent(relationship);
+                request.Headers.Add("traceparent", digitalTwinsAddRelationshipOptions.Traceparent);
             }
+            if (digitalTwinsAddRelationshipOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.Tracestate);
+            }
+            request.Headers.Add("If-None-Match", "*");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            request.Content = new StringRequestContent(relationship);
             return message;
         }
 
-        private HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, string patchDocument, string ifMatch = null)
+        private HttpMessage CreateUpdateRelationshipRequest(
+            string id,
+            string relationshipId,
+            string patchDocument,
+            DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
@@ -835,22 +929,32 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
-            if (patchDocument != null)
+            if (digitalTwinsUpdateRelationshipOptions?.Traceparent != null)
             {
-                request.Content = new StringRequestContent(patchDocument);
+                request.Headers.Add("traceparent", digitalTwinsUpdateRelationshipOptions.Traceparent);
             }
-            if (ifMatch != null)
+            if (digitalTwinsUpdateRelationshipOptions?.Tracestate != null)
             {
-                request.Headers.Add(IfMatchHeaderKey, ifMatch);
+                request.Headers.Add("tracestate", digitalTwinsUpdateRelationshipOptions.Tracestate);
             }
+            if (digitalTwinsUpdateRelationshipOptions?.IfMatch != null)
+            {
+                request.Headers.Add("If-Match", digitalTwinsUpdateRelationshipOptions.IfMatch);
+            }
+            request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
+            request.Content = new StringRequestContent(patchDocument);
             return message;
         }
 
-        private HttpMessage CreateUpdateComponentRequest(string id, string componentPath, string patchDocument, string ifMatch = null)
+        private HttpMessage CreateUpdateComponentRequest(
+            string id,
+            string componentPath,
+            string patchDocument,
+            DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
@@ -860,19 +964,29 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
-            if (ifMatch != null)
+            if (digitalTwinsUpdateComponentOptions?.Traceparent != null)
             {
-                request.Headers.Add(IfMatchHeaderKey, ifMatch);
+                request.Headers.Add("traceparent", digitalTwinsUpdateComponentOptions.Traceparent);
             }
-            if (patchDocument != null)
+            if (digitalTwinsUpdateComponentOptions?.Tracestate != null)
             {
-                request.Content = new StringRequestContent(patchDocument);
+                request.Headers.Add("tracestate", digitalTwinsUpdateComponentOptions.Tracestate);
             }
+            if (digitalTwinsUpdateComponentOptions?.IfMatch != null)
+            {
+                request.Headers.Add("If-Match", digitalTwinsUpdateComponentOptions.IfMatch);
+            }
+            request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
+            request.Content = new StringRequestContent(patchDocument);
             return message;
         }
 
-        private HttpMessage CreateSendTelemetryRequest(string id, string dtId, string telemetry, string dtTimestamp)
+        private HttpMessage CreateSendTelemetryRequest(
+            string id,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -884,20 +998,31 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("dt-id", dtId);
-            if (dtTimestamp != null)
+            if (digitalTwinsSendTelemetryOptions?.Traceparent != null)
             {
-                request.Headers.Add("dt-timestamp", dtTimestamp);
+                request.Headers.Add("traceparent", digitalTwinsSendTelemetryOptions.Traceparent);
+            }
+            if (digitalTwinsSendTelemetryOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", digitalTwinsSendTelemetryOptions.Tracestate);
+            }
+            request.Headers.Add("Message-Id", messageId);
+            if (digitalTwinsSendTelemetryOptions?.TimeStamp != null)
+            {
+                request.Headers.Add("Telemetry-Source-Time", TypeFormatters.ToString(digitalTwinsSendTelemetryOptions.TimeStamp, DateTimeOffsetFormat));
             }
             request.Headers.Add("Content-Type", "application/json");
-            if (telemetry != null)
-            {
-                request.Content = new StringRequestContent(telemetry);
-            }
+            request.Headers.Add("Accept", "application/json");
+            request.Content = new StringRequestContent(telemetry);
             return message;
         }
 
-        private HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string dtId, string telemetry, string dtTimestamp)
+        private HttpMessage CreateSendComponentTelemetryRequest(
+            string id,
+            string componentPath,
+            string messageId,
+            string telemetry,
+            DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -911,20 +1036,27 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("dt-id", dtId);
-            if (dtTimestamp != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.Traceparent != null)
             {
-                request.Headers.Add("dt-timestamp", dtTimestamp);
+                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.Traceparent);
+            }
+            if (digitalTwinsSendComponentTelemetryOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.Tracestate);
+            }
+            request.Headers.Add("Message-Id", messageId);
+            if (digitalTwinsSendComponentTelemetryOptions?.TimeStamp != null)
+            {
+                request.Headers.Add("Telemetry-Source-Time", TypeFormatters.ToString(digitalTwinsSendComponentTelemetryOptions.TimeStamp, DateTimeOffsetFormat));
             }
             request.Headers.Add("Content-Type", "application/json");
-            if (telemetry != null)
-            {
-                request.Content = new StringRequestContent(telemetry);
-            }
+            request.Headers.Add("Accept", "application/json");
+            request.Content = new StringRequestContent(telemetry);
             return message;
         }
 
         #region null overrides
+
         // The following methods are only declared so that autorest does not create these functions in the generated code.
         // For methods that we need to override, when the parameter list is the same, autorest knows not to generate them again.
         // When the parameter list changes, autorest generates the methods again.
@@ -934,43 +1066,44 @@ namespace Azure.DigitalTwins.Core
 #pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
-        private object AddAsync(string id, object twin, CancellationToken cancellationToken = default) => null;
+        private object AddAsync(string id, object twin, DigitalTwinsAddOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response<object> Add(string id, object twin, CancellationToken cancellationToken = default) => null;
+        private Response<object> Add(string id, object twin, DigitalTwinsAddOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response>. Changing to object to allow returning null.
-        private object UpdateAsync(string id, IEnumerable<object> patchDocument, string ifMatch = null, CancellationToken cancellationToken = default) => null;
+        private object UpdateAsync(string id, IEnumerable<object> patchDocument, DigitalTwinsUpdateOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response Update(string id, IEnumerable<object> patchDocument, string ifMatch = null, CancellationToken cancellationToken = default) => null;
+        private Response Update(string id, IEnumerable<object> patchDocument, DigitalTwinsUpdateOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
-        private object AddRelationshipAsync(string id, string relationshipId, object relationship = null, CancellationToken cancellationToken = default) => null;
+        private object AddRelationshipAsync(string id, string relationshipId, object relationship = null, DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response<object> AddRelationship(string id, string relationshipId, object relationship = null, CancellationToken cancellationToken = default) => null;
-
-        // Original return type is Task<Response>. Changing to object to allow returning null.
-        private object UpdateRelationshipAsync(string id, string relationshipId, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
-
-        private Response UpdateRelationship(string id, string relationshipId, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
+        private Response<object> AddRelationship(string id, string relationshipId, object relationship = null, DigitalTwinsAddRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response>. Changing to object to allow returning null.
-        private object UpdateComponentAsync(string id, string componentPath, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
+        private Task<Response> UpdateRelationshipAsync(string id, string relationshipId, IEnumerable<object> patchDocument, DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response UpdateComponent(string id, string componentPath, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
-
-        // Original return type is Task<Response>. Changing to object to allow returning null.
-        private object SendTelemetryAsync(string id, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
-
-        private Response SendTelemetry(string id, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+        private Response UpdateRelationship(string id, string relationshipId, IEnumerable<object> patchDocument, DigitalTwinsUpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response>. Changing to object to allow returning null.
-        private Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+        private Task<Response> UpdateComponentAsync(string id, string componentPath, IEnumerable<object> patchDocument, DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response SendComponentTelemetry(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+        private Response UpdateComponent(string id, string componentPath, IEnumerable<object> patchDocument, DigitalTwinsUpdateComponentOptions digitalTwinsUpdateComponentOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private HttpMessage CreateAddRequest(string id, object twin) => null;
+        // Original return type is Task<Response>. Changing to object to allow returning null.
+        private object SendTelemetryAsync(string id, string dtId, object telemetry, string dtTimestamp = null, DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private Response SendTelemetry(string id, string dtId, object telemetry, string dtTimestamp = null, DigitalTwinsSendTelemetryOptions digitalTwinsSendTelemetryOptions = null, CancellationToken cancellationToken = default) => null;
+
+        // Original return type is Task<Response>. Changing to object to allow returning null.
+        private Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private Response SendComponentTelemetry(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, DigitalTwinsSendComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private HttpMessage CreateAddRequest(string id, object twin, DigitalTwinsAddOptions digitalTwinsAddOptions = null) => null;
 
 #pragma warning restore CA1801, IDE0051, IDE0060 // Remove unused parameter
-        #endregion
+
+        #endregion null overrides
     }
 }

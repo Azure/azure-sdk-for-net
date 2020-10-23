@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -28,7 +29,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
+        public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
             if (apiVersion == null)
@@ -52,18 +53,26 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/eventroutes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesListOptions?.MaxItemCount != null)
+            if (eventRoutesListOptions?.Traceparent != null)
             {
-                request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
+                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
             }
+            if (eventRoutesListOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+            }
+            if (eventRoutesListOptions?.MaxItemsPerPage != null)
+            {
+                request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK.
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +97,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK.
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,7 +119,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string id)
+        internal HttpMessage CreateGetByIdRequest(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -122,26 +130,37 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            if (eventRoutesGetByIdOptions?.Traceparent != null)
+            {
+                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.Traceparent);
+            }
+            if (eventRoutesGetByIdOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.Tracestate);
+            }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary>
         /// Retrieves an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 404 (Not Found): There is no event route with the provided id.
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * EventRouteNotFound - The event route was not found.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
+        /// <param name="eventRoutesGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<EventRoute>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<EventRoute>> GetByIdAsync(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetByIdRequest(id);
+            using var message = CreateGetByIdRequest(id, eventRoutesGetByIdOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,20 +179,22 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 404 (Not Found): There is no event route with the provided id.
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * EventRouteNotFound - The event route was not found.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
+        /// <param name="eventRoutesGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<EventRoute> GetById(string id, CancellationToken cancellationToken = default)
+        public Response<EventRoute> GetById(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetByIdRequest(id);
+            using var message = CreateGetByIdRequest(id, eventRoutesGetByIdOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -189,7 +210,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRequest(string id, EventRoute eventRoute)
+        internal HttpMessage CreateAddRequest(string id, EventRoute eventRoute, EventRoutesAddOptions eventRoutesAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,7 +221,16 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            if (eventRoutesAddOptions?.Traceparent != null)
+            {
+                request.Headers.Add("traceparent", eventRoutesAddOptions.Traceparent);
+            }
+            if (eventRoutesAddOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", eventRoutesAddOptions.Tracestate);
+            }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (eventRoute != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -213,21 +243,26 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Adds or replaces an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * EventRouteEndpointInvalid - The endpoint provided does not exist or is not active.
+        ///   * EventRouteFilterInvalid - The event route filter is invalid.
+        ///   * EventRouteIdInvalid - The event route id is invalid.
+        ///   * LimitExceeded - The maximum number of event routes allowed has been reached.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="eventRoute"> The event route data. </param>
+        /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> AddAsync(string id, EventRoute eventRoute = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AddAsync(string id, EventRoute eventRoute = null, EventRoutesAddOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateAddRequest(id, eventRoute);
+            using var message = CreateAddRequest(id, eventRoute, eventRoutesAddOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -241,21 +276,26 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Adds or replaces an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * EventRouteEndpointInvalid - The endpoint provided does not exist or is not active.
+        ///   * EventRouteFilterInvalid - The event route filter is invalid.
+        ///   * EventRouteIdInvalid - The event route id is invalid.
+        ///   * LimitExceeded - The maximum number of event routes allowed has been reached.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="eventRoute"> The event route data. </param>
+        /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Add(string id, EventRoute eventRoute = null, CancellationToken cancellationToken = default)
+        public Response Add(string id, EventRoute eventRoute = null, EventRoutesAddOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateAddRequest(id, eventRoute);
+            using var message = CreateAddRequest(id, eventRoute, eventRoutesAddOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -266,7 +306,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string id)
+        internal HttpMessage CreateDeleteRequest(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -277,26 +317,37 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            if (eventRoutesDeleteOptions?.Traceparent != null)
+            {
+                request.Headers.Add("traceparent", eventRoutesDeleteOptions.Traceparent);
+            }
+            if (eventRoutesDeleteOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", eventRoutesDeleteOptions.Tracestate);
+            }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary>
         /// Deletes an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 404 (Not Found): There is no event route with the provided id.
+        /// * 204 No Content
+        /// * 404 Not Found
+        ///   * EventRouteNotFound - The event route was not found.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
+        /// <param name="eventRoutesDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteRequest(id);
+            using var message = CreateDeleteRequest(id, eventRoutesDeleteOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -310,20 +361,22 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Deletes an event route.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 404 (Not Found): There is no event route with the provided id.
+        /// * 204 No Content
+        /// * 404 Not Found
+        ///   * EventRouteNotFound - The event route was not found.
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
+        /// <param name="eventRoutesDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Delete(string id, CancellationToken cancellationToken = default)
+        public Response Delete(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteRequest(id);
+            using var message = CreateDeleteRequest(id, eventRoutesDeleteOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -343,18 +396,26 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (eventRoutesListOptions?.MaxItemCount != null)
+            if (eventRoutesListOptions?.Traceparent != null)
             {
-                request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
+                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
             }
+            if (eventRoutesListOptions?.Tracestate != null)
+            {
+                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+            }
+            if (eventRoutesListOptions?.MaxItemsPerPage != null)
+            {
+                request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
@@ -386,8 +447,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>

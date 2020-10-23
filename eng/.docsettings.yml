@@ -123,9 +123,9 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#5499']
   - ['sdk/core/Azure.Core/README.md', '#5499']
   - ['sdk/core/Azure.Core.Experimental/README.md', '#5499']
-  - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
@@ -142,6 +142,8 @@ known_content_issues:
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
@@ -155,6 +157,9 @@ known_content_issues:
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
   - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
   - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
+  - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

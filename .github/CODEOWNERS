@@ -20,24 +20,30 @@
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
-# PRLabel: %AzConfig
+# PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
+
 # PRLabel: %Batch
-/sdk/batch/                                     @bgklein @xingwu1 
+/sdk/batch/                                     @paterasMSFT @dpwatrous
+
+# PRLabel: %Communication
+/sdk/communication/                             @RezaJooyandeh @DominikMe @Azure/azure-sdk-communication-code-reviewers
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
@@ -48,6 +54,9 @@
 # PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
 
+# PRLabel: %Cognitive - Metrics Advisor
+/sdk/metricsadvisor/                            @kinelski
+
 # PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
@@ -57,10 +66,14 @@
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
 # PRLabel: %Storage
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/                                   @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
+
+# PRLabel: %EngSys
+/sdk/template/                                  @Azure/azure-sdk-eng
 
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                             @annelo-msft @maririos
@@ -68,14 +81,18 @@
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
+# PRLabel: %Monitor - Exporter
+/sdk/monitor/OpenTelemetry.*/                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @allenjzhang
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
 
 # Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
 # Update AutoRest C#
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja
@@ -84,6 +101,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @allenjzhang
+/eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

@@ -1,8 +1,30 @@
 # Release History
 
-## 0.1.0-preview.4 (Unreleased)
+## 0.1.0-preview.7 (Unreleased)
 
 
+## 0.1.0-preview.6 (2020-10-06)
+
+### Breaking Changes
+- `BinaryData`: Change return type of `FromObjectAsync` from `Task<T>` to `ValueTask<T>`
+
+## 0.1.0-preview.5 (2020-09-03)
+
+### Added
+- `JsonPatchDocument` type to represent JSON Path document.
+- `BinaryData`: FromString method.
+- `BinaryData`: FromBytes method taking ReadOnlySpan.
+- `BinaryData`: constructor taking ReadOnlyMemory.
+
+### Breaking Changes
+- `BinaryData`: Renamed `Serialize` to `FromObject`.
+- `BinaryData`: Renamed `Deserialize` to `ToObject`.
+- `BinaryData`: Renamed `FromMemory` to `FromBytes`.
+
+## 0.1.0-preview.4 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 ## 0.1.0-preview.3 (2020-08-06)
 
 ### Breaking Changes

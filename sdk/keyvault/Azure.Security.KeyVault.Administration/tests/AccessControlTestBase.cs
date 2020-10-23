@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal KeyVaultAccessControlClient client;
 #pragma warning restore IDE1006 // Naming Styles
 
-        internal const string RoleName = "Azure Key Vault Managed HSM Crypto User";
+        internal const string RoleName = "Managed HSM Crypto User";
         internal readonly Guid _roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
         internal string _roleDefinitionId;
         internal string _objectId;
@@ -39,24 +39,20 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyVaultAccessControlClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+                    InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
         }
 
         internal KeyClient GetKeyClient(TestRecording recording = null)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new KeyClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
+                    InstrumentClientOptions(new KeyClientOptions())));
         }
 
         [SetUp]
@@ -102,7 +98,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
         }
 
-        protected void RegisterForCleanup(RoleAssignment assignment)
+        protected void RegisterForCleanup(KeyVaultRoleAssignment assignment)
         {
             _roleAssignmentsToDelete.Enqueue((assignment.Name, assignment.Properties.Scope));
         }

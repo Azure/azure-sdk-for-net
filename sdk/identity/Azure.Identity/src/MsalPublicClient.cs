@@ -3,18 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
-        private readonly string _redirectUrl;
+        internal string RedirectUrl { get; }
 
         protected MsalPublicClient()
         {
@@ -23,10 +22,10 @@ namespace Azure.Identity
         public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
-            _redirectUrl = redirectUrl;
+            RedirectUrl = redirectUrl;
         }
 
-        protected override Task<IPublicClientApplication> CreateClientAsync()
+        protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
             var authorityHost = Pipeline.AuthorityHost;
 
@@ -34,54 +33,58 @@ namespace Azure.Identity
 
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(ClientId).WithAuthority(authorityUri).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
 
-            if (!string.IsNullOrEmpty(_redirectUrl))
+            if (!string.IsNullOrEmpty(RedirectUrl))
             {
-                pubAppBuilder = pubAppBuilder.WithRedirectUri(_redirectUrl);
+                pubAppBuilder = pubAppBuilder.WithRedirectUri(RedirectUrl);
             }
 
-            return Task.FromResult(pubAppBuilder.Build());
+            return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());
         }
 
-        public virtual async Task<IEnumerable<IAccount>> GetAccountsAsync()
+        public virtual async ValueTask<List<IAccount>> GetAccountsAsync(bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(true).ConfigureAwait(false);
-
-            return await Client.GetAccountsAsync().ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await GetAccountsAsync(client, async).ConfigureAwait(false);
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
-
-            return await Client.AcquireTokenSilent(scopes, account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenSilent(scopes, account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
-
-            return await Client.AcquireTokenInteractive(scopes).WithPrompt(prompt).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenInteractive(scopes).WithPrompt(prompt).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
-
-            return await Client.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
-
-            return await Client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenByRefreshToken(string[] scopes, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenByRefreshToken(string[] scopes, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken).WithAuthority(azureCloudInstance, tenant).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+        }
 
-            return await ((IByRefreshToken)Client).AcquireTokenByRefreshToken(scopes, refreshToken).WithAuthority(azureCloudInstance, tenant).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+        private static async ValueTask<List<IAccount>> GetAccountsAsync(IPublicClientApplication client, bool async)
+        {
+            var result = async
+                ? await client.GetAccountsAsync().ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                : client.GetAccountsAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            return result.ToList();
         }
     }
 }

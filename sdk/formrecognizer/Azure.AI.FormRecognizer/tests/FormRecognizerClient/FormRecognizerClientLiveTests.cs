@@ -25,7 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -61,6 +62,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Greater(formPage.Lines.Count, 0);
             Assert.AreEqual("Contoso", formPage.Lines[0].Text);
         }
+
+        #region StartRecognizeContent
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
@@ -309,6 +312,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(0, blankPage.Lines.Count);
             Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
         [Test]
@@ -378,6 +382,50 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
+        [Test]
+        [Ignore("Need to get an approved file to test")]
+        public async Task StartRecognizeContentWithSelectionMarks()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            var formPage = operation.Value.Single();
+
+            Assert.AreEqual(5, formPage.SelectionMarks.Count);
+
+            var selectionMarks = formPage.SelectionMarks.ToList();
+
+            var expectedState = new string[5]
+            {
+                "Selected",
+                "Selected",
+                "Unselected",
+                "Unselected",
+                "Unselected",
+            };
+
+            for (var i = 0; i < selectionMarks.Count; i++)
+            {
+                Assert.AreEqual(expectedState[i], selectionMarks[i].State.ToString());
+                Assert.AreEqual(expectedState[i], selectionMarks[i].Text);
+            }
+
+            ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
+        }
+
+        #endregion
+
+        #region StartRecognizeReceipts
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis of receipts.
@@ -412,11 +460,16 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.NotNull(form);
 
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
             Assert.AreEqual("prebuilt:receipt", form.FormType);
-
             Assert.AreEqual(1, form.PageRange.FirstPageNumber);
             Assert.AreEqual(1, form.PageRange.LastPageNumber);
 
@@ -517,6 +570,12 @@ namespace Azure.AI.FormRecognizer.Tests
             var form = operation.Value.Single();
 
             Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
@@ -630,8 +689,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidatePrebuiltForm(
+                    recognizedForm,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -666,8 +728,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var blankForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(blankForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidatePrebuiltForm(
+                blankForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
@@ -701,8 +766,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidatePrebuiltForm(
+                    recognizedForm,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -754,6 +822,309 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
+        #endregion
+
+        #region StartRecognizeBusinessCards
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "File not on Github") ]
+        public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeBusinessCardsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
+                operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the business card. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:businesscard", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("ContactNames"));
+            Assert.True(form.Fields.ContainsKey("JobTitles"));
+            Assert.True(form.Fields.ContainsKey("Departments"));
+            Assert.True(form.Fields.ContainsKey("Emails"));
+            Assert.True(form.Fields.ContainsKey("Websites"));
+            Assert.True(form.Fields.ContainsKey("MobilePhones"));
+            Assert.True(form.Fields.ContainsKey("OtherPhones"));
+            Assert.True(form.Fields.ContainsKey("Faxes"));
+            Assert.True(form.Fields.ContainsKey("Addresses"));
+            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+
+            var contactNames = form.Fields["ContactNames"].Value.AsList();
+            Assert.AreEqual(1, contactNames.Count);
+            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+
+            var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
+
+            Assert.True(contactNamesDict.ContainsKey("FirstName"));
+            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+
+            Assert.True(contactNamesDict.ContainsKey("LastName"));
+            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+
+            var jobTitles = form.Fields["JobTitles"].Value.AsList();
+            Assert.AreEqual(1, jobTitles.Count);
+            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+
+            var departments = form.Fields["Departments"].Value.AsList();
+            Assert.AreEqual(1, departments.Count);
+            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+
+            var emails = form.Fields["Emails"].Value.AsList();
+            Assert.AreEqual(1, emails.Count);
+            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+
+            var websites = form.Fields["Websites"].Value.AsList();
+            Assert.AreEqual(1, websites.Count);
+            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+
+            // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
+            var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
+            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+
+            var otherPhones = form.Fields["OtherPhones"].Value.AsList();
+            Assert.AreEqual(1, otherPhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+
+            var faxes = form.Fields["Faxes"].Value.AsList();
+            Assert.AreEqual(1, faxes.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+
+            var addresses = form.Fields["Addresses"].Value.AsList();
+            Assert.AreEqual(1, addresses.Count);
+            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+
+            var companyNames = form.Fields["CompanyNames"].Value.AsList();
+            Assert.AreEqual(1, companyNames.Count);
+            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "File not on Github")]
+        public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeBusinessCardsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardtPng);
+                operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the business card. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:businesscard", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("ContactNames"));
+            Assert.True(form.Fields.ContainsKey("JobTitles"));
+            Assert.True(form.Fields.ContainsKey("Departments"));
+            Assert.True(form.Fields.ContainsKey("Emails"));
+            Assert.True(form.Fields.ContainsKey("Websites"));
+            Assert.True(form.Fields.ContainsKey("MobilePhones"));
+            Assert.True(form.Fields.ContainsKey("OtherPhones"));
+            Assert.True(form.Fields.ContainsKey("Faxes"));
+            Assert.True(form.Fields.ContainsKey("Addresses"));
+            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+
+            var contactNames = form.Fields["ContactNames"].Value.AsList();
+            Assert.AreEqual(1, contactNames.Count);
+            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
+
+            var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
+
+            Assert.True(contactNamesDict.ContainsKey("FirstName"));
+            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+
+            Assert.True(contactNamesDict.ContainsKey("LastName"));
+            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+
+            var jobTitles = form.Fields["JobTitles"].Value.AsList();
+            Assert.AreEqual(1, jobTitles.Count);
+            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+
+            var departments = form.Fields["Departments"].Value.AsList();
+            Assert.AreEqual(1, departments.Count);
+            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+
+            var emails = form.Fields["Emails"].Value.AsList();
+            Assert.AreEqual(1, emails.Count);
+            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+
+            var websites = form.Fields["Websites"].Value.AsList();
+            Assert.AreEqual(1, websites.Count);
+            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+
+            // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
+            var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
+            Assert.AreEqual(1, mobilePhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+
+            var otherPhones = form.Fields["OtherPhones"].Value.AsList();
+            Assert.AreEqual(1, otherPhones.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+
+            var faxes = form.Fields["Faxes"].Value.AsList();
+            Assert.AreEqual(1, faxes.Count);
+            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+
+            var addresses = form.Fields["Addresses"].Value.AsList();
+            Assert.AreEqual(1, addresses.Count);
+            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+
+            var companyNames = form.Fields["CompanyNames"].Value.AsList();
+            Assert.AreEqual(1, companyNames.Count);
+            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+        }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsIncludeFieldElements()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions() { IncludeFieldElements = true };
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var businessCardsForm = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                businessCardsForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+       }
+
+        [Test]
+        public async Task StartRecognizeBusinessCardsCanParseBlankPage()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions() { IncludeFieldElements = true };
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankForm = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                blankForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
+        [Test]
+        public void StartRecognizeBusinessCardsThrowsForDamagedFile()
+        {
+            var client = CreateFormRecognizerClient();
+
+            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
+
+            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
+            using var stream = new MemoryStream(damagedFile);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream));
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and handle returned errors.
+        /// </summary>
+        [Test]
+        public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateFormRecognizerClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+        }
+
+        #endregion
+
+        #region StartRecognizeCustomForms
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
@@ -792,12 +1163,18 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedForm form = operation.Value.Single();
 
-            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
-            Assert.AreEqual("custom:form", form.FormType);
+            Assert.IsNotEmpty(form.FormType);
+            Assert.IsTrue(form.FormTypeConfidence.HasValue);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -814,13 +1191,50 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("Need to get an approved file to test")]
+        public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeCustomFormsOptions { IncludeFieldElements = includeFieldElements };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.SelectionMarks);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+            RecognizedForm form = operation.Value.Single();
+
+            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            // Testing that we shuffle things around correctly so checking only once per property.
+            Assert.IsNotEmpty(form.FormType);
+            Assert.IsNotNull(form.Fields);
+            var name = "Checkbox_Paramedic Subscription_Amount Enclosed";
+            Assert.IsNotNull(form.Fields[name]);
+            Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
+            Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, useMultipageFiles: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -840,8 +1254,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 2);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 2,
+                isComposedModel: false);
 
             // Check some values to make sure that fields from both pages are being populated.
 
@@ -884,8 +1303,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
 
             var blankPage = recognizedForm.Pages.Single();
 
@@ -922,8 +1346,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 3);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 3,
+                isComposedModel: false);
 
             for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
@@ -1008,12 +1437,17 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedForm form = operation.Value.Single();
 
-            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithNoLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             //testing that we shuffle things around correctly so checking only once per property
 
             Assert.AreEqual("form-0", form.FormType);
+            Assert.IsFalse(form.FormTypeConfidence.HasValue);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -1025,7 +1459,10 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(form.Fields[name]);
             Assert.IsNotNull(form.Fields[name].LabelData.Text);
             Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.ValueType);
-            Assert.AreEqual("Hero Limited", form.Fields[name].LabelData.Text);
+
+            // Disable this verification for now.
+            // Issue https://github.com/Azure/azure-sdk-for-net/issues/15075
+            // Assert.AreEqual("Hero Limited", form.Fields[name].LabelData.Text);
         }
 
         [Test]
@@ -1037,7 +1474,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, useMultipageFiles: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -1062,19 +1499,21 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidateModelWithNoLabelsForm(
+                    recognizedForm,
+                    trainedModel.ModelId,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
+                var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
+                var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
 
-                var sampleField = recognizedForm.Fields["field-2"];
-                var expectedLabelData = formIndex == 0 ? "__Tokens__1" : "Contact:";
-                var expectedValueData = formIndex == 0 ? "Vendor Registration" : "Jamie@southridgevideo.com";
-
-                Assert.IsNotNull(sampleField.LabelData);
-                Assert.AreEqual(expectedLabelData, sampleField.LabelData.Text);
-                Assert.IsNotNull(sampleField.ValueData);
-                Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
+                FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains(expectedLabelData)).FirstOrDefault();
+                Assert.IsNotNull(fieldInPage);
+                Assert.IsNotNull(fieldInPage.ValueData);
+                Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
             }
         }
 
@@ -1097,8 +1536,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var blankForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(blankForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithNoLabelsForm(
+                blankForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
@@ -1142,20 +1585,23 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidateModelWithNoLabelsForm(
+                    recognizedForm,
+                    trainedModel.ModelId,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
                 if (formIndex == 0 || formIndex == 2)
                 {
-                    var sampleField = recognizedForm.Fields["field-0"];
                     var expectedValueData = formIndex == 0 ? "300.00" : "3000.00";
 
-                    Assert.IsNotNull(sampleField.LabelData);
-                    Assert.AreEqual("Subtotal:", sampleField.LabelData.Text);
-                    Assert.IsNotNull(sampleField.ValueData);
-                    Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
+                    FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains("Subtotal:")).FirstOrDefault();
+                    Assert.IsNotNull(fieldInPage);
+                    Assert.IsNotNull(fieldInPage.ValueData);
+                    Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
                 }
             }
 
@@ -1185,8 +1631,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3014" : "2005";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
+
+            Assert.AreEqual("2005", ex.ErrorCode);
 
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
@@ -1197,7 +1643,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -1209,12 +1655,13 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3003" : "2003";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
 
+            Assert.AreEqual("2003", ex.ErrorCode);
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
         }
+
+        #endregion
 
         private void ValidateFormPage(FormPage formPage, bool includeFieldElements, int expectedPageNumber)
         {
@@ -1298,11 +1745,58 @@ namespace Azure.AI.FormRecognizer.Tests
                     }
                 }
             }
+
+            Assert.NotNull(formPage.SelectionMarks);
+
+            foreach (var selectionMark in formPage.SelectionMarks)
+            {
+                Assert.AreEqual(expectedPageNumber, selectionMark.PageNumber);
+                Assert.NotNull(selectionMark.BoundingBox.Points);
+                Assert.AreEqual(4, selectionMark.BoundingBox.Points.Length);
+                Assert.NotNull(selectionMark.Text);
+                Assert.That(selectionMark.Text, Is.EqualTo("Selected").Or.EqualTo("Unselected"));
+                Assert.NotNull(selectionMark.State);
+                Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+            }
+        }
+
+        private void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
+        {
+            Assert.NotNull(recognizedForm.FormType);
+            Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.AreEqual(1.0f, recognizedForm.FormTypeConfidence.Value);
+            Assert.IsNull(recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
+        }
+
+        private void ValidateModelWithNoLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
+        {
+            Assert.NotNull(recognizedForm.FormType);
+            Assert.IsFalse(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.IsNotNull(recognizedForm.ModelId);
+            Assert.AreEqual(modelId, recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
+        }
+
+        private void ValidateModelWithLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber, bool isComposedModel)
+        {
+            Assert.NotNull(recognizedForm.FormType);
+            Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.IsNotNull(recognizedForm.ModelId);
+
+            if (!isComposedModel)
+                Assert.AreEqual(modelId, recognizedForm.ModelId);
+            else
+                Assert.AreNotEqual(modelId, recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
         }
 
         private void ValidateRecognizedForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(recognizedForm.FormType);
             Assert.AreEqual(expectedFirstPageNumber, recognizedForm.PageRange.FirstPageNumber);
             Assert.AreEqual(expectedLastPageNumber, recognizedForm.PageRange.LastPageNumber);
 
