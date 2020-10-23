@@ -136,7 +136,7 @@ namespace Microsoft.Azure.ServiceBus
         /// ConnectionIdleTimeout is applied when a connection recevies no traffic for a certain period of time.
         /// In some situations, underlying transport layer takes really long time to detect a socket error and it may
         /// cause some operations to time out after a long wait. This timeout helps to detect and close an idle connection
-        /// without waiting for the network layer to identify a socket error. But this setting may result in some incrased
+        /// without waiting for the network layer to identify a socket error. But this setting may result in some increased
         /// heartbeat traffic between the client and service.
         /// </summary>
         /// <remarks>Defaults to null</remarks>
