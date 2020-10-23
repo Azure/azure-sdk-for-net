@@ -9,16 +9,16 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// The current status of a detected <see cref="AnomalyIncident"/>.
     /// </summary>
     [CodeGenModel("IncidentPropertyIncidentStatus")]
-    public readonly partial struct IncidentStatus
+    public readonly partial struct AnomalyIncidentStatus
     {
         /// <summary>
         /// The detected <see cref="AnomalyIncident"/> is still active.
         /// </summary>
-        public static IncidentStatus Active { get; } = new IncidentStatus(ActiveValue);
+        public static AnomalyIncidentStatus Active { get; } = new AnomalyIncidentStatus(ActiveValue);
 
         /// <summary>
         /// The detected <see cref="AnomalyIncident"/> has been resolved.
         /// </summary>
-        public static IncidentStatus Resolved { get; } = new IncidentStatus(ResolvedValue);
+        public static AnomalyIncidentStatus Resolved { get; } = new AnomalyIncidentStatus(ResolvedValue);
     }
 }

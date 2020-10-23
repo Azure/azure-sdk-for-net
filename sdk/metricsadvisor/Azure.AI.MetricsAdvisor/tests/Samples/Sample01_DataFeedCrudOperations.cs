@@ -41,10 +41,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 new DataFeedMetric("cost"),
                 new DataFeedMetric("revenue")
             };
-            var dataFeedDimensions = new List<MetricDimension>()
+            var dataFeedDimensions = new List<DataFeedDimension>()
             {
-                new MetricDimension("category"),
-                new MetricDimension("city")
+                new DataFeedDimension("category"),
+                new DataFeedDimension("city")
             };
             var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
             {
@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             #endregion
 
             Console.WriteLine($"Dimension columns:");
-            foreach (MetricDimension dimension in dataFeed.Schema.DimensionColumns)
+            foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)
             {
                 Console.WriteLine($" - {dimension.DimensionName}");
             }

@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string DataFeedId { get; }
 
         /// <summary> dimension list. </summary>
-        public IList<MetricDimension> Dimension { get; }
+        public IList<DataFeedDimension> Dimension { get; }
 
         /// <summary> data feed administrator. </summary>
         public IList<string> Admins { get; }
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedName = dataFeedName;
             GranularityName = granularityName;
             Metrics = metrics.ToList();
-            Dimension = new ChangeTrackingList<MetricDimension>();
+            Dimension = new ChangeTrackingList<DataFeedDimension>();
             DataStartFrom = dataStartFrom;
             RollUpColumns = new ChangeTrackingList<string>();
             Admins = new ChangeTrackingList<string>();
@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="createdTime"> data feed created time. </param>
         /// <param name="actionLinkTemplate"> action link for alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/> or <paramref name="metrics"/> is null. </exception>
-        internal DataFeedDetail(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<MetricDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate)
+        internal DataFeedDetail(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate)
         {
             Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
             Argument.AssertNotNullOrEmpty(metrics, nameof(metrics));
@@ -89,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             GranularityName = granularityName;
             GranularityAmount = granularityAmount;
             Metrics = metrics;
-            Dimension = dimension ?? new ChangeTrackingList<MetricDimension>();
+            Dimension = dimension ?? new ChangeTrackingList<DataFeedDimension>();
             TimestampColumn = timestampColumn;
             DataStartFrom = dataStartFrom;
             StartOffsetInSeconds = startOffsetInSeconds;

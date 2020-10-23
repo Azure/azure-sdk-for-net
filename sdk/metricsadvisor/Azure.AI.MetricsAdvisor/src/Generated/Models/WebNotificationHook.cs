@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The AnomalyResult. </summary>
-    public partial class DataAnomaly
+    /// <summary> The WebhookHookInfo. </summary>
+    public partial class WebNotificationHook : NotificationHook
     {
     }
 }

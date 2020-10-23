@@ -12,17 +12,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// All alerts can be sent through a web hook.
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
-    [CodeGenSuppress(nameof(WebHook), typeof(string), typeof(WebhookHookParameter))]
-    public partial class WebHook : AlertingHook
+    [CodeGenSuppress(nameof(WebNotificationHook), typeof(string), typeof(WebhookHookParameter))]
+    public partial class WebNotificationHook : NotificationHook
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebHook"/> class.
+        /// Initializes a new instance of the <see cref="WebNotificationHook"/> class.
         /// <param name="name">The name to assign to the hook.</param>
         /// <param name="endpoint">The API address to be called when an alert is triggered.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="endpoint"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="endpoint"/> is empty.</exception>
         /// </summary>
-        public WebHook(string name, string endpoint)
+        public WebNotificationHook(string name, string endpoint)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = HookType.Webhook;
         }
 
-        internal WebHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
+        internal WebNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
             HookParameter = hookParameter;
