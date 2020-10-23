@@ -66,7 +66,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Directory Certificate Service's self-signed root CA certificate,
         /// this optional parameter is used only for dual protocol with LDAP
         /// user-mapping volumes.</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string))
+        /// <param name="aesEncryption">If enabled, AES encryption will be
+        /// enabled for SMB communication.</param>
+        /// <param name="ldapSigning">Specifies whether or not the LDAP traffic
+        /// needs to be signed.</param>
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -82,6 +86,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
             KdcIP = kdcIP;
             AdName = adName;
             ServerRootCACertificate = serverRootCACertificate;
+            AesEncryption = aesEncryption;
+            LdapSigning = ldapSigning;
             CustomInit();
         }
 
@@ -188,6 +194,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "serverRootCACertificate")]
         public string ServerRootCACertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled, AES encryption will be enabled for SMB
+        /// communication.
+        /// </summary>
+        [JsonProperty(PropertyName = "aesEncryption")]
+        public bool? AesEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether or not the LDAP traffic needs to be
+        /// signed.
+        /// </summary>
+        [JsonProperty(PropertyName = "ldapSigning")]
+        public bool? LdapSigning { get; set; }
 
         /// <summary>
         /// Validate the object.

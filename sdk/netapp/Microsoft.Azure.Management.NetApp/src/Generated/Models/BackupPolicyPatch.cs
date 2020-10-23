@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// Backup policy Details for create and update
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BackupPolicyPatch
+    public partial class BackupPolicyPatch : IResource
     {
         /// <summary>
         /// Initializes a new instance of the BackupPolicyPatch class.
@@ -35,7 +36,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the BackupPolicyPatch class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="name">Name of backup policy</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        /// <param name="name1">Name of backup policy</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="dailyBackupsToKeep">Daily backups count to
         /// keep</param>
@@ -51,10 +56,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// not</param>
         /// <param name="volumeBackups">A list of volumes assigned to this
         /// policy</param>
-        public BackupPolicyPatch(string location = default(string), string name = default(string), string provisioningState = default(string), int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? yearlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? enabled = default(bool?), IList<VolumeBackups> volumeBackups = default(IList<VolumeBackups>))
+        public BackupPolicyPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string name1 = default(string), string provisioningState = default(string), int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? yearlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? enabled = default(bool?), IList<VolumeBackups> volumeBackups = default(IList<VolumeBackups>))
         {
             Location = location;
+            Id = id;
             Name = name;
+            Type = type;
+            Tags = tags;
+            Name1 = name1;
             ProvisioningState = provisioningState;
             DailyBackupsToKeep = dailyBackupsToKeep;
             WeeklyBackupsToKeep = weeklyBackupsToKeep;
@@ -78,10 +87,34 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Location { get; set; }
 
         /// <summary>
+        /// Gets resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
         /// Gets name of backup policy
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
-        public string Name { get; private set; }
+        public string Name1 { get; private set; }
 
         /// <summary>
         /// Gets azure lifecycle management
