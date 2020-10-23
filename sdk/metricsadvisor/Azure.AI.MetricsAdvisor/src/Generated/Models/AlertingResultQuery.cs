@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         /// <param name="timeMode"> time mode. </param>
-        public AlertingResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, TimeMode timeMode)
+        public AlertingResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, AlertQueryTimeMode timeMode)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -28,6 +28,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> end time. </summary>
         public DateTimeOffset EndTime { get; }
         /// <summary> time mode. </summary>
-        public TimeMode TimeMode { get; }
+        public AlertQueryTimeMode TimeMode { get; }
     }
 }

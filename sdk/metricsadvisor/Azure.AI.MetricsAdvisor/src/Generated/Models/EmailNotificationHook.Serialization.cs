@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class EmailHook : IUtf8JsonSerializable
+    public partial class EmailNotificationHook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static EmailHook DeserializeEmailHook(JsonElement element)
+        internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element)
         {
             EmailHookParameter hookParameter = default;
             HookType hookType = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new EmailHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

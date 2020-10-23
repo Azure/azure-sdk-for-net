@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataAnomaly
+    public partial class DataPointAnomaly
     {
-        internal static DataAnomaly DeserializeDataAnomaly(JsonElement element)
+        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataAnomaly(metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
         }
     }
 }

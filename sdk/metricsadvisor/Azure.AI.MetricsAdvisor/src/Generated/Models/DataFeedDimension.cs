@@ -10,13 +10,13 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The Dimension. </summary>
-    public partial class MetricDimension
+    public partial class DataFeedDimension
     {
 
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of DataFeedDimension. </summary>
         /// <param name="dimensionName"> dimension name. </param>
         /// <param name="dimensionDisplayName"> dimension display name. </param>
-        internal MetricDimension(string dimensionName, string dimensionDisplayName)
+        internal DataFeedDimension(string dimensionName, string dimensionDisplayName)
         {
             DimensionName = dimensionName;
             DimensionDisplayName = dimensionDisplayName;

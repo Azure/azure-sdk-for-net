@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
-            var options = new GetAlertsOptions(startTime, endTime, TimeMode.AnomalyTime)
+            var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
             {
                 TopCount = 5
             };

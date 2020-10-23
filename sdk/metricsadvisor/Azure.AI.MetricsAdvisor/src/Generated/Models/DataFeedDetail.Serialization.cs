@@ -180,7 +180,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedGranularityType granularityName = default;
             Optional<int?> granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
-            Optional<IList<MetricDimension>> dimension = default;
+            Optional<IList<DataFeedDimension>> dimension = default;
             Optional<string> timestampColumn = default;
             DateTimeOffset dataStartFrom = default;
             Optional<long> startOffsetInSeconds = default;
@@ -255,10 +255,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricDimension> array = new List<MetricDimension>();
+                    List<DataFeedDimension> array = new List<DataFeedDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(DataFeedDimension.DeserializeDataFeedDimension(item));
                     }
                     dimension = array;
                     continue;

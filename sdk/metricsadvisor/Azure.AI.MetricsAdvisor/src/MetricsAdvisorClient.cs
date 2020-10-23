@@ -97,13 +97,13 @@ namespace Azure.AI.MetricsAdvisor
         #region Metrics
 
         /// <summary>
-        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
@@ -157,13 +157,13 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the possible values a <see cref="MetricDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
         /// </summary>
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="MetricDimension"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="MetricDimension"/> can assume.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
@@ -793,10 +793,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<DataAnomaly> GetAnomaliesForDetectionConfigurationAsync(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataPointAnomaly> GetAnomaliesForDetectionConfigurationAsync(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
@@ -809,7 +809,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options.SkipCount;
             int? top = options.TopCount;
 
-            async Task<Page<DataAnomaly>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForDetectionConfiguration)}");
                 scope.Start();
@@ -826,7 +826,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            async Task<Page<DataAnomaly>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataPointAnomaly>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForDetectionConfiguration)}");
                 scope.Start();
@@ -852,10 +852,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<DataAnomaly> GetAnomaliesForDetectionConfiguration(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataPointAnomaly> GetAnomaliesForDetectionConfiguration(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
@@ -868,7 +868,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options.SkipCount;
             int? top = options.TopCount;
 
-            Page<DataAnomaly> FirstPageFunc(int? pageSizeHint)
+            Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForDetectionConfiguration)}");
                 scope.Start();
@@ -885,7 +885,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            Page<DataAnomaly> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataPointAnomaly> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForDetectionConfiguration)}");
                 scope.Start();
@@ -911,7 +911,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<AnomalyIncident> GetIncidentsForDetectionConfigurationAsync(string detectionConfigurationId, GetIncidentsForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
@@ -970,7 +970,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<AnomalyIncident> GetIncidentsForDetectionConfiguration(string detectionConfigurationId, GetIncidentsForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
@@ -1423,10 +1423,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="alertId">The unique identifier of the alert.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
-        public virtual AsyncPageable<DataAnomaly> GetAnomaliesForAlertAsync(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataPointAnomaly> GetAnomaliesForAlertAsync(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
@@ -1435,7 +1435,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
 
-            async Task<Page<DataAnomaly>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForAlert)}");
                 scope.Start();
@@ -1452,7 +1452,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            async Task<Page<DataAnomaly>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataPointAnomaly>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForAlert)}");
                 scope.Start();
@@ -1480,10 +1480,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="alertId">The unique identifier of the alert.</param>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataAnomaly"/> instances.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
-        public virtual Pageable<DataAnomaly> GetAnomaliesForAlert(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataPointAnomaly> GetAnomaliesForAlert(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
@@ -1492,7 +1492,7 @@ namespace Azure.AI.MetricsAdvisor
             int? skip = options?.SkipCount;
             int? top = options?.TopCount;
 
-            Page<DataAnomaly> FirstPageFunc(int? pageSizeHint)
+            Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForAlert)}");
                 scope.Start();
@@ -1509,7 +1509,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
 
-            Page<DataAnomaly> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataPointAnomaly> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAnomaliesForAlert)}");
                 scope.Start();

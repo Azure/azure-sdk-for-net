@@ -12,17 +12,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Two types of alert emails will be sent: Data feed not available alerts, and Incident reports which contain one or multiple anomalies.
     /// </summary>
     [CodeGenModel("EmailHookInfo")]
-    [CodeGenSuppress(nameof(EmailHook), typeof(string), typeof(EmailHookParameter))]
-    public partial class EmailHook : AlertingHook
+    [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string), typeof(EmailHookParameter))]
+    public partial class EmailNotificationHook : NotificationHook
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmailHook"/> class.
+        /// Initializes a new instance of the <see cref="EmailNotificationHook"/> class.
         /// <param name="name">The name to assign to the hook.</param>
         /// <param name="emailsToAlert">The list of e-mail addresses to alert.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="emailsToAlert"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// </summary>
-        public EmailHook(string name, IList<string> emailsToAlert)
+        public EmailNotificationHook(string name, IList<string> emailsToAlert)
             : base(name)
         {
             Argument.AssertNotNull(emailsToAlert, nameof(emailsToAlert));
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = HookType.Email;
         }
 
-        internal EmailHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter)
+        internal EmailNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
             HookParameter = hookParameter;

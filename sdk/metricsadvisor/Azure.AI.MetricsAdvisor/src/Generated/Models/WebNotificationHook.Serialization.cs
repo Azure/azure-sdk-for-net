@@ -11,11 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AlertingHook : IUtf8JsonSerializable
+    public partial class WebNotificationHook : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("hookParameter");
+            writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType");
             writer.WriteStringValue(HookType.ToString());
             writer.WritePropertyName("hookName");
@@ -33,16 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static AlertingHook DeserializeAlertingHook(JsonElement element)
+        internal static WebNotificationHook DeserializeWebNotificationHook(JsonElement element)
         {
-            if (element.TryGetProperty("hookType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Email": return EmailHook.DeserializeEmailHook(element);
-                    case "Webhook": return WebHook.DeserializeWebHook(element);
-                }
-            }
+            WebhookHookParameter hookParameter = default;
             HookType hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
@@ -51,6 +46,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IReadOnlyList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("hookParameter"))
+                {
+                    hookParameter = WebhookHookParameter.DeserializeWebhookHookParameter(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("hookType"))
                 {
                     hookType = new HookType(property.Value.GetString());
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AlertingHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new WebNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

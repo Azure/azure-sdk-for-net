@@ -7,19 +7,19 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A <see cref="MetricDimension"/>  is one or more categorical values. The combination of those values identify a particular univariate time series.
+    /// A <see cref="DataFeedDimension"/>  is one or more categorical values. The combination of those values identify a particular univariate time series.
     /// For example: country, language, tenant, and so on.
     /// </summary>
     [CodeGenModel("Dimension")]
-    public partial class MetricDimension
+    public partial class DataFeedDimension
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricDimension"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedDimension"/> class.
         /// </summary>
         /// <param name="dimensionName">The name of the data source's column to be used as a dimension. Values of this dimension will be read only from the specified column.</param>
         /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
-        public MetricDimension(string dimensionName)
+        public DataFeedDimension(string dimensionName)
         {
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 

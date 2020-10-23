@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var metricId in feed.MetricIds)
             {
-                foreach (MetricDimension dimension in feed.Schema.DimensionColumns)
+                foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
                     await foreach (string value in client.GetMetricDimensionValuesAsync(metricId, dimension.DimensionName))
                     {
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            List<DataAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
+            List<DataPointAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
                 DetectionConfigurationId,
                 new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
             ).ToEnumerableAsync().ConfigureAwait(false);
@@ -178,7 +178,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (var alert in client.GetAlertsAsync(
                 AlertConfigurationId,
-                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
+                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, AlertQueryTimeMode.CreatedTime) { TopCount = 1 }))
             {
                 Assert.That(alert.Id, Is.Not.Null);
 
