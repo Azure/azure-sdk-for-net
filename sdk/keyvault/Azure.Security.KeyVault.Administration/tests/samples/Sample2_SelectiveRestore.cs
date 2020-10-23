@@ -33,21 +33,18 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupBlobUri = backupResult.Value;
+            Uri backupFolderUri = backupResult.Value;
 
-            Assert.That(backupBlobUri, Is.Not.Null);
+            Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             string keyName = PreviouslyBackedUpKeyName;
 
             #region Snippet:SelectiveRestoreAsync
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation.
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
             //@@ string keyName = <key name to restore>;
 
-            // Start the restore for a specific key that was previously backed up.
-            RestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, builder.Uri, sasToken, folderName);
+            // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             Response restoreResult = await restoreOperation.WaitForCompletionAsync();

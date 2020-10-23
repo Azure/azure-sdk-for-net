@@ -61,14 +61,14 @@ A credential is a class which contains or can obtain the data needed for a servi
 
 The Azure Identity library focuses on OAuth authentication with Azure Active directory, and it offers a variety of credential classes capable of acquiring an AAD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`. 
 
-See [Credential Classes](#Credential-Classes) for a complete listing of available credential types.
+See [Credential Classes](#credential-classes) for a complete listing of available credential types.
 
 ### DefaultAzureCredential
 The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
 
 ![DefaultAzureCredential authentication flow][default_azure_credential_authflow_image]
 
- - Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#Environment-Variables) and use it to authenticate.
+ - Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#environment-variables) and use it to authenticate.
  - Managed Identity - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
  - Visual Studio - If the developer has authenticated via Visual Studio, the `DefaultAzureCredential` will authenticate with that account.
  - Visual Studio Code - If the developer has authenticated via the Visual Studio Code Azure Account plugin, the `DefaultAzureCredential` will authenticate with that account.

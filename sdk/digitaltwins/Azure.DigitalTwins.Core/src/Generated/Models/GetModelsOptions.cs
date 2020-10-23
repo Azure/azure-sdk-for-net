@@ -14,8 +14,7 @@ namespace Azure.DigitalTwins.Core
         public GetModelsOptions()
         {
         }
-
-        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested max. </summary>
-        public int? MaxItemCount { get; set; }
+        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </summary>
+        public int? MaxItemsPerPage { get; set; }
     }
 }

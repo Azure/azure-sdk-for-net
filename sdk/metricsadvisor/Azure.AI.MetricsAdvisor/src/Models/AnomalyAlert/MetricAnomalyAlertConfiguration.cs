@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Defines which anomalies detected by a <see cref="MetricAnomalyDetectionConfiguration"/> are eligible for
+    /// Defines which anomalies detected by an <see cref="AnomalyDetectionConfiguration"/> are eligible for
     /// triggering an alert.
     /// </summary>
     [CodeGenModel("MetricAlertingConfiguration")]
@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyAlertConfiguration
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricAnomalyAlertConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MetricAnomalyAlertConfiguration"/> class.
         /// </summary>
         /// <param name="detectionConfigurationId">The identifier of the anomaly detection configuration to which this configuration applies.</param>
         /// <param name="alertScope">Selects which set of time series should trigger alerts.</param>

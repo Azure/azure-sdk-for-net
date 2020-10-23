@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.13.0
+###  Feature Additions
+- Added publicNetworkAccess property to datafactory
+- Added logSettings property into CopyActivity
+- Added connectionProperties property into Concur linkedService
+- Added authenticationType and sessionToken properties into AmazonS3 linkedService
+
 ## Version 4.12.0
 ###  Feature Additions
 - Added logLevel/enableReliableLogging to LogStorageSettings

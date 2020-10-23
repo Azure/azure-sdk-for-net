@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
 using Azure.DigitalTwins.Core.Samples;
+using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 
@@ -47,15 +48,17 @@ namespace Azure.DigitalTwins.Samples
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId);
 
-            await client.CreateDigitalTwinAsync(twinId, twinPayload);
-            Console.WriteLine($"Created digital twin '{twinId}'.");
+            BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twinPayload);
+
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(twinId, basicDigitalTwin);
+            Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             try
             {
                 #region Snippet:DigitalTwinsSamplePublishTelemetry
 
                 // construct your json telemetry payload by hand.
-                await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+                await client.PublishTelemetryAsync(twinId, Guid.NewGuid().ToString(), "{\"Telemetry1\": 5}");
                 Console.WriteLine($"Published telemetry message to twin '{twinId}'.");
 
                 #endregion Snippet:DigitalTwinsSamplePublishTelemetry
@@ -70,6 +73,7 @@ namespace Azure.DigitalTwins.Samples
                 await client.PublishComponentTelemetryAsync(
                     twinId,
                     "Component1",
+                    Guid.NewGuid().ToString(),
                     JsonSerializer.Serialize(telemetryPayload));
                 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 

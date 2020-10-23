@@ -1,13 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dca4afce961ff14f90d17d8b62947fab-3f77297652c41343-00",
-        "User-Agent": "azsdk-net-ResourceManager.Network.Tests/1.0.0-alpha.20200911.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
+        "traceparent": "00-dd980832c09e624bb5fa2e7abcdfb36f-1b8ae8093b636d4f-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "79c77babeb8acf2ec75698b0f4fd3599",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,17 +18,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "87293",
+        "Content-Length": "93711",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:29:04 GMT",
+        "Date": "Wed, 30 Sep 2020 02:39:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7d085ee5-1f91-4569-8efe-6f33a1180632",
-        "x-ms-ratelimit-remaining-subscription-reads": "11670",
-        "x-ms-request-id": "7d085ee5-1f91-4569-8efe-6f33a1180632",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022905Z:7d085ee5-1f91-4569-8efe-6f33a1180632"
+        "x-ms-correlation-request-id": "8922fbf1-e454-47e2-b0bf-b24ff053f098",
+        "x-ms-ratelimit-remaining-subscription-reads": "11662",
+        "x-ms-request-id": "8922fbf1-e454-47e2-b0bf-b24ff053f098",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T023933Z:8922fbf1-e454-47e2-b0bf-b24ff053f098"
       },
       "ResponseBody": {
         "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network",
@@ -66,6 +69,10 @@
           {
             "applicationId": "6d057c82-a784-47ae-8d12-ca7b38cf06b4",
             "roleDefinitionId": "c27dd31e-c1e5-4ab0-93e1-a12ba34f182e"
+          },
+          {
+            "applicationId": "b4ca0290-4e73-4e31-ade0-c82ecfaabf6a",
+            "roleDefinitionId": "18363e25-ff21-4159-ae8d-7dfecb5bd001"
           }
         ],
         "resourceTypes": [
@@ -152,6 +159,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -166,7 +174,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "natGateways",
@@ -224,6 +232,7 @@
               "2018-12-01",
               "2018-11-01"
             ],
+            "defaultApiVersion": "2020-03-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -338,7 +347,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -349,7 +362,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "publicIPAddresses",
@@ -434,6 +447,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -562,7 +576,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -573,7 +591,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "customIpPrefixes",
@@ -617,6 +635,7 @@
             "apiVersions": [
               "2020-06-01"
             ],
+            "defaultApiVersion": "2020-06-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -731,7 +750,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -742,7 +765,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkInterfaces",
@@ -827,6 +850,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -841,7 +865,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "privateEndpoints",
@@ -897,7 +921,8 @@
               "2019-04-01",
               "2019-02-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "privateEndpointRedirectMaps",
@@ -949,7 +974,8 @@
               "2019-08-01",
               "2019-07-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "loadBalancers",
@@ -1034,6 +1060,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -1048,7 +1075,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkSecurityGroups",
@@ -1133,6 +1160,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -1147,7 +1175,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "applicationSecurityGroups",
@@ -1217,6 +1245,7 @@
               "2017-10-01",
               "2017-09-01"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -1227,7 +1256,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "serviceEndpointPolicies",
@@ -1294,7 +1323,8 @@
               "2018-02-01",
               "2018-01-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkIntentPolicies",
@@ -1359,7 +1389,8 @@
               "2018-05-01",
               "2018-04-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "routeTables",
@@ -1444,6 +1475,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -1458,7 +1490,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "publicIPPrefixes",
@@ -1519,6 +1551,7 @@
               "2018-08-01",
               "2018-07-01"
             ],
+            "defaultApiVersion": "2020-03-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -1633,7 +1666,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -1644,7 +1681,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "masterCustomIpPrefixes",
@@ -1688,6 +1725,7 @@
             "apiVersions": [
               "2020-06-01"
             ],
+            "defaultApiVersion": "2020-06-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -1802,7 +1840,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -1813,7 +1855,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "ddosCustomPolicies",
@@ -1872,7 +1914,8 @@
               "2018-11-01",
               "2018-10-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkWatchers",
@@ -1954,7 +1997,8 @@
               "2016-06-01",
               "2016-03-30"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkWatchers/connectionMonitors",
@@ -2024,7 +2068,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkWatchers/flowLogs",
@@ -2094,7 +2139,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkWatchers/pingMeshes",
@@ -2163,7 +2209,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "virtualNetworkGateways",
@@ -2248,6 +2295,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -2262,7 +2310,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "localNetworkGateways",
@@ -2347,6 +2395,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -2361,7 +2410,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "connections",
@@ -2446,6 +2495,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -2460,7 +2510,7 @@
                 "apiVersion": "2017-10-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "applicationGateways",
@@ -2545,6 +2595,7 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
+            "defaultApiVersion": "2020-03-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -2659,7 +2710,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -2670,7 +2725,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "None"
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "applicationGatewayWebApplicationFirewallPolicies",
@@ -2727,7 +2782,8 @@
               "2019-02-01",
               "2018-12-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "locations",
@@ -2789,7 +2845,8 @@
                 "profileVersion": "2019-03-01-hybrid",
                 "apiVersion": "2017-10-01"
               }
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/operations",
@@ -2851,7 +2908,8 @@
                 "profileVersion": "2019-03-01-hybrid",
                 "apiVersion": "2017-10-01"
               }
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/operationResults",
@@ -2913,7 +2971,8 @@
                 "profileVersion": "2019-03-01-hybrid",
                 "apiVersion": "2017-10-01"
               }
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/CheckDnsNameAvailability",
@@ -2997,7 +3056,8 @@
               "2015-06-15",
               "2015-05-01-preview",
               "2014-12-01-preview"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/setLoadBalancerFrontendPublicIpAddresses",
@@ -3041,7 +3101,8 @@
             "apiVersions": [
               "2020-06-01",
               "2020-05-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/usages",
@@ -3139,7 +3200,8 @@
                 "profileVersion": "2019-03-01-hybrid",
                 "apiVersion": "2017-10-01"
               }
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/virtualNetworkAvailableEndpointServices",
@@ -3211,7 +3273,8 @@
               "2017-08-01",
               "2017-06-01",
               "2017-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/availableDelegations",
@@ -3274,7 +3337,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/serviceTags",
@@ -3329,7 +3393,8 @@
               "2019-06-01",
               "2019-04-01",
               "2019-02-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/availablePrivateEndpointTypes",
@@ -3384,7 +3449,8 @@
               "2019-06-01",
               "2019-04-01",
               "2019-02-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/availableServiceAliases",
@@ -3435,7 +3501,8 @@
               "2019-11-01",
               "2019-09-01",
               "2019-08-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/checkPrivateLinkServiceVisibility",
@@ -3489,7 +3556,8 @@
               "2019-07-01",
               "2019-06-01",
               "2019-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/autoApprovedPrivateLinkServices",
@@ -3543,7 +3611,8 @@
               "2019-07-01",
               "2019-06-01",
               "2019-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/batchValidatePrivateEndpointsForResourceMove",
@@ -3589,7 +3658,8 @@
               "2020-05-01",
               "2020-04-01",
               "2020-03-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/batchNotifyPrivateEndpointsForResourceMove",
@@ -3635,7 +3705,8 @@
               "2020-05-01",
               "2020-04-01",
               "2020-03-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/supportedVirtualMachineSizes",
@@ -3698,7 +3769,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/checkAcceleratedNetworkingSupport",
@@ -3761,7 +3833,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/validateResourceOwnership",
@@ -3824,7 +3897,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/setResourceOwnership",
@@ -3887,7 +3961,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/effectiveResourceOwnership",
@@ -3950,7 +4025,8 @@
               "2018-06-01",
               "2018-05-01",
               "2018-04-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "operations",
@@ -3998,7 +4074,8 @@
               "2015-06-15",
               "2015-05-01-preview",
               "2014-12-01-preview"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones",
@@ -4009,7 +4086,8 @@
               "2020-01-01",
               "2018-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "privateDnsZones/virtualNetworkLinks",
@@ -4020,7 +4098,8 @@
               "2020-01-01",
               "2018-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "privateDnsOperationResults",
@@ -4030,7 +4109,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsOperationStatuses",
@@ -4040,7 +4121,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZonesInternal",
@@ -4049,7 +4132,9 @@
             ],
             "apiVersions": [
               "2020-01-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-01-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/A",
@@ -4059,7 +4144,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/AAAA",
@@ -4069,7 +4156,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/CNAME",
@@ -4079,7 +4168,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/PTR",
@@ -4089,7 +4180,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/MX",
@@ -4099,7 +4192,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/TXT",
@@ -4109,7 +4204,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/SRV",
@@ -4119,7 +4216,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/SOA",
@@ -4129,7 +4228,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "privateDnsZones/all",
@@ -4139,7 +4240,9 @@
             "apiVersions": [
               "2020-01-01",
               "2018-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-09-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "trafficmanagerprofiles",
@@ -4156,7 +4259,8 @@
               "2015-11-01",
               "2015-04-28-preview"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2018-08-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "trafficmanagerprofiles/heatMaps",
@@ -4169,7 +4273,9 @@
               "2018-03-01",
               "2018-02-01",
               "2017-09-01-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-08-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "checkTrafficManagerNameAvailability",
@@ -4185,7 +4291,9 @@
               "2017-03-01",
               "2015-11-01",
               "2015-04-28-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-08-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "trafficManagerUserMetricsKeys",
@@ -4196,7 +4304,9 @@
               "2018-08-01",
               "2018-04-01",
               "2017-09-01-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-08-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "trafficManagerGeographicHierarchies",
@@ -4210,7 +4320,9 @@
               "2018-02-01",
               "2017-05-01",
               "2017-03-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-08-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "expressRouteCircuits",
@@ -4295,7 +4407,8 @@
               "2015-05-01-preview",
               "2014-12-01-preview"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "expressRouteServiceProviders",
@@ -4343,7 +4456,8 @@
               "2015-06-15",
               "2015-05-01-preview",
               "2014-12-01-preview"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "applicationGatewayAvailableWafRuleSets",
@@ -4380,7 +4494,8 @@
               "2017-06-01",
               "2017-04-01",
               "2017-03-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "applicationGatewayAvailableSslOptions",
@@ -4415,7 +4530,8 @@
               "2017-09-01",
               "2017-08-01",
               "2017-06-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "applicationGatewayAvailableServerVariables",
@@ -4436,7 +4552,8 @@
               "2019-02-01",
               "2018-12-01",
               "2018-11-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "applicationGatewayAvailableRequestHeaders",
@@ -4457,7 +4574,8 @@
               "2019-02-01",
               "2018-12-01",
               "2018-11-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "applicationGatewayAvailableResponseHeaders",
@@ -4478,7 +4596,8 @@
               "2019-02-01",
               "2018-12-01",
               "2018-11-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "routeFilters",
@@ -4553,7 +4672,8 @@
               "2017-03-01",
               "2016-12-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "bgpServiceCommunities",
@@ -4591,7 +4711,8 @@
               "2017-04-01",
               "2017-03-01",
               "2016-12-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "virtualWans",
@@ -4661,7 +4782,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "vpnSites",
@@ -4731,7 +4853,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "vpnServerConfigurations",
@@ -4781,7 +4904,8 @@
               "2019-09-01",
               "2019-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "virtualHubs",
@@ -4851,7 +4975,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "vpnGateways",
@@ -4921,7 +5046,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "p2sVpnGateways",
@@ -4981,7 +5107,8 @@
               "2018-10-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "expressRouteGateways",
@@ -5041,7 +5168,8 @@
               "2018-10-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "firewallPolicies",
@@ -5102,7 +5230,8 @@
               "2019-07-01",
               "2019-06-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-04-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "ipGroups",
@@ -5161,7 +5290,8 @@
               "2019-09-01",
               "2019-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2019-08-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "locations/nfvOperations",
@@ -5178,7 +5308,8 @@
               "2019-08-01",
               "2019-07-01",
               "2019-06-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/nfvOperationResults",
@@ -5195,7 +5326,8 @@
               "2019-08-01",
               "2019-07-01",
               "2019-06-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "securityPartnerProviders",
@@ -5241,7 +5373,8 @@
               "2020-03-01",
               "2020-01-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "azureFirewalls",
@@ -5305,6 +5438,7 @@
               "2018-05-01",
               "2018-04-01"
             ],
+            "defaultApiVersion": "2020-03-01",
             "zoneMappings": [
               {
                 "location": "East US 2",
@@ -5419,7 +5553,11 @@
               },
               {
                 "location": "Canada Central",
-                "zones": []
+                "zones": [
+                  "1",
+                  "3",
+                  "2"
+                ]
               },
               {
                 "location": "Germany West Central",
@@ -5430,7 +5568,7 @@
                 "zones": []
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "azureFirewallFqdnTags",
@@ -5453,7 +5591,8 @@
               "2018-11-01",
               "2018-10-01",
               "2018-08-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "virtualNetworkTaps",
@@ -5513,7 +5652,8 @@
               "2018-10-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "privateLinkServices",
@@ -5573,7 +5713,8 @@
               "2018-10-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "ddosProtectionPlans",
@@ -5639,13 +5780,14 @@
               "2018-03-01",
               "2018-02-01"
             ],
+            "defaultApiVersion": "2020-03-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
                 "apiVersion": "2018-02-01"
               }
             ],
-            "capabilities": "None"
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkProfiles",
@@ -5708,7 +5850,8 @@
               "2018-06-01",
               "2018-05-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "checkFrontdoorNameAvailability",
@@ -5738,7 +5881,9 @@
               "2019-05-01",
               "2019-04-01",
               "2018-08-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-07-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "frontdoorWebApplicationFirewallManagedRuleSets",
@@ -5764,7 +5909,9 @@
               "2020-04-01",
               "2019-10-01",
               "2019-03-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-04-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "locations/bareMetalTenants",
@@ -5824,7 +5971,8 @@
               "2018-10-01",
               "2018-08-01",
               "2018-07-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "bastionHosts",
@@ -5883,7 +6031,8 @@
               "2018-11-01",
               "2018-10-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "virtualRouters",
@@ -5943,7 +6092,8 @@
               "2019-08-01",
               "2019-07-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2019-07-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkVirtualAppliances",
@@ -5999,7 +6149,8 @@
               "2020-01-01",
               "2019-12-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2019-12-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "ipAllocations",
@@ -6047,7 +6198,8 @@
               "2020-03-01",
               "2020-01-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "locations/commitInternalAzureNetworkManagerConfiguration",
@@ -6063,7 +6215,8 @@
               "2020-03-01",
               "2019-12-01",
               "2019-11-01"
-            ]
+            ],
+            "capabilities": "None"
           },
           {
             "resourceType": "networkVirtualApplianceSkus",
@@ -6073,7 +6226,9 @@
               "2020-05-01",
               "2020-04-01",
               "2020-03-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "networkWatchers/lenses",
@@ -6106,7 +6261,8 @@
               "2017-10-01",
               "2017-09-01"
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "defaultApiVersion": "2020-03-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "dnszones",
@@ -6124,6 +6280,7 @@
               "2015-11-15-preview",
               "2015-05-04-preview"
             ],
+            "defaultApiVersion": "2018-05-01",
             "apiProfiles": [
               {
                 "profileVersion": "2017-03-09-profile",
@@ -6138,7 +6295,7 @@
                 "apiVersion": "2016-04-01"
               }
             ],
-            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove"
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "dnsOperationResults",
@@ -6154,7 +6311,9 @@
               "2016-04-01",
               "2015-11-30",
               "2015-11-15-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnsOperationStatuses",
@@ -6170,7 +6329,9 @@
               "2016-04-01",
               "2015-11-30",
               "2015-11-15-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "getDnsResourceReference",
@@ -6179,7 +6340,9 @@
             ],
             "apiVersions": [
               "2018-05-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "internalNotify",
@@ -6188,7 +6351,9 @@
             ],
             "apiVersions": [
               "2018-05-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/A",
@@ -6205,7 +6370,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/AAAA",
@@ -6222,7 +6389,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/CNAME",
@@ -6239,7 +6408,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/PTR",
@@ -6256,7 +6427,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/MX",
@@ -6273,7 +6446,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/TXT",
@@ -6290,7 +6465,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/SRV",
@@ -6307,7 +6484,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/SOA",
@@ -6324,7 +6503,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/NS",
@@ -6341,7 +6522,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/CAA",
@@ -6354,7 +6537,9 @@
               "2017-10-01",
               "2017-09-15-preview",
               "2017-09-01"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/recordsets",
@@ -6371,7 +6556,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "dnszones/all",
@@ -6388,7 +6575,9 @@
               "2015-11-30",
               "2015-11-15-preview",
               "2015-05-04-preview"
-            ]
+            ],
+            "defaultApiVersion": "2018-05-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "frontdoorOperationResults",
@@ -6407,7 +6596,9 @@
               "2019-04-01",
               "2019-03-01",
               "2018-08-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-07-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "frontdoors",
@@ -6441,7 +6632,8 @@
               "2019-04-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-07-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "frontdoors/frontendEndpoints",
@@ -6474,7 +6666,9 @@
               "2019-05-01",
               "2019-04-01",
               "2018-08-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-07-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "frontdoors/frontendEndpoints/customHttpsConfiguration",
@@ -6507,7 +6701,9 @@
               "2019-05-01",
               "2019-04-01",
               "2018-08-01"
-            ]
+            ],
+            "defaultApiVersion": "2020-07-01",
+            "capabilities": "None"
           },
           {
             "resourceType": "frontdoorWebApplicationFirewallPolicies",
@@ -6536,7 +6732,8 @@
               "2019-03-01",
               "2018-08-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2020-04-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           },
           {
             "resourceType": "networkExperimentProfiles",
@@ -6564,10 +6761,12 @@
             "apiVersions": [
               "2019-11-01"
             ],
-            "capabilities": "None"
+            "defaultApiVersion": "2019-11-01",
+            "capabilities": "SupportsTags, SupportsLocation"
           }
         ],
-        "registrationState": "Registered"
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
       }
     },
     {
@@ -6576,7 +6775,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Network/1.0.0-alpha.20200911.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Network/1.0.0-alpha.20200930.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "23a941e13957db9e05ee08672a13bc07",
         "x-ms-return-client-request-id": "true"
       },
@@ -6584,9 +6786,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "312717",
+        "Content-Length": "316052",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:29:07 GMT",
+        "Date": "Wed, 30 Sep 2020 02:39:34 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -6595,12 +6797,12 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "ca2d5623-4fdf-443c-9ade-ef2bc23c7749",
+        "x-ms-arm-service-request-id": "ff0862ba-0c75-4b04-8a96-b16e7cfb4962",
         "x-ms-client-request-id": "23a941e13957db9e05ee08672a13bc07",
-        "x-ms-correlation-request-id": "ba02a5e7-c2d4-48a8-9971-f52990c6e700",
-        "x-ms-ratelimit-remaining-subscription-reads": "11669",
-        "x-ms-request-id": "6297f813-f547-423c-ace8-16384987c505",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022908Z:ba02a5e7-c2d4-48a8-9971-f52990c6e700"
+        "x-ms-correlation-request-id": "c3807f10-a00a-4538-9efb-88144ead2f03",
+        "x-ms-ratelimit-remaining-subscription-reads": "11661",
+        "x-ms-request-id": "8a36bdf5-be77-4ff6-a845-3fffa3a54fa6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T023935Z:c3807f10-a00a-4538-9efb-88144ead2f03"
       },
       "ResponseBody": [
         "{\r\n",
@@ -6632,7 +6834,6 @@
         "              \u0022131.253.33.215/32\u0022,\r\n",
         "              \u0022132.245.0.0/16\u0022,\r\n",
         "              \u0022150.171.32.0/22\u0022,\r\n",
-        "              \u0022191.234.140.0/22\u0022,\r\n",
         "              \u0022204.79.197.215/32\u0022,\r\n",
         "              \u002213.107.128.0/24\u0022,\r\n",
         "              \u002213.107.129.0/24\u0022,\r\n",
@@ -7054,7 +7255,14 @@
         "              \u002252.245.20.0/22\u0022,\r\n",
         "              \u002252.255.32.0/19\u0022,\r\n",
         "              \u0022104.46.28.0/24\u0022,\r\n",
-        "              \u0022104.46.160.0/19\u0022,\r\n",
+        "              \u0022104.46.160.0/20\u0022,\r\n",
+        "              \u0022104.46.176.0/23\u0022,\r\n",
+        "              \u0022104.46.178.0/25\u0022,\r\n",
+        "              \u0022104.46.178.160/27\u0022,\r\n",
+        "              \u0022104.46.178.192/26\u0022,\r\n",
+        "              \u0022104.46.179.0/24\u0022,\r\n",
+        "              \u0022104.46.180.0/22\u0022,\r\n",
+        "              \u0022104.46.184.0/21\u0022,\r\n",
         "              \u0022104.209.64.0/20\u0022,\r\n",
         "              \u0022191.239.160.0/19\u0022,\r\n",
         "              \u0022191.239.192.0/22\u0022\r\n",
@@ -7089,6 +7297,7 @@
         "              \u002223.97.96.0/20\u0022,\r\n",
         "              \u002223.97.112.0/25\u0022,\r\n",
         "              \u002223.97.112.128/28\u0022,\r\n",
+        "              \u002223.97.112.160/27\u0022,\r\n",
         "              \u002252.253.185.0/24\u0022,\r\n",
         "              \u002252.253.186.0/24\u0022,\r\n",
         "              \u0022104.41.0.0/18\u0022,\r\n",
@@ -7163,6 +7372,7 @@
         "              \u002220.47.87.0/24\u0022,\r\n",
         "              \u002220.48.128.0/18\u0022,\r\n",
         "              \u002220.48.192.0/21\u0022,\r\n",
+        "              \u002220.60.42.0/23\u0022,\r\n",
         "              \u002220.63.0.0/18\u0022,\r\n",
         "              \u002220.150.16.0/24\u0022,\r\n",
         "              \u002220.150.31.0/24\u0022,\r\n",
@@ -7269,6 +7479,7 @@
         "              \u002220.192.0.0/19\u0022,\r\n",
         "              \u002220.192.40.0/21\u0022,\r\n",
         "              \u002220.192.96.0/21\u0022,\r\n",
+        "              \u002220.193.128.0/19\u0022,\r\n",
         "              \u002220.193.224.0/19\u0022,\r\n",
         "              \u002240.79.214.0/24\u0022,\r\n",
         "              \u002240.80.48.0/21\u0022,\r\n",
@@ -7378,6 +7589,9 @@
         "              \u002240.86.0.0/17\u0022,\r\n",
         "              \u002240.87.180.0/30\u0022,\r\n",
         "              \u002240.87.180.4/31\u0022,\r\n",
+        "              \u002240.87.180.14/31\u0022,\r\n",
+        "              \u002240.87.180.16/30\u0022,\r\n",
+        "              \u002240.87.180.20/31\u0022,\r\n",
         "              \u002240.87.182.4/30\u0022,\r\n",
         "              \u002240.87.182.8/29\u0022,\r\n",
         "              \u002240.87.182.24/29\u0022,\r\n",
@@ -7540,7 +7754,14 @@
         "              \u002220.45.200.0/21\u0022,\r\n",
         "              \u002220.45.208.0/20\u0022,\r\n",
         "              \u002220.45.224.0/19\u0022,\r\n",
-        "              \u002220.46.0.0/19\u0022,\r\n",
+        "              \u002220.46.0.0/21\u0022,\r\n",
+        "              \u002220.46.8.0/23\u0022,\r\n",
+        "              \u002220.46.10.0/26\u0022,\r\n",
+        "              \u002220.46.10.96/27\u0022,\r\n",
+        "              \u002220.46.10.128/25\u0022,\r\n",
+        "              \u002220.46.11.0/24\u0022,\r\n",
+        "              \u002220.46.12.0/22\u0022,\r\n",
+        "              \u002220.46.16.0/20\u0022,\r\n",
         "              \u002220.47.5.0/24\u0022,\r\n",
         "              \u002220.47.105.0/24\u0022,\r\n",
         "              \u002220.60.24.0/23\u0022,\r\n",
@@ -7560,6 +7781,8 @@
         "              \u002240.87.180.6/31\u0022,\r\n",
         "              \u002240.87.180.8/30\u0022,\r\n",
         "              \u002240.87.180.12/31\u0022,\r\n",
+        "              \u002240.87.180.22/31\u0022,\r\n",
+        "              \u002240.87.180.24/30\u0022,\r\n",
         "              \u002240.87.182.0/30\u0022,\r\n",
         "              \u002240.87.182.16/29\u0022,\r\n",
         "              \u002240.87.182.60/31\u0022,\r\n",
@@ -7633,7 +7856,12 @@
         "              \u002220.150.96.0/24\u0022,\r\n",
         "              \u002220.187.64.0/18\u0022,\r\n",
         "              \u002220.187.128.0/18\u0022,\r\n",
-        "              \u002220.187.192.0/21\u0022,\r\n",
+        "              \u002220.187.192.0/22\u0022,\r\n",
+        "              \u002220.187.196.0/24\u0022,\r\n",
+        "              \u002220.187.197.0/27\u0022,\r\n",
+        "              \u002220.187.197.64/26\u0022,\r\n",
+        "              \u002220.187.197.128/25\u0022,\r\n",
+        "              \u002220.187.198.0/23\u0022,\r\n",
         "              \u002220.187.224.0/19\u0022,\r\n",
         "              \u002220.189.64.0/18\u0022,\r\n",
         "              \u002223.97.64.0/19\u0022,\r\n",
@@ -7730,7 +7958,17 @@
         "              \u002220.60.2.0/24\u0022,\r\n",
         "              \u002220.60.6.0/23\u0022,\r\n",
         "              \u002220.60.128.0/23\u0022,\r\n",
-        "              \u002220.62.128.0/17\u0022,\r\n",
+        "              \u002220.60.134.0/23\u0022,\r\n",
+        "              \u002220.62.128.0/24\u0022,\r\n",
+        "              \u002220.62.129.32/27\u0022,\r\n",
+        "              \u002220.62.129.64/26\u0022,\r\n",
+        "              \u002220.62.129.128/25\u0022,\r\n",
+        "              \u002220.62.130.0/23\u0022,\r\n",
+        "              \u002220.62.132.0/22\u0022,\r\n",
+        "              \u002220.62.136.0/21\u0022,\r\n",
+        "              \u002220.62.144.0/20\u0022,\r\n",
+        "              \u002220.62.160.0/19\u0022,\r\n",
+        "              \u002220.62.192.0/18\u0022,\r\n",
         "              \u002220.150.32.0/23\u0022,\r\n",
         "              \u002220.150.90.0/24\u0022,\r\n",
         "              \u002220.185.0.0/17\u0022,\r\n",
@@ -8091,6 +8329,7 @@
         "              \u0022191.237.128.0/18\u0022,\r\n",
         "              \u0022191.239.224.0/20\u0022,\r\n",
         "              \u0022193.149.64.0/21\u0022,\r\n",
+        "              \u0022198.180.96.0/25\u0022,\r\n",
         "              \u0022199.30.16.0/24\u0022\r\n",
         "            ],\r\n",
         "            \u0022isAuthorizedToUse\u0022: true,\r\n",
@@ -8119,7 +8358,12 @@
         "              \u002220.47.6.0/24\u0022,\r\n",
         "              \u002220.47.106.0/24\u0022,\r\n",
         "              \u002220.47.128.0/17\u0022,\r\n",
-        "              \u002220.51.16.0/21\u0022,\r\n",
+        "              \u002220.51.16.0/25\u0022,\r\n",
+        "              \u002220.51.16.160/27\u0022,\r\n",
+        "              \u002220.51.16.192/26\u0022,\r\n",
+        "              \u002220.51.17.0/24\u0022,\r\n",
+        "              \u002220.51.18.0/23\u0022,\r\n",
+        "              \u002220.51.20.0/22\u0022,\r\n",
         "              \u002220.150.108.0/24\u0022,\r\n",
         "              \u002240.70.88.0/28\u0022,\r\n",
         "              \u002240.74.144.0/23\u0022,\r\n",
@@ -8189,8 +8433,7 @@
         "              \u002252.253.152.0/23\u0022,\r\n",
         "              \u002252.253.224.0/21\u0022,\r\n",
         "              \u002252.254.120.0/21\u0022,\r\n",
-        "              \u0022198.180.97.0/25\u0022,\r\n",
-        "              \u0022198.180.97.128/26\u0022\r\n",
+        "              \u0022198.180.97.0/24\u0022\r\n",
         "            ],\r\n",
         "            \u0022isAuthorizedToUse\u0022: true,\r\n",
         "            \u0022serviceGroup\u0022: \u0022Azure\u0022\r\n",
@@ -8313,6 +8556,7 @@
         "              \u002220.47.45.0/24\u0022,\r\n",
         "              \u002220.47.84.0/23\u0022,\r\n",
         "              \u002220.52.72.0/21\u0022,\r\n",
+        "              \u002220.52.80.32/27\u0022,\r\n",
         "              \u002220.150.60.0/24\u0022,\r\n",
         "              \u002220.150.112.0/24\u0022,\r\n",
         "              \u002240.82.72.0/22\u0022,\r\n",
@@ -8348,6 +8592,8 @@
         "              \u002220.47.112.0/24\u0022,\r\n",
         "              \u002220.52.0.0/18\u0022,\r\n",
         "              \u002220.52.64.0/21\u0022,\r\n",
+        "              \u002220.52.80.0/27\u0022,\r\n",
+        "              \u002220.52.80.64/27\u0022,\r\n",
         "              \u002220.52.128.0/18\u0022,\r\n",
         "              \u002220.60.22.0/23\u0022,\r\n",
         "              \u002220.150.54.0/24\u0022,\r\n",
@@ -8436,6 +8682,7 @@
         "              \u002220.63.128.0/18\u0022,\r\n",
         "              \u002220.150.85.0/24\u0022,\r\n",
         "              \u002220.150.105.0/24\u0022,\r\n",
+        "              \u002220.157.38.0/24\u0022,\r\n",
         "              \u002220.188.0.0/19\u0022,\r\n",
         "              \u002220.191.160.0/19\u0022,\r\n",
         "              \u002220.194.128.0/17\u0022,\r\n",
@@ -8554,7 +8801,7 @@
         "              \u002220.60.16.0/24\u0022,\r\n",
         "              \u002220.150.4.0/23\u0022,\r\n",
         "              \u002220.194.0.0/18\u0022,\r\n",
-        "              \u002220.194.64.0/21\u0022,\r\n",
+        "              \u002220.194.64.0/20\u0022,\r\n",
         "              \u002220.194.96.0/19\u0022,\r\n",
         "              \u002220.196.64.0/18\u0022,\r\n",
         "              \u002220.196.128.0/18\u0022,\r\n",
@@ -8652,6 +8899,7 @@
         "              \u002220.51.0.0/21\u0022,\r\n",
         "              \u002220.59.192.0/18\u0022,\r\n",
         "              \u002220.60.28.0/23\u0022,\r\n",
+        "              \u002220.66.128.0/17\u0022,\r\n",
         "              \u002220.150.17.0/25\u0022,\r\n",
         "              \u002220.150.25.0/24\u0022,\r\n",
         "              \u002220.150.49.0/24\u0022,\r\n",
@@ -8814,7 +9062,16 @@
         "              \u002252.142.64.0/18\u0022,\r\n",
         "              \u002252.143.195.0/24\u0022,\r\n",
         "              \u002252.143.209.0/24\u0022,\r\n",
-        "              \u002252.146.128.0/17\u0022,\r\n",
+        "              \u002252.146.128.0/22\u0022,\r\n",
+        "              \u002252.146.132.0/26\u0022,\r\n",
+        "              \u002252.146.132.64/27\u0022,\r\n",
+        "              \u002252.146.132.128/25\u0022,\r\n",
+        "              \u002252.146.133.0/24\u0022,\r\n",
+        "              \u002252.146.134.0/23\u0022,\r\n",
+        "              \u002252.146.136.0/21\u0022,\r\n",
+        "              \u002252.146.144.0/20\u0022,\r\n",
+        "              \u002252.146.160.0/19\u0022,\r\n",
+        "              \u002252.146.192.0/18\u0022,\r\n",
         "              \u002252.155.64.0/19\u0022,\r\n",
         "              \u002252.155.128.0/17\u0022,\r\n",
         "              \u002252.156.192.0/18\u0022,\r\n",
@@ -8917,9 +9174,9 @@
         "              \u002240.126.200.0/24\u0022,\r\n",
         "              \u002251.13.0.0/17\u0022,\r\n",
         "              \u002251.107.208.0/20\u0022,\r\n",
-        "              \u002251.107.240.0/20\u0022,\r\n",
         "              \u002251.120.0.0/17\u0022,\r\n",
         "              \u002251.120.208.0/21\u0022,\r\n",
+        "              \u002251.120.232.0/21\u0022,\r\n",
         "              \u002251.120.240.0/20\u0022,\r\n",
         "              \u002252.253.168.0/24\u0022,\r\n",
         "              \u002252.253.177.0/24\u0022,\r\n",
@@ -9031,6 +9288,7 @@
         "              \u002220.51.10.0/23\u0022,\r\n",
         "              \u002220.51.18.0/23\u0022,\r\n",
         "              \u002220.53.42.0/23\u0022,\r\n",
+        "              \u002220.58.64.0/23\u0022,\r\n",
         "              \u002220.61.100.0/23\u0022,\r\n",
         "              \u002220.62.56.0/23\u0022,\r\n",
         "              \u002220.62.130.0/23\u0022,\r\n",
@@ -9050,6 +9308,7 @@
         "              \u002220.192.32.128/26\u0022,\r\n",
         "              \u002220.192.40.0/23\u0022,\r\n",
         "              \u002220.193.204.0/26\u0022,\r\n",
+        "              \u002220.195.144.0/23\u0022,\r\n",
         "              \u002223.98.110.0/23\u0022,\r\n",
         "              \u002240.67.54.0/23\u0022,\r\n",
         "              \u002240.67.59.208/28\u0022,\r\n",
@@ -9194,6 +9453,7 @@
         "              \u0022102.37.0.0/20\u0022,\r\n",
         "              \u0022102.37.16.0/21\u0022,\r\n",
         "              \u0022102.37.24.0/23\u0022,\r\n",
+        "              \u0022102.37.26.32/27\u0022,\r\n",
         "              \u0022102.37.32.0/19\u0022,\r\n",
         "              \u0022102.37.72.0/21\u0022,\r\n",
         "              \u0022102.37.96.0/19\u0022,\r\n",
@@ -9240,6 +9500,7 @@
         "              \u002240.119.68.0/22\u0022,\r\n",
         "              \u002252.143.203.0/24\u0022,\r\n",
         "              \u002252.239.232.128/25\u0022,\r\n",
+        "              \u0022102.37.26.0/27\u0022,\r\n",
         "              \u0022102.37.64.0/21\u0022,\r\n",
         "              \u0022102.133.0.0/18\u0022,\r\n",
         "              \u0022102.133.64.0/19\u0022,\r\n",
@@ -9364,6 +9625,8 @@
         "              \u002240.87.177.200/30\u0022,\r\n",
         "              \u002240.87.177.212/30\u0022,\r\n",
         "              \u002240.87.177.216/29\u0022,\r\n",
+        "              \u002240.87.177.224/29\u0022,\r\n",
+        "              \u002240.87.177.232/30\u0022,\r\n",
         "              \u002240.91.16.0/22\u0022,\r\n",
         "              \u002240.119.0.0/18\u0022,\r\n",
         "              \u002240.124.0.0/16\u0022,\r\n",
@@ -9446,6 +9709,7 @@
         "              \u002220.47.72.0/23\u0022,\r\n",
         "              \u002220.60.10.0/24\u0022,\r\n",
         "              \u002220.150.24.0/24\u0022,\r\n",
+        "              \u002220.192.128.0/19\u0022,\r\n",
         "              \u002220.192.184.0/21\u0022,\r\n",
         "              \u002240.78.192.0/23\u0022,\r\n",
         "              \u002240.78.194.0/24\u0022,\r\n",
@@ -9582,10 +9846,12 @@
         "              \u002240.119.80.0/22\u0022,\r\n",
         "              \u002240.126.194.0/24\u0022,\r\n",
         "              \u002251.103.128.0/18\u0022,\r\n",
+        "              \u002251.103.192.32/27\u0022,\r\n",
         "              \u002251.107.0.0/18\u0022,\r\n",
         "              \u002251.107.64.0/19\u0022,\r\n",
         "              \u002251.107.128.0/21\u0022,\r\n",
         "              \u002251.107.200.0/21\u0022,\r\n",
+        "              \u002251.107.240.0/21\u0022,\r\n",
         "              \u002252.239.251.0/24\u0022,\r\n",
         "              \u002252.253.165.0/24\u0022,\r\n",
         "              \u002252.253.175.0/24\u0022,\r\n",
@@ -9617,12 +9883,14 @@
         "              \u002240.82.108.0/22\u0022,\r\n",
         "              \u002240.119.84.0/22\u0022,\r\n",
         "              \u002240.126.195.0/24\u0022,\r\n",
+        "              \u002251.103.192.0/27\u0022,\r\n",
         "              \u002251.107.96.0/19\u0022,\r\n",
         "              \u002251.107.136.0/21\u0022,\r\n",
         "              \u002251.107.144.0/20\u0022,\r\n",
         "              \u002251.107.160.0/20\u0022,\r\n",
         "              \u002251.107.192.0/21\u0022,\r\n",
         "              \u002251.107.224.0/20\u0022,\r\n",
+        "              \u002251.107.248.0/21\u0022,\r\n",
         "              \u002252.239.250.0/24\u0022,\r\n",
         "              \u002252.253.166.0/24\u0022\r\n",
         "            ],\r\n",
@@ -9746,6 +10014,7 @@
         "              \u002220.50.96.0/19\u0022,\r\n",
         "              \u002220.58.0.0/18\u0022,\r\n",
         "              \u002220.60.17.0/24\u0022,\r\n",
+        "              \u002220.68.0.0/18\u0022,\r\n",
         "              \u002220.150.18.0/25\u0022,\r\n",
         "              \u002220.150.40.0/25\u0022,\r\n",
         "              \u002220.150.41.0/24\u0022,\r\n",
@@ -9854,6 +10123,7 @@
         "              \u002220.47.56.0/24\u0022,\r\n",
         "              \u002220.47.82.0/23\u0022,\r\n",
         "              \u002220.58.64.0/18\u0022,\r\n",
+        "              \u002220.68.64.0/18\u0022,\r\n",
         "              \u002220.150.2.0/23\u0022,\r\n",
         "              \u002220.150.52.0/24\u0022,\r\n",
         "              \u002220.150.110.0/24\u0022,\r\n",
@@ -9932,7 +10202,16 @@
         "              \u002252.136.4.0/22\u0022,\r\n",
         "              \u002252.143.214.0/24\u0022,\r\n",
         "              \u002252.148.0.0/18\u0022,\r\n",
-        "              \u002252.150.128.0/17\u0022,\r\n",
+        "              \u002252.150.128.0/20\u0022,\r\n",
+        "              \u002252.150.144.0/21\u0022,\r\n",
+        "              \u002252.150.152.0/22\u0022,\r\n",
+        "              \u002252.150.156.0/24\u0022,\r\n",
+        "              \u002252.150.157.32/27\u0022,\r\n",
+        "              \u002252.150.157.64/26\u0022,\r\n",
+        "              \u002252.150.157.128/25\u0022,\r\n",
+        "              \u002252.150.158.0/23\u0022,\r\n",
+        "              \u002252.150.160.0/19\u0022,\r\n",
+        "              \u002252.150.192.0/18\u0022,\r\n",
         "              \u002252.153.128.0/18\u0022,\r\n",
         "              \u002252.159.0.0/19\u0022,\r\n",
         "              \u002252.159.32.0/20\u0022,\r\n",
@@ -10012,7 +10291,18 @@
         "              \u002220.56.0.0/16\u0022,\r\n",
         "              \u002220.60.26.0/23\u0022,\r\n",
         "              \u002220.60.130.0/24\u0022,\r\n",
-        "              \u002220.61.0.0/16\u0022,\r\n",
+        "              \u002220.61.0.0/18\u0022,\r\n",
+        "              \u002220.61.64.0/19\u0022,\r\n",
+        "              \u002220.61.96.0/23\u0022,\r\n",
+        "              \u002220.61.98.0/25\u0022,\r\n",
+        "              \u002220.61.98.128/27\u0022,\r\n",
+        "              \u002220.61.98.192/26\u0022,\r\n",
+        "              \u002220.61.99.0/24\u0022,\r\n",
+        "              \u002220.61.100.0/22\u0022,\r\n",
+        "              \u002220.61.104.0/21\u0022,\r\n",
+        "              \u002220.61.112.0/20\u0022,\r\n",
+        "              \u002220.61.128.0/17\u0022,\r\n",
+        "              \u002220.67.0.0/17\u0022,\r\n",
         "              \u002220.150.8.0/23\u0022,\r\n",
         "              \u002220.150.37.0/24\u0022,\r\n",
         "              \u002220.150.42.0/24\u0022,\r\n",
@@ -10221,7 +10511,16 @@
         "              \u002220.59.64.0/18\u0022,\r\n",
         "              \u002220.60.1.0/24\u0022,\r\n",
         "              \u002220.60.34.0/23\u0022,\r\n",
-        "              \u002220.66.0.0/17\u0022,\r\n",
+        "              \u002220.66.0.0/23\u0022,\r\n",
+        "              \u002220.66.2.0/27\u0022,\r\n",
+        "              \u002220.66.2.64/26\u0022,\r\n",
+        "              \u002220.66.2.128/25\u0022,\r\n",
+        "              \u002220.66.3.0/24\u0022,\r\n",
+        "              \u002220.66.4.0/22\u0022,\r\n",
+        "              \u002220.66.8.0/21\u0022,\r\n",
+        "              \u002220.66.16.0/20\u0022,\r\n",
+        "              \u002220.66.32.0/19\u0022,\r\n",
+        "              \u002220.66.64.0/18\u0022,\r\n",
         "              \u002220.150.34.0/23\u0022,\r\n",
         "              \u002220.150.91.0/24\u0022,\r\n",
         "              \u002220.150.102.0/24\u0022,\r\n",
@@ -10636,6 +10935,7 @@
         "            \u0022communityPrefixes\u0022: [\r\n",
         "              \u002220.38.114.0/25\u0022,\r\n",
         "              \u002220.47.40.0/24\u0022,\r\n",
+        "              \u002220.60.42.0/23\u0022,\r\n",
         "              \u002220.150.16.0/24\u0022,\r\n",
         "              \u002220.150.31.0/24\u0022,\r\n",
         "              \u002220.150.71.0/24\u0022,\r\n",
@@ -10898,6 +11198,7 @@
         "              \u002220.60.2.0/24\u0022,\r\n",
         "              \u002220.60.6.0/23\u0022,\r\n",
         "              \u002220.60.128.0/23\u0022,\r\n",
+        "              \u002220.60.134.0/23\u0022,\r\n",
         "              \u002220.150.32.0/23\u0022,\r\n",
         "              \u002220.150.90.0/24\u0022,\r\n",
         "              \u002223.96.64.64/26\u0022,\r\n",
@@ -11197,6 +11498,7 @@
         "              \u002220.47.12.0/24\u0022,\r\n",
         "              \u002220.150.85.0/24\u0022,\r\n",
         "              \u002220.150.105.0/24\u0022,\r\n",
+        "              \u002220.157.38.0/24\u0022,\r\n",
         "              \u002223.98.57.64/26\u0022,\r\n",
         "              \u002240.115.169.32/28\u0022,\r\n",
         "              \u002240.115.175.16/28\u0022,\r\n",

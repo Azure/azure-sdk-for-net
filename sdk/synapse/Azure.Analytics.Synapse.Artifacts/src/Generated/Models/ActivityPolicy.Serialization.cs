@@ -62,26 +62,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("timeout"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("retry"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retry = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retryIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("secureInput"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     secureInput = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("secureOutput"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }

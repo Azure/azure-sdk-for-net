@@ -6,14 +6,16 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    // TODODOCS: hard to explain.
     /// <summary>
+    /// A <see cref="DataFeedMetric"/> is a quantifiable measure that is used to monitor and assess the status of a specific business process.
+    /// It can be a combination of multiple time series values divided into dimensions.
+    /// For example, a web health metric might contain dimensions for user count in a specific market.
     /// </summary>
     [CodeGenModel("Metric")]
     public partial class DataFeedMetric
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedMetric"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedMetric"/> class.
         /// </summary>
         /// <param name="metricName">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricName"/> is null.</exception>

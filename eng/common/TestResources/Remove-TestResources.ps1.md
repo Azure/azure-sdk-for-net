@@ -187,7 +187,7 @@ Accept wildcard characters: False
 ### -Environment
 Name of the cloud environment.
 The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 ```yaml
 Type: String

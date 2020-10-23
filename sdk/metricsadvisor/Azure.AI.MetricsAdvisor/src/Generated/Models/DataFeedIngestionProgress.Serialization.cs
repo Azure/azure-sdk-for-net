@@ -31,6 +31,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("latestActiveTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     latestActiveTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

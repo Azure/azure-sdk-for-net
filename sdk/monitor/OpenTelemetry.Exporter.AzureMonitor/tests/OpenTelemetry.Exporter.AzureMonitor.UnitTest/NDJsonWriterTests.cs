@@ -21,6 +21,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Tests
             writer.JsonWriter.WriteEndObject();
 
             Assert.Equal("{\"property\":\"value\"}\n{\"anotherProperty\":2}", Encoding.UTF8.GetString(writer.ToBytes().Span.ToArray()));
+            writer.Dispose();
         }
     }
 }

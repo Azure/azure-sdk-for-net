@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ApiError.DeserializeApiError(property.Value);
                     continue;
                 }

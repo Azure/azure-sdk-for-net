@@ -23,13 +23,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeHttpHostPort] = PartBType.Http,
             [SemanticConventions.AttributeHttpTarget] = PartBType.Http,
 
-            [SemanticConventions.AttributeNetPeerName] = PartBType.Net,
-            [SemanticConventions.AttributeNetPeerIp] = PartBType.Net,
-            [SemanticConventions.AttributeNetPeerPort] = PartBType.Net,
-            [SemanticConventions.AttributeNetTransport] = PartBType.Net,
-            [SemanticConventions.AttributeNetHostIp] = PartBType.Net,
-            [SemanticConventions.AttributeNetHostPort] = PartBType.Net,
-            [SemanticConventions.AttributeNetHostName] = PartBType.Net,
+            [SemanticConventions.AttributeNetPeerName] = PartBType.Common,
+            [SemanticConventions.AttributeNetPeerIp] = PartBType.Common,
+            [SemanticConventions.AttributeNetPeerPort] = PartBType.Common,
+            [SemanticConventions.AttributeNetTransport] = PartBType.Common,
+            [SemanticConventions.AttributeNetHostIp] = PartBType.Common,
+            [SemanticConventions.AttributeNetHostPort] = PartBType.Common,
+            [SemanticConventions.AttributeNetHostName] = PartBType.Common,
+            [SemanticConventions.AttributeComponent] = PartBType.Common,
 
             [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
             [SemanticConventions.AttributeRpcService] = PartBType.Rpc,
@@ -44,6 +45,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeFaasDocumentName] = PartBType.FaaS,
             [SemanticConventions.AttributeFaasCron] = PartBType.FaaS,
             [SemanticConventions.AttributeFaasTime] = PartBType.FaaS,
+
+            [SemanticConventions.AttributeAzureNameSpace] = PartBType.Azure,
+            [SemanticConventions.AttributeEndpointAddress] = PartBType.Azure,
+            [SemanticConventions.AttributeMessageBusDestination] = PartBType.Azure,
 
             [SemanticConventions.AttributeMessagingSystem] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingDestination] = PartBType.Messaging,
@@ -99,12 +104,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                         continue;
                     }
 
-                    if (activityType == PartBType.Unknown || activityType == PartBType.Net)
+                    if (activityType == PartBType.Unknown || activityType == PartBType.Common)
                     {
                         activityType = tempActivityType;
                     }
 
-                    if (tempActivityType == activityType || tempActivityType == PartBType.Net)
+                    if (tempActivityType == activityType || tempActivityType == PartBType.Common)
                     {
                         partBTags.Add(entry.Key, entry.Value.ToString());
                     }

@@ -31,13 +31,13 @@
                         resourcesClient = DigitalTwinsTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         digitalTwinsClient = DigitalTwinsTestUtilities.GetDigitalTwinsClient(context,  new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
+                        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_LOCATION")))
                         {
                             location = DigitalTwinsTestUtilities.DefaultLocation;
                         }
                         else
                         {
-                            location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "").ToLower();
+                            location = Environment.GetEnvironmentVariable("AZURE_LOCATION").Replace(" ", "").ToLower();
                         }
 
                         this.initialized = true;
@@ -53,10 +53,6 @@
                 Location = location,
             };
 
-            PropertyInfo sku = digitalTwinsDescription.GetType().BaseType.GetProperty("Sku");
-            DigitalTwinsSkuInfo newSku = new DigitalTwinsSkuInfo();
-            newSku.GetType().GetProperty("Name").SetValue(newSku, "S1");
-            sku.SetValue(digitalTwinsDescription, newSku);
 
             return this.digitalTwinsClient.DigitalTwins.CreateOrUpdate(
                 resourceGroup.Name,

@@ -22,21 +22,41 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("minimum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimum = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maximum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maximum = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("default"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     @default = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("scaleType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scaleType = property.Value.GetString().ToResourceSkuCapacityScaleType();
                     continue;
                 }
