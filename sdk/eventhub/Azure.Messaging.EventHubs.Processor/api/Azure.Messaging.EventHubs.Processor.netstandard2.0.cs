@@ -7,6 +7,7 @@ namespace Azure.Messaging.EventHubs
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
+        public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Messaging.EventHubs.EventHubsSharedAccessKeyCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public new string ConsumerGroup { get { throw null; } }
         public new string EventHubName { get { throw null; } }

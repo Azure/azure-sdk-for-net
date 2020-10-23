@@ -15,6 +15,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -1233,9 +1234,10 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Paths
         /// <summary>
-        /// The <see cref="GetPaths"/> operation returns an async sequence
-        /// of paths in this file system.  Enumerating the paths may make
-        /// multiple requests to the service while fetching all the values.
+        /// The <see cref="GetPaths"/>
+        /// operation returns an async sequence of paths in this file system.
+        /// Enumerating the paths may make multiple requests to the service
+        /// while fetching all the values.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
@@ -1276,12 +1278,14 @@ namespace Azure.Storage.Files.DataLake
                 this,
                 path,
                 recursive,
-                userPrincipalName).ToSyncCollection(cancellationToken);
+                userPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetPathsAsync"/> operation returns an async
-        /// sequence of paths in this file system.  Enumerating the paths may
-        /// make multiple requests to the service while fetching all the
+        /// The <see cref="GetPathsAsync(string, bool, bool, CancellationToken)"/>
+        /// operation returns an async sequence of paths in this file system.  Enumerating
+        /// the paths may make multiple requests to the service while fetching all the
         /// values.
         ///
         /// For more information, see
@@ -1322,7 +1326,9 @@ namespace Azure.Storage.Files.DataLake
             new GetPathsAsyncCollection(this,
                 path,
                 recursive,
-                userPrincipalName).ToAsyncCollection(cancellationToken);
+                userPrincipalName,
+                $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPathsInternal"/> operation returns a
@@ -1330,7 +1336,8 @@ namespace Azure.Storage.Files.DataLake
         /// from the specified <paramref name="continuation"/>.  Use an empty
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
+        /// empty to make subsequent calls to
+        /// <see cref="GetPathsAsync"/>
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
@@ -1362,6 +1369,9 @@ namespace Azure.Storage.Files.DataLake
         /// An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000,
         /// the response will include up to 5,000 items.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the operation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1383,6 +1393,7 @@ namespace Azure.Storage.Files.DataLake
             bool userPrincipalName,
             string continuation,
             int? maxResults,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1407,6 +1418,7 @@ namespace Azure.Storage.Files.DataLake
                         upn: userPrincipalName,
                         path: path,
                         async: async,
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

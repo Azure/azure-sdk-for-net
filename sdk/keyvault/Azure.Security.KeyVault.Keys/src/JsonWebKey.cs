@@ -245,7 +245,7 @@ namespace Azure.Security.KeyVault.Keys
         #endregion
 
         /// <summary>
-        /// Gets the HSM token used with "Bring Your Own Key".
+        /// Gets the protected key used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; set; }
 
@@ -268,15 +268,15 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> or <see cref="KeyType.OctHsm"/> to an <see cref="Aes"/> object.
         /// </summary>
         /// <returns>An <see cref="Aes"/> object.</returns>
         /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Oct"/> or <see cref="K"/> is null.</exception>
         public Aes ToAes()
         {
-            if (KeyType != KeyType.Oct)
+            if (KeyType != KeyType.Oct && KeyType != KeyType.OctHsm)
             {
-                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} key");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} or {nameof(KeyType.OctHsm)} type");
             }
 
             if (K is null)

@@ -477,6 +477,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DeleteIfExistsAsync_Lease()
         {
@@ -501,6 +502,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DeleteIfExistsAsync_LeaseFailed()
         {
@@ -608,6 +610,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetPropertiesAsync_Lease()
         {
@@ -635,6 +638,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetPropertiesAsync_LeaseFailed()
         {
@@ -686,6 +690,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetMetadataAsync_Lease()
         {
@@ -717,6 +722,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetMetadataAsync_LeaseFailed()
         {
@@ -777,6 +783,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetAccessPolicyAsync_Lease()
         {
@@ -804,6 +811,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetAccessPolicyAsync_LeaseFailed()
         {
@@ -839,6 +847,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessPolicyAsync_Lease()
         {
@@ -871,6 +880,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessPolicyAsync_LeaseFailed()
         {
@@ -1097,6 +1107,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetStatisticsAsync_Lease()
         {
@@ -1124,6 +1135,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetStatisticsAsync_LeaseFailed()
         {
@@ -1242,6 +1254,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetQuotaAsync_Lease()
         {
@@ -1271,6 +1284,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetQuotaAsync_LeaseFailed()
         {
@@ -1305,6 +1319,47 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DeleteAsync_IncludeLeasedSnapshots()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await share.CreateIfNotExistsAsync(quotaInGB: 1);
+
+            // Create a snapshot
+            Response<ShareSnapshotInfo> snapshotResponse0 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient0 = share.WithSnapshot(snapshotResponse0.Value.Snapshot);
+
+            // Create another snapshot
+            Response<ShareSnapshotInfo> snapshotResponse1 = await share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient1 = share.WithSnapshot(snapshotResponse1.Value.Snapshot);
+
+            // Lease 2nd snapshot
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShareClient1.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync(duration);
+
+            // Act
+            ShareDeleteOptions options = new ShareDeleteOptions()
+            {
+                ShareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.IncludeWithLeased
+            };
+            await share.DeleteAsync(options);
+
+            // Assert
+            Response<bool> shareExists = await share.ExistsAsync();
+            Response<bool> snapshot0Exists = await snapshotShareClient0.ExistsAsync();
+            Response<bool> snapshot1Exists = await snapshotShareClient1.ExistsAsync();
+
+            Assert.IsFalse(shareExists);
+            Assert.IsFalse(snapshot0Exists);
+            Assert.IsFalse(snapshot1Exists);
         }
 
         [Test]
@@ -1365,6 +1420,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DeleteAsync_Lease()
         {
@@ -1389,6 +1445,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DeleteAsync_LeaseFailed()
         {
@@ -1491,6 +1548,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AcquireLeaseAsync()
         {
@@ -1520,6 +1578,28 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task AcquireLeaseAsync_ExtendedExceptionMessage()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(10);
+            ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.AcquireAsync(duration),
+                e =>
+                {
+                    Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                });
+        }
+
+        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AcquireLeaseAsync_Snapshot()
         {
@@ -1545,6 +1625,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AcquireLeaseAsync_Error()
         {
@@ -1561,6 +1642,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AcquireLeaseAsync_SnapshotError()
         {
@@ -1578,6 +1660,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ReleaseLeaseAsync()
         {
@@ -1598,6 +1681,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ReleaseLeaseAsync_Error()
         {
@@ -1614,6 +1698,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ReleaseLeaseAsync_Snapshot()
         {
@@ -1632,6 +1717,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ReleaseLeaseAsync_SnapshotError()
         {
@@ -1649,6 +1735,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ChangeLeaseAsync()
         {
@@ -1668,6 +1755,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ChangeLeaseAsync_Error()
         {
@@ -1685,6 +1773,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ChangeLeaseAsync_Snapshot()
         {
@@ -1708,6 +1797,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ChangeLeaseAsync_SnapshotError()
         {
@@ -1725,6 +1815,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BreakLeaseAsync()
         {
@@ -1745,6 +1836,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BreakLeaseAsync_Error()
         {
@@ -1762,6 +1854,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BreakLeaseAsync_Snapshot()
         {
@@ -1780,6 +1873,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BreakLeaseAsync_SnapshotError()
         {
@@ -1797,6 +1891,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RenewLeaseAsync()
         {
@@ -1824,6 +1919,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RenewLeaseAsync_Error()
         {
@@ -1841,6 +1937,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RenewLeaseAsync_Snapshot()
         {
@@ -1862,6 +1959,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RenewLeaseAsync_SnapshotError()
         {

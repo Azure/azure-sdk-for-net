@@ -1385,6 +1385,30 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AmazonS3LinkedServiceWithTemporarySecurityCredentials = @"
+{
+    name: ""AmazonS3LinkedService"",
+    properties:
+    {
+        type: ""AmazonS3"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType : ""TemporarySecurityCredentials"",
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            },
+            sessionToken : {
+                value : ""fakeSessionToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureDataLakeStoreLinkedService = @"
 {
     name: ""AzureDataLakeStoreLinkedService"",
@@ -1689,6 +1713,30 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string ConcurLinkedServiceWithConnectionProperties = @"
+{
+    name: ""ConcurLinkedService"",
+    properties: {
+        type: ""Concur"",
+        typeProperties: {
+            connectionProperties: {
+                clientId : ""f145kn9Pcyq9pr4lvumdapfl4rive"",
+                username : ""jsmith"",
+                password : {
+                   type: ""SecureString"",
+                   value: ""some secret""
+                },
+                useEncryptedEndpoints : true,
+                useHostVerification : true,
+                usePeerVerification : true
+           }
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string CouchbaseLinkedService = @"
 {

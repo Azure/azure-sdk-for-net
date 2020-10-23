@@ -4444,6 +4444,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AcquireLeaseAsync_ExtendedExceptionMessage()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(10);
+            BlobLeaseClient blobLeaseClient = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blobLeaseClient.AcquireAsync(duration),
+                e =>
+                {
+                    Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                });
+        }
+
+        [Test]
         public async Task RenewLeaseAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

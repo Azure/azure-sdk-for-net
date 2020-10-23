@@ -220,6 +220,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Max
             // 
             dynamic epInput3 = createModelFunc();
+            epInput3.Sku = returnedEp.Sku;
             epInput3.DatabaseDtuMax = 100;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
@@ -233,6 +234,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Min
             // 
             dynamic epInput4 = createModelFunc();
+            epInput4.Sku = returnedEp.Sku;
             epInput4.DatabaseDtuMin = 10;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput4);

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -43,7 +42,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(EventRoutesListOptions eventRoutesListOptions)
+        internal HttpMessage CreateListRequest(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,13 +52,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/eventroutes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesListOptions?.Traceparent != null)
+            if (eventRoutesListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
             }
-            if (eventRoutesListOptions?.Tracestate != null)
+            if (eventRoutesListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
             }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {
@@ -76,7 +75,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EventRouteCollection>> ListAsync(EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsEventRouteCollection>> ListAsync(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(eventRoutesListOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -84,9 +83,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRouteCollection value = default;
+                        DigitalTwinsEventRouteCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
+                        value = DigitalTwinsEventRouteCollection.DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +100,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EventRouteCollection> List(EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsEventRouteCollection> List(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(eventRoutesListOptions);
             _pipeline.Send(message, cancellationToken);
@@ -109,9 +108,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRouteCollection value = default;
+                        DigitalTwinsEventRouteCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
+                        value = DigitalTwinsEventRouteCollection.DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -119,7 +118,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions)
+        internal HttpMessage CreateGetByIdRequest(string id, GetDigitalTwinsEventRouteOptions eventRoutesGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,13 +129,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesGetByIdOptions?.Traceparent != null)
+            if (eventRoutesGetByIdOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.TraceParent);
             }
-            if (eventRoutesGetByIdOptions?.Tracestate != null)
+            if (eventRoutesGetByIdOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -153,7 +152,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<EventRoute>> GetByIdAsync(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsEventRoute>> GetByIdAsync(string id, GetDigitalTwinsEventRouteOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -166,9 +165,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRoute value = default;
+                        DigitalTwinsEventRoute value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventRoute.DeserializeEventRoute(document.RootElement);
+                        value = DigitalTwinsEventRoute.DeserializeDigitalTwinsEventRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,7 +186,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<EventRoute> GetById(string id, EventRoutesGetByIdOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsEventRoute> GetById(string id, GetDigitalTwinsEventRouteOptions eventRoutesGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -200,9 +199,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRoute value = default;
+                        DigitalTwinsEventRoute value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventRoute.DeserializeEventRoute(document.RootElement);
+                        value = DigitalTwinsEventRoute.DeserializeDigitalTwinsEventRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,7 +209,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRequest(string id, EventRoute eventRoute, EventRoutesAddOptions eventRoutesAddOptions)
+        internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions eventRoutesAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,13 +220,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesAddOptions?.Traceparent != null)
+            if (eventRoutesAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesAddOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesAddOptions.TraceParent);
             }
-            if (eventRoutesAddOptions?.Tracestate != null)
+            if (eventRoutesAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesAddOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesAddOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -255,7 +254,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> AddAsync(string id, EventRoute eventRoute = null, EventRoutesAddOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -288,7 +287,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Add(string id, EventRoute eventRoute = null, EventRoutesAddOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -306,7 +305,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions)
+        internal HttpMessage CreateDeleteRequest(string id, DeleteEventRouteOptions eventRoutesDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,13 +316,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesDeleteOptions?.Traceparent != null)
+            if (eventRoutesDeleteOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesDeleteOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesDeleteOptions.TraceParent);
             }
-            if (eventRoutesDeleteOptions?.Tracestate != null)
+            if (eventRoutesDeleteOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesDeleteOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesDeleteOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -340,7 +339,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, DeleteEventRouteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -369,7 +368,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Delete(string id, EventRoutesDeleteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
+        public Response Delete(string id, DeleteEventRouteOptions eventRoutesDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -387,7 +386,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, EventRoutesListOptions eventRoutesListOptions)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -396,13 +395,13 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (eventRoutesListOptions?.Traceparent != null)
+            if (eventRoutesListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", eventRoutesListOptions.Traceparent);
+                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
             }
-            if (eventRoutesListOptions?.Tracestate != null)
+            if (eventRoutesListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", eventRoutesListOptions.Tracestate);
+                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
             }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {
@@ -421,7 +420,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<EventRouteCollection>> ListNextPageAsync(string nextLink, EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsEventRouteCollection>> ListNextPageAsync(string nextLink, GetDigitalTwinsEventRoutesOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -434,9 +433,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRouteCollection value = default;
+                        DigitalTwinsEventRouteCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
+                        value = DigitalTwinsEventRouteCollection.DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -453,7 +452,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<EventRouteCollection> ListNextPage(string nextLink, EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsEventRouteCollection> ListNextPage(string nextLink, GetDigitalTwinsEventRoutesOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -466,9 +465,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        EventRouteCollection value = default;
+                        DigitalTwinsEventRouteCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
+                        value = DigitalTwinsEventRouteCollection.DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

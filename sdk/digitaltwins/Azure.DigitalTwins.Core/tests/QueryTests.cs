@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -36,8 +37,8 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Create a room twin, with property "IsOccupied": true
                 string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
-                string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 string queryString = "SELECT * FROM digitaltwins where IsOccupied = true";
 
@@ -76,6 +77,7 @@ namespace Azure.DigitalTwins.Core.Tests
             int pageSize = 5;
             string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
             string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+            TimeSpan QueryWaitTimeout = TimeSpan.FromMinutes(1); // Wait at most one minute for the created twins to become queryable
 
             try
             {
@@ -84,26 +86,45 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
 
                 // Create a room twin, with property "IsOccupied": true
-                string roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
 
-                for (int i = 0; i < pageSize + 1; i++)
+                for (int i = 0; i < pageSize * 2; i++)
                 {
                     string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
-                    await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+                    await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
                 }
 
                 string queryString = "SELECT * FROM digitaltwins";
 
                 // act
-                var options = new QueryTwinsOptions();
+                var options = new QueryOptions();
                 options.MaxItemsPerPage = pageSize;
-                AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, options);
+
+                CancellationTokenSource queryTimeoutCancellationToken = new CancellationTokenSource(QueryWaitTimeout);
+                bool queryHasExpectedCount = false;
+                while (!queryHasExpectedCount)
+                {
+                    if (queryTimeoutCancellationToken.IsCancellationRequested)
+                    {
+                        throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
+                    }
+
+                    AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, null, queryTimeoutCancellationToken.Token);
+                    int count = 0;
+                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages())
+                    {
+                        count += queriedTwinPage.Values.Count;
+                    }
+
+                    // Once at least (page + 1) twins are query-able, then page size control can be tested.
+                    queryHasExpectedCount = count >= pageSize + 1;
+                }
 
                 // assert
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
                 // elements, or have no continuation token (signaling that it is the last page)
                 int pageCount = 0;
-                await foreach (Page<string> page in asyncPageableResponse.AsPages())
+                await foreach (Page<string> page in client.QueryAsync(queryString, options).AsPages())
                 {
                     pageCount++;
                     if (page.ContinuationToken != null)

@@ -44,19 +44,17 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     },
     /// };
     ///
-    /// string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-    ///
-    /// await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-    /// Console.WriteLine($&quot;Created digital twin &apos;{basicDtId}&apos;.&quot;);
+    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId, basicTwin);
+    /// Console.WriteLine($&quot;Created digital twin &apos;{createDigitalTwinResponse.Value.Id}&apos;.&quot;);
     /// </code>
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
     ///
     /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
-    /// Response&lt;string&gt; getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+    /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
     /// if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     /// {
-    ///     BasicDigitalTwin basicDt = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(getBasicDtResponse.Value);
+    ///     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
     ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
     ///     string component1RawText = ((JsonElement)basicDt.CustomProperties[&quot;Component1&quot;]).GetRawText();
