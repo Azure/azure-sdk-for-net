@@ -7,15 +7,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1b2efbc-65c4-4961-a2dd-88966e45f9cc"
+          "fa533ef3-83a8-4d2f-a845-3c425e187020"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11997"
         ],
         "x-ms-request-id": [
-          "0c897798-bd08-4273-922c-3fe903499899"
+          "93a17075-5a5f-49c0-9b4b-d14880d82f3a"
         ],
         "x-ms-correlation-request-id": [
-          "0c897798-bd08-4273-922c-3fe903499899"
+          "93a17075-5a5f-49c0-9b4b-d14880d82f3a"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191015T121355Z:0c897798-bd08-4273-922c-3fe903499899"
+          "FRANCESOUTH:20201020T162257Z:93a17075-5a5f-49c0-9b4b-d14880d82f3a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 15 Oct 2019 12:13:54 GMT"
+          "Tue, 20 Oct 2020 16:22:56 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -54,35 +54,35 @@
           "-1"
         ],
         "Content-Length": [
-          "5579"
+          "9073"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto\",\r\n  \"namespace\": \"Microsoft.Kusto\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"2746ea77-4702-4b45-80ca-3c97e680e8b7\",\r\n      \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037c\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/eventhubconnections\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/dataconnections\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/attacheddatabaseconfigurations\",\r\n      \"locations\": [\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"North Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"Australia East\",\r\n        \"Brazil South\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada East\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"UK West\",\r\n        \"Korea South\",\r\n        \"France South\",\r\n        \"Australia Southeast\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"Australia Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto\",\r\n  \"namespace\": \"Microsoft.Kusto\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"2746ea77-4702-4b45-80ca-3c97e680e8b7\",\r\n      \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037c\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Canada Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Germany West Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Brazil South\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/attacheddatabaseconfigurations\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/eventhubconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg4839?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQ4Mzk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg4217?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQyMTc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"Australia Central\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7daebdbe-2ec8-470b-b936-be940f3f5528"
+          "788945c1-f441-46a4-a6bf-4eac847afef5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "32"
+          "39"
         ]
       },
       "ResponseHeaders": {
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "80411f8b-798f-4bef-b5d5-718e93033368"
+          "93464223-71cd-4b03-9c6c-506c81d8a976"
         ],
         "x-ms-correlation-request-id": [
-          "80411f8b-798f-4bef-b5d5-718e93033368"
+          "93464223-71cd-4b03-9c6c-506c81d8a976"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191015T121358Z:80411f8b-798f-4bef-b5d5-718e93033368"
+          "FRANCESOUTH:20201020T162259Z:93464223-71cd-4b03-9c6c-506c81d8a976"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,10 +111,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 15 Oct 2019 12:13:57 GMT"
+          "Tue, 20 Oct 2020 16:22:58 GMT"
         ],
         "Content-Length": [
-          "182"
+          "189"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,32 +123,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4839\",\r\n  \"name\": \"sdktestrg4839\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4217\",\r\n  \"name\": \"sdktestrg4217\",\r\n  \"location\": \"australiacentral\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-06-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2020-09-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\",\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"clientstestkey\",\r\n      \"keyVersion\": \"6fd57d53ad6b4b53bacb062c98c761a0\",\r\n      \"keyVaultUri\": \"https://clientstestkv.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ce82c9f8-1b04-4c28-bb90-f66725dd0230"
+          "ce3041d4-d3bf-401f-867c-c07331bdf5f6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "219"
+          "220"
         ]
       },
       "ResponseHeaders": {
@@ -162,16 +162,17 @@
           "\"\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18&operationResultResponseType=Location"
         ],
         "x-ms-request-id": [
-          "c2d3b0a8-36a3-46a1-acbc-082b460dd7fe"
+          "4cf83a34-04f6-4838-a0f8-28a1a190b8d1"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18"
         ],
         "Set-Cookie": [
-          "ARRAffinity=f8efa2d44f4f61144c8c03d4c5b5a5e933cd99e4fb3c36abf43f050b1eae54d5;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+          "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
+          "ARRAffinitySameSite=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;SameSite=None;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -180,10 +181,10 @@
           "199"
         ],
         "x-ms-correlation-request-id": [
-          "4f1510fa-6865-4736-9790-0493cf6afdd2"
+          "6c0b7931-0e88-4e8a-a802-35e7b0bd8253"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191015T121359Z:4f1510fa-6865-4736-9790-0493cf6afdd2"
+          "FRANCESOUTH:20201020T162302Z:6c0b7931-0e88-4e8a-a802-35e7b0bd8253"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -192,10 +193,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 15 Oct 2019 12:13:59 GMT"
+          "Tue, 20 Oct 2020 16:23:02 GMT"
         ],
         "Content-Length": [
-          "1051"
+          "1117"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -204,20 +205,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Kusto/Clusters/ofertestforclient\",\r\n  \"name\": \"ofertestforclient\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Dev(No SLA)_Standard_D11_v2\",\r\n    \"tier\": \"Basic\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"uri\": \"https://ofertestforclient.centralus.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-ofertestforclient.centralus.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": {\r\n      \"version\": 1,\r\n      \"isEnabled\": false,\r\n      \"minimum\": 1,\r\n      \"maximum\": 1\r\n    },\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\",\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\"\r\n    },\r\n    \"provisioningState\": \"Accepted\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"22aa465d-7d3a-4f54-b0a1-8092bc583771\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\",\r\n    \"userAssignedIdentities\": {}\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/Clusters/eventgridclienttest\",\r\n  \"name\": \"eventgridclienttest\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D11_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"stateReason\": null,\r\n    \"uri\": \"https://eventgridclienttest.australiacentral.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-eventgridclienttest.australiacentral.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": null,\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"clientstestkey\",\r\n      \"keyVersion\": \"6fd57d53ad6b4b53bacb062c98c761a0\",\r\n      \"keyVaultUri\": \"https://clientstestkv.vault.azure.net/\"\r\n    },\r\n    \"languageExtensions\": {\r\n      \"value\": []\r\n    },\r\n    \"enablePurge\": false,\r\n    \"enableDoubleEncryption\": false,\r\n    \"engineType\": \"V2\",\r\n    \"provisioningState\": \"Accepted\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"a4f74545-0569-49ab-a902-f712fcf2f9e0\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  }\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzE5YWI5Mzk0LTNkODQtNGNkZC04ZWY2LWExNjA5MWQxNTAzYT9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -234,19 +235,20 @@
           "299"
         ],
         "x-ms-request-id": [
-          "23468b3e-7807-4d37-a028-713ef13afc2f"
+          "95f44ab2-1c3f-46fc-8aea-ee30d732f203"
         ],
         "Set-Cookie": [
-          "ARRAffinity=3afece78d18a01c40dada722ca97ed90078102060b84b73a66e9795b86ad3fa8;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+          "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
+          "ARRAffinitySameSite=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;SameSite=None;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "926c97a9-3c22-4dbe-8431-039528edc796"
+          "068a9805-a863-4519-b37f-b16ba4b07362"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191015T121430Z:926c97a9-3c22-4dbe-8431-039528edc796"
+          "FRANCESOUTH:20201020T162333Z:068a9805-a863-4519-b37f-b16ba4b07362"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -255,10 +257,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 15 Oct 2019 12:14:29 GMT"
+          "Tue, 20 Oct 2020 16:23:32 GMT"
         ],
         "Content-Length": [
-          "553"
+          "513"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -267,20 +269,84 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/19ab9394-3d84-4cdd-8ef6-a16091d1503a\",\r\n  \"name\": \"19ab9394-3d84-4cdd-8ef6-a16091d1503a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-10-15T12:13:59.5627156Z\",\r\n  \"endTime\": \"2019-10-15T12:14:11.4848654Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ServiceConfigurationAlter\",\r\n    \"RootActivityId\": \"5232de3a-1778-471c-8183-b0d2d4abfd88\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"error\": {\r\n    \"code\": \"PartiallySucceeded\",\r\n    \"message\": \"Internal Server Error\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/465356cf-a398-4931-8019-d97de845e6fd\",\r\n  \"name\": \"465356cf-a398-4931-8019-d97de845e6fd\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T16:23:02.350052Z\",\r\n  \"endTime\": \"2020-10-20T16:23:21.8762201Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ServiceConfigurationAlter\",\r\n    \"RootActivityId\": \"2c6faccd-a343-46e4-ae17-d943507a6066\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-06-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27817.03",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Kusto.KustoManagementClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "298"
+        ],
+        "x-ms-request-id": [
+          "da476bd9-661d-4a0f-be6a-329fa9bf5fea"
+        ],
+        "Set-Cookie": [
+          "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
+          "ARRAffinitySameSite=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;SameSite=None;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "b103f92c-9628-4a5c-a757-6472ad3b659a"
+        ],
+        "x-ms-routing-request-id": [
+          "FRANCESOUTH:20201020T162404Z:b103f92c-9628-4a5c-a757-6472ad3b659a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 20 Oct 2020 16:24:04 GMT"
+        ],
+        "Content-Length": [
+          "516"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/465356cf-a398-4931-8019-d97de845e6fd\",\r\n  \"name\": \"465356cf-a398-4931-8019-d97de845e6fd\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T16:23:02.350052Z\",\r\n  \"endTime\": \"2020-10-20T16:23:55.5514548Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ServiceConfigurationAlter\",\r\n    \"RootActivityId\": \"2c6faccd-a343-46e4-ae17-d943507a6066\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2020-09-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29017.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Kusto.KustoManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -300,19 +366,20 @@
           "299"
         ],
         "x-ms-request-id": [
-          "080b8b16-2939-42d3-88fa-bd4f992dc773"
+          "347c206e-7567-4fcb-860a-078ef6beb90c"
         ],
         "Set-Cookie": [
-          "ARRAffinity=20a1717378e36ca6eef5d7a9ef01b04cdb43003687b1d2f915704ceec819965a;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
+          "ARRAffinity=2178e553889a2baebeafe5c8f11834575983f3128efba736a18021d968aa0b1a;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
+          "ARRAffinitySameSite=2178e553889a2baebeafe5c8f11834575983f3128efba736a18021d968aa0b1a;Path=/;HttpOnly;SameSite=None;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "720f31f8-eed3-4c9d-bca2-869440534e20"
+          "c3ecf53a-d8e9-4f74-8073-ab54a494d429"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191015T121430Z:720f31f8-eed3-4c9d-bca2-869440534e20"
+          "FRANCESOUTH:20201020T162404Z:c3ecf53a-d8e9-4f74-8073-ab54a494d429"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -321,10 +388,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 15 Oct 2019 12:14:30 GMT"
+          "Tue, 20 Oct 2020 16:24:04 GMT"
         ],
         "Content-Length": [
-          "1052"
+          "1136"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -333,20 +400,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Kusto/Clusters/ofertestforclient\",\r\n  \"name\": \"ofertestforclient\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Dev(No SLA)_Standard_D11_v2\",\r\n    \"tier\": \"Basic\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"uri\": \"https://ofertestforclient.centralus.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-ofertestforclient.centralus.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": {\r\n      \"version\": 1,\r\n      \"isEnabled\": false,\r\n      \"minimum\": 1,\r\n      \"maximum\": 1\r\n    },\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\",\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"22aa465d-7d3a-4f54-b0a1-8092bc583771\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\",\r\n    \"userAssignedIdentities\": {}\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/Clusters/eventgridclienttest\",\r\n  \"name\": \"eventgridclienttest\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D11_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"stateReason\": null,\r\n    \"uri\": \"https://eventgridclienttest.australiacentral.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-eventgridclienttest.australiacentral.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": null,\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": {\r\n      \"keyVaultUri\": \"https://clientstestkv.vault.azure.net/\",\r\n      \"keyName\": \"clientstestkey\",\r\n      \"keyVersion\": \"6fd57d53ad6b4b53bacb062c98c761a0\",\r\n      \"userIdentity\": \"\"\r\n    },\r\n    \"languageExtensions\": {\r\n      \"value\": []\r\n    },\r\n    \"enablePurge\": false,\r\n    \"enableDoubleEncryption\": false,\r\n    \"engineType\": \"V2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"a4f74545-0569-49ab-a902-f712fcf2f9e0\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "Initialize": [
-      "sdktestrg4839",
-      "testcluster8834",
-      "testfollower1917",
-      "testdatabase9606",
-      "testattacheddatabaseconfiguration3404",
-      "eventhubConnection955",
-      "eventGridConnection8303",
-      "iothubConnection9899"
+      "sdktestrg4217",
+      "testcluster3100",
+      "testfollower2590",
+      "testdatabase9056",
+      "testattacheddatabaseconfiguration5973",
+      "eventhubConnection1116",
+      "eventGridConnection6218",
+      "iothubConnection7043"
     ]
   },
   "Variables": {

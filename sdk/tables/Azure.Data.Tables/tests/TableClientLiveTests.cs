@@ -1052,5 +1052,36 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
             Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
         }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task BatchError()
+        {
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+
+            // Create the batch.
+            var batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add the last entity to the table prior to adding it as part of the batch to cause a batch failure.
+            await client.AddEntityAsync(entitiesToCreate.Last());
+
+            // Add the entities to the batch
+            batch.AddEntities(entitiesToCreate);
+
+            try
+            {
+                TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
+                Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
+                Assert.That(ex.Message.Contains(entitiesToCreate.Last().RowKey), $"Exception message should have contained {entitiesToCreate.Last().RowKey}.\n\n Actual: {ex.Message}");
+            }
+        }
     }
 }

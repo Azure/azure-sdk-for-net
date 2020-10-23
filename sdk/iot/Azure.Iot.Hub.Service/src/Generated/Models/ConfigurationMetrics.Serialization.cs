@@ -49,6 +49,11 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("results"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, long> dictionary = new Dictionary<string, long>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -59,6 +64,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("queries"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

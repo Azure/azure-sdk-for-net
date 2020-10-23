@@ -423,8 +423,8 @@ namespace Azure.Search.Documents.Tests
         public async Task Cancels_OnlySlow()
         {
             TestHandler first = new TestHandler() { Delay = TimeSpan.FromMilliseconds(20) };
-            TestHandler second = new TestHandler() { Delay = TimeSpan.FromMilliseconds(200) };
-            TestHandler third = new TestHandler() { Delay = TimeSpan.FromMilliseconds(200) };
+            TestHandler second = new TestHandler() { Delay = TimeSpan.FromMilliseconds(500) };
+            TestHandler third = new TestHandler() { Delay = TimeSpan.FromMilliseconds(500) };
             CancellationTokenSource cancellation = new CancellationTokenSource();
 
             Func<EventArgs, CancellationToken, Task> handler = null;

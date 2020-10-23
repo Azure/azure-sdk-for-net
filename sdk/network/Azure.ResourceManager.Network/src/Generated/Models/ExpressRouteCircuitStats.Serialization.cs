@@ -48,21 +48,41 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("primarybytesIn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     primarybytesIn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("primarybytesOut"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     primarybytesOut = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("secondarybytesIn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     secondarybytesIn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("secondarybytesOut"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     secondarybytesOut = property.Value.GetInt64();
                     continue;
                 }

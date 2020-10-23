@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -47,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
 
                 // Act - Test publishing telemetry to a digital twin.
-                var telemetryOptions = new DigitalTwinsSendTelemetryOptions()
+                var telemetryOptions = new PublishTelemetryOptions()
                 {
                     TimeStamp = default
                 };
@@ -57,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
                 // Act - Test publishing telemetry to a component in a digital twin.
-                var componentTelemetryOptions = new DigitalTwinsSendComponentTelemetryOptions()
+                var componentTelemetryOptions = new PublishComponentTelemetryOptions()
                 {
                     TimeStamp = default
                 };
@@ -117,10 +118,10 @@ namespace Azure.DigitalTwins.Core.Tests
             await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
             // Generate the payload needed to create the room with wifi twin.
-            string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
+            BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
             // Create the room with wifi component digital twin.
-            await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
+            await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
         private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)

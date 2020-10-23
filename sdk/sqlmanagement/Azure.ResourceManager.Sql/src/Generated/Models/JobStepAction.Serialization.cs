@@ -39,11 +39,21 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new JobStepActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = new JobStepActionSource(property.Value.GetString());
                     continue;
                 }

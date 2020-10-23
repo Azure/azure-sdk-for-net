@@ -42,11 +42,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("storageAccountType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diskEncryptionSet = DeserializeSubResource(property.Value);
                     continue;
                 }

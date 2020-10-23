@@ -42,6 +42,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -52,6 +57,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("phonePlanIds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -67,11 +77,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("quantity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     quantity = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("locationOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LocationOptionsDetails> array = new List<LocationOptionsDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -82,11 +102,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new SearchStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("phoneNumbers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -97,11 +127,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("reservationExpiryDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reservationExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     errorCode = property.Value.GetInt32();
                     continue;
                 }

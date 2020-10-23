@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new FirewallPolicyNatRuleActionType(property.Value.GetString());
                     continue;
                 }

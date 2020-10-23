@@ -31,6 +31,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -41,11 +46,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("quantity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     quantity = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("quantityObtained"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     quantityObtained = property.Value.GetInt32();
                     continue;
                 }
@@ -56,6 +71,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("focDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     focDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
