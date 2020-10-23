@@ -19,6 +19,7 @@ Familiarity with the v11 client library is assumed. For those new to the Azure S
   - [Uploading Blobs to a Container](#uploading-blobs-to-a-container)
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
+  - [Generate a SAS](#generate-a-sas)
   - [Other](#other)
 - [Additional information](#additional-information)
 
@@ -71,71 +72,31 @@ You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/
 
 #### SAS
 
-There are various SAS tokens that may be generated. Visit our documentation pages to learn how to [Create a User Delegation SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet), [Create a Service SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-service-sas-create-dotnet), or [Create an Account SAS](https://docs.microsoft.com/azure/storage/common/storage-account-sas-create-dotnet?toc=/azure/storage/blobs/toc.json).
+This section regards authenticating a client with an existing SAS. For migration samples regarding SAS generation, go to [Generate a SAS](#generate-a-sas).
 
 v11
+
+In general, SAS tokens can be provided on their own to be applied as needed, or as a complete, self-authenticating URL. The legacy library allowed providing a SAS through `StorageCredentials` as well as constructing with a complete URL.
+
 ```csharp
-string sasBlobToken;
+string sasQueryString; // the provided SAS
+Uri blobLocation; // URI to a blob the SAS grants access to
+StorageCredentials credentials = new StorageCredentials(sasQueryString);
+CloudBlob blob = new CloudBlob(blobLocation, credentials);
+```
 
-// Get a reference to a blob within the container.
-// Note that the blob may not exist yet, but a SAS can still be created for it.
-CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
-
-if (policyName == null)
-{
-   // Create a new access policy and define its constraints.
-   // Note that the SharedAccessBlobPolicy class is used both to define the parameters of an ad hoc SAS, and
-   // to construct a shared access policy that is saved to the container's shared access policies.
-   SharedAccessBlobPolicy adHocSAS = new SharedAccessBlobPolicy()
-   {
-       // When the start time for the SAS is omitted, the start time is assumed to be the time when the storage service receives the request.
-       // Omitting the start time for a SAS that is effective immediately helps to avoid clock skew.
-       SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
-       Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-   };
-
-   // Generate the shared access signature on the blob, setting the constraints directly on the signature.
-   sasBlobToken = blob.GetSharedAccessSignature(adHocSAS);
-
-   Console.WriteLine("SAS for blob (ad hoc): {0}", sasBlobToken);
-   Console.WriteLine();
-}
-else
-{
-   // Generate the shared access signature on the blob. In this case, all of the constraints for the
-   // shared access signature are specified on the container's stored access policy.
-   sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
-
-   Console.WriteLine("SAS for blob (stored access policy): {0}", sasBlobToken);
-   Console.WriteLine();
-}
-
-// Return the URI string for the container, including the SAS token.
-return blob.Uri + sasBlobToken;
+```csharp
+Uri blobLocationWithSAS; // self-authenticating SAS URI to a blob
+CloudBlob blob = new CloudBlob(blobLocationWithSAS);
 ```
 
 v12
+
+The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, there is currently no way to rotate a SAS in a client.
+
 ```csharp
-// Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder()
-{
-    BlobContainerName = containerName,
-    BlobName = blobName,
-    ExpiresOn = new DateTimeOffset
-    IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
-};
-// Set Permissions
-sasBuilder.SetPermissions(BlobSasPermissions.Read);
-
-// Create SasQueryParameters
-BlobSasQueryParameters parameters = sasBuilder.ToSasQueryParameters(sharedKeyCredential);
-
-// Create Uri with SasToken
-BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri)
-{
-    Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
-};
-Uri sasUri = uriBuilder.ToUri()
+Uri blobLocationWithSAS; // self-authenticating SAS URI to a blob
+BlobClient blob = new BlobClient(blobLocationWithSAS);
 ```
 
 #### Connection string
@@ -358,6 +319,80 @@ await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
 {
     Console.WriteLine("\t" + blobItem.Name);
 }
+```
+
+### Generate a SAS
+
+ There are various SAS tokens that may be generated. Visit our documentation pages to learn more: [Create a User Delegation SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet), [Create a Service SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-service-sas-create-dotnet), or [Create an Account SAS](https://docs.microsoft.com/azure/storage/common/storage-account-sas-create-dotnet?toc=/azure/storage/blobs/toc.json).
+
+v11
+
+The following example is for creating a SAS to a single blob in the legacy library, but this pattern is applicable to container SAS and service SAS as well.
+
+```csharp
+// blob to generate a SAS for, must be authenticated with shared key
+CloudBlob blob;
+
+// Create a new access policy and define its constraints.
+SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+{
+    // SAS will be valid immetiately until 24 hours from now
+    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+    Permissions = SharedAccessBlobPermissions.Read |
+        SharedAccessBlobPermissions.Write |
+        SharedAccessBlobPermissions.Create
+    // other optional parameters specified here
+};
+
+// Generate a SAS with the given policy, scoped to this blob
+string sasBlobToken = blob.GetSharedAccessSignature(sasPolicy);
+
+// optionally combine with URI for a full, self-authenticated URI to the blob
+return blob.Uri + sasBlobToken;
+```
+
+You could also make a SAS using a predefined policy stored on the service, instead of defining it in code.
+
+```csharp
+string policyId; // the id of the stored policy
+sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
+```
+
+v12
+
+The modern SDK uses a builder pattern for constructing a SAS token. Clients are not involved in the process.
+
+```csharp
+Uri resourceUri; // URI to the resource we want to scope the SAS to
+StorageSharedKeyCredential credential; // key used to sign the SAS
+
+// Create BlobSasBuilder and specify parameters
+BlobSasBuilder sasBuilder = new BlobSasBuilder()
+{
+    // with no url in a client to read from, container and blob name must be provided if applicable
+    BlobContainerName = containerName,
+    BlobName = blobName,
+    ExpiresOn = new DateTimeOffset
+};
+// permissions applied separately, using the appropriate enum to the scope of your SAS
+sasBuilder.SetPermissions(BlobSasPermissions.Read);
+
+// Create full, self-authenticating URI to the resource
+BlobUriBuilder uriBuilder = new BlobUriBuilder(resourceUri)
+{
+    Sas = sasBuilder.ToSasQueryParameters(credential)
+};
+Uri sasUri = uriBuilder.ToUri()
+```
+
+If using a stored access policy, construct your `BlobSasBuilder` from the example above as follows:
+
+```csharp
+string identifier; // ID of the stored access policy
+BlobSasBuilder sasBuilder = new BlobSasBuilder()
+{
+    Identifier = identifier
+};
 ```
 
 ### Other
