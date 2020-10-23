@@ -1061,7 +1061,7 @@ namespace Azure.DigitalTwins.Core
         /// {
         ///     Console.WriteLine($&quot;Retrieved model &apos;{model.Id}&apos;, &quot; +
         ///         $&quot;display name &apos;{model.DisplayName[&quot;en&quot;]}&apos;, &quot; +
-        ///         $&quot;upload time &apos;{model.UploadTime}&apos;, &quot; +
+        ///         $&quot;uploaded on &apos;{model.UploadedOn}&apos;, &quot; +
         ///         $&quot;and decommissioned &apos;{model.Decommissioned}&apos;&quot;);
         /// }
         /// </code>
@@ -1283,7 +1283,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Creates one or many models asynchronously.
         /// </summary>
-        /// <param name="dtdlModels">The set of models conforming to the Digital Twins Definition Language (DTDL) to create. Each string corresponds to exactly one model.</param>
+        /// <param name="dtdlModels">The set of models conforming to Digital Twins Definition Language (DTDL) v2 to create. Each string corresponds to exactly one model.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
@@ -1317,7 +1317,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Creates one or many models synchronously.
         /// </summary>
-        /// <param name="dtdlModels">The set of models conforming to the Digital Twins Definition Language (DTDL) to create. Each string corresponds to exactly one model.</param>
+        /// <param name="dtdlModels">The set of models conforming to Digital Twins Definition Language (DTDL) v2 to create. Each string corresponds to exactly one model.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>

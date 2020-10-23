@@ -135,7 +135,7 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
         public string DtdlModel { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.DateTimeOffset? UploadTime { get { throw null; } }
+        public System.DateTimeOffset? UploadedOn { get { throw null; } }
     }
     public partial class GetComponentOptions
     {

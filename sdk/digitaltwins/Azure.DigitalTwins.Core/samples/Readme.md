@@ -70,7 +70,7 @@ await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
-        $"upload time '{model.UploadTime}', " +
+        $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }
 ```
