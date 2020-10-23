@@ -11,7 +11,7 @@ namespace Azure.Learn.AppConfig.Tests
 {
     public class ConfigurationClientLiveTests : RecordedTestBase<LearnAppConfigTestEnvironment>
     {
-        public ConfigurationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ConfigurationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             //...
         }
