@@ -83,13 +83,6 @@ namespace Azure.Core.TestFramework
 
             string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
 
-            if (path == null) // send to test directory
-            {
-                return Path.Combine(TestContext.CurrentContext.TestDirectory,
-                "SessionRecords",
-                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
-                fileName);
-            }
             return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
