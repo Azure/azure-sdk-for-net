@@ -179,7 +179,7 @@ await service.GetPropertiesAsync();
 
 ### Shared Access Policies
 
-To learn more, visit our article [Create a Stored Access Policy with .NET](https://docs.microsoft.com/en-us/azure/storage/common/storage-stored-access-policy-define-dotnet?tabs=dotnet11) or take a look at the code comparison below.
+To learn more, visit our article [Create a Stored Access Policy with .NET](https://docs.microsoft.com/azure/storage/common/storage-stored-access-policy-define-dotnet) or take a look at the code comparison below.
 
 v11
 ```csharp
