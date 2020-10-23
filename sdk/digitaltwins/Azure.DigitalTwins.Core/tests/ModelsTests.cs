@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // GET one created model
                 Response<DigitalTwinsModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
-                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.Model}");
+                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.DtdlModel}");
 
                 // LIST all models
                 AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();

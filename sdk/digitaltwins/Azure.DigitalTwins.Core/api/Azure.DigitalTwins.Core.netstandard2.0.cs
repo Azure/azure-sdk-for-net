@@ -65,8 +65,8 @@ namespace Azure.DigitalTwins.Core
         public virtual Azure.Response<T> CreateDigitalTwin<T>(string digitalTwinId, T digitalTwin, Azure.DigitalTwins.Core.CreateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateEventRoute(string eventRouteId, Azure.DigitalTwins.Core.EventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.EventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]> CreateModels(System.Collections.Generic.IEnumerable<string> models, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> models, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]> CreateModels(System.Collections.Generic.IEnumerable<string> dtdlModels, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> dtdlModels, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> CreateRelationship<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -126,8 +126,8 @@ namespace Azure.DigitalTwins.Core
         public bool? Decommissioned { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
+        public string DtdlModel { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Model { get { throw null; } }
         public System.DateTimeOffset? UploadTime { get { throw null; } }
     }
     public partial class EventRoute
