@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class NamedValueOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// Gets the entity state (Etag) version of the named value specified by its
             /// identifier.
             /// </summary>
             /// <param name='operations'>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// Gets the entity state (Etag) version of the named value specified by its
             /// identifier.
             /// </summary>
             /// <param name='operations'>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the NamedValue specified by its identifier.
+            /// Gets the details of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the NamedValue specified by its identifier.
+            /// Gets the details of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific NamedValue from the API Management service instance.
+            /// Deletes specific named value from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific NamedValue from the API Management service instance.
+            /// Deletes specific named value from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the secret value of the NamedValue.
+            /// Gets the secret of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -354,13 +354,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='namedValueId'>
             /// Identifier of the NamedValue.
             /// </param>
-            public static PropertyValueContract ListValue(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
+            public static NamedValueSecretContract ListValue(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
             {
                 return operations.ListValueAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the secret value of the NamedValue.
+            /// Gets the secret of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PropertyValueContract> ListValueAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueSecretContract> ListValueAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListValueWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
