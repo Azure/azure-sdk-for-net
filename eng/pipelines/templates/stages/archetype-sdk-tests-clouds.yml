@@ -78,7 +78,7 @@ stages:
       condition: or(eq(variables['Build.Reason'], 'Manual'), contains('${{ parameters.Clouds }}', '${{ cloud.key }}'))
       dependsOn: []
       jobs:
-      - template: ../../jobs/platforms.yml
+      - template: ../jobs/archetype-sdk-tests-platforms.yml
         parameters:
           AdditionalParameters: ${{ parameters.AdditionalParameters }}
           Platforms:

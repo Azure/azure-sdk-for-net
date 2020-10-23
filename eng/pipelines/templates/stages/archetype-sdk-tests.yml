@@ -37,7 +37,7 @@ parameters:
   default: 'AzureCloud,AzureCloud_Preview'
 
 stages:
-  - template: ../stages/clouds/clouds.yml
+  - template: ./archetype-sdk-tests-clouds.yml
     parameters:
       Location: ${{ parameters.Location }}
       AdditionalParameters:
