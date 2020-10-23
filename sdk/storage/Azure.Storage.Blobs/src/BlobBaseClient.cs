@@ -108,6 +108,11 @@ namespace Azure.Storage.Blobs.Specialized
         private string _snapshot;
 
         /// <summary>
+        /// Optional. The version of the blob.
+        /// </summary>
+        private string _blobVersionId;
+
+        /// <summary>
         /// The Storage account name corresponding to the blob client.
         /// </summary>
         private string _accountName;
@@ -347,6 +352,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (!string.IsNullOrEmpty(blobUri.Query))
             {
                 _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
             }
             _pipeline = options.Build(authentication);
             _version = options.Version;
@@ -1447,7 +1453,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            long position = 0 ,
+            long position = 0,
             int? bufferSize = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1562,7 +1568,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool allowBlobModifications,
-            long position = 0 ,
+            long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
                 => await OpenReadAsync(
@@ -4163,7 +4169,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn));
+            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
+            {
+                Snapshot = _snapshot,
+                BlobVersionId = _blobVersionId
+            });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
@@ -4211,6 +4221,12 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.Snapshot),
+                    nameof(BlobSasBuilder));
+            }
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobVersionId),
                     nameof(BlobSasBuilder));
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)

@@ -5926,6 +5926,47 @@ namespace Azure.Storage.Blobs.Test
                 //the correct exception came back
             }
         }
+
+        [Test]
+        public void GenerateSas_BuilderWrongVersion()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string blobVersionId = "2020-07-03T12:45:46.1234567Z";
+            string diffBlobVersionId = "2019-07-03T12:45:46.1234567Z";
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            Uri blobEndpoint = new Uri($"http://127.0.0.1/{constants.Sas.Account}/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={blobVersionId}");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + blobName;
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobBaseClient blobClient = new BlobBaseClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Resource = "bs",
+                BlobVersionId = diffBlobVersionId,
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+            };
+
+            // Act
+            try
+            {
+                blobClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("BlobBaseClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
         #endregion
 
         //[Test]
