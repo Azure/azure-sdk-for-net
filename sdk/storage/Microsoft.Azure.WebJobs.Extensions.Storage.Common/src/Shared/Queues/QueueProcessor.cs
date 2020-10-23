@@ -54,9 +54,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         public event EventHandler<PoisonMessageEventArgs> MessageAddedToPoisonQueue;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
         internal QueuesOptions QueuesOptions { get; private set; }
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
@@ -125,9 +122,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Moves the specified message to the poison queue.
         /// </summary>
-        /// <param name="message">The poison message</param>
-        /// <param name="poisonQueue">The poison queue to copy the message to</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
+        /// <param name="message">The poison message.</param>
+        /// <param name="poisonQueue">The poison queue to copy the message to.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
@@ -145,8 +142,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="message">The message to release</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
-        /// <param name="visibilityTimeout">The visibility timeout to set for the message</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
+        /// <param name="visibilityTimeout">The visibility timeout to set for the message.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
         {
@@ -179,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Delete the specified message.
         /// </summary>
         /// <param name="message">The message to delete.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
@@ -217,9 +214,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         }
 
         /// <summary>
-        /// Called to raise the MessageAddedToPoisonQueue event
+        /// Called to raise the MessageAddedToPoisonQueue event.
         /// </summary>
-        /// <param name="e">The event arguments</param>
+        /// <param name="e">The event arguments.</param>
         protected internal virtual void OnMessageAddedToPoisonQueue(PoisonMessageEventArgs e)
         {
             MessageAddedToPoisonQueue?.Invoke(this, e);
