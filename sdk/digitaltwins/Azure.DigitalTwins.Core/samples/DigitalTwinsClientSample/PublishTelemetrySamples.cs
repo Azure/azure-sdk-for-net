@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
 using Azure.DigitalTwins.Core.Samples;
+using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 
@@ -47,8 +48,10 @@ namespace Azure.DigitalTwins.Samples
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId);
 
-            await client.CreateDigitalTwinAsync(twinId, twinPayload);
-            Console.WriteLine($"Created digital twin '{twinId}'.");
+            BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twinPayload);
+
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(twinId, basicDigitalTwin);
+            Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             try
             {
