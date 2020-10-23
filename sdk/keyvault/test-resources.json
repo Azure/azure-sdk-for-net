@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
@@ -14,18 +14,6 @@
             "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
             "metadata": {
                 "description": "The tenant ID to which the application and resources belong."
-            }
-        },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
             }
         },
         "testApplicationOid": {
@@ -66,6 +54,9 @@
     },
     "variables": {
         "azureKeyVaultUrl": "[format('https://{0}{1}', parameters('baseName'), parameters('keyVaultDomainSuffix'))]",
+        "mhsmApiVersion": "2020-04-01-preview",
+        "mhsmName": "[concat(parameters('baseName'), 'mhsm')]",
+        "mhsmLocation": "southcentralus",
         "mgmtApiVersion": "2019-04-01",
         "blobContainerName": "backup",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
@@ -159,6 +150,24 @@
             }
         },
         {
+            "type": "Microsoft.KeyVault/managedHSMs",
+            "apiVersion": "[variables('mhsmApiVersion')]",
+            "name": "[variables('mhsmName')]",
+            "location": "[variables('mhsmLocation')]",
+            "sku": {
+                "family": "B",
+                "name": "Standard_B1"
+            },
+            "properties": {
+                "tenantId": "[parameters('tenantId')]",
+                "initialAdminObjectIds": [
+                    "[parameters('testApplicationOid')]"
+                ],
+                "enablePurgeProtection": false,
+                "enableSoftDelete": "[parameters('enableSoftDelete')]"
+            }
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[variables('primaryAccountName')]",
@@ -215,7 +224,11 @@
         },
         "KEYVAULT_SKU": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))).sku.name]"
+            "value": "[reference(parameters('baseName')).sku.name]"
+        },
+        "MANAGEDHSM_URL": {
+            "type": "string",
+            "value": "[reference(variables('mhsmName')).hsmUri]"
         },
         "CLIENT_OBJECTID": {
             "type": "string",
@@ -227,7 +240,7 @@
         },
         "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+            "value": "[listKeys(variables('primaryAccountName'), variables('mgmtApiVersion')).keys[0].value]"
         },
         "BLOB_CONTAINER_NAME" : {
             "type": "string",
