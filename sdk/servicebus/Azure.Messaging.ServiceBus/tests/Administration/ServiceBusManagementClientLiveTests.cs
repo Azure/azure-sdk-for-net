@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -41,6 +42,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                     TestEnvironment.FullyQualifiedNamespace,
                     GetTokenCredential(),
                     InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+
+        private ServiceBusAdministrationClient GetSharedKeyTokenClient()
+        {
+            var properties = ConnectionStringParser.Parse(GetConnectionString());
+            var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+
+            return InstrumentClient(
+                new ServiceBusAdministrationClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    credential,
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+        }
 
         [Test]
         public async Task BasicQueueCrudOperations()
@@ -776,6 +789,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = GetAADClient();
+
+            var queueOptions = new CreateQueueOptions(queueName);
+            QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
+
+            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+
+            var topicOptions = new CreateTopicOptions(topicName);
+            TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
+
+            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+
+            await client.DeleteQueueAsync(queueName);
+            await client.DeleteTopicAsync(topicName);
+        }
+
+        [Test]
+        public async Task AuthenticateWithSharedKeyCredential()
+        {
+            var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var client = GetSharedKeyTokenClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
