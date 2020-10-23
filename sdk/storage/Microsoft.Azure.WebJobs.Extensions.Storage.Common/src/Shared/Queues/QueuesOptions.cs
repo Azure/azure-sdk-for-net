@@ -11,10 +11,10 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Host
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
 #if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
+    /// <summary>
+    /// Represents configuration for <see cref="QueueTriggerAttribute"/>.
+    /// </summary>
     public class QueuesOptions : IOptionsFormatter
 #else
     internal class QueuesOptions : IOptionsFormatter
