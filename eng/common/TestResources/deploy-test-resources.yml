@@ -21,7 +21,7 @@ steps:
   - template: /eng/common/TestResources/setup-az-modules.yml
 
   - pwsh: |
-      . "eng/common/TestResources/Update-PSModulePathForHostedAgent.ps1"
+      eng/common/TestResources/Import-AzModules.ps1
 
       $subscriptionConfiguration = @"
         ${{ parameters.SubscriptionConfiguration }}
