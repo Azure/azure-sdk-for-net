@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Tests
         {
 
         }
-        protected override async Task OnOneTimeSetupAsync()
+        protected override async Task AfterOneTimeSetupAsync()
         {
             location = "West US";
             this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");

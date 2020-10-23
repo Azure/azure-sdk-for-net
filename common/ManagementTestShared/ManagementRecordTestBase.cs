@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TestFramework
         /// Setup of resources that will be run before a test fixture or suite
         /// This should be overriden if resources need to be setup once for a suite of test
         /// </summary>
-        protected virtual Task OnOneTimeSetupAsync()
+        protected virtual Task AfterOneTimeSetupAsync()
         {
             this.InitializeClients();
             return Task.FromResult<object>(null);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.TestFramework
         /// Setup of resources that will run before each test in a test fixture or suite
         /// This should be overriden if resources need to be setup before each test.
         /// </summary>
-        protected virtual Task OnSetupAsync()
+        protected virtual Task AfterSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.TestFramework
         /// This should be overriden if customization for resource teardown needs done, else the teardown of
         /// resources will be handled automaticall by the framework
         /// </summary>
-        protected virtual Task OnOneTimeTearDownAsync()
+        protected virtual Task AfterOneTimeTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.TestFramework
         /// This should be overriden if customization for resource teardown needs done, else the teardown of
         /// resources will be handled automaticall by the framework
         /// </summary>
-        protected virtual Task OnTearDownAsync()
+        protected virtual Task AfterTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            await OnOneTimeSetupAsync();
+            await AfterOneTimeSetupAsync();
             await this.RunTearDown();
         }
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.TestFramework
             CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
-            await OnOneTimeTearDownAsync();
+            await AfterOneTimeTearDownAsync();
         }
         /// <summary>
         /// A method called by NUnit framework to setup recordings for new test and run onsetup
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            await OnSetupAsync();
+            await AfterSetupAsync();
         }
         /// <summary>
         /// Called by NUnit upon completion of test and saves the recording if running in record mode
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            await OnTearDownAsync();
+            await AfterTearDownAsync();
         }
 
         /// <summary>

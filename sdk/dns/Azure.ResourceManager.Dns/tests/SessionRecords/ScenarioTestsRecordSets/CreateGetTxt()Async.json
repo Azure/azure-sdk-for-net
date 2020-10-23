@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-3842/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/TXT/txt_record?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-5032/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/TXT/txt_record?api-version=2018-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "109",
         "Content-Type": "application/json",
-        "traceparent": "00-cbfaca0881502c4d8ca907a974c441c4-eb5cbbe9804f5741-00",
+        "traceparent": "00-9c8c5cf4a7b5b146aeade8e7d28655f6-612813d9b2ed8047-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201023.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
-        "x-ms-client-request-id": "19d218d937de6bd8b52a1a7fe2e38c9c",
+        "x-ms-client-request-id": "d73e29c3664acc204488935ac2b32c53",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,22 +41,22 @@
         "Cache-Control": "private",
         "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Oct 2020 19:42:14 GMT",
-        "ETag": "93e20884-9034-4ec5-8abb-54bbba6418ae",
+        "Date": "Fri, 23 Oct 2020 22:28:52 GMT",
+        "ETag": "c6203979-f28e-4a9c-a3d1-a71a914f3950",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "68b18a43-fd6c-4501-8990-8db698672865",
+        "x-ms-correlation-request-id": "3675d3c8-003b-472b-99e1-e29f459789fa",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
-        "x-ms-request-id": "19d218d9-37de-6bd8-b52a-1a7fe2e38c9c",
-        "x-ms-routing-request-id": "WESTUS2:20201023T194215Z:68b18a43-fd6c-4501-8990-8db698672865",
+        "x-ms-request-id": "d73e29c3-664a-cc20-4488-935ac2b32c53",
+        "x-ms-routing-request-id": "WESTUS2:20201023T222853Z:3675d3c8-003b-472b-99e1-e29f459789fa",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-3842\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u002293e20884-9034-4ec5-8abb-54bbba6418ae\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-5032\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u0022c6203979-f28e-4a9c-a3d1-a71a914f3950\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
-    "RandomSeed": "2012510038",
+    "RandomSeed": "426656121",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
