@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.Ope
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing", "tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing.csproj", "{966EFB72-64D7-46D8-B592-9C141C5703F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests", "tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.UnitTest\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests", "tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests.AspNetCoreWebApp", "tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp\Integration.Tests.AspNetCoreWebApp.csproj", "{E00C15D6-96E5-4A3B-8701-AC24292301CE}"
 EndProject

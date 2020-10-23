@@ -205,51 +205,51 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Internal.Avro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHubClientSamples", "..\..\iot\Azure.Iot.Hub.Service\samples\IotHubClientSamples\IotHubClientSamples.csproj", "{E4EA7D47-B37F-45EE-8366-944A395859F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AnomalyDetector", "..\..\anomalydetector\Azure.AI.AnomalyDetector\src\Azure.AI.AnomalyDetector.csproj", "{12A6863D-EED3-49AA-819B-6A9E70CA1720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.AnomalyDetector", "..\..\anomalydetector\Azure.AI.AnomalyDetector\src\Azure.AI.AnomalyDetector.csproj", "{12A6863D-EED3-49AA-819B-6A9E70CA1720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AnomalyDetector.Tests", "..\..\anomalydetector\Azure.AI.AnomalyDetector\tests\Azure.AI.AnomalyDetector.Tests.csproj", "{D0C0BE31-9F7C-48FD-8EBA-C0E139CF4ECF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.AnomalyDetector.Tests", "..\..\anomalydetector\Azure.AI.AnomalyDetector\tests\Azure.AI.AnomalyDetector.Tests.csproj", "{D0C0BE31-9F7C-48FD-8EBA-C0E139CF4ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.CosmosDB", "..\..\cosmosdb\Azure.ResourceManager.CosmosDB\src\Azure.ResourceManager.CosmosDB.csproj", "{6ED5EF9B-08E9-4287-BDF6-187477F56F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.CosmosDB", "..\..\cosmosdb\Azure.ResourceManager.CosmosDB\src\Azure.ResourceManager.CosmosDB.csproj", "{6ED5EF9B-08E9-4287-BDF6-187477F56F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.CosmosDB.Tests", "..\..\cosmosdb\Azure.ResourceManager.CosmosDB\tests\Azure.ResourceManager.CosmosDB.Tests.csproj", "{FCB67E1C-4324-4FF5-848B-4AA8B36DE74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.CosmosDB.Tests", "..\..\cosmosdb\Azure.ResourceManager.CosmosDB\tests\Azure.ResourceManager.CosmosDB.Tests.csproj", "{FCB67E1C-4324-4FF5-848B-4AA8B36DE74A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Dns", "..\..\dns\Azure.ResourceManager.Dns\src\Azure.ResourceManager.Dns.csproj", "{83B381DE-8CA6-4C7C-B255-745CB717EA3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Dns", "..\..\dns\Azure.ResourceManager.Dns\src\Azure.ResourceManager.Dns.csproj", "{83B381DE-8CA6-4C7C-B255-745CB717EA3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Dns.Tests", "..\..\dns\Azure.ResourceManager.Dns\tests\Azure.ResourceManager.Dns.Tests.csproj", "{D4889902-E8BF-40EE-A2BB-71D9E8CB98B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Dns.Tests", "..\..\dns\Azure.ResourceManager.Dns\tests\Azure.ResourceManager.Dns.Tests.csproj", "{D4889902-E8BF-40EE-A2BB-71D9E8CB98B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Sql", "..\..\sqlmanagement\Azure.ResourceManager.Sql\src\Azure.ResourceManager.Sql.csproj", "{7F3E131C-5A52-4668-BDE7-88585B9BDE9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Sql", "..\..\sqlmanagement\Azure.ResourceManager.Sql\src\Azure.ResourceManager.Sql.csproj", "{7F3E131C-5A52-4668-BDE7-88585B9BDE9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Sql.Tests", "..\..\sqlmanagement\Azure.ResourceManager.Sql\tests\Azure.ResourceManager.Sql.Tests.csproj", "{7458E73F-7F1A-455B-96DC-2071BCB089F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Sql.Tests", "..\..\sqlmanagement\Azure.ResourceManager.Sql\tests\Azure.ResourceManager.Sql.Tests.csproj", "{7458E73F-7F1A-455B-96DC-2071BCB089F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{B3E1B17C-73A7-4E2F-9A66-F29BDD68CD63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{B3E1B17C-73A7-4E2F-9A66-F29BDD68CD63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj", "{9F432570-3808-4828-9EB8-66E291BA8EB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj", "{9F432570-3808-4828-9EB8-66E291BA8EB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Samples", "..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\samples\Microsoft.Azure.WebJobs.Extensions.Clients.Samples.csproj", "{08189C7A-5899-40F3-91BE-F0DF83DD34F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Samples", "..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\samples\Microsoft.Azure.WebJobs.Extensions.Clients.Samples.csproj", "{08189C7A-5899-40F3-91BE-F0DF83DD34F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Tests", "..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\Microsoft.Azure.WebJobs.Extensions.Clients.Tests.csproj", "{88D0ADB1-F9B6-48DB-BE18-CF0CE11E49B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Tests", "..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\Microsoft.Azure.WebJobs.Extensions.Clients.Tests.csproj", "{88D0ADB1-F9B6-48DB-BE18-CF0CE11E49B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure", "..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{6F1BF1BB-EF86-45A7-A96F-5DA9AD748583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{6F1BF1BB-EF86-45A7-A96F-5DA9AD748583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure.Samples", "..\..\extensions\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{CA140CF8-B22E-44EB-A1AD-4727A1CCE51F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Samples", "..\..\extensions\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{CA140CF8-B22E-44EB-A1AD-4727A1CCE51F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure.Tests", "..\..\extensions\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{B1752F71-5BDB-4E28-96BC-CDAFCEAAC255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\..\extensions\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{B1752F71-5BDB-4E28-96BC-CDAFCEAAC255}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor", "..\..\monitor\OpenTelemetry.Exporter.AzureMonitor\src\OpenTelemetry.Exporter.AzureMonitor.csproj", "{9D8657F9-D1C0-4D45-9961-0037B78A9DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter", "..\..\monitor\Microsoft.Azure.Monitor.OpenTelemetry.Exporter\src\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.csproj", "{9D8657F9-D1C0-4D45-9961-0037B78A9DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing", "..\..\monitor\OpenTelemetry.Exporter.AzureMonitor\tests\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing.csproj", "{36EE1A13-6B13-47FF-A6EA-E64E8567992A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing", "..\..\monitor\Microsoft.Azure.Monitor.OpenTelemetry.Exporter\tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing.csproj", "{36EE1A13-6B13-47FF-A6EA-E64E8567992A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.Tests", "..\..\monitor\OpenTelemetry.Exporter.AzureMonitor\tests\OpenTelemetry.Exporter.AzureMonitor.UnitTest\OpenTelemetry.Exporter.AzureMonitor.Tests.csproj", "{BD291E22-BE9A-4D9F-B32A-685DEE36EE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests", "..\..\monitor\Microsoft.Azure.Monitor.OpenTelemetry.Exporter\tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests\Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{BD291E22-BE9A-4D9F-B32A-685DEE36EE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink", "..\..\keyvault\samples\sharelink\ShareLink.csproj", "{28B02839-0F22-40F2-9A80-C4384881A54F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareLink", "..\..\keyvault\samples\sharelink\ShareLink.csproj", "{28B02839-0F22-40F2-9A80-C4384881A54F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj", "{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj", "{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -1296,54 +1296,6 @@ Global
 		{CE8663D2-B3C6-42B4-9A62-9A0BA4707464}.Release|x64.Build.0 = Release|Any CPU
 		{CE8663D2-B3C6-42B4-9A62-9A0BA4707464}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE8663D2-B3C6-42B4-9A62-9A0BA4707464}.Release|x86.Build.0 = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|x64.Build.0 = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Debug|x86.Build.0 = Debug|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|x64.ActiveCfg = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|x64.Build.0 = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|x86.ActiveCfg = Release|Any CPU
-		{E4CE8E6D-C0B6-4C99-8027-332BA51C6EEF}.Release|x86.Build.0 = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|x64.Build.0 = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Debug|x86.Build.0 = Debug|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|x64.ActiveCfg = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|x64.Build.0 = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|x86.ActiveCfg = Release|Any CPU
-		{6C445CE2-1A18-48B5-96D1-5F1D288ABA58}.Release|x86.Build.0 = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|x64.Build.0 = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Debug|x86.Build.0 = Debug|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|x64.ActiveCfg = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|x64.Build.0 = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|x86.ActiveCfg = Release|Any CPU
-		{1ACD56F7-1828-46ED-B98A-3FD2A37F55E9}.Release|x86.Build.0 = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|x64.Build.0 = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Debug|x86.Build.0 = Debug|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|x64.ActiveCfg = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|x64.Build.0 = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|x86.ActiveCfg = Release|Any CPU
-		{85187149-00E3-4C3A-81D7-D42A61CB0381}.Release|x86.Build.0 = Release|Any CPU
 		{4D647887-E161-4DB5-9C92-E5930EF9CEBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D647887-E161-4DB5-9C92-E5930EF9CEBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D647887-E161-4DB5-9C92-E5930EF9CEBB}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1766,20 +1718,52 @@ Global
 		{28B02839-0F22-40F2-9A80-C4384881A54F}.Release|x86.Build.0 = Release|Any CPU
 		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|x86.Build.0 = Debug|Any CPU
 		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|x64.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|x86.Build.0 = Release|Any CPU
 		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|x64.Build.0 = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|x86.Build.0 = Debug|Any CPU
 		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|x64.ActiveCfg = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|x64.Build.0 = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|x86.ActiveCfg = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|x86.Build.0 = Release|Any CPU
 		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|x64.Build.0 = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|x86.Build.0 = Debug|Any CPU
 		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|x64.ActiveCfg = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|x64.Build.0 = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|x86.ActiveCfg = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|x86.Build.0 = Release|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|x64.Build.0 = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|x86.Build.0 = Debug|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|x64.ActiveCfg = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|x64.Build.0 = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|x86.ActiveCfg = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
