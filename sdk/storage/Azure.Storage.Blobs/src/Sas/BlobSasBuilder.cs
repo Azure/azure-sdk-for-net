@@ -25,6 +25,12 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
@@ -150,6 +156,61 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="BlobSasBuilder(BlobSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BlobSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
 
         /// <summary>
         /// Sets the permissions for a blob SAS.

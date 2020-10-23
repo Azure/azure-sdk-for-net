@@ -3,6 +3,8 @@
 ## 12.5.0-preview.2 (Unreleased)
 - Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added seekability to DataLakeFileClient.OpenRead().
+- Added CanGenerateSasUri property, GetSasBuilder() and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
+- Added CanGenerateSasUri property, GetAccountSasBuilder and GetAccountSasUri to DataLakeServiceClient.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

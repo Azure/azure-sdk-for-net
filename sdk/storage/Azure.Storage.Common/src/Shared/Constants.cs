@@ -82,6 +82,9 @@ namespace Azure.Storage
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
 
+        public const string FalseName = "false";
+        public const string TrueName = "true";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -189,6 +192,7 @@ namespace Azure.Storage
 
             internal static class Container
             {
+                public const string Name = "Blob Container";
                 /// <summary>
                 /// The Azure Storage name used to identify a storage account's root container.
                 /// </summary>
@@ -244,6 +248,11 @@ namespace Azure.Storage
 
                 public const string LeaseNotPresentWithFileOperation =
                     "LeaseNotPresentWithFileOperation";
+            }
+
+            internal static class Share
+            {
+                public const string Name = "Share";
             }
         }
 
@@ -303,6 +312,8 @@ namespace Azure.Storage
             /// Metadata key for isFolder property.
             /// </summary>
             public const string IsDirectoryKey = "hdi_isFolder";
+
+            public const string FileSystemName = "FileSystem";
         }
 
         /// <summary>

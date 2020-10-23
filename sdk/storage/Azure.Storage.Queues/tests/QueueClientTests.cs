@@ -1230,32 +1230,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
-        public void GetSasBuilder()
-        {
-            //Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-            string containerName = GetNewQueueName();
-            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueSasPermissions permissions = QueueSasPermissions.Read | QueueSasPermissions.Add;
-            QueueClient containerClient = new QueueClient(connectionString, containerName, GetOptions());
-
-            // Act
-            QueueSasBuilder sasBuilder = containerClient.GetSasBuilder(
-                permissions: permissions,
-                expiresOn: expiresOn);
-
-            // Assert
-            Assert.AreEqual(sasBuilder.QueueName, containerName);
-            Assert.AreEqual(sasBuilder.Permissions, permissions.ToPermissionsString());
-            Assert.AreEqual(sasBuilder.ExpiresOn, expiresOn);
-        }
-
-        [Test]
-        public void GenerateSas_GeneratedBuilder()
+        public void GenerateSas_RequiredParameters()
         {
             // Arrange
             var constants = new TestConstants(this);
@@ -1263,54 +1238,62 @@ namespace Azure.Storage.Queues.Test
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
             string connectionString = storageConnectionString.ToString(true);
-            string containerName = GetNewQueueName();
-            QueueClient containerClient = new QueueClient(connectionString, containerName, GetOptions());
-
-            QueueSasBuilder sasBuilder =
-                containerClient.GetSasBuilder(QueueSasPermissions.Read, Recording.UtcNow.AddHours(+1));
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
 
             // Act
-            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
 
             // Assert
-            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
-            expectedUri.Path += "/" + containerName;
-            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
         [Test]
-        public void GenerateSas_CustomerProvidedBuilder()
+        public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
             string connectionString = storageConnectionString.ToString(true);
-            string containerName = GetNewQueueName();
-            QueueClient containerClient =
-                new QueueClient(connectionString, containerName, GetOptions());
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
 
-            QueueSasBuilder sasBuilder = new QueueSasBuilder()
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
             {
-                QueueName = containerClient.Name,
-                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+                QueueName = queueName,
+                StartsOn = startsOn
             };
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
 
             // Act
-            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
 
             // Assert
-            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
-            expectedUri.Path += "/" + containerName;
-            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName,
+                StartsOn = startsOn
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
         [Test]
@@ -1321,19 +1304,22 @@ namespace Azure.Storage.Queues.Test
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewQueueName();
-            QueueClient containerClient = new QueueClient(
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
 
-            QueueSasBuilder sasBuilder =
-                containerClient.GetSasBuilder(QueueSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            sasBuilder.QueueName = GetNewQueueName();
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = GetNewQueueName() //different queueName
+            };
 
             // Act
             try
             {
-                containerClient.GenerateSasUri(sasBuilder);
+                queueClient.GenerateSasUri(sasBuilder);
 
                 Assert.Fail("QueueClient.GenerateSasUri should have failed with an ArgumentException.");
             }

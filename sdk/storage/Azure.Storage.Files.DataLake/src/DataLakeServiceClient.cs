@@ -761,46 +761,20 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete File System
 
-        #region GenerateSAS
+        #region GenerateSas
         /// <summary>
-        /// The <see cref="GetSasBuilder"/> returns a <see cref="DataLakeSasBuilder"/> that
-        /// sets the respective properties in the DataLakeSasBuilder from the client.
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a DataLake Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
         ///
-        /// Note that properties in the returned builder will not set the BlobName
-        /// </summary>
-        /// <param name="permissions">
-        /// Specifies the list of permissions that can be set in the returned SasBuilder
-        /// See <see cref="DataLakeSasPermissions"/>.
-        /// </param>
-        /// <param name="expiresOn">
-        /// Specifies when to set the expires time in the returned Sas builder.
-        /// </param>
-        /// <returns>
-        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public DataLakeSasBuilder GetSasBuilder(
-            DataLakeSasPermissions permissions,
-            DateTimeOffset expiresOn)
-        {
-            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
-            {
-                Version = Version.ToString(),
-                ExpiresOn = expiresOn
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
-
-
-        /// <summary>
-        /// The <see cref="GetAccountSasBuilder"/> returns a <see cref="AccountSasBuilder"/> that
-        /// sets the respective properties in the DataLakeSasBuilder from the client.
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
         ///
-        /// Note that properties in the returned builder will not set the BlobName.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
         /// </summary>
         /// <param name="permissions">
         /// Specifies the list of permissions that can be set in the SasBuilder
@@ -812,82 +786,45 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resourceTypes">
         /// Specifies the resource types associated with the shared access signature.
         /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
         /// </param>
         /// <returns>
-        /// A <see cref="AccountSasBuilder"/>.
+        /// A <see cref="Uri"/> containing the SAS Uri.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        public AccountSasBuilder GetAccountSasBuilder(
+        public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
-            AccountSasResourceTypes resourceTypes)
-        {
-            AccountSasBuilder sasBuilder = new AccountSasBuilder
-            {
-                Services = AccountSasServices.Blobs,
-                Version = Version.ToString(),
-                ExpiresOn = expiresOn,
-                ResourceTypes = resourceTypes
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
+            AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Blobs,
+                resourceTypes));
 
         /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a DataLake Account Shared Access Signature (SAS)
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
-        /// Consturcting a Service SAS</see>
-        /// </summary>
-        /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS)
-        /// </param>
-        /// <returns>
-        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public Uri GenerateSasUri(
-            DataLakeSasBuilder builder)
-        {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            UriBuilder sasUri = new UriBuilder(Uri);
-            if (!string.IsNullOrEmpty(builder.FileSystemName))
-            {
-                sasUri.Path += "/" + builder.FileSystemName;
-                if (!string.IsNullOrEmpty(builder.Path))
-                {
-                    sasUri.Path += "/" + builder.Path;
-                }
-            }
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
-        }
-
-        /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
-        /// Consturcting a Service SAS</see>
+        /// Constructing an Account SAS</see>.
         /// </summary>
         /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS)
+        /// Used to generate a Shared Access Signature (SAS).
         /// </param>
         /// <returns>
-        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
+        /// A <see cref="Uri"/> containing the SAS Uri.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public Uri GenerateAccountSasUri(
             AccountSasBuilder builder)
@@ -900,48 +837,9 @@ namespace Azure.Storage.Files.DataLake
                     nameof(builder),
                     nameof(AccountSasServices.Blobs));
             }
-            UriBuilder sasUri = new UriBuilder(Uri);
+            DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
             sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
-        }
-
-        /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri"/> returns a Uri that
-        /// generates a User Delegation SAS based on the Client properties and builder passed.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
-        /// Constructing a User Delegation SAS</see>.
-        /// </summary>
-        /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS).
-        /// </param>
-        /// <param name="delegationKey">
-        /// User Delegation Key used to generate the User Delegation SAS
-        /// </param>
-        /// <returns>
-        /// A <see cref="DataLakeSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public Uri GenerateUserDelegationSasUri(
-            DataLakeSasBuilder builder,
-            UserDelegationKey delegationKey)
-        {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            UriBuilder sasUri = new UriBuilder(Uri);
-            if (!string.IsNullOrEmpty(builder.FileSystemName))
-            {
-                sasUri.Path += "/" + builder.FileSystemName;
-                if (!string.IsNullOrEmpty(builder.Path))
-                {
-                    sasUri.Path += "/" + builder.Path;
-                }
-            }
-            sasUri.Query = builder.ToSasQueryParameters(delegationKey, AccountName).ToString();
-            return sasUri.Uri;
+            return sasUri.ToUri();
         }
         #endregion
     }

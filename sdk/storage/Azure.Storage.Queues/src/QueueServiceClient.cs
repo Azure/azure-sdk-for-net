@@ -826,132 +826,66 @@ namespace Azure.Storage.Queues
                 .ConfigureAwait(false);
         #endregion DeleteQueue
 
-        #region GenerateSAS
+        #region GenerateSas
         /// <summary>
-        /// The <see cref="GetSasBuilder"/>
-        /// returns a <see cref="QueueSasBuilder"/> that
-        /// sets the respective properties in the QueueSasBuilder from the client.
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a Queue
+        /// Account Shared Access Signature based on the
+        /// Client properties and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
         ///
-        /// Note that properties in the returned builder will not set the FilePath
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing a Service SAS</see>
         /// </summary>
         /// <param name="permissions">
-        /// Specifies the list of permissions that can be set in the returned SasBuilder
-        /// See <see cref="QueueSasPermissions"/>.
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="AccountSasPermissions"/>.
         /// </param>
         /// <param name="expiresOn">
-        /// Specifies when to set the expires time in the returned Sas builder.
-        /// </param>
-        /// <returns>
-        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public QueueSasBuilder GetSasBuilder(
-            QueueSasPermissions permissions,
-            DateTimeOffset expiresOn)
-        {
-            QueueSasBuilder sasBuilder = new QueueSasBuilder
-            {
-                Version = Version.ToString(),
-                ExpiresOn = expiresOn
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
-
-        /// <summary>
-        /// The <see cref="GetAccountSasBuilder"/> returns a <see cref="AccountSasBuilder"/> that
-        /// sets the respective properties in the QueueSasBuilder from the client.
-        ///
-        /// Note that properties in the returned builder will not set the FilePath.
-        /// </summary>
-        /// <param name="permissions">
-        /// Specifies the list of permissions that can be set in the SasBuilder
-        /// See <see cref="QueueSasPermissions"/>.
-        /// </param>
-        /// <param name="expiresOn">
-        /// Specifies when to set the expires time in the sas builder.
+        /// Required. The time at which the shared access signature becomes invalid.
         /// </param>
         /// <param name="resourceTypes">
         /// Specifies the resource types associated with the shared access signature.
         /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
         /// </param>
         /// <returns>
-        /// A <see cref="AccountSasBuilder"/>.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public AccountSasBuilder GetAccountSasBuilder(
-            AccountSasPermissions permissions,
-            DateTimeOffset expiresOn,
-            AccountSasResourceTypes resourceTypes)
-        {
-            AccountSasBuilder sasBuilder = new AccountSasBuilder
-            {
-                Services = AccountSasServices.Queues,
-                Version = Version.ToString(),
-                ExpiresOn = expiresOn,
-                ResourceTypes = resourceTypes
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
-
-        /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
-        /// Consturcting a Service SAS</see>
-        /// </summary>
-        /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS)
-        /// </param>
-        /// <returns>
-        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public Uri GenerateSasUri(
-            QueueSasBuilder builder)
-        {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            UriBuilder sasUri = new UriBuilder(Uri);
-            if (!string.IsNullOrEmpty(builder.QueueName))
-            {
-                sasUri.Path += "/" + builder.QueueName;
-            }
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
-        }
-
-        /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
-        /// Consturcting a Service SAS</see>
-        /// </summary>
-        /// <param name="builder">
-        /// Used to generate a Shared Access Signature (SAS)
-        /// </param>
-        /// <returns>
-        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// A <see cref="Uri"/> containing the SAS Uri.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public Uri GenerateAccountSasUri(
-            AccountSasBuilder builder)
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Queues,
+                resourceTypes));
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a Uri that
+        /// generates a Service SAS based on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(AccountSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             if (!builder.Services.HasFlag(AccountSasServices.Queues))
@@ -961,9 +895,9 @@ namespace Azure.Storage.Queues
                     nameof(builder),
                     nameof(AccountSasServices.Queues));
             }
-            UriBuilder sasUri = new UriBuilder(Uri);
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
             sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
+            return sasUri.ToUri();
         }
         #endregion
     }

@@ -2444,46 +2444,42 @@ namespace Azure.Storage.Queues
         }
         #endregion UpdateMessage
 
-        #region GenerateSAS
+        #region GenerateSas
         /// <summary>
-        /// The <see cref="GetSasBuilder"/> returns a <see cref="QueueSasBuilder"/> that
-        /// sets the respective properties in the QueueSasBuilder from the client.
+        /// The <see cref="GenerateSasUri(QueueSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Queue Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
         /// </summary>
         /// <param name="permissions">
-        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// Required. Specifies the list of permissions to be associated with the SAS.
         /// See <see cref="QueueSasPermissions"/>.
         /// </param>
         /// <param name="expiresOn">
-        /// Specifies when to set the expires time in the sas builder
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
         /// </param>
         /// <returns>
         /// A <see cref="QueueSasBuilder"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        public QueueSasBuilder GetSasBuilder(
-            QueueSasPermissions permissions,
-            DateTimeOffset expiresOn)
-        {
-            QueueSasBuilder sasBuilder = new QueueSasBuilder
-            {
-                Version = Version.ToString(),
-                QueueName = Name,
-                ExpiresOn = expiresOn
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
+        public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
+            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn));
 
         /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
+        /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Queue Service SAS Uri based
+        /// on the Client properties and builder passed.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
-        /// Consturcting a Service SAS</see>
+        /// Constructing a Service SAS</see>
         /// </summary>
         /// <param name="builder">
         /// Used to generate a Shared Access Signature (SAS)
@@ -2492,10 +2488,9 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueSasBuilder"/> on successfully deleting.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        public Uri GenerateSasUri(
+        public virtual Uri GenerateSasUri(
             QueueSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
@@ -2511,9 +2506,9 @@ namespace Azure.Storage.Queues
                     nameof(QueueSasBuilder),
                     nameof(Name));
             }
-            UriBuilder sasUri = new UriBuilder(Uri);
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
             sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
+            return sasUri.ToUri();
         }
         #endregion
     }

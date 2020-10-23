@@ -60,12 +60,19 @@ namespace Azure.Storage
             => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does not match {clientParam} in the Client. " +
                     $"{builderName}.{builderParam} must either be left empty or match the {clientParam} in the Client");
 
+        public static InvalidOperationException SasNamesNotMatching(string builderParam, string builderName)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does not match snapshot value in the URI in the Client. " +
+                    $"{builderName}.{builderParam} must either be left empty or match the snapshot value in the URI in the Client");
+
         public static InvalidOperationException SasServiceNotMatching(string builderParam, string builderName, string expectedService)
             => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{builderParam} does specify {expectedService}. " +
                     $"{builderName}.{builderParam} must either specify {expectedService} or specify all Services are accessible in the value.");
 
-        public static InvalidOperationException SasEmptyParam(string paramName)
+        public static InvalidOperationException SasClientMissingData(string paramName)
             => new InvalidOperationException($"SAS Uri cannot be generated. {paramName} in the client has not been set");
+
+        public static InvalidOperationException SasBuilderEmptyParam(string builderName, string paramName, string sasType)
+            => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{paramName} cannot be set to create a {sasType} SAS.");
 
         public static InvalidOperationException SasIncorrectResourceType(string builderName, string builderParam, string value, string clientName)
             => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate" +

@@ -3154,79 +3154,83 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
         #endregion DeleteDirectory
 
-        #region GenerateSAS
+        #region GenerateSas
         /// <summary>
-        /// The <see cref="GetSasBuilder"/> returns a <see cref="ShareSasBuilder"/> that
-        /// sets the respective properties in the ShareSasBuilder from the client.
+        /// The <see cref="GenerateSasUri(ShareSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Service
+        /// Shared Access Signature (SAS) Uri based on the
+        /// Client properties and parameters passed.
+        /// The SAS is signed by the shared key credential of the client.
         ///
-        /// Note that properties in the returned builder will not set the BlobName
-        /// </summary>
-        /// <param name="permissions">
-        /// Specifies the list of permissions that can be set in the SasBuilder
-        /// See <see cref="ShareSasPermissions"/>.
-        /// </param>
-        /// <param name="expiresOn">
-        /// Specifies when to set the expires time in the sas builder
-        /// </param>
-        /// <returns>
-        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public ShareSasBuilder GetSasBuilder(
-            ShareSasPermissions permissions,
-            DateTimeOffset expiresOn)
-        {
-            ShareSasBuilder sasBuilder = new ShareSasBuilder
-            {
-                Version = Version.ToString(),
-                ShareName = Name,
-                ExpiresOn = expiresOn,
-                Resource = "c"
-            };
-            sasBuilder.SetPermissions(permissions);
-            return sasBuilder;
-        }
-
-        /// <summary>
-        /// The <see cref="GenerateSasUri"/> returns a Uri that
-        /// generates a Service SAS based on the Client properties and builder passed.
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
-        /// Consturcting a Service SAS</see>
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn));
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Container Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
         /// </summary>
         /// <param name="builder">
         /// Used to generate a Shared Access Signature (SAS)
         /// </param>
         /// <returns>
-        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// A <see cref="Uri"/> containing the SAS Uri.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        public Uri GenerateSasUri(
-            ShareSasBuilder builder)
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             builder.ShareName = string.IsNullOrEmpty(builder.ShareName) ? Name : builder.ShareName;
             if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
             {
-                // TODO: throw proper exception for non-matching builder name
-                // e.g. containerName doesn't match or leave the containerName in builder
-                // should be left empty. Or should we always default to the client's ContainerName
-                // and chug along if they don't match?
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.ShareName),
                     nameof(ShareSasBuilder),
                     nameof(Name));
             }
-            UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
-            return sasUri.Uri;
+            if (!string.IsNullOrEmpty(builder.FilePath))
+            {
+                throw Errors.SasBuilderEmptyParam(
+                    nameof(builder),
+                    nameof(builder.FilePath),
+                    nameof(Constants.File.Share.Name));
+            }
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
         }
         #endregion
     }

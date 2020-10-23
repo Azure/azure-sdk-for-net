@@ -5710,39 +5710,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void GetSasBuilder()
-        {
-            //Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-            string containerName = GetNewContainerName();
-            string blobName = GetNewBlobName();
-            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            BlobSasPermissions permissions = BlobSasPermissions.Read | BlobSasPermissions.Write;
-            BlobBaseClient blobClient = new BlobBaseClient(
-                connectionString,
-                containerName,
-                blobName,
-                GetOptions());
-
-            // Act
-            BlobSasBuilder sasBuilder = blobClient.GetSasBuilder(
-                permissions: permissions,
-                expiresOn: expiresOn);
-
-            // Assert
-            Assert.AreEqual(sasBuilder.BlobContainerName, containerName);
-            Assert.AreEqual(sasBuilder.BlobName, blobName);
-            Assert.AreEqual(sasBuilder.Permissions, permissions.ToPermissionsString());
-            Assert.AreEqual(sasBuilder.ExpiresOn, expiresOn);
-            Assert.AreEqual("b", sasBuilder.Resource);
-        }
-
-        [Test]
-        public void GenerateSas_GeneratedBuilder()
+        public void GenerateSas_RequiredParameters()
         {
             // Arrange
             var constants = new TestConstants(this);
@@ -5752,30 +5720,34 @@ namespace Azure.Storage.Blobs.Test
             string connectionString = storageConnectionString.ToString(true);
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             BlobBaseClient blobClient = new BlobBaseClient(
                 connectionString,
                 containerName,
                 blobName,
                 GetOptions());
 
-            BlobSasBuilder sasBuilder =
-                blobClient.GetSasBuilder(BlobSasPermissions.Read, Recording.UtcNow.AddHours(+1));
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
-
-            // Act
-            Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
+            //Act
+            Uri sasUri = blobClient.GenerateSasUri(permissions, expiresOn);
 
             // Assert
-            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
-            expectedUri.Path += "/" + containerName + "/" + blobName;
-            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName
+            };
+            BlobUriBuilder expectedUri = new BlobUriBuilder(blobEndpoint)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
         [Test]
-        public void GenerateSas_CustomerProvidedBuilder()
+        public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
@@ -5784,32 +5756,39 @@ namespace Azure.Storage.Blobs.Test
             string connectionString = storageConnectionString.ToString(true);
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
-
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             BlobBaseClient blobClient = new BlobBaseClient(
                 connectionString,
                 containerName,
                 blobName,
                 GetOptions());
 
-            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
                 BlobContainerName = containerName,
                 BlobName = blobName,
-                Resource = "b",
-                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+                StartsOn = startsOn
             };
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
 
             // Act
             Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
 
             // Assert
-            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
-            expectedUri.Path += "/" + containerName + "/" + blobName;
-            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                StartsOn = startsOn
+            };
+            BlobUriBuilder expectedUri = new BlobUriBuilder(blobEndpoint)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
         [Test]
@@ -5819,20 +5798,27 @@ namespace Azure.Storage.Blobs.Test
             var constants = new TestConstants(this);
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
-            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + GetNewBlobName();
+            string blobName = GetNewBlobName();
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + blobName;
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             BlobBaseClient blobClient = new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
 
-            BlobSasBuilder sasBuilder =
-                blobClient.GetSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            sasBuilder.BlobContainerName = GetNewContainerName();
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = GetNewContainerName(), // set a different containerName
+                BlobName = blobName,
+                Resource = "b",
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+            };
 
             // Act
             try
             {
-                blobClient.GenerateSasUri(sasBuilder);
+                Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
 
                 Assert.Fail("BlobBaseClient.GenerateSasUri should have failed with an ArgumentException.");
             }
@@ -5849,20 +5835,27 @@ namespace Azure.Storage.Blobs.Test
             var constants = new TestConstants(this);
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
-            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + GetNewBlobName();
-            BlobBaseClient containerClient = new BlobBaseClient(
+            string containerName = GetNewContainerName();
+            blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + GetNewBlobName();
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobBaseClient blobClient = new BlobBaseClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
 
-            BlobSasBuilder sasBuilder =
-                containerClient.GetSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            sasBuilder.BlobName = GetNewBlobName();
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+                BlobName = GetNewBlobName(), // set a different blobName
+                Resource = "b",
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
+            };
 
             // Act
             try
             {
-                containerClient.GenerateSasUri(sasBuilder);
+                blobClient.GenerateSasUri(sasBuilder);
 
                 Assert.Fail("BlobBaseClient.GenerateSasUri should have failed with an ArgumentException.");
             }
@@ -5873,153 +5866,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void GenerateUserDelegationSas_GeneratedBuilder()
+        public void GenerateSas_BuilderWrongSnapshot()
         {
             // Arrange
             var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
-            blobUriBuilder.Path += "/" + GetNewContainerName() + "/" + GetNewBlobName();
-            BlobBaseClient blobClient =
-                new BlobBaseClient(blobUriBuilder.Uri, GetOptions());
-            UserDelegationKey userDelegationKey = new UserDelegationKey
-            {
-                SignedObjectId = constants.Sas.KeyObjectId,
-                SignedTenantId = constants.Sas.KeyTenantId,
-                SignedStartsOn = constants.Sas.KeyStart,
-                SignedExpiresOn = constants.Sas.KeyExpiry,
-                SignedService = constants.Sas.KeyService,
-                SignedVersion = constants.Sas.KeyVersion,
-                Value = constants.Sas.KeyValue
-            };
-
-            BlobSasBuilder sasBuilder =
-                blobClient.GetSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
-
-            // Act
-            Uri sasUri = blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
-
-            // Assert
-            blobUriBuilder.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
-            Assert.AreEqual(blobUriBuilder.Uri.ToString(), sasUri.ToString());
-        }
-
-        [Test]
-        public void GenerateUserDelegationSas_CustomerProvidedBuilder()
-        {
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            string differentSnapshot = "2019-07-03T12:45:46.1234567Z";
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
-            BlobBaseClient blobClient =
-                new BlobBaseClient(new Uri(blobEndpoint + "/" + containerName + "/" + blobName));
+            Uri blobEndpoint = new Uri($"http://127.0.0.1/{constants.Sas.Account}/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + containerName + "/" + blobName;
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobBaseClient blobClient = new BlobBaseClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
 
-            UserDelegationKey userDelegationKey = new UserDelegationKey
-            {
-                SignedObjectId = constants.Sas.KeyObjectId,
-                SignedTenantId = constants.Sas.KeyTenantId,
-                SignedStartsOn = constants.Sas.KeyStart,
-                SignedExpiresOn = constants.Sas.KeyExpiry,
-                SignedService = constants.Sas.KeyService,
-                SignedVersion = constants.Sas.KeyVersion,
-                Value = constants.Sas.KeyValue
-            };
-            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
             {
                 BlobContainerName = containerName,
                 BlobName = blobName,
-                Resource = "b",
+                Resource = "bs",
+                Snapshot = differentSnapshot,
                 IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None)
-
             };
-            // Add more properties on the builder
-            sasBuilder.StartsOn = Recording.UtcNow.AddHours(-1);
-            sasBuilder.Identifier = GetNewString();
-
-            // Act
-            Uri sasUri = blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
-
-            // Assert
-            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
-            expectedUri.Path += "/" + containerName + "/" + blobName;
-            expectedUri.Query += sasBuilder.ToSasQueryParameters(userDelegationKey, constants.Sas.Account).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
-        }
-
-        [Test]
-        public void GenerateUserDelegationSas_BuilderWrongContainerName()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/");
-            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
-            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + GetNewBlobName();
-            UserDelegationKey userDelegationKey = new UserDelegationKey
-            {
-                SignedObjectId = constants.Sas.KeyObjectId,
-                SignedTenantId = constants.Sas.KeyTenantId,
-                SignedStartsOn = constants.Sas.KeyStart,
-                SignedExpiresOn = constants.Sas.KeyExpiry,
-                SignedService = constants.Sas.KeyService,
-                SignedVersion = constants.Sas.KeyVersion,
-                Value = constants.Sas.KeyValue
-            };
-            BlobBaseClient containerClient = new BlobBaseClient(
-                blobUriBuilder.Uri,
-                constants.Sas.SharedKeyCredential,
-                GetOptions());
-
-            BlobSasBuilder sasBuilder =
-                containerClient.GetSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            sasBuilder.BlobContainerName = GetNewContainerName();
 
             // Act
             try
             {
-                containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
-
-                Assert.Fail("BlobBaseClient.GenerateSasUri should have failed with an ArgumentException.");
-            }
-            catch (InvalidOperationException)
-            {
-                //the correct exception came back
-            }
-        }
-
-        [Test]
-        public void GenerateUserDelegationSas_BuilderWrongBlobName()
-        {
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/");
-            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
-            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewContainerName() + "/" + GetNewBlobName();
-            UserDelegationKey userDelegationKey = new UserDelegationKey
-            {
-                SignedObjectId = constants.Sas.KeyObjectId,
-                SignedTenantId = constants.Sas.KeyTenantId,
-                SignedStartsOn = constants.Sas.KeyStart,
-                SignedExpiresOn = constants.Sas.KeyExpiry,
-                SignedService = constants.Sas.KeyService,
-                SignedVersion = constants.Sas.KeyVersion,
-                Value = constants.Sas.KeyValue
-            };
-            BlobBaseClient containerClient = new BlobBaseClient(
-                blobUriBuilder.Uri,
-                constants.Sas.SharedKeyCredential,
-                GetOptions());
-
-            BlobSasBuilder sasBuilder =
-                containerClient.GetSasBuilder(BlobSasPermissions.All, Recording.UtcNow.AddHours(+1));
-            sasBuilder.BlobName = GetNewBlobName();
-            ;
-
-            // Act
-            try
-            {
-                containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+                blobClient.GenerateSasUri(sasBuilder);
 
                 Assert.Fail("BlobBaseClient.GenerateSasUri should have failed with an ArgumentException.");
             }
