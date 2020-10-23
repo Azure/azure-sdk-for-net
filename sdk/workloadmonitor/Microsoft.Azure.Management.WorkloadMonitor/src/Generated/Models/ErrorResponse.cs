@@ -14,26 +14,23 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using System.Linq;
 
     /// <summary>
-    /// Default Error
+    /// Error response
     /// </summary>
-    /// <remarks>
-    /// Error body contract.
-    /// </remarks>
-    public partial class DefaultError
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the DefaultError class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public DefaultError()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultError class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">error details</param>
-        public DefaultError(DefaultErrorError error = default(DefaultErrorError))
+        /// <param name="error">Error info.</param>
+        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
         {
             Error = error;
             CustomInit();
@@ -45,13 +42,10 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error details
+        /// Gets or sets error info.
         /// </summary>
-        /// <remarks>
-        /// Details about the error
-        /// </remarks>
         [JsonProperty(PropertyName = "error")]
-        public DefaultErrorError Error { get; set; }
+        public ErrorResponseError Error { get; set; }
 
     }
 }
