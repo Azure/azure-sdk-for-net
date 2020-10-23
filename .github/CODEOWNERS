@@ -68,6 +68,7 @@
 # PRLabel: %Storage
 /sdk/storage/                                   @tg-msft
 /sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
