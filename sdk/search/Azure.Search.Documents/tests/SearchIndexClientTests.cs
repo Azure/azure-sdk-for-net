@@ -287,6 +287,22 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task GetIndexNames()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            bool found = false;
+            await foreach (string name in client.GetIndexNamesAsync())
+            {
+                found |= string.Equals(resources.IndexName, name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Shared index name not found");
+        }
+
+        [Test]
         [SyncOnly]
         public void DeleteIndexParameterValidation()
         {

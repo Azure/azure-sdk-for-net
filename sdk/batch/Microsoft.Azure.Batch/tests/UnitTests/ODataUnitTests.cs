@@ -27,102 +27,92 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnTaskListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.CloudTask,
-                        Protocol.Models.TaskListOptions,
-                        Protocol.Models.TaskListNextOptions,
-                        Protocol.Models.TaskListHeaders>(req, FullDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.CloudTask,
+                    Protocol.Models.TaskListOptions,
+                    Protocol.Models.TaskListNextOptions,
+                    Protocol.Models.TaskListHeaders>(req, FullDetailLevel)));
 
-                IEnumerable<CloudTask> tasks = client.JobOperations.ListTasks(
-                    "Foo",
-                    FullDetailLevel);
+            IEnumerable<CloudTask> tasks = client.JobOperations.ListTasks(
+                "Foo",
+                FullDetailLevel);
 
-                Assert.Empty(tasks.ToList());
-            }
+            Assert.Empty(tasks.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnJobListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.CloudJob,
-                        Protocol.Models.JobListOptions,
-                        Protocol.Models.JobListNextOptions,
-                        Protocol.Models.JobListHeaders>(req, FullDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.CloudJob,
+                    Protocol.Models.JobListOptions,
+                    Protocol.Models.JobListNextOptions,
+                    Protocol.Models.JobListHeaders>(req, FullDetailLevel)));
 
-                IEnumerable<CloudJob> jobs = client.JobOperations.ListJobs(
-                    FullDetailLevel);
+            IEnumerable<CloudJob> jobs = client.JobOperations.ListJobs(
+                FullDetailLevel);
 
-                Assert.Empty(jobs.ToList());
-            }
+            Assert.Empty(jobs.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnJobScheduleListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.CloudJobSchedule,
-                        Protocol.Models.JobScheduleListOptions,
-                        Protocol.Models.JobScheduleListNextOptions,
-                        Protocol.Models.JobScheduleListHeaders>(req, FullDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.CloudJobSchedule,
+                    Protocol.Models.JobScheduleListOptions,
+                    Protocol.Models.JobScheduleListNextOptions,
+                    Protocol.Models.JobScheduleListHeaders>(req, FullDetailLevel)));
 
-                IEnumerable<CloudJobSchedule> jobSchedules = client.JobScheduleOperations.ListJobSchedules(
-                    FullDetailLevel);
+            IEnumerable<CloudJobSchedule> jobSchedules = client.JobScheduleOperations.ListJobSchedules(
+                FullDetailLevel);
 
-                Assert.Empty(jobSchedules.ToList());
-            }
+            Assert.Empty(jobSchedules.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnJobFromJobScheduleListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.CloudJob,
-                        Protocol.Models.JobListFromJobScheduleOptions,
-                        Protocol.Models.JobListFromJobScheduleNextOptions,
-                        Protocol.Models.JobListFromJobScheduleHeaders>(req, FullDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.CloudJob,
+                    Protocol.Models.JobListFromJobScheduleOptions,
+                    Protocol.Models.JobListFromJobScheduleNextOptions,
+                    Protocol.Models.JobListFromJobScheduleHeaders>(req, FullDetailLevel)));
 
-                IEnumerable<CloudJob> jobs = client.JobScheduleOperations.ListJobs(
-                    "Foo",
-                    FullDetailLevel);
+            IEnumerable<CloudJob> jobs = client.JobScheduleOperations.ListJobs(
+                "Foo",
+                FullDetailLevel);
 
-                Assert.Empty(jobs.ToList());
-            }
+            Assert.Empty(jobs.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnPoolListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.CloudPool,
-                        Protocol.Models.PoolListOptions,
-                        Protocol.Models.PoolListNextOptions,
-                        Protocol.Models.PoolListHeaders>(req, FullDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.CloudPool,
+                    Protocol.Models.PoolListOptions,
+                    Protocol.Models.PoolListNextOptions,
+                    Protocol.Models.PoolListHeaders>(req, FullDetailLevel)));
 
-                IEnumerable<CloudPool> pools = client.PoolOperations.ListPools(
-                    FullDetailLevel);
+            IEnumerable<CloudPool> pools = client.PoolOperations.ListPools(
+                FullDetailLevel);
 
-                Assert.Empty(pools.ToList());
-            }
+            Assert.Empty(pools.ToList());
         }
 
 
@@ -130,99 +120,90 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnCertificateListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.Certificate,
-                        Protocol.Models.CertificateListOptions,
-                        Protocol.Models.CertificateListNextOptions,
-                        Protocol.Models.CertificateListHeaders>(req, FilterSelectDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.Certificate,
+                    Protocol.Models.CertificateListOptions,
+                    Protocol.Models.CertificateListNextOptions,
+                    Protocol.Models.CertificateListHeaders>(req, FilterSelectDetailLevel)));
 
-                IEnumerable<Certificate> certificates = client.CertificateOperations.ListCertificates(
-                    FilterSelectDetailLevel);
+            IEnumerable<Certificate> certificates = client.CertificateOperations.ListCertificates(
+                FilterSelectDetailLevel);
 
-                Assert.Empty(certificates.ToList());
-            }
+            Assert.Empty(certificates.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnComputeNodeListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.ComputeNode,
-                        Protocol.Models.ComputeNodeListOptions,
-                        Protocol.Models.ComputeNodeListNextOptions,
-                        Protocol.Models.ComputeNodeListHeaders>(req, FilterSelectDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.ComputeNode,
+                    Protocol.Models.ComputeNodeListOptions,
+                    Protocol.Models.ComputeNodeListNextOptions,
+                    Protocol.Models.ComputeNodeListHeaders>(req, FilterSelectDetailLevel)));
 
-                IEnumerable<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(
-                    "Foo",
-                    FilterSelectDetailLevel);
+            IEnumerable<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(
+                "Foo",
+                FilterSelectDetailLevel);
 
-                Assert.Empty(nodes.ToList());
-            }
+            Assert.Empty(nodes.ToList());
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CanUseODataPredicatesOnJobPrepAndReleaseStatusListWithMultiplePages()
         {
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.JobOperations.CustomBehaviors.Add(new Protocol.RequestInterceptor(
-                    req => VerifyODataClausesAndReturnMultiplePages<
-                        Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation,
-                        Protocol.Models.JobListPreparationAndReleaseTaskStatusOptions,
-                        Protocol.Models.JobListPreparationAndReleaseTaskStatusNextOptions,
-                        Protocol.Models.JobListPreparationAndReleaseTaskStatusHeaders>(req, FilterSelectDetailLevel)));
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.JobOperations.CustomBehaviors.Add(new Protocol.RequestInterceptor(
+                req => VerifyODataClausesAndReturnMultiplePages<
+                    Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation,
+                    Protocol.Models.JobListPreparationAndReleaseTaskStatusOptions,
+                    Protocol.Models.JobListPreparationAndReleaseTaskStatusNextOptions,
+                    Protocol.Models.JobListPreparationAndReleaseTaskStatusHeaders>(req, FilterSelectDetailLevel)));
 
-                IEnumerable<JobPreparationAndReleaseTaskExecutionInformation> jobPrepAndReleaseInfo = client.JobOperations.ListJobPreparationAndReleaseTaskStatus(
-                    "Foo",
-                    FilterSelectDetailLevel);
+            IEnumerable<JobPreparationAndReleaseTaskExecutionInformation> jobPrepAndReleaseInfo = client.JobOperations.ListJobPreparationAndReleaseTaskStatus(
+                "Foo",
+                FilterSelectDetailLevel);
 
-                Assert.Empty(jobPrepAndReleaseInfo.ToList());
-            }
+            Assert.Empty(jobPrepAndReleaseInfo.ToList());
         }
 
         private static void VerifyODataClausesAndReturnMultiplePages<TPage, TListOptions, TListNextOptions, THeaders>(Protocol.IBatchRequest req, ODATADetailLevel expectedDetailLevel)
             where TListOptions : Protocol.Models.IOptions, new()
             where TListNextOptions : Protocol.Models.IOptions, new()
         {
-            var listRequest = req as Protocol.BatchRequest<TListOptions, AzureOperationResponse<IPage<TPage>, THeaders>>;
-            var listNextRequest = req as Protocol.BatchRequest<TListNextOptions, AzureOperationResponse<IPage<TPage>, THeaders>>;
-
-            if (listRequest != null)
+            if (req is Protocol.BatchRequest<TListOptions, AzureOperationResponse<IPage<TPage>, THeaders>> listRequest)
             {
                 listRequest.ServiceRequestFunc = token =>
+                {
+                    var filter = listRequest.Options as Protocol.Models.IODataFilter;
+                    var select = listRequest.Options as Protocol.Models.IODataSelect;
+                    var expand = listRequest.Options as Protocol.Models.IODataExpand;
+
+                    Assert.Equal(expectedDetailLevel.FilterClause, filter?.Filter);
+                    Assert.Equal(expectedDetailLevel.SelectClause, select?.Select);
+                    Assert.Equal(expectedDetailLevel.ExpandClause, expand?.Expand);
+
+                    return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
                     {
-                        var filter = listRequest.Options as Protocol.Models.IODataFilter;
-                        var select = listRequest.Options as Protocol.Models.IODataSelect;
-                        var expand = listRequest.Options as Protocol.Models.IODataExpand;
-
-                        Assert.Equal(expectedDetailLevel.FilterClause, filter?.Filter);
-                        Assert.Equal(expectedDetailLevel.SelectClause, select?.Select);
-                        Assert.Equal(expectedDetailLevel.ExpandClause, expand?.Expand);
-
-                        return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
-                        {
-                            Body = new FakePage<TPage>(new List<TPage>(), "Bar")
-                        });
-                    };
+                        Body = new FakePage<TPage>(new List<TPage>(), "Bar")
+                    });
+                };
             }
 
-            if (listNextRequest != null)
+            if (req is Protocol.BatchRequest<TListNextOptions, AzureOperationResponse<IPage<TPage>, THeaders>> listNextRequest)
             {
                 listNextRequest.ServiceRequestFunc = token =>
+                {
+                    return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
                     {
-                        return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
-                        {
-                            Body = new FakePage<TPage>(new List<TPage>())
-                        });
-                    };
+                        Body = new FakePage<TPage>(new List<TPage>())
+                    });
+                };
             }
         }
     }

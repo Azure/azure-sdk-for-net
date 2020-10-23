@@ -90,13 +90,14 @@ function Get-PkgProperties
     foreach ($directory in $directoriesPresent)
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
-        if ($GetPackageInfoFromRepoFn)
+
+        if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetPackageInfoFromRepoFn }).Count -gt 0)
         {
             $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $ServiceDirectory -pkgName $PackageName
         }
         else
         {
-            Write-Error "The function 'Get-${Language}-PackageInfoFromRepo' was not found."
+            Write-Error "The function '$GetPackageInfoFromRepoFn' was not found."
         }
 
         if ($pkgProps -ne $null)

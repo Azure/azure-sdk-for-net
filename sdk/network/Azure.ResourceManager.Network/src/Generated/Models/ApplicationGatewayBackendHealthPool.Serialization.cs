@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("backendAddressPool"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendHttpSettingsCollection"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayBackendHealthHttpSettings> array = new List<ApplicationGatewayBackendHealthHttpSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

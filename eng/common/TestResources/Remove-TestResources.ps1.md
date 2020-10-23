@@ -187,7 +187,7 @@ Accept wildcard characters: False
 ### -Environment
 Name of the cloud environment.
 The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 ```yaml
 Type: String
@@ -272,6 +272,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[New-TestResources.ps1]()
-

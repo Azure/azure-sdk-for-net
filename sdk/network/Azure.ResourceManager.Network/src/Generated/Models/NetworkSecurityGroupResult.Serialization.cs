@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("securityRuleAccessResult"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     securityRuleAccessResult = new SecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluatedNetworkSecurityGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EvaluatedNetworkSecurityGroup> array = new List<EvaluatedNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

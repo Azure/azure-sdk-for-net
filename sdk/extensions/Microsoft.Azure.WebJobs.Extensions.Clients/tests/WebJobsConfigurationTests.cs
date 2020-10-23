@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
@@ -20,9 +21,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
                 {
                     new KeyValuePair<string, string>(actualKeyName, "value")
                 });
-            var configuration = new WebJobsConfiguration(builder.Build());
-
-            Assert.AreEqual(configuration.GetSection("Key").Value, "value");
+            var configuration = builder.Build();
+            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key").Value, "value");
         }
 
         [TestCase("Key")]
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
                     new KeyValuePair<string, string>(actualKeyName + ":Value1", "value1"),
                     new KeyValuePair<string, string>(actualKeyName + ":Value2", "value2")
                 });
-            var configuration = new WebJobsConfiguration(builder.Build());
+            var configuration = builder.Build();
 
-            Assert.AreEqual(configuration.GetSection("Key")["Value1"], "value1");
-            Assert.AreEqual(configuration.GetSection("Key")["Value2"], "value2");
+            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key")["Value1"], "value1");
+            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key")["Value2"], "value2");
         }
     }
 }

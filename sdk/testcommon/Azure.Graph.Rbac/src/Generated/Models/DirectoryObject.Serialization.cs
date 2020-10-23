@@ -45,6 +45,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

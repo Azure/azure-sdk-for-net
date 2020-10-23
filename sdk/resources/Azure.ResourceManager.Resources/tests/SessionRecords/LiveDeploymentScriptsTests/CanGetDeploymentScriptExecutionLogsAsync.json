@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--csmd8127?api-version=2019-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "517",
         "Content-Type": "application/json",
@@ -2720,6 +2721,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--csmd8127?api-version=2019-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-5467bbb499381e489a26378f5d07a903-3129133aaea59947-00",
         "User-Agent": [
@@ -2802,6 +2804,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--csmd8127/logs/default?api-version=2019-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-7c1cd178697c034ab012b61058fde72d-128dc1319c4d3242-00",
         "User-Agent": [
@@ -2844,6 +2847,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--csmd8127?api-version=2019-10-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-b2ac5f393038294f919b651fac1e7f1a-338f750a1abc634d-00",
         "User-Agent": [
@@ -2876,6 +2880,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",

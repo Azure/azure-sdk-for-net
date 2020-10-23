@@ -78,55 +78,110 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("databaseEdition"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseEdition = new ElasticPoolEdition(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             dtu = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("databaseDtuMin"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseDtuMin = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("databaseDtuMax"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseDtuMax = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("storageMB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageMB = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("observationPeriodStart"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             observationPeriodStart = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("observationPeriodEnd"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             observationPeriodEnd = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("maxObservedDtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxObservedDtu = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("maxObservedStorageMB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxObservedStorageMB = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("databases"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<TrackedResource> array = new List<TrackedResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -137,6 +192,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("metrics"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<RecommendedElasticPoolMetric> array = new List<RecommendedElasticPoolMetric>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

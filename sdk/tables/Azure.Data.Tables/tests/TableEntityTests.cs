@@ -2,12 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using Azure.Data.Tables;
-using Azure.Data.Tables.Sas;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Tables.Tests
@@ -99,16 +94,25 @@ namespace Azure.Tables.Tests
         [Test]
         public void ValidateDictionaryEntityGetPropertiesWithIndexer()
         {
+            Assert.That(fullEntity["binary"], Is.Not.Null);
             Assert.That(fullEntity["binary"], Is.InstanceOf(typeof(byte[])));
+            Assert.That(fullEntity["boolean"], Is.Not.Null);
             Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
+            Assert.That(fullEntity["datetime"], Is.Not.Null);
             Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity["double"], Is.Not.Null);
             Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
+            Assert.That(fullEntity["guid"], Is.Not.Null);
             Assert.That(fullEntity["guid"], Is.InstanceOf(typeof(Guid)));
+            Assert.That(fullEntity["int32"], Is.Not.Null);
             Assert.That(fullEntity["int32"], Is.InstanceOf(typeof(int?)));
+            Assert.That(fullEntity["int64"], Is.Not.Null);
             Assert.That(fullEntity["int64"], Is.InstanceOf(typeof(long?)));
+            Assert.That(fullEntity["string"], Is.Not.Null);
             Assert.That(fullEntity["string"], Is.InstanceOf(typeof(string)));
 
             // Timestamp property returned as object casted as DateTimeOffset?
+            Assert.That(fullEntity.Timestamp, Is.Not.Null);
             Assert.That(fullEntity.Timestamp, Is.InstanceOf(typeof(DateTimeOffset?)));
         }
 

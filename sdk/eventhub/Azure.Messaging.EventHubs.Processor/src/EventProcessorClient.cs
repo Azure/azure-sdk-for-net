@@ -27,6 +27,13 @@ namespace Azure.Messaging.EventHubs
     ///   group pairing to share work by using a common storage platform to communicate.  Fault tolerance is also built-in,
     ///   allowing the processor to be resilient in the face of errors.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   The <see cref="EventProcessorClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
+    ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    /// </remarks>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
@@ -554,6 +561,14 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorClientOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
+        ///
         public override Task StopProcessingAsync(CancellationToken cancellationToken = default) => base.StopProcessingAsync(cancellationToken);
 
         /// <summary>
@@ -562,6 +577,14 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
+        ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorClientOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
         ///
         public override void StopProcessing(CancellationToken cancellationToken = default) => base.StopProcessing(cancellationToken);
 
@@ -1028,7 +1051,10 @@ namespace Azure.Messaging.EventHubs
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties,
                 LoadBalancingStrategy = clientOptions.LoadBalancingStrategy,
-                PrefetchCount = clientOptions.PrefetchCount
+                PrefetchCount = clientOptions.PrefetchCount,
+                PrefetchSizeInBytes = clientOptions.PrefetchSizeInBytes,
+                LoadBalancingUpdateInterval = clientOptions.LoadBalancingUpdateInterval,
+                PartitionOwnershipExpirationInterval = clientOptions.PartitionOwnershipExpirationInterval
             };
         }
 

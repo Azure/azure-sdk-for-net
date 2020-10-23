@@ -86,16 +86,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("automatic"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     automatic = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("indexingMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     indexingMode = new IndexingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("includedPaths"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IncludedPath> array = new List<IncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -106,6 +121,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("excludedPaths"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ExcludedPath> array = new List<ExcludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -116,6 +136,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("compositeIndexes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IList<CompositePath>> array = new List<IList<CompositePath>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,6 +156,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("spatialIndexes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SpatialSpec> array = new List<SpatialSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

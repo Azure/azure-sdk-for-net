@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
@@ -16,171 +13,53 @@ using OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal class AzureMonitorTransmitter
+    /// <summary>
+    /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
+    /// </summary>
+    internal class AzureMonitorTransmitter : ITransmitter
     {
-        private readonly ServiceRestClient serviceRestClient;
-        private readonly AzureMonitorExporterOptions options;
-        private readonly string instrumentationKey;
+        private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
 
-        private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
-            [TelemetryType.Request] = "RequestData",
-            [TelemetryType.Dependency] = "RemoteDependencyData",
-            [TelemetryType.Message] = "MessageData",
-            [TelemetryType.Event] = "EventData",
-        };
+            ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
+            options.Retry.MaxRetries = 0;
+            options.AddPolicy(new IngestionResponsePolicy(), HttpPipelinePosition.PerCall);
 
-        private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "Request",
-            [TelemetryType.Dependency] = "RemoteDependency",
-            [TelemetryType.Message] = "Message",
-            [TelemetryType.Event] = "Event",
-        };
-
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
-        {
-            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
-
-            options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
-        internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
+        public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
                 return 0;
             }
 
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            TelemetryItem telemetryItem;
+            int itemsAccepted = 0;
 
-            foreach (var activity in batchActivity)
+            try
             {
-                telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.InstrumentationKey = this.instrumentationKey;
-                telemetryItem.Data = GenerateTelemetryData(activity);
-                telemetryItems.Add(telemetryItem);
-            }
-
-            Azure.Response<TrackResponse> response;
-
-            if (async)
-            {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
-            }
-
-            // TODO: Handle exception, check telemetryItems has items
-            return response.Value.ItemsAccepted.GetValueOrDefault();
-        }
-
-        private static TelemetryItem GeneratePartAEnvelope(Activity activity)
-        {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            // TODO: Validate if Azure SDK has common function to generate role instance
-            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
-
-            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
-            if (activity.Parent != null)
-            {
-                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
-            }
-
-            // TODO: "ai.location.ip"
-            // TODO: Handle exception
-            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-
-            return telemetryItem;
-        }
-
-        private MonitorBase GenerateTelemetryData(Activity activity)
-        {
-            var telemetryType = activity.GetTelemetryType();
-            var tags = activity.Tags.ToAzureMonitorTags(out var activityType);
-            MonitorBase telemetry = new MonitorBase
-            {
-                BaseType = Telemetry_Base_Type_Mapping[telemetryType]
-            };
-
-            if (telemetryType == TelemetryType.Request)
-            {
-                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(tags) : GetMessagingUrl(tags);
-                var statusCode = GetHttpStatusCode(tags);
-                var success = GetSuccessFromHttpStatusCode(statusCode);
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
+                if (async)
                 {
-                    Name = activity.DisplayName,
-                    Url = url,
-                    // TODO: Handle request.source.
-                };
-
-                // TODO: Handle activity.TagObjects, extract well-known tags
-                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
-
-                telemetry.BaseData = request;
+                    itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                }
             }
-            else if (telemetryType == TelemetryType.Dependency)
+            catch (Exception ex)
             {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
+                if (ex?.InnerException?.InnerException?.Source == "System.Net.Http")
                 {
-                    Id = activity.Context.SpanId.ToHexString()
-                };
-
-                // TODO: Handle activity.TagObjects
-                // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
-
-                if (activityType == PartBType.Http)
-                {
-                    dependency.Data = UrlHelper.GetUrl(tags);
-                    dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    var statusCode = GetHttpStatusCode(tags);
-                    dependency.ResultCode = statusCode;
-                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
+                    // TODO: Network issue. Send Telemetry Items To Storage
                 }
 
-                // TODO: Handle dependency.target.
-                telemetry.BaseData = dependency;
+                AzureMonitorTraceExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
 
-            return telemetry;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetHttpStatusCode(Dictionary<string, string> tags)
-        {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
-            {
-                return status;
-            }
-
-            return "0";
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool GetSuccessFromHttpStatusCode(string statusCode)
-        {
-            return statusCode == "200" || statusCode == "Ok";
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetMessagingUrl(Dictionary<string, string> tags)
-        {
-            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
-            return url;
-        }
-
-        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
-        {
-            // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
-            {
-                destination.Add(tag);
-            }
+            return itemsAccepted;
         }
     }
 }

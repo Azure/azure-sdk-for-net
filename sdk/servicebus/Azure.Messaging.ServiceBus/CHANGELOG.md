@@ -1,7 +1,21 @@
 # Release History
 
-## 7.0.0-preview.8 (Unreleased)
+## 7.0.0-preview.9 (Unreleased)
 
+
+## 7.0.0-preview.8 (2020-10-06)
+
+### Added
+- Added `AcceptSessionAsync` that accepts a specific session based on session ID.
+
+### Breaking Changes
+- Renamed `ViaQueueOrTopicName` to `TransactionQueueOrTopicName`.
+- Renamed `ViaPartitionKey` to `TransactionPartitionKey`.
+- Renamed `ViaEntityPath` to `TransactionEntityPath`.
+- Renamed `Proxy` to `WebProxy`.
+- Made `MaxReceiveWaitTime` in `ServiceBusProcessorOptions` and `ServiceBusSessionProcessorOptions` internal.
+- Renamed `CreateSessionReceiverAsync` to `AcceptNextSessionAsync`.
+- Removed `SessionId` from `ServiceBusClientOptions` in favor of `AcceptSessionAsync`.
 
 ## 7.0.0-preview.7 (2020-09-10)
 

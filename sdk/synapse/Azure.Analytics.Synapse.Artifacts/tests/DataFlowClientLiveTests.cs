@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using NUnit.Framework;
 
@@ -38,23 +39,23 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateDataFlow()
         {
-            var operation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync("MyDataFlow", new DataFlowResource(new DataFlow()));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyDataFlow", operation.Value.Name);
+            string dataFlowName = Recording.GenerateName("DataFlow");
+            DataFlowCreateOrUpdateDataFlowOperation operation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
+            DataFlowResource dataFlow = await operation.WaitForCompletionAsync();
+            Assert.AreEqual(dataFlowName, dataFlow.Name);
         }
 
         [Test]
         public async Task TestDeleteDataFlow()
         {
-            var operation = await DataFlowClient.StartDeleteDataFlowAsync("MyDataFlow");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string dataFlowName = Recording.GenerateName("DataFlow");
+
+            DataFlowCreateOrUpdateDataFlowOperation createOperation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
+            await createOperation.WaitForCompletionAsync();
+
+            DataFlowDeleteDataFlowOperation deleteOperation = await DataFlowClient.StartDeleteDataFlowAsync(dataFlowName);
+            Response response = await deleteOperation.WaitForCompletionAsync();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }
