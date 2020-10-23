@@ -14,7 +14,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
 
 ```shell
-dotnet add package OpenTelemetry.Exporter.AzureMonitor
+dotnet add package Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 ```
 ### Authenticate the client
 
@@ -26,7 +26,7 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 
 ## Examples
 
-Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/OpenTelemetry.Exporter.AzureMonitor/tests/OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing/DemoTrace.cs) for a complete demo.
+Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Microsoft.Azure.Monitor.OpenTelemetry.Exporter/tests/Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing/DemoTrace.cs) for a complete demo.
 
 ```csharp
 using Microsoft.Azure.Monitor.OpenTelemetry.Exporter;
