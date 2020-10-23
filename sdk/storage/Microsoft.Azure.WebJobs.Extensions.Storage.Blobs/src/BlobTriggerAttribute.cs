@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
@@ -17,17 +18,18 @@ namespace Microsoft.Azure.WebJobs
     /// <remarks>
     /// The method parameter type can be one of the following:
     /// <list type="bullet">
-    /// <item><description>ICloudBlob</description></item>
-    /// <item><description>CloudBlockBlob</description></item>
-    /// <item><description>CloudPageBlob</description></item>
+    /// <item><description><see cref="BlobBaseClient"/></description></item>
+    /// <item><description><see cref="AppendBlobClient"/></description></item>
+    /// <item><description><see cref="BlockBlobClient"/></description></item>
+    /// <item><description><see cref="PageBlobClient"/></description></item>
     /// <item><description><see cref="Stream"/></description></item>
     /// <item><description><see cref="TextReader"/></description></item>
     /// <item><description><see cref="string"/></description></item>
     /// <item><description><see cref="T:byte[]"/></description></item>
     /// </list>
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Parameter)]
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
+    [AttributeUsage(AttributeTargets.Parameter)]
     [DebuggerDisplay("{BlobPath,nq}")]
     [ConnectionProvider(typeof(StorageAccountAttribute))]
     [Binding]

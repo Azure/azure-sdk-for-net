@@ -24,12 +24,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private readonly AzureComponentFactory _componentFactory;
         private readonly AzureEventSourceLogForwarder _logForwarder;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="componentFactory"></param>
-        /// <param name="logForwarder"></param>
         public StorageClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
@@ -37,23 +31,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             _logForwarder = logForwarder;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resolver"></param>
-        /// <returns></returns>
         public virtual TClient Get(string name, INameResolver resolver)
         {
             var resolvedName = resolver.ResolveWholeString(name);
             return this.Get(resolvedName);
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public virtual TClient Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
@@ -19,11 +20,11 @@ namespace Microsoft.Azure.WebJobs
     /// <remarks>
     /// The method parameter type can be one of the following:
     /// <list type="bullet">
-    /// <item><description>ICloudBlob</description></item>
-    /// <item><description>CloudBlockBlob</description></item>
-    /// <item><description>CloudPageBlob</description></item>
-    /// <item><description><see cref="Stream"/> (read-only)</description></item>
-    /// <item><description>CloudBlobStream (write-only)</description></item>
+    /// <item><description><see cref="BlobBaseClient"/></description></item>
+    /// <item><description><see cref="AppendBlobClient"/></description></item>
+    /// <item><description><see cref="BlockBlobClient"/></description></item>
+    /// <item><description><see cref="PageBlobClient"/></description></item>
+    /// <item><description><see cref="Stream"/></description></item>
     /// <item><description><see cref="TextReader"/></description></item>
     /// <item><description><see cref="TextWriter"/></description></item>
     /// <item><description>
@@ -39,12 +40,13 @@ namespace Microsoft.Azure.WebJobs
     /// The parameter type can be CloudBlobContainer, CloudBlobDirectory or <see cref="IEnumerable{T}"/>
     /// of one of the following element types:
     /// <list type = "bullet" >
-    /// <item><description>ICloudBlob</description></item>
-    /// <item><description>CloudBlockBlob</description></item>
-    /// <item><description>CloudPageBlob</description></item>
-    /// <item><description>Stream</description></item>
-    /// <item><description>string</description></item>
-    /// <item><description>TextReader</description></item>
+    /// <item><description><see cref="BlobBaseClient"/></description></item>
+    /// <item><description><see cref="AppendBlobClient"/></description></item>
+    /// <item><description><see cref="BlockBlobClient"/></description></item>
+    /// <item><description><see cref="PageBlobClient"/></description></item>
+    /// <item><description><see cref="Stream"/></description></item>
+    /// <item><description><see cref="string"/></description></item>
+    /// <item><description><see cref="TextReader"/></description></item>
     /// </list>
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1019:DefineAccessorsForAttributeArguments", Justification = "There is an accessor for FileAccess")]

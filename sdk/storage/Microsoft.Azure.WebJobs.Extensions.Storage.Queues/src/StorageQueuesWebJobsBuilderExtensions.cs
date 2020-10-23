@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Config;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
@@ -21,16 +18,15 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Microsoft.Extensions.Hosting
 {
     /// <summary>
-    /// TODO.
+    /// Extension methods for Storage Queues integration.
     /// </summary>
     public static class StorageQueuesWebJobsBuilderExtensions
     {
         /// <summary>
-        /// TODO.
+        /// Adds the Storage Queues extension to the provided <see cref="IWebJobsBuilder"/>.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="configureQueues"></param>
-        /// <returns></returns>
+        /// <param name="builder">The <see cref="IWebJobsBuilder"/> to configure.</param>
+        /// <param name="configureQueues">Optional. An action to configure <see cref="QueuesOptions"/>.</param>
         public static IWebJobsBuilder AddAzureStorageQueues(this IWebJobsBuilder builder, Action<QueuesOptions> configureQueues = null)
         {
             builder.Services.AddAzureClientsCore();

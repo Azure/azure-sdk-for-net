@@ -21,16 +21,15 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Microsoft.Extensions.Hosting
 {
     /// <summary>
-    /// TODO.
+    /// Extension methods for Storage Blobs integration.
     /// </summary>
     public static class StorageBlobsWebJobsBuilderExtensions
     {
         /// <summary>
-        /// TODO.
+        /// Adds the Storage Blobs extension to the provided <see cref="IWebJobsBuilder"/>.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="configureBlobs"></param>
-        /// <returns></returns>
+        /// <param name="builder">The <see cref="IWebJobsBuilder"/> to configure.</param>
+        /// <param name="configureBlobs">Optional. An action to configure <see cref="BlobsOptions"/>.</param>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
             builder.Services.AddAzureClientsCore();

@@ -78,11 +78,6 @@ namespace Microsoft.Azure.WebJobs.Description
             return null;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="containerName"></param>
-        /// <returns></returns>
         internal static bool IsValidContainerName(string containerName)
         {
             if (containerName == null)
@@ -98,13 +93,6 @@ namespace Microsoft.Azure.WebJobs.Description
             return Regex.IsMatch(containerName, @"^[a-z0-9](([a-z0-9\-[^\-])){1,61}[a-z0-9]$");
         }
 
-        // See http://msdn.microsoft.com/en-us/library/windowsazure/dd135715.aspx.
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="blobName"></param>
-        /// <param name="errorMessage"></param>
-        /// <returns></returns>
         internal static bool IsValidBlobName(string blobName, out string errorMessage)
         {
             const string UnsafeCharactersMessage =
