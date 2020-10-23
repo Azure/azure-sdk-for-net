@@ -2,7 +2,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
     public static partial class AzureMonitorExporterHelperExtensions
     {
-        public static OpenTelemetry.Trace.TracerProviderBuilder AddAzureMonitorTraceExporter(this OpenTelemetry.Trace.TracerProviderBuilder builder, System.Action<OpenTelemetry.Exporter.AzureMonitor.AzureMonitorExporterOptions> configure = null) { throw null; }
+        public static OpenTelemetry.Trace.TracerProviderBuilder AddAzureMonitorTraceExporter(this OpenTelemetry.Trace.TracerProviderBuilder builder, System.Action<Microsoft.Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions> configure = null) { throw null; }
     }
     public partial class AzureMonitorExporterOptions : Azure.Core.ClientOptions
     {
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
     }
     public partial class AzureMonitorTraceExporter : OpenTelemetry.Trace.ActivityExporter
     {
-        public AzureMonitorTraceExporter(OpenTelemetry.Exporter.AzureMonitor.AzureMonitorExporterOptions options) { }
+        public AzureMonitorTraceExporter(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
         public override OpenTelemetry.Trace.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
     }
 }
@@ -32,36 +32,36 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
         public bool Success { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataPointType : System.IEquatable<OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType>
+    public readonly partial struct DataPointType : System.IEquatable<Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataPointType(string value) { throw null; }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType Aggregation { get { throw null; } }
-        public static OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType Measurement { get { throw null; } }
-        public bool Equals(OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType other) { throw null; }
+        public static Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType Aggregation { get { throw null; } }
+        public static Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType Measurement { get { throw null; } }
+        public bool Equals(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType left, OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType right) { throw null; }
-        public static implicit operator OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType (string value) { throw null; }
-        public static bool operator !=(OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType left, OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType right) { throw null; }
+        public static bool operator ==(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType left, Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType right) { throw null; }
+        public static implicit operator Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType (string value) { throw null; }
+        public static bool operator !=(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType left, Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
+    public partial class MessageData : Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain
     {
         public MessageData(int version, string message) : base (default(int)) { }
         public System.Collections.Generic.IDictionary<string, double> Measurements { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        public OpenTelemetry.Exporter.AzureMonitor.Models.SeverityLevel? SeverityLevel { get { throw null; } set { } }
+        public Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.SeverityLevel? SeverityLevel { get { throw null; } set { } }
     }
     public partial class MetricDataPoint
     {
         public MetricDataPoint(string name, double value) { }
         public int? Count { get { throw null; } set { } }
-        public OpenTelemetry.Exporter.AzureMonitor.Models.DataPointType? DataPointType { get { throw null; } set { } }
+        public Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.DataPointType? DataPointType { get { throw null; } set { } }
         public double? Max { get { throw null; } set { } }
         public double? Min { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -69,16 +69,16 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
         public double? StdDev { get { throw null; } set { } }
         public double Value { get { throw null; } }
     }
-    public partial class MetricsData : OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain
+    public partial class MetricsData : Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain
     {
-        public MetricsData(int version, System.Collections.Generic.IEnumerable<OpenTelemetry.Exporter.AzureMonitor.Models.MetricDataPoint> metrics) : base (default(int)) { }
-        public System.Collections.Generic.IList<OpenTelemetry.Exporter.AzureMonitor.Models.MetricDataPoint> Metrics { get { throw null; } }
+        public MetricsData(int version, System.Collections.Generic.IEnumerable<Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> metrics) : base (default(int)) { }
+        public System.Collections.Generic.IList<Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.MetricDataPoint> Metrics { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
     }
     public partial class MonitorBase
     {
         public MonitorBase() { }
-        public OpenTelemetry.Exporter.AzureMonitor.Models.MonitorDomain BaseData { get { throw null; } set { } }
+        public Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomain BaseData { get { throw null; } set { } }
         public string BaseType { get { throw null; } set { } }
     }
     public partial class MonitorDomain
