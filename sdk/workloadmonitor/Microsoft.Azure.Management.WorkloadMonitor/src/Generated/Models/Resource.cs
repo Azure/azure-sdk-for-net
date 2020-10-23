@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">Arm ID</param>
-        /// <param name="name">Url-encoded monitor name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">The resource Id.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
@@ -49,29 +49,20 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets arm ID
+        /// Gets the resource Id.
         /// </summary>
-        /// <remarks>
-        /// Arm ID of this monitor.
-        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets url-encoded monitor name
+        /// Gets the resource name.
         /// </summary>
-        /// <remarks>
-        /// Url-encoded monitor name.
-        /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets the resource type.
         /// </summary>
-        /// <remarks>
-        /// Type of ARM resource.
-        /// </remarks>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
