@@ -4,8 +4,8 @@
 - Fixed bug where BlobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added seekability to BaseBlobClient.OpenRead().
 - Added additional info to exception messages.
-- Added CanGenerateSasUri property, GetSasBuilder() and GenerateSasUri() to BlobBaseClient, BlobClient, BlockBlobClient, AppendBlobClient, PageBlobClient and BlobContainerClient.
-- Added CanGenerateSasUri property, GetAccountSasBuilder and GetAccountSasUri to BlobServiceClient.
+- Added CanGenerateSasUri property, GenerateSasUri() to BlobBaseClient, BlobClient, BlockBlobClient, AppendBlobClient, PageBlobClient and BlobContainerClient.
+- Added CanGenerateSasUri property, GenerateSasUri() to BlobServiceClient.
 - Deprecated proeprty BlobSasBuilder.Version and when generating SAS will always use the latest storage SAS version of the Storage service version supported.
 
 ## 12.7.0-preview.1 (2020-09-30)

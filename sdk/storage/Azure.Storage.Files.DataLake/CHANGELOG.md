@@ -5,8 +5,8 @@
 - Added seekability to DataLakeFileClient.OpenRead().
 - Added additional info to exception messages.
 - Added DataLakeDirectoryClient.GetPaths().
-- Added CanGenerateSasUri property, GetSasBuilder() and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
-- Added CanGenerateSasUri property, GetAccountSasBuilder and GetAccountSasUri to DataLakeServiceClient.
+- Added CanGenerateSasUri property and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
+- Added CanGenerateSasUri property and GenerateSasUri() to DataLakeServiceClient.
 
 >>>>>>> master
 
