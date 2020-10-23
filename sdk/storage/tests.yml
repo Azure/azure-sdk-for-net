@@ -7,6 +7,6 @@ extends:
     BuildInParallel: false
     TimeoutInMinutes: 360
     Location: canadacentral
-    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+    Clouds: AzureCloud_Preview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

@@ -36,7 +36,7 @@ parameters:
 jobs:
   - job: 
     condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('${{ parameters.Platform.TestMode }}', 'Record')))
-    displayName: ${{ parameters.Platform.DisplayName }} - ${{ parameters.CloudConfig.DisplayName }}
+    displayName: ${{ parameters.Platform.DisplayName }}
     variables:
       - template: ../variables/globals.yml
       - name: OSVmImage
@@ -87,8 +87,8 @@ jobs:
           AZURE_TEST_MODE: "${{ coalesce(parameters.Platform.TestMode, 'None') }}"
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
-          ${{ each var in cloudConfig.value.EnvVars }}:
-            ${{ var.key }}: ${{ var.value }}
+          ${{ each v in parameters.CloudConfig.EnvVars }}:
+            ${{ v.key }}: ${{ v.value }}
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:

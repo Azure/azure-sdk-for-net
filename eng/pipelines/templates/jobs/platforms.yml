@@ -13,7 +13,7 @@ jobs:
 - ${{ each platform in parameters.Platforms }}:
   - template: ./archetype-sdk-tests-jobs.yml
     parameters:
-      Platform: ${{ platform }}
+      Platform: ${{ platform.value }}
       CloudConfig: ${{ parameters.CloudConfig }}
       ${{ each param in parameters.AdditionalParameters }}:
         ${{ param.key }}: ${{ param.value }}

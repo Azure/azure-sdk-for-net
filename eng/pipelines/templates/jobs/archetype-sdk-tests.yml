@@ -34,14 +34,12 @@ parameters:
   default: []
 - name: Clouds
   type: string
-  default: 'AzureCloud'
-- name: ResourceGroupLocationCanary
-  type: string
-  default: "centraluseuap"
+  default: 'AzureCloud,AzureCloud_Preview'
 
 stages:
   - template: ../stages/clouds/clouds.yml
     parameters:
+      Location: ${{ parameters.Location }}
       AdditionalParameters:
         PreSteps: ${{ parameters.PreSteps }}
         PostSteps: ${{ parameters.PostSteps }}
@@ -49,53 +47,61 @@ stages:
         MaxParallel: ${{ parameters.MaxParallel }}
         BuildInParallel: ${{ parameters.BuildInParallel }}
         TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-        Location: ${{ parameters.Location }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+      AdditionalPlatforms:
+        - ${{ parameters.AdditionalPlatforms }}
       Platforms: 
-      - DisplayName: "Test on Linux"
-        OSVmImage: "ubuntu-18.04"
-        TestTargetFramework: netcoreapp2.1
-        PreSteps:
-          - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-      - DisplayName: "Test on Windows for NetCoreApp"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: netcoreapp2.1
-      - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: netcoreapp2.1
-        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-      - DisplayName: "Test on Windows for .Net Framework"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: net461
-      - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
-        OSVmImage: "windows-2019"
-        TestTargetFramework: net461
-        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-      - DisplayName: "Test on MacOS"
-        OSVmImage: "macOS-10.15"
-        TestTargetFramework: netcoreapp2.1
-      - ${{ if eq(parameters.TestCanary, 'true') }}:          
-        - DisplayName: "Test on Windows for NetCoreApp - Canary region"
+        Linux_NetCore:
+          DisplayName: "Test on Linux"
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp2.1
+          PreSteps:
+            - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+          RunInClouds: 'AzureCloud,AzureCloud_Preview,AzureUsGovCloud'
+        Windows_NetCore:
+          DisplayName: "Test on Windows for NetCoreApp"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
-          Location: ${{ parameters.ResourceGroupLocationCanary }}
-      - DisplayName: "Record on Windows for NetCoreApp"
-        OSVmImage: "windows-2019"
-        TestMode: Record
-        TestTargetFramework: netcoreapp2.1
-        AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
-        PostSteps:
-          - task: CopyFiles@2
-            displayName: "Copy Test Recordings"
-            inputs:
-              sourceFolder: '$(Build.SourcesDirectory)'
-              contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
-              targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-          - task: PublishBuildArtifacts@1
-            displayName: "Publish Test Recordings"
-            inputs:
-              pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-              artifactName: SessionRecords
-      - ${{ parameters.AdditionalPlatforms }}
+          RunInClouds: 'AzureCloud,AzureCloud_Canary,AzureUsGovCloud'
+        Windows_NetCore_ProjectRefAzureClients:
+          DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+          RunInClouds: 'AzureCloud,AzureChinaCloud'
+        Windows_NetFramework:
+          DisplayName: "Test on Windows for .Net Framework"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          RunInClouds: 'AzureCloud,AzureChinaCloud'
+        Windows_NetFramework_ProjectRefAzureClients:
+          DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+          RunInClouds: 'AzureCloud,AzureUsGovCloud'
+        MacOS:
+          DisplayName: "Test on MacOS"
+          OSVmImage: "macOS-10.15"
+          TestTargetFramework: netcoreapp2.1
+          RunInClouds: 'AzureCloud'
+        Windows_NetCore_Record:
+          DisplayName: "Record on Windows for NetCoreApp"
+          OSVmImage: "windows-2019"
+          TestMode: Record
+          TestTargetFramework: netcoreapp2.1
+          AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
+          PostSteps:
+            - task: CopyFiles@2
+              displayName: "Copy Test Recordings"
+              inputs:
+                sourceFolder: '$(Build.SourcesDirectory)'
+                contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+                targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+            - task: PublishBuildArtifacts@1
+              displayName: "Publish Test Recordings"
+              inputs:
+                pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+                artifactName: SessionRecords
+          RunInClouds: 'AzureCloud'
