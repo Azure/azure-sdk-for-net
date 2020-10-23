@@ -9,6 +9,9 @@ parameters:
 - name: Artifacts
   type: object
   default: []
+- name: TestPipeline
+  type: boolean
+  default: false
 - name: ArtifactName
   type: string
   default: packages
