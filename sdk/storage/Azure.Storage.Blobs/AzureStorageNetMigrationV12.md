@@ -56,29 +56,18 @@ dotnet add package Azure.Storage.Blobs
 
 v11
 
-TODO
+The legacy Storage SDK contained a `TokenCredential` class that could be used to populate a `StorageCredentials` instance. Constructors took a string token for HTTP authorization headers and an optional refresh mechanism for the library to invoke when the token expired. Users could then use Microsoft.IdentityModel.Clients.ActiveDirectory to get their own token for the TokenCredential, and to use in their own handwritten token refresh mechanism.
 
 v12
 
+A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
+
 ```csharp
-public async Task ActiveDirectoryAuthAsync()
-{
-    // Create a token credential that can use our Azure Active
-    // Directory application to authenticate with Azure Storage
-    TokenCredential credential =
-        new ClientSecretCredential(
-            ActiveDirectoryTenantId,
-            ActiveDirectoryApplicationId,
-            ActiveDirectoryApplicationSecret,
-            new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
-
-    // Create a client that can authenticate using our token credential
-    BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
-
-    // Make a service request to verify we've successfully authenticated
-    await service.GetPropertiesAsync();
-}
+Uri myAccountUri; // url to your storage account
+BlobServiceClient client = new BlobServiceClient(myAccountUri, new DefaultAzureCredential());
 ```
+
+You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
 
 #### SAS
 
