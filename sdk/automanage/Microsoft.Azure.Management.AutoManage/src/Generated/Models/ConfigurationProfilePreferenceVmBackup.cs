@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.AutoManage.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using System.Linq;
 
     /// <summary>
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.AutoManage.Models
         /// backup copy retention ranges.</param>
         /// <param name="schedulePolicy">Backup schedule specified as part of
         /// backup policy.</param>
-        public ConfigurationProfilePreferenceVmBackup(string timeZone = default(string), int? instantRpRetentionRangeInDays = default(int?), string retentionPolicy = default(string), string schedulePolicy = default(string))
+        public ConfigurationProfilePreferenceVmBackup(string timeZone = default(string), int? instantRpRetentionRangeInDays = default(int?), JObject retentionPolicy = default(JObject), JObject schedulePolicy = default(JObject))
         {
             TimeZone = timeZone;
             InstantRpRetentionRangeInDays = instantRpRetentionRangeInDays;
@@ -64,20 +65,6 @@ namespace Microsoft.Azure.Management.AutoManage.Models
         /// Gets or sets instant RP retention policy range in days
         /// </summary>
         [JsonProperty(PropertyName = "instantRpRetentionRangeInDays")]
-        public int? InstantRpRetentionRangeInDays { get; set; }
-
-        /// <summary>
-        /// Gets or sets retention policy with the details on backup copy
-        /// retention ranges.
-        /// </summary>
-        [JsonProperty(PropertyName = "retentionPolicy")]
-        public string RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Gets or sets backup schedule specified as part of backup policy.
-        /// </summary>
-        [JsonProperty(PropertyName = "schedulePolicy")]
-        public string SchedulePolicy { get; set; }
-
+        public int? InstantRpRetentionRangeInDays { get; set; }        
     }
 }

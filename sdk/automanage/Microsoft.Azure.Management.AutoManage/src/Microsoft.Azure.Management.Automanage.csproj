@@ -7,14 +7,17 @@
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Automanage</PackageId>
+    <PackageId>Microsoft.Azure.Management.AutoManage</PackageId>
     <Description>Microsoft Azure Automanage Class Library</Description>
     <VersionPrefix>0.1.1-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.Automanage</AssemblyName>
-    <RootNameSpace>Microsoft.Azure.Management.Automanage</RootNameSpace>
+    <AssemblyName>Microsoft.Azure.Management.AutoManage</AssemblyName>
+    <RootNameSpace>Microsoft.Azure.Management.AutoManage</RootNameSpace>
     <PackageTags>Automanagement;Automanaged;Automanagement Configuration Profile; Automanagement Account</PackageTags>
     <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/Automanage/Management.Automanage/changelog.md</PackageReleaseNotes>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Customization\Models\" />
+  </ItemGroup>
 
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 </Project>
