@@ -13,7 +13,7 @@ computation and filtering. Processing may also involve distribution or storage o
 Event Hub consumers are often robust and high-scale platform infrastructure parts with built-in analytics capabilities, like Azure 
 Stream Analytics, Apache Spark, or Apache Storm.  
 
-This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/develop/net/).
+This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
 Use the client library for Event Hubs to:
 
@@ -102,7 +102,7 @@ For additional insight and context, the development, release, and issue history 
 
 ## Versioning information
 
-The Azure Event Hubs client library uses [the semantic versioning scheme.](http://semver.org/)
+The Azure Event Hubs client library uses [the semantic versioning scheme.](https://semver.org/)
 
 ## Target frameworks
 

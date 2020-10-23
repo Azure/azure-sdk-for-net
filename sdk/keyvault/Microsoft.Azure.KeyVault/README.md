@@ -17,7 +17,7 @@ It is **recommended** that you move to one or more of the new packages.
 The Microsoft Azure Key Vault SDK for .NET allows you to build secure Azure applications that can access secrets, keys, and certificates that a encrypted at rest with hardware security modules.
 
 This directory contains the open source subset of the .NET SDK. For documentation of the 
-complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/develop/net/).
+complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
 ## Features
 
@@ -60,7 +60,7 @@ For the best development experience, developers should use the official Microsof
 
 ## Versioning Information
 
-- The Key Vault SDK uses [the semantic versioning scheme.](http://semver.org/)
+- The Key Vault SDK uses [the semantic versioning scheme.](https://semver.org/)
 
 ## Target Frameworks
 
