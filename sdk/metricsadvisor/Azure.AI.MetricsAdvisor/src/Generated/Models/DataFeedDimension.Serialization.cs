@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricDimension : IUtf8JsonSerializable
+    public partial class DataFeedDimension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricDimension DeserializeMetricDimension(JsonElement element)
+        internal static DataFeedDimension DeserializeDataFeedDimension(JsonElement element)
         {
             string dimensionName = default;
             Optional<string> dimensionDisplayName = default;
@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricDimension(dimensionName, dimensionDisplayName.Value);
+            return new DataFeedDimension(dimensionName, dimensionDisplayName.Value);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
@@ -8,21 +10,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// in the <see cref="MetricsAdvisorClient.GetAlerts"/> and the <see cref="MetricsAdvisorClient.GetAlertsAsync"/>
     /// operations.
     /// </summary>
-    public readonly partial struct TimeMode
+    [CodeGenModel("TimeMode")]
+    public readonly partial struct AlertQueryTimeMode
     {
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.Timestamp"/>.
         /// </summary>
-        public static TimeMode AnomalyTime { get; } = new TimeMode(AnomalyTimeValue);
+        public static AlertQueryTimeMode AnomalyTime { get; } = new AlertQueryTimeMode(AnomalyTimeValue);
 
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.CreatedTime"/>.
         /// </summary>
-        public static TimeMode CreatedTime { get; } = new TimeMode(CreatedTimeValue);
+        public static AlertQueryTimeMode CreatedTime { get; } = new AlertQueryTimeMode(CreatedTimeValue);
 
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.ModifiedTime"/>.
         /// </summary>
-        public static TimeMode ModifiedTime { get; } = new TimeMode(ModifiedTimeValue);
+        public static AlertQueryTimeMode ModifiedTime { get; } = new AlertQueryTimeMode(ModifiedTimeValue);
     }
 }

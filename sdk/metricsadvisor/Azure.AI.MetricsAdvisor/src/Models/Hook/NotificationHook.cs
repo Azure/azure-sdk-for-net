@@ -11,9 +11,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
-    public partial class AlertingHook
+    public partial class NotificationHook
     {
-        internal AlertingHook(string name)
+        internal NotificationHook(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -47,12 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
         public string ExternalLink { get; set; }
 
-        internal static HookInfoPatch GetPatchModel(AlertingHook hook)
+        internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
             return hook switch
             {
-                EmailHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
-                WebHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
                 _ => throw new InvalidOperationException("Unknown AlertingHook type.")
             };
         }

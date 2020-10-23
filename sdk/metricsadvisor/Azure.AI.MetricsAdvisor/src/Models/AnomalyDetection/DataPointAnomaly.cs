@@ -8,16 +8,16 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The properties of a detected <see cref="DataAnomaly"/>. A <see cref="DataAnomaly"/> is detected according to
+    /// The properties of a detected <see cref="DataPointAnomaly"/>. A <see cref="DataPointAnomaly"/> is detected according to
     /// the rules set by a <see cref="AnomalyDetectionConfiguration"/>.
     /// </summary>
     [CodeGenModel("AnomalyResult")]
-    [CodeGenSuppress(nameof(DataAnomaly), typeof(DateTimeOffset), typeof(IReadOnlyDictionary<string, string>), typeof(AnomalyProperty))]
+    [CodeGenSuppress(nameof(DataPointAnomaly), typeof(DateTimeOffset), typeof(IReadOnlyDictionary<string, string>), typeof(AnomalyProperty))]
     [CodeGenSuppress("Property")]
     [CodeGenSuppress("Dimension")]
-    public partial class DataAnomaly
+    public partial class DataPointAnomaly
     {
-        internal DataAnomaly(string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        internal DataPointAnomaly(string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
         {
             MetricId = metricId;
             AnomalyDetectionConfigurationId = anomalyDetectionConfigurationId;
@@ -56,7 +56,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalySeverity Severity { get; }
 
         /// <summary>
-        /// The status of the issue that caused this <see cref="DataAnomaly"/>. This property is only populated
+        /// The status of the issue that caused this <see cref="DataPointAnomaly"/>. This property is only populated
         /// when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert"/> or
         /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync"/>.
         /// </summary>
