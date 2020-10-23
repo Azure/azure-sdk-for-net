@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of EventRoute objects. </summary>
-    internal partial class EventRouteCollection
+    internal partial class DigitalTwinsEventRouteCollection
     {
-        /// <summary> Initializes a new instance of EventRouteCollection. </summary>
-        internal EventRouteCollection()
+        /// <summary> Initializes a new instance of DigitalTwinsEventRouteCollection. </summary>
+        internal DigitalTwinsEventRouteCollection()
         {
-            Value = new ChangeTrackingList<EventRoute>();
+            Value = new ChangeTrackingList<DigitalTwinsEventRoute>();
         }
 
-        /// <summary> Initializes a new instance of EventRouteCollection. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventRouteCollection. </summary>
         /// <param name="value"> The EventRoute objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of results. </param>
-        internal EventRouteCollection(IReadOnlyList<EventRoute> value, string nextLink)
+        internal DigitalTwinsEventRouteCollection(IReadOnlyList<DigitalTwinsEventRoute> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The EventRoute objects. </summary>
-        public IReadOnlyList<EventRoute> Value { get; }
+        public IReadOnlyList<DigitalTwinsEventRoute> Value { get; }
         /// <summary> A URI to retrieve the next page of results. </summary>
         public string NextLink { get; }
     }

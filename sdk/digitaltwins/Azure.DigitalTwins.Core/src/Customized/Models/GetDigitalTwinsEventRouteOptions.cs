@@ -7,9 +7,9 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("EventRoutesGetByIdOptions")]
-    public partial class GetEventRouteOptions
+    public partial class GetDigitalTwinsEventRouteOptions
     {
-        // This class declaration changes the namespace; do not remove.
+        // This class declaration changes the namespace and the class name; do not remove.
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>
         [CodeGenMember("Traceparent")]
