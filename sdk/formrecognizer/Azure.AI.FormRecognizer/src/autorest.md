@@ -1,13 +1,13 @@
 # Azure.AI.FormRecognizer
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/40008a6fae4c614cfed5f401a635462eb4e93a93/specification/cognitiveservices/data-plane/FormRecognizer/stable/v2.0/FormRecognizer.json
+    -  https://github.com/Azure/azure-rest-api-specs/blob/8fee11f5dd30e228a850ee25a2f3368dc1671b53/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.1-preview.1/FormRecognizer.json
 ```
 
 

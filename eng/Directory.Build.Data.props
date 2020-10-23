@@ -49,6 +49,7 @@
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
+    <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -150,5 +151,13 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <!-- Code generation settings -->
+  <PropertyGroup>
+    <!-- Don't use code generator bundled Azure.Core shared source for code generation -->
+    <AzureCoreSharedCodeDirectory>$(AzureCoreSharedSources)</AzureCoreSharedCodeDirectory>
+    <!-- Don't use code generator bundled Azure.Core shared source when building, projects in this repo include individual sources when needed  -->
+    <IncludeAzureCoreSharedCode>false</IncludeAzureCoreSharedCode>
   </PropertyGroup>
 </Project>

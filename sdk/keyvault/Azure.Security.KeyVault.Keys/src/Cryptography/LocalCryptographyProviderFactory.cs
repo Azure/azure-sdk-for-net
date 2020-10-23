@@ -5,24 +5,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal static class LocalCryptographyProviderFactory
     {
-        public static ICryptographyProvider Create(KeyVaultKey key)
+        public static ICryptographyProvider Create(KeyVaultKey key) => Create(key?.Key, key?.Properties);
+
+        public static ICryptographyProvider Create(JsonWebKey keyMaterial, KeyProperties keyProperties)
         {
-            JsonWebKey keyMaterial = key?.Key;
             if (keyMaterial != null)
             {
                 if (keyMaterial.KeyType == KeyType.Rsa || keyMaterial.KeyType == KeyType.RsaHsm)
                 {
-                    return new RsaCryptographyProvider(key);
+                    return new RsaCryptographyProvider(keyMaterial, keyProperties);
                 }
 
                 if (keyMaterial.KeyType == KeyType.Ec || keyMaterial.KeyType == KeyType.EcHsm)
                 {
-                    return new EcCryptographyProvider(key);
+                    return new EcCryptographyProvider(keyMaterial, keyProperties);
                 }
 
                 if (keyMaterial.KeyType == KeyType.Oct)
                 {
-                    return new AesCryptographyProvider(key);
+                    return new AesCryptographyProvider(keyMaterial, keyProperties);
                 }
             }
 

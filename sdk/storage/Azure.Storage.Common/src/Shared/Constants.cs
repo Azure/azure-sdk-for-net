@@ -11,6 +11,7 @@ namespace Azure.Storage
         public const int MB = KB * 1024;
         public const int GB = MB * 1024;
         public const long TB = GB * 1024L;
+        public const int Base16 = 16;
 
         public const int MaxReliabilityRetries = 5;
 
@@ -23,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2019-12-12";
+        public const string DefaultSasVersion = "2020-02-10";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -73,6 +74,7 @@ namespace Azure.Storage
 
         public const string SnapshotParameterName = "snapshot";
         public const string VersionIdParameterName = "versionid";
+        public const string ShareSnapshotParameterName = "sharesnapshot";
 
         public const string Https = "https";
         public const string Http = "http";
@@ -232,7 +234,7 @@ namespace Azure.Storage
                 /// <summary>
                 /// Lease Duration is set as infinite when passed -1.
                 /// </summary>
-                public const int InfiniteLeaseDuration = -1;
+                public const long InfiniteLeaseDuration = -1;
             }
 
             internal static class Errors
@@ -393,11 +395,12 @@ namespace Azure.Storage
             public const string ErrorRecordName = "com.microsoft.azure.storage.queryBlobContents.error";
             public const string EndRecordName = "com.microsoft.azure.storage.queryBlobContents.end";
 
-            internal static class Errors
-            {
-                public const string InvalidTextConfigurationType
-                    = "Invalid text configuration type.  Must be CvsTextConfiguration or JsonTextConfiguration.";
-            }
+            public const string ArrowFieldTypeInt64 = "int64";
+            public const string ArrowFieldTypeBool = "bool";
+            public const string ArrowFieldTypeTimestamp = "timestamp[ms]";
+            public const string ArrowFieldTypeString = "string";
+            public const string ArrowFieldTypeDouble = "double";
+            public const string ArrowFieldTypeDecimal = "decimal";
         }
 
         /// <summary>
@@ -418,6 +421,10 @@ namespace Azure.Storage
                 public const char Create = 'c';
                 public const char Tag = 't';
                 public const char FilterByTags = 'f';
+                public const char Move = 'm';
+                public const char Execute = 'e';
+                public const char ManageOwnership = 'o';
+                public const char ManageAccessControl = 'p';
             }
 
             internal static class Parameters
@@ -466,6 +473,14 @@ namespace Azure.Storage
                 public const string ContentLanguageUpper = "RSCL";
                 public const string ContentType = "rsct";
                 public const string ContentTypeUpper = "RSCT";
+                public const string PreauthorizedAgentObjectId = "saoid";
+                public const string PreauthorizedAgentObjectIdUpper = "SAOID";
+                public const string AgentObjectId = "suoid";
+                public const string AgentObjectIdUpper = "SUOID";
+                public const string CorrelationId = "scid";
+                public const string CorrelationIdUpper = "SCID";
+                public const string DirectoryDepth = "sdd";
+                public const string DirectoryDepthUpper = "SDD";
             }
 
             internal static class Resource
@@ -476,6 +491,7 @@ namespace Azure.Storage
                 public const string Container = "c";
                 public const string File = "f";
                 public const string Share = "s";
+                public const string Directory = "d";
             }
 
             internal static class AccountServices
@@ -492,6 +508,21 @@ namespace Azure.Storage
                 public const char Container = 'c';
                 public const char Object = 'o';
             }
+
+            public static readonly List<char> ValidPermissionsInOrder = new List<char>
+            {
+                Sas.Permissions.Read,
+                Sas.Permissions.Add,
+                Sas.Permissions.Create,
+                Sas.Permissions.Write,
+                Sas.Permissions.Delete,
+                Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.List,
+                Sas.Permissions.Tag,
+                Sas.Permissions.Update,
+                Sas.Permissions.Process,
+                Sas.Permissions.FilterByTags,
+            };
         }
 
         internal static class ClientSideEncryption

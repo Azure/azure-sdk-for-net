@@ -256,10 +256,10 @@
     <value>The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shard Access Signature to be valid.</value>
   </data>
   <data name="OnlyOneEntityNameMayBeSpecified" xml:space="preserve">
-    <value>The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both.</value>
+    <value>The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor.</value>
   </data>
   <data name="OperationNotSupported" xml:space="preserve">
     <value>The operation is only supported in 'PeekLock' receive mode.</value>
@@ -293,5 +293,11 @@
   </data>
   <data name="SendViaCannotBeUsedWithEntityInConnectionString" xml:space="preserve">
     <value>When sending via a different entity, an entity path is not allowed to specified in the connection string.</value>
+  </data>
+  <data name="MessageProcessorIsNotRunning" xml:space="preserve">
+    <value>The message processor is not currently running. It needs to be started before it can be stopped.</value>
+  </data>
+  <data name="OnlyOneSharedAccessAuthorizationMayBeSpecified" xml:space="preserve">
+    <value>The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`.</value>
   </data>
 </root>

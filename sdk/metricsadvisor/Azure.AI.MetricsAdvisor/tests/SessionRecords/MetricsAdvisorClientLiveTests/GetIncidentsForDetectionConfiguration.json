@@ -1,0 +1,161 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "dfb068d354664758af5cf540d0f8c1b8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2015-09-29T23:42:37Z",
+        "endTime": "2020-09-29T23:42:37Z",
+        "filter": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "238dc4a4-454f-497c-bfce-6cffbc477cf8",
+        "Content-Length": "860",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "262",
+        "X-Request-ID": "238dc4a4-454f-497c-bfce-6cffbc477cf8"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "incidentId": "013c34456c5aed901c66ca1dff0714aa-174995c5800",
+            "startTime": "2020-09-17T00:00:00Z",
+            "lastTime": "2020-09-17T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "city": "Hong Kong",
+                "category": "Handmade"
+              }
+            },
+            "property": {
+              "maxSeverity": "Low",
+              "incidentStatus": "Active"
+            }
+          }
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1\u0026$token=eyJtZXRyaWNJZCI6IjgwMjE1M2E5LTE2NzEtNGE2Zi05MDFlLTY2YmJmMDkzODRkOSIsImRldGVjdENvbmZpZ0lkIjoiNTlmMjZhNTctNTVmNy00MWViLTg4OTktYTcyNjhkMTI1NTU3Iiwic3RhcnRUaW1lIjoiMjAxNS0wOS0yOVQyMzo0MjozN1oiLCJlbmRUaW1lIjoiMjAyMC0wOS0yOVQyMzo0MjozN1oiLCJuZXh0IjoiTWpBeU1DMHdPUzB4T0ZRd01Eb3dNRG93TUZvakl5TXdNVE5qTXpRME5UWmpOV0ZsWkRrd01XTTJObU5oTVdSbVpqQTNNVFJoWVE9PSIsImxpbWl0IjoxLCJmaWx0ZXIiOnt9fQ=="
+      }
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1\u0026$token=eyJtZXRyaWNJZCI6IjgwMjE1M2E5LTE2NzEtNGE2Zi05MDFlLTY2YmJmMDkzODRkOSIsImRldGVjdENvbmZpZ0lkIjoiNTlmMjZhNTctNTVmNy00MWViLTg4OTktYTcyNjhkMTI1NTU3Iiwic3RhcnRUaW1lIjoiMjAxNS0wOS0yOVQyMzo0MjozN1oiLCJlbmRUaW1lIjoiMjAyMC0wOS0yOVQyMzo0MjozN1oiLCJuZXh0IjoiTWpBeU1DMHdPUzB4T0ZRd01Eb3dNRG93TUZvakl5TXdNVE5qTXpRME5UWmpOV0ZsWkRrd01XTTJObU5oTVdSbVpqQTNNVFJoWVE9PSIsImxpbWl0IjoxLCJmaWx0ZXIiOnt9fQ==",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "4941a8a192798f2430fca0cf5eed9432",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9090d175-95d4-46d2-ae72-2b7c8329865e",
+        "Content-Length": "867",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "226",
+        "X-Request-ID": "9090d175-95d4-46d2-ae72-2b7c8329865e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "incidentId": "08309e98fac29f10bb627f0f407881b7-174995c5800",
+            "startTime": "2020-09-17T00:00:00Z",
+            "lastTime": "2020-09-17T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "city": "Belo Horizonte",
+                "category": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "Medium",
+              "incidentStatus": "Active"
+            }
+          }
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1\u0026$token=eyJtZXRyaWNJZCI6IjgwMjE1M2E5LTE2NzEtNGE2Zi05MDFlLTY2YmJmMDkzODRkOSIsImRldGVjdENvbmZpZ0lkIjoiNTlmMjZhNTctNTVmNy00MWViLTg4OTktYTcyNjhkMTI1NTU3Iiwic3RhcnRUaW1lIjoiMjAxNS0wOS0yOVQyMzo0MjozN1oiLCJlbmRUaW1lIjoiMjAyMC0wOS0yOVQyMzo0MjozN1oiLCJuZXh0IjoiTWpBeU1DMHdPUzB4T0ZRd01Eb3dNRG93TUZvakl5TXdPRE13T1dVNU9HWmhZekk1WmpFd1ltSTJNamRtTUdZME1EYzRPREZpTnc9PSIsImxpbWl0IjoxLCJmaWx0ZXIiOnt9fQ=="
+      }
+    },
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1\u0026$token=eyJtZXRyaWNJZCI6IjgwMjE1M2E5LTE2NzEtNGE2Zi05MDFlLTY2YmJmMDkzODRkOSIsImRldGVjdENvbmZpZ0lkIjoiNTlmMjZhNTctNTVmNy00MWViLTg4OTktYTcyNjhkMTI1NTU3Iiwic3RhcnRUaW1lIjoiMjAxNS0wOS0yOVQyMzo0MjozN1oiLCJlbmRUaW1lIjoiMjAyMC0wOS0yOVQyMzo0MjozN1oiLCJuZXh0IjoiTWpBeU1DMHdPUzB4T0ZRd01Eb3dNRG93TUZvakl5TXdPRE13T1dVNU9HWmhZekk1WmpFd1ltSTJNamRtTUdZME1EYzRPREZpTnc9PSIsImxpbWl0IjoxLCJmaWx0ZXIiOnt9fQ==",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200929.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "61dc61db24dfd30d4a5572a11c2f2b7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "050788ae-4dd1-4e4e-b8c2-d00e5161648e",
+        "Content-Length": "879",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 29 Sep 2020 23:42:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "212",
+        "X-Request-ID": "050788ae-4dd1-4e4e-b8c2-d00e5161648e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "incidentId": "20f206334a78c68dcedf6bf3d89a8b97-174995c5800",
+            "startTime": "2020-09-17T00:00:00Z",
+            "lastTime": "2020-09-17T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "city": "Hong Kong",
+                "category": "Shoes Handbags \u0026 Sunglasses"
+              }
+            },
+            "property": {
+              "maxSeverity": "Low",
+              "incidentStatus": "Active"
+            }
+          }
+        ],
+        "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/query?$top=1\u0026$token=eyJtZXRyaWNJZCI6IjgwMjE1M2E5LTE2NzEtNGE2Zi05MDFlLTY2YmJmMDkzODRkOSIsImRldGVjdENvbmZpZ0lkIjoiNTlmMjZhNTctNTVmNy00MWViLTg4OTktYTcyNjhkMTI1NTU3Iiwic3RhcnRUaW1lIjoiMjAxNS0wOS0yOVQyMzo0MjozN1oiLCJlbmRUaW1lIjoiMjAyMC0wOS0yOVQyMzo0MjozN1oiLCJuZXh0IjoiTWpBeU1DMHdPUzB4T0ZRd01Eb3dNRG93TUZvakl5TXlNR1l5TURZek16UmhOemhqTmpoa1kyVmtaalppWmpOa09EbGhPR0k1Tnc9PSIsImxpbWl0IjoxLCJmaWx0ZXIiOnt9fQ=="
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2020-09-29T18:42:37.6879327-05:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1921701175"
+  }
+}

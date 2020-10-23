@@ -177,12 +177,12 @@ APIs for getting statistics about devices and modules, as well as service statis
 #### Devices
 APIs for managing device identities, device twins, and querying devices.
 
-This sub-client has been implemented. Refer to [DevicesClient](./DevicesClient.cs).
+This sub-client has been implemented. Refer to [DevicesClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/iot/Azure.Iot.Hub.Service/src/DevicesClient.cs).
 
 #### Modules
 APIs for managing module identities, module twins, and querying modules.
 
-This sub-client has been implemented. Refer to [ModulesClient](./ModulesClient.cs).
+This sub-client has been implemented. Refer to [ModulesClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/iot/Azure.Iot.Hub.Service/src/ModulesClient.cs).
 
 #### Jobs
 APIs for using IotHub v2 jobs.

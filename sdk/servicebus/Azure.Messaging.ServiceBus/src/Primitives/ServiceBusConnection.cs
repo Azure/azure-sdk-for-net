@@ -83,33 +83,34 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-
             ValidateConnectionOptions(options);
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
-                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
-                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey))
-            {
-                throw new ArgumentException(Resources.MissingConnectionInformation, nameof(connectionString));
-            }
+            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            ValidateConnectionStringProperties(connectionStringProperties, nameof(connectionString));
 
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             TransportType = options.TransportType;
             EntityPath = connectionStringProperties.EntityPath;
             RetryOptions = options.RetryOptions;
 
-            var sharedAccessSignature = new SharedAccessSignature
-            (
-                 BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
-                 connectionStringProperties.SharedAccessKeyName,
-                 connectionStringProperties.SharedAccessKey
-            );
+            SharedAccessSignature sharedAccessSignature;
+
+            if (string.IsNullOrEmpty(connectionStringProperties.SharedAccessSignature))
+            {
+                sharedAccessSignature = new SharedAccessSignature(
+                     BuildConnectionResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
+                     connectionStringProperties.SharedAccessKeyName,
+                     connectionStringProperties.SharedAccessKey);
+            }
+            else
+            {
+                sharedAccessSignature = new SharedAccessSignature(connectionStringProperties.SharedAccessSignature);
+            }
 
             var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(
                 sharedCredential,
-                BuildAudienceResource(TransportType, FullyQualifiedNamespace, EntityPath));
+                BuildConnectionResource(TransportType, FullyQualifiedNamespace, EntityPath));
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             _innerClient = CreateTransportClient(tokenCredential, options);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
@@ -137,11 +138,11 @@ namespace Azure.Messaging.ServiceBus
                     break;
 
                 case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildConnectionResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
                     break;
             }
 
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildConnectionResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             TransportType = options.TransportType;
@@ -265,7 +266,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Builds the audience for use in the signature.
+        ///   Builds the audience of the connection for use in the signature.
         /// </summary>
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Service Bus service.</param>
@@ -274,7 +275,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(
+        internal static string BuildConnectionResource(
             ServiceBusTransportType transportType,
             string fullyQualifiedNamespace,
             string entityName)
@@ -296,6 +297,12 @@ namespace Azure.Messaging.ServiceBus
 
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
+
+        /// <summary>
+        /// Throw an ObjectDisposedException if the object is Closing.
+        /// </summary>
+        internal virtual void ThrowIfClosed() =>
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusConnection));
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ServiceBusClientOptions" /> associated
@@ -320,20 +327,43 @@ namespace Azure.Messaging.ServiceBus
 
             // A proxy is only valid when web sockets is used as the transport.
 
-            if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.Proxy != null))
+            if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.WebProxy != null))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(connectionOptions));
             }
         }
 
         /// <summary>
-        /// Throw an ObjectDisposedException if the object is Closing.
+        ///   Performs the actions needed to validate the set of connection string properties for connecting to the
+        ///   Service Bus service.
         /// </summary>
-        internal virtual void ThrowIfClosed()
+        ///
+        /// <param name="connectionStringProperties">The set of connection string properties to validate.</param>
+        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
+        ///
+        /// <exception cref="ArgumentException">In the case that the properties violate an invariant or otherwise represent a combination that is not permissible, an appropriate exception will be thrown.</exception>
+        ///
+        private static void ValidateConnectionStringProperties(
+            ConnectionStringProperties connectionStringProperties,
+            string connectionStringArgumentName)
         {
-            if (IsClosed)
+            var hasSharedKey = ((!string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)) && (!string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey)));
+            var hasSharedSignature = (!string.IsNullOrEmpty(connectionStringProperties.SharedAccessSignature));
+
+            // Ensure that each of the needed components are present for connecting.
+
+            if ((string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host))
+                || ((!hasSharedKey) && (!hasSharedSignature)))
             {
-                throw new ObjectDisposedException($"{nameof(ServiceBusConnection)} has already been closed. Please create a new instance");
+                throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
+            }
+
+            // The connection string may contain a precomputed shared access signature OR a shared key name and value,
+            // but not both.
+
+            if (hasSharedKey && hasSharedSignature)
+            {
+                throw new ArgumentException(Resources.OnlyOneSharedAccessAuthorizationMayBeSpecified, connectionStringArgumentName);
             }
         }
     }

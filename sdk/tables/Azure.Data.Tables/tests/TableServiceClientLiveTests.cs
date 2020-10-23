@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreateTableIfNotExists()
         {
             // Call CreateTableIfNotExists when the table already exists.
@@ -49,7 +49,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithPermissions()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -80,8 +80,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -97,7 +97,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
         }
 
-        [Test]
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithResourceTypes()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -128,8 +128,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
@@ -156,7 +156,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
@@ -170,8 +170,8 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                 }
 
                 // Get the table list.
@@ -193,7 +193,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetTablesReturnsTablesWithFilter()
         {
             var createdTables = new List<string>();
@@ -225,7 +225,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesReturnsProperties()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -245,24 +245,20 @@ namespace Azure.Data.Tables.Tests
 
             await service.SetPropertiesAsync(responseToChange).ConfigureAwait(false);
 
-            // Wait 20 sec if on Live mode to ensure properties are updated in the service
-            // Minimum time: Sync - 20 sec; Async - 12 sec
-
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
-
             // Get configured properties
+            // A delay is required to ensure properties are updated in the service
 
-            TableServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+            TableServiceProperties changedResponse = await RetryUntilExpectedResponse(
+                async () => await service.GetPropertiesAsync().ConfigureAwait(false),
+                result => result.Value.Logging.Read == responseToChange.Logging.Read,
+                15000).ConfigureAwait(false);
 
             // Test each property
 
             CompareServiceProperties(responseToChange, changedResponse);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetTableServiceStatsReturnsStats()
         {
             if (_endpointType == TableEndpointType.CosmosTable)

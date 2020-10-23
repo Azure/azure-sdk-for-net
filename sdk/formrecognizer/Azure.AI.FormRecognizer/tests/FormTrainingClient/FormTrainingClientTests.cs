@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
@@ -21,7 +22,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientTests(bool isAsync) : base(isAsync)
+        public FormTrainingClientTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -115,6 +117,16 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
             Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null, useTrainingLabels: false));
+        }
+
+        [Test]
+        public void StartCreateComposedModelArgumentValidation()
+        {
+            FormTrainingClient client = CreateInstrumentedClient();
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCreateComposedModelAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCreateComposedModelAsync(new List<string>() { string.Empty }));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCreateComposedModelAsync(new List<string>() { "1975-04-04" }));
         }
 
         [Test]

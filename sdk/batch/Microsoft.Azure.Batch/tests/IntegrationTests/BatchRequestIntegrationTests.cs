@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
@@ -16,20 +16,10 @@
     using IntegrationTestUtilities;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Xunit.Abstractions;
-    using CloudJob = Microsoft.Azure.Batch.CloudJob;
 
     public class BatchRequestIntegrationTests
     {
-        private readonly ITestOutputHelper testOutputHelper;
         private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(10);
-
-        public BatchRequestIntegrationTests(ITestOutputHelper testOutputHelper)
-        {
-            this.testOutputHelper = testOutputHelper;
-        }
-
-        #region Cancellation
 
         [Fact]
         [LiveTest]
@@ -40,17 +30,17 @@
             await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
                 await SynchronizationContextHelper.RunTestAsync(async () =>
                 {
-                    using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                    using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
+                    List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>
                     {
-                        List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>();
-                        customBehaviors.Add(new RequestInterceptor((req) =>
+                        new RequestInterceptor((req) =>
                         {
                             //Set the timeout to something small so it is guaranteed to expire before the service has responded
                             req.Timeout = TimeSpan.FromMilliseconds(25);
-                        }));
+                        })
+                    };
 
-                        await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false);
-                    }
+                    await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false);
                 },
                 TestTimeout));
         }
@@ -67,26 +57,26 @@
             await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
                 await SynchronizationContextHelper.RunTestAsync(async () =>
                 {
-                    using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                    using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
+                    client.CustomBehaviors.Add(RetryPolicyProvider.LinearRetryProvider(TimeSpan.FromMilliseconds(250), maxRetries));
+                    List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>
                     {
-                        client.CustomBehaviors.Add(RetryPolicyProvider.LinearRetryProvider(TimeSpan.FromMilliseconds(250), maxRetries));
-                        List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>();
-                        customBehaviors.Add(new RequestInterceptor((req) =>
+                        new RequestInterceptor((req) =>
                         {
                             //Set the timeout to something small so it is guaranteed to expire before the service has responded
                             req.Timeout = TimeSpan.FromMilliseconds(25);
 
                             var castRequest = (JobGetBatchRequest)req;
-                            Func<CancellationToken, Task<AzureOperationResponse<Microsoft.Azure.Batch.Protocol.Models.CloudJob, Microsoft.Azure.Batch.Protocol.Models.JobGetHeaders>>> oldFunc = castRequest.ServiceRequestFunc;
+                            Func<CancellationToken, Task<AzureOperationResponse<Microsoft.Azure.Batch.Protocol.Models.CloudJob, JobGetHeaders>>> oldFunc = castRequest.ServiceRequestFunc;
                             castRequest.ServiceRequestFunc = async (token) =>
                                                                    {
                                                                        actualRequestCount++; //Count the number of calls to the func
                                                                        return await oldFunc(token).ConfigureAwait(false);
                                                                    };
-                        }));
+                        })
+                    };
 
-                        await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false);
-                    }
+                    await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false);
                 },
                 TestTimeout));
 
@@ -96,29 +86,26 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        [Trait("Flaky", "true")]
         public async Task BatchRequestWithShortUserCancellationToken()
         {
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
                 //Set the timeout to something small so it is guaranteed to expire before the service has responded
-                using(CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(25)))
+                using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(25));
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false);
+                List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>
                 {
-                    using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                    new RequestInterceptor((req) =>
                     {
-                        List<BatchClientBehavior> customBehaviors = new List<BatchClientBehavior>();
-                        customBehaviors.Add(new RequestInterceptor((req) =>
-                        {
-                            req.CancellationToken = tokenSource.Token;
-                        }));
+                        req.CancellationToken = tokenSource.Token;
+                    })
+                };
 
-                        await TestUtilities.AssertThrowsAsync<OperationCanceledException>(async () =>
-                            await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false)).ConfigureAwait(false);
-                    }
-                }
+                await TestUtilities.AssertThrowsAsync<OperationCanceledException>(async () =>
+                    await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false)).ConfigureAwait(false);
             },
             TestTimeout);
         }
-
-        #endregion
     }
 }

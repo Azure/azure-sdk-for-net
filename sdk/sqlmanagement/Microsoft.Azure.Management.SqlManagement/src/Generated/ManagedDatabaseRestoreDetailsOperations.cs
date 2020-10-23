@@ -54,8 +54,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets managed database restore details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
@@ -90,6 +89,21 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
             if (managedInstanceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managedInstanceName");
@@ -103,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string restoreDetailsName = "Default";
-            string apiVersion = "2019-06-01-preview";
+            string apiVersion = "2020-02-02-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

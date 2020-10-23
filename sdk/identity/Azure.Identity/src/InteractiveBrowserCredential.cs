@@ -16,11 +16,12 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
-        private readonly string _clientId;
-        private readonly MsalPublicClient _client;
-        private readonly CredentialPipeline _pipeline;
-        private AuthenticationRecord _record = null;
-        private bool _disableAutomaticAuthentication = false;
+        internal string ClientId { get; }
+        internal MsalPublicClient Client {get;}
+        internal CredentialPipeline Pipeline { get; }
+        internal bool DisableAutomaticAuthentication { get; }
+        internal AuthenticationRecord Record { get; private set; }
+
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
@@ -38,10 +39,10 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
         public InteractiveBrowserCredential(InteractiveBrowserCredentialOptions options)
-            : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, null, null)
+            : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, options, null)
         {
-            _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
-            _record = options?.AuthenticationRecord;
+            DisableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+            Record = options?.AuthenticationRecord;
         }
 
         /// <summary>
@@ -73,11 +74,13 @@ namespace Azure.Identity
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
+            var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
+
+            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions);
         }
 
         /// <summary>
@@ -88,7 +91,7 @@ namespace Azure.Identity
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
             return Authenticate(new TokenRequestContext(new[] { defaultScope }), cancellationToken);
         }
@@ -101,7 +104,7 @@ namespace Azure.Identity
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
             return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
         }
@@ -129,7 +132,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -140,7 +143,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -152,13 +155,13 @@ namespace Azure.Identity
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
                 scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
 
-                return _record;
+                return Record;
             }
             catch (Exception e)
             {
@@ -168,17 +171,17 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(GetToken)}", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(GetToken)}", requestContext);
 
             try
             {
                 Exception inner = null;
 
-                if (_record != null)
+                if (Record != null)
                 {
                     try
                     {
-                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -188,7 +191,7 @@ namespace Azure.Identity
                     }
                 }
 
-                if (_disableAutomaticAuthentication)
+                if (DisableAutomaticAuthentication)
                 {
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
@@ -203,9 +206,9 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
-            _record = new AuthenticationRecord(result, _clientId);
+            Record = new AuthenticationRecord(result, ClientId);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

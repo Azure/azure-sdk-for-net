@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Prepare DataMove Response
     /// </summary>
-    public partial class PrepareDataMoveResponse
+    public partial class PrepareDataMoveResponse : VaultStorageConfigOperationResultResponse
     {
         /// <summary>
         /// Initializes a new instance of the PrepareDataMoveResponse class.

@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "westus2",
+            "defaultValue": "westcentralus",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
@@ -42,6 +42,10 @@
             "type": "string",
             "defaultValue": "multipage-vendor-forms"
         },
+        "selectionMarkTrainingDataContainer": {
+            "type": "string",
+            "defaultValue": "selectionmark"
+        },
         "trainingDataResourceId": {
             "type": "string",
             "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
@@ -59,6 +63,15 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('multipageTrainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "selectionMarkTrainingDataSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('selectionMarkTrainingDataContainer'))]",
                 "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
@@ -110,6 +123,10 @@
         "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('multipageTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('multipageTrainingDataSasProperties')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('selectionMarkTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('selectionMarkTrainingDataSasProperties')).serviceSasToken)]"
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_REGION": {
             "type": "string",

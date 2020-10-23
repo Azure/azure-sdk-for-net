@@ -247,8 +247,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Mock MSI is being asked to act like MSI was able to get token. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            HttpClient httpClient = new HttpClient(mockMsi);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
@@ -278,8 +277,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Mock MSI is being asked to act like MSI was able to get token. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            HttpClient httpClient = new HttpClient(mockMsi);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
@@ -313,8 +311,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Mock MSI is being asked to act like MSI was NOT able to get token. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
-            HttpClient httpClient = new HttpClient(mockMsi);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);

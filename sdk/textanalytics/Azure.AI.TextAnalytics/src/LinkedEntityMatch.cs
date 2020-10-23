@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -8,12 +10,21 @@ namespace Azure.AI.TextAnalytics
     /// the linked entity, or well-known item, that the Text Analytics model
     /// identified.
     /// </summary>
-    public readonly struct LinkedEntityMatch
+    [CodeGenModel("Match")]
+    public readonly partial struct LinkedEntityMatch
     {
-        internal LinkedEntityMatch(string text, double score)
+        // use for deserialization
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
+            : this(confidenceScore, text, offset) => Length = length;
+
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset)
         {
-            Text = text;
-            ConfidenceScore = score;
+            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Text = text ?? string.Empty;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = default;
         }
 
         /// <summary>
@@ -26,5 +37,15 @@ namespace Azure.AI.TextAnalytics
         /// substring matches the corresponding linked entity.
         /// </summary>
         public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// Gets the starting position (in UTF-16 code units) for the matching text in the document.
+        /// </summary>
+        public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length (in UTF-16 code units) of the matching text in the sentence.
+        /// </summary>
+        private int Length { get; }
     }
 }

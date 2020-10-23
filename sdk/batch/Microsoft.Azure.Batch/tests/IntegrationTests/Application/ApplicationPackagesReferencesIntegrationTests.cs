@@ -31,38 +31,36 @@
         {
             var poolId = "app-ref-test-1-" + Guid.NewGuid();
 
-            Func<Task> test = async () =>
+            async Task test()
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                CloudPool newPool = null;
+                try
                 {
-                    CloudPool newPool = null;
-                    try
+                    List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
+
+                    foreach (var applicationSummary in applicationSummaries.Where(app => app.Id == ApplicationId))
                     {
-                        List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
-
-                        foreach (var applicationSummary in applicationSummaries.Where(app => app.Id == ApplicationId))
-                        {
-                            Assert.True(true, string.Format("{0} was found.", applicationSummary.Id));
-                        }
-                        CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
-
-                        pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = ApplicationId, Version = Version } };
-
-                        await pool.CommitAsync().ConfigureAwait(false);
-
-                        newPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
-
-                        ApplicationPackageReference apr = newPool.ApplicationPackageReferences.First();
-
-                        Assert.Equal(ApplicationId, apr.ApplicationId);
-                        Assert.Equal(Version, apr.Version);
+                        Assert.True(true, string.Format("{0} was found.", applicationSummary.Id));
                     }
-                    finally
-                    {
-                        TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
-                    }
+                    CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
+
+                    pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = ApplicationId, Version = Version } };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+
+                    newPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
+
+                    ApplicationPackageReference apr = newPool.ApplicationPackageReferences.First();
+
+                    Assert.Equal(ApplicationId, apr.ApplicationId);
+                    Assert.Equal(Version, apr.Version);
                 }
-            };
+                finally
+                {
+                    TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
+                }
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -74,35 +72,33 @@
         {
             var poolId = "app-ref-test-2-" + Guid.NewGuid();
 
-            Func<Task> test = async () =>
+            async Task test()
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                try
                 {
-                    try
-                    {
-                        CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
-                        await pool.CommitAsync().ConfigureAwait(false);
+                    CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
+                    await pool.CommitAsync().ConfigureAwait(false);
 
-                        pool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
-                        Assert.Null(pool.ApplicationPackageReferences);
+                    pool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
+                    Assert.Null(pool.ApplicationPackageReferences);
 
-                        pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = ApplicationId, Version = Version } };
+                    pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = ApplicationId, Version = Version } };
 
-                        await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.CommitAsync().ConfigureAwait(false);
 
-                        CloudPool updatedPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
+                    CloudPool updatedPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
 
-                        ApplicationPackageReference apr = updatedPool.ApplicationPackageReferences.First();
+                    ApplicationPackageReference apr = updatedPool.ApplicationPackageReferences.First();
 
-                        Assert.Equal(ApplicationId, apr.ApplicationId);
-                        Assert.Equal(Version, apr.Version);
-                    }
-                    finally
-                    {
-                        TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
-                    }
+                    Assert.Equal(ApplicationId, apr.ApplicationId);
+                    Assert.Equal(Version, apr.Version);
                 }
-            };
+                finally
+                {
+                    TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
+                }
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
@@ -115,14 +111,12 @@
             await SynchronizationContextHelper.RunTestAsync(async () =>
             {
                 var poolId = "app-ref-test-3-" + Guid.NewGuid();
-                using (BatchClient client = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
-                {
-                    CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
+                using BatchClient client = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
+                CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
 
-                    pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = "dud", Version = Version } };
+                pool.ApplicationPackageReferences = new[] { new ApplicationPackageReference { ApplicationId = "dud", Version = Version } };
 
-                    await TestUtilities.AssertThrowsAsync<BatchException>(() => pool.CommitAsync()).ConfigureAwait(false);
-                }
+                await TestUtilities.AssertThrowsAsync<BatchException>(() => pool.CommitAsync()).ConfigureAwait(false);
             }, LongTestTimeout);
         }
 
@@ -160,54 +154,52 @@
             Schedule schedule = new Schedule { DoNotRunAfter = DateTime.UtcNow.AddMinutes(5), RecurrenceInterval = TimeSpan.FromMinutes(2) };
             JobSpecification jobSpecification = new JobSpecification(poolInformation);
 
-            using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+            using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+            CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jobId, schedule, jobSpecification);
+
+            async Task test()
             {
-                CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jobId, schedule, jobSpecification);
+                CloudJobSchedule updatedBoundJobSchedule = null;
 
-                Func<Task> test = async () =>
+                try
+                {
+                    await cloudJobSchedule.CommitAsync().ConfigureAwait(false);
+
+                    CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jobId);
+
+                    ApplicationPackageReference apr = boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
+
+                    Assert.Equal(ApplicationId, apr.ApplicationId);
+                    Assert.Equal(Version, apr.Version);
+
+                    boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences = new[]
                     {
-                        CloudJobSchedule updatedBoundJobSchedule = null;
-
-                        try
-                        {
-                            await cloudJobSchedule.CommitAsync().ConfigureAwait(false);
-
-                            CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jobId);
-
-                            ApplicationPackageReference apr = boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
-
-                            Assert.Equal(ApplicationId, apr.ApplicationId);
-                            Assert.Equal(Version, apr.Version);
-
-                            boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences = new []
-                            {
                                 new ApplicationPackageReference()
                                 {
                                     ApplicationId = ApplicationId,
                                     Version = newVersion
                                 }
-                            };
+                        };
 
-                            await boundJobSchedule.CommitAsync().ConfigureAwait(false);
-                            await boundJobSchedule.RefreshAsync().ConfigureAwait(false);
+                    await boundJobSchedule.CommitAsync().ConfigureAwait(false);
+                    await boundJobSchedule.RefreshAsync().ConfigureAwait(false);
 
-                            updatedBoundJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId).ConfigureAwait(false);
+                    updatedBoundJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId).ConfigureAwait(false);
 
-                            ApplicationPackageReference updatedApr =
-                                updatedBoundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences
-                                                       .First();
+                    ApplicationPackageReference updatedApr =
+                        updatedBoundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences
+                                               .First();
 
-                            Assert.Equal(ApplicationId, updatedApr.ApplicationId);
-                            Assert.Equal(newVersion, updatedApr.Version);
-                        }
-                        finally
-                        {
-                            TestUtilities.DeleteJobScheduleIfExistsAsync(client, jobId).Wait();
-                        }
-                    };
-
-                await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
+                    Assert.Equal(ApplicationId, updatedApr.ApplicationId);
+                    Assert.Equal(newVersion, updatedApr.Version);
+                }
+                finally
+                {
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(client, jobId).Wait();
+                }
             }
+
+            await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }
 
         [Fact]
@@ -238,29 +230,27 @@
                 }
             };
 
-            Func<Task> test = async () =>
+            async Task test()
             {
-                using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                try
                 {
-                    try
-                    {
-                        var job = client.JobOperations.CreateJob(jobId, poolInformation);
+                    var job = client.JobOperations.CreateJob(jobId, poolInformation);
 
-                        await job.CommitAsync().ConfigureAwait(false);
+                    await job.CommitAsync().ConfigureAwait(false);
 
-                        CloudJob jobResponse = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
+                    CloudJob jobResponse = await client.JobOperations.GetJobAsync(jobId).ConfigureAwait(false);
 
-                        ApplicationPackageReference apr = jobResponse.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
+                    ApplicationPackageReference apr = jobResponse.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
 
-                        Assert.Equal(ApplicationId, apr.ApplicationId);
-                        Assert.Equal(Version, apr.Version);
-                    }
-                    finally
-                    {
-                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                    }
+                    Assert.Equal(ApplicationId, apr.ApplicationId);
+                    Assert.Equal(Version, apr.Version);
                 }
-            };
+                finally
+                {
+                    TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                }
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
         }

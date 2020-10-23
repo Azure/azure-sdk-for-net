@@ -511,6 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 OwnerLevel = 99,
                 PrefetchCount = 42,
+                PrefetchSizeInBytes = 43,
                 TrackLastEnqueuedEventProperties = false
             };
 
@@ -524,7 +525,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     expectedRetryPolicy,
                     expectedOptions.TrackLastEnqueuedEventProperties,
                     expectedOptions.OwnerLevel,
-                    (uint?)expectedOptions.PrefetchCount),
+                    (uint?)expectedOptions.PrefetchCount,
+                    expectedOptions.PrefetchSizeInBytes),
                 Times.Once);
         }
 
@@ -557,7 +559,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -590,7 +593,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -806,7 +810,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             mockConsumer
@@ -851,7 +856,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             mockConsumer
@@ -895,7 +901,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             mockConsumer
@@ -961,7 +968,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -1005,7 +1013,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -1101,7 +1110,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -1158,7 +1168,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);

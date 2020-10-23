@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
+        public PrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
         {
             if (subscriptionId == null)
             {
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -150,6 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(groupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -236,6 +238,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

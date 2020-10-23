@@ -1600,6 +1600,7 @@ namespace Azure.Management.Network
         public virtual Azure.Management.Network.NetworkInterfaceLoadBalancersOperations NetworkInterfaceLoadBalancers { get { throw null; } }
         public virtual Azure.Management.Network.NetworkInterfacesOperations NetworkInterfaces { get { throw null; } }
         public virtual Azure.Management.Network.NetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get { throw null; } }
+        public virtual Azure.Management.Network.NetworkManagementOperations NetworkManagement { get { throw null; } }
         public virtual Azure.Management.Network.NetworkProfilesOperations NetworkProfiles { get { throw null; } }
         public virtual Azure.Management.Network.NetworkSecurityGroupsOperations NetworkSecurityGroups { get { throw null; } }
         public virtual Azure.Management.Network.NetworkVirtualAppliancesOperations NetworkVirtualAppliances { get { throw null; } }
@@ -1620,7 +1621,6 @@ namespace Azure.Management.Network
         public virtual Azure.Management.Network.RouteTablesOperations RouteTables { get { throw null; } }
         public virtual Azure.Management.Network.SecurityPartnerProvidersOperations SecurityPartnerProviders { get { throw null; } }
         public virtual Azure.Management.Network.SecurityRulesOperations SecurityRules { get { throw null; } }
-        public virtual Azure.Management.Network.ServiceOperations Service { get { throw null; } }
         public virtual Azure.Management.Network.ServiceAssociationLinksOperations ServiceAssociationLinks { get { throw null; } }
         public virtual Azure.Management.Network.ServiceEndpointPoliciesOperations ServiceEndpointPolicies { get { throw null; } }
         public virtual Azure.Management.Network.ServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get { throw null; } }
@@ -1651,6 +1651,78 @@ namespace Azure.Management.Network
     public partial class NetworkManagementClientOptions : Azure.Core.ClientOptions
     {
         public NetworkManagementClientOptions() { }
+    }
+    public partial class NetworkManagementDeleteBastionShareableLinkOperation : Azure.Operation<Azure.Response>
+    {
+        internal NetworkManagementDeleteBastionShareableLinkOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Azure.Operation<Azure.Management.Network.Models.VpnProfileResponse>
+    {
+        internal NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Management.Network.Models.VpnProfileResponse Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Network.Models.VpnProfileResponse>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Network.Models.VpnProfileResponse>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkManagementGetActiveSessionsOperation : Azure.Operation<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>
+    {
+        internal NetworkManagementGetActiveSessionsOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkManagementOperations
+    {
+        protected NetworkManagementOperations() { }
+        public virtual Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Network.Models.BastionSessionState> DisconnectActiveSessions(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.SessionIds sessionIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Network.Models.BastionSessionState> DisconnectActiveSessionsAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.SessionIds sessionIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Network.Models.BastionShareableLink> GetBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink> GetBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Network.NetworkManagementDeleteBastionShareableLinkOperation StartDeleteBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Network.NetworkManagementDeleteBastionShareableLinkOperation> StartDeleteBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Network.NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation StartGeneratevirtualwanvpnserverconfigurationvpnprofile(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.VirtualWanVpnProfileParameters vpnClientParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Network.NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> StartGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.VirtualWanVpnProfileParameters vpnClientParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Network.NetworkManagementGetActiveSessionsOperation StartGetActiveSessions(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Network.NetworkManagementGetActiveSessionsOperation> StartGetActiveSessionsAsync(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Network.NetworkManagementPutBastionShareableLinkOperation StartPutBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Network.NetworkManagementPutBastionShareableLinkOperation> StartPutBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Network.Models.VirtualWanSecurityProviders> SupportedSecurityProviders(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkManagementPutBastionShareableLinkOperation : Azure.Operation<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>
+    {
+        internal NetworkManagementPutBastionShareableLinkOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkProfilesDeleteOperation : Azure.Operation<Azure.Response>
     {
@@ -2634,19 +2706,6 @@ namespace Azure.Management.Network
         public virtual Azure.Response<Azure.Management.Network.Models.ServiceAssociationLinksListResult> List(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ServiceAssociationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceDeleteBastionShareableLinkOperation : Azure.Operation<Azure.Response>
-    {
-        internal ServiceDeleteBastionShareableLinkOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ServiceEndpointPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.Management.Network.Models.ServiceEndpointPolicy>
     {
         internal ServiceEndpointPoliciesCreateOrUpdateOperation() { }
@@ -2726,65 +2785,6 @@ namespace Azure.Management.Network
         public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, Azure.Management.Network.Models.ServiceEndpointPolicyDefinition serviceEndpointPolicyDefinitions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Network.ServiceEndpointPolicyDefinitionsDeleteOperation StartDelete(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServiceEndpointPolicyDefinitionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Azure.Operation<Azure.Management.Network.Models.VpnProfileResponse>
-    {
-        internal ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Management.Network.Models.VpnProfileResponse Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Network.Models.VpnProfileResponse>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Network.Models.VpnProfileResponse>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceGetActiveSessionsOperation : Azure.Operation<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>
-    {
-        internal ServiceGetActiveSessionsOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession> Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionActiveSession>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceOperations
-    {
-        protected ServiceOperations() { }
-        public virtual Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Network.Models.BastionSessionState> DisconnectActiveSessions(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.SessionIds sessionIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Network.Models.BastionSessionState> DisconnectActiveSessionsAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.SessionIds sessionIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Network.Models.BastionShareableLink> GetBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink> GetBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Network.ServiceDeleteBastionShareableLinkOperation StartDeleteBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServiceDeleteBastionShareableLinkOperation> StartDeleteBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Network.ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation StartGeneratevirtualwanvpnserverconfigurationvpnprofile(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.VirtualWanVpnProfileParameters vpnClientParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> StartGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.VirtualWanVpnProfileParameters vpnClientParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Network.ServiceGetActiveSessionsOperation StartGetActiveSessions(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServiceGetActiveSessionsOperation> StartGetActiveSessionsAsync(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Network.ServicePutBastionShareableLinkOperation StartPutBastionShareableLink(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Network.ServicePutBastionShareableLinkOperation> StartPutBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.BastionShareableLinkListRequest bslRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Network.Models.VirtualWanSecurityProviders> SupportedSecurityProviders(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServicePutBastionShareableLinkOperation : Azure.Operation<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>
-    {
-        internal ServicePutBastionShareableLinkOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink> Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.Management.Network.Models.BastionShareableLink>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceTagsOperations
     {
@@ -6977,26 +6977,6 @@ namespace Azure.Management.Network.Models
         public Azure.Management.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HubVirtualNetworkConnectionStatus : System.IEquatable<Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HubVirtualNetworkConnectionStatus(string value) { throw null; }
-        public static Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus Connected { get { throw null; } }
-        public static Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus Connecting { get { throw null; } }
-        public static Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus NotConnected { get { throw null; } }
-        public static Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus left, Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus right) { throw null; }
-        public static implicit operator Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus left, Azure.Management.Network.Models.HubVirtualNetworkConnectionStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IkeEncryption : System.IEquatable<Azure.Management.Network.Models.IkeEncryption>
     {
         private readonly object _dummy;
@@ -7827,25 +7807,6 @@ namespace Azure.Management.Network.Models
         internal NetworkInterfaceTapConfigurationListResult() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Management.Network.Models.NetworkInterfaceTapConfiguration> Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkOperationStatus : System.IEquatable<Azure.Management.Network.Models.NetworkOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkOperationStatus(string value) { throw null; }
-        public static Azure.Management.Network.Models.NetworkOperationStatus Failed { get { throw null; } }
-        public static Azure.Management.Network.Models.NetworkOperationStatus InProgress { get { throw null; } }
-        public static Azure.Management.Network.Models.NetworkOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.Management.Network.Models.NetworkOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Management.Network.Models.NetworkOperationStatus left, Azure.Management.Network.Models.NetworkOperationStatus right) { throw null; }
-        public static implicit operator Azure.Management.Network.Models.NetworkOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Management.Network.Models.NetworkOperationStatus left, Azure.Management.Network.Models.NetworkOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class NetworkProfile : Azure.Management.Network.Models.Resource
     {
@@ -9331,26 +9292,6 @@ namespace Azure.Management.Network.Models
         public long? IngressBytesTransferred { get { throw null; } }
         public string LastConnectionEstablishedUtcTime { get { throw null; } }
         public string Tunnel { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TunnelConnectionStatus : System.IEquatable<Azure.Management.Network.Models.TunnelConnectionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TunnelConnectionStatus(string value) { throw null; }
-        public static Azure.Management.Network.Models.TunnelConnectionStatus Connected { get { throw null; } }
-        public static Azure.Management.Network.Models.TunnelConnectionStatus Connecting { get { throw null; } }
-        public static Azure.Management.Network.Models.TunnelConnectionStatus NotConnected { get { throw null; } }
-        public static Azure.Management.Network.Models.TunnelConnectionStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.Management.Network.Models.TunnelConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Management.Network.Models.TunnelConnectionStatus left, Azure.Management.Network.Models.TunnelConnectionStatus right) { throw null; }
-        public static implicit operator Azure.Management.Network.Models.TunnelConnectionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Management.Network.Models.TunnelConnectionStatus left, Azure.Management.Network.Models.TunnelConnectionStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class UnprepareNetworkPoliciesRequest
     {

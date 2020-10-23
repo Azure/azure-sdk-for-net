@@ -272,8 +272,12 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventData TryAddCalledWith = null;
 
             public override long MaximumSizeInBytes { get; } = 200;
+
             public override long SizeInBytes { get; } = 100;
-            public override int Count { get; } = 300;
+
+            public override TransportProducerFeatures ActiveFeatures { get; } = TransportProducerFeatures.None;
+
+            public override int Count { get; } = 400;
 
             public override void Clear() => ClearInvoked = true;
 

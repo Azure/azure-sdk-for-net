@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = usePem ? TestEnvironment.ServicePrincipalCertificatePemPath : TestEnvironment.ServicePrincipalCertificatePfxPath;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
 
@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientCertificateCredential(tenantId, clientId, cert, options);
 
@@ -102,13 +102,32 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task IncludeX5CCliamHeader()
+        {
+            var tenantId = TestEnvironment.ServicePrincipalTenantId;
+            var clientId = TestEnvironment.ServicePrincipalClientId;
+            var certPath = TestEnvironment.ServicePrincipalSniCertificatePath;
+
+            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { IncludeX5CCliamHeader = true });
+
+            var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
+
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+
+            // ensure we can initially acquire a  token
+            AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
+
+            Assert.IsNotNull(token.Token);
+        }
+
+        [Test]
         public void IncorrectCertificate()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options);
 

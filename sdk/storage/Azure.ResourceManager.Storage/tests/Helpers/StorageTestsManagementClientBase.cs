@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
     {
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "eastus2(stage)";
+        public static string DefaultLocation = IsTestTenant ? null : "eastus2";
         public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
         public static Sku DefaultSkuNameStandardGRS = new Sku(SkuName.StandardGRS);
         public static Kind DefaultKindStorage = Kind.Storage;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             return CreateClient<StorageManagementClient>(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
+                 InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
         public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)

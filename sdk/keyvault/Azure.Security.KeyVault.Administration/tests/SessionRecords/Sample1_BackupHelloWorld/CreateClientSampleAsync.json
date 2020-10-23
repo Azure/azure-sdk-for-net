@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net",
+    "RandomSeed": "1468448133"
+  }
+}
