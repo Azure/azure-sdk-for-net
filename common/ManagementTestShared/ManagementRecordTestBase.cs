@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
             await OnOneTimeSetupAsync();
+            await this.RunTearDown();
         }
         /// <summary>
         /// Called by NUnit to run one time tear down and runs user defined on one time teardown
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeTearDown]
         protected async Task RunOneTimeTearDown()
         {
-            await StopTestRecording();
-            await CleanupResourceGroupsAsync();
+            await RunTearDown();
+            CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
             await OnOneTimeTearDownAsync();
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.TestFramework
         /// A method called by NUnit framework to setup recordings for new test and run onsetup
         /// </summary>
         [SetUp]
-        protected async Task StartTestRecording()
+        protected async Task RunSetup()
         {
-            await StopTestRecording();
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings") +
+                " test is not running live but the recording is marked to be skipped");
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.Mode = Mode;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.TestFramework
         /// Called by NUnit upon completion of test and saves the recording if running in record mode
         /// </summary>
         [TearDown]
-        protected async Task StopTestRecording()
+        protected async Task RunTearDown()
         {
             bool save = TestContext.CurrentContext.Result.FailCount == 0;
 #if DEBUG
@@ -145,25 +146,22 @@ namespace Azure.ResourceManager.TestFramework
         /// </summary>
         protected ResourcesManagementClient GetResourceManagementClient()
         {
-            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
-            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
-            return GetManagementClient<ResourcesManagementClient>(options);
+            return GetManagementClient<ResourcesManagementClient>(new ResourcesManagementClientOptions());
         }
 
         /// <summary>
         /// Delete all monitored resource groups.
         /// </summary>
-        protected async Task CleanupResourceGroupsAsync()
+        protected void CleanupResourceGroupsAsync()
         {
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
                 var resourceGroupsClient = new ResourcesManagementClient(
                     TestEnvironment.SubscriptionId,
-                    TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).ResourceGroups;
+                    TestEnvironment.Credential).ResourceGroups;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
+                    _ = resourceGroupsClient.StartDeleteAsync(resourceGroup);
                 }
                 CleanupPolicy.ResourceGroupsCreated.Clear();
             }
@@ -173,6 +171,10 @@ namespace Azure.ResourceManager.TestFramework
         /// </summary>
         protected T GetManagementClient<T>(ClientOptions options) where T : class
         {
+            if (typeof(T) == typeof(ResourcesManagementClient))
+            {
+                options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+            }
             return this.CreateClient<T>(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential, InstrumentClientOptions(options));
         }

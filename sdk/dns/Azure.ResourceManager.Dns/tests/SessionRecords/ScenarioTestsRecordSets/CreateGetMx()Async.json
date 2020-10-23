@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-574/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/MX/mx_record?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-3842/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/MX/mx_record?api-version=2018-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "162",
         "Content-Type": "application/json",
-        "traceparent": "00-15d5545310367a4f9a8a14a0012af351-8a3199665dd2d047-00",
+        "traceparent": "00-386cc6ff1e8d5948b25551fad82f21ce-30b0fcc1499c1244-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201020.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201023.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
-        "x-ms-client-request-id": "4d792a39702bf7f24dc60347df4a0767",
+        "x-ms-client-request-id": "cffc5c7da8952395b51b1d9f5e06fb1b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -34,27 +34,27 @@
           ]
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "private",
-        "Content-Length": "532",
+        "Content-Length": "533",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Oct 2020 19:43:44 GMT",
-        "ETag": "74dc46c2-24eb-4ecb-8bfc-018432c75e30",
+        "Date": "Fri, 23 Oct 2020 19:42:10 GMT",
+        "ETag": "e4a8798b-e55b-4c57-b27d-bd226b8c4bbc",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d853f9e8-8a73-4460-b9e7-a4004a810918",
+        "x-ms-correlation-request-id": "57b63e29-640b-4092-9b8a-fd379e02a8b4",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
-        "x-ms-request-id": "4d792a39-702b-f7f2-4dc6-0347df4a0767",
-        "x-ms-routing-request-id": "WESTUS2:20201020T194345Z:d853f9e8-8a73-4460-b9e7-a4004a810918",
+        "x-ms-request-id": "cffc5c7d-a895-2395-b51b-1d9f5e06fb1b",
+        "x-ms-routing-request-id": "WESTUS2:20201023T194211Z:57b63e29-640b-4092-9b8a-fd379e02a8b4",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-574\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/MX\\/mx_record\u0022,\u0022name\u0022:\u0022mx_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/MX\u0022,\u0022etag\u0022:\u002274dc46c2-24eb-4ecb-8bfc-018432c75e30\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022mx_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022MXRecords\u0022:[{\u0022exchange\u0022:\u0022mail1.scsfsm.com\u0022,\u0022preference\u0022:1},{\u0022exchange\u0022:\u0022mail2.scsfsm.com\u0022,\u0022preference\u0022:2}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-3842\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/MX\\/mx_record\u0022,\u0022name\u0022:\u0022mx_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/MX\u0022,\u0022etag\u0022:\u0022e4a8798b-e55b-4c57-b27d-bd226b8c4bbc\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022mx_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022MXRecords\u0022:[{\u0022exchange\u0022:\u0022mail1.scsfsm.com\u0022,\u0022preference\u0022:1},{\u0022exchange\u0022:\u0022mail2.scsfsm.com\u0022,\u0022preference\u0022:2}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
-    "RandomSeed": "1789764330",
+    "RandomSeed": "1108433066",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
