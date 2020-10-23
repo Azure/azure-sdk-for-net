@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
         }
 
-        // Infrastructure setup script uses this hardcoded value when linking the test eventhub to the test digital twins instance.
+        // Infrastructure setup script uses this hard-coded value when linking the test eventhub to the test digital twins instance.
         private const string EndpointName = "someEventHubEndpoint";
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.DigitalTwins.Core.Tests
             try
             {
                 // Create an event route for the digital twins client.
-                EventRoute eventRoute = await CreateEventRoute(client, eventRouteId).ConfigureAwait(false);
+                DigitalTwinsEventRoute eventRoute = await CreateEventRoute(client, eventRouteId).ConfigureAwait(false);
 
                 // Create the models needed for the digital twin.
                 await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
@@ -108,26 +108,26 @@ namespace Azure.DigitalTwins.Core.Tests
 
         private async Task CreateModelsAndTwins(DigitalTwinsClient client, string wifiModelId, string roomWithWifiModelId, string wifiComponentName, string roomWithWifiTwinId)
         {
-            // Generate the payload needed to create the wifi component model.
+            // Generate the payload needed to create the WiFi component model.
             string wifiModel = TestAssetsHelper.GetWifiModelPayload(wifiModelId);
 
-            // Generate the payload needed to create the room with wifi model.
+            // Generate the payload needed to create the room with WiFi model.
             string roomWithWifiModel = TestAssetsHelper.GetRoomWithWifiModelPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
-            // Create the room and wifi models.
+            // Create the room and WiFi models.
             await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
-            // Generate the payload needed to create the room with wifi twin.
+            // Generate the payload needed to create the room with WiFi twin.
             BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
-            // Create the room with wifi component digital twin.
+            // Create the room with WiFi component digital twin.
             await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
-        private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)
+        private async Task<DigitalTwinsEventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)
         {
             string filter = "type = 'Microsoft.DigitalTwins.Twin.Create' OR type = 'microsoft.iot.telemetry'";
-            var eventRoute = new EventRoute(EndpointName, filter);
+            var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Create an event route.
             Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);

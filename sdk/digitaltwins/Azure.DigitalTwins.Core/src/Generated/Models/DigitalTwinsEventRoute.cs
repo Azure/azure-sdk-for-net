@@ -10,13 +10,13 @@ using System;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A route which directs notification and telemetry events to an endpoint. Endpoints are a destination outside of Azure Digital Twins such as an EventHub. </summary>
-    public partial class EventRoute
+    public partial class DigitalTwinsEventRoute
     {
-        /// <summary> Initializes a new instance of EventRoute. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="filter"/> is null. </exception>
-        public EventRoute(string endpointName, string filter)
+        public DigitalTwinsEventRoute(string endpointName, string filter)
         {
             if (endpointName == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.DigitalTwins.Core
             Filter = filter;
         }
 
-        /// <summary> Initializes a new instance of EventRoute. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
         /// <param name="id"> The id of the event route. </param>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
-        internal EventRoute(string id, string endpointName, string filter)
+        internal DigitalTwinsEventRoute(string id, string endpointName, string filter)
         {
             Id = id;
             EndpointName = endpointName;

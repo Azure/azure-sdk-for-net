@@ -7,8 +7,8 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("EventRoute")]
-    public partial class EventRoute
+    public partial class DigitalTwinsEventRoute
     {
-        // This class declaration changes the namespace; do not remove.
+        // This class declaration changes the namespace and the class name; do not remove.
     }
 }

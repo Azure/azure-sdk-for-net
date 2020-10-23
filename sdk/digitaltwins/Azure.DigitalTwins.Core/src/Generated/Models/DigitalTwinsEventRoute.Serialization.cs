@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class EventRoute : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventRoute : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteEndObject();
         }
 
-        internal static EventRoute DeserializeEventRoute(JsonElement element)
+        internal static DigitalTwinsEventRoute DeserializeDigitalTwinsEventRoute(JsonElement element)
         {
             Optional<string> id = default;
             string endpointName = default;
@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new EventRoute(id.Value, endpointName, filter);
+            return new DigitalTwinsEventRoute(id.Value, endpointName, filter);
         }
     }
 }

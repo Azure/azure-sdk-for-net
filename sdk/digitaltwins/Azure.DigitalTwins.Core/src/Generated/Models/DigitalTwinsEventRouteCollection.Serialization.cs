@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class EventRouteCollection
+    internal partial class DigitalTwinsEventRouteCollection
     {
-        internal static EventRouteCollection DeserializeEventRouteCollection(JsonElement element)
+        internal static DigitalTwinsEventRouteCollection DeserializeDigitalTwinsEventRouteCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<EventRoute>> value = default;
+            Optional<IReadOnlyList<DigitalTwinsEventRoute>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.DigitalTwins.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventRoute> array = new List<EventRoute>();
+                    List<DigitalTwinsEventRoute> array = new List<DigitalTwinsEventRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventRoute.DeserializeEventRoute(item));
+                        array.Add(DigitalTwinsEventRoute.DeserializeDigitalTwinsEventRoute(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new EventRouteCollection(Optional.ToList(value), nextLink.Value);
+            return new DigitalTwinsEventRouteCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }

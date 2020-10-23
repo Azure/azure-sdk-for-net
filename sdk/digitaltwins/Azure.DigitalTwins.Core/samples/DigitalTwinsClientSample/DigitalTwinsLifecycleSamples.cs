@@ -378,8 +378,8 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetEventRoutes
 
-                AsyncPageable<EventRoute> response = client.GetEventRoutesAsync();
-                await foreach (EventRoute er in response)
+                AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
+                await foreach (DigitalTwinsEventRoute er in response)
                 {
                     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
                 }
@@ -403,7 +403,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 #region Snippet:DigitalTwinsSampleCreateEventRoute
 
                 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-                var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
+                var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
                 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
                 Console.WriteLine($"Created event route '{_eventRouteId}'.");

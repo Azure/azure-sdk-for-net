@@ -420,7 +420,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
+var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
@@ -433,8 +433,8 @@ For more information on the event route filter language, see the "how to manage 
 List a specific event route given event route Id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetEventRoutes
-AsyncPageable<EventRoute> response = client.GetEventRoutesAsync();
-await foreach (EventRoute er in response)
+AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
+await foreach (DigitalTwinsEventRoute er in response)
 {
     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
 }
