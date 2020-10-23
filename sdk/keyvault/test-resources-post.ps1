@@ -76,8 +76,8 @@ if (!$DeploymentOutputs['MANAGEDHSM_URL']) {
     exit
 }
 
-[Uri] $mhsmUrl = $DeploymentOutputs['MANAGEDHSM_URL']
-$mhsmName = $mhsmUrl.Host.Substring(0, $mhsmUrl.Host.IndexOf('.'))
+[Uri] $hsmUrl = $DeploymentOutputs['MANAGEDHSM_URL']
+$hsmName = $hsmUrl.Host.Substring(0, $hsmUrl.Host.IndexOf('.'))
 
 $tenant = $DeploymentOutputs['KEYVAULT_TENANT_ID']
 $username = $DeploymentOutputs['KEYVAULT_CLIENT_ID']
@@ -85,9 +85,9 @@ $password = $DeploymentOutputs['KEYVAULT_CLIENT_SECRET']
 
 Log 'Creating 3 X509 certificates to activate security domain'
 $wrappingFiles = foreach ($i in 0..2) {
-    $certificate = New-X509Certificate2 "CN=$($mhsmUrl.Host)"
+    $certificate = New-X509Certificate2 "CN=$($hsmUrl.Host)"
 
-    $baseName = "$PSScriptRoot\$mhsmName-certificate$i"
+    $baseName = "$PSScriptRoot\$hsmName-certificate$i"
     Export-X509Certificate2 "$baseName.pfx" $certificate
     Export-X509Certificate2PEM "$baseName.cer" $certificate
 
@@ -98,9 +98,9 @@ $wrappingFiles = foreach ($i in 0..2) {
 Log "Logging '$username' into the Azure CLI"
 az login --service-principal --tenant $tenant --username $username --password $password
 
-Log "Downloading security domain from '$mhsmUrl'"
+Log "Downloading security domain from '$hsmUrl'"
 
-$sdPath = "$PSScriptRoot\$mhsmName-security-domain.key"
-az keyvault security-domain download --hsm-name $mhsmName --security-domain-file $sdPath --sd-quorum 2 --sd-wrapping-keys $wrappingFiles
+$sdPath = "$PSScriptRoot\$hsmName-security-domain.key"
+az keyvault security-domain download --hsm-name $hsmName --security-domain-file $sdPath --sd-quorum 2 --sd-wrapping-keys $wrappingFiles
 
-Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$mhsmUrl'"
+Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$hsmUrl'"

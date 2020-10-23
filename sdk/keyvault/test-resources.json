@@ -30,6 +30,16 @@
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
+        "hsmLocation": {
+            "type": "string",
+            "defaultValue": "southcentralus",
+            "allowedValues": [
+
+            ],
+            "metadata": {
+                "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
+            }
+        },
         "enableSoftDelete": {
             "type": "bool",
             "defaultValue": true,
@@ -54,9 +64,8 @@
     },
     "variables": {
         "azureKeyVaultUrl": "[format('https://{0}{1}', parameters('baseName'), parameters('keyVaultDomainSuffix'))]",
-        "mhsmApiVersion": "2020-04-01-preview",
-        "mhsmName": "[concat(parameters('baseName'), 'mhsm')]",
-        "mhsmLocation": "southcentralus",
+        "hsmApiVersion": "2020-04-01-preview",
+        "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
         "blobContainerName": "backup",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
@@ -151,9 +160,9 @@
         },
         {
             "type": "Microsoft.KeyVault/managedHSMs",
-            "apiVersion": "[variables('mhsmApiVersion')]",
-            "name": "[variables('mhsmName')]",
-            "location": "[variables('mhsmLocation')]",
+            "apiVersion": "[variables('hsmApiVersion')]",
+            "name": "[variables('hsmName')]",
+            "location": "[parameters('hsmLocation')]",
             "sku": {
                 "family": "B",
                 "name": "Standard_B1"
@@ -228,7 +237,7 @@
         },
         "MANAGEDHSM_URL": {
             "type": "string",
-            "value": "[reference(variables('mhsmName')).hsmUri]"
+            "value": "[reference(variables('hsmName')).hsmUri]"
         },
         "CLIENT_OBJECTID": {
             "type": "string",
