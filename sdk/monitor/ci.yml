@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: monitor
     ArtifactName: packages
     Artifacts:
-    - name: OpenTelemetry.Exporter.AzureMonitor
-      safeName: OpenTelemetryExporterAzureMonitor
+    - name: Microsoft.Azure.Monitor.OpenTelemetry.Exporter
+      safeName: MicrosoftAzureMonitorOpenTelemetryExporter
