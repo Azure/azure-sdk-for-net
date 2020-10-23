@@ -34,7 +34,10 @@
             "type": "string",
             "defaultValue": "southcentralus",
             "allowedValues": [
-
+                "eastus2",
+                "southcentralus",
+                "northeurope",
+                "westeurope"
             ],
             "metadata": {
                 "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
@@ -231,13 +234,13 @@
             "type": "string",
             "value": "[variables('azureKeyVaultUrl')]"
         },
+        "AZURE_MANAGEDHSM_URL": {
+            "type": "string",
+            "value": "[reference(variables('hsmName')).hsmUri]"
+        },
         "KEYVAULT_SKU": {
             "type": "string",
             "value": "[reference(parameters('baseName')).sku.name]"
-        },
-        "MANAGEDHSM_URL": {
-            "type": "string",
-            "value": "[reference(variables('hsmName')).hsmUri]"
         },
         "CLIENT_OBJECTID": {
             "type": "string",

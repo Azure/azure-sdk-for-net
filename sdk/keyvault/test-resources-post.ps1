@@ -12,9 +12,6 @@ using namespace System.Security.Cryptography.X509Certificates
 # Use same parameter names as declared in eng/New-TestResources.ps1 (assume validation therein).
 [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
-    [Parameter(Mandatory = $true)]
-    [string] $ResourceGroupName,
-
     [Parameter()]
     [hashtable] $DeploymentOutputs,
 
@@ -71,12 +68,12 @@ $([Convert]::ToBase64String($Certificate.RawData, 'InsertLineBreaks'))
 }
 
 # Make sure we deployed a Managed HSM.
-if (!$DeploymentOutputs['MANAGEDHSM_URL']) {
+if (!$DeploymentOutputs['AZURE_MANAGEDHSM_URL']) {
     Log "Managed HSM not deployed; skipping activation"
     exit
 }
 
-[Uri] $hsmUrl = $DeploymentOutputs['MANAGEDHSM_URL']
+[Uri] $hsmUrl = $DeploymentOutputs['AZURE_MANAGEDHSM_URL']
 $hsmName = $hsmUrl.Host.Substring(0, $hsmUrl.Host.IndexOf('.'))
 
 $tenant = $DeploymentOutputs['KEYVAULT_TENANT_ID']
