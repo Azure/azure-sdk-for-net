@@ -115,9 +115,9 @@ jobs:
         TestTargetFramework: netcoreapp2.1
         PreSteps:
           - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-      # - DisplayName: "Test on Windows for NetCoreApp"
-      #   OSVmImage: "windows-2019"
-      #   TestTargetFramework: netcoreapp2.1
+      - DisplayName: "Test on Windows for NetCoreApp"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: netcoreapp2.1
       # - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
       #   OSVmImage: "windows-2019"
       #   TestTargetFramework: netcoreapp2.1
@@ -129,9 +129,9 @@ jobs:
       #   OSVmImage: "windows-2019"
       #   TestTargetFramework: net461
       #   AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-      # - DisplayName: "Test on MacOS"
-      #   OSVmImage: "macOS-10.15"
-      #   TestTargetFramework: netcoreapp2.1
+      - DisplayName: "Test on MacOS"
+        OSVmImage: "macOS-10.15"
+        TestTargetFramework: netcoreapp2.1
       # - ${{ if eq(parameters.TestCanary, 'true') }}:          
       #   - DisplayName: "Test on Windows for NetCoreApp - Canary region"
       #     OSVmImage: "windows-2019"
