@@ -1283,7 +1283,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Creates one or many models asynchronously.
         /// </summary>
-        /// <param name="models">The set of models to create. Each string corresponds to exactly one model.</param>
+        /// <param name="dtdlModels">The set of models conforming to the Digital Twins Definition Language (DTDL) to create. Each string corresponds to exactly one model.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
@@ -1301,22 +1301,23 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
         /// </remarks>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models" />
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
         /// await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> models, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> dtdlModels, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<DigitalTwinsModelData>> response = await _dtModelsRestClient.AddAsync(models, options, cancellationToken).ConfigureAwait(false);
+            Response<IReadOnlyList<DigitalTwinsModelData>> response = await _dtModelsRestClient.AddAsync(dtdlModels, options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
         /// Creates one or many models synchronously.
         /// </summary>
-        /// <param name="models">The set of models to create. Each string corresponds to exactly one model.</param>
+        /// <param name="dtdlModels">The set of models conforming to the Digital Twins Definition Language (DTDL) to create. Each string corresponds to exactly one model.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
@@ -1331,15 +1332,16 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
         /// </remarks>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models" />
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CreateModelsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> models, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> dtdlModels, CreateModelsOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<DigitalTwinsModelData>> response = _dtModelsRestClient.Add(models, options, cancellationToken);
+            Response<IReadOnlyList<DigitalTwinsModelData>> response = _dtModelsRestClient.Add(dtdlModels, options, cancellationToken);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
@@ -2038,7 +2040,6 @@ namespace Azure.DigitalTwins.Core
 
             if (async)
             {
-
                 await objectSerializer.SerializeAsync(memoryStream, obj, typeof(T), cancellationToken).ConfigureAwait(false);
             }
             else
