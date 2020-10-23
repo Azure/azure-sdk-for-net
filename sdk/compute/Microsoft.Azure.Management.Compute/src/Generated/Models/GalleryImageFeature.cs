@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the gallery image definition purchase plan. This is used by
-    /// marketplace images.
+    /// A feature for gallery image.
     /// </summary>
-    public partial class ImagePurchasePlan
+    public partial class GalleryImageFeature
     {
         /// <summary>
-        /// Initializes a new instance of the ImagePurchasePlan class.
+        /// Initializes a new instance of the GalleryImageFeature class.
         /// </summary>
-        public ImagePurchasePlan()
+        public GalleryImageFeature()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImagePurchasePlan class.
+        /// Initializes a new instance of the GalleryImageFeature class.
         /// </summary>
-        /// <param name="name">The plan ID.</param>
-        /// <param name="publisher">The publisher ID.</param>
-        /// <param name="product">The product ID.</param>
-        public ImagePurchasePlan(string name = default(string), string publisher = default(string), string product = default(string))
+        /// <param name="name">The name of the gallery image feature.</param>
+        /// <param name="value">The value of the gallery image feature.</param>
+        public GalleryImageFeature(string name = default(string), string value = default(string))
         {
             Name = name;
-            Publisher = publisher;
-            Product = product;
+            Value = value;
             CustomInit();
         }
 
@@ -47,22 +44,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the plan ID.
+        /// Gets or sets the name of the gallery image feature.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the publisher ID.
+        /// Gets or sets the value of the gallery image feature.
         /// </summary>
-        [JsonProperty(PropertyName = "publisher")]
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets the product ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "product")]
-        public string Product { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }
