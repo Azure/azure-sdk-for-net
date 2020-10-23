@@ -318,7 +318,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             arguments = new { input = TestData };
             await _fixture.JobHost.CallAsync(method, arguments);
 
-            // TODO (this sometimes results in empty string
             Assert.True(await blob.ExistsAsync());
             string result = await blob.DownloadTextAsync();
             Assert.AreEqual(TestData, result);

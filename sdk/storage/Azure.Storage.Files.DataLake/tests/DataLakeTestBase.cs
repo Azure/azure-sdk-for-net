@@ -434,5 +434,19 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
             }
         }
-    }
+
+        public string[] PathNames
+        => new[]
+            {
+                "foo",
+                "bar",
+                "baz",
+                "baz/bar",
+                "foo/foo",
+                "foo/bar",
+                "baz/foo",
+                "baz/foo/bar",
+                "baz/bar/foo"
+            };
+        }
 }

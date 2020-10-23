@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.WebJobs
     /// <remarks>
     /// The method parameter type can be one of the following:
     /// <list type="bullet">
-    /// <item><description>CloudQueueMessage</description></item>
+    /// <item><description><see cref="QueueMessage"/></description></item>
     /// <item><description><see cref="string"/></description></item>
     /// <item><description><see cref="T:byte[]"/></description></item>
     /// <item><description>A user-defined type (serialized as JSON)</description></item>

@@ -3,6 +3,8 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
@@ -15,8 +17,8 @@ namespace Microsoft.Azure.WebJobs
     /// <remarks>
     /// The method parameter type can be one of the following:
     /// <list type="bullet">
-    /// <item><description>CloudQueue</description></item>
-    /// <item><description>CloudQueueMessage (out parameter)</description></item>
+    /// <item><description><see cref="QueueClient"/></description></item>
+    /// <item><description><see cref="QueueMessage"/> (out parameter)</description></item>
     /// <item><description><see cref="string"/> (out parameter)</description></item>
     /// <item><description><see cref="T:byte[]"/> (out parameter)</description></item>
     /// <item><description>A user-defined type (out parameter, serialized as JSON)</description></item>
@@ -24,8 +26,8 @@ namespace Microsoft.Azure.WebJobs
     /// <item><description><see cref="IAsyncCollector{T}"/> of these types (to enqueue multiple messages via <see cref="IAsyncCollector{T}.AddAsync(T, System.Threading.CancellationToken)"/></description></item>
     /// </list>
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1813:AvoidUnsealedAttributes")]
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1813:AvoidUnsealedAttributes")]
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [DebuggerDisplay("{QueueName,nq}")]
     [ConnectionProvider(typeof(StorageAccountAttribute))]

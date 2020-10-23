@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        /// <param name="queue">TODO.</param>
+        /// <param name="queue">The queue the <see cref="QueueProcessor"/> will operate on.</param>
         /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
         /// <param name="options">The queue configuration.</param>
         /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
@@ -33,13 +33,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         }
 
         /// <summary>
-        /// TODO.
+        /// Gets the queue the <see cref="QueueProcessor"/> will operate on.
         /// </summary>
         public QueueClient Queue { get; private set; }
 
         /// <summary>
-        /// TODO.
-        /// May be null.
+        /// Gets the queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.
         /// </summary>
         public QueueClient PoisonQueue { get; private set; }
 
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         public ILogger Logger { get; private set; }
 
         /// <summary>
-        /// TODO.
+        /// Gets the queue configuration.
         /// </summary>
         public QueuesOptions Options { get; private set; }
     }

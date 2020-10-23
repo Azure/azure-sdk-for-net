@@ -115,8 +115,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 _sharedWatcher = sharedWatcher;
             }
 
-            // TODO (kasobol-msft) remove this
-            //_queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, loggerFactory, queueProcessorFactory, _queueOptions, _sharedWatcher);
             _queueProcessor = queueProcessor;
 
             TimeSpan maximumInterval = _queueProcessor.QueuesOptions.MaxPollingInterval;

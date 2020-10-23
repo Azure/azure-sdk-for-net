@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Path to get the namespce properties.
+        /// Path to get the namespace properties.
         /// </summary>
         private const string NamespacePath = "$namespaceinfo";
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         ///
         /// <param name="connectionString">Namespace connection string.</param>
-        /// <param name="options"></param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         public ServiceBusAdministrationClient(
             string connectionString,
             ServiceBusAdministrationClientOptions options)
@@ -87,16 +87,61 @@ namespace Azure.Messaging.ServiceBus.Administration
             _fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
             var sharedAccessSignature = new SharedAccessSignature
-          (
+            (
                BuildAudienceResource(connectionStringProperties.Endpoint.Host),
-              connectionStringProperties.SharedAccessKeyName,
+               connectionStringProperties.SharedAccessKeyName,
                connectionStringProperties.SharedAccessKey
-          );
+            );
 
             var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(
                 sharedCredential,
                 BuildAudienceResource(connectionStringProperties.Endpoint.Host));
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            _httpRequestAndResponse = new HttpRequestAndResponse(
+                pipeline,
+                _clientDiagnostics,
+                tokenCredential,
+                _fullyQualifiedNamespace,
+                options.Version);
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        public ServiceBusAdministrationClient(
+            string fullyQualifiedNamespace,
+            ServiceBusSharedAccessKeyCredential credential)
+            : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        public ServiceBusAdministrationClient(
+            string fullyQualifiedNamespace,
+            ServiceBusSharedAccessKeyCredential credential,
+            ServiceBusAdministrationClientOptions options)
+        {
+            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new ServiceBusAdministrationClientOptions();
+            _fullyQualifiedNamespace = fullyQualifiedNamespace;
+
+            var audience = BuildAudienceResource(fullyQualifiedNamespace);
+            var tokenCredential = new ServiceBusTokenCredential(credential.AsSharedAccessSignatureCredential(audience), audience);
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -140,15 +185,6 @@ namespace Azure.Messaging.ServiceBus.Administration
             options ??= new ServiceBusAdministrationClientOptions();
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
 
-            switch (credential)
-            {
-                case SharedAccessSignatureCredential _:
-                    break;
-
-                case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(fullyQualifiedNamespace));
-                    break;
-            }
             var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
 
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope);

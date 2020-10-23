@@ -89,8 +89,10 @@ jobs:
               DOTNET_CLI_TELEMETRY_OPTOUT: 1
               DOTNET_MULTILEVEL_LOOKUP: 0
               AZURE_TEST_MODE: "${{ coalesce(platform.TestMode, 'None') }}"
-              ${{ insert }}: ${{ parameters.EnvVars }}
-              ${{ insert }}: ${{ cloudConfig.value.EnvVars }}
+              ${{ each var in parameters.EnvVars }}:
+                ${{ var.key }}: ${{ var.value }}
+              ${{ each var in cloudConfig.value.EnvVars }}:
+                ${{ var.key }}: ${{ var.value }}
 
           - template: /eng/common/TestResources/remove-test-resources.yml
             parameters:

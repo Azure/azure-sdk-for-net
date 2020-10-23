@@ -9,12 +9,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc cref="IWebJobsStartup"/>
     public class AzureStorageBlobsWebJobsStartup : IWebJobsStartup
     {
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Configure(IWebJobsBuilder builder)
         {
             builder.AddAzureStorageBlobs();
