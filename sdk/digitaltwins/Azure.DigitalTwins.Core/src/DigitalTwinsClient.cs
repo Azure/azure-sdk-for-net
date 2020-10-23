@@ -226,10 +226,10 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created digital twin &apos;{createCustomDigitalTwinResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public async virtual Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
-            using MemoryStream memoryStream = await WriteToStream<T>(digitalTwin, _objectSerializer, true /*async*/, cancellationToken).ConfigureAwait(false);
+            using MemoryStream memoryStream = await WriteToStream<T>(digitalTwin, _objectSerializer, true /*asynchronous*/, cancellationToken).ConfigureAwait(false);
 
             // Get the digital twin as a Stream object
             Response<Stream> digitalTwinStream = await _dtRestClient.AddAsync(digitalTwinId, memoryStream, options, cancellationToken).ConfigureAwait(false);
@@ -262,7 +262,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<T> CreateDigitalTwin<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
-            using MemoryStream memoryStream = WriteToStream<T>(digitalTwin, _objectSerializer, false /*async*/, cancellationToken).EnsureCompleted();
+            using MemoryStream memoryStream = WriteToStream<T>(digitalTwin, _objectSerializer, false /*asynchronous*/, cancellationToken).EnsureCompleted();
 
             // Get the digital twin as a Stream object
             Response<Stream> digitalTwinStream = _dtRestClient.Add(digitalTwinId, memoryStream, options, cancellationToken);
@@ -516,7 +516,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <remarks>
         /// <para>
-        /// String relationships that are returned as part of the pageable list can always be deserialized into an instnace of <see cref="Serialization.BasicRelationship"/>.
+        /// String relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="Serialization.BasicRelationship"/>.
         /// You may also deserialize the relationship into custom type that extend the <see cref="Serialization.BasicRelationship"/>.
         /// </para>
         /// <para>
@@ -930,10 +930,10 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;from twin &apos;{createCustomRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createCustomRelationshipResponse.Value.TargetId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public async virtual Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
-            using MemoryStream memoryStream = await WriteToStream<T>(relationship, _objectSerializer, true /*async*/, cancellationToken).ConfigureAwait(false);
+            using MemoryStream memoryStream = await WriteToStream<T>(relationship, _objectSerializer, true /*asynchronous*/, cancellationToken).ConfigureAwait(false);
 
             // Get the component as a Stream object
             Response<Stream> relationshipStream = await _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, memoryStream, options, cancellationToken).ConfigureAwait(false);
@@ -980,7 +980,7 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
-            using MemoryStream memoryStream = WriteToStream<T>(relationship, _objectSerializer, false /*async*/, cancellationToken).EnsureCompleted();
+            using MemoryStream memoryStream = WriteToStream<T>(relationship, _objectSerializer, false /*asynchronous*/, cancellationToken).EnsureCompleted();
 
             // Get the relationship as a Stream object
             Response<Stream> relationshipStream = _dtRestClient.AddRelationship(digitalTwinId, relationshipId, memoryStream, options, cancellationToken);
@@ -1217,9 +1217,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
         /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
+        /// Once a model is decommissioned, it may not be recommissioned.
         /// </para>
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -1258,9 +1258,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
         /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
+        /// Once a model is decommissioned, it may not be recommissioned.
         /// </para>
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -1579,22 +1579,22 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes">
-        /// AsyncPageable&lt;EventRoute&gt; response = client.GetEventRoutesAsync();
-        /// await foreach (EventRoute er in response)
+        /// AsyncPageable&lt;DigitalTwinsEventRoute&gt; response = client.GetEventRoutesAsync();
+        /// await foreach (DigitalTwinsEventRoute er in response)
         /// {
         ///     Console.WriteLine($&quot;Event route &apos;{er.Id}&apos;, endpoint name &apos;{er.EndpointName}&apos;&quot;);
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<EventRoute> GetEventRoutesAsync(GetEventRoutesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DigitalTwinsEventRoute> GetEventRoutesAsync(GetDigitalTwinsEventRoutesOptions options = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventRoute>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DigitalTwinsEventRoute>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
                 try
                 {
-                    Response<EventRouteCollection> response = await _eventRoutesRestClient.ListAsync(options, cancellationToken).ConfigureAwait(false);
+                    Response<DigitalTwinsEventRouteCollection> response = await _eventRoutesRestClient.ListAsync(options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1604,13 +1604,13 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            async Task<Page<EventRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DigitalTwinsEventRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
                 try
                 {
-                    Response<EventRouteCollection> response = await _eventRoutesRestClient.ListNextPageAsync(nextLink, options, cancellationToken).ConfigureAwait(false);
+                    Response<DigitalTwinsEventRouteCollection> response = await _eventRoutesRestClient.ListNextPageAsync(nextLink, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1635,18 +1635,18 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="GetEventRoutesAsync(GetEventRoutesOptions, CancellationToken)">
+        /// <seealso cref="GetEventRoutesAsync(GetDigitalTwinsEventRoutesOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<EventRoute> GetEventRoutes(GetEventRoutesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DigitalTwinsEventRoute> GetEventRoutes(GetDigitalTwinsEventRoutesOptions options = null, CancellationToken cancellationToken = default)
         {
-            Page<EventRoute> FirstPageFunc(int? pageSizeHint)
+            Page<DigitalTwinsEventRoute> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
                 try
                 {
-                    Response<EventRouteCollection> response = _eventRoutesRestClient.List(options, cancellationToken);
+                    Response<DigitalTwinsEventRouteCollection> response = _eventRoutesRestClient.List(options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1656,13 +1656,13 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            Page<EventRoute> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DigitalTwinsEventRoute> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
                 try
                 {
-                    Response<EventRouteCollection> response = _eventRoutesRestClient.ListNextPage(nextLink, options, cancellationToken);
+                    Response<DigitalTwinsEventRouteCollection> response = _eventRoutesRestClient.ListNextPage(nextLink, options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1691,7 +1691,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response<EventRoute>> GetEventRouteAsync(string eventRouteId, GetEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, GetDigitalTwinsEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.GetByIdAsync(eventRouteId, options, cancellationToken);
         }
@@ -1712,10 +1712,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetEventRouteAsync(string, GetEventRouteOptions, CancellationToken)">
+        /// <seealso cref="GetEventRouteAsync(string, GetDigitalTwinsEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<EventRoute> GetEventRoute(string eventRouteId, GetEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsEventRoute> GetEventRoute(string eventRouteId, GetDigitalTwinsEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.GetById(eventRouteId, options, cancellationToken);
         }
@@ -1741,13 +1741,13 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateEventRoute">
         /// string eventFilter = &quot;$eventType = &apos;DigitalTwinTelemetryMessages&apos; or $eventType = &apos;DigitalTwinLifecycleNotification&apos;&quot;;
-        /// var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
+        /// var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
         ///
         /// await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, EventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, options, cancellationToken);
         }
@@ -1770,10 +1770,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateEventRouteAsync(string, EventRoute, CreateEventRouteOptions, CancellationToken)">
+        /// <seealso cref="CreateEventRouteAsync(string, DigitalTwinsEventRoute, CreateEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response CreateEventRoute(string eventRouteId, EventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response CreateEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.Add(eventRouteId, eventRoute, options, cancellationToken);
         }
@@ -1831,11 +1831,11 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// Publishes telemetry from a digital twin asynchronously.
-        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="EventRoute"/>.
+        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="DigitalTwinsEventRoute"/>.
         /// These event routes need to be set before publishing a telemetry message, in order for the telemetry message to be consumed.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
+        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1875,11 +1875,11 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// Publishes telemetry from a digital twin synchronously.
-        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="EventRoute"/>.
+        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="DigitalTwinsEventRoute"/>.
         /// These event routes need to be set before publishing a telemetry message, in order for the telemetry message to be consumed.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
-        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
+        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1909,12 +1909,12 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// Publishes telemetry from a digital twin's component asynchronously.
-        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="EventRoute"/>.
+        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="DigitalTwinsEventRoute"/>.
         /// These event routes need to be set before publishing a telemetry message, in order for the telemetry message to be consumed.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The name of the DTDL component.</param>
-        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
+        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1962,12 +1962,12 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// Publishes telemetry from a digital twin's component synchronously.
-        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="EventRoute"/>.
+        /// The result is then consumed by one or many destination endpoints (subscribers) defined under <see cref="DigitalTwinsEventRoute"/>.
         /// These event routes need to be set before publishing a telemetry message, in order for the telemetry message to be consumed.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The name of the DTDL component.</param>
-        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random guid if argument is null.</param>
+        /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -2031,7 +2031,7 @@ namespace Azure.DigitalTwins.Core
         /// <typeparam name="T">Generic type of the object being serialized.</typeparam>
         /// <param name="obj">Object being serialized.</param>
         /// <param name="objectSerializer">Object serializer used to serialize/deserialize an object.</param>
-        /// <param name="async">Indicates whether or not to use async operations during serialization.</param>
+        /// <param name="async">Indicates whether or not to use asynchronous operations during serialization.</param>
         /// <param name="cancellationToken">Then cancellation token.</param>
         /// <returns>A binary representation of the object written to a stream.</returns>
         internal static async Task<MemoryStream> WriteToStream<T>(T obj, ObjectSerializer objectSerializer, bool async, CancellationToken cancellationToken)
