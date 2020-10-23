@@ -509,7 +509,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubName">The name of the Event Hub being connected to.</param>
         /// <param name="transportType">The type of transport being used for the connection.</param>
         ///
-        /// <returns>The <see cref="SharedAccessSignatureCredential" /> which the <paramref name="credential" /> was translated into.</returns>
+        /// <returns>The <see cref="SharedAccessSignatureCredential" /> which the <paramref name="credential" /> was translated into, if the parameters were populated; otherwise, <c>null</c>.</returns>
         ///
         internal static SharedAccessSignatureCredential TranslateSharedKeyCredential(EventHubsSharedAccessKeyCredential credential,
                                                                                      string fullyQualifiedNamespace,

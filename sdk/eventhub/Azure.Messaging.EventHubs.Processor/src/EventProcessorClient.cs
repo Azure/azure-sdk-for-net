@@ -418,7 +418,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -445,7 +445,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
-        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
