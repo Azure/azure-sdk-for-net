@@ -13,9 +13,10 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with DefaultError information.
+    /// Exception thrown for an invalid response with ErrorResponse
+    /// information.
     /// </summary>
-    public partial class DefaultErrorException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -30,30 +31,30 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public DefaultError Body { get; set; }
+        public ErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
-        public DefaultErrorException()
+        public ErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public DefaultErrorException(string message)
+        public ErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public DefaultErrorException(string message, System.Exception innerException)
+        public ErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }
