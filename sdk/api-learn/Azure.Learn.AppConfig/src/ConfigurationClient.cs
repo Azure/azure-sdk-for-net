@@ -56,8 +56,21 @@ namespace Azure.Learn.AppConfig
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            var result = _restClient.GetKeyValue(key, label, cancellationToken: cancellationToken);
-            return Response.FromValue(result.Value, result.GetRawResponse());
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
+
+            try
+            {
+                var result = _restClient.GetKeyValue(key, label, cancellationToken: cancellationToken);
+                return Response.FromValue(result.Value, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

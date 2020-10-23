@@ -11,5 +11,9 @@ namespace Azure.Learn.AppConfig.Tests
         public LearnAppConfigTestEnvironment() : base("api-learn")
         {
         }
+
+        public string Endpoint => GetRecordedVariable("API-LEARN_ENDPOINT");
+        public string SettingKey => GetVariable("API-LEARN_SETTING_COLOR_KEY");
+        public string SettingValue => GetVariable("API-LEARN_SETTING_COLOR_VALUE");
     }
 }
