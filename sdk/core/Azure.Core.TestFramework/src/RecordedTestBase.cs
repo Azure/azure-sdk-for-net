@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.Core.TestFramework
 {
