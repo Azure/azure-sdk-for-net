@@ -457,6 +457,34 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCanSendAnEventBatchUsingTheSharedKeyCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+
+                await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    using EventDataBatch batch = await producer.CreateBatchAsync();
+
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is a message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is another message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Event more messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Will it ever stop?")));
+
+                    Assert.That(batch.Count, Is.EqualTo(5), "The batch should contain all 5 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ProducerCanSendZeroLengthEventBatch()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))

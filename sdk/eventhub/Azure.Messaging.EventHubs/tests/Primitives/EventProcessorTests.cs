@@ -127,6 +127,13 @@ namespace Azure.Messaging.EventHubs.Tests
                                         string consumerGroup,
                                         string fullyQualifiedNamespace,
                                         string eventHubName,
+                                        EventHubsSharedAccessKeyCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
                                         TokenCredential credential,
                                         EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
 

@@ -139,6 +139,56 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task EventsCanBeReadByOneProcessorClientUsingTheSharedKeyCredential()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessorWithSharedAccessKey(scope.ConsumerGroups.First(), scope.EventHubName, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
         public async Task EventsCanBeReadByMultipleProcessorClients()
         {
             // Setup the environment.
@@ -478,6 +528,29 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
+        ///   a connection based on an identity credential.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group for the processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub for the processor.</param>
+        /// <param name="options">The set of client options to pass.</param>
+        ///
+        /// <returns>The processor instance.</returns>
+        ///
+        private EventProcessorClient CreateProcessorWithSharedAccessKey(string consumerGroup,
+                                                                        string eventHubName,
+                                                                        StorageManager storageManager = default,
+                                                                        EventProcessorOptions options = default)
+        {
+            var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
+
+            storageManager ??= new InMemoryStorageManager(_=> {});
+            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+        }
+
+        /// <summary>
         ///   Sends a set of events using a new producer to do so.
         /// </summary>
         ///
@@ -574,6 +647,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public class TestEventProcessorClient : EventProcessorClient
         {
             private readonly Func<EventHubConnection> InjectedConnectionFactory;
+
+            internal TestEventProcessorClient(StorageManager storageManager,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              EventHubsSharedAccessKeyCredential credential,
+                                              Func<EventHubConnection> connectionFactory,
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+            {
+                InjectedConnectionFactory = connectionFactory;
+            }
 
             internal TestEventProcessorClient(StorageManager storageManager,
                                               string consumerGroup,

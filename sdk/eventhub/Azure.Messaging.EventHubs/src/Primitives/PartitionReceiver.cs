@@ -211,6 +211,46 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventPosition">The position within the partition where the client should begin reading events.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the client with.</param>
+        /// <param name="credential">The Event Hubs shared key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        ///
+        public PartitionReceiver(string consumerGroup,
+                                 string partitionId,
+                                 EventPosition eventPosition,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 EventHubsSharedAccessKeyCredential credential,
+                                 PartitionReceiverOptions options = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new PartitionReceiverOptions();
+
+            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
+            InitialPosition = eventPosition;
+            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this client is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the client should begin reading events.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the client with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         ///
