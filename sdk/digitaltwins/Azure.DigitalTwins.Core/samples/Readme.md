@@ -142,8 +142,9 @@ var basicTwin = new BasicDigitalTwin
             new ModelProperties
             {
                 // component properties
-                CustomProperties =
+                Properties =
                 {
+                    { DigitalTwinsJsonPropertyNames.MetadataModel, componentModelId },
                     { "ComponentProp1", "Component value 1" },
                     { "ComponentProp2", 123 },
                 },
@@ -169,9 +170,10 @@ var customTwin = new CustomDigitalTwin
     Prop2 = 987,
     Component1 = new MyCustomComponent
     {
+        Metadata = { ModelId = componentModelId },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
-    }
+    },
 };
 Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
 Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");

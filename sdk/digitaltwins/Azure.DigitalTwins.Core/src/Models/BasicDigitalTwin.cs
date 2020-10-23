@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.DigitalTwins.Core.Serialization
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
@@ -34,8 +34,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///             new ModelProperties
     ///             {
     ///                 // component properties
-    ///                 CustomProperties =
+    ///                 Properties =
     ///                 {
+    ///                     { DigitalTwinsJsonPropertyNames.MetadataModel, componentModelId },
     ///                     { &quot;ComponentProp1&quot;, &quot;Component value 1&quot; },
     ///                     { &quot;ComponentProp2&quot;, 123 },
     ///                 },
@@ -69,28 +70,26 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// }
     /// </code>
     /// </example>
-    public class BasicDigitalTwin
+    public class BasicDigitalTwin : IDigitalTwin
     {
-        /// <summary>
-        /// The unique Id of the digital twin in a digital twins instance. This field is present on every digital twin.
-        /// </summary>
-        [JsonPropertyName("$dtId")]
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinId)]
         public string Id { get; set; }
 
-        /// <summary>
-        /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
-        /// </summary>
-        [JsonPropertyName("$etag")]
-        public string ETag { get; set; }
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
+        public ETag ETag { get; set; }
 
         /// <summary>
-        /// Information about the model a digital twin conforms to. This field is present on every digital twin.
+        /// Information about the model a digital twin conforms to.
+        /// This field is present on every digital twin.
         /// </summary>
-        [JsonPropertyName("$metadata")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
         public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
 
         /// <summary>
-        /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
+        /// Additional properties of the digital twin.
+        /// This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
         /// </summary>
         [JsonExtensionData]
         public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();

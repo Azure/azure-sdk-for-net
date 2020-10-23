@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.DigitalTwins.Core.Serialization
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
@@ -13,13 +13,12 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class ComponentMetadata
+    public class DigitalTwinMetadata
     {
         /// <summary>
-        /// Model-defined writable properties' request state.
+        /// The Id of the model that the digital twin or component is modeled by.
         /// </summary>
-        /// <remarks>For your convenience, the value of each dictionary object can be turned into an instance of <see cref="WritableProperty"/>.</remarks>
-        [JsonExtensionData]
-        public IDictionary<string, object> WritableProperties { get; } = new Dictionary<string, object>();
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataModel)]
+        public string ModelId { get; set; }
     }
 }
