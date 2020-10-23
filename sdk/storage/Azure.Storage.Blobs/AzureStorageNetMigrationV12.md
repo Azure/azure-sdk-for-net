@@ -9,8 +9,9 @@ Familiarity with the v11 client library is assumed. For those new to the Azure S
 
 - [Migration benefits](#migration-benefits)
 - [General changes](#general-changes)
-  - [Authentication](#authentication)
   - [Package and namespaces](#package-and-namespaces)
+  - [Authentication](#authentication)
+  - [Shared access policies](#shared-access-policies)
   - [Client hierarchy](#client-hierarchy)
   - [Client constructors](#client-constructors)
 - [Migration samples](#migration-samples)
@@ -264,6 +265,8 @@ In the interest of simplifying the API surface we've made a three top level clie
 | `CloudBlockBlob` | `BlockBlobClient` |
 | `CloudPageBlob` | `PageBlobClient` |
 | `CloudAppendBlob` | `AppendBlobClient` |
+
+## Migration Samples
 
 ### Creating a Container
 
