@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -2187,5 +2188,95 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete Sub Directory
+
+        #region Get Paths
+        /// <summary>
+        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PathItem> GetPaths(
+            bool recursive = default,
+            bool userPrincipalName = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                recursive,
+                userPrincipalName,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+            bool recursive = default,
+            bool userPrincipalName = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                recursive,
+                userPrincipalName,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
+        #endregion Get Paths
     }
 }
