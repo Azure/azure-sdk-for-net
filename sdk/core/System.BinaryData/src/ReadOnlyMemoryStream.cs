@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace System
 {
     /// <summary>Provides a <see cref="Stream"/> for the contents of a <see cref="ReadOnlyMemory{Byte}"/>.</summary>
     internal sealed class ReadOnlyMemoryStream : Stream
@@ -70,10 +70,10 @@ namespace Azure.Core
         public override int Read(byte[] buffer, int offset, int count)
         {
             ValidateReadArrayArguments(buffer, offset, count);
-            return Read(new Span<byte>(buffer, offset, count));
+            return ReadBuffer(new Span<byte>(buffer, offset, count));
         }
 
-        private int Read(Span<byte> buffer)
+        private int ReadBuffer(Span<byte> buffer)
         {
             int remaining = _content.Length - _position;
 
@@ -100,7 +100,7 @@ namespace Azure.Core
             ValidateReadArrayArguments(buffer, offset, count);
             return cancellationToken.IsCancellationRequested ?
                 Task.FromCanceled<int>(cancellationToken) :
-                Task.FromResult(Read(new Span<byte>(buffer, offset, count)));
+                Task.FromResult(ReadBuffer(new Span<byte>(buffer, offset, count)));
         }
 
         public override void Flush() { }

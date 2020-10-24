@@ -29,17 +29,17 @@ namespace Azure.Core.Experimental.Tests.samples
             #region Snippet:BinaryDataToFromBytes
             var bytes = Encoding.UTF8.GetBytes("some data");
 
-            // when using the ReadOnlySpan constructor the underlying data is copied.
-            var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
+            // Create BinaryData using a constructor ...
+            var data = new BinaryData(bytes);
 
-            // when using the static factory method, the data is wrapped
+            // Or using a static factory method.
             data = BinaryData.FromBytes(bytes);
 
-            // there is an implicit cast defined for ReadOnlyMemory<byte>
+            // There is an implicit cast defined for ReadOnlyMemory<byte>
             ReadOnlyMemory<byte> rom = data;
 
-            // there is also a Bytes property that holds the data
-            rom = data.Bytes;
+            // there is also a ToBytes method that gives access to the ReadOnlyMemory.
+            rom = data.ToBytes();
             #endregion
         }
 
@@ -70,8 +70,8 @@ namespace Azure.Core.Experimental.Tests.samples
                 C = true
             };
 
-            var data = BinaryData.FromObject(model);
-            model = data.ToObject<CustomModel>();
+            var data = BinaryData.FromObjectAsJson(model);
+            model = data.ToObjectFromJson<CustomModel>();
             #endregion
         }
 
