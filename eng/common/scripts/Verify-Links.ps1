@@ -200,6 +200,10 @@ function CheckLink ([System.Uri]$linkUri)
   }
   
   if ($checkLinkGuidance) {
+    if ($linkUri.Scheme -eq 'http') {
+      LogWarning "DO NOT use 'http' in $linkUri. Please use secure link with https instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
     $link = $linkUri.ToString()
     # Check if the url is relative links, suppress the archor link validation.
     if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
