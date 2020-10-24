@@ -26,6 +26,10 @@ namespace System.Tests
             // using implicit conversion
             ReadOnlyMemory<byte> bytes = data;
             Assert.AreEqual(payload, bytes.ToArray());
+
+            // using implicit conversion
+            ReadOnlySpan<byte> span = data;
+            Assert.AreEqual(new ReadOnlySpan<byte>(payload).ToArray(), span.ToArray());
         }
 
         [Test]

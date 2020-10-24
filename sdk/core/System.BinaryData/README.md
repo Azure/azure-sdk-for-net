@@ -30,6 +30,9 @@ data = BinaryData.FromBytes(bytes);
 // There is an implicit cast defined for ReadOnlyMemory<byte>
 ReadOnlyMemory<byte> rom = data;
 
+// There is also an implicit cast defined for ReadOnlySpan<byte>
+ReadOnlySpan<byte> ros = data;
+
 // there is also a ToBytes method that gives access to the ReadOnlyMemory.
 rom = data.ToBytes();
 ```

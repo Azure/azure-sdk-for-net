@@ -222,12 +222,20 @@ namespace System
         }
 
         /// <summary>
-        /// Implicit conversion to bytes.
+        /// Implicit conversion to <see cref="ReadOnlyMemory{Byte}"/>.
         /// </summary>
         /// <param name="data"></param>
         public static implicit operator ReadOnlyMemory<byte>(
             BinaryData data) =>
             data.Bytes;
+
+        /// <summary>
+        /// Implicit conversion to <see cref="ReadOnlySpan{Byte}"/>.
+        /// </summary>
+        /// <param name="data"></param>
+        public static implicit operator ReadOnlySpan<byte>(
+            BinaryData data) =>
+            data.Bytes.Span;
 
         /// <summary>
         /// Two <see cref="BinaryData"/> objects are equal if the memory regions point to the same array and have the

@@ -17,6 +17,7 @@ namespace System
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (System.BinaryData data) { throw null; }
+        public static implicit operator System.ReadOnlySpan<byte> (System.BinaryData data) { throw null; }
         public System.ReadOnlyMemory<byte> ToBytes() { throw null; }
         public T ToObjectFromJson<T>(System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         public System.IO.Stream ToStream() { throw null; }
