@@ -116,6 +116,10 @@ namespace Azure.Identity.Tests
                 ErrorDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper(Error));
             }
 
+            // signal completion
+            OutputDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper((string)null));
+            ErrorDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper((string)null));
+
             _hasExited = true;
             _exitCode = CodeOnExit ?? (Error != default ? 1 : 0);
             Exited?.Invoke(this, EventArgs.Empty);

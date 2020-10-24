@@ -21,6 +21,8 @@ namespace Azure.Identity
         private CancellationTokenRegistration _ctRegistration;
         private readonly StringBuilder _stdOutBuilder;
         private readonly StringBuilder _stdErrBuilder;
+        private readonly AutoResetEvent _stdOutWaitHandle;
+        private readonly AutoResetEvent _stdErrWaitHandle;
 
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
@@ -29,6 +31,8 @@ namespace Azure.Identity
             _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
             _stdOutBuilder = new StringBuilder();
             _stdErrBuilder = new StringBuilder();
+            _stdOutWaitHandle = new AutoResetEvent(false);
+            _stdErrWaitHandle = new AutoResetEvent(false);
 
             if (timeout.TotalMilliseconds >= 0)
             {
@@ -63,9 +67,9 @@ namespace Azure.Identity
             }
 
             _process.Exited += (o, e) => HandleExit();
+
             _process.OutputDataReceived += HandleStdOutDataReceived;
             _process.ErrorDataReceived += HandleStdErrDataReceived;
-
 
             _process.StartInfo.UseShellExecute = false;
             _process.StartInfo.RedirectStandardOutput = true;
@@ -79,6 +83,9 @@ namespace Azure.Identity
 
         private void HandleExit()
         {
+            _stdOutWaitHandle.WaitOne(_timeout);
+            _stdErrWaitHandle.WaitOne(_timeout);
+
             if (_process.ExitCode == 0)
             {
                 TrySetResult(_stdOutBuilder.ToString());
@@ -88,9 +95,29 @@ namespace Azure.Identity
                 TrySetException(new InvalidOperationException(_stdErrBuilder.ToString()));
             }
         }
-        private void HandleStdErrDataReceived(object sender, DataReceivedEventArgsWrapper e) => _stdErrBuilder.Append(e.Data);
+        private void HandleStdErrDataReceived(object sender, DataReceivedEventArgsWrapper e)
+        {
+            if (e.Data is null)
+            {
+                _stdErrWaitHandle.Set();
+            }
+            else
+            {
+                _stdErrBuilder.Append(e.Data);
+            }
+        }
 
-        private void HandleStdOutDataReceived(object sender, DataReceivedEventArgsWrapper e) => _stdOutBuilder.Append(e.Data);
+        private void HandleStdOutDataReceived(object sender, DataReceivedEventArgsWrapper e)
+        {
+            if (e.Data is null)
+            {
+                _stdOutWaitHandle.Set();
+            }
+            else
+            {
+                _stdOutBuilder.Append(e.Data);
+            }
+        }
 
         private void HandleCancel()
         {
@@ -142,6 +169,8 @@ namespace Azure.Identity
         {
             _process.OutputDataReceived -= HandleStdOutDataReceived;
             _process.ErrorDataReceived -= HandleStdErrDataReceived;
+            _stdOutWaitHandle.Dispose();
+            _stdErrWaitHandle.Dispose();
 
             _process.Dispose();
             _ctRegistration.Dispose();
