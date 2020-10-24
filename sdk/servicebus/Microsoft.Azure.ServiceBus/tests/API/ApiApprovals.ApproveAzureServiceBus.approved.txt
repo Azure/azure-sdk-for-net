@@ -320,6 +320,7 @@ namespace Microsoft.Azure.ServiceBus
             "String, RetryPolicy retryPolicy) constructor instead, providing operationTimeout" +
             " in the connection string.")]
         public ServiceBusConnection(string namespaceConnectionString, System.TimeSpan operationTimeout, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public System.TimeSpan? ConnectionIdleTimeout { get; set; }
         public System.Uri Endpoint { get; set; }
         public bool IsClosedOrClosing { get; }
         public System.TimeSpan OperationTimeout { get; set; }
@@ -337,6 +338,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder.AuthenticationType Authentication { get; set; }
+        public System.TimeSpan? ConnectionIdleTimeout { get; set; }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public System.TimeSpan OperationTimeout { get; set; }
