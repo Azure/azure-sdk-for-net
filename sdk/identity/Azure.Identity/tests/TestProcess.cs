@@ -70,6 +70,8 @@ namespace Azure.Identity.Tests
 
         public event EventHandler Exited;
         public event EventHandler Started;
+        public event DataReceivedEventWrapperHandler OutputDataReceived;
+        public event DataReceivedEventWrapperHandler ErrorDataReceived;
 
         public void Start()
         {
@@ -101,7 +103,18 @@ namespace Azure.Identity.Tests
         private void FinishProcessRun()
         {
             WriteToStream(Output, _outputStreamWriter);
+
+            if (Output != default)
+            {
+                OutputDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper(Output));
+            }
+
             WriteToStream(Error, _errorStreamWriter);
+
+            if (Error != default)
+            {
+                ErrorDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper(Error));
+            }
 
             _hasExited = true;
             _exitCode = CodeOnExit ?? (Error != default ? 1 : 0);

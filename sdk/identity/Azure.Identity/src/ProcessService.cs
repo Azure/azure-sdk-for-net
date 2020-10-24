@@ -26,6 +26,9 @@ namespace Azure.Identity
                     StartInfo = processStartInfo,
                     EnableRaisingEvents = true
                 };
+
+                _process.OutputDataReceived += HandleOutputDataReceived;
+                _process.ErrorDataReceived += HandleErrorDataReceived;
             }
 
             public bool HasExited => _process.HasExited;
@@ -45,7 +48,20 @@ namespace Azure.Identity
                 remove => _process.Exited -= value;
             }
 
-            public void Start() => _process.Start();
+            public event DataReceivedEventWrapperHandler OutputDataReceived;
+            public event DataReceivedEventWrapperHandler ErrorDataReceived;
+
+            private void HandleErrorDataReceived(object sender, DataReceivedEventArgs e) => ErrorDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper(e));
+            private void HandleOutputDataReceived(object sender, DataReceivedEventArgs e) => OutputDataReceived?.Invoke(this, new DataReceivedEventArgsWrapper(e));
+
+            public void Start()
+            {
+                _process.Start();
+
+                _process.BeginOutputReadLine();
+                _process.BeginErrorReadLine();
+            }
+
             public void Kill() => _process.Kill();
             public void Dispose() => _process.Dispose();
         }

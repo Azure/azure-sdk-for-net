@@ -16,6 +16,8 @@ namespace Azure.Identity
         ProcessStartInfo StartInfo { get; set; }
 
         event EventHandler Exited;
+        event DataReceivedEventWrapperHandler OutputDataReceived;
+        event DataReceivedEventWrapperHandler ErrorDataReceived;
 
         void Start();
         void Kill();

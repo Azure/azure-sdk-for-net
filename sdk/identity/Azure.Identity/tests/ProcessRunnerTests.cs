@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -38,6 +39,17 @@ namespace Azure.Identity.Tests
         public async Task ProcessRunnerRealProcessSucceeded()
         {
             var output = "Test output";
+            var process = CreateRealProcess($"echo {output}", $"echo {output}");
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(output, result.TrimEnd());
+        }
+
+        [Test]
+        public async Task ProcessRunnerRealProcessLargeOutputSucceeded()
+        {
+            var output = string.Concat(Enumerable.Repeat("ab", 3000));
             var process = CreateRealProcess($"echo {output}", $"echo {output}");
             var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
             var result = await Run(runner);
