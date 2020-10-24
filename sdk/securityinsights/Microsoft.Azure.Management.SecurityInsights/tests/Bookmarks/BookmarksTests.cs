@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -21,12 +22,8 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
         private static string ResourceGroup = "CXP-Nicholas";
         private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
-        private static string BookmarkId = Guid.NewGuid().ToString();
-        private static string BookmarkId2 = "f7579d0c-ecd4-4c04-851d-30629979febd";
-        private static string ObjectId = "f7579d0c-ecd4-4c04-851d-30629979febd";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -35,7 +32,6 @@ namespace SecurityInsights.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
@@ -69,18 +65,18 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
-                var UserInfo = new UserInfo()
-                {
-                    ObjectId = Guid.Parse(ObjectId)
-                };
+                var Labels = new List<string>();
+                var BookmarkId = Guid.NewGuid().ToString();
                 var BookmarkBody = new Bookmark()
                 {
                     DisplayName = "SDKTestBookmark",
-                    Query = "SecurityEvent | take 10"
+                    Query = "SecurityEvent | take 10",
+                    Labels = Labels
                 };
 
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(ResourceGroup, WorkspaceName, BookmarkId, BookmarkBody);
                 ValidateBookmark(Bookmark);
+                SecurityInsightsClient.Bookmarks.Delete(ResourceGroup, WorkspaceName, BookmarkId);
             }
         }
 
@@ -90,8 +86,16 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
-
-                var Bookmark = SecurityInsightsClient.Bookmarks.Get(ResourceGroup, WorkspaceName, BookmarkId2);
+                var Labels = new List<string>();
+                var BookmarkId = Guid.NewGuid().ToString();
+                var BookmarkBody = new Bookmark()
+                {
+                    DisplayName = "SDKTestBookmark",
+                    Query = "SecurityEvent | take 10",
+                    Labels = Labels
+                };
+                SecurityInsightsClient.Bookmarks.CreateOrUpdate(ResourceGroup, WorkspaceName, BookmarkId, BookmarkBody);
+                var Bookmark = SecurityInsightsClient.Bookmarks.Get(ResourceGroup, WorkspaceName, BookmarkId);
                 ValidateBookmark(Bookmark);
 
             }
@@ -100,10 +104,18 @@ namespace SecurityInsights.Tests
         [Fact]
         public void Bookmarks_Delete()
         {
-            Thread.Sleep(5000);
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var Labels = new List<string>();
+                var BookmarkId = Guid.NewGuid().ToString();
+                var BookmarkBody = new Bookmark()
+                {
+                    DisplayName = "SDKTestBookmark",
+                    Query = "SecurityEvent | take 10",
+                    Labels = Labels
+                };
+                SecurityInsightsClient.Bookmarks.CreateOrUpdate(ResourceGroup, WorkspaceName, BookmarkId, BookmarkBody);
                 SecurityInsightsClient.Bookmarks.Delete(ResourceGroup, WorkspaceName, BookmarkId);
             }
         }

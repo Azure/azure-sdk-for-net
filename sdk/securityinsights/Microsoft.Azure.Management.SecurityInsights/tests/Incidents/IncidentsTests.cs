@@ -21,12 +21,9 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
         private static string ResourceGroup = "CXP-Nicholas";
         private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
-        private static string NewIncidentId = Guid.NewGuid().ToString();
-        private static string IncidentId = "a0c942f3-d316-4af7-9c6b-90420f79d35e";
-
+        
         public static TestEnvironment TestEnvironment { get; private set; }
 
         private static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
@@ -34,7 +31,6 @@ namespace SecurityInsights.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
@@ -68,6 +64,7 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var IncidentId = Guid.NewGuid().ToString();
                 var IncidentBody = new Incident()
                 {
                     Title = "SDKCreateIncidentTest",
@@ -75,8 +72,9 @@ namespace SecurityInsights.Tests
                     Severity = "Low"
                 };
 
-                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(ResourceGroup, WorkspaceName, NewIncidentId, IncidentBody);
+                var Incident = SecurityInsightsClient.Incidents.CreateOrUpdate(ResourceGroup, WorkspaceName, IncidentId, IncidentBody);
                 ValidateIncident(Incident);
+                SecurityInsightsClient.Incidents.Delete(ResourceGroup, WorkspaceName, IncidentId);
             }
         }
 
@@ -86,9 +84,18 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var IncidentId = Guid.NewGuid().ToString();
+                var IncidentBody = new Incident()
+                {
+                    Title = "SDKCreateIncidentTest",
+                    Status = "Active",
+                    Severity = "Low"
+                };
 
+                SecurityInsightsClient.Incidents.CreateOrUpdate(ResourceGroup, WorkspaceName, IncidentId, IncidentBody);
                 var Incident = SecurityInsightsClient.Incidents.Get(ResourceGroup, WorkspaceName, IncidentId);
                 ValidateIncident(Incident);
+                SecurityInsightsClient.Incidents.Delete(ResourceGroup, WorkspaceName, IncidentId);
 
             }
         }
@@ -100,7 +107,16 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
-                SecurityInsightsClient.Incidents.Delete(ResourceGroup, WorkspaceName, NewIncidentId);
+                var IncidentId = Guid.NewGuid().ToString();
+                var IncidentBody = new Incident()
+                {
+                    Title = "SDKCreateIncidentTest",
+                    Status = "Active",
+                    Severity = "Low"
+                };
+
+                SecurityInsightsClient.Incidents.CreateOrUpdate(ResourceGroup, WorkspaceName, IncidentId, IncidentBody);
+                SecurityInsightsClient.Incidents.Delete(ResourceGroup, WorkspaceName, IncidentId);
             }
         }
 

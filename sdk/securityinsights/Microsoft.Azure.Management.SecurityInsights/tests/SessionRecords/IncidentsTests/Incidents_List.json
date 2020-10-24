@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/incidents?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmIxY2VhY2QtNTczMS00NzgwLThmOTYtMjA3OGRkOTZmZDk2L3Jlc291cmNlR3JvdXBzL0NYUC1OaWNob2xhcy9wcm92aWRlcnMvTWljcm9zb2Z0Lk9wZXJhdGlvbmFsSW5zaWdodHMvd29ya3NwYWNlcy9TZWN1cmVTY29yZURhdGEtdDRhaDR4c3R0Y2V2cy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5SW5zaWdodHMvaW5jaWRlbnRzP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c46f4379-b699-4ff2-84c3-50e29026939e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SecurityInsights.SecurityInsightsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "a1add036-f387-41cf-b794-4ac886971620"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1add036-f387-41cf-b794-4ac886971620"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201024T034838Z:a1add036-f387-41cf-b794-4ac886971620"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 24 Oct 2020 03:48:37 GMT"
+        ],
+        "Content-Length": [
+          "3710"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/c778abcf-62c9-4c9e-a0d2-ddc02bdd6dd3\",\r\n      \"name\": \"c778abcf-62c9-4c9e-a0d2-ddc02bdd6dd3\",\r\n      \"etag\": \"\\\"09004129-0000-0100-0000-5f920dc40000\\\"\",\r\n      \"type\": \"Microsoft.SecurityInsights/Incidents\",\r\n      \"properties\": {\r\n        \"title\": \"SDKCreateIncidentTest\",\r\n        \"severity\": \"Low\",\r\n        \"status\": \"Active\",\r\n        \"owner\": {\r\n          \"objectId\": null,\r\n          \"email\": null,\r\n          \"assignedTo\": null,\r\n          \"userPrincipalName\": null\r\n        },\r\n        \"labels\": [],\r\n        \"lastModifiedTimeUtc\": \"2020-10-22T22:55:00.6270355Z\",\r\n        \"createdTimeUtc\": \"2020-10-22T22:55:00.6270355Z\",\r\n        \"incidentNumber\": 3,\r\n        \"additionalData\": {\r\n          \"alertsCount\": 0,\r\n          \"bookmarksCount\": 0,\r\n          \"commentsCount\": 0,\r\n          \"alertProductNames\": [],\r\n          \"tactics\": []\r\n        },\r\n        \"relatedAnalyticRuleIds\": [],\r\n        \"incidentUrl\": \"https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/c778abcf-62c9-4c9e-a0d2-ddc02bdd6dd3\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/8851b3ad-90ff-40db-99e0-d5fae1ac067a\",\r\n      \"name\": \"8851b3ad-90ff-40db-99e0-d5fae1ac067a\",\r\n      \"etag\": \"\\\"0700ef87-0000-0100-0000-5f91deaa0000\\\"\",\r\n      \"type\": \"Microsoft.SecurityInsights/Incidents\",\r\n      \"properties\": {\r\n        \"title\": \"SDKCreateIncidentTest\",\r\n        \"severity\": \"Low\",\r\n        \"status\": \"Active\",\r\n        \"owner\": {\r\n          \"objectId\": null,\r\n          \"email\": null,\r\n          \"assignedTo\": null,\r\n          \"userPrincipalName\": null\r\n        },\r\n        \"labels\": [],\r\n        \"lastModifiedTimeUtc\": \"2020-10-22T19:34:02.1255128Z\",\r\n        \"createdTimeUtc\": \"2020-10-22T19:34:02.1255128Z\",\r\n        \"incidentNumber\": 2,\r\n        \"additionalData\": {\r\n          \"alertsCount\": 0,\r\n          \"bookmarksCount\": 0,\r\n          \"commentsCount\": 0,\r\n          \"alertProductNames\": [],\r\n          \"tactics\": []\r\n        },\r\n        \"relatedAnalyticRuleIds\": [],\r\n        \"incidentUrl\": \"https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/8851b3ad-90ff-40db-99e0-d5fae1ac067a\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/a0c942f3-d316-4af7-9c6b-90420f79d35e\",\r\n      \"name\": \"a0c942f3-d316-4af7-9c6b-90420f79d35e\",\r\n      \"etag\": \"\\\"09001b29-0000-0100-0000-5f920dbc0000\\\"\",\r\n      \"type\": \"Microsoft.SecurityInsights/Incidents\",\r\n      \"properties\": {\r\n        \"title\": \"SDKIncidentTest\",\r\n        \"description\": \"\",\r\n        \"severity\": \"Medium\",\r\n        \"status\": \"New\",\r\n        \"owner\": {\r\n          \"objectId\": \"6953ad4f-7384-4478-a2af-06fb8fe1a5c5\",\r\n          \"email\": \"Nicholas.DiCola@microsoft.com\",\r\n          \"assignedTo\": \"Nicholas DiCola (SECURITY JEDI)\",\r\n          \"userPrincipalName\": \"ndicola@microsoft.com\"\r\n        },\r\n        \"labels\": [],\r\n        \"firstActivityTimeUtc\": \"2020-10-22T19:11:54Z\",\r\n        \"lastActivityTimeUtc\": \"2020-10-22T19:11:54Z\",\r\n        \"lastModifiedTimeUtc\": \"2020-10-22T22:54:52.9102833Z\",\r\n        \"createdTimeUtc\": \"2020-10-22T19:12:07.223934Z\",\r\n        \"incidentNumber\": 1,\r\n        \"additionalData\": {\r\n          \"alertsCount\": 0,\r\n          \"bookmarksCount\": 1,\r\n          \"commentsCount\": 3,\r\n          \"alertProductNames\": [],\r\n          \"tactics\": []\r\n        },\r\n        \"relatedAnalyticRuleIds\": [],\r\n        \"incidentUrl\": \"https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/Incidents/a0c942f3-d316-4af7-9c6b-90420f79d35e\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

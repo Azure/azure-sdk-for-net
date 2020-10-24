@@ -21,8 +21,6 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
-
         public static TestEnvironment TestEnvironment { get; private set; }
 
         private static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
@@ -30,7 +28,6 @@ namespace SecurityInsights.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };

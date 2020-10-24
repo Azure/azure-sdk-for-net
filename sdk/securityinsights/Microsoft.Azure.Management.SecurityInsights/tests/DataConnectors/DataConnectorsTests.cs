@@ -21,11 +21,8 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
         private static string ResourceGroup = "CXP-Nicholas";
         private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
-        private static string NewDataConnectorId = Guid.NewGuid().ToString();
-        private static string DemoSub = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -34,7 +31,6 @@ namespace SecurityInsights.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
@@ -57,8 +53,18 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var DataConnectorId = Guid.NewGuid().ToString();
+                var DataConnectorBody = new ASCDataConnector()
+                {
+                    DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
+                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
+
+                };
+
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
                 var DataConnectors = SecurityInsightsClient.DataConnectors.List(ResourceGroup, WorkspaceName);
                 ValidateDataConnectors(DataConnectors);
+                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
             }
         }
 
@@ -69,28 +75,38 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var DataConnectorId = Guid.NewGuid().ToString();
                 var DataConnectorBody = new ASCDataConnector()
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
-                    SubscriptionId = DemoSub                    
+                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()                    
 
                 };
 
-                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, NewDataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
                 ValidateDataConnector(DataConnector);
+                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
             }
         }
 
         [Fact]
         public void DataConnectors_Get()
         {
-            Thread.Sleep(3000);
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var DataConnectorId = Guid.NewGuid().ToString();
+                var DataConnectorBody = new ASCDataConnector()
+                {
+                    DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
+                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
 
-                var DataConnector = SecurityInsightsClient.DataConnectors.Get(ResourceGroup, WorkspaceName, NewDataConnectorId);
+                };
+
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.Get(ResourceGroup, WorkspaceName, DataConnectorId);
                 ValidateDataConnector(DataConnector);
+                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
 
             }
         }
@@ -98,11 +114,19 @@ namespace SecurityInsights.Tests
         [Fact]
         public void DataConnectors_Delete()
         {
-            Thread.Sleep(10000);
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
-                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, NewDataConnectorId);
+                var DataConnectorId = Guid.NewGuid().ToString();
+                var DataConnectorBody = new ASCDataConnector()
+                {
+                    DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
+                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
+
+                };
+
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
+                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
             }
         }
 

@@ -20,7 +20,6 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "6b1ceacd-5731-4780-8f96-2078dd96fd96";
         private static string ResourceGroup = "CXP-Nicholas";
         private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
 
@@ -31,7 +30,6 @@ namespace SecurityInsights.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };

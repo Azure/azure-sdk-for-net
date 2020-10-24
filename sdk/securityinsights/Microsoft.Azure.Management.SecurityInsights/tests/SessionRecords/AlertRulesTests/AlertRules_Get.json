@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.OperationalInsights/workspaces/SecureScoreData-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/alertRules/BuiltInFusion?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmIxY2VhY2QtNTczMS00NzgwLThmOTYtMjA3OGRkOTZmZDk2L3Jlc291cmNlR3JvdXBzL0NYUC1OaWNob2xhcy9wcm92aWRlcnMvTWljcm9zb2Z0Lk9wZXJhdGlvbmFsSW5zaWdodHMvd29ya3NwYWNlcy9TZWN1cmVTY29yZURhdGEtdDRhaDR4c3R0Y2V2cy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5SW5zaWdodHMvYWxlcnRSdWxlcy9CdWlsdEluRnVzaW9uP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f2887a1b-5ffb-462f-92c3-0bf37fbe0c79"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SecurityInsights.SecurityInsightsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "api-supported-versions": [
+          "2019-01-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "664de3ce-ca7e-4bbc-819e-a0ae8793929c"
+        ],
+        "x-ms-correlation-request-id": [
+          "664de3ce-ca7e-4bbc-819e-a0ae8793929c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201024T034855Z:664de3ce-ca7e-4bbc-819e-a0ae8793929c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 24 Oct 2020 03:48:54 GMT"
+        ],
+        "Content-Length": [
+          "1656"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/cxp-nicholas/providers/Microsoft.OperationalInsights/workspaces/securescoredata-t4ah4xsttcevs/providers/Microsoft.SecurityInsights/alertRules/BuiltInFusion\",\r\n  \"name\": \"BuiltInFusion\",\r\n  \"etag\": \"\\\"2900c1e8-0000-0100-0000-5ed693700000\\\"\",\r\n  \"type\": \"Microsoft.SecurityInsights/alertRules\",\r\n  \"kind\": \"Fusion\",\r\n  \"properties\": {\r\n    \"displayName\": \"Advanced Multistage Attack Detection\",\r\n    \"description\": \"By using Fusion technology that’s based on machine learning, Azure Sentinel can automatically detect multistage attacks by combining anomalous behaviors and suspicious activities that are observed at various stages of the kill-chain. Azure Sentinel then generates incidents that would otherwise be very difficult to catch. These incidents encase two or more alerts or activities. By design, these incidents are low volume, high fidelity, and high severity - which is why this detection is turned ON by default.\\n\\nThere are currently 35 incident types that include a combination of suspicious Azure Active Directory sign-in events followed by anomalous Office 365 activity. \\n\\nTo detect these multistage attacks, the following data connectors must be configured:\\n- Azure Active Directory Identity Protection\\n- Microsoft Cloud App Security\\n\\nFor a full list and description of each scenario that is supported for these multistage attacks, go to https://aka.ms/SentinelFusion.\",\r\n    \"alertRuleTemplateName\": \"f71aba3d-28fb-450b-b192-4e76a83015c8\",\r\n    \"tactics\": [\r\n      \"Persistence\",\r\n      \"LateralMovement\",\r\n      \"Exfiltration\",\r\n      \"CommandAndControl\"\r\n    ],\r\n    \"severity\": \"High\",\r\n    \"enabled\": true,\r\n    \"lastModifiedUtc\": \"2020-06-02T17:59:12.0631182Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
