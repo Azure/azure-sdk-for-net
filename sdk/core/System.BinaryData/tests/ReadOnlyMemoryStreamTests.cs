@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace System.Tests
 {
     public class ReadOnlyMemoryStreamTests
     {
