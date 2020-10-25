@@ -206,6 +206,26 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Version.TryParse(fxVer.Product.Version, out defaultVersion);
             Assert.Equal(defaultVersion.ToString(), "1.0.0.0");
         }
+        
+        /// <summary>
+        /// This is to verify if a HttpClient is passed that contains ProductInfoHeaderValues with comments in
+        /// userAgent information, no exception occurs while merging
+        /// </summary>
+        [Fact]
+        public void ExistingCommentOnlyProductInfoHeaderValue()
+        {
+            const string comment = "(comment)";
+            HttpClient hc = new HttpClient(new ContosoMessageHandler());
+            hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(comment));
+            ContosoServiceClient contosoClient = new ContosoServiceClient(hc, false);
+            HttpResponseMessage response = contosoClient.DoSyncWork();
+
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = contosoClient.HttpClient.DefaultRequestHeaders.UserAgent;
+            contosoClient.Dispose();
+            var productInfos = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product == null && p.Comment.Equals(comment, StringComparison.OrdinalIgnoreCase));
+            Assert.Single(productInfos);
+            Assert.Equal(5, contosoClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+        }
 
         private HttpResponseMessage SendAndReceiveResponse(HttpClient httpClient)
         {

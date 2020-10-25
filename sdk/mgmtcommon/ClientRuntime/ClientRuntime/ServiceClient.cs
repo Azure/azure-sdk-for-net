@@ -565,10 +565,26 @@ namespace Microsoft.Rest
             lock (lockUserAgent)
             {
                 if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
-                    new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
+                    new ObjectComparer<ProductInfoHeaderValue>(ProductInfoHeadersEqual)))
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
                 }
+            }
+        }
+
+        private bool ProductInfoHeadersEqual(ProductInfoHeaderValue left, ProductInfoHeaderValue right)
+        {
+            if (left.Product != null && right.Product != null)
+            { 
+                return left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase); 
+            }
+            else if(left.Product == null && right.Product == null && !string.IsNullOrEmpty(left.Comment) && !string.IsNullOrEmpty(right.Comment))
+            {
+                return left.Comment.Equals(right.Comment, StringComparison.OrdinalIgnoreCase);
+            }
+            else
+            {
+                return false;
             }
         }
 
