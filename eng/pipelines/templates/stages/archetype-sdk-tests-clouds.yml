@@ -34,7 +34,7 @@ parameters:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     AzureCloud_Canary:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-      Location: 'centraluseuap'
+      Location: 'eastus2euap'
     AzureUsGovCloud:
       SubscriptionConfiguration: $(sub-config-gov-test-resources)
       ArmTemplateParameters: >-
