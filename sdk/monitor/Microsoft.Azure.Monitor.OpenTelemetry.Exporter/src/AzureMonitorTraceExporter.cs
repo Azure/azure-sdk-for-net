@@ -12,7 +12,7 @@ using OpenTelemetry.Trace;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorTraceExporter : ActivityExporter
+    public class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter Transmitter;
         private readonly AzureMonitorExporterOptions options;
