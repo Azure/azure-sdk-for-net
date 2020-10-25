@@ -11,10 +11,10 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
         public long MaxTransmissionStorageCapacity { get { throw null; } set { } }
         public string StorageFolder { get { throw null; } set { } }
     }
-    public partial class AzureMonitorTraceExporter : OpenTelemetry.Trace.ActivityExporter
+    public partial class AzureMonitorTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
     {
         public AzureMonitorTraceExporter(Microsoft.Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
-        public override OpenTelemetry.Trace.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
+        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
     }
 }
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models

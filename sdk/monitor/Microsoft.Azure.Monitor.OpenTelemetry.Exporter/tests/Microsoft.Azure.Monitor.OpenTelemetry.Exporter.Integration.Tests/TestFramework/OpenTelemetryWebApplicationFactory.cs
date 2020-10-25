@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Trace;
+using OpenTelemetry;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
@@ -24,11 +26,11 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestF
 
         private const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
         private readonly MockTransmitter Transmitter = new MockTransmitter();
-        private ActivityProcessor ActivityProcessor;
+        private BaseProcessor<Activity> ActivityProcessor;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(
+            this.ActivityProcessor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,

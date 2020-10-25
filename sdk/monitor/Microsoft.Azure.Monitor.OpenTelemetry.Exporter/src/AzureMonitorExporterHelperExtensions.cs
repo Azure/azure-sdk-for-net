@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry;
 using OpenTelemetry.Trace;
 using System;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -28,7 +30,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             configure?.Invoke(options);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchExportActivityProcessor(new AzureMonitorTraceExporter(options)));
+            return builder.AddProcessor(new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(options)));
         }
     }
 }
