@@ -144,6 +144,36 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task CanCreateBinaryDataFromCustomType()
+        {
+            var payload = new Model { A = "value", B = 5, C = 3 };
+            var serializer = new JsonObjectSerializer();
+
+            await AssertData(serializer.SerializeToBinaryData(payload));
+            await AssertData(await serializer.SerializeToBinaryDataAsync(payload));
+
+            await AssertData(serializer.SerializeToBinaryData(payload, typeof(Model)));
+            await AssertData(await serializer.SerializeToBinaryDataAsync(payload, typeof(Model)));
+
+            async Task AssertData(BinaryData data)
+            {
+                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
+                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
+                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
+                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
+                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
+                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
+
+                Assert.AreEqual(payload.A, data.ToObject<Model>(serializer).A);
+                Assert.AreEqual(payload.B, data.ToObject<Model>(serializer).B);
+                Assert.AreEqual(0, data.ToObject<Model>(serializer).C);
+                Assert.AreEqual(payload.A, (await data.ToObjectAsync<Model>(serializer)).A);
+                Assert.AreEqual(payload.B, (await data.ToObjectAsync<Model>(serializer)).B);
+                Assert.AreEqual(0, (await data.ToObjectAsync<Model>(serializer)).C);
+            }
+        }
+
         public class Model
         {
             public string A { get; set; }
