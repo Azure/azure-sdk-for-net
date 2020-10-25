@@ -37,7 +37,7 @@ namespace Azure.Core.Serialization
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public static async Task<T> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+        public static async ValueTask<T> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             (T) await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
     }
 }

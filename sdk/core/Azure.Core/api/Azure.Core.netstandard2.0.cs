@@ -549,7 +549,7 @@ namespace Azure.Core.Serialization
     }
     public static partial class SerializationExtensions
     {
-        public static System.Threading.Tasks.Task<T> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<T> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static T ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
