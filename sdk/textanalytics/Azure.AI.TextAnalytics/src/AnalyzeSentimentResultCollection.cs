@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets statistics about the documents and how it was processed
         /// by the service.  This property will have a value when IncludeStatistics in <see cref="AnalyzeSentimentOptions"/>
-        /// is set to True in the client call.
+        /// is set to true in the client call.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
 
