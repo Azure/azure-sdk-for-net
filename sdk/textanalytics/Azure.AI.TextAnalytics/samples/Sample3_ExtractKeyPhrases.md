@@ -17,15 +17,18 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = "My cat might need to see a veterinarian.";
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+little sister thinks it is funny, I a worried it has the cold that I got last week.
+We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it will be covered by the cat's insurance.
+It might be good to not let it sleep in my room for a while.";
 
-KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
+            KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 
-Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
-foreach (string keyPhrase in keyPhrases)
-{
-    Console.WriteLine(keyPhrase);
-}
+            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
+            foreach (string keyPhrase in keyPhrases)
+            {
+                Console.WriteLine(keyPhrase);
+            }
 ```
 
 ## Extracting key phrases from multiple documents
@@ -39,23 +42,36 @@ ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(docume
 To extract key phrases from a collection of documents in different languages, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
-var documents = new List<TextDocumentInput>
-{
-    new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
-    {
-         Language = "en",
-    },
-    new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
-    {
-         Language = "en",
-    },
-    new TextDocumentInput("3", "My cat might need to see a veterinarian.")
-    {
-         Language = "en",
-    }
-};
+            string documentA = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar cómo invocar el método de extracción de frases del servicio de Text Analytics en Microsoft Azure.
+También muestra cómo acceder a la información retornada por el servicio.";
 
-ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            string documentB = @"We love this trail and make the trip every year. The views are breathtaking and well worth the hike!
+Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was amazing.
+Everyone in my family liked the trail although it was too challenging for the less athletic among us. Not necessarily recommended for small children.
+A hotel close to the trail offers services for childcare in case you want that.";
+
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+They had great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages which were really good. 
+The spa was clean and felt very peaceful. Overall the whole experience was great.
+We will definitely come back.";
+
+            var documents = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", documentA)
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", documentC)
+                {
+                     Language = "en",
+                }
+            };
+
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

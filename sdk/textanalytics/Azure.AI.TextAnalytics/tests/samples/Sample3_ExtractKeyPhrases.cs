@@ -21,7 +21,10 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:ExtractKeyPhrases
-            string document = "My cat might need to see a veterinarian.";
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+little sister thinks it is funny, I a worried it has the cold that I got last week.
+We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it will be covered by the cat's insurance.
+It might be good to not let it sleep in my room for a while.";
 
             KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 

@@ -136,11 +136,13 @@ The following section provides several code snippets using the `client` [created
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguage
-string document = "Este documento está en español.";
+            string document = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
+También muestra cómo acceder a la información retornada por el servicio. Esta capacidad es útil para los sistemas de contenido que recopilan texto arbitrario, donde el idioma es desconocido.
+La característica Detección de idioma puede detectar una amplia gama de idiomas, variantes, dialectos y algunos idiomas regionales o culturales.";
 
-DetectedLanguage language = client.DetectLanguage(document);
+            DetectedLanguage language = client.DetectLanguage(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+            Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
 For samples on using the production recommended option `DetectLanguageBatch` see [here][detect_language_sample].
 
@@ -169,15 +171,18 @@ Please refer to the service documentation for a conceptual discussion of [sentim
 Run a model to identify a collection of significant phrases found in the passed-in document or batch of documents.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = "My cat might need to see a veterinarian.";
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+little sister thinks it is funny, I a worried it has the cold that I got last week.
+We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it will be covered by the cat's insurance.
+It might be good to not let it sleep in my room for a while.";
 
-KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
+            KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 
-Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
-foreach (string keyPhrase in keyPhrases)
-{
-    Console.WriteLine(keyPhrase);
-}
+            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
+            foreach (string keyPhrase in keyPhrases)
+            {
+                Console.WriteLine(keyPhrase);
+            }
 ```
 For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here][extract_key_phrases_sample].
 
@@ -256,11 +261,13 @@ Please refer to the service documentation for a conceptual discussion of [entity
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguageAsync
-string document = "Este documento está en español.";
+            string document = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
+También muestra cómo acceder a la información retornada por el servicio. Esta capacidad es útil para los sistemas de contenido que recopilan texto arbitrario, donde el idioma es desconocido.
+La característica Detección de idioma puede detectar una amplia gama de idiomas, variantes, dialectos y algunos idiomas regionales o culturales.";
 
-DetectedLanguage language = await client.DetectLanguageAsync(document);
+            DetectedLanguage language = await client.DetectLanguageAsync(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+            Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
 
 ### Recognize Entities Asynchronously
