@@ -32,11 +32,15 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// Initializes a new instance of the ManagementCluster class.
         /// </summary>
         /// <param name="clusterSize">The cluster size</param>
+        /// <param name="provisioningState">The state of the cluster
+        /// provisioning. Possible values include: 'Succeeded', 'Failed',
+        /// 'Cancelled', 'Deleting', 'Updating'</param>
         /// <param name="clusterId">The identity</param>
         /// <param name="hosts">The hosts</param>
-        public ManagementCluster(int? clusterSize = default(int?), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
+        public ManagementCluster(int? clusterSize = default(int?), string provisioningState = default(string), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
             : base(clusterSize)
         {
+            ProvisioningState = provisioningState;
             ClusterId = clusterId;
             Hosts = hosts;
             CustomInit();
@@ -46,6 +50,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the state of the cluster provisioning. Possible values
+        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting', 'Updating'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets the identity

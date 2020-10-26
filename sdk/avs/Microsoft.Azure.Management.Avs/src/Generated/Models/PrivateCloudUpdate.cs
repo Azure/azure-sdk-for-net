@@ -34,14 +34,16 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the PrivateCloudUpdate class.
         /// </summary>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="managementCluster">The default cluster used for
         /// management</param>
         /// <param name="internet">Connectivity to internet is enabled or
         /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="identitySources">vCenter Single Sign On Identity
         /// Sources</param>
-        public PrivateCloudUpdate(ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>))
+        public PrivateCloudUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>))
         {
+            Tags = tags;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
@@ -52,6 +54,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the default cluster used for management

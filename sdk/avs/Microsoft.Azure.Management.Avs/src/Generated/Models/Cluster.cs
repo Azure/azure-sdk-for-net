@@ -39,19 +39,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="clusterSize">The cluster size</param>
-        /// <param name="clusterId">The identity</param>
-        /// <param name="hosts">The hosts</param>
         /// <param name="provisioningState">The state of the cluster
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
         /// 'Cancelled', 'Deleting', 'Updating'</param>
-        public Cluster(Sku sku, string id = default(string), string name = default(string), string type = default(string), int? clusterSize = default(int?), int? clusterId = default(int?), IList<string> hosts = default(IList<string>), string provisioningState = default(string))
+        /// <param name="clusterId">The identity</param>
+        /// <param name="hosts">The hosts</param>
+        public Cluster(Sku sku, string id = default(string), string name = default(string), string type = default(string), int? clusterSize = default(int?), string provisioningState = default(string), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
             : base(id, name, type)
         {
             Sku = sku;
             ClusterSize = clusterSize;
+            ProvisioningState = provisioningState;
             ClusterId = clusterId;
             Hosts = hosts;
-            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -73,6 +73,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         public int? ClusterSize { get; set; }
 
         /// <summary>
+        /// Gets or sets the state of the cluster provisioning. Possible values
+        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting', 'Updating'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets the identity
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterId")]
@@ -83,13 +90,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hosts")]
         public IList<string> Hosts { get; private set; }
-
-        /// <summary>
-        /// Gets the state of the cluster provisioning. Possible values
-        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting', 'Updating'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
