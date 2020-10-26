@@ -12,113 +12,109 @@ using System.Threading.Tasks;
 namespace System
 {
     /// <summary>
-    /// A lightweight abstraction for a payload of bytes that supports converting between string, stream, Json, and bytes.
+    /// A lightweight abstraction for a payload of bytes that supports converting between string, stream, JSON, and bytes.
     /// </summary>
     public class BinaryData
     {
         private const int CopyToBufferSize = 81920;
 
-        private static readonly UTF8Encoding s_encoding = new UTF8Encoding(false);
-
         /// <summary>
         /// The backing store for the <see cref="BinaryData"/> instance.
         /// </summary>
-        internal ReadOnlyMemory<byte> Bytes { get; }
+        private readonly ReadOnlyMemory<byte> _bytes;
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance by wrapping the
-        /// passed in array of bytes.
+        /// provided byte array.
         /// </summary>
-        /// <param name="data">Byte data.</param>
+        /// <param name="data">The array to wrap.</param>
         public BinaryData(byte[] data)
         {
-            Bytes = data;
+            _bytes = data;
         }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object to Json
+        /// Creates a <see cref="BinaryData"/> instance by serializing the provided object to JSON
         /// using <see cref="JsonSerializer"/>.
         /// </summary>
         ///
-        /// <param name="jsonSerializable">The object that will be serialized to Json using
+        /// <param name="jsonSerializable">The object that will be serialized to JSON using
         /// <see cref="JsonSerializer"/>.</param>
-        /// <param name="options">The <see cref="JsonSerializerOptions"/> to use when serializing to Json.</param>
-        /// <param name="type">The type of the data. If not specified, <see cref="object.GetType"/> will
+        /// <param name="options">The options to use when serializing to JSON.</param>
+        /// <param name="type">The type to use when serializing the data. If not specified, <see cref="object.GetType"/> will
         /// be used to determine the type.</param>
-        ///
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public BinaryData(object jsonSerializable, JsonSerializerOptions? options = default, Type? type = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            Bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type, options);
+            _bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type, options);
         }
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance by wrapping the
-        /// passed in bytes.
+        /// provided bytes.
         /// </summary>
-        /// <param name="data">Byte data.</param>
+        /// <param name="data">Byte data to wrap.</param>
         public BinaryData(ReadOnlyMemory<byte> data)
         {
-            Bytes = data;
+            _bytes = data;
         }
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance from a string by converting
-        /// the string to bytes using UTF-8 encoding.
+        /// the string to bytes using the UTF-8 encoding.
         /// </summary>
         /// <param name="data">The string data.</param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        /// <remarks>The byte order mark is not included as part of the encoding process.</remarks>
         public BinaryData(string data)
         {
-            Bytes = s_encoding.GetBytes(data);
+            _bytes = Encoding.UTF8.GetBytes(data);
         }
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the passed in
+        /// Creates a <see cref="BinaryData"/> instance by wrapping the provided
         /// <see cref="ReadOnlyMemory{Byte}"/>.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <param name="data">Byte data to wrap.</param>
+        /// <returns>A wrapper over <paramref name="data"/>.</returns>
         public static BinaryData FromBytes(ReadOnlyMemory<byte> data) =>
             new BinaryData(data);
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by wrapping the passed in
+        /// Creates a <see cref="BinaryData"/> instance by wrapping the provided
         /// byte array.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <param name="data">The array to wrap.</param>
+        /// <returns>A wrapper over <paramref name="data"/>.</returns>
         public static BinaryData FromBytes(byte[] data) =>
             new BinaryData(data);
 
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance using the passed in string.
+        /// Creates a <see cref="BinaryData"/> instance from a string by converting
+        /// the string to bytes using the UTF-8 encoding.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <param name="data">The string data.</param>
+        /// <returns>A value representing the UTF-8 encoding of <paramref name="data"/>.</returns>
         public static BinaryData FromString(string data) =>
             new BinaryData(data);
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance from the specified stream.
-        /// The passed in stream is not disposed by this method.
+        /// The stream is not disposed by this method.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <returns>A value representing all of the data remaining in <paramref name="stream"/>.</returns>
         public static BinaryData FromStream(Stream stream) =>
-            FromStreamAsync(stream, false).EnsureCompleted();
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            FromStreamAsync(stream, false).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance from the specified stream.
-        /// The passed in stream is not disposed by this method.
+        /// The stream is not disposed by this method.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
-        /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
-        /// the request to cancel the operation.</param>
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <param name="cancellationToken">A token that may be used to cancel the operation.</param>
+        /// <returns>A value representing all of the data remaining in <paramref name="stream"/>.</returns>
         public static async Task<BinaryData> FromStreamAsync(
             Stream stream,
             CancellationToken cancellationToken = default) =>
@@ -133,13 +129,22 @@ namespace System
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            if (stream.CanSeek && stream.Length > int.MaxValue)
+            if (stream.CanSeek && (stream.Length - stream.Position) > int.MaxValue)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(stream),
                     "Stream length must be less than Int32.MaxValue");
             }
-            using var memoryStream = new MemoryStream();
+
+            MemoryStream? inputMemoryStream = stream as MemoryStream;
+            ArraySegment<byte> buffer = default;
+
+            if (inputMemoryStream?.TryGetBuffer(out buffer) ?? false)
+            {
+                return new BinaryData(buffer.Array.AsMemory(buffer.Offset, buffer.Count));
+            }
+
+            using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream((int)stream.Length) : new MemoryStream();
             if (async)
             {
                 await stream.CopyToAsync(memoryStream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
@@ -148,45 +153,43 @@ namespace System
             {
                 stream.CopyTo(memoryStream);
             }
-            return new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int) memoryStream.Position));
+            return new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position));
         }
 
-
         /// <summary>
-        /// Creates a <see cref="BinaryData"/> instance by serializing the passed in object using
+        /// Creates a <see cref="BinaryData"/> instance by serializing the provided object using
         /// the <see cref="JsonSerializer"/>.
         /// </summary>
         ///
-        /// <typeparam name="T">The type of the data.</typeparam>
+        /// <typeparam name="T">The type to use when serializing the data.</typeparam>
         /// <param name="jsonSerializable">The data to use.</param>
-        /// <param name="options">The <see cref="JsonSerializerOptions"/> to use when serializing to Json.</param>
+        /// <param name="options">The options to use when serializing to JSON.</param>
         ///
-        /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        [Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "<Pending>")]
+        /// <returns>A value representing the UTF-8 encoding of the JSON representation of <paramref name="jsonSerializable" />.</returns>
+        [Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "This will be part of BCL.")]
         public static BinaryData FromObjectAsJson<T>(
             T jsonSerializable,
             JsonSerializerOptions? options = default)
         {
-            using var memoryStream = new MemoryStream();
-            var buffer = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, typeof(T), options);
-            memoryStream.Write(buffer, 0, buffer.Length);
-            return new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int) memoryStream.Position));
+            byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, typeof(T), options);
+            return new BinaryData(buffer);
         }
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to a string using UTF-8.
+        /// Converts the value of this instance to a string using UTF-8.
         /// </summary>
-        /// <returns>The string representation of the <see cref="BinaryData"/> using UTF-8
-        /// to decode the bytes.</returns>
+        /// <returns>
+        /// A string from the value of this instance, using UTF-8 to decode the bytes.
+        /// </returns>
         public override string ToString()
         {
             if (MemoryMarshal.TryGetArray(
-                Bytes,
+                _bytes,
                 out ArraySegment<byte> data))
             {
-                return s_encoding.GetString(data.Array, data.Offset, data.Count);
+                return Encoding.UTF8.GetString(data.Array, data.Offset, data.Count);
             }
-            return s_encoding.GetString(Bytes.ToArray());
+            return Encoding.UTF8.GetString(_bytes.ToArray());
         }
 
         /// <summary>
@@ -194,14 +197,14 @@ namespace System
         /// </summary>
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream() =>
-            new ReadOnlyMemoryStream(Bytes);
+            new ReadOnlyMemoryStream(_bytes);
 
         /// <summary>
-        /// Gets the <see cref="BinaryData"/> as <see cref="ReadOnlyMemory{Byte}"/>.
+        /// Gets the value of this instance as bytes without any further interpretation.
         /// </summary>
-        /// <returns><see cref="BinaryData"/> as bytes.</returns>
+        /// <returns>The value of this instance as bytes without any further interpretation.</returns>
         public ReadOnlyMemory<byte> ToBytes() =>
-            Bytes;
+            _bytes;
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> to the specified type using
@@ -209,52 +212,47 @@ namespace System
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
-        /// <param name="options">The <see cref="JsonSerializerOptions"/> to use when serializing to Json.</param>
+        /// <param name="options">The <see cref="JsonSerializerOptions"/> to use when serializing to JSON.</param>
         /// <returns>The data converted to the specified type.</returns>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public T ToObjectFromJson<T>(JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            using var memoryStream = new MemoryStream();
-            ToStream().CopyTo(memoryStream);
-            return (T) JsonSerializer.Deserialize(memoryStream.ToArray(), typeof(T), options);
-
+            return (T)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options);
         }
 
         /// <summary>
-        /// Implicit conversion to <see cref="ReadOnlyMemory{Byte}"/>.
+        /// Defines an implicit conversion from a <see cref="BinaryData" /> to a <see cref="ReadOnlyMemory{Byte}"/>.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlyMemory<byte>(
             BinaryData data) =>
-            data.Bytes;
+            data._bytes;
 
         /// <summary>
-        /// Implicit conversion to <see cref="ReadOnlySpan{Byte}"/>.
+        /// Defines an implicit conversion from a <see cref="BinaryData" /> to a <see cref="ReadOnlySpan{Byte}"/>.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlySpan<byte>(
             BinaryData data) =>
-            data.Bytes.Span;
+            data._bytes.Span;
 
         /// <summary>
-        /// Two <see cref="BinaryData"/> objects are equal if the memory regions point to the same array and have the
-        /// same length. The method does not check to see if the contents are equal.
+        /// Determines whether the specified object is equal to the current object.
         /// </summary>
-        /// <param name="obj">The <see cref="BinaryData"/> to compare.</param>
-        /// <returns>true if the current instance and other are equal; otherwise, false.</returns>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>
+        /// <see langword="true" /> if the specified object is equal to the current object; otherwise, <see langword="false" />.
+        /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)
         {
-            if (obj is BinaryData data)
-            {
-                return data.Bytes.Equals(Bytes);
-            }
-            return false;
+            return ReferenceEquals(this, obj);
         }
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            Bytes.GetHashCode();
+            base.GetHashCode();
     }
 }

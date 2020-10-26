@@ -4,14 +4,13 @@
 using System;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace Azure.Core.Experimental.Tests.samples
 {
     public class BinaryDataSamples
     {
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
         public void ToFromString()
         {
             #region Snippet:BinaryDataToFromString
@@ -22,8 +21,8 @@ namespace Azure.Core.Experimental.Tests.samples
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
+
         public void ToFromBytes()
         {
             #region Snippet:BinaryDataToFromBytes
@@ -46,8 +45,7 @@ namespace Azure.Core.Experimental.Tests.samples
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
         public void ToFromStream()
         {
             #region Snippet:BinaryDataToFromStream
@@ -61,8 +59,8 @@ namespace Azure.Core.Experimental.Tests.samples
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
+
         public void ToFromCustomType()
         {
             #region Snippet:BinaryDataToFromCustomModel

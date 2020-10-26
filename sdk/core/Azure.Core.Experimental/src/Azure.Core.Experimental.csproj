@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
-    <ProjectReference Include="..\..\System.BinaryData\src\System.BinaryData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

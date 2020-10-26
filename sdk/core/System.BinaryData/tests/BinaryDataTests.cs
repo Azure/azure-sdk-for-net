@@ -5,139 +5,204 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace System.Tests
 {
     public class BinaryDataTests
     {
-        [Test]
+        [Fact]
         public void CanCreateBinaryDataFromBytes()
         {
             byte[] payload = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromBytes(payload);
-            Assert.AreEqual(payload, data.ToBytes().ToArray());
+            Assert.Equal(payload, data.ToBytes().ToArray());
 
-            MemoryMarshal.TryGetArray<byte>(payload, out var array);
-            Assert.AreSame(payload, array.Array);
+            MemoryMarshal.TryGetArray<byte>(payload, out ArraySegment<byte> array);
+            Assert.Same(payload, array.Array);
 
             // using implicit conversion
             ReadOnlyMemory<byte> bytes = data;
-            Assert.AreEqual(payload, bytes.ToArray());
+            Assert.Equal(payload, bytes.ToArray());
 
             // using implicit conversion
             ReadOnlySpan<byte> span = data;
-            Assert.AreEqual(new ReadOnlySpan<byte>(payload).ToArray(), span.ToArray());
+            Assert.Equal(payload, span.ToArray());
         }
 
-        [Test]
+        [Fact]
         public void CanCreateBinaryDataFromString()
         {
-            var payload = "some data";
-            var data = new BinaryData(payload);
-            Assert.AreEqual(payload, data.ToString());
+            string payload = "some data";
+            BinaryData data = new BinaryData(payload);
+            Assert.Equal(payload, data.ToString());
 
             data = BinaryData.FromString(payload);
-            Assert.AreEqual(payload, data.ToString());
+            Assert.Equal(payload, data.ToString());
         }
 
-        [Test]
+        [Fact]
         public void ToStringRespectsArraySegmentBoundaries()
         {
-            var payload = "pre payload post";
-            var bytes = Encoding.UTF8.GetBytes(payload);
-            var segment = new ArraySegment<byte>(bytes, 4, 7);
-            var data = BinaryData.FromBytes(segment);
-            Assert.AreEqual("payload", data.ToString());
+            string payload = "pre payload post";
+            byte[] bytes = Encoding.UTF8.GetBytes(payload);
+            ArraySegment<byte> segment = new ArraySegment<byte>(bytes, 4, 7);
+            BinaryData data = BinaryData.FromBytes(segment);
+            Assert.Equal("payload", data.ToString());
 
             data = BinaryData.FromBytes(segment.Array);
-            Assert.AreEqual("pre payload post", data.ToString());
+            Assert.Equal("pre payload post", data.ToString());
         }
 
-        [Test]
+        [Fact]
         public async Task ToStreamRespectsArraySegmentBoundaries()
         {
-            var payload = "pre payload post";
-            var bytes = Encoding.UTF8.GetBytes(payload);
-            var segment = new ArraySegment<byte>(bytes, 4, 7);
-            var data = BinaryData.FromBytes(segment);
-            var stream = data.ToStream();
-            var sr = new StreamReader(stream);
-            Assert.AreEqual("payload", await sr.ReadToEndAsync());
+            string payload = "pre payload post";
+            byte[] bytes = Encoding.UTF8.GetBytes(payload);
+            ArraySegment<byte> segment = new ArraySegment<byte>(bytes, 4, 7);
+            BinaryData data = BinaryData.FromBytes(segment);
+            Stream stream = data.ToStream();
+            StreamReader sr = new StreamReader(stream);
+            Assert.Equal("payload", await sr.ReadToEndAsync());
         }
 
-        [Test]
+        [Fact]
         public async Task CannotWriteToReadOnlyMemoryStream()
         {
-            var buffer = Encoding.UTF8.GetBytes("some data");
-            var payload = new MemoryStream(buffer);
-            var data = BinaryData.FromStream(payload);
-            var stream = data.ToStream();
-            Assert.That(
-                () => stream.Write(buffer, 0, buffer.Length),
-                Throws.InstanceOf<NotSupportedException>());
-            Assert.That(
-                async () => await stream.WriteAsync(buffer, 0, buffer.Length),
-                Throws.InstanceOf<NotSupportedException>());
-            Assert.That(
-                () => stream.WriteByte(1),
-                Throws.InstanceOf<NotSupportedException>());
-            Assert.IsFalse(stream.CanWrite);
-            var sr = new StreamReader(stream);
-            Assert.AreEqual("some data", await sr.ReadToEndAsync());
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using MemoryStream payload = new MemoryStream(buffer);
+            BinaryData data = BinaryData.FromStream(payload);
+            Stream stream = data.ToStream();
+            Assert.Throws<NotSupportedException>(() => stream.Write(buffer, 0, buffer.Length));
+            await Assert.ThrowsAsync<NotSupportedException>(() => stream.WriteAsync(buffer, 0, buffer.Length));
+            Assert.Throws<NotSupportedException>(() => stream.WriteByte(1));
+            Assert.False(stream.CanWrite);
+            StreamReader sr = new StreamReader(stream);
+            Assert.Equal("some data", await sr.ReadToEndAsync());
         }
 
-        [Test]
+        [Fact]
         public async Task CanCreateBinaryDataFromStream()
         {
-            var buffer = Encoding.UTF8.GetBytes("some data");
-            var stream = new MemoryStream(buffer);
-            var data = BinaryData.FromStream(stream);
-            Assert.AreEqual(buffer, data.ToBytes().ToArray());
-            Assert.AreEqual(stream, data.ToStream());
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using MemoryStream stream = new MemoryStream(buffer);
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            byte[] output = new byte[buffer.Length];
+            var outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int) outputStream.Length);
+            Assert.Equal(buffer, output);
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.AreEqual(buffer, data.ToBytes().ToArray());
-            Assert.AreEqual(stream, data.ToStream());
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
         }
 
-        [Test]
+        [Fact]
+        public async Task CanCreateBinaryDataFromStreamUsingBackingBuffer()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using MemoryStream stream = new MemoryStream();
+            stream.Write(buffer, 0, buffer.Length);
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            byte[] output = new byte[buffer.Length];
+            var outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+
+            stream.Position = 0;
+            data = await BinaryData.FromStreamAsync(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+        }
+
+        [Fact]
+        public async Task CanCreateBinaryDataFromNonSeekableStream()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using MemoryStream stream = new NonSeekableStream(buffer);
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            byte[] output = new byte[buffer.Length];
+            var outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+
+            stream.Position = 0;
+            data = await BinaryData.FromStreamAsync(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+        }
+
+        [Fact]
+        public async Task CanCreateBinaryDataFromFileStream()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using FileStream stream = new FileStream(Path.GetTempFileName(), FileMode.Open);
+            stream.Write(buffer, 0, buffer.Length);
+            stream.Position = 0;
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            byte[] output = new byte[buffer.Length];
+            var outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+
+            stream.Position = 0;
+            data = await BinaryData.FromStreamAsync(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+        }
+
+        [Fact]
         public async Task StartPositionOfStreamRespected()
         {
-            var buffer = Encoding.UTF8.GetBytes("some data");
-            var stream = new MemoryStream(buffer);
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            MemoryStream stream = new MemoryStream(buffer);
             long start = 4;
-            var payload = new ReadOnlyMemory<byte>(buffer, (int) start, buffer.Length - (int) start);
+            var payload = new ReadOnlyMemory<byte>(buffer, (int)start, buffer.Length - (int)start);
 
             stream.Position = start;
-            var data = BinaryData.FromStream(stream);
-            Assert.AreEqual(payload.ToArray(), data.ToBytes().ToArray());
-            Assert.AreEqual(5, data.ToStream().Length);
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(5, data.ToStream().Length);
 
             stream.Position = start;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.AreEqual(payload.ToArray(), data.ToBytes().ToArray());
-            Assert.AreEqual(5, data.ToStream().Length);
+            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(5, data.ToStream().Length);
         }
 
-        [Test]
+        [Fact]
         public void MaxStreamLengthRespected()
         {
-            var mockStream = new Mock<Stream>();
-            mockStream.Setup(s => s.CanSeek).Returns(true);
-            mockStream.Setup(s => s.Length).Returns((long)int.MaxValue + 1);
-            Assert.That(
-                () => BinaryData.FromStream(mockStream.Object),
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.Throws<ArgumentOutOfRangeException>(() => BinaryData.FromStream(new OverFlowStream()));
         }
 
-        [Test]
+        [Fact]
         public void CanCreateBinaryDataFromCustomType()
         {
-            var payload = new TestModel { A = "value", B = 5, C = true, D = null };
+            TestModel payload = new TestModel { A = "value", B = 5, C = true, D = null };
 
             AssertData(BinaryData.FromObjectAsJson(payload));
             AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
@@ -147,77 +212,191 @@ namespace System.Tests
 
             void AssertData(BinaryData data)
             {
-                var model = data.ToObjectFromJson<TestModel>();
-                Assert.AreEqual(payload.A, model.A);
-                Assert.AreEqual(payload.B, model.B);
-                Assert.AreEqual(payload.C, model.C);
-                Assert.AreEqual(payload.D, model.D);
+                TestModel model = data.ToObjectFromJson<TestModel>();
+                Assert.Equal(payload.A, model.A);
+                Assert.Equal(payload.B, model.B);
+                Assert.Equal(payload.C, model.C);
+                Assert.Equal(payload.D, model.D);
             }
         }
 
-        [Test]
+        [Fact]
         public void CanSerializeNullData()
         {
-            var data = new BinaryData(jsonSerializable: null);
-            Assert.IsNull(data.ToObjectFromJson<object>());
+            BinaryData data = new BinaryData(jsonSerializable: null);
+            Assert.Null(data.ToObjectFromJson<object>());
             data = BinaryData.FromObjectAsJson<object>(null);
-            Assert.IsNull(data.ToObjectFromJson<object>());
+            Assert.Null(data.ToObjectFromJson<object>());
         }
 
-        [Test]
-        public void CreateThrowsOnNullStream()
+        [Fact]
+        public async Task CreateThrowsOnNullStream()
         {
-            Assert.That(
-                () => BinaryData.FromStream(null),
-                Throws.InstanceOf<ArgumentNullException>());
+            Assert.Throws<ArgumentNullException>(() => BinaryData.FromStream(null));
 
-            Assert.That(
-                async () => await BinaryData.FromStreamAsync(null),
-                Throws.InstanceOf<ArgumentNullException>());
+            await Assert.ThrowsAsync<ArgumentNullException>(() => BinaryData.FromStreamAsync(null));
         }
 
-        [Test]
+        [Fact]
         public void ToObjectThrowsExceptionOnIncompatibleType()
         {
-            var payload = new TestModel { A = "value", B = 5, C = true };
-            var data = BinaryData.FromObjectAsJson(payload);
-            Assert.That(
-                () => data.ToObjectFromJson<string>(),
-                Throws.InstanceOf<Exception>());
+            TestModel payload = new TestModel { A = "value", B = 5, C = true };
+            BinaryData data = BinaryData.FromObjectAsJson(payload);
+            Assert.ThrowsAny<Exception>(() => data.ToObjectFromJson<string>());
         }
 
-        [Test]
+        [Fact]
         public void EqualsRespectsReferenceEquality()
         {
-            var payload = Encoding.UTF8.GetBytes("some data");
-            var a = BinaryData.FromBytes(payload);
-            var b = BinaryData.FromBytes(payload);
-            Assert.AreEqual(a, b);
+            byte[] payload = Encoding.UTF8.GetBytes("some data");
+            BinaryData a = BinaryData.FromBytes(payload);
+            BinaryData b = BinaryData.FromBytes(payload);
+            Assert.NotEqual(a, b);
 
-            var c = BinaryData.FromBytes(Encoding.UTF8.GetBytes("some data"));
-            Assert.AreNotEqual(a, c);
+            BinaryData c = BinaryData.FromBytes(Encoding.UTF8.GetBytes("some data"));
+            Assert.NotEqual(a, c);
 
-            Assert.AreNotEqual(a, "string data");
+            Assert.False(a.Equals("string data"));
         }
 
-        [Test]
+        [Fact]
         public void GetHashCodeWorks()
         {
-            var payload = Encoding.UTF8.GetBytes("some data");
-            var a = BinaryData.FromBytes(payload);
-            var b = BinaryData.FromBytes(payload);
-            var set = new HashSet<BinaryData>
+            byte[] payload = Encoding.UTF8.GetBytes("some data");
+            BinaryData a = BinaryData.FromBytes(payload);
+            BinaryData b = BinaryData.FromBytes(payload);
+            HashSet<BinaryData> set = new HashSet<BinaryData>
             {
                 a
             };
-            // hashcodes of a and b should match since instances use same memory.
-            Assert.IsTrue(set.Contains(b));
+            // hashcodes of a and b should not match since instances are different.
+            Assert.DoesNotContain(b, set);
 
-            var c = BinaryData.FromBytes(Encoding.UTF8.GetBytes("some data"));
+            BinaryData c = BinaryData.FromBytes(Encoding.UTF8.GetBytes("some data"));
             // c should have a different hash code
-            Assert.IsFalse(set.Contains(c));
+            Assert.DoesNotContain(c, set);
             set.Add(c);
-            Assert.IsTrue(set.Contains(c));
+            Assert.Contains(c, set);
+        }
+
+        [Fact]
+        public async Task CanRead()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+
+            var read = new byte[buffer.Length];
+            stream.Read(read, 0, buffer.Length);
+            Assert.Equal(buffer, read);
+
+            read = new byte[buffer.Length];
+            stream.Position = 0;
+            await stream.ReadAsync(read, 0, buffer.Length);
+            Assert.Equal(buffer, read);
+
+            // no-op as we are at end of stream
+            stream.Read(read, 0, buffer.Length);
+            await stream.ReadAsync(read, 0, buffer.Length);
+        }
+
+        [Fact]
+        public async Task CanReadPartial()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+            var length = 4;
+            var read = new byte[length];
+            stream.Read(read, 0, length);
+            Assert.Equal(buffer.AsMemory().Slice(0, length).ToArray(), read.AsMemory().Slice(0, length).ToArray());
+
+            read = new byte[length];
+            stream.Position = 0;
+            await stream.ReadAsync(read, 0, length);
+            Assert.Equal(buffer.AsMemory().Slice(0, length).ToArray(), read.AsMemory().Slice(0, length).ToArray());
+
+            // no-op as we are at end of stream
+            stream.Read(read, 0, length);
+            await stream.ReadAsync(read, 0, length);
+            Assert.Equal(-1, stream.ReadByte());
+        }
+
+        [Fact]
+        public void ReadAsyncRespectsCancellation()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+
+            var read = new byte[buffer.Length];
+            var cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            var task = stream.ReadAsync(read, 0, buffer.Length, cts.Token);
+            Assert.True(task.IsCanceled);
+
+            cts = new CancellationTokenSource();
+            task = stream.ReadAsync(read, 0, buffer.Length, cts.Token);
+            Assert.False(task.IsCanceled);
+            Assert.True(task.IsCompleted);
+        }
+
+        [Fact]
+        public async Task CanSeek()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+
+            stream.Seek(5, SeekOrigin.Begin);
+            Assert.Equal(buffer[5], stream.ReadByte());
+            stream.Seek(1, SeekOrigin.Current);
+            Assert.Equal(buffer[7], stream.ReadByte());
+            stream.Seek(-2, SeekOrigin.End);
+            Assert.Equal(buffer.Length - 2, stream.Position);
+            Assert.Equal(buffer[buffer.Length - 2], stream.ReadByte());
+            stream.Seek(-2, SeekOrigin.End);
+            var read = new byte[buffer.Length - stream.Position];
+            await stream.ReadAsync(read, 0, read.Length);
+            Assert.Equal(
+                new ReadOnlyMemory<byte>(buffer, buffer.Length - 2, 2).ToArray(),
+                read);
+        }
+
+        [Fact]
+        public void ValidatesSeekArguments()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+
+            Assert.Throws<IOException>(() => stream.Seek(-1, SeekOrigin.Begin));
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => stream.Seek((long)int.MaxValue + 1, SeekOrigin.Begin));
+            Assert.Throws<ArgumentOutOfRangeException>(() => stream.Seek(0, (SeekOrigin)3));
+        }
+
+
+        [Fact]
+        public async Task ValidatesReadArguments()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+            stream.Seek(3, SeekOrigin.Begin);
+            var read = new byte[buffer.Length - stream.Position];
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => stream.ReadAsync(read, 0, buffer.Length));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => stream.ReadAsync(null, 0, buffer.Length));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => stream.ReadAsync(read, -1, read.Length));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => stream.ReadAsync(read, 0, -1));
+            await stream.ReadAsync(read, 0, read.Length);
+            Assert.Equal(
+                new ReadOnlyMemory<byte>(buffer, 3, buffer.Length - 3).ToArray(),
+                read);
+        }
+
+        [Fact]
+        public void ValidatesPositionValue()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new BinaryData(buffer).ToStream();
+            Assert.Throws<ArgumentOutOfRangeException>(() => stream.Position = -1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => stream.Position = (long)int.MaxValue + 1);
         }
 
         private class TestModel
@@ -226,6 +405,17 @@ namespace System.Tests
             public int B { get; set; }
             public bool C { get; set; }
             public object D { get; set; }
+        }
+
+        private class OverFlowStream : MemoryStream
+        {
+            public override long Length => (long)int.MaxValue + 1;
+        }
+
+        private class NonSeekableStream : MemoryStream
+        {
+            public NonSeekableStream(byte[] buffer) : base(buffer) { }
+            public override bool CanSeek => false;
         }
     }
 }
