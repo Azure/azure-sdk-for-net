@@ -106,17 +106,15 @@ The following code assumes you have acquired your connection string (you can do 
 Legacy (v11)
 ```csharp
 string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
-// Check whether the connection string can be parsed.
+// Create a client that can authenticate with a connection string, using a try pattern.
 CloudStorageAccount storageAccount;
-if (CloudStorageAccount.TryParse(storageConnectionString, out storageAccount))
+if (!CloudStorageAccount.TryParse(storageConnectionString, out storageAccount))
 {
-    // If the connection string is valid, proceed with operations against Blob
-    // storage here.
+    // handle failure
 }
-else
-{
-    // Otherwise, user needs to define the environment variable.
-}
+CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+// Make a service request to verify we've successfully authenticated
+await blobClient.GetServicePropertiesAsync();
 ```
 
 v12
@@ -126,6 +124,16 @@ string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONN
 BlobServiceClient service = new BlobServiceClient(connectionString);
 // Make a service request to verify we've successfully authenticated
 await service.GetPropertiesAsync();
+```
+
+You can also directly get a blob client with your connection string, instead of going through a service and container client to get to your desired blob. You just need to provide the container and blob names alongside the connection string.
+
+```csharp
+string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
+string containerName; // name of the container the desired blob exists in
+string blobName; // name of the desired blob
+
+BlobClient blob = new BlobClient(connectionString, containerName, blobName);
 ```
 
 ### Shared Access Policies
