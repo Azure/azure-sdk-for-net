@@ -304,7 +304,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 
 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
+3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
 6. **MANDATORY**: Add or update tests for the newly generated code.
@@ -353,7 +353,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
    | PackageReleaseNotes |
    |                     |
 
-> PackageReleaseNotes are important because this information is displayed on www.nuget.org when your nuget package is published
+> PackageReleaseNotes are important because this information is displayed on https://www.nuget.org when your nuget package is published
 
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`

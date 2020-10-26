@@ -38,7 +38,7 @@ complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https
 
 ## Getting Started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
 Please review [Get started with Azure Key Vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started) if you are not familiar with Azure Key Vault.
 
