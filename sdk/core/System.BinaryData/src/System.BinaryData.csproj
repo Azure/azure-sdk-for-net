@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Experimental types that might eventually move to Azure.Core</Description>
-    <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
+    <Description>Contains the BinaryData which is useful for converting between string, stream, Json, and bytes.</Description>
+    <AssemblyTitle>System.BinaryData</AssemblyTitle>
     <Version>1.0.0</Version>
-    <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
