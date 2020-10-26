@@ -1432,6 +1432,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// Note that there may be a delay between before changes in your instance are reflected in queries.
+        /// For more details on query limitations, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/how-to-query-graph#query-limitations">Query limitations</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -1508,6 +1511,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// Note that there may be a delay between before changes in your instance are reflected in queries.
+        /// For more details on query limitations, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/how-to-query-graph#query-limitations">Query limitations</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
