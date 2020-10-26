@@ -323,24 +323,39 @@ BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
+This example uploads from given file paths, but note that v12 also conatins an overloads for uploading from a readable `Stream` instance.
+
 ### Downloading Blobs from a Container
 
 v11
 ```csharp
-// Assumes you have already created a reference to the blob via blobClient
+// Assumes container and blob already exist on the service.
+// blobName should be the name of the blob on the service
 // downloadFilePath should be the path to the intended file to download the blob to
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
 await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 ```
 
 v12
+
 ```csharp
-// Assumes you have already created a reference to the blob via blobClient
+// Assumes container and blob already exist on the service.
+// blobName should be the name of the blob on the service
 // downloadFilePath should be the path to the intended file to download the blob to
-BlobDownloadInfo download = await blobClient.DownloadAsync();
-using (FileStream downloadFileStream = File.OpenWrite(downloadFilePath))
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+await blobClient.DownloadTo(downloadFilePath);
+```
+
+This example uploads from given file paths, but note that v12 also conatins an overloads for downloading to a writable `Stream` instance.
+
+v12 also contains overloads for reading the download stream directly, with smart retries abstracted into the stream implementation. Remember to dispose of your stream when finished, either through `Stream.Close()` or (as in this example) through a disposable pattern. Note that this is the only mechanism in v12 to download a specific range of a blob instead of the whole blob.
+
+```csharp
+// assume you already have your properly configured BlobClient
+BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
+using (Stream downloadStream = download.Content)
 {
-    await download.Content.CopyToAsync(downloadFileStream);
-    downloadFileStream.Close();
+    // consume stream
 }
 ```
 
