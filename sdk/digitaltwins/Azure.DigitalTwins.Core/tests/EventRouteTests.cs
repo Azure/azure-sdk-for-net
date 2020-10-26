@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
-            Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
+            Response createEventRouteResponse = await client.CreateOrReplaceEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
             createEventRouteResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
             // Test GetEventRoute
@@ -102,7 +102,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
-            Func<Task> act = async () => await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
+            Func<Task> act = async () => await client.CreateOrReplaceEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
             act.Should().Throw<RequestFailedException>()
                 .And.Status.Should().Be((int)HttpStatusCode.BadRequest);
         }

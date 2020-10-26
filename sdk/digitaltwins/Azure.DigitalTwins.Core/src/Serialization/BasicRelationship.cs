@@ -31,7 +31,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// };
     ///
     /// Response&lt;BasicRelationship&gt; createBuildingFloorRelationshipResponse = await client
-    ///     .CreateRelationshipAsync&lt;BasicRelationship&gt;(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, buildingFloorRelationshipPayload);
+    ///     .CreateOrReplaceRelationshipAsync&lt;BasicRelationship&gt;(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, buildingFloorRelationshipPayload);
     /// Console.WriteLine($&quot;Created a digital twin relationship &apos;{createBuildingFloorRelationshipResponse.Value.Id}&apos; &quot; +
     ///     $&quot;from twin &apos;{createBuildingFloorRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createBuildingFloorRelationshipResponse.Value.TargetId}&apos;.&quot;);
     /// </code>

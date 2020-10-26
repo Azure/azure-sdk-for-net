@@ -58,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Metadata = { ModelId = sampleBuildingModelId }
             };
 
-            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>("buildingTwinId", buildingDigitalTwin);
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>("buildingTwinId", buildingDigitalTwin);
             Console.WriteLine($"Created twin '{createDigitalTwinResponse.Value.Id}'.");
 
             // Create a floor digital.
@@ -68,7 +68,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Metadata = { ModelId = sampleFloorModelId }
             };
 
-            Response<BasicDigitalTwin> createFloorDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>("floorTwinId", floorDigitalTwin);
+            Response<BasicDigitalTwin> createFloorDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>("floorTwinId", floorDigitalTwin);
             Console.WriteLine($"Created twin '{createFloorDigitalTwinResponse.Value.Id}'.");
 
             // Create a relationship between building and floor using the BasicRelationship serialization helper.
@@ -89,7 +89,7 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
-                .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+                .CreateOrReplaceRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
             Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
                 $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             Response<CustomRelationship> createCustomRelationshipResponse = await client
-                .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+                .CreateOrReplaceRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
             Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
                 $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 
