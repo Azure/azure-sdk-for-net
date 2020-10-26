@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
 using Azure.DigitalTwins.Core.Samples;
-using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 

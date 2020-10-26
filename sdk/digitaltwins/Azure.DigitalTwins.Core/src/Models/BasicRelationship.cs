@@ -4,14 +4,20 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.DigitalTwins.Core.Serialization
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// Although relationships have a user-defined schema, these properties should exist on every instance. This is
     /// useful to use as a base class to ensure your custom relationships have the necessary properties.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// This helper class will only work with <see cref="System.Text.Json"/>. When used with the <see cref="Azure.Core.Serialization.ObjectSerializer"/>,
+    /// parameter to <see cref="DigitalTwinsClientOptions" /> it will only work with the default (<see cref="Azure.Core.Serialization.JsonObjectSerializer"/>).
+    /// </para>
+    /// <para>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </para>
     /// </remarks>
     /// <example>
     /// Here's an example of how to use the BasicRelationship helper class to serialize and create a relationship from a building digital twin to a floor digital twin.
@@ -51,34 +57,27 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// }
     /// </code>
     /// </example>
-    public class BasicRelationship
+    public class BasicRelationship : IDigitalTwinRelationship
     {
-        /// <summary>
-        /// The unique Id of the relationship. This field is present on every relationship.
-        /// </summary>
-        [JsonPropertyName("$relationshipId")]
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipId)]
         public string Id { get; set; }
 
-        /// <summary>
-        /// The unique Id of the target digital twin. This field is present on every relationship.
-        /// </summary>
-        [JsonPropertyName("$targetId")]
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipTargetId)]
         public string TargetId { get; set; }
 
-        /// <summary>
-        /// The unique Id of the source digital twin. This field is present on every relationship.
-        /// </summary>
-        [JsonPropertyName("$sourceId")]
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipSourceId)]
         public string SourceId { get; set; }
 
-        /// <summary>
-        /// The name of the relationship, which defines the type of link (e.g. Contains). This field is present on every relationship.
-        /// </summary>
-        [JsonPropertyName("$relationshipName")]
+        /// <inheritdoc />
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipName)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Additional properties defined in the model. This field will contain any properties of the relationship that are not already defined by the other strong types of this class.
+        /// Additional, custom properties defined in the DTDL model.
+        /// This property will contain any relationship properties that are not already defined in this class.
         /// </summary>
         [JsonExtensionData]
         public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();

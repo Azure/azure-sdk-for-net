@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.DigitalTwins.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Tests

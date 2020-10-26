@@ -1,5 +1,31 @@
 namespace Azure.DigitalTwins.Core
 {
+    public partial class BasicDigitalTwin
+    {
+        public BasicDigitalTwin() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
+        public string ETag { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
+        public string Id { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
+        public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
+    }
+    public partial class BasicRelationship : Azure.DigitalTwins.Core.IDigitalTwinRelationship
+    {
+        public BasicRelationship() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipId")]
+        public string Id { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipName")]
+        public string Name { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$sourceId")]
+        public string SourceId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
+        public string TargetId { get { throw null; } set { } }
+    }
     public partial class CreateDigitalTwinOptions
     {
         public CreateDigitalTwinOptions() { }
@@ -58,6 +84,20 @@ namespace Azure.DigitalTwins.Core
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
+    public partial class DigitalTwinComponent
+    {
+        public DigitalTwinComponent() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
+        public object Metadata { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
+    }
+    public partial class DigitalTwinMetadata
+    {
+        public DigitalTwinMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
+        public string ModelId { get { throw null; } set { } }
+    }
     public partial class DigitalTwinsClient
     {
         protected DigitalTwinsClient() { }
@@ -70,7 +110,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Azure.Response CreateOrReplaceEventRoute(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<T> CreateOrReplaceRelationship<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<T> CreateOrReplaceRelationship<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.DigitalTwins.Core.IDigitalTwinRelationship { throw null; }
         public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDigitalTwin(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -95,10 +135,10 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData>> GetModelAsync(string modelId, Azure.DigitalTwins.Core.GetModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.DigitalTwins.Core.DigitalTwinsModelData> GetModels(Azure.DigitalTwins.Core.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.DigitalTwinsModelData> GetModelsAsync(Azure.DigitalTwins.Core.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<T>> GetRelationshipAsync<T>(string digitalTwinId, string relationshipId, Azure.DigitalTwins.Core.GetRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<T>> GetRelationshipAsync<T>(string digitalTwinId, string relationshipId, Azure.DigitalTwins.Core.GetRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.DigitalTwins.Core.IDigitalTwinRelationship { throw null; }
         public virtual Azure.Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, Azure.DigitalTwins.Core.GetRelationshipsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, Azure.DigitalTwins.Core.GetRelationshipsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<T> GetRelationship<T>(string digitalTwinId, string relationshipId, Azure.DigitalTwins.Core.GetRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<T> GetRelationship<T>(string digitalTwinId, string relationshipId, Azure.DigitalTwins.Core.GetRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.DigitalTwins.Core.IDigitalTwinRelationship { throw null; }
         public virtual Azure.Response PublishComponentTelemetry(string digitalTwinId, string componentName, string messageId, string payload, Azure.DigitalTwins.Core.PublishComponentTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, Azure.DigitalTwins.Core.PublishComponentTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishTelemetry(string digitalTwinId, string messageId, string payload, Azure.DigitalTwins.Core.PublishTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -128,6 +168,17 @@ namespace Azure.DigitalTwins.Core
         public string EndpointName { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Id { get { throw null; } }
+    }
+    public static partial class DigitalTwinsJsonPropertyNames
+    {
+        public const string DigitalTwinETag = "$etag";
+        public const string DigitalTwinId = "$dtId";
+        public const string DigitalTwinMetadata = "$metadata";
+        public const string MetadataModel = "$model";
+        public const string RelationshipId = "$relationshipId";
+        public const string RelationshipName = "$relationshipName";
+        public const string RelationshipSourceId = "$sourceId";
+        public const string RelationshipTargetId = "$targetId";
     }
     public partial class DigitalTwinsModelData
     {
@@ -196,6 +247,13 @@ namespace Azure.DigitalTwins.Core
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
+    public partial interface IDigitalTwinRelationship
+    {
+        string Id { get; set; }
+        string Name { get; set; }
+        string SourceId { get; set; }
+        string TargetId { get; set; }
+    }
     public partial class IncomingRelationship
     {
         internal IncomingRelationship() { }
@@ -248,70 +306,5 @@ namespace Azure.DigitalTwins.Core
         public string IfMatch { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
-    }
-}
-namespace Azure.DigitalTwins.Core.Serialization
-{
-    public partial class BasicDigitalTwin
-    {
-        public BasicDigitalTwin() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
-        public string ETag { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
-        public string Id { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
-    }
-    public partial class BasicRelationship
-    {
-        public BasicRelationship() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipId")]
-        public string Id { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipName")]
-        public string Name { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$sourceId")]
-        public string SourceId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
-        public string TargetId { get { throw null; } set { } }
-    }
-    public partial class ComponentMetadata
-    {
-        public ComponentMetadata() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> WritableProperties { get { throw null; } }
-    }
-    public partial class DigitalTwinMetadata
-    {
-        public DigitalTwinMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
-        public string ModelId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> WritableProperties { get { throw null; } }
-    }
-    public partial class ModelProperties
-    {
-        public ModelProperties() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.Serialization.ComponentMetadata Metadata { get { throw null; } }
-    }
-    public partial class WritableProperty
-    {
-        public WritableProperty() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("ackCode")]
-        public int AckCode { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("ackDescription")]
-        public string AckDescription { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("ackVersion")]
-        public int AckVersion { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("desiredValue")]
-        public object DesiredValue { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("desiredVersion")]
-        public int DesiredVersion { get { throw null; } set { } }
     }
 }

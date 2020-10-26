@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 
@@ -61,11 +60,12 @@ namespace Azure.DigitalTwins.Core.Samples
                     // component
                     {
                         "Component1",
-                        new ModelProperties
+                        new DigitalTwinComponent
                         {
                             // component properties
-                            CustomProperties =
+                            Properties =
                             {
+                                { DigitalTwinsJsonPropertyNames.MetadataModel, componentModelId },
                                 { "ComponentProp1", "Component value 1" },
                                 { "ComponentProp2", 123 },
                             },
@@ -122,7 +122,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
-                }
+                },
             };
             Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
             Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");

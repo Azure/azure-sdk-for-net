@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.DigitalTwins.Core.Serialization
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// Properties on a component that adhere to a specific model.
@@ -12,18 +12,19 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class ModelProperties
+    public class DigitalTwinComponent
     {
         /// <summary>
-        /// Information about the model a component conforms to. This field is present on every digital twin.
+        /// The metadata property, required on a component to identify as one.
         /// </summary>
-        [JsonPropertyName("$metadata")]
-        public ComponentMetadata Metadata { get; internal set; } = new ComponentMetadata();
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
+        public object Metadata { get; set; } = new object();
 
         /// <summary>
-        /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
+        /// Additional custom, properties of the digital twin.
+        /// This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> CustomProperties { get; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
     }
 }
