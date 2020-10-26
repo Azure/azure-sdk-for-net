@@ -17,25 +17,20 @@ namespace Microsoft.Azure.WebJobs.Host
         /// </summary>
         public BlobsOptions()
         {
-            CentralizedPoisonQueue = false;
+            // TODO
+            MaxDegreeOfParallelism = 1;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a single centralized
-        /// poison queue for poison blobs should be used (in the primary
-        /// storage account) or whether the poison queue for a blob triggered
-        /// function should be co-located with the target blob container.
-        /// This comes into play only when using multiple storage accounts via
-        /// <see cref="StorageAccountAttribute"/>. The default is false.
         /// </summary>
-        public bool CentralizedPoisonQueue { get; set; }
+        public int MaxDegreeOfParallelism { get; set; }
 
         /// <inheritdoc/>
         public string Format()
         {
             JObject options = new JObject
             {
-                { nameof(CentralizedPoisonQueue), CentralizedPoisonQueue }
+                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism }
             };
 
             return options.ToString(Formatting.Indented);

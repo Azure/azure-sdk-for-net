@@ -109,18 +109,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     _queueOptions, _exceptionHandler, _loggerFactory, sharedBlobListener.BlobWritterWatcher, _functionDescriptor));
             var queueListener = new BlobListener(sharedBlobQueueListener);
 
-            // determine which client to use for the poison queue
+            // the client to use for the poison queue
             // by default this should target the same storage account
             // as the blob container we're monitoring
             var poisonQueueClient = targetQueueClient;
-            if (
-                // _dataAccount.Type != StorageAccountType.GeneralPurpose || $$$
-                _blobsOptions.CentralizedPoisonQueue)
-            {
-                // use the primary storage account if the centralize flag is true,
-                // or if the target storage account doesn't support queues
-                poisonQueueClient = primaryQueueClient;
-            }
 
             // Register our function with the shared blob queue listener
             RegisterWithSharedBlobQueueListenerAsync(sharedBlobQueueListener, targetBlobClient, poisonQueueClient);
