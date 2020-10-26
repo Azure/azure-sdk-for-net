@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the mined opinions of a sentence. This is only returned if
         /// <see cref="AdditionalSentimentAnalyses.OpinionMining"/> is set in <see cref="AnalyzeSentimentOptions.AdditionalSentimentAnalyses"/>.
         /// </summary>
-        public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
+        public IReadOnlyCollection<MinedOpinion> Opinions { get; }
 
         /// <summary>
         /// Gets the starting position (in UTF-16 code units) for the matching text in the sentence.
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (SentenceAspect aspects in sentence.Aspects)
             {
-                var opinions = new List<OpinionSentiment>();
+                var opinions = new List<OpinionDescriptionSentiment>();
                 foreach (AspectRelation relation in aspects.Relations)
                 {
                     if (relation.RelationType == AspectRelationType.Opinion)
@@ -78,14 +78,14 @@ namespace Azure.AI.TextAnalytics
                         opinions.Add(ResolveOpinionReference(allSentences, relation.Ref));
                     }
                 }
-                minedOpinions.Add(new MinedOpinion(new AspectSentiment(aspects), opinions));
+                minedOpinions.Add(new MinedOpinion(new OpinionTargetSentiment(aspects), opinions));
             }
 
             return minedOpinions;
         }
 
         private static Regex _opinionRegex = new Regex(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/opinions/(?<opinionIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-        internal static OpinionSentiment ResolveOpinionReference(IReadOnlyList<SentenceSentimentInternal> sentences, string reference)
+        internal static OpinionDescriptionSentiment ResolveOpinionReference(IReadOnlyList<SentenceSentimentInternal> sentences, string reference)
         {
             // Example: the following should result in sentenceIndex = 2, opinionIndex = 1. There will not be cases where sentences from other documents are referenced.
             // "#/documents/0/sentences/2/opinions/1"
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (opinionIndex < sentences[sentenceIndex].Opinions.Count)
                     {
-                        return new OpinionSentiment(sentences[sentenceIndex].Opinions[opinionIndex]);
+                        return new OpinionDescriptionSentiment(sentences[sentenceIndex].Opinions[opinionIndex]);
                     }
                 }
             }

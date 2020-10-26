@@ -19,10 +19,11 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
+
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var documents = new List<string>
+            var reviews = new List<string>
             {
                 "The food and service were unacceptable, but the concierge were nice.",
                 "The rooms were beautiful. The AC was good and quiet.",
@@ -33,33 +34,33 @@ namespace Azure.AI.TextAnalytics.Samples
                 "We changed rooms as the toilet smelled."
             };
 
-            AnalyzeSentimentResultCollection reviews = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            AnalyzeSentimentResultCollection analyzedReviews = await client.AnalyzeSentimentBatchAsync(reviews, options: new AnalyzeSentimentOptions() { MineOpinions = true });
 
-            Dictionary<string, int> complaints = GetComplaint(reviews);
+            Dictionary<string, int> complaintTargets = GetNegativeOpinionTargets(analyzedReviews);
 
-            var negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
-            Console.WriteLine($"Alert! major complaint is *{negativeAspect}*");
+            var negativeOpinionTarget = complaintTargets.Aggregate((a, b) => a.Value > b.Value ? a : b).Key;
+            Console.WriteLine($"Alert! major complaint target is *{negativeOpinionTarget}*");
             Console.WriteLine();
-            Console.WriteLine("---All complaints:");
-            foreach (KeyValuePair<string, int> complaint in complaints)
+            Console.WriteLine("---All complaint targets:");
+            foreach (KeyValuePair<string, int> complaintTarget in complaintTargets)
             {
-                Console.WriteLine($"   {complaint.Key}, {complaint.Value}");
+                Console.WriteLine($"   OpinionTarget: {complaintTarget.Key}, Number of negative descriptions: {complaintTarget.Value}");
             }
         }
 
-        private Dictionary<string, int> GetComplaint(AnalyzeSentimentResultCollection reviews)
+        private static Dictionary<string, int> GetNegativeOpinionTargets(AnalyzeSentimentResultCollection reviews)
         {
             var complaints = new Dictionary<string, int>();
             foreach (AnalyzeSentimentResult review in reviews)
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
                 {
-                    foreach (MinedOpinion minedOpinion in sentence.MinedOpinions)
+                    foreach (MinedOpinion opinion in sentence.Opinions)
                     {
-                        if (minedOpinion.Aspect.Sentiment == TextSentiment.Negative)
+                        if (opinion.Target.Sentiment == TextSentiment.Negative)
                         {
-                            complaints.TryGetValue(minedOpinion.Aspect.Text, out var value);
-                            complaints[minedOpinion.Aspect.Text] = value + 1;
+                            complaints.TryGetValue(opinion.Target.Text, out var value);
+                            complaints[opinion.Target.Text] = value + 1;
                         }
                     }
                 }

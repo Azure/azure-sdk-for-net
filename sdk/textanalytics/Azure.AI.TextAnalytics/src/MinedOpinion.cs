@@ -12,19 +12,19 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct MinedOpinion
     {
-        internal MinedOpinion(AspectSentiment aspect, IReadOnlyList<OpinionSentiment> opinions)
+        internal MinedOpinion(OpinionTargetSentiment aspect, IReadOnlyList<OpinionDescriptionSentiment> opinions)
         {
-            Aspect = aspect;
-            Opinions = new List<OpinionSentiment>(opinions);
+            Target = aspect;
+            Descriptions = new List<OpinionDescriptionSentiment>(opinions);
         }
 
         /// <summary>
         /// Get the aspect in text, such as the attributes of products or services.
         /// </summary>
-        public AspectSentiment Aspect { get; }
+        public OpinionTargetSentiment Target { get; }
         /// <summary>
         /// The list of opinions that are related to the aspect.
         /// </summary>
-        public IReadOnlyCollection<OpinionSentiment> Opinions { get; }
+        public IReadOnlyCollection<OpinionDescriptionSentiment> Descriptions { get; }
     }
 }

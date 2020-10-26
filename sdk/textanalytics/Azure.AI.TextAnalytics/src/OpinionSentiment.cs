@@ -11,11 +11,11 @@ namespace Azure.AI.TextAnalytics
     /// For example, in the sentence "The food is good", the opinion of the
     /// aspect 'food' is 'good'.
     /// </summary>
-    public readonly struct OpinionSentiment
+    public readonly struct OpinionDescriptionSentiment
     {
         private const double _neutralValue = 0d;
 
-        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset)
+        internal OpinionDescriptionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics
             Offset = offset;
         }
 
-        internal OpinionSentiment(SentenceOpinion opinion)
+        internal OpinionDescriptionSentiment(SentenceOpinion opinion)
         {
             _ = opinion ?? throw new ArgumentNullException(nameof(opinion));
 

@@ -13,11 +13,11 @@ namespace Azure.AI.TextAnalytics
     /// For example in "The food at Hotel Foo is good", "food" is an aspect of
     /// "Hotel Foo".
     /// </summary>
-    public readonly struct AspectSentiment
+    public readonly struct OpinionTargetSentiment
     {
         private const double _neutralValue = 0d;
 
-        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
+        internal OpinionTargetSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
         {
             Sentiment = sentiment;
             Text = text;
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
             Offset = offset;
         }
 
-        internal AspectSentiment(SentenceAspect sentenceAspect)
+        internal OpinionTargetSentiment(SentenceAspect sentenceAspect)
         {
             _ = sentenceAspect ?? throw new ArgumentNullException(nameof(sentenceAspect));
 
