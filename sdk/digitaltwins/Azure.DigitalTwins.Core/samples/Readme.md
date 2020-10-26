@@ -131,7 +131,7 @@ var basicTwin = new BasicDigitalTwin
     Id = basicDtId,
     // model Id of digital twin
     Metadata = { ModelId = modelId },
-    CustomProperties =
+    Properties =
     {
         // digital twin properties
         { "Prop1", "Value1" },
@@ -190,13 +190,13 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+    string component1RawText = ((JsonElement)basicDt.Properties["Component1"]).GetRawText();
     IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
+        $"Prop1: {basicDt.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.Properties["Prop2"]}\n\t" +
         $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
@@ -315,7 +315,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     SourceId = "buildingTwinId",
     TargetId = "floorTwinId",
     Name = "contains",
-    CustomProperties =
+    Properties =
     {
         { "Prop1", "Prop1 value" },
         { "Prop2", 6 }
@@ -360,8 +360,8 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 {
     BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-        $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+        $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicRelationship.Properties["Prop2"]}");
 }
 ```
 
@@ -387,8 +387,8 @@ await foreach (var relationshipJson in relationships)
     BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
-        $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {relationship.CustomProperties["Prop2"]}");
+        $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {relationship.Properties["Prop2"]}");
 }
 ```
 

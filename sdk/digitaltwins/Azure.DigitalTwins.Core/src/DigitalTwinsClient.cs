@@ -538,8 +538,8 @@ namespace Azure.DigitalTwins.Core
         ///     BasicRelationship relationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(relationshipJson);
         ///     Console.WriteLine($&quot;Retrieved relationship &apos;{relationship.Id}&apos; with source {relationship.SourceId}&apos; and &quot; +
         ///         $&quot;target {relationship.TargetId}.\n\t&quot; +
-        ///         $&quot;Prop1: {relationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
-        ///         $&quot;Prop2: {relationship.CustomProperties[&quot;Prop2&quot;]}&quot;);
+        ///         $&quot;Prop1: {relationship.Properties[&quot;Prop1&quot;]}\n\t&quot; +
+        ///         $&quot;Prop2: {relationship.Properties[&quot;Prop2&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>

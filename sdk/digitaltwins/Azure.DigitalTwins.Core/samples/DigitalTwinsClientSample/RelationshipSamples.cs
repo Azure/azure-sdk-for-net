@@ -81,7 +81,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 SourceId = "buildingTwinId",
                 TargetId = "floorTwinId",
                 Name = "contains",
-                CustomProperties =
+                Properties =
                 {
                     { "Prop1", "Prop1 value" },
                     { "Prop2", 6 }
@@ -106,8 +106,8 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
                 Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-                    $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+                    $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+                    $"Prop2: {basicRelationship.Properties["Prop2"]}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetBasicRelationship
@@ -160,8 +160,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                 Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
                     $"target {relationship.TargetId}.\n\t" +
-                    $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {relationship.CustomProperties["Prop2"]}");
+                    $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+                    $"Prop2: {relationship.Properties["Prop2"]}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetAllRelationships

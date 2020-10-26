@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     Id = basicDtId,
     ///     // model Id of digital twin
     ///     Metadata = { ModelId = modelId },
-    ///     CustomProperties =
+    ///     Properties =
     ///     {
     ///         // digital twin properties
     ///         { &quot;Prop1&quot;, &quot;Value1&quot; },
@@ -57,13 +57,13 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
     ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    ///     string component1RawText = ((JsonElement)basicDt.CustomProperties[&quot;Component1&quot;]).GetRawText();
+    ///     string component1RawText = ((JsonElement)basicDt.Properties[&quot;Component1&quot;]).GetRawText();
     ///     IDictionary&lt;string, object&gt; component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
     ///
     ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
-    ///         $&quot;Prop1: {basicDt.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
-    ///         $&quot;Prop2: {basicDt.CustomProperties[&quot;Prop2&quot;]}\n\t&quot; +
+    ///         $&quot;Prop1: {basicDt.Properties[&quot;Prop1&quot;]}\n\t&quot; +
+    ///         $&quot;Prop2: {basicDt.Properties[&quot;Prop2&quot;]}\n\t&quot; +
     ///         $&quot;ComponentProp1: {component1[&quot;ComponentProp1&quot;]}\n\t&quot; +
     ///         $&quot;ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
     /// }
@@ -93,6 +93,6 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> CustomProperties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
     }
 }

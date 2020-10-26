@@ -255,24 +255,24 @@ namespace Azure.DigitalTwins.Core.Serialization
     public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
         public string ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
         public BasicRelationship() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipName")]
         public string Name { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$sourceId")]
         public string SourceId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
