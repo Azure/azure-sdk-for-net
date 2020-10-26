@@ -4716,5 +4716,123 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
             Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
         }
+
+        [Test]
+        public async Task GetPathsAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            AsyncPageable<PathItem> response = directory.GetPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+        }
+
+        [Test]
+        public async Task GetPathsAsync_Recursive()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            AsyncPageable<PathItem> response = directory.GetPathsAsync(
+                recursive: true);
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(PathNames.Length, paths.Count);
+            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
+            Assert.AreEqual($"{directoryName}/baz/bar", paths[2].Name);
+            Assert.AreEqual($"{directoryName}/baz/bar/foo", paths[3].Name);
+            Assert.AreEqual($"{directoryName}/baz/foo", paths[4].Name);
+            Assert.AreEqual($"{directoryName}/baz/foo/bar", paths[5].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[6].Name);
+            Assert.AreEqual($"{directoryName}/foo/bar", paths[7].Name);
+            Assert.AreEqual($"{directoryName}/foo/foo", paths[8].Name);
+        }
+
+        [Test]
+        public async Task GetPathsAsync_Upn()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            AsyncPageable<PathItem> response = directory.GetPathsAsync(
+                userPrincipalName: true);
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
+            Assert.IsNotNull(paths[0].Group);
+            Assert.IsNotNull(paths[0].Owner);
+
+            Assert.AreEqual($"{directoryName}/bar", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", paths[1].Name);
+            Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetPathsAsync_MaxResults()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            await SetUpDirectoryForListing(directory);
+
+            // Act
+            Page<PathItem> page = await directory.GetPathsAsync().AsPages(pageSizeHint: 2).FirstAsync();
+
+            // Assert
+            Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual($"{directoryName}/bar", page.Values[0].Name);
+            Assert.AreEqual($"{directoryName}/baz", page.Values[1].Name);
+        }
+
+        [Test]
+        public async Task GetPathsAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.GetPathsAsync().ToListAsync(),
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+        }
+
+        private async Task SetUpDirectoryForListing(DataLakeDirectoryClient directoryClient)
+        {
+            string[] pathNames = PathNames;
+            DataLakeDirectoryClient[] subDirectories = new DataLakeDirectoryClient[pathNames.Length];
+
+            // Upload directories
+            for (var i = 0; i < pathNames.Length; i++)
+            {
+                DataLakeDirectoryClient directory = InstrumentClient(directoryClient.GetSubDirectoryClient(pathNames[i]));
+                subDirectories[i] = directory;
+                await directory.CreateIfNotExistsAsync();
+            }
+        }
     }
 }

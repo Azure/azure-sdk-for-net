@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeedSchema
     {
-        private IList<MetricDimension> _dimensionColumns;
+        private IList<DataFeedDimension> _dimensionColumns;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedSchema"/> class.
@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(metricColumns, nameof(metricColumns));
 
             MetricColumns = metricColumns;
-            DimensionColumns = new ChangeTrackingList<MetricDimension>();
+            DimensionColumns = new ChangeTrackingList<DataFeedDimension>();
         }
 
         internal DataFeedSchema(DataFeedDetail dataFeedDetail)
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// monitored in search of anomalies.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="DimensionColumns"/> is null.</exception>
-        public IList<MetricDimension> DimensionColumns
+        public IList<DataFeedDimension> DimensionColumns
         {
             get => _dimensionColumns;
             set
