@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     SourceId = &quot;buildingTwinId&quot;,
     ///     TargetId = &quot;floorTwinId&quot;,
     ///     Name = &quot;contains&quot;,
-    ///     CustomProperties =
+    ///     Properties =
     ///     {
     ///         { &quot;Prop1&quot;, &quot;Prop1 value&quot; },
     ///         { &quot;Prop2&quot;, 6 }
@@ -46,8 +46,8 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// {
     ///     BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     ///     Console.WriteLine($&quot;Retrieved relationship &apos;{basicRelationship.Id}&apos; from twin {basicRelationship.SourceId}.\n\t&quot; +
-    ///         $&quot;Prop1: {basicRelationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
-    ///         $&quot;Prop2: {basicRelationship.CustomProperties[&quot;Prop2&quot;]}&quot;);
+    ///         $&quot;Prop1: {basicRelationship.Properties[&quot;Prop1&quot;]}\n\t&quot; +
+    ///         $&quot;Prop2: {basicRelationship.Properties[&quot;Prop2&quot;]}&quot;);
     /// }
     /// </code>
     /// </example>
