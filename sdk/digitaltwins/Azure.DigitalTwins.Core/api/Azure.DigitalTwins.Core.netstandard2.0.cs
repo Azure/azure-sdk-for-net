@@ -26,28 +26,28 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
         public string TargetId { get { throw null; } set { } }
     }
-    public partial class CreateDigitalTwinOptions
-    {
-        public CreateDigitalTwinOptions() { }
-        public string IfNoneMatch { get { throw null; } set { } }
-        public string TraceParent { get { throw null; } set { } }
-        public string TraceState { get { throw null; } set { } }
-    }
-    public partial class CreateEventRouteOptions
-    {
-        public CreateEventRouteOptions() { }
-        public string TraceParent { get { throw null; } set { } }
-        public string TraceState { get { throw null; } set { } }
-    }
     public partial class CreateModelsOptions
     {
         public CreateModelsOptions() { }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
-    public partial class CreateRelationshipOptions
+    public partial class CreateOrReplaceDigitalTwinOptions
     {
-        public CreateRelationshipOptions() { }
+        public CreateOrReplaceDigitalTwinOptions() { }
+        public string IfNoneMatch { get { throw null; } set { } }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
+    }
+    public partial class CreateOrReplaceEventRouteOptions
+    {
+        public CreateOrReplaceEventRouteOptions() { }
+        public string TraceParent { get { throw null; } set { } }
+        public string TraceState { get { throw null; } set { } }
+    }
+    public partial class CreateOrReplaceRelationshipOptions
+    {
+        public CreateOrReplaceRelationshipOptions() { }
         public string IfNoneMatch { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
@@ -105,12 +105,12 @@ namespace Azure.DigitalTwins.Core
         public DigitalTwinsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.DigitalTwins.Core.DigitalTwinsClientOptions options) { }
         public virtual Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]> CreateModels(System.Collections.Generic.IEnumerable<string> dtdlModels, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> dtdlModels, Azure.DigitalTwins.Core.CreateModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, Azure.DigitalTwins.Core.CreateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<T> CreateOrReplaceDigitalTwin<T>(string digitalTwinId, T digitalTwin, Azure.DigitalTwins.Core.CreateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateOrReplaceEventRoute(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<T> CreateOrReplaceRelationship<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, Azure.DigitalTwins.Core.CreateOrReplaceDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<T> CreateOrReplaceDigitalTwin<T>(string digitalTwinId, T digitalTwin, Azure.DigitalTwins.Core.CreateOrReplaceDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrReplaceEventRoute(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateOrReplaceEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.DigitalTwinsEventRoute eventRoute, Azure.DigitalTwins.Core.CreateOrReplaceEventRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateOrReplaceRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<T> CreateOrReplaceRelationship<T>(string digitalTwinId, string relationshipId, T relationship, Azure.DigitalTwins.Core.CreateOrReplaceRelationshipOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DecommissionModel(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DecommissionModelAsync(string modelId, Azure.DigitalTwins.Core.DecomissionModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDigitalTwin(string digitalTwinId, Azure.DigitalTwins.Core.DeleteDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
