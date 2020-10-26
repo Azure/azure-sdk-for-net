@@ -108,7 +108,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = TestEnvironment.ServicePrincipalSniCertificatePath;
 
-            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { IncludeX5CClaimHeader = true });
+            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { SendCertificateChain = true });
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
 

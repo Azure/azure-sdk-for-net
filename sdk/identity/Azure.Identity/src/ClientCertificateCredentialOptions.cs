@@ -20,9 +20,9 @@ namespace Azure.Identity
         internal bool AllowUnencryptedCache { get; set; }
 
         /// <summary>
-        /// Will include x5c header to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
+        /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        public bool IncludeX5CClaimHeader { get; set; }
+        public bool SendCertificateChain { get; set; }
 
         bool ITokenCacheOptions.EnablePersistentCache => EnablePersistentCache;
 
