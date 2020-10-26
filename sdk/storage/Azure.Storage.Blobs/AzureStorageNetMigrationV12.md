@@ -19,7 +19,6 @@ Familiarity with the v11 client library is assumed. For those new to the Azure S
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
   - [Generate a SAS](#generate-a-sas)
-  - [Other](#other)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -538,8 +537,6 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder()
     Identifier = identifier
 };
 ```
-
-### Other
 
 ## Additional information
 
