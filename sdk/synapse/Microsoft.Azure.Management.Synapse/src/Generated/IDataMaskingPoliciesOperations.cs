@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,49 +19,12 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolTablesOperations operations.
+    /// DataMaskingPoliciesOperations operations.
     /// </summary>
-    public partial interface ISqlPoolTablesOperations
+    public partial interface IDataMaskingPoliciesOperations
     {
         /// <summary>
-        /// Gets tables of a given schema in a SQL pool
-        /// </summary>
-        /// <remarks>
-        /// Gets tables of a given schema in a SQL pool.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='sqlPoolName'>
-        /// SQL pool name
-        /// </param>
-        /// <param name='schemaName'>
-        /// The name of the schema.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolTable>>> ListBySchemaWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, ODataQuery<SqlPoolTable> odataQuery = default(ODataQuery<SqlPoolTable>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get Sql pool table
+        /// Creates or updates a Sql pool data masking policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -73,11 +35,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='sqlPoolName'>
         /// SQL pool name
         /// </param>
-        /// <param name='schemaName'>
-        /// The name of the schema.
-        /// </param>
-        /// <param name='tableName'>
-        /// The name of the table.
+        /// <param name='parameters'>
+        /// Parameters for creating or updating a data masking policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,15 +53,18 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SqlPoolTable>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataMaskingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, DataMaskingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets tables of a given schema in a SQL pool
+        /// Gets a Sql pool data masking policy.
         /// </summary>
-        /// <remarks>
-        /// Gets tables of a given schema in a SQL pool.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='sqlPoolName'>
+        /// SQL pool name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,6 +81,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolTable>>> ListBySchemaNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataMaskingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
