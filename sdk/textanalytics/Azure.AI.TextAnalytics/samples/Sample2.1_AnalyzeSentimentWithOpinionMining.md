@@ -61,8 +61,6 @@ Alert! major complaint is *toilet*
    food, 1
    service, 1
    toilet, 3
-   bathrooms, 1
-   rooms, 1
 ```
 
 ## Define method `GetComplaints`
