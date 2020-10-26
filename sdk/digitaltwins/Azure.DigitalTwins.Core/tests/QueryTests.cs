@@ -97,9 +97,6 @@ namespace Azure.DigitalTwins.Core.Tests
                 string queryString = "SELECT * FROM digitaltwins";
 
                 // act
-                var options = new QueryOptions();
-                options.MaxItemsPerPage = pageSize;
-
                 CancellationTokenSource queryTimeoutCancellationToken = new CancellationTokenSource(QueryWaitTimeout);
                 bool queryHasExpectedCount = false;
                 while (!queryHasExpectedCount)
@@ -111,7 +108,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                     AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, null, queryTimeoutCancellationToken.Token);
                     int count = 0;
-                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages())
+                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
                     {
                         count += queriedTwinPage.Values.Count;
                     }
@@ -124,7 +121,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
                 // elements, or have no continuation token (signaling that it is the last page)
                 int pageCount = 0;
-                await foreach (Page<string> page in client.QueryAsync(queryString, options).AsPages())
+                await foreach (Page<string> page in client.QueryAsync(queryString).AsPages(pageSizeHint: pageSize))
                 {
                     pageCount++;
                     if (page.ContinuationToken != null)

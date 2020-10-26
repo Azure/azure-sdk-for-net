@@ -18,5 +18,8 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
         public string TraceState { get; set; }
+
+        // This is internal because users should not set page size here. It should be set on the pageable instances's .AsPages() method.
+        internal int? MaxItemsPerPage { get; set; }
     }
 }

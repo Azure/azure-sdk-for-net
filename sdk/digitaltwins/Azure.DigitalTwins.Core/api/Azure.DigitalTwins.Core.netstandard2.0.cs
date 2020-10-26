@@ -181,7 +181,6 @@ namespace Azure.DigitalTwins.Core
         public GetModelsOptions() { }
         public System.Collections.Generic.IEnumerable<string> DependenciesFor { get { throw null; } set { } }
         public bool IncludeModelDefinition { get { throw null; } set { } }
-        public int? MaxItemsPerPage { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
@@ -226,7 +225,6 @@ namespace Azure.DigitalTwins.Core
     public partial class QueryOptions
     {
         public QueryOptions() { }
-        public int? MaxItemsPerPage { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
