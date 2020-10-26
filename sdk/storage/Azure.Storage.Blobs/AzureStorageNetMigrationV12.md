@@ -1,9 +1,10 @@
 # Migration Guide: From Microsoft.Azure.Storage.Blob to Azure.Storage.Blobs
 
-This guide intends to assist customers in migrating from the legacy version 11 of the Azure Storage .NET library for Blobs to version 12.
+This guide intends to assist customers in migrating from legacy versions of the Azure Storage .NET library for Blobs to version 12.
+While this guide is generally applicable to older versions of the SDK, it was written with v11 in mind as the starting point.
 It will focus on side-by-side comparisons for similar operations between the v12 package, [`Azure.Storage.Blobs`](https://www.nuget.org/packages/Azure.Storage.Blobs) and v11 package, [`Microsoft.Azure.Storage.Blob`](https://www.nuget.org/packages/Microsoft.Azure.Storage.Blob/).
 
-Familiarity with the v11 client library is assumed. For those new to the Azure Storage Blobs client library for .NET, please refer to the [Quickstart](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet) for the v12 library rather than this guide.
+Familiarity with the legacy client library is assumed. For those new to the Azure Storage Blobs client library for .NET, please refer to the [Quickstart](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet) for the v12 library rather than this guide.
 
 ## Table of contents
 
