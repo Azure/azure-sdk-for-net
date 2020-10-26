@@ -7,10 +7,10 @@
     <Nullable>enable</Nullable>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
-    <LangVersion>8.0</LangVersion>
+    <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json"/>
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>
