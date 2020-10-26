@@ -6,9 +6,6 @@ namespace Azure.DigitalTwins.Core
     /// <summary>
     /// String constants for use in JSON de/serialization for custom types.
     /// </summary>
-    /// <remarks>
-    /// Useful with <see cref="IDigitalTwinRelationship"/>.
-    /// </remarks>
     public static class DigitalTwinsJsonPropertyNames
     {
         /// <summary>
