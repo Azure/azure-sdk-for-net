@@ -34,7 +34,7 @@ namespace Azure.Core.Pipeline
             {
                 return default;
             }
-            var scope = new DiagnosticScope(name, _source);
+            var scope = new DiagnosticScope(_source.Name, name, _source);
 
             if (_resourceProviderNamespace != null)
             {

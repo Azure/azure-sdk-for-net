@@ -26,18 +26,14 @@ namespace Azure.Core.Pipeline
             _oldStyleActivity = _source.IsEnabled(name) ? new DiagnosticActivity(name) : null;
             _oldStyleActivity?.SetW3CFormat();
 
-            int indexOfDot = name.IndexOf(".");
-            if (indexOfDot != -1)
+            int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
+            if (indexOfDot == -1)
             {
-#if DEBUG
-                throw new ArgumentException("Invalid scope name, expected ClassName.MethodName");
-#else
                 return;
-#endif
             }
 
             string clientName = ns + "." + name.Substring(0, indexOfDot);
-            string methodName = name.Substring(indexOfDot);
+            string methodName = name.Substring(indexOfDot + 1);
 
             var currentSource = _activitySources.GetOrAdd(clientName, n => new ActivitySource(n));
             if (currentSource != null)
@@ -70,7 +66,6 @@ namespace Azure.Core.Pipeline
             {
                 var formattedValue = format(value);
                 AddAttribute(name, formattedValue);
-                _activityAdapter?.AddTag(name, formattedValue);
             }
         }
 
@@ -129,14 +124,14 @@ namespace Azure.Core.Pipeline
                 _source?.Write(_oldStyleActivity.OperationName + ".Exception", e);
             }
 
-            _activityAdapter?.MarkFailed(e);
+            _activityAdapter?.MarkFailed();
         }
 
         private class DiagnosticActivity : Activity
         {
             private List<Activity>? _links;
 
-            public new IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
+            public new IEnumerable<Activity> Links => (IEnumerable<Activity>?) _links ?? Array.Empty<Activity>();
 
             public DiagnosticActivity(string operationName) : base(operationName)
             {
@@ -148,65 +143,76 @@ namespace Azure.Core.Pipeline
                 _links.Add(activity);
             }
         }
-    }
 
-    internal class ActivitySourceAdapter
-    {
-        private readonly ActivitySource _activitySource;
-        private readonly string _activityName;
-        private Activity? _currentActivity;
-        private ActivityTagsCollection? _tagCollection;
-        private DateTimeOffset? _startTime;
-        private List<ActivityLink>? _linkCollection;
-
-        public ActivitySourceAdapter(ActivitySource activitySource, string activityName)
+        internal class ActivitySourceAdapter
         {
-            _activitySource = activitySource;
-            _activityName = activityName;
-        }
+            private readonly ActivitySource _activitySource;
+            private readonly string _activityName;
+            private Activity? _currentActivity;
+            private ActivityTagsCollection? _tagCollection;
+            private DateTimeOffset? _startTime;
+            private List<ActivityLink>? _linkCollection;
 
-        public void AddTag<T>(string name, T value)
-        {
-            _tagCollection ??= new ActivityTagsCollection();
-            _tagCollection.Add(name, value);
-        }
-
-        public void AddLink(string id, IDictionary<string,string>? attributes)
-        {
-            _linkCollection = new List<ActivityLink>();
-
-            ActivityTagsCollection? linkTagsCollection = null;
-            if (attributes != null)
+            public ActivitySourceAdapter(ActivitySource activitySource, string activityName)
             {
-                linkTagsCollection ??= new ActivityTagsCollection();
+                _activitySource = activitySource;
+                _activityName = activityName;
             }
 
-            _linkCollection.Add(new ActivityLink(ActivityContext.Parse(id, null), linkTagsCollection));
-        }
+            public void AddTag<T>(string name, T value)
+            {
+                _tagCollection ??= new ActivityTagsCollection();
+                _tagCollection.Add(name, value);
+            }
 
-        public bool HasListeners() => _activitySource.HasListeners();
+            public void AddLink(string id, IDictionary<string, string>? attributes)
+            {
+                _linkCollection ??= new List<ActivityLink>();
 
-        public void Start()
-        {
-            _currentActivity = _activitySource.StartActivity(_activityName, startTime: _startTime);
-        }
+                ActivityTagsCollection? linkTagsCollection = null;
+                if (attributes != null)
+                {
+                    linkTagsCollection ??= new ActivityTagsCollection();
+                }
 
-        public void SetStartTime(DateTime startTime)
-        {
-            _startTime = startTime;
-        }
+                _linkCollection.Add(new ActivityLink(ActivityContext.Parse(id, null), linkTagsCollection));
+            }
 
-        public void MarkFailed(Exception exception)
-        {
-            _currentActivity?.AddTag("exception", exception);
-        }
+            public bool HasListeners() => _activitySource.HasListeners();
 
-        public void Dispose()
-        {
-            _currentActivity?.Dispose();
+            public void Start()
+            {
+                if (_startTime.HasValue)
+                {
+                    _currentActivity = _activitySource.StartActivity(_activityName, ActivityKind.Internal, default(ActivityContext), startTime: _startTime.Value, tags: _tagCollection, links: _linkCollection);
+                }
+                else
+                {
+                    _currentActivity = _activitySource.StartActivity(_activityName, ActivityKind.Internal, default(ActivityContext), tags: _tagCollection, links: _linkCollection);
+                }
+            }
+
+            public void SetStartTime(DateTime startTime)
+            {
+                _startTime = startTime;
+            }
+
+            public void MarkFailed()
+            {
+                // See https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/StatusCode.cs
+                // and https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L45
+                // Unset = 0,
+                // Error = 1
+                // Ok = 2
+                _currentActivity?.AddTag("otel.status_code", 1);
+            }
+
+            public void Dispose()
+            {
+                _currentActivity?.Dispose();
+            }
         }
     }
-
     /// <summary>
     /// WORKAROUND. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
     /// This type is a temporary workaround to avoid the issue.
@@ -221,7 +227,7 @@ namespace Azure.Core.Pipeline
         {
             if (s_setIdFormatMethod == null) return false;
 
-            s_setIdFormatMethod.Invoke(activity, new object[]{ 2 /* ActivityIdFormat.W3C */});
+            s_setIdFormatMethod.Invoke(activity, new object[] {2 /* ActivityIdFormat.W3C */});
 
             return true;
         }
@@ -232,7 +238,7 @@ namespace Azure.Core.Pipeline
 
             object? result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
-            return result != null && (int)result == 2 /* ActivityIdFormat.W3C */;
+            return result != null && (int) result == 2 /* ActivityIdFormat.W3C */;
         }
 
         public static bool TryGetTraceState(this Activity activity, out string? traceState)

@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
-                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Links");
+                    PropertyInfo propertyInfo = value.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links");
                     var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
 
                     var scope = new ProducedDiagnosticScope()

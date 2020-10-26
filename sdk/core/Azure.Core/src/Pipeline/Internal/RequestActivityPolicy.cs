@@ -114,7 +114,7 @@ namespace Azure.Core.Pipeline
 
         private static async ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            Activity currentActivity = Activity.Current;
+            Activity? currentActivity = Activity.Current;
 
             if (currentActivity != null)
             {
@@ -122,7 +122,10 @@ namespace Azure.Core.Pipeline
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
-                        message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
+                        if (currentActivity.Id != null)
+                        {
+                            message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
+                        }
                         if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
@@ -133,7 +136,10 @@ namespace Azure.Core.Pipeline
                 {
                     if (!message.Request.Headers.Contains(RequestIdHeaderName))
                     {
-                        message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
+                        if (currentActivity.Id != null)
+                        {
+                            message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
+                        }
                     }
                 }
             }
