@@ -30,5 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new ElasticsearchParameter(host, port, authHeader, query);
         }
+        internal ElasticsearchDataFeedSource(ElasticsearchParameter parameter)
+            : base(DataFeedSourceType.Elasticsearch)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
+
     }
 }
