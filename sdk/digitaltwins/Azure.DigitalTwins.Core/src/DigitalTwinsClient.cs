@@ -1074,6 +1074,14 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
+                    if (options == null)
+                    {
+                        options = new GetModelsOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListAsync(options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1090,6 +1098,14 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
+                    if (options == null)
+                    {
+                        options = new GetModelsOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<PagedDigitalTwinsModelDataCollection> response = await _dtModelsRestClient.ListNextPageAsync(nextLink, options?.DependenciesFor, options?.IncludeModelDefinition, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1466,6 +1482,15 @@ namespace Azure.DigitalTwins.Core
                     {
                         Query = query
                     };
+
+                    if (options == null)
+                    {
+                        options = new QueryOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -1486,6 +1511,15 @@ namespace Azure.DigitalTwins.Core
                     {
                         ContinuationToken = nextLink
                     };
+
+                    if (options == null)
+                    {
+                        options = new QueryOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -1532,6 +1566,15 @@ namespace Azure.DigitalTwins.Core
                     {
                         Query = query
                     };
+
+                    if (options == null)
+                    {
+                        options = new QueryOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -1552,6 +1595,15 @@ namespace Azure.DigitalTwins.Core
                     {
                         ContinuationToken = nextLink
                     };
+
+                    if (options == null)
+                    {
+                        options = new QueryOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -1594,6 +1646,14 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
+                    if (options == null)
+                    {
+                        options = new GetDigitalTwinsEventRoutesOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<DigitalTwinsEventRouteCollection> response = await _eventRoutesRestClient.ListAsync(options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1610,6 +1670,14 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
+                    if (options == null)
+                    {
+                        options = new GetDigitalTwinsEventRoutesOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<DigitalTwinsEventRouteCollection> response = await _eventRoutesRestClient.ListNextPageAsync(nextLink, options, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1646,6 +1714,14 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
+                    if (options == null)
+                    {
+                        options = new GetDigitalTwinsEventRoutesOptions();
+                    }
+
+                    // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                    options.MaxItemsPerPage = pageSizeHint;
+
                     Response<DigitalTwinsEventRouteCollection> response = _eventRoutesRestClient.List(options, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1660,6 +1736,15 @@ namespace Azure.DigitalTwins.Core
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
+
+                if (options == null)
+                {
+                    options = new GetDigitalTwinsEventRoutesOptions();
+                }
+
+                // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                options.MaxItemsPerPage = pageSizeHint;
+
                 try
                 {
                     Response<DigitalTwinsEventRouteCollection> response = _eventRoutesRestClient.ListNextPage(nextLink, options, cancellationToken);
