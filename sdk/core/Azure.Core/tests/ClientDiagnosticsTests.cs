@@ -189,6 +189,25 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void StartsActivity()
+        {
+            var activities = new List<Activity>();
+            var listener =  new ActivityListener();
+            listener.ShouldListenTo = source => source.Name == "Azure.Clients.ClientName";
+            listener.ActivityStarted = activity => activities.Add(activity);
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            scope.Dispose();
+
+            Assert.AreEqual(1, activities.Count);
+            var activity = activities[0];
+
+            Assert.AreEqual("ActivityName", activity.DisplayName);
+        }
+
+        [Test]
         public void NoopsWhenDisabled()
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
