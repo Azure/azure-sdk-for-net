@@ -939,5 +939,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
             Assert.AreEqual(0, count);
         }
+
+        [Test]
+        [Ignore("Even when the name in the path is URI data-encoded, the service still returns the ASP.NET error page in HTML")]
+        public void ImportKeyEscapesPath()
+        {
+            // Technically, https://github.com/Azure/azure-sdk-for-net/issues/15784 would be a problem for any path.
+
+            string keyName = $"Test: bad name ({Recording.GenerateId(string.Empty, 6)})";
+            JsonWebKey jwk = KeyUtilities.CreateRsaKey(includePrivateParameters: true);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.ImportKeyAsync(new ImportKeyOptions(keyName, jwk)));
+            Assert.AreEqual(400, ex.Status);
+            StringAssert.DoesNotContain("<html>", ex.Message);
+        }
     }
 }

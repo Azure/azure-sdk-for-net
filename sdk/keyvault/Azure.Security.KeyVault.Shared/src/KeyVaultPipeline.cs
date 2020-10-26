@@ -33,6 +33,12 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(VaultUri);
 
+            // Use URI path escaping to preserve valid path characters.
+            if (path != null)
+            {
+                path = Uri.EscapeUriString(path);
+            }
+
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
 
@@ -43,6 +49,12 @@ namespace Azure.Security.KeyVault
         {
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(VaultUri);
+
+            // Use URI path escaping to preserve valid path characters.
+            if (path != null)
+            {
+                path = Uri.EscapeUriString(path);
+            }
 
             firstPage.AppendPath(path, escape: false);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -78,7 +90,10 @@ namespace Azure.Security.KeyVault
 
             foreach (var p in path)
             {
-                request.Uri.AppendPath(p, escape: false);
+                // Use URI path escaping to preserve valid path characters.
+                string escaped = p != null ? Uri.EscapeUriString(p) : p;
+
+                request.Uri.AppendPath(escaped, escape: false);
             }
 
             request.Uri.AppendQuery("api-version", ApiVersion);
