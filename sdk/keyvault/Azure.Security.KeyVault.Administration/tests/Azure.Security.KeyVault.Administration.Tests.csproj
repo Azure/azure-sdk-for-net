@@ -10,7 +10,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->

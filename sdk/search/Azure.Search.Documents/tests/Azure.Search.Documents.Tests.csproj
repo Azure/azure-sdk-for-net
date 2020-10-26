@@ -22,8 +22,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
