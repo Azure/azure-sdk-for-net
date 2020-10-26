@@ -12,8 +12,14 @@ namespace Azure.DigitalTwins.Core
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class ModelProperties
+    public class DigitalTwinComponent
     {
+        /// <summary>
+        /// The metadata property, required on a component to identify as one.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
+        public object Metadata { get; set; } = new object();
+
         /// <summary>
         /// Additional custom, properties of the digital twin.
         /// This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.

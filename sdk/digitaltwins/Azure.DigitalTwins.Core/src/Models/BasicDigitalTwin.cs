@@ -31,7 +31,7 @@ namespace Azure.DigitalTwins.Core
     ///         // component
     ///         {
     ///             &quot;Component1&quot;,
-    ///             new ModelProperties
+    ///             new DigitalTwinComponent
     ///             {
     ///                 // component properties
     ///                 Properties =
@@ -70,15 +70,19 @@ namespace Azure.DigitalTwins.Core
     /// }
     /// </code>
     /// </example>
-    public class BasicDigitalTwin : IDigitalTwin
+    public class BasicDigitalTwin
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// The unique Id of the digital twin in a digital twins instance. This field is present on every digital twin.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinId)]
         public string Id { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
-        public ETag ETag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary>
         /// Information about the model a digital twin conforms to.

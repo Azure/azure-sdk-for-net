@@ -9,13 +9,13 @@ namespace Azure.DigitalTwins.Core.Samples
     /// Custom type for a sample illustrating how someone can create their own class to match a digital twin model type
     /// for serialization, instead of using <see cref="BasicDigitalTwin"/>.
     /// </summary>
-    internal class CustomDigitalTwin : IDigitalTwin
+    internal class CustomDigitalTwin
     {
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinId)]
         public string Id { get; set; }
 
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
-        public ETag ETag { get; set; }
+        public string ETag { get; set; }
 
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
         public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
@@ -32,8 +32,11 @@ namespace Azure.DigitalTwins.Core.Samples
 
     internal class MyCustomComponent
     {
+        /// <summary>
+        /// A component must have a property named $metadata with no properties to be distinguished from other properties as a component.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
+        public object Metadata { get; set; } = new object();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }

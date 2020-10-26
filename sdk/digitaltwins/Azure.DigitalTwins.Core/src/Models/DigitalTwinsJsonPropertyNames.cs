@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core
         public const string DigitalTwinETag = "$etag";
 
         /// <summary>
-        /// The JSON property name for the metadata field on a digital twin.
+        /// The JSON property name for the metadata field on a digital twin.%
         /// </summary>
         public const string DigitalTwinMetadata = "$metadata";
 
@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// The JSON property name for the target Id field on a relationship.
         /// </summary>
-        public const string RelationshipTargetId = "targetId";
+        public const string RelationshipTargetId = "$targetId";
 
         /// <summary>
         /// The JSON property name for the name field on a relationship.
