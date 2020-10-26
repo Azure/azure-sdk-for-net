@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room digital twin
                 BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
-                await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin);
 
                 // Get the component
                 Response<object> getComponentResponse = await client

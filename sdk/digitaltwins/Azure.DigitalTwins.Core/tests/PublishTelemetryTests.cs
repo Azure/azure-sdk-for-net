@@ -121,7 +121,7 @@ namespace Azure.DigitalTwins.Core.Tests
             BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
             // Create the room with WiFi component digital twin.
-            await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
+            await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
         private async Task<DigitalTwinsEventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Create an event route.
-            Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
+            Response createEventRouteResponse = await client.CreateOrReplaceEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
             createEventRouteResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
             return eventRoute;

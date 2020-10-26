@@ -222,11 +222,11 @@ namespace Azure.DigitalTwins.Core
         ///         ComponentProp2 = 123,
         ///     }
         /// };
-        /// Response&lt;CustomDigitalTwin&gt; createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId, customTwin);
+        /// Response&lt;CustomDigitalTwin&gt; createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId, customTwin);
         /// Console.WriteLine($&quot;Created digital twin &apos;{createCustomDigitalTwinResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual async Task<Response<T>> CreateDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> CreateOrReplaceDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
             using MemoryStream memoryStream = await WriteToStream<T>(digitalTwin, _objectSerializer, true /*asynchronous*/, cancellationToken).ConfigureAwait(false);
@@ -259,7 +259,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Response<T> CreateDigitalTwin<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<T> CreateOrReplaceDigitalTwin<T>(string digitalTwinId, T digitalTwin, CreateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
             using MemoryStream memoryStream = WriteToStream<T>(digitalTwin, _objectSerializer, false /*asynchronous*/, cancellationToken).EnsureCompleted();
@@ -925,12 +925,12 @@ namespace Azure.DigitalTwins.Core
         /// };
         ///
         /// Response&lt;CustomRelationship&gt; createCustomRelationshipResponse = await client
-        ///     .CreateRelationshipAsync&lt;CustomRelationship&gt;(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, floorBuildingRelationshipPayload);
+        ///     .CreateOrReplaceRelationshipAsync&lt;CustomRelationship&gt;(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, floorBuildingRelationshipPayload);
         /// Console.WriteLine($&quot;Created a digital twin relationship &apos;{createCustomRelationshipResponse.Value.Id}&apos; &quot; +
         ///     $&quot;from twin &apos;{createCustomRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createCustomRelationshipResponse.Value.TargetId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual async Task<Response<T>> CreateRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<T>> CreateOrReplaceRelationshipAsync<T>(string digitalTwinId, string relationshipId, T relationship, CreateRelationshipOptions options = null, CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a Stream
             using MemoryStream memoryStream = await WriteToStream<T>(relationship, _objectSerializer, true /*asynchronous*/, cancellationToken).ConfigureAwait(false);
@@ -969,10 +969,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateRelationshipAsync{T}(string, string, T, CreateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, CreateRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<T> CreateRelationship<T>(
+        public virtual Response<T> CreateOrReplaceRelationship<T>(
             string digitalTwinId,
             string relationshipId,
             T relationship,
@@ -1743,11 +1743,11 @@ namespace Azure.DigitalTwins.Core
         /// string eventFilter = &quot;$eventType = &apos;DigitalTwinTelemetryMessages&apos; or $eventType = &apos;DigitalTwinLifecycleNotification&apos;&quot;;
         /// var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
         ///
-        /// await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+        /// await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, options, cancellationToken);
         }
@@ -1770,10 +1770,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateEventRouteAsync(string, DigitalTwinsEventRoute, CreateEventRouteOptions, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceEventRouteAsync(string, DigitalTwinsEventRoute, CreateEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response CreateEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrReplaceEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.Add(eventRouteId, eventRoute, options, cancellationToken);
         }

@@ -152,7 +152,7 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
 Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -173,7 +173,7 @@ var customTwin = new CustomDigitalTwin
         ComponentProp2 = 123,
     }
 };
-Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
 Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -323,7 +323,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
 };
 
 Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
-    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
     $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
@@ -344,7 +344,7 @@ var floorBuildingRelationshipPayload = new CustomRelationship
 };
 
 Response<CustomRelationship> createCustomRelationshipResponse = await client
-    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
     $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
@@ -422,7 +422,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
 var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
-await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 ```
 
