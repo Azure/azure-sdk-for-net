@@ -11,7 +11,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     /// <summary>
     /// Options class used by the <see cref="AzureKeyVaultConfigurationExtensions"/>.
     /// </summary>
-    internal class AzureKeyVaultConfigurationOptions
+    public class AzureKeyVaultConfigurationOptions
     {
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationOptions"/>.

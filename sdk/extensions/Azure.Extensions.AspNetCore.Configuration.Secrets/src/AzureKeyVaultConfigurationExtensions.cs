@@ -75,7 +75,7 @@ namespace Microsoft.Extensions.Configuration
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        private static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
+        public static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
         {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
             Argument.AssertNotNull(options, nameof(configurationBuilder));
