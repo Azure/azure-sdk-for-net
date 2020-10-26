@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using Azure.DigitalTwins.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
