@@ -361,31 +361,75 @@ using (Stream downloadStream = download.Content)
 
 ### Listing Blobs in a Container
 
-v11
+#### Flat listing
+
+Azure Blob Storage lists blobs in a container as a paged response. Both the modern and legacy SDKs allow you to either
+- receive an `IEnumerable` that lazily requests subsequent pages to present a single stream of results
+- request individual pages and manually request any subsequent pages via continuation token (note that manual iteration is the only way to pick up a listing where you may have left off)
+
+v11 lazy enumerable
 ```csharp
-// List the blobs in the container.
-// Assumes a reference to the container via `cloudBlobContainer`
+CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
+IEnumerable<IListBlobItem> results = cloudBlobContainer.ListBlobs();
+foreach (IListBlobItem item in results)
+{
+    // process blob listing
+}
+```
+Note there is no asynchronous overload of a lazy enumerator in v11. Users desiring async performance were required to use manual page iteration and asynchronously request each page.
+
+v11 manual interation
+```csharp
+CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
+// set this to already existing continuation token to pick up where you previously left off
 BlobContinuationToken blobContinuationToken = null;
 do
 {
-    var results = await cloudBlobContainer.ListBlobsSegmentedAsync(null, blobContinuationToken);
-    // Get the value of the continuation token returned by the listing call.
-    blobContinuationToken = results.ContinuationToken;
-    foreach (IListBlobItem item in results.Results)
+    BlobResultSegment resultSegment = await cloudBlobContainer.ListBlobsSegmentedAsync(blobContinuationToken);
+    blobContinuationToken = resultSegment.ContinuationToken;
+    foreach (IListBlobItem item in resultSegment.Results)
     {
-        Console.WriteLine(item.Uri);
+        // process blob listing
     }
 } while (blobContinuationToken != null); // Loop while the continuation token is not null.
 ```
 
-v12
+v12 lazy enumerable
 ```csharp
-// Get a reference to the container
-BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-// List all blobs in the container
-await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
+BlobContainerClient containerClient; // properly configured client to an existing container
+IAsyncEnumerable<BlobItem> results = containerClient.GetBlobsAsync());
+await foreach (BlobItem item in results)
 {
-    Console.WriteLine("\t" + blobItem.Name);
+    // process blob listing
+}
+```
+
+v12 manual iteration
+
+The result we declared an `IAsyncEnumerable<T>` in the previous example was actually an `AsyncPagable<T>`, an implementation provided by the Azure.Core package. This class contains the method `AsPages()`, which returns an `IAsyncEnumerable<Page<T>>`. This is how you can go page by page in the modern Storage SDK.
+
+```csharp
+BlobContainerClient containerClient; // properly configured client to an existing container
+// set this to already existing continuation token to pick up where you previously left off
+string initialContinuationToken = null;
+AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync());
+IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationToken);
+
+// the foreach loop requests the next page of results every loop
+// you do not need to explicitly access the continuation token just to get the next page
+// to stop requesting new pages, break from the loop
+// you also have access to the contination token returned with each page if needed
+await foreach (Page<BlobItem> page in pages)
+{
+    // process page
+
+    foreach (BlobItem item in page.Values)
+    {
+        // process blob listing
+    }
+
+    // access continuation token if desired
+    string continuationToken = page.ContinuationToken;
 }
 ```
 
