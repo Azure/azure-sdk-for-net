@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Microsoft.Azure.WebJobs.Host
 {
@@ -12,18 +14,33 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class BlobsOptions : IOptionsFormatter
     {
+        private int _maxDegreeOfParallelism;
+
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
         public BlobsOptions()
         {
-            // TODO
-            MaxDegreeOfParallelism = 1;
+            _maxDegreeOfParallelism = 8 * SkuUtility.ProcessorCount;
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of blob changes that may be processed by concurrently.
         /// </summary>
-        public int MaxDegreeOfParallelism { get; set; }
+        public int MaxDegreeOfParallelism
+        {
+            get { return _maxDegreeOfParallelism; }
+
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                _maxDegreeOfParallelism = value;
+            }
+        }
 
         /// <inheritdoc/>
         public string Format()
