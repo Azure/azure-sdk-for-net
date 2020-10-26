@@ -133,7 +133,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.IncludeX5CClaimHeader ?? false, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.SendCertificateChain ?? false, options as ITokenCacheOptions);
         }
 
         /// <summary>
