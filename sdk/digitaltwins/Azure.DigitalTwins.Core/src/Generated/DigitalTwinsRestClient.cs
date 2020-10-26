@@ -392,7 +392,10 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddRelationshipOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();

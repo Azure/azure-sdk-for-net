@@ -3,6 +3,7 @@ namespace Azure.DigitalTwins.Core
     public partial class CreateDigitalTwinOptions
     {
         public CreateDigitalTwinOptions() { }
+        public string IfNoneMatch { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }
@@ -21,6 +22,7 @@ namespace Azure.DigitalTwins.Core
     public partial class CreateRelationshipOptions
     {
         public CreateRelationshipOptions() { }
+        public string IfNoneMatch { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
     }

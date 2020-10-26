@@ -36,7 +36,10 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("TraceState", digitalTwinsAddOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             var content = RequestContent.Create(twin);
@@ -639,7 +642,10 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("TraceState", digitalTwinsAddRelationshipOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddRelationshipOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(relationship);
