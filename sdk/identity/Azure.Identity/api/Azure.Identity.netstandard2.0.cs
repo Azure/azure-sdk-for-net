@@ -47,7 +47,7 @@ namespace Azure.Identity
     public partial class ClientCertificateCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientCertificateCredentialOptions() { }
-        public bool IncludeX5CClaimHeader { get { throw null; } set { } }
+        public bool SendCertificateChain { get { throw null; } set { } }
     }
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
