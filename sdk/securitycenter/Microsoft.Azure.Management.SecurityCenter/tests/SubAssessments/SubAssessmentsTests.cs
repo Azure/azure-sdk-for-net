@@ -83,6 +83,22 @@ namespace SecurityCenter.Tests
                 Assert.NotNull(ret);
             }
         }
+
+
+        [Fact]
+        public void SubAssessments_Get_Azure_ResourceDetails()
+        {
+            string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{ContainerRegistryName}";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var ret = securityCenterClient.SubAssessments.Get(scope, AssessmentName, SubAssessmentName);
+
+                var id = (ret.ResourceDetails as AzureResourceDetails)?.Id;
+                Assert.NotNull(id);
+            }
+        }
         #endregion
 
         #region Validations
