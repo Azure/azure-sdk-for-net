@@ -361,7 +361,7 @@ using (Stream downloadStream = download.Content)
 
 ### Listing Blobs in a Container
 
-#### Flat listing
+#### Flat Listing
 
 Azure Blob Storage lists blobs in a container as a paged response. Both the modern and legacy SDKs allow you to either
 - receive an `IEnumerable` that lazily requests subsequent pages to present a single stream of results
@@ -430,6 +430,38 @@ await foreach (Page<BlobItem> page in pages)
 
     // access continuation token if desired
     string continuationToken = page.ContinuationToken;
+}
+```
+
+#### Hierarchical Listing
+
+See the [list blobs documentation](https://docs.microsoft.com/azure/storage/blobs/storage-blobs-list?tabs=dotnet#flat-listing-versus-hierarchical-listing) for more information on what a hierarchical listing is.
+
+While manual page iteration as described in the previous section is still applicable to a hierarchical listing, this section will only give examples using lazy enumerables.
+
+v11
+
+`ListBlobs()` and `ListBlobsSegmented()` that were used in a flat listing contain overloads with a string parameter `prefix`, which results in a flat listing when `null`. Provide a value to perform a hierarchical listing with that prefix.
+```csharp
+CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
+string blobPrefix; // prefix to list on
+IEnumerable<IListBlobItem> results = cloudBlobContainer.ListBlobs(prefix: blobPrefix);
+foreach (IListBlobItem item in results)
+{
+    // process blob listing
+}
+```
+
+v12
+
+v12 has explicit methods for listing by hierarchy.
+```csharp
+BlobContainerClient containerClient; // properly configured client to an existing container
+string blobPrefix; // prefix to list on
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
+await foreach (BlobHierarchyItem item in results)
+{
+    // process blob listing
 }
 ```
 
